@@ -4,7 +4,7 @@ import App from "./app";
 
 
 // Access Token verification
-const fakeInfo = false;
+const fakeInfo = true;
 let CheckAccess = () => {
   if (fakeInfo === false) {
     return <App />;
