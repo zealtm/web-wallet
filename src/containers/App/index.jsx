@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Login from "./login";
-import App from "./app";
+import Login from "./Login";
+import App from "./App";
 
 
 // Access Token verification

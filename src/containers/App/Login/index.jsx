@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
-import fakeDelay from "../../components/fakeDelay";
+import fakeDelay from "../../../components/fakeDelay";
 import path from "path";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
@@ -14,33 +14,33 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../User/login")),
+  loader: () => fakeDelay(400).then(() => import("../../User/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../User/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../User/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../User/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../User/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "./User/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../User/reset")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../User/create")),
+  loader: () => fakeDelay(400).then(() => import("../../User/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "./User/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../User/create")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../Errors/404")),
+  loader: () => fakeDelay(400).then(() => import("../../Errors/404")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../Errors/404")
+  serverSideRequirePath: path.resolve(__dirname, "../../Errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../Errors/500")),
+  loader: () => fakeDelay(400).then(() => import("../../Errors/500")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../Errors/500")
+  serverSideRequirePath: path.resolve(__dirname, "../../Errors/500")
 });
 /* eslint-enable */
 
