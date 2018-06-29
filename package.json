@@ -5,12 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "start-default": "PORT=6001 react-scripts start",
     "build": "webpack",
-    "build-default": "react-scripts build",
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
