@@ -4,6 +4,10 @@ import fakeDelay from "../../../components/fakeDelay";
 import path from "path";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
+// material ui
+import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+
 function Loading({ error }) {
   if (error) {
     return "Error!";
@@ -44,22 +48,46 @@ let errorInternal = Loadable({
 });
 /* eslint-enable */
 
+// styles temp , do refatore to import styles.css
+const styles = {
+  colRight: {
+    backgroundColor: "#3b1878",
+    height: "100vh",
+    minHeight: "600px"
+  },
+  colLeft: {
+    backgroundColor: "#4b2c82",
+    minHeight: "600px"
+  }
+};
+
 class Login extends Component {
   render() {
     return (
       <Router>
         <div>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/reset">Reset</Link>
-          <Link to="/create">Create</Link>
-
           <Switch>
-            {/* INSIDE ROUTES */}
-            <Route exact path="/" component={login} />
-            <Route exact path="/login" component={login} />
-            <Route exact path="/reset" component={reset} />
-            <Route exact path="/create" component={create} />
+            {/* CONTAINER OF VIEWS */}
+            <Grid container>
+              <Grid xs={12} sm={5} md={5} style={styles.colRight}>
+                <Link to="/">Home</Link>
+                <Link to="/login">Login</Link>
+                <Link to="/reset">Reset</Link>
+                <Link to="/create">Create</Link>
+
+                {/* INSIDE ROUTES */}
+                <Route exact path="/" component={login} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/reset" component={reset} />
+                <Route exact path="/create" component={create} />
+              </Grid>
+
+              <Hidden xsDown>
+                <Grid sm={7} md={7} style={styles.colLeft}>
+                  SLIDE
+                </Grid>
+              </Hidden>
+            </Grid>
 
             {/* ERRORS PAGE */}
             <Route path="/404" component={errorNotFound} />
