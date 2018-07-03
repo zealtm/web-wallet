@@ -2,13 +2,20 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-console.log('\n');
-console.log('\x1b[1m', '\x1b[31m', '-----------------------------------------------------------');
-console.log('-------------------- VISERION IS RISING! ---------------------');
-console.log('--------------------------- V 1.0 ----------------------------');
-console.log('-----------------------------------------------------------', '\x1b[0m', '\x1b[21m');
-console.log('\n');
-
+console.log("\n");
+console.log(
+  "\x1b[1m",
+  "\x1b[31m",
+  "-----------------------------------------------------------"
+);
+console.log("-------------------- VISERION IS RISING! ---------------------");
+console.log("--------------------------- V 1.0 ----------------------------");
+console.log(
+  "-----------------------------------------------------------",
+  "\x1b[0m",
+  "\x1b[21m"
+);
+console.log("\n");
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -23,6 +30,10 @@ module.exports = {
           presets: ["react", "es2015"],
           plugins: ["syntax-dynamic-import"]
         }
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       }
     ]
   },

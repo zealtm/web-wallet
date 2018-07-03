@@ -6,6 +6,7 @@ import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 function Loading({ error }) {
   if (error) {
+    console.error(error);
     return "Error!";
   } else {
     return <h3>Loading...</h3>;
