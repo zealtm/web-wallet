@@ -1,0 +1,16 @@
+:global(.bg) {
+  background-color: black;
+}
+
+:local(.defaultP) {
+  font-size: 12px;
+}
+
+:local(.clWhite) {
+  color: white;
+}
+
+:local(.clGreen) {
+  composes: defaultP;
+  color: green;
+}
