@@ -27,20 +27,20 @@ const styles = {
     }
 };
 
-const imageDirectory = "/images/carousel";
+var imageDirectory = "/images/carousel/";
 
 const imageSteps = [
     {
         label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
-        imgPath: imageDirectory + "/slide-01.png"
+        imgPath:imageDirectory +"carousel-01.png"
     },
     {
         label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
-        imgPath: imageDirectory + "/slide-02.png"
+        imgPath: imageDirectory + "/carousel-02.png"
     },
     {
         label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
-        imgPath: imageDirectory + "/slide-03.png"
+        imgPath: imageDirectory + "/carousel-03.png"
     }
 ];
 
