@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
-import fakeDelay from "../../../components/fakeDelay";
 import path from "path";
 import {
   Link,
@@ -8,6 +7,13 @@ import {
   Switch,
   BrowserRouter as Router
 } from "react-router-dom";
+
+// COMPONENTS
+import fakeDelay from "../../../components/fakeDelay";
+
+// STYLE
+import style from "./style.css";
+
 
 function Loading({ error }) {
   if (error) {
@@ -48,8 +54,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Link to="/">Home</Link>
-          <Link to="/wallet">Wallet</Link>
+          <Link className={style.link} to="/">Home</Link>
+          <Link className={style.link} to="/wallet">Wallet</Link>
 
           <Switch>
             {/* INSIDE ROUTES */}

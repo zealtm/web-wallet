@@ -6,7 +6,6 @@ import App from "./App";
 
 // STYLE
 import style from "./style.css";
-console.warn(style.textDefault)
 
 // Access Token verification
 const fakeInfo = true;

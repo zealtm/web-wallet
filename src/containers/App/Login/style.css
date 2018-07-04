@@ -17,6 +17,10 @@
   min-height: 600px;
 }
 
+:local .link {
+  composes: linkDefault from "../../../components/textBase.css";
+}
+
 /* 1.2 COLUMN LEFT */
 :local(.colLeft) {
   composes: bgPurpleLight from "../../../components/colorBase.css";
