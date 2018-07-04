@@ -2,20 +2,22 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-console.log("\n");
-console.log(
-  "\x1b[1m",
-  "\x1b[31m",
-  "-----------------------------------------------------------"
-);
+console.log("\n", "\x1b[1m", "\x1b[31m");
+console.log("-----------------------------------------------------------");
 console.log("-------------------- VISERION IS RISING! ---------------------");
 console.log("--------------------------- V 1.0 ----------------------------");
-console.log(
-  "-----------------------------------------------------------",
-  "\x1b[0m",
-  "\x1b[21m"
-);
+console.log("-----------------------------------------------------------",);
 console.log("\n");
+
+console.log("                                     __");
+console.log("                     _____/-----\\   / o\\");
+console.log("                    <____   _____\\_/    >");
+console.log("                         \\ /    /______/");
+console.log("                          /|:||/");
+console.log("                         /____/");
+
+console.log("\n", "\x1b[0m", "\x1b[21m");
+
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -27,8 +29,8 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", "es2015"],
-          plugins: ["syntax-dynamic-import"]
+          presets: ["react", "env"],
+          plugins: ["syntax-dynamic-import", "transform-class-properties"]
         }
       },
       {
