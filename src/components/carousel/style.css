@@ -1,0 +1,18 @@
+:local(.center) {
+    width:  80%;
+    margin: auto auto
+}
+
+:local(.paragraph) {
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center
+    
+}
+
+:local(.imageResponsive){
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    height: auto;
+}
