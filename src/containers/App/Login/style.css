@@ -9,16 +9,16 @@
 
 /* 1. LOGIN */
 
-/* 1.1 COLUMN 1 */
+/* 1.1 COLUMN RIGHT */
 :local(.colRight) {
-  composes: bgPurpleDark from "../../../components/colors.css";
+  composes: purpleDark from "../../../components/colorBase.css";
   height: 100vh;
   min-height: 600px;
 }
 
-/* 1.2 COLUMN 2 */
+/* 1.2 COLUMN LEFT */
 :local(.colLeft) {
-  composes: bgPurple from "../../../components/colors.css";
+  composes: purpleLight from "../../../components/colorBase.css";
   min-height: 600px;
 }
 

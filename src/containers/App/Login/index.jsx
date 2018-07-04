@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
-import fakeDelay from "../../../components/fakeDelay";
 import path from "path";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
-// material ui
+// COMPONENTS
+import fakeDelay from "../../../components/fakeDelay";
+
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 
-// style
+// STYLE
 import style from "./style.css";
 
 function Loading({ error }) {
