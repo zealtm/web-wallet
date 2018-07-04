@@ -1,43 +1,84 @@
 /*
 
-1. COLORS
-  1.1 PURPLE
-  1.2 GREEN
-  1.3 COINS
+1 PURPLE
+  1.1 BACKGROUND (bgColorName)
+  1.2 COLOR (clColorName)
+2 GREEN
+  2.1 BACKGROUND
+  2.2 COLOR
+3 COINS
+  3.1 BACKGROUND
+  3.2 COLOR
+
 */
 
 /* ------------------------------------------------------------------------- */
 
-/* 1. COLORS */
-
-/* 1.1 PURPLE */
-:local(.purpleDefault) {
+/* 1 PURPLE */
+/* 1.1 BACKGROUND */
+:local(.bgPurpleDefault) {
   background-color: #4b2c82;
 }
-:local(.purpleLight) {
+:local(.bgPurpleLight) {
   background-color: #4b2c82;
 }
-:local(.purpleDark) {
+:local(.bgPurpleDark) {
   background-color: #3b1878;
 }
 
-/* 1.2 GREEN */
-:local(.greenDefault) {
+/* 1.2 COLOR */
+:local(.clPurpleDefault) {
+  color: #4b2c82;
+}
+:local(.clPurpleLight) {
+  color: #4b2c82;
+}
+:local(.clPurpleDark) {
+  color: #3b1878;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 2 GREEN */
+/* 2.1 BACKGROUND */
+:local(.bgGreenDefault) {
   background-color: #4cd566;
 }
-:local(.greenLight) {
+:local(.bgGreenLight) {
   background-color: #4cd566;
 }
-:local(.greenDark) {
+:local(.bgGreenDark) {
   background-color: #000;
 }
 
-/* 1.3 COINS */
-:local(.coinLunes) {
+/* 2.2 COLOR */
+:local(.clGreenDefault) {
+  color: #4cd566;
+}
+:local(.clGreenLight) {
+  color: #4cd566;
+}
+:local(.clGreenDark) {
+  color: #000;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 3 COINS */
+/* 3.1 BACKGROUND */
+:local(.bgCoinLunes) {
   background-color: #4cd566;
 }
-:local(.coinBitcoin) {
+:local(.bgCoinBitcoin) {
   background-color: #f7921a;
+}
+
+/* 3.2 COLOR */
+:local(.clCoinLunes) {
+  color: #4cd566;
+}
+:local(.clCoinBitcoin) {
+  color: #f7921a;
 }
 
 /* ------------------------------------------------------------------------- */
