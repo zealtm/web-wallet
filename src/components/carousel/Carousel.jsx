@@ -5,6 +5,7 @@ import { autoPlay } from "react-swipeable-views-utils";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import SwipeableViews from "react-swipeable-views";
 import { Grid } from "@material-ui/core";
+import i18n from "../../utils/i18n";
 import style from "./style.css";
 
 const styles = {
@@ -31,15 +32,15 @@ var imageDirectory = "/images/carousel/";
 
 const imageSteps = [
     {
-        label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
+        label: i18n.t("CAROUSEL_DESCRIPTION1"),
         imgPath:imageDirectory +"carousel-01.png"
     },
     {
-        label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
+        label: i18n.t("CAROUSEL_DESCRIPTION2"),
         imgPath: imageDirectory + "/carousel-02.png"
     },
     {
-        label: "Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança...",
+        label: i18n.t("CAROUSEL_DESCRIPTION3"),
         imgPath: imageDirectory + "/carousel-03.png"
     }
 ];
