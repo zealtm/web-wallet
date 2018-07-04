@@ -2,16 +2,15 @@ import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
-
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
-
+import Carousel from "../../../components/carousel/Carousel";
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
-
 // STYLE
 import style from "./style.css";
+
 
 function Loading({ error }) {
   if (error) {
@@ -62,7 +61,7 @@ class Login extends Component {
           <Switch>
             {/* CONTAINER OF VIEWS */}
             <Grid container>
-              <Grid xs={12} sm={5} md={5} className={style.colRight}>
+              <Grid item xs={12} sm={5} md={5} className={style.colRight}>
                 <Link to="/">Home</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/reset">Reset</Link>
@@ -76,8 +75,8 @@ class Login extends Component {
               </Grid>
 
               <Hidden xsDown>
-                <Grid sm={7} md={7} className={style.colLeft}>
-                  SLIDE
+                <Grid item sm={7} md={7} className={style.colLeft}>
+                  <Carousel />
                 </Grid>
               </Hidden>
             </Grid>
