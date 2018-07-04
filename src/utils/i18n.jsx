@@ -1,25 +1,25 @@
-import i18next from 'i18next';
+import i18next from "i18next";
+import LngDetector from "i18next-browser-languagedetector";
 
-i18next
-  .init({
-    interpolation: {
-      // React already does escaping
-      escapeValue: false,
-    },
-    lng: 'pt',
-    // Using simple hardcoded resources for simple example
-    resources: {
-      en: {
-        translation: {
-          SUBMIT: "Submit"
-        },
-      },
-      pt: {
-        translation: {
-          SUBMIT: "Enviar"
-        },
-      },
-    },
-  })
+// LANGUAGE FILES
+import en_US from "../lang/en_US.json";
 
-export default i18next
+i18next.use(LngDetector).init({
+  interpolation: {
+    escapeValue: false
+  },
+  lng: 'en',
+  resources: {
+    en: {
+      translation: en_US
+    },
+    pt: {
+      translation: en_US
+    },
+    es: {
+      translation: en_US
+    }
+  }
+});
+
+export default i18next;
