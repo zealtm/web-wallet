@@ -11,14 +11,14 @@
 
 /* 1.1 COLUMN RIGHT */
 :local(.colRight) {
-  composes: purpleDark from "../../../components/colorBase.css";
+  composes: bgPurpleDark from "../../../components/colorBase.css";
   height: 100vh;
   min-height: 600px;
 }
 
 /* 1.2 COLUMN LEFT */
 :local(.colLeft) {
-  composes: purpleLight from "../../../components/colorBase.css";
+  composes: bgPurpleLight from "../../../components/colorBase.css";
   min-height: 600px;
 }
 
