@@ -1,0 +1,3 @@
+:local(.textDefault) {
+  composes: textDefault from "../../components/textBase.css";
+}

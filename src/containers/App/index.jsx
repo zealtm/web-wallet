@@ -1,10 +1,16 @@
 import React, { Component } from "react";
+
+// COMPONENTS
 import Login from "./Login";
 import App from "./App";
 
+// STYLE
+import style from "./style.css";
+console.warn(style.textDefault)
+
 // Access Token verification
 const fakeInfo = true;
-let CheckAccess = () => {
+let Content = () => {
   if (fakeInfo === false) {
     return <App />;
   } else {
@@ -15,7 +21,9 @@ let CheckAccess = () => {
 class Routes extends Component {
   render() {
     return (
-      <CheckAccess />
+      <div className={style.textDefault}>
+        <Content />
+      </div>
     );
   }
 }
