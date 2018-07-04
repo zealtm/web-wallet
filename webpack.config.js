@@ -29,8 +29,8 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", "es2015"],
-          plugins: ["syntax-dynamic-import"]
+          presets: ["react", "env"],
+          plugins: ["syntax-dynamic-import", "transform-class-properties"]
         }
       },
       {

@@ -6,28 +6,17 @@ i18next
       // React already does escaping
       escapeValue: false,
     },
-    lng: 'en', // 'en' | 'es'
+    lng: 'pt',
     // Using simple hardcoded resources for simple example
     resources: {
       en: {
         translation: {
-          age: { label: 'Age', },
-          home: { label: 'Home', },
-          name: { label: 'Name', },
+          SUBMIT: "Submit"
         },
       },
       pt: {
         translation: {
-          age: { label: 'Age', },
-          home: { label: 'Home', },
-          name: { label: 'Name', },
-        },
-      },
-      es: {
-        translation: {
-          age: { label: 'Años', },
-          home: { label: 'Casa', },
-          name: { label: 'Nombre', },
+          SUBMIT: "Enviar"
         },
       },
     },
