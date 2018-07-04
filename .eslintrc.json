@@ -1,0 +1,20 @@
+{
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true
+    },
+    "parserOptions": {
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "indent": ["error", "tab"],
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "globals": {
+        "localStorage": true,
+        "fetch": true
+    }
+}
