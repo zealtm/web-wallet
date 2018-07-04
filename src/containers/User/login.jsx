@@ -7,7 +7,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <p>{i18n.t("SUBMIT")} Teste</p>
+        <p>{i18n.t("SUBMIT")}</p>
         <p className={style.formLogin}>
           Login
         </p>
