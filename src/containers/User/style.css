@@ -8,7 +8,6 @@
 
 /* 1. LOGIN */
 :local(.formLogin) {
-  composes: clWhite from "../../components/textBase.css";
   font-size: 24px;
 }
 

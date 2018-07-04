@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Login from "./Login";
 import App from "./App";
 
-
 // Access Token verification
 const fakeInfo = true;
 let CheckAccess = () => {
