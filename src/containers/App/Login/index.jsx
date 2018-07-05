@@ -11,7 +11,6 @@ import Hidden from "@material-ui/core/Hidden";
 // STYLE
 import style from "./style.css";
 
-
 function Loading({ error }) {
   if (error) {
     console.error(error);
@@ -62,10 +61,18 @@ class Login extends Component {
             {/* CONTAINER OF VIEWS */}
             <Grid container>
               <Grid item xs={12} sm={5} md={5} className={style.colRight}>
-                <Link className={style.link} to="/">Home</Link>
-                <Link className={style.link} to="/login">Login</Link>
-                <Link className={style.link} to="/reset">Reset</Link>
-                <Link className={style.link} to="/create">Create</Link>
+                <Link className={style.link} to="/">
+                  Home
+                </Link>
+                <Link className={style.link} to="/login">
+                  Login
+                </Link>
+                <Link className={style.link} to="/reset">
+                  Reset
+                </Link>
+                <Link className={style.link} to="/create">
+                  Create
+                </Link>
 
                 {/* INSIDE ROUTES */}
                 <Route exact path="/" component={login} />
