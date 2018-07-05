@@ -1,4 +1,6 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import i18n from "../../utils/i18n";
 
 // STYLE
@@ -17,4 +19,10 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = store => ({
+  
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
