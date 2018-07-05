@@ -7,6 +7,7 @@ import SwipeableViews from "react-swipeable-views";
 import { Grid } from "@material-ui/core";
 import i18n from "../../utils/i18n";
 import style from "./style.css";
+import textBase from "../textBase.css";
 
 const styles = {
     dot: {
@@ -75,7 +76,7 @@ class Carousel extends Component {
                         {imageSteps.map((item, index) => (
                             <div className={style.paragraph} key={index}>
                                 <img className={style.imageResponsive} src={item.imgPath} alt={item.label} />
-                                <p>
+                                <p className={textBase.defaultP}>
                                     <label>{item.label}</label>
                                 </p>
                             </div>
