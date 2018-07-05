@@ -1,30 +1,54 @@
 import React, { Component } from "react";
-import Immutable from "seamless-immutable";
+import PropTypes from "prop-types";
 
 // MATERIAL UI
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
+import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import ErrorIcon from "@material-ui/icons/Error";
-import InfoIcon from "@material-ui/icons/Info";
-import WarningIcon from "@material-ui/icons/Warning";
+
+// IMAGES
+const imagePath = "/images/modal/";
 
 const style = {
   info: {
-    backgroundColor: "#FFF"
+    backgroundColor: "#ffffff"
+  },
+  error: {
+    backgroundColor: "#ff445b"
+  },
+  success: {
+    backgroundColor: "#4cd566"
+  },
+  modalContent: {
+    alignItems: "center",
+    display: "flex"
+  },
+  typeIcon: {
+    color: "#000000",
+  },
+  message: {
+    color: "#000000",
+    fontSize: "17px",
+    opacity: "0.4",
+    margin: "0 50px 0 20px"
+  },
+  closeIcon: {
+    color: "#000000",
+    fontSize: "24px",
+    opacity: "0.54",
+    float: "right"
   }
 };
-
 
 class ModalBar extends Component {
   constructor(props) {
     super(props);
-    this.state = Immutable({
+    this.state = {
       show: true,
       type: undefined,
       message: undefined
-    });
+    };
   }
 
   componentDidMount() {
@@ -32,7 +56,7 @@ class ModalBar extends Component {
   }
 
   modalControl() {
-    this.setState(Immutable.merge(this.state, { show: false }));
+    this.setState(...this.state, { show: false });
   }
 
   validateContente = () => {
@@ -43,6 +67,8 @@ class ModalBar extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const { type, message } = this.state;
     return (
       <div>
         <Snackbar
@@ -53,11 +79,21 @@ class ModalBar extends Component {
           open={this.state.show}
         >
           <SnackbarContent
+            className={classes[type]}
             message={
-              <span id="client-snackbar">
-                {this.state.message}
-                <CloseIcon onClick={this.modalControl()}/>
-              </span>
+              <div className={classes.modalContent}>
+                <img
+                  className={classes.typeIcon}
+                  src={imagePath + "/" + type + ".png"}
+                />
+                <span className={classes.message}>{message}</span>
+                <CloseIcon
+                  className={classes.closeIcon}
+                  onClick={() => {
+                    this.modalControl();
+                  }}
+                />
+              </div>
             }
           />
         </Snackbar>
@@ -66,4 +102,10 @@ class ModalBar extends Component {
   }
 }
 
-export default ModalBar;
+ModalBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  type: PropTypes.oneOf(["success", "error", "info"]).isRequired,
+  message: PropTypes.string
+};
+
+export default withStyles(style)(ModalBar);

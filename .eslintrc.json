@@ -6,7 +6,7 @@
     },
     "parserOptions": {
         "indent": ["error", "tab"],
-        "ecmaVersion": 6,
+        "ecmaVersion": 8,
         "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true

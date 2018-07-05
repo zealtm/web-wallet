@@ -11,7 +11,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <ModalBar type="success"/>
+        <ModalBar type="success" message="Mensagem de teste Mensagem de teste Mensagem de teste Mensagem de teste Mensagem de teste Mensagem de teste "/>
         <p>{i18n.t("SUBMIT")} Teste</p>
         <p className={style.formLogin}>
           Login
