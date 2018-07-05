@@ -1,0 +1,22 @@
+@import url("./colorBase.css");
+/*
+
+1. INPUT TEXT
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1 INPUT TEXT*/
+:local(.inputTextDefault) {
+    composes: bgPurpleLight from "./colorBase.css";
+    border-radius: 6px;
+    border: none;
+    color: white;   
+    width: 95%;
+    height: 50px;
+    padding: 0 15px;
+    position: relative;
+}
+
+/* ------------------------------------------------------------------------- */

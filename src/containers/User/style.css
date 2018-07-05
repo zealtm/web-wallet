@@ -11,3 +11,10 @@
   font-size: 24px;
 }
 
+:local(.buttonPurpleLight) {
+  composes: buttonPurpleLight from '../../components/buttonBase.css';
+}
+
+:local(.inputTextDefault) {
+  composes: inputTextDefault from '../../components/inputBase.css';
+}

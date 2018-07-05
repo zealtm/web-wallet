@@ -10,6 +10,8 @@ class Login extends React.Component {
       <div>
         <p>{i18n.t("SUBMIT")}</p>
         <p className={style.formLogin}>
+        <button type="text" className={style.buttonPurpleLight}> TESTE </button>
+        <input type="text" className={style.inputTextDefault}/>
           Login
         </p>
       </div>
