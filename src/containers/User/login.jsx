@@ -12,6 +12,7 @@ class Login extends React.Component {
         <p className={style.formLogin}>
         <button type="text" className={style.buttonPurpleLight}> TESTE </button>
         <input type="text" className={style.inputTextDefault}/>
+        <input type="email" placeholder="teste@teste" className={style.inputTextDefault}/>
           Login
         </p>
       </div>

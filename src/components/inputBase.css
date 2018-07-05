@@ -2,7 +2,7 @@
 /*
 
 1. INPUT TEXT
-
+    1.1 INPUT TEXT PLACEHOLDER
 */
 
 /* ------------------------------------------------------------------------- */
@@ -10,13 +10,19 @@
 /* 1 INPUT TEXT*/
 :local(.inputTextDefault) {
     composes: bgPurpleLight from "./colorBase.css";
+    composes: textDefault from "./textBase.css";
     border-radius: 6px;
     border: none;
-    color: white;   
     width: 95%;
     height: 50px;
     padding: 0 15px;
     position: relative;
+}
+
+/* 1.1 INPUT TEXT PLACEHOLDER*/
+:local(.inputTextDefault::placeholder) {   
+    opacity: 0.5;
+    color: white;
 }
 
 /* ------------------------------------------------------------------------- */
