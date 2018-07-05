@@ -1,7 +1,8 @@
 import React from "react";
-import style from "./style.css";
 import i18n from "../../utils/i18n";
 
+// STYLE
+import style from "./style.css";
 class Login extends React.Component {
 
   render() {

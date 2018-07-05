@@ -3,6 +3,7 @@
 1. LOGIN
   1.1 COLUMN RIGHT
   1.2 COLUMN LEFT
+  
 */
 
 /* ------------------------------------------------------------------------- */
@@ -14,6 +15,10 @@
   composes: bgPurpleDark from "../../../components/colorBase.css";
   height: 100vh;
   min-height: 600px;
+}
+
+:local .link {
+  composes: linkDefault from "../../../components/textBase.css";
 }
 
 /* 1.2 COLUMN LEFT */
