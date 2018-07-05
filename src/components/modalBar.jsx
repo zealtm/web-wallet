@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Immutable from "seamless-immutable";
 
 // MATERIAL UI
 import Snackbar from "@material-ui/core/Snackbar";
@@ -11,23 +12,27 @@ import WarningIcon from "@material-ui/icons/Warning";
 
 const style = {
   info: {
-    backgroundColor: '#FFF'
+    backgroundColor: "#FFF"
   }
-}
+};
 
-let showModal = true;
 
 class ModalBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = Immutable({
+      show: true,
       type: undefined,
       message: undefined
-    };
+    });
   }
 
   componentDidMount() {
     this.validateContente();
+  }
+
+  modalControl() {
+    this.setState(Immutable.merge(this.state, { show: false }));
   }
 
   validateContente = () => {
@@ -41,18 +46,17 @@ class ModalBar extends Component {
     return (
       <div>
         <Snackbar
-          className={style.info}
-          open={showModal}
           anchorOrigin={{
             vertical: "top",
             horizontal: "center"
           }}
+          open={this.state.show}
         >
           <SnackbarContent
             message={
               <span id="client-snackbar">
                 {this.state.message}
-                <CloseIcon />
+                <CloseIcon onClick={this.modalControl()}/>
               </span>
             }
           />
