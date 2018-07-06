@@ -13,12 +13,8 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
-        <p>{i18n.t("SUBMIT")}</p>
-=======
         <ModalBar type="success" message="Mensagem de teste"/>
         <p>{i18n.t("SUBMIT")} Teste</p>
->>>>>>> V-23
         <p className={style.formLogin}>
         <button type="text" className={style.buttonPurpleLight}> TESTE </button>
         <input type="text" className={style.inputTextDefault}/>
