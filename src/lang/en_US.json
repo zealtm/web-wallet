@@ -9,12 +9,14 @@
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
 
   "PLACEHOLDER_EMAIL": "name@email.com",
-  "PLACEHOLDER_PASS": "PASSWORD",
-  "FORGET_PASS": "Esqueceu sua senha?",
-  "BT_LOGIN": "LOGIN",
-  "CREATE_ACCOUNT_LABEL": "Não tem uma conta?",
-  "CREATE_ACCOUNT": "Inscrever-se",
-  "LOGIN_FOOTER_HOME": "Principal",
+  "PLACEHOLDER_PASS": "Password",
+
+  "LOGIN_HEADER": "Enter your data",
+  "LOGIN_FORGET_PASSWORD_LINK": "Forgot your password?",
+  "BTN_LOGIN": "Login",
+  "LOGIN_CREATE_ACCOUNT_LABEL": "Don't have an account?",
+  "LOGIN_SINGUP_ACCOUNT_LINK": "Sign up",
+  "LOGIN_FOOTER_HOME": "Main",
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved"

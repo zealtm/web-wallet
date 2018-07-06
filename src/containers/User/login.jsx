@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
-// MATERIAL
+
+// MATERIAL UI
 import { withStyles } from "@material-ui/core/styles";
+
 // STYLE
 import style from "./style.css";
 
@@ -18,7 +20,7 @@ class Login extends React.Component {
         {/* <p>{i18n.t("SUBMIT")}</p> */}
 
         <img src="../../images/logo.svg" className={style.logo} />
-        <div className={style.description}>Entre com seus dados</div>
+        <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 
         <input
           type="text"
@@ -32,18 +34,18 @@ class Login extends React.Component {
         />
 
         <Link className={style.textForgetPass} to="/reset">
-          {i18n.t("FORGET_PASS")}
+          {i18n.t("LOGIN_FORGET_PASSWORD_LINK")}
         </Link>
 
         <button className={style.buttonBorderGreen}>
           {" "}
-          {i18n.t("BT_LOGIN")}{" "}
+          {i18n.t("BTN_LOGIN")}{" "}
         </button>
 
         <div className={style.doNotHaveAccount}>
-          {i18n.t("CREATE_ACCOUNT_LABEL")}{" "}
+          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
           <Link className={style.doNotLink} to="/create">
-            {i18n.t("CREATE_ACCOUNT")}
+            {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
         </div>
 
