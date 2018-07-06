@@ -1,20 +1,116 @@
 /*
 
 1. LOGIN
-
+/* 1.1. BUTTON BORDER GREEN 
+/* 1.2. INPUT DEFAULT 
+/* 1.3. LINK DEFAULT 
+/* 1.4. TEXT DESCRIPTION 
+/* 1.5. TEXT RESET PASS 
+/* 1.6. TEXT DO NOT HAVE ACCOUNT 
+/* 1.7. LINK DO NOT HAVE ACCOUNT 
+/* 1.8. LOGO 
+/* 2. BASE FOOTER 
+/* 2.1. FOOTER LINK 
+/* 2.2. FOOTER SPACE BET LINK
 */
 
 /* ------------------------------------------------------------------------- */
 
 /* 1. LOGIN */
 :local(.formLogin) {
-  font-size: 24px;
+  /* font-size: 24px; */
+  margin: 25px;
+  padding: 15px;
+  max-width: 335px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-:local(.buttonPurpleLight) {
-  composes: buttonPurpleLight from '../../components/buttonBase.css';
+/* :local(.buttonPurpleLight) {
+  composes: buttonPurpleLight from "../../components/buttonBase.css";
+} */
+
+/* 1.1. BUTTON BORDER GREEN */
+:local(.buttonBorderGreen) {
+  composes: buttonBorderGreen from "../../components/buttonBase.css";
 }
 
+/* 1.2. INPUT DEFAULT */
 :local(.inputTextDefault) {
-  composes: inputTextDefault from '../../components/inputBase.css';
+  composes: inputTextDefault from "../../components/inputBase.css";
+  margin-bottom: 30px;
+}
+
+/* 1.3. LINK DEFAULT */
+:local(.link) {
+  composes: linkDefault from "../../components/textBase.css";
+}
+
+/* 1.4. TEXT DESCRIPTION */
+:local(.description) {
+  composes: textDefault from "../../components/textBase.css";
+  display: block;
+  text-align: center;
+  margin-top: 45px;
+  margin-bottom: 25px;
+}
+
+/* 1.5. TEXT RESET PASS */
+:local(.textForgetPass) {
+  composes: textDefault from "../../components/textBase.css";
+  display: block;
+  text-align: right;
+  margin-bottom: 25px;
+  text-decoration: none;
+}
+
+/* 1.6. TEXT DO NOT HAVE ACCOUNT */
+:local(.doNotHaveAccount) {
+  composes: textDefault from "../../components/textBase.css";
+  font-size: 16px;
+  display: block;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+/* 1.7. LINK DO NOT HAVE ACCOUNT */
+:local(.doNotLink) {
+  composes: linkDefault from "../../components/textBase.css";
+  font-size: 16px;
+}
+
+/* 1.8. LOGO */
+:local(.logo) {
+  display: block;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 2. BASE FOOTER */
+:local(.footer) {
+  composes: clGreenDefault from "../../components/colorBase.css";
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  max-width: 335px;
+  margin-left: auto;
+  margin-right: auto;
+  top: 100%;
+  margin-top: -60px;
+  position: absolute;
+}
+
+/* 2.1. FOOTER LINK */
+:local(.footerLink) {
+  composes: linkDefault from "../../components/textBase.css";
+  font-size: 12px;
+}
+
+/* 2.2. FOOTER SPACE BET LINK */
+:local(.footerSpace) {
+  margin-left: 15px;
+  margin-right: 15px;
 }

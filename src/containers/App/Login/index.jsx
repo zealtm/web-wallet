@@ -61,7 +61,7 @@ class Login extends Component {
             {/* CONTAINER OF VIEWS */}
             <Grid container>
               <Grid item xs={12} sm={5} md={5} className={style.colRight}>
-                <Link className={style.link} to="/">
+                {/* <Link className={style.link} to="/">
                   Home
                 </Link>
                 <Link className={style.link} to="/login">
@@ -72,7 +72,7 @@ class Login extends Component {
                 </Link>
                 <Link className={style.link} to="/create">
                   Create
-                </Link>
+                </Link> */}
 
                 {/* INSIDE ROUTES */}
                 <Route exact path="/" component={login} />

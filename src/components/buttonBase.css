@@ -22,21 +22,28 @@
 /* 1.1 BUTTON GREEN */
 :local(.buttonGreenLight) {
   composes: buttonGeneral;
-  composes: bgGreenDefault from './colorBase.css';
+  composes: bgGreenDefault from "./colorBase.css";
 }
 
 /* 1.2 BUTTON PURPLE */
 :local(.buttonPurpleClear) {
   composes: buttonGeneral;
-  composes: bgPurpleClear from './colorBase.css';
+  composes: bgPurpleClear from "./colorBase.css";
 }
 :local(.buttonPurpleLight) {
   composes: buttonGeneral;
-  composes: bgPurpleDefault from './colorBase.css';
+  composes: bgPurpleDefault from "./colorBase.css";
 }
 :local(.buttonPurpleDark) {
   composes: buttonGeneral;
-  composes: bgPurpleDark from './colorBase.css';
+  composes: bgPurpleDark from "./colorBase.css";
+}
+
+/* 1.1 BUTTON BORDER GREEN */
+:local(.buttonBorderGreen) {
+  composes: buttonGeneral;
+  background-color: transparent;
+  border: solid 1px #4cd566;
 }
 
 /* ------------------------------------------------------------------------- */
