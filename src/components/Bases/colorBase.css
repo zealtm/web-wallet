@@ -6,6 +6,7 @@
 2 GREEN
   2.1 BACKGROUND
   2.2 COLOR
+  2.3 BORDER
 3 COINS
   3.1 BACKGROUND
   3.2 COLOR
@@ -20,6 +21,9 @@
 /* 1.1 BACKGROUND */
 :local(.bgPurpleDefault) {
   background-color: #4b2c82;
+}
+:local(.bgPurpleClear) {
+  background-color: #654fa4;
 }
 :local(.bgPurpleLight) {
   background-color: #4b2c82;
@@ -62,6 +66,17 @@
 }
 :local(.clGreenDark) {
   color: #000;
+}
+
+/* 2.3 BORDER */
+:local(.bdGreenDefault) {
+  border-color: #4cd566;
+}
+:local(.bdGreenLight) {
+  border-color: #4cd566;
+}
+:local(.bdGreenDark) {
+  border-color: #000;
 }
 
 /* ------------------------------------------------------------------------- */

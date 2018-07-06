@@ -16,7 +16,9 @@ class Login extends React.Component {
         <ModalBar type="success" message="Mensagem de teste" timer/>
         <p>{i18n.t("SUBMIT")} Teste</p>
         <p className={style.formLogin}>
-        <button type="text" className={style.buttonPurpleLight}> TESTE </button>
+        <button type="text" className={style.buttonPurpleClear}> TESTE </button>
+        <button type="text" className={style.buttonEnable}> TESTE </button>
+        <button type="text" className={style.buttonDisable}> TESTE </button>
         <input type="text" className={style.inputTextDefault}/>
         <input type="email" placeholder="teste@teste" className={style.inputTextDefault}/>
           Login

@@ -11,8 +11,16 @@
   font-size: 24px;
 }
 
-:local(.buttonPurpleLight) {
-  composes: buttonPurpleLight from '../../components/Bases/buttonBase.css';
+:local(.buttonEnable) {
+  composes: buttonGreenLight from '../../components/Bases/buttonBase.css';
+}
+
+:local(.buttonDisable) {
+  composes: buttonPurpleDark from '../../components/Bases/buttonBase.css';
+}
+
+:local(.buttonPurpleClear) {
+  composes: buttonPurpleClear from '../../components/Bases/buttonBase.css';
 }
 
 :local(.inputTextDefault) {
