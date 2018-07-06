@@ -7,6 +7,9 @@ import SnackbarContent from "@material-ui/core/SnackbarContent";
 import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 
+// STYLE
+import colorBase from "./colorBase.css";
+
 // IMAGES
 const imagePath = "/images/modal/";
 
@@ -25,7 +28,7 @@ const style = {
     display: "flex"
   },
   typeIcon: {
-    color: "#000000",
+    color: "#000000"
   },
   message: {
     color: "#000000",
@@ -69,6 +72,7 @@ class ModalBar extends Component {
   render() {
     const { classes } = this.props;
     const { type, message } = this.state;
+    console.warn(classes);
     return (
       <div>
         <Snackbar
@@ -79,7 +83,7 @@ class ModalBar extends Component {
           open={this.state.show}
         >
           <SnackbarContent
-            className={classes[type]}
+            className={classes.bgError}
             message={
               <div className={classes.modalContent}>
                 <img
@@ -108,4 +112,4 @@ ModalBar.propTypes = {
   message: PropTypes.string
 };
 
-export default withStyles(style)(ModalBar);
+export default withStyles(Object.assign(style, colorBase))(ModalBar);
