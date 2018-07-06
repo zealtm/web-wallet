@@ -1,12 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
-
+// MATERIAL
+import { withStyles } from "@material-ui/core/styles";
 // STYLE
 import style from "./style.css";
 
+// local classes
+const styles = {};
+
 class Login extends React.Component {
   render() {
+    const { classes } = this.props;
     return (
       <div className={style.formLogin}>
         {/* <p>{i18n.t("SUBMIT")}</p> */}
@@ -16,41 +22,44 @@ class Login extends React.Component {
 
         <input
           type="text"
-          placeholder="nome@email.com"
+          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           className={style.inputTextDefault}
         />
         <input
           type="password"
-          placeholder="Senha"
+          placeholder={i18n.t("PLACEHOLDER_PASS")}
           className={style.inputTextDefault}
         />
 
         <Link className={style.textForgetPass} to="/reset">
-          Esqueceu sua senha?
+          {i18n.t("FORGET_PASS")}
         </Link>
 
-        <button className={style.buttonBorderGreen}> ENTRAR </button>
+        <button className={style.buttonBorderGreen}>
+          {" "}
+          {i18n.t("BT_LOGIN")}{" "}
+        </button>
 
         <div className={style.doNotHaveAccount}>
-          Não tem uma conta?{" "}
+          {i18n.t("CREATE_ACCOUNT_LABEL")}{" "}
           <Link className={style.doNotLink} to="/create">
-            Inscrever-se
+            {i18n.t("CREATE_ACCOUNT")}
           </Link>
         </div>
 
         <div className={style.footer}>
           <a href="#" className={style.footerLink}>
-            Principal
+            {i18n.t("LOGIN_FOOTER_HOME")}
           </a>
           <span className={style.footerSpace}>|</span>
           <a href="#" className={style.footerLink}>
-            Support
+            {i18n.t("LOGIN_FOOTER_SUPPORT")}
           </a>
           <span className={style.footerSpace}>|</span>
           <a href="#" className={style.footerLink}>
-            Português
+            {i18n.t("LOGIN_FOOTER_LANG")}
           </a>
-          <p>2018 lunes.io All Rights Reserved</p>
+          <p>{i18n.t("LOGIN_FOOTER")}</p>
         </div>
 
         {/* <p className={style.formLogin}>
@@ -63,4 +72,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.protoTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(Login);
