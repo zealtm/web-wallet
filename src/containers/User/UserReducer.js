@@ -4,7 +4,7 @@ const initialState = {
 
 const user = (state = initialState, action) => {
     switch (action.type) {
-        case "USER_AUTHENTICATE":
+        case "GET_USER_AUTHENTICATE":
             return {
                 ...state,
                 user: action.data

@@ -1,5 +1,5 @@
 export const Authenticate = (value) => ({
-    type: "ASYNC_USER_AUTHENTICATE",
+    type: "GET_USER_AUTHENTICATE_API",
     email: value.email,
     password: value.password
 });
