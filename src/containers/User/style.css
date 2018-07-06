@@ -8,13 +8,18 @@
 
 /* 1. LOGIN */
 :local(.formLogin) {
+  margin-top: 10%;
+  margin-left: 10px;
   font-size: 24px;
+
 }
 
 :local(.buttonPurpleLight) {
   composes: buttonPurpleLight from '../../components/buttonBase.css';
+  width: 38vw
 }
 
 :local(.inputTextDefault) {
   composes: inputTextDefault from '../../components/inputBase.css';
+  width: 35vw
 }

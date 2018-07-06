@@ -1,15 +1,20 @@
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeLatest, put, call, all } from "redux-saga/effects";
+import UserService from "../../services/UserService";
+const userService = new UserService();
 
-export function* userAuthenticate() {
-    yield takeLatest("GET_USER_AUTHENTICATE_API", authenticate)
-}
-
-export function* authenticate(data) {
-    const request = yield call("external_service", data);
-
+ 
+function* authenticateUser(data) {
+    const request = yield call( userService.userAuthenticate, data.email, data.password);
+    
     yield put({
-        type: "GET_USER_AUTHENTICATE",
+        type: "POST_USER_AUTHENTICATE",
         data: request
     });
+}
+
+export default function* watchAll() {
+    yield all([
+        takeLatest("POST_USER_AUTHENTICATE_API", authenticateUser)
+    ]); 
 }
 
