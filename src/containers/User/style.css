@@ -12,9 +12,9 @@
 }
 
 :local(.buttonPurpleLight) {
-  composes: buttonPurpleLight from '../../components/buttonBase.css';
+  composes: buttonPurpleLight from '../../components/Bases/buttonBase.css';
 }
 
 :local(.inputTextDefault) {
-  composes: inputTextDefault from '../../components/inputBase.css';
+  composes: inputTextDefault from '../../components/Bases/inputBase.css';
 }

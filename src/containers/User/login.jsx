@@ -13,7 +13,7 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <ModalBar type="success" message="Mensagem de teste"/>
+        <ModalBar type="success" message="Mensagem de teste" timer/>
         <p>{i18n.t("SUBMIT")} Teste</p>
         <p className={style.formLogin}>
         <button type="text" className={style.buttonPurpleLight}> TESTE </button>
