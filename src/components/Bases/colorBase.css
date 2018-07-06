@@ -9,7 +9,9 @@
 3 COINS
   3.1 BACKGROUND
   3.2 COLOR
-
+4 MESSAGES
+  4.1 BACKGROUND
+  4.2 COLOR
 */
 
 /* ------------------------------------------------------------------------- */
@@ -82,3 +84,26 @@
 }
 
 /* ------------------------------------------------------------------------- */
+
+/* 4 MESSAGES */
+/* 4.1 BACKGROUND */
+:local(.bgSuccess) {
+  background-color: #4cd566;
+}
+:local(.bgError) {
+  background-color: #ff445b;
+}
+:local(.bgInfo) {
+  background-color: #ffffff;
+}
+
+/* 4.2 COLOR */
+:local(.clSuccess) {
+  color: #4cd566;
+}
+:local(.clError) {
+  color: #ff445b;
+}
+:local(.clInfo) {
+  color: #ffffff;
+}
