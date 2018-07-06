@@ -12,18 +12,18 @@
 
 /* 1.1 COLUMN RIGHT */
 :local(.colRight) {
-  composes: bgPurpleDark from "../../../components/colorBase.css";
+  composes: bgPurpleDark from "../../../components/Bases/colorBase.css";
   height: 100vh;
   min-height: 600px;
 }
 
 :local .link {
-  composes: linkDefault from "../../../components/textBase.css";
+  composes: linkDefault from "../../../components/Bases/textBase.css";
 }
 
 /* 1.2 COLUMN LEFT */
 :local(.colLeft) {
-  composes: bgPurpleLight from "../../../components/colorBase.css";
+  composes: bgPurpleLight from "../../../components/Bases/colorBase.css";
   min-height: 600px;
 }
 

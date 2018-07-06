@@ -8,20 +8,16 @@ import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 
 // STYLE
-import colorBase from "./colorBase.css";
+import colorBase from "./Bases/colorBase.css";
 
 // IMAGES
 const imagePath = "/images/modal/";
 
 const style = {
-  info: {
-    backgroundColor: "#ffffff"
-  },
-  error: {
-    backgroundColor: "#ff445b"
-  },
-  success: {
-    backgroundColor: "#4cd566"
+  modal: {
+    borderRadius: "4px",
+    flexWrap: "wrap",
+    pointerEvents: "initial"
   },
   modalContent: {
     alignItems: "center",
@@ -44,6 +40,13 @@ const style = {
   }
 };
 
+/*
+Component Props
+type: string -    default: info
+message: string - default: "NO TEXT MESSAGE"
+timer: boolean -   default: disabled / enabled: 6000ms
+*/
+
 class ModalBar extends Component {
   constructor(props) {
     super(props);
@@ -55,24 +58,30 @@ class ModalBar extends Component {
   }
 
   componentDidMount() {
-    this.validateContente();
+    this.validateContent();
   }
 
-  modalControl() {
-    this.setState(...this.state, { show: false });
-  }
-
-  validateContente = () => {
-    let { type, message } = this.props;
+  // VALIDATE CONTENT
+  validateContent = () => {
+    let { type, message, timer } = this.props;
     if (!type) type = "info";
     if (!message) message = "NO TEXT MESSAGE";
+    if (timer)
+      setTimeout(() => {
+        this.modalClose();
+      }, 6000);
     this.setState({ type, message });
   };
+
+  // MANUAL CLOSE
+  modalClose() {
+    this.setState(...this.state, { show: false });
+  }
 
   render() {
     const { classes } = this.props;
     const { type, message } = this.state;
-    console.warn(classes);
+    const { bgInfo, bgSuccess, bgError } = colorBase;
     return (
       <div>
         <Snackbar
@@ -82,24 +91,35 @@ class ModalBar extends Component {
           }}
           open={this.state.show}
         >
-          <SnackbarContent
-            className={classes.bgError}
-            message={
-              <div className={classes.modalContent}>
-                <img
-                  className={classes.typeIcon}
-                  src={imagePath + "/" + type + ".png"}
-                />
-                <span className={classes.message}>{message}</span>
-                <CloseIcon
-                  className={classes.closeIcon}
-                  onClick={() => {
-                    this.modalControl();
-                  }}
-                />
-              </div>
-            }
-          />
+          <div
+            className={[
+              classes.modal,
+              type === "info"
+                ? bgInfo
+                : type === "success"
+                  ? bgSuccess
+                  : bgError
+            ].join(" ")}
+          >
+            <SnackbarContent
+              style={{ borderRadius: "4px", backgroundColor: "transparent" }}
+              message={
+                <div className={classes.modalContent}>
+                  <img
+                    className={classes.typeIcon}
+                    src={imagePath + "/" + type + ".png"}
+                  />
+                  <span className={classes.message}>{message}</span>
+                  <CloseIcon
+                    className={classes.closeIcon}
+                    onClick={() => {
+                      this.modalClose();
+                    }}
+                  />
+                </div>
+              }
+            />
+          </div>
         </Snackbar>
       </div>
     );
@@ -109,7 +129,8 @@ class ModalBar extends Component {
 ModalBar.propTypes = {
   classes: PropTypes.object.isRequired,
   type: PropTypes.oneOf(["success", "error", "info"]).isRequired,
-  message: PropTypes.string
+  message: PropTypes.string,
+  timer: PropTypes.bool
 };
 
-export default withStyles(Object.assign(style, colorBase))(ModalBar);
+export default withStyles(style)(ModalBar);
