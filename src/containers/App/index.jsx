@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { Provider } from "react-redux";
+import Store from "./store";
 // COMPONENTS
 import Login from "./Login";
 import App from "./App";
@@ -21,7 +22,9 @@ class Routes extends Component {
   render() {
     return (
       <div className={style.textDefault}>
-        <Content />
+        <Provider store={Store}>
+          <Content />
+        </Provider>
       </div>
     );
   }
