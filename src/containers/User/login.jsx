@@ -2,13 +2,13 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { authenticate } from "./UserAction";
-import PropTypes from "prop-types";
-
 // STYLE
 import style from "./style.css";
 class Login extends React.Component {
+
   constructor() {
-    super();
+    super()
+
     this.state = {
       email: "",
       password: ""
@@ -16,7 +16,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const props = this.props;
+    const state = this.state;
 
     return (
       <div>
@@ -36,23 +37,20 @@ class Login extends React.Component {
           <button
             className={style.buttonPurpleLight}
             onClick={() => {
-              classes.authenticate(
-                this.state.email,
-                this.state.password
+              props.authenticate(
+                state.email,
+                state.password
               )
-            }}> LOGAR </button>
+            }
+            }> LOGAR </button>
         </p>
       </div >
     );
   }
 }
 
-Login.prototype = {
-  classes: PropTypes.object.isRequired
-};
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   authenticate
 }, dispatch);
 
-export default connect(mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

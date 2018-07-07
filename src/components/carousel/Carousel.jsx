@@ -62,7 +62,7 @@ class Carousel extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes } = this.props; 
         return (
             <Grid container>
                 <Grid item xs={12} sm={12}>
@@ -99,7 +99,7 @@ class Carousel extends Component {
     }
 }
 
-Carousel.protoTypes = {
+Carousel.propTypes = {
     classes: PropTypes.object.isRequired
 };
 

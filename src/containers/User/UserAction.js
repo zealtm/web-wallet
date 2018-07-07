@@ -1,5 +1,5 @@
-export const authenticate = (value) => ({
+export const authenticate = (email, password) => ({
     type: "POST_USER_AUTHENTICATE_API",
-    email: value.email,
-    password: value.password
+    email,
+    password
 });

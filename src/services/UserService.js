@@ -1,17 +1,16 @@
 import axios from "axios";
 
-const endpoint = "localhost:4000";
-
 class UserService {
 
-    async userAuthenticate (login, password) {
-       
+    async userAuthenticate(email, password) {
+
         try {
-            let request = await axios.post(`${endpoint}/login`, {
-                login,
+            console.warn("service", email, password);
+            let request = await axios.post(`http://localhost:4000/login`, {
+                login: email,
                 password
             });
-
+            console.warn(request);
             return request;
         } catch (error) {
             console.warn(error);
