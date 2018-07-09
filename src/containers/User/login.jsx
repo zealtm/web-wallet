@@ -5,10 +5,7 @@ import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
 
 // COMPONENTS
-import FooterUser from "../../components/footer/footerUser";
-
-// COMPONENTS
-import ModalBar from "../../components/modalBar";
+import Footer from "./footer";
 
 // STYLE
 import style from "./style.css";
@@ -46,7 +43,7 @@ class Login extends React.Component {
           </Link>
         </div>
 
-        <FooterUser />
+        <Footer />
       </div>
     );
   }
