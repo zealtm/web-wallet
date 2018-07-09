@@ -1,24 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
-
-// MATERIAL UI
-import { withStyles } from "@material-ui/core/styles";
 
 // STYLE
 import style from "./style.css";
 
-// local classes
-const styles = {};
-
 class Login extends React.Component {
   render() {
-    const { classes } = this.props;
     return (
       <div className={style.formLogin}>
-        {/* <p>{i18n.t("SUBMIT")}</p> */}
-
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 
@@ -29,7 +19,7 @@ class Login extends React.Component {
         />
         <input
           type="password"
-          placeholder={i18n.t("PLACEHOLDER_PASS")}
+          placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           className={style.inputTextDefault}
         />
 
@@ -38,12 +28,10 @@ class Login extends React.Component {
         </Link>
 
         <button className={style.buttonBorderGreen}>
-          {" "}
-          {i18n.t("BTN_LOGIN")}{" "}
+          {i18n.t("BTN_LOGIN")}
         </button>
 
         <div className={style.doNotHaveAccount}>
-          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
           <Link className={style.doNotLink} to="/create">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
@@ -63,19 +51,9 @@ class Login extends React.Component {
           </a>
           <p>{i18n.t("LOGIN_FOOTER")}</p>
         </div>
-
-        {/* <p className={style.formLogin}>
-          <button className={style.buttonPurpleLight}> TESTE </button>
-          <input type="text" className={style.inputTextDefault} />
-          Login
-        </p> */}
       </div>
     );
   }
 }
 
-Login.protoTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(Login);
+export default Login;
