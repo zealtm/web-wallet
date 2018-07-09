@@ -1,7 +1,22 @@
 {
-    "SUBMIT": "Submit",
-    "LOGIN": "Login",
-    "CAROUSEL_DESCRIPTION1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-    "CAROUSEL_DESCRIPTION2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-    "CAROUSEL_DESCRIPTION3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ..."
+  "PLACEHOLDER_EMAIL": "name@email.com",
+  "PLACEHOLDER_PASSWORD": "Password",
+
+  "BTN_SUBMIT": "Submit",
+  "BTN_LOGIN": "Login",
+
+  "LOGIN_SLIDE_DESCRIPTION_1":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_2":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_3":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_HEADER": "Enter your data",
+  "LOGIN_FORGET_PASSWORD_LINK": "Forgot your password?",
+  "LOGIN_CREATE_ACCOUNT_LABEL": "Don't have an account?",
+  "LOGIN_SINGUP_ACCOUNT_LINK": "Sign up",
+  "LOGIN_FOOTER_HOME": "Main",
+  "LOGIN_FOOTER_SUPPORT": "Support",
+  "LOGIN_FOOTER_LANG": "English",
+  "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved"
 }

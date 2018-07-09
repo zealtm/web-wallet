@@ -1,0 +1,29 @@
+/*
+
+1. FOOTER 
+
+*/
+
+/* 1. FOOTER */
+
+:local(.footer) {
+  composes: clGreenDefault from "../Bases/colorBase.css";
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  max-width: 335px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
+}
+
+:local(.footerLink) {
+  composes: linkDefault from "../Bases/textBase.css";
+  font-size: 12px;
+}
+
+:local(.footerSpace) {
+  margin-left: 15px;
+  margin-right: 15px;
+}

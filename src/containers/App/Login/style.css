@@ -14,7 +14,19 @@
 :local(.colRight) {
   composes: bgPurpleDark from "../../../components/Bases/colorBase.css";
   height: 100vh;
-  min-height: 600px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 667px) {
+  :local(.colRight) {
+    display: block;
+    overflow: auto;
+  }
 }
 
 :local .link {
@@ -24,7 +36,8 @@
 /* 1.2 COLUMN LEFT */
 :local(.colLeft) {
   composes: bgPurpleLight from "../../../components/Bases/colorBase.css";
-  min-height: 600px;
+  height: 100vh;
+  overflow: auto;
 }
 
 /* ------------------------------------------------------------------------- */
