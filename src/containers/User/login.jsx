@@ -2,6 +2,9 @@ import React from "react";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
 
+// COMPONENTS
+import FooterUser from "../../components/footer/footerUser";
+
 // STYLE
 import style from "./style.css";
 
@@ -32,25 +35,13 @@ class Login extends React.Component {
         </button>
 
         <div className={style.doNotHaveAccount}>
+          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
           <Link className={style.doNotLink} to="/create">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
         </div>
 
-        <div className={style.footer}>
-          <a href="#" className={style.footerLink}>
-            {i18n.t("LOGIN_FOOTER_HOME")}
-          </a>
-          <span className={style.footerSpace}>|</span>
-          <a href="#" className={style.footerLink}>
-            {i18n.t("LOGIN_FOOTER_SUPPORT")}
-          </a>
-          <span className={style.footerSpace}>|</span>
-          <a href="#" className={style.footerLink}>
-            {i18n.t("LOGIN_FOOTER_LANG")}
-          </a>
-          <p>{i18n.t("LOGIN_FOOTER")}</p>
-        </div>
+        <FooterUser />
       </div>
     );
   }
