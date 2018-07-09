@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
