@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
 import Carousel from "../../../components/carousel/Carousel";
+
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
+
 // STYLE
 import style from "./style.css";
 
@@ -56,44 +59,39 @@ class Login extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Switch>
-            {/* CONTAINER OF VIEWS */}
-            <Grid container>
-              <Grid item xs={12} sm={5} md={5} className={style.colRight}>
-                <Link className={style.link} to="/">
-                  Home
-                </Link>
-                <Link className={style.link} to="/login">
-                  Login
-                </Link>
-                <Link className={style.link} to="/reset">
-                  Reset
-                </Link>
-                <Link className={style.link} to="/create">
-                  Create
-                </Link>
+        <Switch>
+          <Grid container>
+            <Grid item xs={12} sm={5} md={5} className={style.colRight}>
+              <Link className={style.link} to="/">
+                Home
+              </Link>
+              <Link className={style.link} to="/login">
+                Login
+              </Link>
+              <Link className={style.link} to="/reset">
+                Reset
+              </Link>
+              <Link className={style.link} to="/create">
+                Create
+              </Link>
 
-                {/* INSIDE ROUTES */}
-                <Route exact path="/" component={login} />
-                <Route exact path="/login" component={login} />
-                <Route exact path="/reset" component={reset} />
-                <Route exact path="/create" component={create} />
-              </Grid>
-
-              <Hidden xsDown>
-                <Grid item sm={7} md={7} className={style.colLeft}>
-                  <Carousel />
-                </Grid>
-              </Hidden>
+              <Route exact path="/" component={login} />
+              <Route exact path="/login" component={login} />
+              <Route exact path="/reset" component={reset} />
+              <Route exact path="/create" component={create} />
             </Grid>
 
-            {/* ERRORS PAGE */}
-            <Route path="/404" component={errorNotFound} />
-            <Route path="/500" component={errorInternal} />
-            <Route path={"**"} component={errorNotFound} />
-          </Switch>
-        </div>
+            <Hidden xsDown>
+              <Grid item sm={7} md={7} className={style.colLeft}>
+                <Carousel />
+              </Grid>
+            </Hidden>
+          </Grid>
+
+          <Route path="/404" component={errorNotFound} />
+          <Route path="/500" component={errorInternal} />
+          <Route path={"**"} component={errorNotFound} />
+        </Switch>
       </Router>
     );
   }
