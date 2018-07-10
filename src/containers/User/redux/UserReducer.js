@@ -2,8 +2,7 @@ const initialState = {
     user: {}
 }
 
-const user = (state = initialState, action) => {
-    console.warn("reducer 1 ", action.type, action.data)
+const user = (state = initialState, action) => { 
     switch (action.type) {
         case "POST_USER_AUTHENTICATE":
             return {

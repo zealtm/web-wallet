@@ -5,22 +5,17 @@ const userService = new UserService();
 
 export function* authenticateUser(action) {
     try {
-        const request = yield call(
-            userService.userAuthenticate,
-            action.email,
-            action.password);
+        const request = yield call(userService.userAuthenticate,
+            action.email, action.password);
 
-        yield put({
-            type: "POST_USER_AUTHENTICATE",
-            data: request
-        });
+        yield put({ type: "POST_USER_AUTHENTICATE", data: request });
     } catch (error) {
-        console.error("failed: ", error)
+        console.error("failed: ", error);
     }
 }
 
 export default function* rootSaga() {
-    yield[
+    yield [
         fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser)
     ];
 }

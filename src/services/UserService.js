@@ -1,19 +1,19 @@
 import axios from "axios";
-
+import { BASE_URL } from "../constants/ApiBaseUrl";
 class UserService {
 
     async userAuthenticate(email, password) {
 
         try {
-            console.warn("service", email, password);
-            let request = await axios.post("http://localhost:4000/login", {
+            let request = await axios.post(`${BASE_URL}/login`, {
                 login: email,
                 password
             });
 
+            console.warn(request);
             return request;
         } catch (error) {
-            console.warn(error);
+            console.error(error);
         }
     }
 }
