@@ -12,19 +12,32 @@
 
 /* 1.1 COLUMN RIGHT */
 :local(.colRight) {
-  composes: bgPurpleDark from "../../../components/colorBase.css";
+  composes: bgPurpleDark from "../../../components/Bases/colorBase.css";
   height: 100vh;
-  min-height: 600px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 667px) {
+  :local(.colRight) {
+    display: block;
+    overflow: auto;
+  }
 }
 
 :local .link {
-  composes: linkDefault from "../../../components/textBase.css";
+  composes: linkDefault from "../../../components/Bases/textBase.css";
 }
 
 /* 1.2 COLUMN LEFT */
 :local(.colLeft) {
-  composes: bgPurpleLight from "../../../components/colorBase.css";
-  min-height: 600px;
+  composes: bgPurpleLight from "../../../components/Bases/colorBase.css";
+  height: 100vh;
+  overflow: auto;
 }
 
 /* ------------------------------------------------------------------------- */

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import Store from "./store";
+
 // COMPONENTS
 import Login from "./Login";
 import App from "./App";
