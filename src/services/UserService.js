@@ -6,11 +6,11 @@ class UserService {
 
         try {
             console.warn("service", email, password);
-            let request = await axios.post(`http://localhost:4000/login`, {
+            let request = await axios.post("http://localhost:4000/login", {
                 login: email,
                 password
             });
-            console.warn(request);
+
             return request;
         } catch (error) {
             console.warn(error);

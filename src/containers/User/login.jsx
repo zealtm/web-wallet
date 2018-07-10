@@ -1,7 +1,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { authenticate } from "./UserAction";
+import { authenticate } from "./redux/UserAction";
 // STYLE
 import style from "./style.css";
 class Login extends React.Component {

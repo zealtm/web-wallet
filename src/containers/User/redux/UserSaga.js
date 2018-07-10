@@ -1,5 +1,6 @@
-import { put, call } from "redux-saga/effects";
-import UserService from "../services/UserService";
+import { takeLatest } from "redux-saga";
+import { put, call, fork } from "redux-saga/effects";
+import UserService from "../../../services/UserService";
 const userService = new UserService();
 
 export function* authenticateUser(action) {
@@ -9,7 +10,6 @@ export function* authenticateUser(action) {
             action.email,
             action.password);
 
-        console.warn("saga", request);
         yield put({
             type: "POST_USER_AUTHENTICATE",
             data: request
@@ -17,6 +17,11 @@ export function* authenticateUser(action) {
     } catch (error) {
         console.error("failed: ", error)
     }
+}
 
+export default function* rootSaga() {
+    yield[
+        fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser)
+    ];
 }
 
