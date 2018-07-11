@@ -1,6 +1,6 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import UserService from "../../../services/UserService";
+import UserService from "../../../services/userService";
 const userService = new UserService();
 
 export function* authenticateUser(action) {

@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import Store from "./store";
 
 // COMPONENTS
-import Login from "./Login";
-import App from "./App";
+import Login from "./login";
+import App from "./app";
 
 // STYLE
 import style from "./style.css";

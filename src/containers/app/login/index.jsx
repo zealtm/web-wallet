@@ -5,7 +5,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
-import Carousel from "../../../components/carousel/Carousel";
+import Carousel from "../../../components/carousel/carousel";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -24,33 +24,33 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/404")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/404")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/500")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/500")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/500")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
 
