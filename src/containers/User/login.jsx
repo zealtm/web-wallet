@@ -13,7 +13,7 @@ import style from "./style.css";
 class Login extends React.Component {
   render() {
     return (
-      <div className={style.formLogin}>
+      <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 

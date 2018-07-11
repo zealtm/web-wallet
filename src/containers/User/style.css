@@ -1,21 +1,30 @@
 /*
 
-1. LOGIN
-  1.1 BUTTON
-  1.2 INPUT
-  1.3 LINKS
-  1.4 TEXTS
+1. GENERAL COMPONENTS
+  1.1 CONTAINER GENERAL
+  1.2 BUTTON
+  1.3 INPUT
+  1.4 LINKS
   1.5 LOGO 
 
 2. FOOTER 
-  2.1. LINKS
+  2.1 CONTAINER GENERAL
+  2.2 LINKS
 
+3. LOGIN
+  3.1 TEXTS
+
+4. RESET
+  4.1 TEXTS
+  4.2 ICONE
 */
 
 /* ------------------------------------------------------------------------- */
 
-/* 1. LOGIN */
-:local(.formLogin) {
+/* 1. GENERAL COMPONENTS */
+
+/* 1.1 CONTAINER GENERAL */
+:local(.contGeneral) {
   margin: 25px;
   padding: 15px;
   width: 100%;
@@ -24,7 +33,7 @@
   margin-right: auto;
 }
 
-/* 1.1 BUTTON */
+/* 1.2 BUTTON */
 :local(.buttonEnable) {
   composes: buttonGreenLight from "../../components/Bases/buttonBase.css";
 }
@@ -41,13 +50,13 @@
   composes: buttonBorderGreen from "../../components/Bases/buttonBase.css";
 }
 
-/* 1.2 INPUT */
+/* 1.3 INPUT */
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/Bases/inputBase.css";
   margin-bottom: 30px;
 }
 
-/* 1.3 LINKS */
+/* 1.4 LINKS */
 :local(.link) {
   composes: linkDefault from "../../components/Bases/textBase.css";
 }
@@ -57,7 +66,47 @@
   font-size: 16px;
 }
 
-/* 1.4 TEXT DESCRIPTION */
+/* 1.5 LOGO */
+:local(.logo) {
+  display: block;
+  width: 160px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 2. FOOTER */
+/* 2.1 GENERAL */
+:local(.footer) {
+  composes: clGreenDefault from "../../components/Bases/colorBase.css";
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  width: 100%;
+  max-width: 335px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+  font-weight: 500;
+}
+
+/* 2.1 LINKS */
+:local(.footerLink) {
+  composes: linkDefault from "../../components/Bases/textBase.css";
+  font-size: 12px;
+}
+
+:local(.footerSpace) {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 3 LOGIN */
+
+/* 3.1 TEXT DESCRIPTION */
 :local(.description) {
   composes: textDefault from "../../components/Bases/textBase.css";
   display: block;
@@ -83,38 +132,39 @@
   margin-bottom: 25px;
 }
 
-/* 1.5 LOGO */
-:local(.logo) {
-  display: block;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* 4. RESET */
 
-/* ------------------------------------------------------------------------- */
-
-/* 2. FOOTER */
-/* 2.1 GENERAL */
-:local(.footer) {
-  composes: clGreenDefault from "../../components/Bases/colorBase.css";
-  font-size: 12px;
+/* 4.1 TEXTS */
+:local(.p) {
+  composes: textDefault from "../../components/Bases/textBase.css";
   display: block;
   text-align: center;
-  width: 100%;
-  max-width: 335px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+:local(.p2) {
+  composes: textDefault from "../../components/Bases/textBase.css";
+  display: block;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* 4.2 ICONE */
+:local(.iconEmail) {
+  display: block;
+  width: 55px;
+  height: 58px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;
+  margin-top: 45px;
 }
-
-/* 2.1 LINKS */
-:local(.footerLink) {
-  composes: linkDefault from "../../components/Bases/textBase.css";
-  font-size: 12px;
+:local(.resetHeader) {
+  composes: textDefault from "../../components/Bases/textBase.css";
+  margin-top: 45px;
+  margin-bottom: 25px;
+  font-size: 22px;
+  text-align: center;
+  font-weight: 800;
 }
-
-:local(.footerSpace) {
-  margin-left: 15px;
-  margin-right: 15px;
-}
-

@@ -1,5 +1,5 @@
 {
-  "PLACEHOLDER_EMAIL": "name@email.com",
+  "PLACEHOLDER_EMAIL": "User / name@email.com",
   "PLACEHOLDER_PASSWORD": "Password",
 
   "BTN_SUBMIT": "Submit",
@@ -18,5 +18,10 @@
   "LOGIN_FOOTER_HOME": "Main",
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
-  "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved"
+  "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
+  
+  "RESET_HEADER": "Forgot your password?",
+  "RESET_INSTRUCTIONS": "We will send your instructions",
+  "RESET_INSTRUCTIONS2": "About resetting it",
+  "BTN_RESET": "Reset"
 }
