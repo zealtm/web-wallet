@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
-import fakeDelay from "../../../components/fakeDelay";
 import path from "path";
 import {
   Link,
@@ -8,6 +7,13 @@ import {
   Switch,
   BrowserRouter as Router
 } from "react-router-dom";
+
+// COMPONENTS
+import fakeDelay from "../../../components/fakeDelay";
+
+// STYLE
+import style from "./style.css";
+
 
 function Loading({ error }) {
   if (error) {
@@ -19,27 +25,27 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let home = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Home")),
+  loader: () => fakeDelay(400).then(() => import("../../home")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Home")
+  serverSideRequirePath: path.resolve(__dirname, "../../home")
 });
 
 let wallet = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Wallet")),
+  loader: () => fakeDelay(400).then(() => import("../../wallet")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Wallet")
+  serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/404")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/404")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/500")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/500")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/500")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
 
@@ -48,8 +54,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Link to="/">Home</Link>
-          <Link to="/wallet">Wallet</Link>
+          <Link className={style.link} to="/">Home</Link>
+          <Link className={style.link} to="/wallet">Wallet</Link>
 
           <Switch>
             {/* INSIDE ROUTES */}

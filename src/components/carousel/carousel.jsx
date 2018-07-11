@@ -33,15 +33,15 @@ var imageDirectory = "/images/carousel/";
 
 const imageSteps = [
     {
-        label: i18n.t("CAROUSEL_DESCRIPTION1"),
+        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
         imgPath:imageDirectory +"carousel-01.png"
     },
     {
-        label: i18n.t("CAROUSEL_DESCRIPTION2"),
+        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
         imgPath: imageDirectory + "/carousel-02.png"
     },
     {
-        label: i18n.t("CAROUSEL_DESCRIPTION3"),
+        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
         imgPath: imageDirectory + "/carousel-03.png"
     }
 ];
@@ -63,7 +63,7 @@ class Carousel extends Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes } = this.props; 
         return (
             <Grid container>
                 <Grid item xs={12} sm={12}>
@@ -100,7 +100,7 @@ class Carousel extends Component {
     }
 }
 
-Carousel.protoTypes = {
+Carousel.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
