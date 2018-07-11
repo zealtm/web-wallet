@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -54,6 +55,26 @@ let errorInternal = Loadable({
 });
 /* eslint-enable */
 
+
+const imagePath = "/images/carousel/";
+
+const carouselSteps = [
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
+    imgPath: imagePath + "carousel-01.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
+    imgPath: imagePath + "/carousel-02.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
+    imgPath: imagePath + "/carousel-03.png"
+  }
+];
+
+const maxDots = carouselSteps.length;
+
 class Login extends Component {
   render() {
     return (
@@ -71,7 +92,7 @@ class Login extends Component {
 
             <Hidden xsDown>
               <Grid item sm={7} md={7} className={style.colLeft}>
-                <Carousel />
+                <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>
           </Grid>
