@@ -1,14 +1,14 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import i18n from "../../utils/i18n";
+import i18n from "../../../utils/i18n";
 import { Link } from "react-router-dom";
 
 // COMPONENTS
-import Footer from "./footer";
+import Footer from "../footer";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 class Login extends React.Component {
   render() {
