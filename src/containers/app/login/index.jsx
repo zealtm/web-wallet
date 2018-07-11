@@ -7,6 +7,7 @@ import i18n from "../../../utils/i18n";
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
 import Carousel from "../../../components/carousel/carousel";
+import ModalBar from "../../../components/modalBar";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -82,6 +83,7 @@ class Login extends Component {
         <Switch>
           {/* CONTAINER OF VIEWS */}
           <Grid container>
+            <ModalBar type={"error"} />
             <Grid item xs={12} sm={5} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
