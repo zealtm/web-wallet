@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "../constants/ApiBaseUrl";
+import { BASE_URL } from "../constants/apiBaseUrl";
 class UserService {
 
     async userAuthenticate(email, password) {
