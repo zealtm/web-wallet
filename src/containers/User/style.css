@@ -17,6 +17,7 @@
 4. RESET
   4.1 TEXTS
   4.2 ICONE
+  4.3 INPUT ERROR
 */
 
 /* ------------------------------------------------------------------------- */
@@ -158,7 +159,7 @@
   height: 58px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 45px;
+  margin-top: 40px;
 }
 :local(.resetHeader) {
   composes: textDefault from "../../components/Bases/textBase.css";
@@ -169,7 +170,7 @@
   font-weight: 800;
 }
 
-/* INPUT ERROR */
+/* 4.3 INPUT ERROR */
 :local(.inputError){
   composes: inputTextDefault;
   color: red;
