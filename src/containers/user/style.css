@@ -15,13 +15,14 @@
 /* ------------------------------------------------------------------------- */
 
 /* 1. LOGIN */
-:local(.formLogin) {
+:local(.formPIN) {
   margin: 25px;
   padding: 15px;
   width: 100%;
   max-width: 335px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: -100px;
 }
 
 /* 1.1 BUTTON */
@@ -118,3 +119,25 @@
   margin-right: 15px;
 }
 
+:local(.inputPINDefault){
+  composes: inputTextDefault from "../../components/bases/textBase.css";
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  width: 16%; /*48px*/
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 0;
+  height: 30px;
+  color: white;
+  font-size: 28px;
+  text-align: center;
+  display: inline;
+}
+:local(.descriptionLink) {
+  margin: 25px 0 25px 0;
+  text-align: right;
+}
+:local(.descriptionPIN) {
+  composes: description;
+  margin-top: 150px;  
+}

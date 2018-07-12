@@ -18,5 +18,10 @@
   "LOGIN_FOOTER_HOME": "Main",
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
-  "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved"
+  "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
+
+  "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
+  "PIN_HEADER": "Enter your PIN"
+
+
 }
