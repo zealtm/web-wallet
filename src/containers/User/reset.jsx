@@ -8,49 +8,72 @@ import ModalBar from "../../components/modalBar";
 // STYLE
 import style from "./style.css";
 
-class Reset extends React.Component {
-  
-  constructor(props){
-    super(props);
-    this.state={inputfield: " '  ' "};   
-    this.handleClick = this.handleClick.bind(this);
-    this.updateInputValue = this.updateInputValue.bind(this);
-   }
- 
-   handleClick(){
-    // alert("trying to add picture url");
-    alert(this.state.inputfield+" Email/Usuário inválido"); 
-   }
- 
-   updateInputValue(evt){
-     //console.log("input field updated with "+evt.target.value);
-     this.state={inputfield: evt.target.value};    
-   }
-  render() 
 
-  {
+class Reset extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      userInput: undefined,
+      modalError: false
+    }
+  }
+
+  onInputChange = (inputValue) => {
+
+      this.setState({
+        userInput: inputValue
+      })
+     return this.setState({
+      modalError: false
+    })
+    }
+
+  inputValidator = () => {
+    let { userInput } = this.state
+    if (!userInput) {
+      return this.setState({
+        modalError: true
+      })
+    }   
+  }
+
+  showModalError = () => {
+    let { modalError } = this.state
+    if (modalError) {
+      return (
+        <ModalBar
+          type={"error"}
+          message={"Digite um email/usuário válido"}
+          timer
+        />
+      )}
+    return;
+  }
+
+  render() {
+    let { modalError } = this.state
     return (
       <div className={style.contGeneral}>
+        {this.showModalError()}
+
         <img src="../../images/logo.svg" className={style.logo} />
         <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
 
         <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>
 
         <input
-          type="text"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          className={style.inputTextDefault}
-          onChange={this.updateInputValue}
+          className={modalError ? style.inputError : style.inputTextDefault}
+          onChange={(insert) => this.onInputChange(insert.target.value)}
         />
 
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
         <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
-        <button className={style.buttonBorderGreen} onClick={this.handleClick}>
-          {i18n.t("BTN_RESET")}                   
+        <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
+          {i18n.t("BTN_RESET")}
         </button>
 
-        <ModalBar type={"error"} message={"Digite um email/usuário válido"} timer={1}/>
         <Footer />
       </div>
     );
