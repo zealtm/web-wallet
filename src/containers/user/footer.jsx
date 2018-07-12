@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // STYLE
 import style from "./style.css";
 
-class FooterUser extends React.Component {
+class Footer extends React.Component {
   render() {
     return (
       <div className={style.footer}>
@@ -25,4 +25,4 @@ class FooterUser extends React.Component {
     );
   }
 }
-export default FooterUser;
+export default Footer;

@@ -1,7 +1,7 @@
 import React from "react";
 
 // COMPONENTS
-import CheckBox from "../../components/checkBox";
+import CheckBox from "../../../components/checkBox";
 
 class Create extends React.Component {
   constructor(props) {

@@ -25,21 +25,21 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/Login/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/Login/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/Reset/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/Reset/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/Create/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/Create/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
 });
 
 let errorNotFound = Loadable({

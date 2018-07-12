@@ -1,6 +1,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { authenticate } from "../redux/userAction";
 import i18n from "../../../utils/i18n";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,19 @@ import Footer from "../footer";
 import style from "../style.css";
 
 class Login extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      email: "",
+      password: ""
+    }
+  }
+
   render() {
+    const props = this.props;
+    const state = this.state;
+
     return (
       <div className={style.formLogin}>
         <img src="../../images/logo.svg" className={style.logo} />
@@ -20,11 +33,13 @@ class Login extends React.Component {
         <input
           type="text"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          onChange={(event) => this.setState({ email: event.target.value })}
           className={style.inputTextDefault}
         />
         <input
           type="password"
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
+          onChange={(event) => this.setState({ password: event.target.value })}
           className={style.inputTextDefault}
         />
 
@@ -32,7 +47,9 @@ class Login extends React.Component {
           {i18n.t("LOGIN_FORGET_PASSWORD_LINK")}
         </Link>
 
-        <button className={style.buttonBorderGreen}>
+        <button
+          className={style.buttonBorderGreen}
+          onClick={() => props.authenticate(state.email, state.password)}>
           {i18n.t("BTN_LOGIN")}
         </button>
 
@@ -49,11 +66,10 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  authenticate
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(Login);
