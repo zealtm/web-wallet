@@ -1,7 +1,7 @@
 import React from "react";
 
 // COMPONENTS
-import CustomCheckBox from "../../components/CustomCheckBox";
+import CheckBox from "../../components/checkBox";
 
 class Create extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Create extends React.Component {
       <div>
         <div>CREATE</div>
 
-        <CustomCheckBox
+        <CheckBox
           checked={this.state.checkbox1}
           onChange={this.handleChange("checkbox1")}
           value="checkbox1"

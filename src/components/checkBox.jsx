@@ -1,12 +1,13 @@
 // MATERIAL
 import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
+import colors from "./Bases/colors"
 
 const checkBoxStyles = {
   root: {
-    color: "#f2f2f2",
+    color: colors.messages.info,
     "&$checked": {
-      color: "#4CD566"
+      color: colors.green.light
     }
   },
   checked: {}
