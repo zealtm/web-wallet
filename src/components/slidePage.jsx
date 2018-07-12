@@ -1,46 +1,39 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Transaction } from "react-transition-group";
+import { Transition } from "react-transition-group";
 
 // STYLE
-import Style from "./style.css";
+import style from "./style.css";
 
 class SlidePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentContent: 0
-    };
-  }
-
-  nextContent() {
-    const { content } = this.props;
-    if (content[this.state.currentContent + 1]) {
-      return this.setState({ currentContent: this.state.currentContent + 1 });
-    }
-
-    return;
   }
 
   render() {
-    const { content } = this.props;
-    const { currentContent } = this.state;
+    const { content, step } = this.props;
 
     return (
       <div>
-        <div className={Style.transaction}>
-          <Transaction transitionName="example">
-            {content[currentContent]}
-          </Transaction>
+        <div>
+          <Transition
+            entering={style.starEnter}
+            entered={style.starEnterActive}
+            exiting={style.starExit}
+            exited={style.starExitActive}
+            timeout={1000}
+          >
+            {content[step]}
+          </Transition>
         </div>
-        <button onClick={() => this.nextContent()}> TROCAR </button>
       </div>
     );
   }
 }
 
 SlidePage.propTypes = {
-  content: PropTypes.array.isRequired
+  content: PropTypes.array.isRequired,
+  step: PropTypes.number.isRequired
 };
 
 export default SlidePage;
