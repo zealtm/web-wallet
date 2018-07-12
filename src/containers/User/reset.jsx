@@ -64,7 +64,7 @@ class Reset extends React.Component {
         <input
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           className={modalError ? style.inputError : style.inputTextDefault}
-          onChange={(insert) => this.onInputChange(insert.target.value)}
+          onChange={(value) => this.onInputChange(value.target.value)}
         />
 
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
