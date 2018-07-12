@@ -66,8 +66,6 @@ class Login extends React.Component {
   }
 }
 
-
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   authenticate
 }, dispatch);

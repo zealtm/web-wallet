@@ -9,8 +9,6 @@ class UserService {
                 login: email,
                 password
             });
-
-            console.warn(request);
             return request;
         } catch (error) {
             console.error(error);
