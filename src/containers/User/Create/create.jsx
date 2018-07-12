@@ -1,5 +1,4 @@
 import React from "react";
-import SlidePage from "../../../components/slidePage";
 
 let content_1 = <div>Conteúdo 1</div>;
 let content_2 = <div>Conteúdo 2</div>;
@@ -17,9 +16,19 @@ class Create extends React.Component {
 
   nextContent() {
     let { step } = this.state;
-    if (contents[step + 1]) {
+    if(contents[step + 1]) {
       return this.setState({ step: step + 1 });
     }
+
+    return;
+  }
+
+  prevContent() {
+    let { step } = this.state;
+    if(contents[step - 1]) {
+      return this.setState({ step: step - 1 });
+    }
+    
     return;
   }
 
@@ -27,8 +36,9 @@ class Create extends React.Component {
     let { step } = this.state;
     return (
       <div>
-        <SlidePage content={contents} step={step} />
-        <button onClick={() => this.nextContent()}> TROCAR </button>
+        {contents[step]}
+        <button onClick={() => this.nextContent()}> PROXIMO </button>
+        <button onClick={() => this.prevContent()}> ANTERIOR </button>
       </div>
     );
   }
