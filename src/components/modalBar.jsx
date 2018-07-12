@@ -8,7 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 
 // STYLE
-import colorBase from "./Bases/colorBase.css";
+import colorBase from "./bases/colorBase.css";
 
 // IMAGES
 const imagePath = "/images/modal/";
