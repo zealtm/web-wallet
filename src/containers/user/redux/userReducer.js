@@ -1,6 +1,9 @@
 const initialState = {
     user: {},
-    errorMessage: ""
+    error: {
+        hasError: false,
+        errorMessage: ""
+    }
 }
 
 const user = (state = initialState, action) => {
@@ -9,14 +12,17 @@ const user = (state = initialState, action) => {
         case "POST_USER_AUTHENTICATE":
             return {
                 ...state,
-                user: action.data
+                user: action.payload.user
             };
 
-        case "REQUEST_FAILED": 
-            console.warn("LEO2 ", action.data)
-            return { 
+        case "REQUEST_FAILED":
+            console.warn("LEO2 ", action.payload)
+            return {
                 ...state,
-                errorMessage: action.data
+                error: {
+                    hasError: true,
+                    errorMessage: ""
+                }
             };
 
         default: {

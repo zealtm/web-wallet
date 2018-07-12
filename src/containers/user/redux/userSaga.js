@@ -8,9 +8,19 @@ export function* authenticateUser(action) {
         const request = yield call(userService.userAuthenticate, action.email, action.password);
 
         if (request.status !== 200) {
-            return yield put({ type: "POST_USER_AUTHENTICATE", data: request });
+            return yield put({
+                type: "POST_USER_AUTHENTICATE",
+                payload: { 
+                    user: request 
+                }
+            });
         }
-        return yield put({ type: "REQUEST_FAILED", data: "falha ao tentar authenticação" });
+        return yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message: "falha ao tentar authenticação"
+            }
+        });
     }
 
     catch (error) {
