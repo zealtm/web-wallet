@@ -25,27 +25,27 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let home = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Home")),
+  loader: () => fakeDelay(400).then(() => import("../../home")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Home")
+  serverSideRequirePath: path.resolve(__dirname, "../../home")
 });
 
 let wallet = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Wallet")),
+  loader: () => fakeDelay(400).then(() => import("../../wallet")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Wallet")
+  serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/404")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/404")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/500")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/500")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/500")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
 

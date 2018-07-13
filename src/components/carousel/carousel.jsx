@@ -5,8 +5,8 @@ import { autoPlay } from "react-swipeable-views-utils";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import SwipeableViews from "react-swipeable-views";
 import { Grid } from "@material-ui/core";
-import i18n from "../../utils/i18n";
 import style from "./style.css";
+import textBase from "../textBase.css";
 
 const styles = {
     dot: {
@@ -28,25 +28,6 @@ const styles = {
     }
 };
 
-var imageDirectory = "/images/carousel/";
-
-const imageSteps = [
-    {
-        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
-        imgPath:imageDirectory +"carousel-01.png"
-    },
-    {
-        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
-        imgPath: imageDirectory + "/carousel-02.png"
-    },
-    {
-        label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
-        imgPath: imageDirectory + "/carousel-03.png"
-    }
-];
-
-const maxSteps = imageSteps.length;
-
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 class Carousel extends Component {
@@ -63,6 +44,7 @@ class Carousel extends Component {
 
     render() {
         const { classes } = this.props;
+        const props = this.props;
         return (
             <Grid container>
                 <Grid item xs={12} sm={12}>
@@ -72,10 +54,10 @@ class Carousel extends Component {
                         onChangeIndex={this.stepChange}
                         enableMouseEvents>
 
-                        {imageSteps.map((item, index) => (
+                        {props.imageSteps.map((item, index) => (
                             <div className={style.paragraph} key={index}>
                                 <img className={style.imageResponsive} src={item.imgPath} alt={item.label} />
-                                <p>
+                                <p className={textBase.defaultP}>
                                     <label>{item.label}</label>
                                 </p>
                             </div>
@@ -83,7 +65,7 @@ class Carousel extends Component {
 
                     </AutoPlaySwipeableViews>
                     <MobileStepper
-                        steps={maxSteps}
+                        steps={props.maxDot}
                         position="static"
                         activeStep={this.state.activeStep}
                         classes={{
@@ -99,7 +81,7 @@ class Carousel extends Component {
     }
 }
 
-Carousel.protoTypes = {
+Carousel.propTypes = {
     classes: PropTypes.object.isRequired
 };
 

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
-import Carousel from "../../../components/carousel/Carousel";
+import Carousel from "../../../components/carousel/carousel";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -25,35 +26,55 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../User/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../User/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/404")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/404")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../Errors/500")),
+  loader: () => fakeDelay(400).then(() => import("../../errors/500")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../Errors/500")
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
+
+
+const imagePath = "/images/carousel/";
+
+const carouselSteps = [
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
+    imgPath: imagePath + "carousel-01.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
+    imgPath: imagePath + "/carousel-02.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
+    imgPath: imagePath + "/carousel-03.png"
+  }
+];
+
+const maxDots = carouselSteps.length;
 
 class Login extends Component {
   render() {
@@ -72,7 +93,7 @@ class Login extends Component {
 
             <Hidden xsDown>
               <Grid item sm={7} md={7} className={style.colLeft}>
-                <Carousel />
+                <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>
           </Grid>

@@ -32,38 +32,39 @@
   max-width: 335px;
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
 
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
-  composes: buttonGreenLight from "../../components/Bases/buttonBase.css";
+  composes: buttonGreenLight from "../../components/bases/buttonBase.css";
 }
 
 :local(.buttonDisable) {
-  composes: buttonPurpleDark from "../../components/Bases/buttonBase.css";
+  composes: buttonPurpleDark from "../../components/bases/buttonBase.css";
 }
 
 :local(.buttonPurpleClear) {
-  composes: buttonPurpleClear from "../../components/Bases/buttonBase.css";
+  composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
 }
 
 :local(.buttonBorderGreen) {
-  composes: buttonBorderGreen from "../../components/Bases/buttonBase.css";
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }
 
 /* 1.3 INPUT */
 :local(.inputTextDefault) {
-  composes: inputTextDefault from "../../components/Bases/inputBase.css";
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
   margin-bottom: 30px;
 }
 
 /* 1.4 LINKS */
 :local(.link) {
-  composes: linkDefault from "../../components/Bases/textBase.css";
+  composes: linkDefault from "../../components/bases/textBase.css";
 }
 
 :local(.doNotLink) {
-  composes: linkDefault from "../../components/Bases/textBase.css";
+  composes: linkDefault from "../../components/bases/textBase.css";
   font-size: 16px;
 }
 
@@ -109,7 +110,7 @@
 
 /* 3.1 TEXT DESCRIPTION */
 :local(.description) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
   display: block;
   text-align: center;
   margin-top: 45px;
@@ -117,7 +118,7 @@
 }
 
 :local(.textForgetPass) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
   display: block;
   text-align: right;
   margin-bottom: 25px;
@@ -125,7 +126,7 @@
 }
 
 :local(.doNotHaveAccount) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
   font-size: 16px;
   display: block;
   text-align: center;
@@ -146,6 +147,14 @@
 
 :local(.p2) {
   composes: textDefault from "../../components/Bases/textBase.css";
+}
+/* ------------------------------------------------------------------------- */
+
+/* 2. FOOTER */
+/* 2.1 GENERAL */
+:local(.footer) {
+  composes: clGreenDefault from "../../components/bases/colorBase.css";
+  font-size: 12px;
   display: block;
   text-align: center;
   margin-bottom: 25px;
@@ -168,6 +177,12 @@
   font-size: 22px;
   text-align: center;
   font-weight: 800;
+}
+
+/* 2.1 LINKS */
+:local(.footerLink) {
+  composes: linkDefault from "../../components/bases/textBase.css";
+  font-size: 12px;
 }
 
 /* 4.3 INPUT ERROR */
