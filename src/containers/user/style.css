@@ -19,6 +19,7 @@
   4.2 ICONE
   4.3 INPUT ERROR
   4.4 MESSAGES
+  4.5 LINKS
 */
 
 /* ------------------------------------------------------------------------- */
@@ -163,7 +164,7 @@
   display: block;
   text-align: center;
   margin-bottom: 25px;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 /* 4.2 ICONE */
@@ -204,6 +205,14 @@
   font-size: 22px;
   text-align: center;
   font-weight: bold;
+}
+
+/* 4.5 LINKS */
+
+:local(.resetLinkPassNew){
+  composes: defaultP from "../../components/bases/textBase.css";
+  color: white;
+  text-decoration: none;
 }
 
 /* ------------------------------------------------------------------------- */

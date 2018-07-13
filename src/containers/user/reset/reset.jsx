@@ -1,5 +1,6 @@
 import React from "react";
 import i18n from "../../../utils/i18n";
+import { Link } from "react-router-dom";
 
 // COMPONENTS
 import Footer from "../footer";
@@ -83,7 +84,9 @@ class Reset extends React.Component {
       <div>
         <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SEND")}</div>
         <button className={style.buttonBorderGreen}>
+        <Link className={style.resetLinkPassNew} to="/passNew">
           {i18n.t("BTN_LOGIN")}
+        </Link>
         </button>
     </div>
     )
