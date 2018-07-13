@@ -1,9 +1,5 @@
 const initialState = {
-    user: {},
-    error: {
-        hasError: false,
-        errorMessage: ""
-    }
+    user: {}
 }
 
 const user = (state = initialState, action) => {

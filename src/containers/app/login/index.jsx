@@ -84,14 +84,14 @@ class Login extends Component {
 
   render() {
     const { error } = this.props;
+
     return (
       <Router>
         <Switch>
           {/* CONTAINER OF VIEWS */}
-          {console.warn("REACT ", error)}
           <Grid container>
             <div>
-              {error.active ? <ModalBar type={error.type} message={error.message} /> : null}
+              {error.active ? <ModalBar type={error.type} message={error.message} timer /> : null}
             </div>
             <Grid item xs={12} sm={5} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
@@ -117,9 +117,10 @@ class Login extends Component {
   }
 }
 
+
 const mapSateToProps = store => ({
   error: store.error.message,
-  user: store.user,
+  user: store.user
 });
 
-export default connect(mapSateToProps, null)(Login);
+export default connect(mapSateToProps)(Login);

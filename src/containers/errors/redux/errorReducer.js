@@ -13,20 +13,30 @@ const error = (state = initialState, action) => {
         case "REQUEST_SUCCESS":
             return {
                 ...state,
-                error: {
+                message: {
                     type: "success",
                     active: true,
-                    message: ""
+                    message: action.payload.message
                 }
             }
 
         case "REQUEST_FAILED":
             return {
                 ...state,
-                error: {
+                message: {
                     type: "error",
                     active: true,
                     message: action.payload.message
+                }
+            }
+
+        case "REQUEST_CLEAR":
+            return {
+                ...state,
+                message: {
+                    type: "",
+                    active: false,
+                    message: ""
                 }
             }
 

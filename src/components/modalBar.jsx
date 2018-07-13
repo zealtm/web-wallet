@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
 import PropTypes from "prop-types";
+import { clearMessage } from "../containers/errors/redux/errorAction";
 
 // MATERIAL UI
 import Snackbar from "@material-ui/core/Snackbar";
@@ -9,6 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // STYLE
 import colorBase from "./bases/colorBase.css";
+import { compose } from "redux";
 
 // IMAGES
 const imagePath = "/images/modal/";
@@ -75,7 +80,10 @@ class ModalBar extends Component {
 
   // MANUAL CLOSE
   modalClose() {
+    const prop = this.props;
+
     this.setState(...this.state, { show: false });
+    prop.clearMessage();
   }
 
   render() {
@@ -133,4 +141,9 @@ ModalBar.propTypes = {
   timer: PropTypes.bool
 };
 
-export default withStyles(style)(ModalBar);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  clearMessage
+}, dispatch);
+
+
+export default compose(withStyles(style), connect(null, mapDispatchToProps))(ModalBar);
