@@ -1,12 +1,12 @@
 import React from "react";
-import i18n from "../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
-import Footer from "./footer";
-import ModalBar from "../../components/modalBar";
+import Footer from "../footer";
+import ModalBar from "../../../components/modalBar";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 
 class Reset extends React.Component {

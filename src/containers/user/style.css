@@ -81,7 +81,7 @@
 /* 2. FOOTER */
 /* 2.1 GENERAL */
 :local(.footer) {
-  composes: clGreenDefault from "../../components/Bases/colorBase.css";
+  composes: clGreenDefault from "../../components/bases/colorBase.css";
   font-size: 12px;
   display: block;
   text-align: center;
@@ -95,7 +95,7 @@
 
 /* 2.1 LINKS */
 :local(.footerLink) {
-  composes: linkDefault from "../../components/Bases/textBase.css";
+  composes: linkDefault from "../../components/bases/textBase.css";
   font-size: 12px;
 }
 
@@ -138,7 +138,7 @@
 
 /* 4.1 TEXTS */
 :local(.p) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
   display: block;
   text-align: center;
   margin-top: 20px;
@@ -146,7 +146,7 @@
 }
 
 :local(.p2) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
 }
 /* ------------------------------------------------------------------------- */
 
@@ -171,7 +171,7 @@
   margin-top: 40px;
 }
 :local(.resetHeader) {
-  composes: textDefault from "../../components/Bases/textBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
   margin-top: 45px;
   margin-bottom: 25px;
   font-size: 22px;
