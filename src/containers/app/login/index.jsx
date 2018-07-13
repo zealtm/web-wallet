@@ -8,7 +8,7 @@ import i18n from "../../../utils/i18n";
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
 import Carousel from "../../../components/carousel/carousel";
-import modalBar from "../../../components/modalBar";
+import ModalBar from "../../../components/modalBar";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -80,26 +80,18 @@ const maxDots = carouselSteps.length;
 class Login extends Component {
   constructor() {
     super();
-    this.state = {
-      hasError: false
-    }
-  }
-
-  handleModalError = () => {
-    let  props = this.props;
-    
-    return props.message.errorMessage ? <modalBar type={"error"} /> : null;
   }
 
   render() {
+    const { error } = this.props;
     return (
       <Router>
         <Switch>
           {/* CONTAINER OF VIEWS */}
-          {console.warn(this.props)}
+          {console.warn("REACT ", error)}
           <Grid container>
             <div>
-              {this.handleModalError}
+              {error.active ? <ModalBar type={error.type} message={error.message} /> : null}
             </div>
             <Grid item xs={12} sm={5} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
@@ -126,7 +118,8 @@ class Login extends Component {
 }
 
 const mapSateToProps = store => ({
-  error: store.user.error,
+  error: store.error.message,
+  user: store.user,
 });
 
 export default connect(mapSateToProps, null)(Login);

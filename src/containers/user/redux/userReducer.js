@@ -15,16 +15,6 @@ const user = (state = initialState, action) => {
                 user: action.payload.user
             };
 
-        case "REQUEST_FAILED":
-            console.warn("LEO2 ", action.payload)
-            return {
-                ...state,
-                error: {
-                    hasError: true,
-                    errorMessage: ""
-                }
-            };
-
         default: {
             return {
                 ...state
