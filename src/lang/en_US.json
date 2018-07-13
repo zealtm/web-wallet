@@ -19,9 +19,11 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
-  
+
+  "BTN_RESET": "Reset",  
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
-  "BTN_RESET": "Reset"
+  "RESET_EMAIL_SEND": "A message with a password reset link has been sent to your email."
+
 }

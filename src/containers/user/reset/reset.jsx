@@ -3,7 +3,6 @@ import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import Footer from "../footer";
-import ModalBar from "../../../components/modalBar";
 
 // STYLE
 import style from "../style.css";
@@ -13,68 +12,95 @@ class Reset extends React.Component {
   constructor() {
     super()
     this.state = {
+      step: 0,
       userInput: undefined,
-      modalError: false
+      inputError: false
     }
   }
 
   onInputChange = (inputValue) => {
-
-      this.setState({
-        userInput: inputValue
-      })
-     return this.setState({
-      modalError: false
+    this.setState({
+      userInput: inputValue
     })
-    }
-
-  inputValidator = () => {
-    let { userInput } = this.state
-    if (!userInput) {
-      return this.setState({
-        modalError: true
-      })
-    }   
+    return this.setState({
+      inputError: false
+    })
   }
 
-  showModalError = () => {
-    let { modalError } = this.state
-    if (modalError) {
-      return (
-        <ModalBar
-          type={"error"}
-          message={"Digite um email/usuário válido"}
-          timer
-        />
-      )}
+  inputValidator = () => {
+    let { step, userInput } = this.state
+    if (!userInput) {
+      return this.setState({
+        inputError: true
+      })
+    }else{
+      this.setState({ step: step + 1 });
+    }
+  }
+
+  nextContent = () => {
+    let { step } = this.state;
+    let contents = [this.cont_1, this.cont_2];
+    if (contents[step + 1]) {
+      return this.setState({ step: step + 1 });
+    }
     return;
   }
 
-  render() {
-    let { modalError } = this.state
+  prevContent = () => {
+    let { step } = this.state;
+    let contents = [this.cont_1, this.cont_2];
+    if (contents[step - 1]) {
+      return this.setState({ step: step - 1 });
+    }
+    return;
+  }
+
+  cont_1 = () => {
+    let { inputError } = this.state;
     return (
-      <div className={style.contGeneral}>
-        {this.showModalError()}
-
-        <img src="../../images/logo.svg" className={style.logo} />
-        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
-
-        <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>
-
-        <input
-          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          className={modalError ? style.inputError : style.inputTextDefault}
-          onChange={(value) => this.onInputChange(value.target.value)}
-        />
+      <div>
+        <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>        
 
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
         <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
+        <input
+          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          className={ inputError ? style.inputError : style.inputTextDefault }
+          onChange={(value) => this.onInputChange(value.target.value)}
+        />
+
         <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
           {i18n.t("BTN_RESET")}
         </button>
+    </div>
+    )
+  }
 
-        <Footer />
+  cont_2 = () => {
+    return (
+      <div>
+        <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SEND")}</div>
+        <button className={style.buttonBorderGreen}>
+          {i18n.t("BTN_LOGIN")}
+        </button>
+    </div>
+    )
+  }
+
+  render() {
+    let { step } = this.state
+    let contents = [this.cont_1(), this.cont_2()];
+    return (
+      <div className={style.contGeneral}>
+        
+        <img src="../../images/logo.svg" className={style.logo} />
+        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+        
+        {contents[step]}
+
+        <Footer />        
       </div>
     );
   }
