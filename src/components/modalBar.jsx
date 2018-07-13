@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { bindActionCreators } from "redux";
+import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
@@ -13,7 +13,6 @@ import CloseIcon from "@material-ui/icons/Close";
 
 // STYLE
 import colorBase from "./bases/colorBase.css";
-import { compose } from "redux";
 
 // IMAGES
 const imagePath = "/images/modal/";

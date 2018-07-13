@@ -1,15 +1,15 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { authenticate } from "./redux/userAction";
-import i18n from "../../utils/i18n";
+import { authenticate } from "../redux/userAction";
+import i18n from "../../../utils/i18n";
 import { Link } from "react-router-dom";
 
 // COMPONENTS
-import Footer from "./footer";
+import Footer from "../footer";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 class Login extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ class Login extends React.Component {
     const state = this.state;
 
     return (
-      <div className={style.formLogin}>
+      <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 

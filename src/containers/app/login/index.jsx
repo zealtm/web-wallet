@@ -19,6 +19,7 @@ import style from "./style.css";
 
 function Loading({ error }) {
   if (error) {
+    console.error(error);
     return "Error!";
   } else {
     return <h3>Loading...</h3>;
@@ -27,21 +28,21 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
 });
 
 let errorNotFound = Loadable({
