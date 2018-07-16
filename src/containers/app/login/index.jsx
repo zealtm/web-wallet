@@ -45,6 +45,12 @@ let create = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
 });
 
+let pin = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/pin/pin")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/pin/pin")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
@@ -100,6 +106,7 @@ class Login extends Component {
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
               <Route exact path="/create" component={create} />
+              <Route exact path="/pin" component={pin} />
             </Grid>
 
             <Hidden xsDown>
