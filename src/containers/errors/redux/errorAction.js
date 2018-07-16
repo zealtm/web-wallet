@@ -4,5 +4,5 @@ export const clearMessage = () => ({
 
 export const errorInput = (value) => ({
     type: "ERROR_INPUT",
-    data: value
-})
+    payload: { message: value }
+ })

@@ -3,14 +3,8 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-<<<<<<< HEAD
 import { authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
-=======
-import { authenticate, errorUserInput } from "../redux/userAction";
-import i18n from "../../../utils/i18n";
-import { Link } from "react-router-dom";
->>>>>>> dev
 
 // COMPONENTS
 import Footer from "../footer";
@@ -34,7 +28,7 @@ class Login extends React.Component {
     };
   }
 
-  getInput = input => {
+  getInput = (input) => {
     let { name, value } = input;
     this.setState({
       ...this.state,
@@ -45,16 +39,21 @@ class Login extends React.Component {
   inputValidator = () => {
     let { clearMessage, errorInput } = this.props
     let { inputs } = this.state;
+    let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
-
-    errorInput(messageError);
+    if(errors.length > 0) {
+      errorInput(messageError);
+    } else {
+      clearMessage();
+      authenticate(email.value, password.value)
+    }
     
-    console.warn("validator", messageError, errors);
+    return;
   };
 
-  // return authenticate(email, password)
-
   render() {
+
+
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
@@ -91,7 +90,7 @@ class Login extends React.Component {
         </button>
 
         <div className={style.doNotHaveAccount}>
-          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}
+          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
           <Link className={style.doNotLink} to="/create">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>

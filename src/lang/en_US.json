@@ -1,7 +1,9 @@
 {
   "MESSAGE_ERROR_FILEDS": "The following fields are missing: ",
-  
-  "PLACEHOLDER_EMAIL": "User / name@email.com",
+  "MESSAGE_PASSWORD": "Password",
+  "MESSAGE_USER_EMAIL": "User/Email",
+
+  "PLACEHOLDER_EMAIL": "Username or Email",
   "PLACEHOLDER_PASSWORD": "Password",
 
   "BTN_SUBMIT": "Submit",

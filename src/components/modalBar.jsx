@@ -73,7 +73,7 @@ class ModalBar extends Component {
     if (timer)
       setTimeout(() => {
         this.modalClose();
-      }, 6000);
+      }, 4000);
     this.setState({ type, message });
   };
 

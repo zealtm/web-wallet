@@ -13,7 +13,6 @@ export const inputValidator = inputs => {
 
     // Check if is undefined
     if (!inputs[input]) {
-      console.warn('input undefined', input)
       errors.push(input);
     } else {
       let { type, value } = inputs[input];
@@ -43,7 +42,7 @@ export const inputValidator = inputs => {
   }); 
 
   if(errors.length > 0) {
-    messageError =  i18n.t("MESSAGE_ERROR_FILEDS") + errors.toString();
+    messageError =  i18n.t("MESSAGE_ERROR_FILEDS") + errors.join(", ");
   }
   
   return {messageError, errors};
