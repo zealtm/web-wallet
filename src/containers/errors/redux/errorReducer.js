@@ -2,7 +2,7 @@ const initialState = {
     message: {
         type: "",
         active: false,
-        message: "teste"
+        message: ""
     }
 }
 
