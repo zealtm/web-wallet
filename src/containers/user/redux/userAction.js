@@ -3,3 +3,7 @@ export const authenticate = (email, password) => ({
     email,
     password
 });
+
+export const clearUserError = () => ({
+    type: "CLEAR_USER_ERROR"
+});

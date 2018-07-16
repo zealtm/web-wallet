@@ -3,8 +3,14 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+<<<<<<< HEAD
 import { authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+=======
+import { authenticate, errorUserInput } from "../redux/userAction";
+import i18n from "../../../utils/i18n";
+import { Link } from "react-router-dom";
+>>>>>>> dev
 
 // COMPONENTS
 import Footer from "../footer";
@@ -85,7 +91,7 @@ class Login extends React.Component {
         </button>
 
         <div className={style.doNotHaveAccount}>
-          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
+          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}
           <Link className={style.doNotLink} to="/create">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
