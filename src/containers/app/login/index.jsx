@@ -40,6 +40,12 @@ let reset = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
 });
 
+let resetNewPassword = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/reset/newPassword")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
+});
+
 let create = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
   loading: Loading,
@@ -82,10 +88,27 @@ const maxDots = carouselSteps.length;
 class Login extends Component {
   constructor() {
     super();
+    this.state = {
+      newPassword: false
+    }
+  }
+
+  componentDidMount() {
+    this.newPasswordAuth();
+  }
+
+  newPasswordAuth = () =>  {
+    let newPassword = true
+    if(newPassword) {
+      this.setState({ newPassword: true });
+    }
+
+    return;
   }
 
   render() {
     const { error } = this.props;
+    const { newPassword } = this.state;
 
     return (
       <Router>
@@ -101,6 +124,7 @@ class Login extends Component {
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
               <Route exact path="/create" component={create} />
+              {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null}
             </Grid>
 
             <Hidden xsDown>
