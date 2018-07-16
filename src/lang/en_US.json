@@ -1,9 +1,12 @@
 {
+  "MESSAGE_ERROR_FILEDS": "The following fields are missing: ",
+  
   "PLACEHOLDER_EMAIL": "User / name@email.com",
   "PLACEHOLDER_PASSWORD": "Password",
 
   "BTN_SUBMIT": "Submit",
   "BTN_LOGIN": "Login",
+  "BTN_RESET": "Reset",
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -22,6 +25,6 @@
   
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
-  "RESET_INSTRUCTIONS2": "About resetting it",
-  "BTN_RESET": "Reset"
+  "RESET_INSTRUCTIONS2": "About resetting it"
+
 }

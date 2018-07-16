@@ -1,8 +1,8 @@
 const initialState = {
     message: {
-        type: "",
+        type: undefined,
         active: false,
-        message: "teste"
+        message: undefined,
     }
 }
 

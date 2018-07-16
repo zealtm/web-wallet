@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { authenticate } from "../redux/userAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Footer from "../footer";
-import { authenticate } from "../redux/userAction";
 
 // UTILS
-import { FormValidator } from "../../../utils/formValidator"
+import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
 
 // STYLE
@@ -17,23 +18,33 @@ import style from "../style.css";
 
 class Login extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.state = {
-      email: undefined,
-      password: undefined
-    }
+      inputs: {
+        email: undefined,
+        password: undefined
+      }
+    };
   }
 
-  componentDidMount() {
-    let teste = FormValidator;
-    console.warn(teste);
-  }
-
-  getInput = (input) => {
+  getInput = input => {
     let { name, value } = input;
-    this.setState({ ...this.state, name: { type: name, value }  })
-  }
+    this.setState({
+      ...this.state,
+      inputs: { ...this.state.inputs, [name]: { type: name, value } }
+    });
+  };
+
+  inputValidator = () => {
+    let { clearMessage, errorInput } = this.props
+    let { inputs } = this.state;
+    let { messageError, errors } = inputValidator(inputs);
+
+    errorInput(messageError);
+    
+    console.warn("validator", messageError, errors);
+  };
 
   // return authenticate(email, password)
 
@@ -47,14 +58,18 @@ class Login extends React.Component {
           type="email"
           name="email"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          onChange={(event) => this.getInput(event.target)}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
           className={style.inputTextDefault}
         />
         <input
-          name="password"
           type="password"
+          name="password"
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
-          onChange={(event) => this.setState({ password: event.target.value })}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
           className={style.inputTextDefault}
         />
 
@@ -64,7 +79,8 @@ class Login extends React.Component {
 
         <button
           className={style.buttonBorderGreen}
-          onClick={() => this.inputValidator()}>
+          onClick={() => this.inputValidator()}
+        >
           {i18n.t("BTN_LOGIN")}
         </button>
 
@@ -83,10 +99,21 @@ class Login extends React.Component {
 
 Login.propTypes = {
   authenticate: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  authenticate
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      authenticate,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
