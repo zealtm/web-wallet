@@ -34,7 +34,7 @@ class Reset extends React.Component {
       return this.setState({
         inputError: true
       })
-    }else{
+    } else {
       this.setState({ step: step + 1 });
     }
   }
@@ -61,34 +61,47 @@ class Reset extends React.Component {
     let { inputError } = this.state;
     return (
       <div>
-        <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>        
+        <img src="../../images/logo.svg" className={style.logo} />
+        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+
+        <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>
 
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
         <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
         <input
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          className={ inputError ? style.inputError : style.inputTextDefault }
+          className={inputError ? style.inputError : style.inputTextDefault}
           onChange={(value) => this.onInputChange(value.target.value)}
         />
 
         <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
           {i18n.t("BTN_RESET")}
         </button>
-    </div>
+      </div>
     )
   }
 
   cont_2 = () => {
     return (
       <div>
-        <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SEND")}</div>
-        <button className={style.buttonBorderGreen}>
-        <Link className={style.resetLinkPassNew} to="/passNew">
-          {i18n.t("BTN_LOGIN")}
+        <Link to="/login">
+          <img src="../../images/icons/1x/baseline_arrow_forward_white_18dp.png" className={style.iconArrow} />
         </Link>
+
+        <img src="../../images/logo.svg" className={style.logo} />
+
+        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+
+        <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SEND")}</div>
+
+        <button className={style.buttonBorderGreen}>
+          <Link className={style.resetLinkLogin} to="/login">
+            {i18n.t("BTN_LOGIN")}
+          </Link>
         </button>
-    </div>
+
+      </div>
     )
   }
 
@@ -97,13 +110,11 @@ class Reset extends React.Component {
     let contents = [this.cont_1(), this.cont_2()];
     return (
       <div className={style.contGeneral}>
-        
-        <img src="../../images/logo.svg" className={style.logo} />
-        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
-        
+
         {contents[step]}
 
-        <Footer />        
+        <Footer />
+
       </div>
     );
   }
