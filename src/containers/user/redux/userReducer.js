@@ -1,5 +1,6 @@
 const initialState = {
-    user: {}
+    user: {},
+    errors: []
 }
 
 const user = (state = initialState, action) => {
@@ -11,6 +12,12 @@ const user = (state = initialState, action) => {
                 user: action.payload.user
             };
 
+        case "CLEAR_USER_ERROR":
+            return {
+                ...state,
+                errors: []
+            };
+            
         default: {
             return {
                 ...state

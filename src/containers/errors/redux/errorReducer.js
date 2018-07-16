@@ -30,13 +30,23 @@ const error = (state = initialState, action) => {
                 }
             }
 
-        case "REQUEST_CLEAR":
+        case "CLEAR_MESSAGE":
             return {
                 ...state,
                 message: {
                     type: "",
                     active: false,
                     message: ""
+                }
+            }
+
+        case "ERROR_INPUT":
+            return {
+                ...state,
+                message: {
+                    type: "",
+                    active: false,
+                    message: action.payload.message
                 }
             }
 

@@ -1,3 +1,8 @@
 export const clearMessage = () => ({
-    type: "REQUEST_CLEAR"
+    type: "CLEAR_MESSAGE"
+})
+
+export const errorInput = (value) => ({
+    type: "ERROR_INPUT",
+    data: value
 })
