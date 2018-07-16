@@ -3,3 +3,12 @@ export const authenticate = (email, password) => ({
     email,
     password
 });
+
+export const errorUserInput = value => ({
+    type: "ERROR_USER_INPUT",
+    payload: value
+});
+
+export const clearUserError = () => ({
+    type: "CLEAR_USER_ERROR"
+});

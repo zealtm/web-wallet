@@ -1,7 +1,7 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { authenticate, errorUserInput } from "../redux/userAction";
 import i18n from "../../../utils/i18n";
 import { Link } from "react-router-dom";
 
@@ -54,7 +54,7 @@ class Login extends React.Component {
         </button>
 
         <div className={style.doNotHaveAccount}>
-          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
+          {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}
           <Link className={style.doNotLink} to="/create">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
@@ -67,7 +67,8 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  authenticate
+  authenticate,
+  errorUserInput
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Login);
