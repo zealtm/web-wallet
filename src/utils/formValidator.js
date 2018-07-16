@@ -1,5 +1,5 @@
-import validator from 'validator';
-import isEmail from 'validator/lib/isEmail';
+// import validator from 'validator';
+// import isEmail from 'validator/lib/isEmail';
 
 export const FormValidator = (value) => {
   value += 1;
