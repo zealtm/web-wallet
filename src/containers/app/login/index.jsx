@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Loadable from "react-loadable";
 import path from "path";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
@@ -7,6 +8,7 @@ import i18n from "../../../utils/i18n";
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
 import Carousel from "../../../components/carousel/carousel";
+import ModalBar from "../../../components/modalBar";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -56,7 +58,6 @@ let errorInternal = Loadable({
 });
 /* eslint-enable */
 
-
 const imagePath = "/images/carousel/";
 
 const carouselSteps = [
@@ -76,13 +77,23 @@ const carouselSteps = [
 
 const maxDots = carouselSteps.length;
 
+
 class Login extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
+    const { error } = this.props;
+
     return (
       <Router>
         <Switch>
           {/* CONTAINER OF VIEWS */}
           <Grid container>
+            <div>
+              {error.active ? <ModalBar type={error.type} message={error.message} timer /> : null}
+            </div>
             <Grid item xs={12} sm={5} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
@@ -107,4 +118,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+
+const mapSateToProps = store => ({
+  error: store.error.message,
+  user: store.user
+});
+
+export default connect(mapSateToProps)(Login);
