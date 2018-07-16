@@ -44,7 +44,7 @@ const error = (state = initialState, action) => {
             return {
                 ...state,
                 message: {
-                    type: "",
+                    type: "error",
                     active: false,
                     message: action.payload.message
                 }
