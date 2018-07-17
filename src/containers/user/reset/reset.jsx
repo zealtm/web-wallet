@@ -73,7 +73,7 @@ class Reset extends React.Component {
           type="email"
           name="email"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          onChange={(value) => this.getInput(value.target.value)}
+          onChange={event => { this.getInput(event.target);}}
           className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
         />
 
