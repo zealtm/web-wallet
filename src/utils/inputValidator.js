@@ -30,10 +30,10 @@ export const inputValidator = inputs => {
       }
 
       // Check if is a valid password
-      if (type === "password") {
-        if (!isLength(trim(value.toString()), { min: 8, max: 64 }))
-          errors.push(type);
-      }
+      // if (type === "password") {
+      //   if (!isLength(trim(value.toString()), { min: 8, max: 64 }))
+      //     errors.push(type);
+      // }
 
       if (type === "passwordRepeat") {
         if (
