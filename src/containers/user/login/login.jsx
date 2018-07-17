@@ -16,23 +16,27 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
+
+
 class Login extends React.Component {
   constructor() {
     super();
-
     this.state = {
       inputs: {
         email: undefined,
         password: undefined
-      }
+      },
+      errors: undefined
     };
   }
 
   getInput = (input) => {
     let { name, value } = input;
+    let { inputs } = this.state;
     this.setState({
       ...this.state,
-      inputs: { ...this.state.inputs, [name]: { type: name, value } }
+      inputs: { ...inputs, [name]: { type: name, value } },
+      errors: undefined
     });
   };
 
@@ -41,18 +45,31 @@ class Login extends React.Component {
     let { inputs } = this.state;
     let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
-    if(errors.length > 0) {
+    
+    if (errors.length > 0) {
       errorInput(messageError);
+      this.setState({
+        ...this.state,
+        errors
+      });
     } else {
       clearMessage();
       authenticate(email.value, password.value)
     }
-    
-    return;
   };
 
-  render() {
+  inputError = () => {
+    let { errors } = this.state;
+    let inputError = {};
+    errors.map( (value) => {
+      inputError.push(value);
+    })
 
+    return inputError;
+  }
+
+  render() {
+    let { errors } = this.state;
 
     return (
       <div className={style.contGeneral}>
@@ -66,7 +83,7 @@ class Login extends React.Component {
           onChange={event => {
             this.getInput(event.target);
           }}
-          className={style.inputTextDefault}
+          className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
         />
         <input
           type="password"
@@ -75,7 +92,7 @@ class Login extends React.Component {
           onChange={event => {
             this.getInput(event.target);
           }}
-          className={style.inputTextDefault}
+          className={errors && errors.includes('password') ? style.inputError : style.inputTextDefault}
         />
 
         <Link className={style.textForgetPass} to="/reset">
@@ -84,7 +101,7 @@ class Login extends React.Component {
 
         <button
           className={style.buttonBorderGreen}
-          onClick={() => this.inputValidator()}
+          onClick={() => { this.inputValidator(), console.warn(this.state) }}
         >
           {i18n.t("BTN_LOGIN")}
         </button>
