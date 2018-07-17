@@ -58,15 +58,6 @@ class Login extends React.Component {
     }
   };
 
-  getErrorInputsMap = () => {
-    let { errors } = this.state;
-    let getErrorInputsMap = {};
-    errors.map((value) => {
-      getErrorInputsMap.push(value);
-    })
-    return getErrorInputsMap;
-  }
-
   render() {
     let { errors } = this.state;
 
@@ -100,7 +91,7 @@ class Login extends React.Component {
 
         <button
           className={style.buttonBorderGreen}
-          onClick={() => { this.inputValidator(), console.warn(this.state) }}
+          onClick={() => { this.inputValidator() }}
         >
           {i18n.t("BTN_LOGIN")}
         </button>
