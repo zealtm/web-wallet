@@ -1,9 +1,14 @@
 {
-  "PLACEHOLDER_EMAIL": "User / name@email.com",
+  "MESSAGE_ERROR_FILEDS": "The following fields are missing: ",
+  "MESSAGE_PASSWORD": "Password",
+  "MESSAGE_USER_EMAIL": "User/Email",
+
+  "PLACEHOLDER_EMAIL": "Username or Email",
   "PLACEHOLDER_PASSWORD": "Password",
 
   "BTN_SUBMIT": "Submit",
   "BTN_LOGIN": "Login",
+  "BTN_RESET": "Reset",
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -19,11 +24,10 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
-
-  "BTN_RESET": "Reset",  
+  
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
   "RESET_EMAIL_SEND": "A message with a password reset link has been sent to your email."
-
+  
 }

@@ -1,6 +1,7 @@
 /* eslint-disable */
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ObjectRestSpreadPlugin = require('@sucrase/webpack-object-rest-spread-plugin');
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log("------------------------------------------------------------------------------------------");
@@ -55,7 +56,7 @@ module.exports = {
         options: {
           babelrc: false,
           presets: ["react", "env"],
-          plugins: ["syntax-dynamic-import", "transform-class-properties"]
+          plugins: ["syntax-dynamic-import", "transform-class-properties", "transform-object-rest-spread"]
         }
       },
       {
@@ -80,6 +81,7 @@ module.exports = {
     port: 6001
   },
   plugins: [
+    new ObjectRestSpreadPlugin(),
     new HtmlWebpackPlugin({
       template: "public/index.html"
     })

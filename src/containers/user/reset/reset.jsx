@@ -19,14 +19,14 @@ class Reset extends React.Component {
     }
   }
 
-  onInputChange = (inputValue) => {
+  getInput = (input) => {
+    let { name, value } = input;
     this.setState({
-      userInput: inputValue
-    })
-    return this.setState({
-      inputError: false
-    })
-  }
+      ...this.state,
+      inputs: { ...this.state.inputs, [name]: { type: name, value } }
+    });
+  };
+
 
   inputValidator = () => {
     let { step, userInput } = this.state
@@ -37,24 +37,6 @@ class Reset extends React.Component {
     } else {
       this.setState({ step: step + 1 });
     }
-  }
-
-  nextContent = () => {
-    let { step } = this.state;
-    let contents = [this.cont_1, this.cont_2];
-    if (contents[step + 1]) {
-      return this.setState({ step: step + 1 });
-    }
-    return;
-  }
-
-  prevContent = () => {
-    let { step } = this.state;
-    let contents = [this.cont_1, this.cont_2];
-    if (contents[step - 1]) {
-      return this.setState({ step: step - 1 });
-    }
-    return;
   }
 
   cont_1 = () => {
@@ -72,7 +54,7 @@ class Reset extends React.Component {
         <input
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           className={inputError ? style.inputError : style.inputTextDefault}
-          onChange={(value) => this.onInputChange(value.target.value)}
+          onChange={(value) => this.getInput(value.target.value)}
         />
 
         <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>

@@ -5,12 +5,26 @@ const userService = new UserService();
 
 export function* authenticateUser(action) {
     try {
-        const request = yield call(userService.userAuthenticate,
-            action.email, action.password);
+        const request = yield call(userService.userAuthenticate, action.email, action.password);
 
-        yield put({ type: "POST_USER_AUTHENTICATE", data: request });
-    } catch (error) {
-        console.error("failed: ", error);
+        if (request.status !== 200) {
+            return yield put({
+                type: "POST_USER_AUTHENTICATE",
+                payload: { 
+                    user: request 
+                }
+            });
+        }
+        return yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message: "falha ao tentar authenticação"
+            }
+        });
+    }
+
+    catch (error) {
+        console.warn("ERRO ", error);
     }
 }
 
