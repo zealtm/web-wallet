@@ -2,7 +2,6 @@ import trim from "validator/lib/trim";
 import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
-import isAlphanumeric from "validator/lib/isAlphanumeric";
 import i18n from "./i18n";
 
 export const inputValidator = inputs => {

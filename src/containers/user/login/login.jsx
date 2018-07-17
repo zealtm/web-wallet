@@ -37,7 +37,7 @@ class Login extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props;
+    let { clearMessage, errorInput, authenticate } = this.props
     let { inputs } = this.state;
     let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
