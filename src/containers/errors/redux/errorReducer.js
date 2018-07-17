@@ -2,7 +2,7 @@ const initialState = {
     message: {
         type: undefined,
         active: false,
-        message: undefined
+        message: undefined,        
     }
 }
 
