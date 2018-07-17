@@ -1,7 +1,11 @@
 import React from "react";
 import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import validator from "validator";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+
+// UTILS
+import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
 
 // MATERIAL UI
@@ -10,188 +14,162 @@ import ClearIcon from "@material-ui/icons/Clear";
 
 // COMPONENTS
 import Footer from "../footer";
-import ModalBar from "../../../components/modalBar";
 
 // STYLE
 import style from "../style.css";
 
-const validations = [
-  {
-    text: i18n.t("RESET_PASS_ITEM_2"),
-    valid: true
-  },
-  {
-    text: i18n.t("RESET_PASS_ITEM_1"),
-    valid: true
-  },
-  {
-    text: i18n.t("RESET_PASS_ITEM_3"),
-    valid: true
-  },
-  {
-    text: i18n.t("RESET_PASS_ITEM_4"),
-    valid: true
-  },
-  {
-    text: i18n.t("RESET_PASS_ITEM_5"),
-    valid: true
-  }
-];
-
-class newPassword extends React.Component {
+class NewPassword extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: false,
-      pass1: "",
-      pass2: "",
-      validate: validations
+      inputs: {
+        password: undefined,
+        passwordRepeat: undefined
+      },
+      passwordHint: {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false
+      },
+      errors: undefined
     };
-
-    this.handleValidate = this.handleValidate.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  getInput = input => {
+    let { name, value } = input;
+    let { inputs, passwordHint } = this.state;
+
+    if (name === "password") {
+      passwordHint = {
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false
+      };
+
+      let rules = [
+        /^(?=.*[A-Z])/g,
+        /^(?=.*[a-z])/g,
+        /^(?=.*[0-9])/g,
+        /^(?=.*[!_+=@#-$%^&*])/g,
+        /^(?=.{8,})/g
+      ];
+
+      if (name === "password") {
+        rules.map((rules, key) => {
+          if (value.match(rules)) {
+            passwordHint[key] = true;
+          }
+        });
+      }
+    }
+
+    this.setState({
+      ...this.state,
+      inputs: { ...inputs, [name]: { type: name, value } },
+      passwordHint
+    });
+
+    return;
   };
 
-  handleValidate = event => {
-    event.preventDefault();
-    let errors = 0;
+  inputValidator = () => {
+    let { clearMessage, errorInput } = this.props;
+    let { inputs } = this.state;
+    let { messageError, errors } = inputValidator(inputs);
 
-    // fields
-    const pass1 = this.state.pass1;
-    const pass2 = this.state.pass2;
+    this.setState({ ...this.state, errors: errors });
 
-    const passRules0 = /^(?=.*[a-z])/g; // letra minuscula
-    const passRules1 = /^(?=.*[A-Z])/g; // letra maiuscula
-    const passRules2 = /^(?=.*[0-9])/g; // numeros
-    const passRules3 = /^(?=.*[!_+=@#-$%^&*])/g; // sinais
-    const passRules4 = /^(?=.{8,})/g; // minimo de 8 caracteres
-
-    if (pass1 !== pass2) {
-      alert(i18n.t("RESET_PASS_ERROR_2"));
-      return;
-    }
-
-    if (!validator.matches(pass1, passRules0)) {
-      errors++;
-      validations[0].valid = false;
+    if (errors.length > 0) {
+      errorInput(messageError);
     } else {
-      validations[0].valid = true;
+      clearMessage();
     }
 
-    if (!validator.matches(pass1, passRules1)) {
-      errors++;
-      validations[1].valid = false;
-    } else {
-      validations[1].valid = true;
-    }
-
-    if (!validator.matches(pass1, passRules2)) {
-      errors++;
-      validations[2].valid = false;
-    } else {
-      validations[2].valid = true;
-    }
-
-    if (!validator.matches(pass1, passRules3)) {
-      errors++;
-      validations[3].valid = false;
-    } else {
-      validations[3].valid = true;
-    }
-
-    if (!validator.matches(pass1, passRules4)) {
-      errors++;
-      validations[4].valid = false;
-    } else {
-      validations[4].valid = true;
-    }
-
-    this.setState({ validate: validations });
-
-    if (errors > 2) {
-      this.setState({ error: true });
-    } else {
-      alert("passou");
-      // else , action to save a new password
-      //
-      //
-      //
-    }
+    return;
   };
 
-  renderError = () => {
-    if (this.state.error) {
-      return (
-        <ModalBar type={"error"} message={i18n.t("RESET_PASS_ERROR_1")} timer />
-      );
-    }
+  renderPasswordHintIcon = () => {
+    let { passwordHint } = this.state;
+    let hints = [
+      i18n.t("RESET_NEW_PASSWORD_HINT_1"),
+      i18n.t("RESET_NEW_PASSWORD_HINT_2"),
+      i18n.t("RESET_NEW_PASSWORD_HINT_3"),
+      i18n.t("RESET_NEW_PASSWORD_HINT_4"),
+      i18n.t("RESET_NEW_PASSWORD_HINT_5")
+    ];
+
+    return Object.keys(passwordHint).map((value, key) => {
+      if (passwordHint[key]) {
+        return (
+          <div key={key}>
+            <DoneIcon
+              className={style.iconListValid}
+              style={{ color: "green" }}
+            />
+            {hints[key]}
+          </div>
+        );
+      } else {
+        return (
+          <div key={key}>
+            <ClearIcon
+              className={style.iconListValid}
+              style={{ color: "red" }}
+            />
+            {hints[key]}
+          </div>
+        );
+      }
+    });
   };
 
   render() {
     return (
       <div className={style.formLogin}>
-        <img src="../../images/logo.svg" className={style.logo} />
-        <img src="../../images/ic-email.svg" className={style.iconHeader} />
-        {/* form reset */}
-        <div className={style.description}>{i18n.t("RESET_PASS_LABEL")}</div>
+        <img src="../../../images/logo.svg" className={style.logo} />
+        <img
+          src="../../../images/reset/ic-email.png"
+          className={style.iconHeader}
+        />
+
+        <div className={style.resetHeader}>
+          {i18n.t("RESET_NEW_PASSWORD_HEADER")}
+        </div>
         <input
-          name="pass1"
-          value={this.state.pass1}
+          name="password"
           type="password"
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           className={style.inputTextDefault}
-          onChange={this.handleChange}
+          onChange={input => this.getInput(input.target)}
         />
+
         <input
-          name="pass2"
-          value={this.state.pass2}
           type="password"
+          name="passwordRepeat"
           placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
           className={style.inputTextDefault}
-          onChange={this.handleChange}
+          onChange={input => this.getInput(input.target)}
         />
-        {/* help text */}
-        <div className={style.helpText}>
-          {i18n.t("RESET_PASS_DESCRIPTION_2")}
+
+        <div className={style.passwordRules}>
+          <div>{i18n.t("RESET_NEW_PASSWORD_INSTRUCTION")}</div>
         </div>
 
-        {/* itens has password */}
-        <div className={style.itensValid}>
-          {this.state.validate.map((value, key) => {
-            return (
-              <div key={key}>
-                {value.valid ? (
-                  <DoneIcon
-                    className={style.iconListValid}
-                    style={{ color: "green" }}
-                  />
-                ) : (
-                  <ClearIcon
-                    className={style.iconListValid}
-                    style={{ color: "red" }}
-                  />
-                )}
-                {value.text} <br />
-              </div>
-            );
-          })}
+        <div className={style.passwordRulesItens}>
+          {this.renderPasswordHintIcon()}
         </div>
 
-        {/* btn to save */}
         <button
           className={style.buttonBorderGreen}
-          onClick={this.handleValidate}
+          onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_SAVE")}
         </button>
-
-        {/* error message */}
-        {this.renderError()}
 
         <Footer />
       </div>
@@ -199,11 +177,22 @@ class newPassword extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
+NewPassword.propTypes = {
+  authenticate: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
+};
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
-)(newPassword);
+)(NewPassword);

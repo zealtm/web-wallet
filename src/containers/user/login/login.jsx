@@ -28,7 +28,7 @@ class Login extends React.Component {
     };
   }
 
-  getInput = (input) => {
+  getInput = input => {
     let { name, value } = input;
     this.setState({
       ...this.state,
@@ -37,23 +37,21 @@ class Login extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props
+    let { clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
     let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
-    if(errors.length > 0) {
+    if (errors.length > 0) {
       errorInput(messageError);
     } else {
       clearMessage();
-      authenticate(email.value, password.value)
+      authenticate(email.value, password.value);
     }
-    
+
     return;
   };
 
   render() {
-
-
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
