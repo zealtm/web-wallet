@@ -30,6 +30,7 @@
   margin: 25px;
   padding: 15px;
   width: 100%;
+  height: 600px;
   max-width: 335px;
   margin-left: auto;
   margin-right: auto;
@@ -203,3 +204,28 @@
   margin-right: 10px;
   width: 14px;
 }
+
+/* 4.4 MESSAGE */
+:local(.resetEmailSend){
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin: 55px 0 100px 0;
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 4.5 LINKS */
+
+:local(.resetLinkLogin){
+  composes: defaultP from "../../components/bases/textBase.css";
+  color: white;
+  text-decoration: none;
+}
+
+/* 4.6 ICONS */
+:local(.iconArrow) {
+  display: inline;
+  float: right;
+} 
+
+/* ------------------------------------------------------------------------- */

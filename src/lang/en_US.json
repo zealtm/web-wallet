@@ -1,5 +1,5 @@
 {
-  "MESSAGE_ERROR_FILEDS": "The following fields are missing: ",
+  "MESSAGE_ERROR_FILEDS": "The following fields are missing or wrong: ",
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
 
@@ -12,7 +12,6 @@
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
  
-  "MODAL_ERROR_LENGTH": "The field is too big",
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -32,6 +31,7 @@
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
+  "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address.",
   "RESET_NEW_PASSWORD_HEADER": "Digit your new password",
   "RESET_NEW_PASSWORD_INSTRUCTION": "Your password should follow the rules below",
   "RESET_NEW_PASSWORD_HINT_1": "Upcase letter",
