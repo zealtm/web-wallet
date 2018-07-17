@@ -16,8 +16,6 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
-
-
 class Login extends React.Component {
   constructor() {
     super();
@@ -30,7 +28,7 @@ class Login extends React.Component {
     };
   }
 
-  getInput = (input) => {
+  getInput = input => {
     let { name, value } = input;
     let { inputs } = this.state;
     this.setState({
@@ -41,7 +39,7 @@ class Login extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props
+    let { clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
     let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
@@ -54,7 +52,7 @@ class Login extends React.Component {
       });
     } else {
       clearMessage();
-      authenticate(email.value, password.value)
+      authenticate(email.value, password.value);
     }
   };
 
@@ -73,7 +71,11 @@ class Login extends React.Component {
           onChange={event => {
             this.getInput(event.target);
           }}
-          className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
+          className={
+            errors && errors.includes("email")
+              ? style.inputError
+              : style.inputTextDefault
+          }
         />
         <input
           type="password"
@@ -82,7 +84,11 @@ class Login extends React.Component {
           onChange={event => {
             this.getInput(event.target);
           }}
-          className={errors && errors.includes('password') ? style.inputError : style.inputTextDefault}
+          className={
+            errors && errors.includes("password")
+              ? style.inputError
+              : style.inputTextDefault
+          }
         />
 
         <Link className={style.textForgetPass} to="/reset">
@@ -91,7 +97,9 @@ class Login extends React.Component {
 
         <button
           className={style.buttonBorderGreen}
-          onClick={() => { this.inputValidator() }}
+          onClick={() => {
+            this.inputValidator();
+          }}
         >
           {i18n.t("BTN_LOGIN")}
         </button>
