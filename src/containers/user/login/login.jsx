@@ -45,7 +45,7 @@ class Login extends React.Component {
     let { inputs } = this.state;
     let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
-    
+
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -58,14 +58,13 @@ class Login extends React.Component {
     }
   };
 
-  inputError = () => {
+  getErrorInputsMap = () => {
     let { errors } = this.state;
-    let inputError = {};
-    errors.map( (value) => {
-      inputError.push(value);
+    let getErrorInputsMap = {};
+    errors.map((value) => {
+      getErrorInputsMap.push(value);
     })
-
-    return inputError;
+    return getErrorInputsMap;
   }
 
   render() {
