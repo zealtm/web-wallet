@@ -58,12 +58,6 @@ let pin = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../user/pin/pin")
 });
 
-let pin = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/pin")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/pin")
-});
-
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
