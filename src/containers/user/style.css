@@ -296,20 +296,20 @@
 
 :local(.inputErrorPIN) {
   composes: inputPINDefault;
+  composes: clError from "../../components/bases/colorBase.css";
   border: 1px solid #ff445b;
-  color: #ff445b;
 }
 
 :local(.inputErrorPIN1) {
   composes: inputPINDefault1;
+  composes: clError from "../../components/bases/colorBase.css";
   border: 1px solid #ff445b;
-  color: #ff445b;
 }
 
 :local(.inputErrorPIN4) {
   composes: inputPINDefault4;
+  composes: clError from "../../components/bases/colorBase.css";
   border: 1px solid #ff445b;
-  color: #ff445b;
 }
 
 /* 5.2 TEXTS */
