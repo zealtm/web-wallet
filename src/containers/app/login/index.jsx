@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Loadable from "react-loadable";
 import path from "path";
+import PropTypes from "prop-types";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import i18n from "../../../utils/i18n";
+import { connect } from "react-redux";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -37,6 +38,12 @@ let reset = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
   loading: Loading,
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
+});
+
+let resetNewPassword = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/reset/newPassword")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
 });
 
 let create = Loadable({
@@ -87,6 +94,22 @@ const maxDots = carouselSteps.length;
 class Login extends Component {
   constructor() {
     super();
+    this.state = {
+      newPassword: false
+    }
+  }
+
+  componentDidMount() {
+    this.newPasswordAuth();
+  }
+
+  newPasswordAuth = () =>  {
+    let newPassword = true
+    if(newPassword) {
+      this.setState({ newPassword: true });
+    }
+
+    return;
   }
 
   render() {
@@ -124,6 +147,10 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  error: PropTypes.object
+};
 
 
 const mapSateToProps = store => ({

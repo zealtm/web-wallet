@@ -1,9 +1,17 @@
 {
-  "PLACEHOLDER_EMAIL": "User / name@email.com",
+  "MESSAGE_ERROR_FILEDS": "The following fields are missing or wrong: ",
+  "MESSAGE_PASSWORD": "Password",
+  "MESSAGE_USER_EMAIL": "User/Email",
+
+  "PLACEHOLDER_EMAIL": "Username or Email",
   "PLACEHOLDER_PASSWORD": "Password",
+  "PLACEHOLDER_PASSWORD_REPEAT": "Repeat Password",
 
   "BTN_SUBMIT": "Submit",
   "BTN_LOGIN": "Login",
+  "BTN_RESET": "Reset",
+  "BTN_SAVE": "Save",
+ 
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -23,8 +31,19 @@
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
-  "BTN_RESET": "Reset",
 
   "PIN_HEADER": "Enter your PIN",
-  "PIN_FORGET_PIN_LINK":"Forgot your PIN?"
+  "PIN_FORGET_PIN_LINK":"Forgot your PIN?",
+  
+  "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address.",
+  "RESET_NEW_PASSWORD_HEADER": "Digit your new password",
+  "RESET_NEW_PASSWORD_INSTRUCTION": "Your password should follow the rules below",
+  "RESET_NEW_PASSWORD_HINT_1": "Upcase letter",
+  "RESET_NEW_PASSWORD_HINT_2": "Downcase letter",
+  "RESET_NEW_PASSWORD_HINT_3": "Numbers",
+  "RESET_NEW_PASSWORD_HINT_4": "Symbols",
+  "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
+  "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
+  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
+
 }

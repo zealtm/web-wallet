@@ -1,83 +1,151 @@
 import React from "react";
-import i18n from "../../../utils/i18n";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { authenticate } from "../redux/userAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Footer from "../footer";
-import ModalBar from "../../../components/modalBar";
+
+// UTILS
+import i18n from "../../../utils/i18n";
+import { inputValidator } from "../../../utils/inputValidator";
 
 // STYLE
 import style from "../style.css";
 
-
 class Reset extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      userInput: undefined,
-      modalError: false
+      step: 0,
+      inputs: {
+        email: undefined
+      },
+      errors: undefined
     }
   }
 
-  onInputChange = (inputValue) => {
-
-      this.setState({
-        userInput: inputValue
-      })
-     return this.setState({
-      modalError: false
-    })
-    }
+  getInput = (input) => {
+    let { name, value } = input;
+    this.setState({
+      ...this.state,
+      inputs: { ...this.state.inputs, [name]: { type: name, value } },
+      errors: undefined
+    });
+  };
 
   inputValidator = () => {
-    let { userInput } = this.state
-    if (!userInput) {
-      return this.setState({
-        modalError: true
-      })
-    }   
-  }
+    let { clearMessage, errorInput } = this.props
+    let { inputs, step } = this.state;
+    let { email } = inputs;
+    let { messageError, errors } = inputValidator(inputs);
 
-  showModalError = () => {
-    let { modalError } = this.state
-    if (modalError) {
-      return (
-        <ModalBar
-          type={"error"}
-          message={"Digite um email/usuário válido"}
-          timer
-        />
-      )}
-    return;
-  }
+    if (errors.length > 0) {
+      errorInput(messageError);
+      this.setState({
+        ...this.state,
+        errors
+      });
+    } else {
+      clearMessage();
+      authenticate(email.value);
+      this.setState({ step: step + 1 });
+    }
+  };
 
-  render() {
-    let { modalError } = this.state
+  cont_1 = () => {
+    let { errors } = this.state;
     return (
-      <div className={style.contGeneral}>
-        {this.showModalError()}
+      <div>
+         <Link to="/login">
+          <img src="../../images/icons/2x/baseline_arrow_back_white_18dp.png" className={style.iconArrowBack} />
+        </Link>
 
-        <img src="../../images/logo.svg" className={style.logo} />
-        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+        <img src="../../images/logo.svg" className={style.logoReset} />
+        <img
+          src="../../../../images/reset/ic-email.png"
+          className={style.iconEmail}
+        />
 
         <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>
 
         <input
+          type="email"
+          name="email"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          className={modalError ? style.inputError : style.inputTextDefault}
-          onChange={(value) => this.onInputChange(value.target.value)}
+          onChange={event => { this.getInput(event.target);}}
+          className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
         />
-
+        
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
         <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
         <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
           {i18n.t("BTN_RESET")}
         </button>
+      </div>
+    )
+  }
+
+  cont_2 = () => {
+    return (
+      <div>
+        <Link to="/login">
+          <img src="../../images/icons/2x/baseline_arrow_forward_white_18dp.png" className={style.iconArrowForward} />
+        </Link>
+
+        <img src="../../images/logo.svg" className={style.logoSendEmailReset} />
+
+        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+
+        <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SENDED")}</div>
+
+        <button className={style.buttonBorderGreen}>
+          <Link className={style.resetLinkLogin} to="/login">
+            {i18n.t("BTN_LOGIN")}
+          </Link>
+        </button>
+
+      </div>
+    )
+  }
+
+  render() {
+    let { step } = this.state
+    let contents = [this.cont_1(), this.cont_2()];
+    return (
+      <div className={style.contGeneral}>
+
+        {contents[step]}
 
         <Footer />
+
       </div>
     );
   }
 }
 
-export default Reset;
+
+Reset.propTypes = {
+  authenticate: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      authenticate,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Reset);

@@ -5,10 +5,10 @@
   1.2 BUTTON
   1.3 INPUT
   1.4 LINKS
-  1.5 LOGO 
+  1.5 IMAGES 
 
 2. FOOTER 
-  2.1 CONTAINER GENERAL
+  2.1 GENERAL
   2.2 LINKS
 
 3. LOGIN
@@ -73,12 +73,28 @@
   font-size: 16px;
 }
 
-/* 1.5 LOGO */
+/* 1.5 IMAGES */
 :local(.logo) {
   display: block;
   width: 160px;
   margin-left: auto;
   margin-right: auto;
+}
+
+:local(.iconHeader) {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+:local(.resetHeader) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin-top: 45px;
+  margin-bottom: 25px;
+  font-size: 22px;
+  text-align: center;
+  font-weight: 800;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -113,7 +129,7 @@
 
 /* 3 LOGIN */
 
-/* 3.1 TEXT DESCRIPTION */
+/* 3.1 TEXT */
 :local(.description) {
   composes: textDefault from "../../components/bases/textBase.css";
   display: block;
@@ -139,8 +155,9 @@
   margin-bottom: 25px;
 }
 
-/* 4. RESET */
+/* ------------------------------------------------------------------------- */
 
+/* 4. RESET */
 /* 4.1 TEXTS */
 :local(.p) {
   composes: textDefault from "../../components/bases/textBase.css";
@@ -156,20 +173,70 @@
   font-weight: 600;
   margin-bottom: 25px;
 }
-/* ------------------------------------------------------------------------- */
 
-/* 2. FOOTER */
-/* 2.1 GENERAL */
-:local(.footer) {
-  composes: clGreenDefault from "../../components/bases/colorBase.css";
-  font-size: 12px;
-  display: block;
-  text-align: center;
-  margin-bottom: 25px;
-  font-weight: 600;
+/* 4.2 INPUT ERROR */
+:local(.inputError){
+  composes: inputTextDefault;
+  color: #ff445b;
+  border: 1px solid #ff445b;
 }
 
-/* 4.2 ICONE */
+/* 4.3 NEW PASSWORD */
+:local(.iconHeader) {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+:local(.passwordRules) {
+  font-size: 10px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+:local(.passwordRulesItens) {
+  margin: 20px 0;
+  font-size: 12px;
+}
+
+:local(.iconListValid) {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+}
+
+/* 4.4 MESSAGE */
+:local(.resetEmailSend){
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin: 55px 0 100px 0;
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 4.5 LINKS */
+
+:local(.resetLinkLogin){
+  composes: defaultP from "../../components/bases/textBase.css";
+  color: white;
+  text-decoration: none;
+}
+
+/* 4.6 ICONS */
+:local(.iconArrowForward) {
+  float: right;
+  width: 24px;
+  margin-top: 6px;
+} 
+
+:local(.iconArrowBack) {
+  composes: iconArrowForward;
+  float: left;
+} 
+
 :local(.iconEmail) {
   display: block;
   width: 55px;
@@ -178,26 +245,16 @@
   margin-right: auto;
   margin-top: 40px;
 }
-:local(.resetHeader) {
-  composes: textDefault from "../../components/bases/textBase.css";
-  margin-top: 45px;
-  margin-bottom: 25px;
-  font-size: 22px;
-  text-align: center;
-  font-weight: 800;
+
+/* 4.7 LOGO */
+:local(.logoReset) {
+  composes: logo;
+  padding-right: 24px;
 }
 
-/* 2.1 LINKS */
-:local(.footerLink) {
-  composes: linkDefault from "../../components/bases/textBase.css";
-  font-size: 12px;
-}
-
-/* 4.3 INPUT ERROR */
-:local(.inputError){
-  composes: inputTextDefault;
-  color: red;
-  border: 1px solid red;
+:local(.logoSendEmailReset) {
+  composes: logo;
+  padding-left: 24px;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -214,7 +271,7 @@
   border: 0;
   height: 30px;
   color: white;
-  font-size: 28px;
+  font-size: 49px;
   text-align: center;
 }
 
@@ -236,20 +293,23 @@
 
 :local(.inputErrorPIN) {
   composes: inputPINDefault;
-  border: 1px solid red;
+  border: 1px solid #ff445b;
+  color: #ff445b;
 }
 
 :local(.inputErrorPIN1) {
   composes: inputPINDefault1;
-  border: 1px solid red;
+  border: 1px solid #ff445b;
+  color: #ff445b;
 }
 
 :local(.inputErrorPIN4) {
   composes: inputPINDefault4;
-  border: 1px solid red;
+  border: 1px solid #ff445b;
+  color: #ff445b;
 }
 
-/* 5.2 TEXT*/
+/* 5.2 TEXTS */
 :local(.descriptionLinkPIN) {
   margin: 25px 0 25px 0;
   text-align: right;

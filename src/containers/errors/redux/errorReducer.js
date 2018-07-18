@@ -1,8 +1,8 @@
 const initialState = {
     message: {
-        type: "",
+        type: undefined,
         active: false,
-        message: ""
+        message: undefined,        
     }
 }
 
@@ -30,13 +30,23 @@ const error = (state = initialState, action) => {
                 }
             }
 
-        case "REQUEST_CLEAR":
+        case "CLEAR_MESSAGE":
             return {
                 ...state,
                 message: {
                     type: "",
                     active: false,
                     message: ""
+                }
+            }
+
+        case "ERROR_INPUT":
+            return {
+                ...state,
+                message: {
+                    type: "error",
+                    active: true,
+                    message: action.payload.message
                 }
             }
 

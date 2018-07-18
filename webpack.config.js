@@ -56,7 +56,7 @@ module.exports = {
         options: {
           babelrc: false,
           presets: ["react", "env"],
-          plugins: ["syntax-dynamic-import", "transform-class-properties"]
+          plugins: ["syntax-dynamic-import", "transform-class-properties", "transform-object-rest-spread"]
         }
       },
       {
