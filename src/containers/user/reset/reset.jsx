@@ -60,16 +60,17 @@ class Reset extends React.Component {
     let { errors } = this.state;
     return (
       <div>
-        <img src="../../images/logo.svg" className={style.logo} />
+         <Link to="/login">
+          <img src="../../images/icons/2x/baseline_arrow_back_white_18dp.png" className={style.iconArrowBack} />
+        </Link>
+
+        <img src="../../images/logo.svg" className={style.logoReset} />
         <img
           src="../../../../images/reset/ic-email.png"
           className={style.iconEmail}
         />
 
         <div className={style.resetHeader}>{i18n.t("RESET_HEADER")}</div>
-
-        <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
-        <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
         <input
           type="email"
@@ -78,6 +79,9 @@ class Reset extends React.Component {
           onChange={event => { this.getInput(event.target);}}
           className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
         />
+        
+        <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
+        <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
         <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
           {i18n.t("BTN_RESET")}
@@ -90,10 +94,10 @@ class Reset extends React.Component {
     return (
       <div>
         <Link to="/login">
-          <img src="../../images/icons/1x/baseline_arrow_forward_white_18dp.png" className={style.iconArrow} />
+          <img src="../../images/icons/2x/baseline_arrow_forward_white_18dp.png" className={style.iconArrowForward} />
         </Link>
 
-        <img src="../../images/logo.svg" className={style.logo} />
+        <img src="../../images/logo.svg" className={style.logoSendEmailReset} />
 
         <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
 
