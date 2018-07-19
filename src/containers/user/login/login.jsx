@@ -105,7 +105,7 @@ class Login extends React.Component {
 
         <div className={style.doNotHaveAccount}>
           {i18n.t("LOGIN_CREATE_ACCOUNT_LABEL")}{" "}
-          <Link className={style.doNotLink} to="/create">
+          <Link className={style.doNotLink} to="/create_account">
             {i18n.t("LOGIN_SINGUP_ACCOUNT_LINK")}
           </Link>
         </div>

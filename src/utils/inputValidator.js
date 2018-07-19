@@ -24,6 +24,11 @@ export const inputValidator = inputs => {
 
       /* CUSTOM VALIDATIONS */
 
+      // Check field of text
+      if (type === "text") {
+        if (isEmpty(trim(value.toString()))) errors.push(type);        
+      }
+
       // Check if is a valid email
       if (type === "email") {
         if (!isEmail(trim(value.toString()))) errors.push(type);

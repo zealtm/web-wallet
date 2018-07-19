@@ -4,6 +4,9 @@
   "MESSAGE_USER_EMAIL": "User/Email",
 
   "PLACEHOLDER_EMAIL": "Username or Email",
+  "PLACEHOLDER_USER_EMAIL": "Email",
+  "PLACEHOLDER_FIRST_NAME": "First name",
+  "PLACEHOLDER_LAST_NAME": "Last name",
   "PLACEHOLDER_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat Password",
 
@@ -40,6 +43,11 @@
   "RESET_NEW_PASSWORD_HINT_4": "Symbols",
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
-  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
+  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
+
+  "NEW_ACCOUNT_HEADER": "Enter the necessary data to make your registration",
+  "NEW_ACCOUNT_ACCEPT_TERMS": "I agree with",
+  "NEW_ACCOUNT_TERMS_OF_SERVICES": " Terms of Services",
+  "NEW_ACCOUNT_MESSAGE_SENDED": "A message with an activation link has been sent to your email address"
 
 }

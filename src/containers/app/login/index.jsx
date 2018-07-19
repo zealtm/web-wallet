@@ -124,6 +124,7 @@ class Login extends Component {
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
               <Route exact path="/create" component={create} />
+              
               {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null}
             </Grid>
 
