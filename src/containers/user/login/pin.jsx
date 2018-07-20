@@ -77,7 +77,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextError}
+            className={errors ? style.inputTextError : style.inputTextDefault}
           />
 
           <input
@@ -87,7 +87,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextError}
+            className={errors ? style.inputTextError : style.inputTextDefault}
           />
 
           <input
@@ -97,7 +97,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextError}
+            className={errors ? style.inputTextError : style.inputTextDefault}
           />
 
           <input
@@ -107,7 +107,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextError}
+            className={errors ? style.inputTextError : style.inputTextDefault}
           />
         </div>
 

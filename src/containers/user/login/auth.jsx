@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate, pageControl } from "../redux/userAction";
+import { authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -15,6 +15,11 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
+
+const mapSateToProps = store => ({
+  user: store.user,
+  error: store.error
+});
 
 class Auth extends React.Component {
   constructor() {
@@ -39,22 +44,12 @@ class Auth extends React.Component {
     });
   };
 
-  nextContent = () => {
-    let { authenticate, clearMessage } = this.props;
-    let { email, password } = this.state.inputs;
-    console.warn('1')
-
-    return authenticate(email.value, password.value)
-    
-
-
-  };
-
   inputValidator = () => {
-    let { user, error, pageControl, errorInput } = this.props;
     let { inputs } = this.state;
+    let { email, password } = this.state.inputs;
+    let { errorInput, authenticate } = this.props;
     let { messageError, errors } = inputValidator(inputs);
-    
+
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -62,17 +57,7 @@ class Auth extends React.Component {
         errors
       });
     } else {
-      this.nextContent();
-      
-      console.warn('2')
-      if (!error.message.active) {
-        console.warn('3', error)
-        pageControl(user.page.step + 1);
-        // clearMessage();
-      }
-  
-  
-      console.warn(error)
+      authenticate(email.value, password.value);
     }
   };
 
@@ -139,23 +124,16 @@ class Auth extends React.Component {
 
 Auth.propTypes = {
   authenticate: PropTypes.func,
-  pageControl: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object,
   error: PropTypes.object
 };
 
-const mapSateToProps = store => ({
-  user: store.user,
-  error: store.error
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       authenticate,
-      pageControl,
       clearMessage,
       errorInput
     },
