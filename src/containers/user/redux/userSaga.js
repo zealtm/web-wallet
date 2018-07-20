@@ -31,7 +31,7 @@ export function* authenticateUser(action) {
         yield put({
             type: "REQUEST_FAILED",
             payload: {
-                message: error.message
+                message: "Your request could not be completed. Check your connection or try again later"
             }
         });
     }
