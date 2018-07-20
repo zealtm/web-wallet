@@ -4,11 +4,26 @@ import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
 
+
+/*
+DOCUMENTATION:
+
+Field: Name
+
+E-mail: email
+Alias:  alias
+Username: username
+E-mail or Username: emailUsername
+Password: password
+
+*/
+
 export const inputValidator = inputs => {
   let errors = [];
   let messageError = undefined;
 
   Object.keys(inputs).map(input => {
+    
     // Check if is undefined
     if (!inputs[input]) {
       errors.push(input);
@@ -29,20 +44,46 @@ export const inputValidator = inputs => {
         if (!isEmail(trim(value.toString()))) errors.push(type);
       }
 
-      // Check if is a valid password
-      // if (type === "password") {
-      //   if (!isLength(trim(value.toString()), { min: 8, max: 64 }))
-      //     errors.push(type);
-      // }
+      // Check if is a valid alias
+      if (type === "alias" || type === "username") {
+        let regex = new RegExp("^[a-z0-9-.@_]+$");
+
+        if (
+          !isLength(trim(value.toString()), { min: 4, max: 30 }) ||
+          !regex.test(trim(value.toString()))
+        ) {
+          errors.push(type);
+        }
+      }
+
+      // Check if is username or e-mail
+      if (type === "usernameEmail") {
+        let regex = new RegExp("^[a-z0-9-.@_]+$");
+        let error = 0;
+
+        if (!isEmail(trim(value.toString()))) error += 1;
+
+        if (
+          !isLength(trim(value.toString()), { min: 4, max: 30 }) ||
+          !regex.test(trim(value.toString()))
+        ) {
+          error += 1;
+        }
+
+        if (error === 2) errors.push(type);
+      }
 
       if (type === "passwordRepeat") {
+        let regex = new RegExp('a-zA-Z0-9!@#$&()\\-`.+,/"');
+
         if (
           !isLength(trim(value.toString()), { min: 8, max: 64 }) ||
-          trim(value.toString()).match(/^[a-zA-Z0-9!@#$&()\\-`.+,/"]*$/g)
+          !regex.test(trim(value.toString()))
         ) {
           errors.push(type);
           messageError = i18n.t("RESET_NEW_PASSWORD_ERROR_1");
         }
+
         if (
           inputs["password"] &&
           value.toString() !== inputs["password"].value

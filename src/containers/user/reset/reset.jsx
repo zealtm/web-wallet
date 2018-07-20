@@ -22,7 +22,7 @@ class Reset extends React.Component {
     this.state = {
       step: 0,
       inputs: {
-        email: undefined
+        emailUsername: undefined
       },
       errors: undefined
     }
@@ -40,7 +40,7 @@ class Reset extends React.Component {
   inputValidator = () => {
     let { clearMessage, errorInput } = this.props
     let { inputs, step } = this.state;
-    let { email } = inputs;
+    let { emailUsername } = inputs;
     let { messageError, errors } = inputValidator(inputs);
 
     if (errors.length > 0) {
@@ -51,7 +51,7 @@ class Reset extends React.Component {
       });
     } else {
       clearMessage();
-      authenticate(email.value);
+      authenticate(emailUsername.value);
       this.setState({ step: step + 1 });
     }
   };
@@ -74,10 +74,10 @@ class Reset extends React.Component {
 
         <input
           type="email"
-          name="email"
+          name="emailUsername"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           onChange={event => { this.getInput(event.target);}}
-          className={errors && errors.includes('email') ? style.inputError : style.inputTextDefault}
+          className={errors && errors.includes('emailUsername') ? style.inputError : style.inputTextDefault}
         />
         
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>

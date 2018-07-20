@@ -21,7 +21,7 @@ class Login extends React.Component {
     super();
     this.state = {
       inputs: {
-        email: undefined,
+        emailUsername: undefined,
         password: undefined
       },
       errors: undefined
@@ -41,7 +41,7 @@ class Login extends React.Component {
   inputValidator = () => {
     let { clearMessage, errorInput, authenticate } = this.props;
     let { inputs } = this.state;
-    let { email, password } = inputs;
+    let { emailUsername, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
     if (errors.length > 0) {
       errorInput(messageError);
@@ -51,7 +51,7 @@ class Login extends React.Component {
       });
     } else {
       clearMessage();
-      authenticate(email.value, password.value);
+      authenticate(emailUsername.value, password.value);
     }
   };
 
@@ -65,13 +65,13 @@ class Login extends React.Component {
 
         <input
           type="email"
-          name="email"
+          name="emailUsername"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
           }}
           className={
-            errors && errors.includes("email")
+            errors && errors.includes("emailUsername")
               ? style.inputError
               : style.inputTextDefault
           }
