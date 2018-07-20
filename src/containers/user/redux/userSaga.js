@@ -1,30 +1,39 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import UserService from "../../../services/userService";
-const userService = new UserService();
+import AuthService from "../../../services/authService";
+import { setAuthToken } from "../../../utils/localStorage"
+const authService = new AuthService();
 
 export function* authenticateUser(action) {
     try {
-        const request = yield call(userService.userAuthenticate, action.email, action.password);
-
-        if (request.status !== 200) {
+        const request = yield call(authService.authenticate, 
+            action.email, action.password);
+        
+        if (request.status == 200) {
+            yield call(setAuthToken, request.data.token);
+            
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
-                payload: { 
-                    user: request 
+                payload: {
+                    user: request
                 }
             });
         }
-        return yield put({
+        
+        yield put({
             type: "REQUEST_FAILED",
             payload: {
-                message: "falha ao tentar authenticação"
+                message: "Failed to try authentication"
             }
         });
-    }
 
-    catch (error) {
-        console.warn("ERRO ", error);
+    } catch (error) {
+        yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message: "Your request could not be completed. Check your connection or try again later"
+            }
+        });
     }
 }
 
