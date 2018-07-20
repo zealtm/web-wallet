@@ -1,18 +1,31 @@
 import axios from "axios";
-import { BASE_URL, API_KEY } from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, API_HEADER_AUTH } from "../constants/apiBaseUrl";
 
 class AuthService {
     async authenticate(email, password) {
         try {
-            let request = await axios.post(`${BASE_URL}/login`, {
+            let response = await axios.post(`${BASE_URL}/login`, {
                 login: email,
                 password
-            }, API_KEY); 
-            return request;
+            }, API_HEADER);
+
+            return response;
         } catch (error) {
             console.error(error);
         }
     }
+
+    async hasTwoFactorAuth() {
+        try {
+            let response = await axios.get(`${BASE_URL}/user/2fa`, API_HEADER_AUTH);
+
+            return response;
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    
 }
 
 export default AuthService;
