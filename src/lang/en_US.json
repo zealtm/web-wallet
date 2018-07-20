@@ -40,6 +40,12 @@
   "RESET_NEW_PASSWORD_HINT_4": "Symbols",
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
-  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
+  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
+
+  "2FA_HEADER": "2FA Confirmation",
+  "2FA_INSTRUCTIONS_TITLE": "Device verification",
+  "2FA_INSTRUCTIONS_1": "Confirm with the code provided in google authenticator and enter the 6 digits below",
+  "2FA_INSTRUCTIONS_2": "Enter the six-digit code of the second factor of your Monday Wallet!",
+  "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": " Where do I find the code?"
 
 }
