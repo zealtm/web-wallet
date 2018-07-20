@@ -21,6 +21,8 @@
 5. PIN
   5.1 INPUT
   5.2 TEXTS
+  5.3 BUTTON
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -262,30 +264,31 @@
   composes: inputTextDefault from "../../components/bases/textBase.css";
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   width: 55px;
-  padding: 10px;
+  padding: 10px 10px 4px;
   border-radius: 6px;
-  border: 0;
-  height: 30px;
+  border: 1px solid #4b2c82;
+  height: 35px;
   color: white;
-  font-size: 49px;
+  font-size: 35px;
   text-align: center;
   margin: 1px;
 }
 
-:local(.inputPINDefault1){
+:local(.inputPINError){
   composes: inputPINDefault;
-  margin-left: 0px;
-}
-
-:local(.inputPINDefault4){
-  composes: inputPINDefault;
-  margin-right: 0px;
+  composes: clError from "../../components/bases/colorBase.css";
+  border: 1px solid #ff445b; 
 }
 
 :local(.alignInputsDefault){
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+:local(.inputBorderGreen) {
+  composes: inputPINDefault;
+  border: 1px solid  #4cd566;
 }
 
 /* 5.2 TEXTS */
@@ -303,4 +306,11 @@
   margin-top: 150px;  
 }
 
+/* 5.3 BUTTON*/
+:local(.buttonGreen) {
+  composes: buttonBorderGreen;
+  composes: bgGreenDefault from "../../components/bases/colorBase.css";
+}
 /* ------------------------------------------------------------------------- */
+
+

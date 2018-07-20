@@ -25,27 +25,39 @@ class Pin extends React.Component {
         PIN_3: undefined,
         PIN_4: undefined
       },
-      errors: undefined,
+      onChangeInputs: {
+        onInput_1: false,
+        onInput_2: false,
+        onInput_3: false,
+        onInput_4: false,
+      },
+      errors: undefined
     };
   }
 
   getInput = input => {
     let { name, value } = input;
-    let { inputs } = this.state;
-
+    let { PIN } = this.state;
+    let { onInput_1, onInput_2, onInput_3, onInput_4} = this.state;
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: { type: name, value } },
-      errors: undefined
+      PIN: { ...PIN, [name]: value },
+      errors: undefined,
+      onChangeInput: true,    
     });
-
+    if(onInput_1===1){ this.setState({...this.state, onInput_1: true}) }
+    if(onInput_2===1){ this.setState({...this.state, onInput_2: true}) }
+    if(!onInput_3){ this.setState({...this.state, onInput_3: true}) }
+    if(!onInput_4){ this.setState({...this.state, onInput_4: true}) }    
     return;
   };
 
   inputValidator = () => {
     let { clearMessage, errorInput } = this.props;
-    let { inputs } = this.state;
-    let { errors, messageError } = inputValidator(inputs);
+    let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
+    let PIN = PIN_1 + PIN_2 + PIN_3 + PIN_4;
+    let { errors, messageError } = inputValidator({ inputs: { type: "PIN", value: PIN } });
+
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -63,23 +75,23 @@ class Pin extends React.Component {
   };
 
   render() {
-    let { errors } = this.state;
+    let { errors, PIN, onInput_1, onInput_2, onInput_3, onInput_4 } = this.state;
     return (
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
 
         <div className={style.alignInputsDefault}>
+
           <input
             type="password"
             name="PIN_1"
             maxLength="1"
             onChange={event => {
-              this.getInput(event.target);
+              this.getInput(event.target.nodeName);
             }}
-            className={errors ? style.inputTextError : style.inputTextDefault}
+            className={errors ? style.inputPINError : onInput_1 ? style.inputBorderGreen : style.inputPINDefault}
           />
-
           <input
             type="password"
             name="PIN_2"
@@ -87,7 +99,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextDefault}
+            className={errors ? style.inputPINError : onInput_2 ? style.inputBorderGreen : style.inputPINDefault}
           />
 
           <input
@@ -97,7 +109,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextDefault}
+            className={errors ? style.inputPINError : onInput_3 ? style.inputBorderGreen : style.inputPINDefault}
           />
 
           <input
@@ -107,7 +119,7 @@ class Pin extends React.Component {
             onChange={event => {
               this.getInput(event.target);
             }}
-            className={errors ? style.inputTextError : style.inputTextDefault}
+            className={errors ? style.inputPINError : onInput_4 ? style.inputBorderGreen : style.inputPINDefault}
           />
         </div>
 
@@ -116,11 +128,13 @@ class Pin extends React.Component {
         </div>
 
         <button
-          className={style.buttonBorderGreen}
+          className={PIN.PIN_1 && PIN.PIN_2 && PIN.PIN_3 && PIN.PIN_4 ? style.buttonGreen : style.buttonBorderGreen}
           onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_LOGIN")}
+
         </button>
+
       </div>
     );
   }

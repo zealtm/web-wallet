@@ -15,6 +15,7 @@ export const inputValidator = inputs => {
     } else {
       let { type, value } = inputs[input];
 
+
       // Check if is empty
       if (isEmpty(trim(value.toString()))) errors.push(type);
 
@@ -51,10 +52,21 @@ export const inputValidator = inputs => {
           messageError = i18n.t("RESET_NEW_PASSWORD_ERROR_2");
         }
       }
+
+      if (type === "PIN" || type === "pin") {
+        let regex = new RegExp("^[0-9]+$");
+
+        if (
+          !isLength(trim(value.toString()), { min: 1, max: 4 }) ||
+          !regex.test(trim(value.toString()))
+        ){
+          errors.push(type);
+        }
+      }
     }
   });
 
-  errors = errors.filter(function(item, index, input) {
+  errors = errors.filter(function (item, index, input) {
     return input.indexOf(item) == index;
   });
 

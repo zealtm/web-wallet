@@ -25,6 +25,7 @@
   composes: bgPurpleLight from "./colorBase.css";
   composes: bdError from "./colorBase.css";
   border-style: solid;
+  border-width: 1px;
 }
 
 /* 1.1 INPUT TEXT PLACEHOLDER*/

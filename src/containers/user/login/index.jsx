@@ -12,9 +12,9 @@ class Login extends React.Component {
   renderContent = () => {
     let { page } = this.props.user;
 
-    if (page === 0) return <Auth />;
+    if (page === 1) return <Auth />;
     // if (page === 1) return <2FA />
-    if (page === 1) return <Pin />;
+    if (page === 0) return <Pin />;
     // if (page === 3) return <Seed />
   };
 
