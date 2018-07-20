@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { authenticate, pageControl } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -16,7 +16,7 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
-class Login extends React.Component {
+class Auth extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -31,6 +31,7 @@ class Login extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { inputs } = this.state;
+
     this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: { type: name, value } },
@@ -38,11 +39,22 @@ class Login extends React.Component {
     });
   };
 
+  nextContent = () => {
+    let { authenticate, clearMessage } = this.props;
+    let { email, password } = this.state.inputs;
+    console.warn('1')
+
+    return authenticate(email.value, password.value)
+    
+
+
+  };
+
   inputValidator = () => {
-    let { clearMessage, errorInput, authenticate } = this.props;
+    let { user, error, pageControl, errorInput } = this.props;
     let { inputs } = this.state;
-    let { email, password } = inputs;
     let { messageError, errors } = inputValidator(inputs);
+    
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -50,8 +62,17 @@ class Login extends React.Component {
         errors
       });
     } else {
-      clearMessage();
-      authenticate(email.value, password.value);
+      this.nextContent();
+      
+      console.warn('2')
+      if (!error.message.active) {
+        console.warn('3', error)
+        pageControl(user.page.step + 1);
+        // clearMessage();
+      }
+  
+  
+      console.warn(error)
     }
   };
 
@@ -72,7 +93,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("email")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -85,7 +106,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("password")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -116,16 +137,25 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+Auth.propTypes = {
   authenticate: PropTypes.func,
+  pageControl: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object,
+  error: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  user: store.user,
+  error: store.error
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       authenticate,
+      pageControl,
       clearMessage,
       errorInput
     },
@@ -133,6 +163,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
-)(Login);
+)(Auth);

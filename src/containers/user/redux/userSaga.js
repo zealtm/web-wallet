@@ -15,10 +15,11 @@ export function* authenticateUser(action) {
                 }
             });
         }
+        
         return yield put({
             type: "REQUEST_FAILED",
             payload: {
-                message: "falha ao tentar authenticação"
+                message: "Usuário e/ou senha incorretos"
             }
         });
     }

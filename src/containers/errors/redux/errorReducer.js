@@ -21,6 +21,7 @@ const error = (state = initialState, action) => {
             }
 
         case "REQUEST_FAILED":
+            console.warn('REQUEST_FAILED', action)
             return {
                 ...state,
                 message: {
@@ -34,9 +35,9 @@ const error = (state = initialState, action) => {
             return {
                 ...state,
                 message: {
-                    type: "",
+                    type: undefined,
                     active: false,
-                    message: ""
+                    message: undefined
                 }
             }
 
