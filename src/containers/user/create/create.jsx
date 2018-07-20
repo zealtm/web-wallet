@@ -24,7 +24,10 @@ class Login extends React.Component {
                 email: undefined,
                 password: undefined,
                 passwordRepeat: undefined,
-                checkbox: false
+                checkbox: {
+                    checked: false,
+                    required: true
+                }
             },
             step: 0,
             errors: undefined,
