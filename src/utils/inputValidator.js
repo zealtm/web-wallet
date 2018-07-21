@@ -4,7 +4,6 @@ import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
 
-
 /*
 DOCUMENTATION:
 
@@ -23,7 +22,6 @@ export const inputValidator = inputs => {
   let messageError = undefined;
 
   Object.keys(inputs).map(input => {
-    
     // Check if is undefined
     if (!inputs[input]) {
       errors.push(input);
@@ -95,7 +93,8 @@ export const inputValidator = inputs => {
     }
   });
 
-  errors = errors.filter(function(item, index, input) {
+  // REMOVE DUPLICATE ITENS
+  errors = errors.filter((item, index, input) => {
     return input.indexOf(item) == index;
   });
 
