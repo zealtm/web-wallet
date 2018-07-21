@@ -25,10 +25,10 @@ class Reset extends React.Component {
         emailUsername: undefined
       },
       errors: undefined
-    }
+    };
   }
 
-  getInput = (input) => {
+  getInput = input => {
     let { name, value } = input;
     this.setState({
       ...this.state,
@@ -38,7 +38,7 @@ class Reset extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props
+    let { clearMessage, errorInput } = this.props;
     let { inputs, step } = this.state;
     let { emailUsername } = inputs;
     let { messageError, errors } = inputValidator(inputs);
@@ -60,13 +60,16 @@ class Reset extends React.Component {
     let { errors } = this.state;
     return (
       <div>
-         <Link to="/login">
-          <img src="../../images/icons/2x/baseline_arrow_back_white_18dp.png" className={style.iconArrowBack} />
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
         </Link>
 
         <img src="../../images/logo.svg" className={style.logoReset} />
         <img
-          src="../../../../images/reset/ic-email.png"
+          src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}
         />
 
@@ -76,58 +79,65 @@ class Reset extends React.Component {
           type="email"
           name="emailUsername"
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
-          onChange={event => { this.getInput(event.target);}}
-          className={errors && errors.includes('emailUsername') ? style.inputTextError : style.inputTextDefault}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("emailUsername")
+              ? style.inputTextError
+              : style.inputTextDefault
+          }
         />
-        
+
         <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
         <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
 
-        <button className={style.buttonBorderGreen} onClick={() => this.inputValidator()}>
+        <button
+          className={style.buttonBorderGreen}
+          onClick={() => this.inputValidator()}
+        >
           {i18n.t("BTN_RESET")}
         </button>
       </div>
-    )
-  }
+    );
+  };
 
   cont_2 = () => {
     return (
       <div>
-        <Link to="/login">
-          <img src="../../images/icons/2x/baseline_arrow_forward_white_18dp.png" className={style.iconArrowForward} />
-        </Link>
 
         <img src="../../images/logo.svg" className={style.logoSendEmailReset} />
 
-        <img src="../../../../images/reset/ic-email.png" className={style.iconEmail} />
+        <img
+          src="../../../../images/icons/email/email@1x.png"
+          className={style.iconEmail}
+        />
 
-        <div className={style.resetEmailSend}>{i18n.t("RESET_EMAIL_SENDED")}</div>
+        <div className={style.resetEmailSend}>
+          {i18n.t("RESET_EMAIL_SENDED")}
+        </div>
 
         <button className={style.buttonBorderGreen}>
           <Link className={style.resetLinkLogin} to="/login">
-            {i18n.t("BTN_LOGIN")}
+            {i18n.t("BTN_BACK")}
           </Link>
         </button>
-
       </div>
-    )
-  }
+    );
+  };
 
   render() {
-    let { step } = this.state
+    let { step } = this.state;
     let contents = [this.cont_1(), this.cont_2()];
     return (
       <div className={style.contGeneral}>
-
         {contents[step]}
 
         <Footer />
-
       </div>
     );
   }
 }
-
 
 Reset.propTypes = {
   authenticate: PropTypes.func,

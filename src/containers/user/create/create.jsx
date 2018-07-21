@@ -28,14 +28,6 @@ class Login extends React.Component {
           checkboxTerms: {
             checked: false,
             required: true
-          },
-          checkboxTesteR: {
-            checked: false,
-            required: true
-          },
-          checkboxTesteNR: {
-            checked: false,
-            required: false
           }
         }
       },
@@ -92,11 +84,7 @@ class Login extends React.Component {
 
   container_1 = () => {
     let { errors } = this.state;
-    let {
-      checkboxTerms,
-      checkboxTesteR,
-      checkboxTesteNR
-    } = this.state.inputs.checkbox;
+    let { checkboxTerms } = this.state.inputs.checkbox;
 
     return (
       <div>
@@ -113,7 +101,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("firstName")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -127,7 +115,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("lastName")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -140,7 +128,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("email")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -154,7 +142,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("password")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -168,7 +156,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("passwordRepeat")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -178,22 +166,6 @@ class Login extends React.Component {
             type="checkbox"
             name="checkboxTerms"
             checked={checkboxTerms.checked}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-          />
-          <CustomCheckbox
-            type="checkbox"
-            name="checkboxTesteR"
-            checked={checkboxTesteR.checked}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-          />
-          <CustomCheckbox
-            type="checkbox"
-            name="checkboxTesteNR"
-            checked={checkboxTesteNR.checked}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -248,6 +220,12 @@ class Login extends React.Component {
 
     return (
       <div className={style.contNewAccount}>
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
         <img src="../../images/logo.svg" className={style.logo} />
 
         {contents[step]}
