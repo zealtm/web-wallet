@@ -52,12 +52,6 @@ let create = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
 });
 
-let FA = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/login/2FA")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/login/2FA")
-});
-
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,

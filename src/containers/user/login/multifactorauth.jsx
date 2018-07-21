@@ -13,7 +13,7 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
-class Login extends React.Component {
+class MultiFactorAuth extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -167,7 +167,7 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
+MultiFactorAuth.propTypes = {
     authenticate: PropTypes.func,
     clearMessage: PropTypes.func,
     errorInput: PropTypes.func
@@ -186,4 +186,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
     null,
     mapDispatchToProps
-)(Login);
+)(MultiFactorAuth);

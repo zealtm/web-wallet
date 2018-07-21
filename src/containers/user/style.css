@@ -272,6 +272,8 @@
   font-size: 35px;
   text-align: center;
   margin: 1px;
+}
+
 :local(.inputTwoFactorAuthenticator){
   composes: clSuccess from "../../components/bases/colorBase.css";
   background-color: transparent;
