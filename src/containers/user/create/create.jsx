@@ -97,7 +97,7 @@ class Login extends React.Component {
       checkboxTesteR,
       checkboxTesteNR
     } = this.state.inputs.checkbox;
-    
+
     return (
       <div>
         <div className={style.newAccountHeader}>

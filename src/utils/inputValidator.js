@@ -16,12 +16,11 @@ export const inputValidator = inputs => {
       let { checkbox } = inputs;
 
       Object.keys(checkbox).map(value => {
-        let { checked, required } = checkbox[value]
-        if(required === true && checked === false) {
-          errors.push(value)
+        let { checked, required } = checkbox[value];
+        if (required === true && checked === false) {
+          errors.push(value);
         }
       });
-    
     } else {
       let { type, value } = inputs[input];
 
