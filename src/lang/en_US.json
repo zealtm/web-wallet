@@ -14,7 +14,6 @@
   "BTN_LOGIN": "Login",
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
- 
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -30,28 +29,38 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
-  
+
+  "PIN_HEADER": "Enter your PIN",
+  "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
+
+  "NEW_ACCOUNT_HEADER": "Enter the necessary data to make your registration",
+  "NEW_ACCOUNT_ACCEPT_TERMS": "I agree with",
+  "NEW_ACCOUNT_TERMS_OF_SERVICES": " Terms of Services",
+  "NEW_ACCOUNT_MESSAGE_SENDED":
+    "A message with an activation link has been sent to your email address",
+
+  "2FA_HEADER": "2FA Confirmation",
+  "2FA_INSTRUCTIONS_TITLE": "Device verification",
+  "2FA_INSTRUCTIONS_1":
+    "Confirm with the code provided in google authenticator and enter the 6 digits below",
+  "2FA_INSTRUCTIONS_2":
+    "Enter the six-digit code of the second factor of your Monday Wallet!",
+  "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": " Where do I find the code?",
+
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
 
-  "PIN_HEADER": "Enter your PIN",
-  "PIN_FORGET_PIN_LINK":"Forgot your PIN?",
-  
-  "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address.",
+  "RESET_EMAIL_SENDED":
+    "A message with a password reset link has been sent to your email address.",
   "RESET_NEW_PASSWORD_HEADER": "Digit your new password",
-  "RESET_NEW_PASSWORD_INSTRUCTION": "Your password should follow the rules below",
+  "RESET_NEW_PASSWORD_INSTRUCTION":
+    "Your password should follow the rules below",
   "RESET_NEW_PASSWORD_HINT_1": "Upcase letter",
   "RESET_NEW_PASSWORD_HINT_2": "Downcase letter",
   "RESET_NEW_PASSWORD_HINT_3": "Numbers",
   "RESET_NEW_PASSWORD_HINT_4": "Symbols",
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
-  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
-
-  "NEW_ACCOUNT_HEADER": "Enter the necessary data to make your registration",
-  "NEW_ACCOUNT_ACCEPT_TERMS": "I agree with",
-  "NEW_ACCOUNT_TERMS_OF_SERVICES": " Terms of Services",
-  "NEW_ACCOUNT_MESSAGE_SENDED": "A message with an activation link has been sent to your email address"
-
+  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
 }
