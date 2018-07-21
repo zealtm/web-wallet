@@ -3,8 +3,8 @@ import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import i18n from "../../../utils/i18n";
 import { connect } from "react-redux";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -29,9 +29,9 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/login/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/login/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login")
 });
 
 let reset = Loadable({
@@ -108,7 +108,6 @@ class Login extends Component {
 
   render() {
     const { error } = this.props;
-    const { newPassword } = this.state;
 
     return (
       <Router>
@@ -123,8 +122,8 @@ class Login extends Component {
               <Route exact path="/" component={login} />
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
+              <Route exact path="/new-password" component={resetNewPassword} />
               <Route exact path="/create" component={create} />
-              {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null}
             </Grid>
 
             <Hidden xsDown>
@@ -150,7 +149,6 @@ Login.propTypes = {
 
 const mapSateToProps = store => ({
   error: store.error.message,
-  user: store.user
 });
 
 export default connect(mapSateToProps)(Login);

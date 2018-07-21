@@ -78,6 +78,9 @@
 :local(.bdGreenDark) {
   border-color: #000;
 }
+:local(.bdError) {
+  border-color: #ff445b;
+}
 
 /* ------------------------------------------------------------------------- */
 

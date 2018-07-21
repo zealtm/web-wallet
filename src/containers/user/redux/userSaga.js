@@ -15,6 +15,7 @@ export function* authenticateUser(action) {
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
                 payload: {
+                    page: 1,
                     user: request
                 }
             });
@@ -38,8 +39,5 @@ export function* authenticateUser(action) {
 }
 
 export default function* rootSaga() {
-    yield [
-        fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser)
-    ];
+  yield [fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser)];
 }
-

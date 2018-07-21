@@ -1,30 +1,24 @@
 const initialState = {
-    user: {},
-    errors: []
-}
+  // LOGIN, 2FA, SEED, PIN
+  page: 0,
+  user: {}
+};
 
 const user = (state = initialState, action) => {
+  switch (action.type) {
+    case "POST_USER_AUTHENTICATE":
+      return {
+        ...state,
+        page: action.payload.page,
+        user: action.payload.user
+      };
 
-    switch (action.type) {
-        case "POST_USER_AUTHENTICATE":
-            return {
-                ...state,
-                user: action.payload.user
-            };
-
-        case "CLEAR_USER_ERROR":
-            return {
-                ...state,
-                errors: []
-            };
-            
-        default: {
-            return {
-                ...state
-            }
-        }
+    default: {
+      return {
+        ...state
+      };
     }
+  }
 };
 
 export default user;
-

@@ -31,6 +31,10 @@
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
+
+  "PIN_HEADER": "Enter your PIN",
+  "PIN_FORGET_PIN_LINK":"Forgot your PIN?",
+  
   "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address.",
   "RESET_NEW_PASSWORD_HEADER": "Digit your new password",
   "RESET_NEW_PASSWORD_INSTRUCTION": "Your password should follow the rules below",
@@ -41,5 +45,5 @@
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
   "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
-
+  
 }
