@@ -1,7 +1,20 @@
 export const authenticate = (email, password) => ({
     type: "POST_USER_AUTHENTICATE_API",
-    email,
-    password
+    payload: {
+        email,
+        password
+    }
+});
+
+export const createTwoFactorAuth = () => ({
+    type: "POST_USER_CREATE_2FA_API"
+});
+
+export const verifyTwoFactorAuth = (token) => ({
+    type: "POST_USER_VERIFY_2FA_API",
+    payload: {
+        token
+    }
 });
 
 export const clearUserError = () => ({

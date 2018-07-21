@@ -8,7 +8,7 @@ class AuthService {
                 login: email,
                 password
             }, API_HEADER);
-
+             
             return response;
         } catch (error) {
             console.error(error);
@@ -17,7 +17,8 @@ class AuthService {
 
     async hasTwoFactorAuth() {
         try {
-            let response = await axios.get(`${BASE_URL}/user/2fa`, API_HEADER_AUTH);
+            let response = await axios.get(`${BASE_URL}/user/2fa`,
+                API_HEADER_AUTH);
 
             return response;
         } catch (error) {
@@ -25,7 +26,29 @@ class AuthService {
         }
     }
 
-    
+    async createTwoFactorAuth() {
+        try {
+            let response = await axios.post(`${BASE_URL}/user/2fa`,
+                {},
+                API_HEADER_AUTH);
+
+            return response;
+        } catch (error) {
+            return error.message;
+        }
+    }
+
+    async verifyTwoFactoryAuth(token) {
+        try {
+            let response = await axios.post(`${BASE_URL}/user/2fa/verify`, {
+                token
+            }, API_HEADER_AUTH);
+            return response;
+
+        } catch (error) {
+            return error.message;
+        }
+    }
 }
 
 export default AuthService;

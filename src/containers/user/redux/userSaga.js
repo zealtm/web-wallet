@@ -6,20 +6,24 @@ const authService = new AuthService();
 
 export function* authenticateUser(action) {
     try {
-        const request = yield call(authService.authenticate, 
-            action.email, action.password);
-        
+        const request = yield call(authService.authenticate,
+            action.payload.email,
+            action.payload.password);
+
         if (request.status == 200) {
             yield call(setAuthToken, request.data.token);
-            
+
+            const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
-                payload: {
-                    user: request
+
+                user: {
+                    token: setAuthToken(),
+                    hasTwoFactorAuth
                 }
             });
         }
-        
+
         yield put({
             type: "REQUEST_FAILED",
             payload: {
@@ -37,9 +41,76 @@ export function* authenticateUser(action) {
     }
 }
 
+export function* hasTwoFactorAuth() {
+    try {
+        const response = yield call(authService.hasTwoFactorAuth);
+        if (response.status === 200)
+            return yield put({
+                type: "GET_USER_2FA",
+                response
+            });
+
+        yield put({
+            type: "GET_USER_2FA_FAILED",
+            response
+        });
+
+    } catch (error) {
+        yield put({
+            type: "REQUEST_FAILED",
+            message: error.message
+        });
+    }
+}
+
+export function* createTwoFactorAuth() {
+    try {
+        const response = yield call(authService.createTwoFactorAuth);
+        if (response.status === 201)
+            return yield put({
+                type: "POST_USER_CREATE_2FA",
+                response
+            });
+
+        yield put({
+            type: "POST_USER_CREATE_2FA_FAILED",
+            response
+        });
+    } catch (error) {
+        return error.message;
+    }
+}
+
+export function* verifyTwoFactorAuth(action) {
+    try {
+        const response = yield call(authService.verifyTwoFactoryAuth,
+            action.payload.token);
+        if (response.status === 200)
+            return yield put({
+                type: "POST_USER_VERIFY_2FA",
+                response
+            });
+
+        yield put({
+            type: "POST_USER_VERIFY_2FA_FAILED",
+            response
+        });
+    } catch (error) {
+        yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message: ""
+            }
+        })
+    }
+}
+
 export default function* rootSaga() {
     yield [
-        fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser)
+        fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
+        fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
+        fork(takeLatest, "POST_USER_CREATE_2FA_API", createTwoFactorAuth),
+        fork(takeLatest, "POST_USER_VERIFY_2FA", verifyTwoFactorAuth)
     ];
 }
 
