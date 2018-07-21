@@ -11,7 +11,7 @@ import MultiFactorAuth from "./multifactorauth";
 class Login extends React.Component {
   renderContent = () => {
     let { page } = this.props.user;
-
+    
     if (page === 0) return <Auth />;
     if (page === 1) return <MultiFactorAuth />
     if (page === 2) return <Pin />;
