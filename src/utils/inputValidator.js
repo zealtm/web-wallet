@@ -12,6 +12,16 @@ export const inputValidator = inputs => {
     // Check if is undefined
     if (!inputs[input]) {
       errors.push(input);
+    } else if (input === "checkbox") {
+      let { checkbox } = inputs;
+
+      Object.keys(checkbox).map(value => {
+        let { checked, required } = checkbox[value]
+        if(required === true && checked === false) {
+          errors.push(value)
+        }
+      });
+    
     } else {
       let { type, value } = inputs[input];
 
@@ -26,7 +36,7 @@ export const inputValidator = inputs => {
 
       // Check field of text
       if (type === "text") {
-        if (isEmpty(trim(value.toString()))) errors.push(type);        
+        if (isEmpty(trim(value.toString()))) errors.push(type);
       }
 
       // Check if is a valid email
