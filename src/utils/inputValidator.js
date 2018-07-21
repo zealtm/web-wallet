@@ -70,7 +70,7 @@ export const inputValidator = inputs => {
       }
 
       // Check if is username or e-mail
-      if (type === "usernameEmail") {
+      if (type === "emailUsername") {
         let regex = new RegExp("^[a-z0-9-.@_]+$");
         let error = 0;
 

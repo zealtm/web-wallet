@@ -44,7 +44,7 @@ class Pin extends React.Component {
     let { clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let PIN = PIN_1 + PIN_2 + PIN_3 + PIN_4;
-    console.warn(PIN);
+
     let { errors, messageError } = inputValidator({ inputs: { type: "PIN", value: PIN } });
 
     if (errors.length > 0) {
@@ -65,7 +65,7 @@ class Pin extends React.Component {
 
   render() {
     let { errors, PIN } = this.state;
-    console.warn(this.state)
+
     return (
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
