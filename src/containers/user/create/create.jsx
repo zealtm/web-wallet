@@ -113,7 +113,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("firstName")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -127,7 +127,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("lastName")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -140,7 +140,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("email")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -154,7 +154,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("password")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -168,7 +168,7 @@ class Login extends React.Component {
           }}
           className={
             errors && errors.includes("passwordRepeat")
-              ? style.inputError
+              ? style.inputTextError
               : style.inputTextDefault
           }
         />
@@ -247,7 +247,7 @@ class Login extends React.Component {
     let contents = [this.container_1(), this.container_2()];
 
     return (
-      <div className={style.contNewAccount}>
+      <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
 
         {contents[step]}
