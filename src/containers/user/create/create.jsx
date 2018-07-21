@@ -1,66 +1,278 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { authenticate } from "../redux/userAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
-// COMPONENTS
-import CheckBox from "../../../components/checkBox";
+// UTILS
+import { inputValidator } from "../../../utils/inputValidator";
+import i18n from "../../../utils/i18n";
 
-let content_1 = <div>Conteúdo 1</div>;
-let content_2 = <div>Conteúdo 2</div>;
-let content_3 = <div>Conteúdo 3</div>;
+// STYLE
+import style from "../style.css";
+import CustomCheckbox from "../../../components/checkBox";
 
-let contents = [content_1, content_2, content_3];
-
-class Create extends React.Component {
-  constructor(props) {
-    super(props);
-
+class Login extends React.Component {
+  constructor() {
+    super();
     this.state = {
+      inputs: {
+        lastName: undefined,
+        firstName: undefined,
+        email: undefined,
+        password: undefined,
+        passwordRepeat: undefined,
+        checkbox: {
+          checkboxTerms: {
+            checked: false,
+            required: true
+          },
+          checkboxTesteR: {
+            checked: false,
+            required: true
+          },
+          checkboxTesteNR: {
+            checked: false,
+            required: false
+          }
+        }
+      },
       step: 0,
-      checkbox: false
+      errors: undefined
     };
   }
 
-  nextContent = () => {
-    let { step } = this.state;
-    if (contents[step + 1]) {
-      return this.setState({ step: step + 1 });
-    }
+  getInput = input => {
+    let { inputs } = this.state;
+    let { name, type, value } = input;
 
-    return;
+    if (type === "checkbox") {
+      this.setState({
+        ...this.state,
+        inputs: {
+          ...inputs,
+          checkbox: {
+            ...inputs.checkbox,
+            [name]: {
+              ...inputs.checkbox[name],
+              checked: !inputs.checkbox[name].checked
+            }
+          }
+        },
+        errors: undefined
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        inputs: { ...inputs, [name]: { type: name, value } },
+        errors: undefined
+      });
+    }
   };
 
-  prevContent = () => {
-    let { step } = this.state;
-    if (contents[step - 1]) {
-      return this.setState({ step: step - 1 });
+  inputValidator = () => {
+    let { clearMessage, errorInput, authenticate } = this.props;
+    let { inputs, step } = this.state;
+    let { email, password, passwordRepeat } = inputs;
+    let { messageError, errors } = inputValidator(inputs);
+    if (errors.length > 0) {
+      errorInput(messageError);
+      this.setState({
+        ...this.state,
+        errors
+      });
+    } else {
+      clearMessage();
+      authenticate(email.value, password.value, passwordRepeat.value);
+      this.setState({ step: step + 1 });
     }
-
-    return;
   };
 
-  // MANIPULACAO DE CHECKBOX
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
+  container_1 = () => {
+    let { errors } = this.state;
+    let {
+      checkboxTerms,
+      checkboxTesteR,
+      checkboxTesteNR
+    } = this.state.inputs.checkbox;
+
+    return (
+      <div>
+        <div className={style.newAccountHeader}>
+          {i18n.t("NEW_ACCOUNT_HEADER")}
+        </div>
+
+        <input
+          type="text"
+          name="firstName"
+          placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("firstName")
+              ? style.inputError
+              : style.inputTextDefault
+          }
+        />
+
+        <input
+          type="text"
+          name="lastName"
+          placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("lastName")
+              ? style.inputError
+              : style.inputTextDefault
+          }
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder={i18n.t("PLACEHOLDER_USER_EMAIL")}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("email")
+              ? style.inputError
+              : style.inputTextDefault
+          }
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("password")
+              ? style.inputError
+              : style.inputTextDefault
+          }
+        />
+
+        <input
+          type="password"
+          name="passwordRepeat"
+          placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={
+            errors && errors.includes("passwordRepeat")
+              ? style.inputError
+              : style.inputTextDefault
+          }
+        />
+
+        <div className={style.alignInfoTermsOfServices}>
+          <CustomCheckbox
+            type="checkbox"
+            name="checkboxTerms"
+            checked={checkboxTerms.checked}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+          />
+          <CustomCheckbox
+            type="checkbox"
+            name="checkboxTesteR"
+            checked={checkboxTesteR.checked}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+          />
+          <CustomCheckbox
+            type="checkbox"
+            name="checkboxTesteNR"
+            checked={checkboxTesteNR.checked}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+          />
+
+          <div className={style.acceptTermsOfServices}>
+            {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
+          </div>
+          <Link className={style.linkTermsOfServices} to="#">
+            {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
+          </Link>
+        </div>
+
+        <button
+          className={style.buttonBorderGreen}
+          onClick={() => {
+            this.inputValidator();
+          }}
+        >
+          {i18n.t("BTN_LOGIN")}
+        </button>
+      </div>
+    );
+  };
+
+  container_2 = () => {
+    return (
+      <div>
+        <img
+          src="../../../../images/create/ic-email@2x.png"
+          className={style.iconEmailCreateAccount}
+        />
+
+        <div className={style.messageConfirmationRegister}>
+          {i18n.t("NEW_ACCOUNT_MESSAGE_SENDED")}
+        </div>
+
+        <div className={style.arrowToLoginAlign}>
+          <div className={style.arrowToLogin}>
+            <Link to="/login">
+              <img src="../../../../images/create/arrow.png" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   render() {
     let { step } = this.state;
+    let contents = [this.container_1(), this.container_2()];
 
     return (
-      <div>
-        <div>CREATE</div>
-        <div>
-          {contents[step]}
-          <button onClick={() => this.nextContent()}> PROXIMO </button>
-          <button onClick={() => this.prevContent()}> ANTERIOR </button>
-          <CheckBox
-            checked={this.state.checkbox}
-            onChange={this.handleChange("checkbox")}
-            value="checkbox"
-          />
-        </div>
+      <div className={style.contNewAccount}>
+        <img src="../../images/logo.svg" className={style.logo} />
+
+        {contents[step]}
       </div>
     );
   }
 }
 
-export default Create;
+Login.propTypes = {
+  authenticate: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      authenticate,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);

@@ -32,6 +32,7 @@
 :local(.inputTextDefault::placeholder) {
   opacity: 0.5;
   color: white;
+  font-size: 17px;
 }
 
 /* ------------------------------------------------------------------------- */

@@ -124,6 +124,8 @@ class Login extends Component {
               <Route exact path="/reset" component={reset} />
               <Route exact path="/new-password" component={resetNewPassword} />
               <Route exact path="/create" component={create} />
+              
+              {/* {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null} */}
             </Grid>
 
             <Hidden xsDown>

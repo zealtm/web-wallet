@@ -314,3 +314,66 @@
 /* ------------------------------------------------------------------------- */
 
 
+/* 5. NEW ACCOUNT */
+
+/* 5.1 CONTAINER */
+:local(.contNewAccount) {
+  composes: contGeneral;
+  height: 680px;
+}
+
+:local(.alignInfoTermsOfServices){
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+/* 5.2 TEXTS */
+:local(.newAccountHeader) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin-top: 35px;
+  margin-bottom: 55px;
+  text-align: center;
+  font-weight: bold;
+}
+
+:local(.acceptTermsOfServices) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  display: inline;
+}
+:local(.linkTermsOfServices){
+  composes: link;
+  font-style: italic;
+}
+
+:local(.messageConfirmationRegister) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 80px;
+}
+
+/* 5.3 ICON */
+:local(.iconEmailCreateAccount) {
+  composes: iconEmail;
+  width: 92px;
+  height: 95px;
+  margin-top: 20vh;
+  margin-bottom: 2vh;
+}
+
+:local(.arrowToLogin) {
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+:local(.arrowToLoginAlign){
+  padding-left: 40%; 
+}
+/* ------------------------------------------------------------------------- */ 
