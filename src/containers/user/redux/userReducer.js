@@ -13,6 +13,12 @@ const user = (state = initialState, action) => {
         user: action.payload.user
       };
 
+    case "POST_2FA_AUTHENTICATE":
+      return {
+        ...state,
+        page: action.payload.page,
+      };
+
     default: {
       return {
         ...state

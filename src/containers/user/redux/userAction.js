@@ -3,3 +3,7 @@ export const authenticate = (email, password) => ({
   email,
   password
 });
+
+export const multiFactorAuth = () => ({
+  type: "POST_2FA_AUTHENTICATE_API"
+});

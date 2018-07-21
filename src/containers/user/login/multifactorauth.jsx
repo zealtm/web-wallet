@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { multiFactorAuth } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -36,20 +36,23 @@ class MultiFactorAuth extends React.Component {
     };
 
     inputValidator = () => {
-        let { clearMessage, errorInput, authenticate } = this.props;
-        let { inputs } = this.state;
-        let { email, password } = inputs;
-        let { messageError, errors } = inputValidator(inputs);
-        if (errors.length > 0) {
-            errorInput(messageError);
-            this.setState({
-                ...this.state,
-                errors
-            });
-        } else {
-            clearMessage();
-            authenticate(email.value, password.value);
-        }
+        let { clearMessage, multiFactorAuth } = this.props;
+        // let { inputs } = this.state;
+        // let { messageError, errors } = inputValidator(inputs);
+
+        clearMessage();
+        multiFactorAuth();
+
+        // if (errors.length > 0) {
+        //     errorInput(messageError);
+        //     this.setState({
+        //         ...this.state,
+        //         errors
+        //     });
+        // } else {
+        //     clearMessage();
+        //     multiFactorAuth();
+        // }
     };
 
     render() {
@@ -168,7 +171,7 @@ class MultiFactorAuth extends React.Component {
 }
 
 MultiFactorAuth.propTypes = {
-    authenticate: PropTypes.func,
+    multiFactorAuth: PropTypes.func,
     clearMessage: PropTypes.func,
     errorInput: PropTypes.func
 };
@@ -176,7 +179,7 @@ MultiFactorAuth.propTypes = {
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            authenticate,
+            multiFactorAuth,
             clearMessage,
             errorInput
         },
