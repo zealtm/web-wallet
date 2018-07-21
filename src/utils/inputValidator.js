@@ -57,7 +57,7 @@ export const inputValidator = inputs => {
         let regex = new RegExp("^[0-9]+$");
 
         if (
-          !isLength(trim(value.toString()), { min: 1, max: 4 }) ||
+          !isLength(trim(value.toString()), { min: 4, max: 4 }) ||
           !regex.test(trim(value.toString()))
         ){
           errors.push(type);
