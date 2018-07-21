@@ -276,7 +276,7 @@
 
 :local(.inputPINError){
   composes: inputPINDefault;
-  composes: clError from "../../components/bases/colorBase.css";
+  color: #ff445b;
   border: 1px solid #ff445b; 
 }
 
