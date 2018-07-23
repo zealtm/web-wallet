@@ -18,8 +18,15 @@ class Login extends React.Component {
         super();
         this.state = {
             inputs: {
-                email: undefined,
-                password: undefined
+                factorAuthenticator: undefined
+            },
+            factorAuthenticator: {
+                field_1: undefined,
+                field_2: undefined,
+                field_3: undefined,
+                field_4: undefined,
+                field_5: undefined,
+                field_6: undefined
             },
             errors: undefined
         };
@@ -27,19 +34,21 @@ class Login extends React.Component {
 
     getInput = input => {
         let { name, value } = input;
-        let { inputs } = this.state;
+        let { factorAuthenticator } = this.state;
         this.setState({
             ...this.state,
-            inputs: { ...inputs, [name]: { type: name, value } },
+            factorAuthenticator: { ...factorAuthenticator, [name]: value },
             errors: undefined
         });
+        return;
     };
 
     inputValidator = () => {
-        let { clearMessage, errorInput, authenticate } = this.props;
-        let { inputs } = this.state;
-        let { email, password } = inputs;
-        let { messageError, errors } = inputValidator(inputs);
+        let { clearMessage, errorInput } = this.props;
+        let { field_1, field_2, field_3, field_4, field_5, field_6 } = this.state.factorAuthenticator;
+        let factorAuthenticator = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
+        let { messageError, errors } = inputValidator({ inputs: { type: "factorAuthenticator", value: factorAuthenticator } });
+
         if (errors.length > 0) {
             errorInput(messageError);
             this.setState({
@@ -48,7 +57,7 @@ class Login extends React.Component {
             });
         } else {
             clearMessage();
-            authenticate(email.value, password.value);
+            alert("ok");
         }
     };
 
@@ -67,80 +76,80 @@ class Login extends React.Component {
 
                 <div className={style.alignInputTwoFactorAuthenticator}>
                     <input
-                        name="field1"
+                        name="field_1"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field1")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field2"
+                        name="field_2"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field2")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field3"
+                        name="field_3"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field3")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field4"
+                        name="field_4"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field4")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
 
                     <input
-                        name="field5"
+                        name="field_5"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field5")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field6"
+                        name="field_6"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field6")
-                                ? style.inputError
+                            errors
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
@@ -159,7 +168,7 @@ class Login extends React.Component {
                         this.inputValidator();
                     }}
                 >
-                    {i18n.t("BTN_LOGIN")}
+                    {i18n.t("BTN_AUTHENTICATOR")}
                 </button>
 
             </div>

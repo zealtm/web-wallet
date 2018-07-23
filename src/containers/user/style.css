@@ -254,18 +254,30 @@
   padding-left: 24px;
 }
 
+/* ------------------------------------------------------------------------- */
+
 :local(.inputTwoFactorAuthenticator){
   composes: clSuccess from "../../components/bases/colorBase.css";
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #4cd566;
-  width: 35px;
+  width: 49px;
   height: 50px;
   margin: 25px 1px 0px 0px;
   font-size: 27px;
-  padding-left: 12px;
   font-weight: bold;
   font-family: Roboto;
+  text-align: center;
+}
+
+:local(.inputTwoFactorAuthenticatorError) {
+  composes: inputTwoFactorAuthenticator;
+  border-bottom: 1px solid #ff445b;
+  color: #ff445b;
+
+  /* composes: bdError from "../../components/bases/colorBase.css";
+  composes: clError from "../../components/bases/colorBase.css"; */
+  /* background-color: aqua; */
 }
 
 :local(.alignInputTwoFactorAuthenticator) {
