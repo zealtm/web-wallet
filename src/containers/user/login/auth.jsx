@@ -34,12 +34,12 @@ class Auth extends React.Component {
   }
 
   getInput = input => {
-    let { name, value } = input;
+    let { name } = input;
     let { inputs } = this.state;
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: { type: name, value } },
+      inputs: { ...inputs, [name]: input },
       errors: undefined
     });
   };
@@ -73,6 +73,8 @@ class Auth extends React.Component {
         <input
           type="email"
           name="emailUsername"
+          label="Email"
+          required
           placeholder={i18n.t("PLACEHOLDER_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
@@ -86,6 +88,8 @@ class Auth extends React.Component {
         <input
           type="password"
           name="password"
+          label="Password"
+          required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           onChange={event => {
             this.getInput(event.target);

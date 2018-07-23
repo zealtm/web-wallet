@@ -21,7 +21,15 @@ export const inputValidator = inputs => {
   let errors = [];
   let messageError = undefined;
 
+
   Object.keys(inputs).map(input => {
+    let { name, value, required, label } = inputs[input];
+    console.warn('name', name)
+    console.warn('name', required)
+    console.warn('name', value)
+    console.warn('name', label)
+
+
     // Check if is undefined
     if (!inputs[input]) {
       errors.push(input);
