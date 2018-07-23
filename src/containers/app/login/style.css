@@ -13,12 +13,11 @@
 /* 1.1 COLUMN RIGHT */
 :local(.colRight) {
   composes: bgPurpleDark from "../../../components/bases/colorBase.css";
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  height: 100vh;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  padding: 2% 5%;
 }
 
 @media only screen and (max-width: 667px) {

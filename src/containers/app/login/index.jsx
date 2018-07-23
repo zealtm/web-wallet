@@ -119,7 +119,7 @@ class Login extends Component {
                 <ModalBar type={error.type} message={error.message} timer />
               ) : null}
             </div>
-            <Grid item xs={12} sm={5} md={5} className={style.colRight}>
+            <Grid item xs={12} sm={12} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
               <Route exact path="/login" component={login} />
@@ -130,8 +130,8 @@ class Login extends Component {
               {/* {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null} */}
             </Grid>
 
-            <Hidden xsDown>
-              <Grid item sm={7} md={7} className={style.colLeft}>
+            <Hidden smDown>
+              <Grid item md={7} className={style.colLeft}>
                 <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>

@@ -43,6 +43,7 @@
 
 /* 1. GENERAL COMPONENTS */
 
+
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
   composes: buttonGreenLight from "../../components/bases/buttonBase.css";

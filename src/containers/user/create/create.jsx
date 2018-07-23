@@ -77,6 +77,7 @@ class Login extends React.Component {
     let { inputs, step } = this.state;
     let { email, password, passwordRepeat } = inputs;
     let { messageError, errors } = inputValidator(inputs);
+    
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
