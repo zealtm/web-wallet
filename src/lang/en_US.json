@@ -16,6 +16,9 @@
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
   "BTN_2FA": "Activate 2FA",
+  "BTN_IMPORT_SEED": "IMPORT",
+  "BTN_NEW_SEED": "GENERATE NEW SEED",
+
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -64,5 +67,9 @@
   "RESET_NEW_PASSWORD_HINT_4": "Symbols",
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
-  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same"
+  "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
+
+  "SEED_SLOGAN": "Fast, secure and smart!",
+  "SEED_INSERT_SEED": "Insert your SeedWords"
+
 }

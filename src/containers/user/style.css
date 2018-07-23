@@ -33,10 +33,6 @@
   7.1 INPUT
   7.2 TEXTS
 
-8. NEW PASSWORD
-  8.1 ICONS
-  8.2 TEXTS
-
 */
 
 /* ------------------------------------------------------------------------- */
@@ -55,6 +51,7 @@
 
 :local(.buttonPurpleClear) {
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
+  margin-bottom: 25px;
 }
 
 :local(.buttonBorderGreen) {
@@ -377,34 +374,46 @@
 
 /* ------------------------------------------------------------------------- */ 
 
-/* 8. NEW PASSWORD */
+/* 8. SEED */
 
-/* 8.1 ICONS */
-:local(.iconHeader) {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
+/* 8.1 INPUT ( TEXTAREA ) */
+:local(.inputTextArea) {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";  
+  composes: textDefault from "../../components/bases/textBase.css";  
+  margin-bottom: 25px;
+  border-radius: 6px;
+  border-style: none;
+  width: 90%;
+  height: 127px;
+  padding: 0 5%;
+  position: relative;
+  font-family: roboto;
 }
 
-:local(.iconListValid) {
-  margin: 0;
-  margin-bottom: -8px;
-  margin-right: 10px;
-  width: 14px;
+:local(.inputTextAreaError) {
+  composes: inputTextArea;
+  color: #ff445b;
+  border: 1px solid #ff445b;
 }
 
 /* 8.2 TEXTS */
-:local(.passwordRules) {
-  font-size: 10px;
+:local(.seedSlogan) {
+  color: #4cd566;
+  font-size: 23px;
+  text-align: center;
   font-weight: bold;
-  display: block;
+  margin: 30px 0px 10px 0px;
+}
+
+:local(.descriptionSeed) {
+  margin: 20px;
   text-align: center;
 }
 
-:local(.passwordRulesItens) {
-  margin: 20px 0;
-  font-size: 12px;
+:local(.insertSeed) {
+  composes: descriptionSeed;
+  font-size: 19px;
+  font-weight: 500;
 }
 
 /* ------------------------------------------------------------------------- */ 

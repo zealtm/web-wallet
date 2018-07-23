@@ -7,15 +7,16 @@ import { bindActionCreators } from "redux";
 import Auth from "./auth";
 import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
+import Seed from "./seed";
 
 class Login extends React.Component {
   renderContent = () => {
     let { login } = this.props.user.pages;
     
-    if (login === 0) return <Auth />;
+    if (login === 3) return <Auth />;
     if (login === 1) return <MultiFactorAuth />
     if (login === 2) return <Pin />;
-    // if (page === 3) return <Seed />
+    if (login === 0) return <Seed />
   };
 
   render() {
