@@ -13,14 +13,13 @@ export function* authenticateUser(action) {
         if (request.status === 200) {
             yield call(setAuthToken, request.data.data.token);
             const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
-            
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
                 user: {
                     token: getAuthToken()
                 },
                 pages: {
-                    login: hasTwoFactorAuth.status === 200 ? 1 : 2
+                    login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
                 }
             });
         }
