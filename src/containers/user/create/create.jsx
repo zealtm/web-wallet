@@ -196,7 +196,7 @@ class Login extends React.Component {
     return (
       <div>
         <img
-          src="../../../../images/create/ic-email@2x.png"
+          src="../../../../images/icons/email@2x.png"
           className={style.iconEmailCreateAccount}
         />
 

@@ -133,7 +133,7 @@ class NewPassword extends React.Component {
       <div className={style.formLogin}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <img
-          src="../../../images/reset/ic-email.png"
+          src="../../../images/icons/email@1x.png"
           className={style.iconHeader}
         />
 

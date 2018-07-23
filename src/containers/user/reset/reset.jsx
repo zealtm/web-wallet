@@ -69,7 +69,7 @@ class Reset extends React.Component {
 
         <img src="../../images/logo.svg" className={style.logoReset} />
         <img
-          src="../../../../images/icons/email/ic-email.png"
+          src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}
         />
 
@@ -126,7 +126,7 @@ class Reset extends React.Component {
         </div>
 
         <button className={style.buttonBorderGreen}>
-          <Link className={style.resetLinkLogin} to="/login">
+          <Link className={style.resetLinkLogin} to="/">
             {i18n.t("BTN_BACK")}
           </Link>
         </button>
