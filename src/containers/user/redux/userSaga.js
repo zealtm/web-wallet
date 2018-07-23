@@ -10,17 +10,17 @@ export function* authenticateUser(action) {
             action.payload.email,
             action.payload.password);
 
-        if (request.status == 200) {
-            
+        if (request.status === 200) {
+
             yield call(setAuthToken, request.data.token);
             const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
-            
+            console.warn(request, hasTwoFactorAuth);
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
-
                 user: {
                     token: getAuthToken(),
-                    hasTwoFactorAuth
+                    hasTwoFactorAuth,
+                    page: 1
                 }
             });
         }
@@ -106,12 +106,51 @@ export function* verifyTwoFactorAuth(action) {
     }
 }
 
+export function* createUser() {
+    try {
+        return yield put({
+            type: "POST_USER_CREATE_USER",
+            payload: {
+                page: 1
+            }
+        });
+    } catch (error) {
+        yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message:
+                    "Your request could not be completed. Check your connection or try again later"
+            }
+        });
+    }
+}
+
+export function* resetUser() {
+    try {
+        return yield put({
+            type: "POST_USER_RESET_USER",
+            payload: {
+                page: 1
+            }
+        });
+    } catch (error) {
+        yield put({
+            type: "REQUEST_FAILED",
+            payload: {
+                message:
+                    "Your request could not be completed. Check your connection or try again later"
+            }
+        });
+    }
+}
+
 export default function* rootSaga() {
     yield [
         fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
-        fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
         fork(takeLatest, "POST_USER_CREATE_2FA_API", createTwoFactorAuth),
-        fork(takeLatest, "POST_USER_VERIFY_2FA", verifyTwoFactorAuth)
+        fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
+        fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
+        fork(takeLatest, "POST_USER_VERIFY_2FA", verifyTwoFactorAuth),
+        fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth)
     ];
 }
-

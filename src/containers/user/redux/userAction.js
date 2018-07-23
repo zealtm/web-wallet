@@ -17,6 +17,15 @@ export const verifyTwoFactorAuth = (token) => ({
     }
 });
 
-export const clearUserError = () => ({
-    type: "CLEAR_USER_ERROR"
+export const twoFactorAuth = () => ({
+  type: "POST_2FA_AUTHENTICATE_API"
 });
+
+export const createUser = () => ({
+  type: "POST_USER_CREATE_USER_API",
+});
+
+export const resetUser = () => ({
+  type: "POST_USER_RESET_USER_API",
+});
+

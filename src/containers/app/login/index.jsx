@@ -3,8 +3,8 @@ import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import i18n from "../../../utils/i18n";
 import { connect } from "react-redux";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -16,7 +16,7 @@ import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 function Loading({ error }) {
   if (error) {
@@ -29,27 +29,28 @@ function Loading({ error }) {
 
 /* eslint-disable */
 let login = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/login/login")),
+  loader: () => fakeDelay(400).then(() => import("../../user/login")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/login/login")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login")
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
 });
 
 let resetNewPassword = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/reset/newPassword")),
+  loader: () =>
+    fakeDelay(400).then(() => import("../../user/reset/newPassword")),
   loading: Loading,
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create")
 });
 
 let errorNotFound = Loadable({
@@ -84,56 +85,55 @@ const carouselSteps = [
 
 const maxDots = carouselSteps.length;
 
-
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       newPassword: false
-    }
+    };
   }
 
   componentDidMount() {
     this.newPasswordAuth();
   }
 
-  newPasswordAuth = () =>  {
-    let newPassword = true
-    if(newPassword) {
+  newPasswordAuth = () => {
+    let newPassword = true;
+    if (newPassword) {
       this.setState({ newPassword: true });
     }
 
     return;
-  }
+  };
 
   render() {
     const { error } = this.props;
-    const { newPassword } = this.state;
 
     return (
       <Router>
         <Switch>
-          {/* CONTAINER OF VIEWS */}
           <Grid container>
             <div>
-              {error.active ? <ModalBar type={error.type} message={error.message} timer /> : null}
+              {error.active ? (
+                <ModalBar type={error.type} message={error.message} timer />
+              ) : null}
             </div>
-            <Grid item xs={12} sm={5} md={5} className={style.colRight}>
+            <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
+              <Route exact path="/new-password" component={resetNewPassword} />
               <Route exact path="/create" component={create} />
-              {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null}
             </Grid>
 
-            <Hidden xsDown>
-              <Grid item sm={7} md={7} className={style.colLeft}>
+            <Hidden smDown>
+              <Grid item md={7} className={style.colRight}>
                 <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>
           </Grid>
-
+          
           <Route path="/404" component={errorNotFound} />
           <Route path="/500" component={errorInternal} />
           <Route path={"**"} component={errorNotFound} />
@@ -147,10 +147,8 @@ Login.propTypes = {
   error: PropTypes.object
 };
 
-
 const mapSateToProps = store => ({
-  error: store.error.message,
-  user: store.user
+  error: store.error.message
 });
 
 export default connect(mapSateToProps)(Login);

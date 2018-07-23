@@ -68,6 +68,7 @@ class ModalBar extends Component {
   // VALIDATE CONTENT
   validateContent = () => {
     let { type, message, timer } = this.props;
+
     if (!type) type = "info";
     if (!message) message = "NO TEXT MESSAGE";
     if (timer)
@@ -79,16 +80,17 @@ class ModalBar extends Component {
 
   // MANUAL CLOSE
   modalClose() {
-    const prop = this.props;
+    let { clearMessage } = this.props;
 
     this.setState(...this.state, { show: false });
-    prop.clearMessage();
+    clearMessage();
   }
 
   render() {
-    const { classes } = this.props;
-    const { type, message } = this.state;
-    const { bgInfo, bgSuccess, bgError } = colorBase;
+    let { classes } = this.props;
+    let { type, message } = this.state;
+    let { bgInfo, bgSuccess, bgError } = colorBase;
+
     return (
       <div>
         <Snackbar
@@ -134,15 +136,25 @@ class ModalBar extends Component {
 }
 
 ModalBar.propTypes = {
+  clearMessage: PropTypes.func,
   classes: PropTypes.object.isRequired,
   type: PropTypes.oneOf(["success", "error", "info"]).isRequired,
   message: PropTypes.string,
   timer: PropTypes.bool
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  clearMessage
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clearMessage
+    },
+    dispatch
+  );
 
-
-export default compose(withStyles(style), connect(null, mapDispatchToProps))(ModalBar);
+export default compose(
+  withStyles(style),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(ModalBar);

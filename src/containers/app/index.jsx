@@ -11,6 +11,7 @@ import style from "./style.css";
 
 // Access Token verification
 const fakeInfo = true;
+
 let Content = () => {
   if (fakeInfo === false) {
     return <App />;
