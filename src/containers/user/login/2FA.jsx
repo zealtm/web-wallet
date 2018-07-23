@@ -62,7 +62,7 @@ class Login extends React.Component {
     };
 
     render() {
-        let { errors } = this.state;
+        let { errors, factorAuthenticator } = this.state;
 
         return (
             <div className={style.contGeneral}>
@@ -163,12 +163,18 @@ class Login extends React.Component {
                 </div>
 
                 <button
-                    className={style.buttonBorderGreen}
-                    onClick={() => {
-                        this.inputValidator();
-                    }}
+                    className={
+                        factorAuthenticator.field_1
+                            && factorAuthenticator.field_2
+                            && factorAuthenticator.field_3
+                            && factorAuthenticator.field_4
+                            && factorAuthenticator.field_5
+                            && factorAuthenticator.field_6
+                            ? style.buttonGreen : style.buttonBorderGreen}
+                    onClick={() => this.inputValidator()}
                 >
-                    {i18n.t("BTN_AUTHENTICATOR")}
+                    {i18n.t("BTN_LOGIN")}
+
                 </button>
 
             </div>
