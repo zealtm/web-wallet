@@ -18,6 +18,9 @@ class MultiFactorAuth extends React.Component {
         super();
         this.state = {
             inputs: {
+                factorAuthenticator: undefined
+            },
+            factorAuthenticator: {
                 field_1: undefined,
                 field_2: undefined,
                 field_3: undefined,
@@ -31,21 +34,20 @@ class MultiFactorAuth extends React.Component {
 
     getInput = input => {
         let { name, value } = input;
-        let { inputs } = this.state;
+        let { factorAuthenticator } = this.state;
         this.setState({
             ...this.state,
-            inputs: { ...inputs, [name]: { type: name, value } },
+            factorAuthenticator: { ...factorAuthenticator, [name]: value },
             errors: undefined
         });
+        return;
     };
 
     inputValidator = () => {
-        let { errorInput, clearMessage, twoFactorAuth } = this.props;
-        let { inputs } = this.state;
-        let { messageError, errors } = inputValidator(inputs);
-
-        clearMessage();
-        twoFactorAuth();
+        let { clearMessage, errorInput, twoFactorAuth } = this.props;
+        let { field_1, field_2, field_3, field_4, field_5, field_6 } = this.state.factorAuthenticator;
+        let factorAuthenticator = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
+        let { messageError, errors } = inputValidator({ inputs: { type: "factorAuthenticator", value: factorAuthenticator } });
 
         if (errors.length > 0) {
             errorInput(messageError);
@@ -57,11 +59,10 @@ class MultiFactorAuth extends React.Component {
             clearMessage();
             twoFactorAuth();
         }
-        return;
     };
 
     render() {
-        let { errors } = this.state;
+        let { errors, factorAuthenticator } = this.state;
 
         return (
             <div className={style.contGeneral}>
@@ -81,7 +82,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_1")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -94,7 +95,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_2")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -107,7 +108,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_3")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -120,7 +121,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_4")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -134,7 +135,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_5")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -147,7 +148,7 @@ class MultiFactorAuth extends React.Component {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field_6")
+                            errors
                                 ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
@@ -162,12 +163,18 @@ class MultiFactorAuth extends React.Component {
                 </div>
 
                 <button
-                    className={style.buttonBorderGreen}
-                    onClick={() => {
-                        this.inputValidator();
-                    }}
+                    className={
+                        factorAuthenticator.field_1
+                            && factorAuthenticator.field_2
+                            && factorAuthenticator.field_3
+                            && factorAuthenticator.field_4
+                            && factorAuthenticator.field_5
+                            && factorAuthenticator.field_6
+                            ? style.buttonGreen : style.buttonBorderGreen}
+                    onClick={() => this.inputValidator()}
                 >
-                    {i18n.t("BTN_2FA")}
+                    {i18n.t("BTN_LOGIN")}
+
                 </button>
 
             </div>
