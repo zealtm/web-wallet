@@ -81,7 +81,6 @@ export function* createUser() {
 
 export function* resetUser() {
   try {
-    console.warn("AQUI");
     return yield put({
       type: "POST_USER_RESET_USER",
       payload: {

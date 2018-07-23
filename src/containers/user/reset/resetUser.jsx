@@ -37,7 +37,7 @@ class ResetUser extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props;
+    let { resetUser, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
