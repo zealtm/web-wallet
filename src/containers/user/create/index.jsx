@@ -4,17 +4,15 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // COMPONENTS
-import Auth from "./auth";
-import Pin from "./pin";
-import MultiFactorAuth from "./multifactorauth";
+import Create from "./create";
+import Email from "./emailMessage";
 
 class Login extends React.Component {
   renderContent = () => {
-    let { login } = this.props.user.pages;
-    
-    if (login === 0) return <Auth />;
-    if (login === 1) return <MultiFactorAuth />
-    if (login === 2) return <Pin />;
+    let { create } = this.props.user.pages;
+    console.warn(create)
+    if (create === 0) return <Create />;    
+    if (create === 1) return <Email />;
     // if (page === 3) return <Seed />
   };
 

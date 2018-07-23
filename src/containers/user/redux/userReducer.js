@@ -1,6 +1,10 @@
 const initialState = {
   // LOGIN, 2FA, SEED, PIN
-  page: 0,
+  pages: {
+    login: 0,
+    create: 0,
+    reset: 0
+  },
   user: {}
 };
 
@@ -9,14 +13,33 @@ const user = (state = initialState, action) => {
     case "POST_USER_AUTHENTICATE":
       return {
         ...state,
-        page: action.payload.page,
+        pages: {
+          login: action.payload.page,
+          create: 0,
+          reset: 0
+        },
         user: action.payload.user
       };
 
     case "POST_2FA_AUTHENTICATE":
       return {
         ...state,
-        page: action.payload.page,
+        pages: {
+          login: action.payload.page,
+          create: 0,
+          reset: 0
+        }
+      };
+
+    case "POST_USER_CREATE_USER":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: action.payload.page,
+          reset: 0
+        },
+        user: action.payload.user
       };
 
     default: {

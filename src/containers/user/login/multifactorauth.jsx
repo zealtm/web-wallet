@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { multiFactorAuth } from "../redux/userAction";
+import { twoFactorAuth } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -40,12 +40,12 @@ class MultiFactorAuth extends React.Component {
     };
 
     inputValidator = () => {
-        let { errorInput, clearMessage, multiFactorAuth } = this.props;
+        let { errorInput, clearMessage, twoFactorAuth } = this.props;
         let { inputs } = this.state;
         let { messageError, errors } = inputValidator(inputs);
 
         clearMessage();
-        multiFactorAuth();
+        twoFactorAuth();
 
         if (errors.length > 0) {
             errorInput(messageError);
@@ -55,7 +55,7 @@ class MultiFactorAuth extends React.Component {
             });
         } else {
             clearMessage();
-            multiFactorAuth();
+            twoFactorAuth();
         }
         return;
     };
@@ -176,7 +176,7 @@ class MultiFactorAuth extends React.Component {
 }
 
 MultiFactorAuth.propTypes = {
-    multiFactorAuth: PropTypes.func,
+    twoFactorAuth: PropTypes.func,
     clearMessage: PropTypes.func,
     errorInput: PropTypes.func
 };
@@ -184,7 +184,7 @@ MultiFactorAuth.propTypes = {
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            multiFactorAuth,
+            twoFactorAuth,
             clearMessage,
             errorInput
         },

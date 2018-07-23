@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { createUser } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -14,7 +14,7 @@ import i18n from "../../../utils/i18n";
 import style from "../style.css";
 import CustomCheckbox from "../../../components/checkBox";
 
-class Login extends React.Component {
+class Create extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -65,9 +65,8 @@ class Login extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput, authenticate } = this.props;
-    let { inputs, step } = this.state;
-    let { email, password, passwordRepeat } = inputs;
+    let { createUser, clearMessage, errorInput } = this.props;
+    let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
     if (errors.length > 0) {
@@ -78,165 +77,125 @@ class Login extends React.Component {
       });
     } else {
       clearMessage();
-      authenticate(email.value, password.value, passwordRepeat.value);
-      this.setState({ step: step + 1 });
+      createUser();
     }
   };
 
-  container_1 = () => {
+  render() {
     let { errors } = this.state;
     let { checkboxTerms } = this.state.inputs.checkbox;
 
     return (
-      <div>
-        <div className={style.newAccountHeader}>
-          {i18n.t("NEW_ACCOUNT_HEADER")}
-        </div>
+      <div className={style.contNewAccount}>
+        <img src="../../images/logo.svg" className={style.logo} />
+        <div>
+          <div className={style.newAccountHeader}>
+            {i18n.t("NEW_ACCOUNT_HEADER")}
+          </div>
 
-        <input
-          type="text"
-          name="firstName"
-          placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("firstName")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-
-        <input
-          type="text"
-          name="lastName"
-          placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("lastName")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder={i18n.t("PLACEHOLDER_USER_EMAIL")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("email")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("password")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-
-        <input
-          type="password"
-          name="passwordRepeat"
-          placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("passwordRepeat")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-
-        <div className={style.alignInfoTermsOfServices}>
-          <CustomCheckbox
-            type="checkbox"
-            name="checkboxTerms"
-            checked={checkboxTerms.checked}
+          <input
+            type="text"
+            name="firstName"
+            placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
             onChange={event => {
               this.getInput(event.target);
             }}
+            className={
+              errors && errors.includes("firstName")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
           />
 
-          <div className={style.acceptTermsOfServices}>
-            {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-          </div>
-          <Link className={style.linkTermsOfServices} to="#">
-            {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
-          </Link>
-        </div>
+          <input
+            type="text"
+            name="lastName"
+            placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("lastName")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder={i18n.t("PLACEHOLDER_USER_EMAIL")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("email")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
 
-        <button
-          className={style.buttonBorderGreen}
-          onClick={() => {
-            this.inputValidator();
-          }}
-        >
-          {i18n.t("BTN_LOGIN")}
-        </button>
-      </div>
-    );
-  };
+          <input
+            type="password"
+            name="password"
+            placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("password")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
 
-  container_2 = () => {
-    return (
-      <div>
-        <img
-          src="../../../../images/icons/email@2x.png"
-          className={style.iconEmailCreateAccount}
-        />
+          <input
+            type="password"
+            name="passwordRepeat"
+            placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("passwordRepeat")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
 
-        <div className={style.messageConfirmationRegister}>
-          {i18n.t("NEW_ACCOUNT_MESSAGE_SENDED")}
-        </div>
+          <div className={style.alignInfoTermsOfServices}>
+            <CustomCheckbox
+              type="checkbox"
+              name="checkboxTerms"
+              checked={checkboxTerms.checked}
+              onChange={event => {
+                this.getInput(event.target);
+              }}
+            />
 
-        <div className={style.arrowToLoginAlign}>
-          <div className={style.arrowToLogin}>
-            <Link to="/login">
-              <img src="../../../../images/create/arrow.png" />
+            <div className={style.acceptTermsOfServices}>
+              {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
+            </div>
+            <Link className={style.linkTermsOfServices} to="#">
+              {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
             </Link>
           </div>
+
+          <button
+            className={style.buttonBorderGreen}
+            onClick={() => {
+              this.inputValidator();
+            }}
+          >
+            {i18n.t("BTN_LOGIN")}
+          </button>
         </div>
-      </div>
-    );
-  };
-
-  render() {
-    let { step } = this.state;
-    let contents = [this.container_1(), this.container_2()];
-
-    return (
-      <div className={style.contNewAccount}>
-        <Link to="/login">
-          <img
-            src="../../images/icons/arrow/arrow-white-left@2x.png"
-            className={style.iconArrowBack}
-          />
-        </Link>
-        <img src="../../images/logo.svg" className={style.logo} />
-
-        {contents[step]}
       </div>
     );
   }
 }
 
-Login.propTypes = {
-  authenticate: PropTypes.func,
+Create.propTypes = {
+  createUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };
@@ -244,7 +203,7 @@ Login.propTypes = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      authenticate,
+      createUser,
       clearMessage,
       errorInput
     },
@@ -254,4 +213,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null,
   mapDispatchToProps
-)(Login);
+)(Create);

@@ -41,7 +41,7 @@ export function* authenticateUser(action) {
   }
 }
 
-export function* multiFactorAuth() {
+export function* twoFactorAuth() {
   try {
     return yield put({
       type: "POST_2FA_AUTHENTICATE",
@@ -60,6 +60,29 @@ export function* multiFactorAuth() {
   }
 }
 
+export function* createUser() {
+  try {
+    return yield put({
+      type: "POST_USER_CREATE_USER",
+      payload: {
+        page: 1
+      }
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message:
+          "Your request could not be completed. Check your connection or try again later"
+      }
+    });
+  }
+}
+
 export default function* rootSaga() {
-  yield [fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser), fork(takeLatest, "POST_2FA_AUTHENTICATE_API", multiFactorAuth)];
+  yield [
+    fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
+    fork(takeLatest, "POST_2FA_AUTHENTICATE_API", twoFactorAuth),
+    fork(takeLatest, "POST_USER_CREATE_USER_API", createUser)
+  ];
 }

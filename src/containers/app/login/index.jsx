@@ -48,9 +48,9 @@ let resetNewPassword = Loadable({
 });
 
 let create = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/create/create")),
+  loader: () => fakeDelay(400).then(() => import("../../user/create")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/create/create")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create")
 });
 
 let errorNotFound = Loadable({
