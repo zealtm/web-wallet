@@ -12,7 +12,7 @@ import {
 import fakeDelay from "../../../components/fakeDelay";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 
 function Loading({ error }) {

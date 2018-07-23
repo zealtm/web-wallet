@@ -16,7 +16,7 @@ import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 
 // STYLE
-import style from "./style.css";
+import style from "../style.css";
 
 function Loading({ error }) {
   if (error) {
@@ -112,31 +112,28 @@ class Login extends Component {
     return (
       <Router>
         <Switch>
-          {/* CONTAINER OF VIEWS */}
           <Grid container>
             <div>
               {error.active ? (
                 <ModalBar type={error.type} message={error.message} timer />
               ) : null}
             </div>
-            <Grid item xs={12} sm={12} md={5} className={style.colRight}>
+            <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
               <Route exact path="/new-password" component={resetNewPassword} />
               <Route exact path="/create" component={create} />
-
-              {/* {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null} */}
             </Grid>
 
             <Hidden smDown>
-              <Grid item md={7} className={style.colLeft}>
+              <Grid item md={7} className={style.colRight}>
                 <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>
           </Grid>
-
+          
           <Route path="/404" component={errorNotFound} />
           <Route path="/500" component={errorInternal} />
           <Route path={"**"} component={errorNotFound} />
