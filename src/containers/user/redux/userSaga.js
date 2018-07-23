@@ -1,7 +1,7 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import AuthService from "../../../services/authService";
-import { setAuthToken } from "../../../utils/localStorage"
+import { setAuthToken, getAuthToken } from "../../../utils/localStorage"
 const authService = new AuthService();
 
 export function* authenticateUser(action) {
@@ -11,14 +11,15 @@ export function* authenticateUser(action) {
             action.payload.password);
 
         if (request.status == 200) {
+            
             yield call(setAuthToken, request.data.token);
-
             const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
+            
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
 
                 user: {
-                    token: setAuthToken(),
+                    token: getAuthToken(),
                     hasTwoFactorAuth
                 }
             });

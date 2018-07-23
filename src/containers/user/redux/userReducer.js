@@ -11,7 +11,9 @@ const user = (state = initialState, action) => {
         case "POST_USER_AUTHENTICATE":
             return {
                 ...state,
-                user: action.user
+                user: {
+
+                }
             };
 
         case "GET_USER_2FA":

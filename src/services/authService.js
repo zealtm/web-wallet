@@ -8,7 +8,6 @@ class AuthService {
                 login: email,
                 password
             }, API_HEADER);
-             
             return response;
         } catch (error) {
             console.error(error);
@@ -17,12 +16,14 @@ class AuthService {
 
     async hasTwoFactorAuth() {
         try {
+            console.warn("2", API_HEADER_AUTH);
             let response = await axios.get(`${BASE_URL}/user/2fa`,
                 API_HEADER_AUTH);
-
+            
+                
             return response;
         } catch (error) {
-            console.error(error.message);
+             error.message;
         }
     }
 
