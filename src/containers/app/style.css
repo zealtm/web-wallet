@@ -28,8 +28,21 @@
 
 @media only screen and (max-width: 667px) {
   :local(.colLeft) {
-    display: block;
     padding: 10%;
+    overflow: auto;
+  }
+}
+
+@media screen and (max-width: 958px) and (min-width: 667px) {
+  :local(.colLeft) {
+    padding: 10% 30%;
+    overflow: auto;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  :local(.colLeft) {
+    padding: 10% 10%;
     overflow: auto;
   }
 }

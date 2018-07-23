@@ -35,8 +35,8 @@ class Pin extends React.Component {
     this.setState({
       ...this.state,
       PIN: { ...PIN, [name]: value },
-      errors: undefined,   
-    });   
+      errors: undefined,
+    });
     return;
   };
 
@@ -118,7 +118,13 @@ class Pin extends React.Component {
         </div>
 
         <button
-          className={PIN.PIN_1 && PIN.PIN_2 && PIN.PIN_3 && PIN.PIN_4 ? style.buttonGreen : style.buttonBorderGreen}
+          className={
+            PIN.PIN_1
+              && PIN.PIN_2
+              && PIN.PIN_3
+              && PIN.PIN_4
+              ? style.buttonGreen
+              : style.buttonBorderGreen}
           onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_LOGIN")}
