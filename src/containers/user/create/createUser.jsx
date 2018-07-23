@@ -14,7 +14,7 @@ import i18n from "../../../utils/i18n";
 import style from "../style.css";
 import CustomCheckbox from "../../../components/checkBox";
 
-class Create extends React.Component {
+class CreateUser extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -194,7 +194,7 @@ class Create extends React.Component {
   }
 }
 
-Create.propTypes = {
+CreateUser.propTypes = {
   createUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
@@ -213,4 +213,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null,
   mapDispatchToProps
-)(Create);
+)(CreateUser);

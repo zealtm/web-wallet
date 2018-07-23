@@ -4,28 +4,28 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // COMPONENTS
-import CreateUser from "./createUser";
+import Footer from "../footer";
+import ResetUser from "./resetUser";
 import Email from "./emailMessage";
 
-class Create extends React.Component {
+class Reset extends React.Component {
   renderContent = () => {
-    let { create } = this.props.user.pages;
-    
-    if (create === 0) return <CreateUser />;    
-    if (create === 1) return <Email />;
-    // if (page === 3) return <Seed />
+    let { reset } = this.props.user.pages;
+    if (reset === 0) return <ResetUser />;    
+    if (reset === 1) return <Email />;
   };
 
   render() {
     return (
       <div>
         {this.renderContent()}
+        <Footer />
       </div>
     );
   }
 }
 
-Create.propTypes = {
+Reset.propTypes = {
   user: PropTypes.object
 };
 
@@ -38,4 +38,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
   mapSateToProps,
   mapDispatchToProps
-)(Create);
+)(Reset);

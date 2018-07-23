@@ -35,9 +35,9 @@ let login = Loadable({
 });
 
 let reset = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/reset/reset")),
+  loader: () => fakeDelay(400).then(() => import("../../user/reset")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/reset")
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
 });
 
 let resetNewPassword = Loadable({

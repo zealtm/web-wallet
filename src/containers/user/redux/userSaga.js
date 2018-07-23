@@ -79,10 +79,31 @@ export function* createUser() {
   }
 }
 
+export function* resetUser() {
+  try {
+    console.warn("AQUI");
+    return yield put({
+      type: "POST_USER_RESET_USER",
+      payload: {
+        page: 1
+      }
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message:
+          "Your request could not be completed. Check your connection or try again later"
+      }
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield [
     fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
     fork(takeLatest, "POST_2FA_AUTHENTICATE_API", twoFactorAuth),
-    fork(takeLatest, "POST_USER_CREATE_USER_API", createUser)
+    fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
+    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser)
   ];
 }

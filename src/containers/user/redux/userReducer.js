@@ -42,6 +42,17 @@ const user = (state = initialState, action) => {
         user: action.payload.user
       };
 
+    case "POST_USER_RESET_USER":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: 0,
+          reset: action.payload.page
+        },
+        user: action.payload.user
+      };
+
     default: {
       return {
         ...state

@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
-import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
-// COMPONENTS
-import Footer from "../footer";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { resetUser } from "../redux/userAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -16,7 +15,7 @@ import { inputValidator } from "../../../utils/inputValidator";
 // STYLE
 import style from "../style.css";
 
-class Reset extends React.Component {
+class ResetUser extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -39,8 +38,7 @@ class Reset extends React.Component {
 
   inputValidator = () => {
     let { clearMessage, errorInput } = this.props;
-    let { inputs, step } = this.state;
-    let { emailUsername } = inputs;
+    let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
     if (errors.length > 0) {
@@ -51,13 +49,13 @@ class Reset extends React.Component {
       });
     } else {
       clearMessage();
-      authenticate(emailUsername.value);
-      this.setState({ step: step + 1 });
+      resetUser();
     }
   };
 
-  cont_1 = () => {
+  render() {
     let { errors } = this.state;
+
     return (
       <div>
         <Link to="/login">
@@ -103,52 +101,11 @@ class Reset extends React.Component {
         </button>
       </div>
     );
-  };
-
-  cont_2 = () => {
-    return (
-      <div>
-        <Link to="/login">
-          <img
-            src="../../images/icons/arrow/arrow-white-left@2x.png"
-            className={style.iconArrowBack}
-          />
-        </Link>
-
-        <img src="../../images/logo.svg" className={style.logoReset} />
-        <img
-          src="../../../../images/icons/email/email@1x.png"
-          className={style.iconEmail}
-        />
-
-        <div className={style.resetEmailSend}>
-          {i18n.t("RESET_EMAIL_SENDED")}
-        </div>
-
-        <button className={style.buttonBorderGreen}>
-          <Link className={style.resetLinkLogin} to="/">
-            {i18n.t("BTN_BACK")}
-          </Link>
-        </button>
-      </div>
-    );
-  };
-
-  render() {
-    let { step } = this.state;
-    let contents = [this.cont_1(), this.cont_2()];
-    return (
-      <div className={style.contGeneral}>
-        {contents[step]}
-
-        <Footer />
-      </div>
-    );
   }
 }
 
-Reset.propTypes = {
-  authenticate: PropTypes.func,
+ResetUser.propTypes = {
+  resetUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };
@@ -156,7 +113,7 @@ Reset.propTypes = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      authenticate,
+      resetUser,
       clearMessage,
       errorInput
     },
@@ -166,4 +123,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   null,
   mapDispatchToProps
-)(Reset);
+)(ResetUser);
