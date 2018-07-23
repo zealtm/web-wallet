@@ -365,6 +365,12 @@
   text-align: center;
 }
 
+:local(.inputTwoFactorAuthenticatorError) {
+  composes: inputTwoFactorAuthenticator;
+  border-bottom: 1px solid #ff445b;
+  color: #ff445b;
+}
+
 :local(.alignInputTwoFactorAuthenticator) {
   display: flex;
   justify-content: space-between;
