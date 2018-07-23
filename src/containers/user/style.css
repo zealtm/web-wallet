@@ -16,12 +16,26 @@
 
 4. RESET
   4.1 TEXTS
-  4.2 ICONE
+  4.2 ICONS
+  4.2 LINKS
+  4.4 LOGO
 
 5. PIN
   5.1 INPUT
   5.2 TEXTS
   5.3 BUTTON
+
+6. CREATE / NEW ACCOUNT
+  6.1 TEXTS
+  6.2 ICONS
+
+7. TWO FACTORS AUTHENTICATOR 
+  7.1 INPUT
+  7.2 TEXTS
+
+8. NEW PASSWORD
+  8.1 ICONS
+  8.2 TEXTS
 
 */
 
@@ -29,18 +43,6 @@
 
 /* 1. GENERAL COMPONENTS */
 
-/* 1.1 CONTAINER GENERAL */
-
-:local(.contGeneral) {
-  margin: 25px;
-  padding: 15px;
-  width: 100%;
-  height: 600px;
-  max-width: 335px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-}
 
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
@@ -105,6 +107,7 @@
 /* ------------------------------------------------------------------------- */
 
 /* 2. FOOTER */
+
 /* 2.1 GENERAL */
 :local(.footer) {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
@@ -134,7 +137,7 @@
 
 /* 3 LOGIN */
 
-/* 3.1 TEXT */
+/* 3.1 TEXTS */
 :local(.description) {
   composes: textDefault from "../../components/bases/textBase.css";
   display: block;
@@ -163,50 +166,15 @@
 /* ------------------------------------------------------------------------- */
 
 /* 4. RESET */
+
 /* 4.1 TEXTS */
-:local(.p) {
-  composes: textDefault from "../../components/bases/textBase.css";
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  font-weight: 600;
-}
-
-:local(.p2) {
+:local(.resetInstruction) {
   composes: textDefault from "../../components/bases/textBase.css";
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 25px;
-}
-
-/* 4.3 NEW PASSWORD */
-:local(.iconHeader) {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-}
-
-:local(.passwordRules) {
-  font-size: 10px;
+  margin: 20px 0px 25px 0px;
   font-weight: bold;
-  display: block;
-  text-align: center;
 }
 
-:local(.passwordRulesItens) {
-  margin: 20px 0;
-  font-size: 12px;
-}
-
-:local(.iconListValid) {
-  margin: 0;
-  margin-bottom: -8px;
-  margin-right: 10px;
-  width: 14px;
-}
-
-/* 4.4 MESSAGE */
 :local(.resetEmailSend){
   composes: textDefault from "../../components/bases/textBase.css";
   margin: 55px 0 100px 0;
@@ -215,24 +183,11 @@
   font-weight: bold;
 }
 
-/* 4.5 LINKS */
-
-:local(.resetLinkLogin){
-  composes: defaultP from "../../components/bases/textBase.css";
-  color: white;
-  text-decoration: none;
-}
-
-/* 4.6 ICONS */
-:local(.iconArrowForward) {
-  float: right;
-  width: 20px;
-  margin-top: 6px;
-} 
-
+/* 4.2 ICONS */
 :local(.iconArrowBack) {
-  composes: iconArrowForward;
   float: left;
+  width: 24px;
+  margin-top: 6px;
 } 
 
 :local(.iconEmail) {
@@ -244,15 +199,17 @@
   margin-top: 40px;
 }
 
-/* 4.7 LOGO */
+/* 4.3 LINKS */
+:local(.resetLinkLogin){
+  composes: defaultP from "../../components/bases/textBase.css";
+  color: white;
+  text-decoration: none;
+}
+
+/* 4.4 LOGO */
 :local(.logoReset) {
   composes: logo;
   padding-right: 24px;
-}
-
-:local(.logoSendEmailReset) {
-  composes: logo;
-  padding-left: 24px;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -260,13 +217,15 @@
 /* PIN */
 
 /* 5.1 INPUT */
-:local(.inputPINDefault){
+:local(.inputPINDefault) {
   composes: inputTextDefault from "../../components/bases/textBase.css";
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  composes: bdPurpleDefault from "../../components/bases/colorBase.css";
+  border-width: 1px;
+  border-style: solid;
   width: 55px;
   padding: 10px 10px 4px;
   border-radius: 6px;
-  border: 1px solid #4b2c82;
   height: 35px;
   color: white;
   font-size: 35px;
@@ -274,67 +233,27 @@
   margin: 1px;
 }
 
-:local(.inputTwoFactorAuthenticator){
-  composes: clSuccess from "../../components/bases/colorBase.css";
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #4cd566;
-  width: 35px;
-  height: 50px;
-  margin: 25px 1px 0px 0px;
-  font-size: 27px;
-  padding-left: 12px;
-  font-weight: bold;
-  font-family: Roboto;
-}
-
-:local(.alignInputTwoFactorAuthenticator) {
-  display: flex;
-  justify-content: space-between;
-}
-
-:local(.instructions) {  
-  composes: textDefault from "../../components/bases/textBase.css";  
-  text-align: center;
-}
-
-:local(.linkWhereToFind) {
-  composes: link;
-  color: white;
-  font-weight: bold;
-}
-:local(.instructions_2) {
-  composes: description;
-  margin: 30px 0px 50px 0px;
-}
-
-:local(.inputPINError){
-  composes: inputPINDefault;
+:local(.inputPINError) {
+  composes: bdError from "../../components/bases/colorBase.css";
+  composes: inputPINDefault;  
+  border-width: 1px;
+  border-style: solid;
   color: #ff445b;
-  border: 1px solid #ff445b; 
 }
 
-:local(.alignInputsDefault){
+:local(.alignInputsDefault) {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-:local(.inputBorderGreen) {
-  composes: inputPINDefault;
-  border: 1px solid  #4cd566;
-}
-
 /* 5.2 TEXTS */
 :local(.descriptionLinkPIN) {
+  composes: description;
   margin: 25px 0 25px 0;
   text-align: right;
 }
 
-:local(.descriptionLink) {
-  margin: 25px 0 25px 0;
-  text-align: right;
-}
 :local(.descriptionPIN) {
   composes: description;
   margin-top: 150px;  
@@ -345,24 +264,12 @@
   composes: buttonBorderGreen;
   composes: bgGreenDefault from "../../components/bases/colorBase.css";
 }
+
 /* ------------------------------------------------------------------------- */
 
+/* 6. CREATE / NEW ACCOUNT */
 
-/* 5. NEW ACCOUNT */
-
-/* 5.1 CONTAINER */
-:local(.contNewAccount) {
-  composes: contGeneral;
-  height: 680px;
-}
-
-:local(.alignInfoTermsOfServices){
-  text-align: center;
-  margin-top: -10px;
-  margin-bottom: 15px;
-}
-
-/* 5.2 TEXTS */
+/* 6.1 TEXTS */
 :local(.newAccountHeader) {
   composes: textDefault from "../../components/bases/textBase.css";
   margin-top: 35px;
@@ -371,10 +278,17 @@
   font-weight: bold;
 }
 
+:local(.alignInfoTermsOfServices){
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
 :local(.acceptTermsOfServices) {
   composes: textDefault from "../../components/bases/textBase.css";
   display: inline;
 }
+
 :local(.linkTermsOfServices){
   composes: link;
   font-style: italic;
@@ -388,7 +302,7 @@
   margin-bottom: 80px;
 }
 
-/* 5.3 ICON */
+/* 6.2 ICONS */
 :local(.iconEmailCreateAccount) {
   composes: iconEmail;
   width: 92px;
@@ -410,4 +324,87 @@
 :local(.arrowToLoginAlign){
   padding-left: 40%; 
 }
+
+/* ------------------------------------------------------------------------- */
+
+/* 7. TWO FACTORS AUTHENTICATOR */
+
+/* 7.1 INPUT */
+:local(.inputTwoFactorAuthenticator){
+  composes: clSuccess from "../../components/bases/colorBase.css";
+  border: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  background-color: transparent;
+  width: 49px;
+  height: 50px;
+  margin: 25px 1px 0px 0px;
+  text-align: center;
+  font-size: 27px;
+  font-weight: bold;
+  font-family: Roboto;
+}
+
+:local(.alignInputTwoFactorAuthenticator) {
+  display: flex;
+  justify-content: space-between;
+}
+
+:local(.inputTwoFactorAuthenticatorError) {
+  composes: inputTwoFactorAuthenticator;
+  composes: bdError from "../../components/bases/colorBase.css";
+  composes: clError from "../../components/bases/colorBase.css";  
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* 7.2 TEXTS */
+:local(.instructions) {  
+  composes: textDefault from "../../components/bases/textBase.css";  
+  text-align: center;
+}
+
+:local(.instructions_2) {
+  composes: description;
+  margin: 30px 0px 50px 0px;
+}
+
+:local(.linkWhereToFind) {
+  composes: link;
+  color: white;
+  font-weight: bold;
+}
+
+/* ------------------------------------------------------------------------- */ 
+
+/* 8. NEW PASSWORD */
+
+/* 8.1 ICONS */
+:local(.iconHeader) {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+:local(.iconListValid) {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+}
+
+/* 8.2 TEXTS */
+:local(.passwordRules) {
+  font-size: 10px;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+}
+
+:local(.passwordRulesItens) {
+  margin: 20px 0;
+  font-size: 12px;
+}
+
 /* ------------------------------------------------------------------------- */ 

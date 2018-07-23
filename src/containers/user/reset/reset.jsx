@@ -69,7 +69,7 @@ class Reset extends React.Component {
 
         <img src="../../images/logo.svg" className={style.logoReset} />
         <img
-          src="../../../../images/icons/email/email@1x.png"
+          src="../../../../images/icons/email/ic-email.png"
           className={style.iconEmail}
         />
 
@@ -89,8 +89,11 @@ class Reset extends React.Component {
           }
         />
 
-        <div className={style.p}>{i18n.t("RESET_INSTRUCTIONS")}</div>
-        <div className={style.p2}>{i18n.t("RESET_INSTRUCTIONS2")}</div>
+        <div className={style.resetInstruction}>
+          {i18n.t("RESET_INSTRUCTIONS")}
+          <br />
+          {i18n.t("RESET_INSTRUCTIONS2")}
+        </div>
 
         <button
           className={style.buttonBorderGreen}
@@ -105,9 +108,14 @@ class Reset extends React.Component {
   cont_2 = () => {
     return (
       <div>
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
 
-        <img src="../../images/logo.svg" className={style.logoSendEmailReset} />
-
+        <img src="../../images/logo.svg" className={style.logoReset} />
         <img
           src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}

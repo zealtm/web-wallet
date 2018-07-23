@@ -41,7 +41,8 @@ let reset = Loadable({
 });
 
 let resetNewPassword = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/reset/newPassword")),
+  loader: () =>
+    fakeDelay(400).then(() => import("../../user/reset/newPassword")),
   loading: Loading,
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
 });
@@ -84,27 +85,26 @@ const carouselSteps = [
 
 const maxDots = carouselSteps.length;
 
-
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       newPassword: false
-    }
+    };
   }
 
   componentDidMount() {
     this.newPasswordAuth();
   }
 
-  newPasswordAuth = () =>  {
-    let newPassword = true
-    if(newPassword) {
+  newPasswordAuth = () => {
+    let newPassword = true;
+    if (newPassword) {
       this.setState({ newPassword: true });
     }
 
     return;
-  }
+  };
 
   render() {
     const { error } = this.props;
@@ -115,21 +115,23 @@ class Login extends Component {
           {/* CONTAINER OF VIEWS */}
           <Grid container>
             <div>
-              {error.active ? <ModalBar type={error.type} message={error.message} timer /> : null}
+              {error.active ? (
+                <ModalBar type={error.type} message={error.message} timer />
+              ) : null}
             </div>
-            <Grid item xs={12} sm={5} md={5} className={style.colRight}>
+            <Grid item xs={12} sm={12} md={5} className={style.colRight}>
               {/* INSIDE ROUTES */}
               <Route exact path="/" component={login} />
               <Route exact path="/login" component={login} />
               <Route exact path="/reset" component={reset} />
               <Route exact path="/new-password" component={resetNewPassword} />
               <Route exact path="/create" component={create} />
-              
+
               {/* {newPassword ? <Route exact path="/new-password" component={resetNewPassword} /> : null} */}
             </Grid>
 
-            <Hidden xsDown>
-              <Grid item sm={7} md={7} className={style.colLeft}>
+            <Hidden smDown>
+              <Grid item md={7} className={style.colLeft}>
                 <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
               </Grid>
             </Hidden>
@@ -148,9 +150,8 @@ Login.propTypes = {
   error: PropTypes.object
 };
 
-
 const mapSateToProps = store => ({
-  error: store.error.message,
+  error: store.error.message
 });
 
 export default connect(mapSateToProps)(Login);

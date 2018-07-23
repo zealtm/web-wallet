@@ -18,8 +18,12 @@ class MultiFactorAuth extends React.Component {
         super();
         this.state = {
             inputs: {
-                email: undefined,
-                password: undefined
+                field_1: undefined,
+                field_2: undefined,
+                field_3: undefined,
+                field_4: undefined,
+                field_5: undefined,
+                field_6: undefined
             },
             errors: undefined
         };
@@ -36,23 +40,24 @@ class MultiFactorAuth extends React.Component {
     };
 
     inputValidator = () => {
-        let { clearMessage, multiFactorAuth } = this.props;
-        // let { inputs } = this.state;
-        // let { messageError, errors } = inputValidator(inputs);
+        let { errorInput, clearMessage, multiFactorAuth } = this.props;
+        let { inputs } = this.state;
+        let { messageError, errors } = inputValidator(inputs);
 
         clearMessage();
         multiFactorAuth();
 
-        // if (errors.length > 0) {
-        //     errorInput(messageError);
-        //     this.setState({
-        //         ...this.state,
-        //         errors
-        //     });
-        // } else {
-        //     clearMessage();
-        //     multiFactorAuth();
-        // }
+        if (errors.length > 0) {
+            errorInput(messageError);
+            this.setState({
+                ...this.state,
+                errors
+            });
+        } else {
+            clearMessage();
+            multiFactorAuth();
+        }
+        return;
     };
 
     render() {
@@ -70,80 +75,80 @@ class MultiFactorAuth extends React.Component {
 
                 <div className={style.alignInputTwoFactorAuthenticator}>
                     <input
-                        name="field1"
+                        name="field_1"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field1")
-                                ? style.inputError
+                            errors && errors.includes("field_1")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field2"
+                        name="field_2"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field2")
-                                ? style.inputError
+                            errors && errors.includes("field_2")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field3"
+                        name="field_3"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field3")
-                                ? style.inputError
+                            errors && errors.includes("field_3")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field4"
+                        name="field_4"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field4")
-                                ? style.inputError
+                            errors && errors.includes("field_4")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
 
                     <input
-                        name="field5"
+                        name="field_5"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field5")
-                                ? style.inputError
+                            errors && errors.includes("field_5")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
 
                     <input
-                        name="field6"
+                        name="field_6"
                         maxLength="1"
                         onChange={event => {
                             this.getInput(event.target);
                         }}
                         className={
-                            errors && errors.includes("field6")
-                                ? style.inputError
+                            errors && errors.includes("field_6")
+                                ? style.inputTwoFactorAuthenticatorError
                                 : style.inputTwoFactorAuthenticator
                         }
                     />
@@ -162,7 +167,7 @@ class MultiFactorAuth extends React.Component {
                         this.inputValidator();
                     }}
                 >
-                    {i18n.t("BTN_LOGIN")}
+                    {i18n.t("BTN_2FA")}
                 </button>
 
             </div>

@@ -15,16 +15,15 @@
   composes: bgPurpleDark from "../../../components/bases/colorBase.css";
   height: 100vh;
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
-  overflow: auto;
+  overflow: hidden;
+  padding: 2% 5%;
 }
 
 @media only screen and (max-width: 667px) {
   :local(.colRight) {
     display: block;
+    padding: 10%;
     overflow: auto;
   }
 }
