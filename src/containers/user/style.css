@@ -43,18 +43,6 @@
 
 /* 1. GENERAL COMPONENTS */
 
-/* 1.1 CONTAINER GENERAL */
-:local(.contGeneral) {
-  margin: 25px;
-  padding: 15px;
-  width: 100%;
-  height: 700px;
-  max-width: 335px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-}
-
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
   composes: buttonGreenLight from "../../components/bases/buttonBase.css";
