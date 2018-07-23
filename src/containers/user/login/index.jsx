@@ -10,8 +10,7 @@ import MultiFactorAuth from "./multifactorauth";
 
 class Login extends React.Component {
   renderContent = () => {
-    let { login } = this.props.user.pages;
-    console.warn("LOGIN ", login)    
+    let { login } = this.props.pages;
     if (login === 0) return <Auth />;
     if (login === 1) return <MultiFactorAuth />
     if (login === 2) return <Pin />;
@@ -28,11 +27,13 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  pages: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  user: store.user
+  user: store.user,
+  pages: store.user.pages
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

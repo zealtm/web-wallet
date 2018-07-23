@@ -1,7 +1,6 @@
 const initialState = {
   user: {
-    token: undefined,
-    hasTwoFactorAuth: undefined
+    token: undefined
   },
   pages: {
     login: 0,
@@ -12,16 +11,15 @@ const initialState = {
 }
 
 const user = (state = initialState, action) => {
-  console.warn("ACTION ", action)
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
         ...state,
         user: {
-
+          token: action.user.token
         },
         pages: {
-          login: action.page,
+          login: action.pages.login,
           create: 0,
           reset: 0
         }

@@ -11,16 +11,16 @@ export function* authenticateUser(action) {
             action.payload.password);
 
         if (request.status === 200) {
-            console.warn("TOKEN", request.data.data.token)
             yield call(setAuthToken, request.data.data.token);
             const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
-            // console.warn(request, hasTwoFactorAuth);
+            
             return yield put({
                 type: "POST_USER_AUTHENTICATE",
                 user: {
-                    token: getAuthToken(),
-                    hasTwoFactorAuth,
-                    page: 1
+                    token: getAuthToken()
+                },
+                pages: {
+                    login: hasTwoFactorAuth.status === 200 ? 1 : 2
                 }
             });
         }
