@@ -39,7 +39,7 @@ class Auth extends React.Component {
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: { type: name, value } },
+      inputs: { ...inputs, [name]: value ? input : undefined },
       errors: undefined
     });
   };
@@ -63,7 +63,7 @@ class Auth extends React.Component {
   };
 
   render() {
-    let { errors } = this.state;
+    let { inputs, errors } = this.state;
 
     return (
       <div className={style.contGeneral}>
@@ -73,7 +73,8 @@ class Auth extends React.Component {
         <input
           type="email"
           name="emailUsername"
-          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          required
+          placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
           }}
@@ -86,6 +87,7 @@ class Auth extends React.Component {
         <input
           type="password"
           name="password"
+          required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           onChange={event => {
             this.getInput(event.target);
@@ -102,7 +104,11 @@ class Auth extends React.Component {
         </Link>
 
         <button
-          className={style.buttonBorderGreen}
+          className={
+            inputs.emailUsername && inputs.password && !errors
+              ? style.buttonGreen
+              : style.buttonBorderGreen
+          }
           onClick={() => {
             this.inputValidator();
           }}

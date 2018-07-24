@@ -31,7 +31,7 @@ class ResetUser extends React.Component {
     let { name, value } = input;
     this.setState({
       ...this.state,
-      inputs: { ...this.state.inputs, [name]: { type: name, value } },
+      inputs: { ...this.state.inputs, [name]: value ? input : undefined },
       errors: undefined
     });
   };
@@ -54,7 +54,7 @@ class ResetUser extends React.Component {
   };
 
   render() {
-    let { errors } = this.state;
+    let { inputs, errors } = this.state;
 
     return (
       <div>
@@ -76,7 +76,7 @@ class ResetUser extends React.Component {
         <input
           type="email"
           name="emailUsername"
-          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
           }}
@@ -94,7 +94,11 @@ class ResetUser extends React.Component {
         </div>
 
         <button
-          className={style.buttonBorderGreen}
+          className={
+            inputs.emailUsername && !errors
+              ? style.buttonGreen
+              : style.buttonBorderGreen
+          }
           onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_RESET")}

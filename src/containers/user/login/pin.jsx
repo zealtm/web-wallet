@@ -43,9 +43,9 @@ class Pin extends React.Component {
   inputValidator = () => {
     let { clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
-    let PIN = PIN_1 + PIN_2 + PIN_3 + PIN_4;
-
-    let { errors, messageError } = inputValidator({ inputs: { type: "PIN", value: PIN } });
+    let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
+    let inputPin = { type: "password" , name: "PIN", value: pin, placeholder: "PIN", required: true}
+    let { errors, messageError } = inputValidator({ inputs: inputPin });
 
     if (errors.length > 0) {
       errorInput(messageError);
