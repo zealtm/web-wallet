@@ -51,7 +51,7 @@
 :local(.colRight) {
   composes: bgPurpleLight from "../../components/bases/colorBase.css";
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* ------------------------------------------------------------------------- */
