@@ -36,7 +36,7 @@ export const inputValidator = inputs => {
   let errors = [];
   let inputName = [];
   let messageError = undefined;
-  
+
   Object.keys(inputs).map(input => {
     if (!inputs[input]) {
       errors.push(input);
@@ -179,21 +179,35 @@ export const inputValidator = inputs => {
             inputName.push(placeholder);
           }
         }
+        
+        if (name === "seed") {
+          let regex = new RegExp("^[a-z]+$");
+
+          if (
+            !isLength(trim(value.toString()), { min: 12, max: 12 }) ||
+            !regex.test(trim(value.toString()))
+          ) {
+            errors.push(name);
+          }
+        }
       }
     });
+
+    // REMOVE DUPLICATE ITENS
+    errors = errors.filter((item, index, input) => {
+      return input.indexOf(item) == index;
+    });
+
+    inputName = inputName.filter((item, index, input) => {
+      return input.indexOf(item) == index;
+    });
+
+    if (errors.length > 0 && messageError === undefined) {
+      messageError = i18n.t("MESSAGE_ERROR_FILEDS") + inputName.join(", ");
+    }
+    return {
+      messageError,
+      errors
+    };
   }
-
-  // REMOVE DUPLICATE ITENS
-  errors = errors.filter((item, index, input) => {
-    return input.indexOf(item) == index;
-  });
-
-  inputName = inputName.filter((item, index, input) => {
-    return input.indexOf(item) == index;
-  });
-
-  if (errors.length > 0 && messageError === undefined) {
-    messageError = i18n.t("MESSAGE_ERROR_FILEDS") + inputName.join(", ");
-  }
-  return { messageError, errors };
 };

@@ -35,7 +35,7 @@ class Pin extends React.Component {
     this.setState({
       ...this.state,
       PIN: { ...PIN, [name]: value },
-      errors: undefined,
+      errors: undefined
     });
     return;
   };
@@ -44,20 +44,25 @@ class Pin extends React.Component {
     let { clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
-    let inputPin = { type: "password" , name: "PIN", value: pin, placeholder: "PIN", required: true}
+    let inputPin = {
+      type: "password",
+      name: "PIN",
+      value: pin,
+      placeholder: "PIN",
+      required: true
+    };
     let { errors, messageError } = inputValidator({ inputs: inputPin });
 
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
         ...this.state,
-        errors,
+        errors
       });
     } else {
       clearMessage();
 
       // CÓDIGO
-
     }
 
     return;
@@ -72,7 +77,6 @@ class Pin extends React.Component {
         <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
 
         <div className={style.alignInputsDefault}>
-
           <input
             type="password"
             name="PIN_1"
@@ -119,18 +123,14 @@ class Pin extends React.Component {
 
         <button
           className={
-            PIN.PIN_1
-              && PIN.PIN_2
-              && PIN.PIN_3
-              && PIN.PIN_4
+            PIN.PIN_1 && PIN.PIN_2 && PIN.PIN_3 && PIN.PIN_4
               ? style.buttonGreen
-              : style.buttonBorderGreen}
+              : style.buttonBorderGreen
+          }
           onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_LOGIN")}
-
         </button>
-
       </div>
     );
   }

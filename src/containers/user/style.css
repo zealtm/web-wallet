@@ -32,12 +32,15 @@
   7.1 INPUT
   7.2 TEXTS
 
+8. SEED
+  8.1 INPUT
+  8.2 TEXTS
+
 */
 
 /* ------------------------------------------------------------------------- */
 
 /* 1. GENERAL COMPONENTS */
-
 
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
@@ -50,6 +53,10 @@
 
 :local(.buttonPurpleClear) {
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
+  margin-bottom: 25px;
+  font-family: Roboto;
+  font-weight: bold;
+  font-size: 17px;
 }
 
 :local(.buttonBorderGreen) {
@@ -58,7 +65,7 @@
 
 :local(.buttonGreen) {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-  composes: bgGreenDefault from "../../components/bases/colorBase.css"; 
+  composes: bgGreenDefault from "../../components/bases/colorBase.css";
 }
 
 /* 1.3 INPUT */
@@ -175,7 +182,7 @@
   font-weight: bold;
 }
 
-:local(.resetEmailSend){
+:local(.resetEmailSend) {
   composes: textDefault from "../../components/bases/textBase.css";
   margin: 55px 0 100px 0;
   font-size: 22px;
@@ -200,7 +207,7 @@
   float: left;
   width: 24px;
   margin-top: 6px;
-} 
+}
 
 :local(.iconEmail) {
   display: block;
@@ -226,7 +233,7 @@
 }
 
 /* 4.3 LINKS */
-:local(.resetLinkLogin){
+:local(.resetLinkLogin) {
   composes: defaultP from "../../components/bases/textBase.css";
   color: white;
   text-decoration: none;
@@ -261,7 +268,7 @@
 
 :local(.inputPINError) {
   composes: bdError from "../../components/bases/colorBase.css";
-  composes: inputPINDefault;  
+  composes: inputPINDefault;
   border-width: 1px;
   border-style: solid;
   color: #ff445b;
@@ -282,9 +289,8 @@
 
 :local(.descriptionPIN) {
   composes: description;
-  margin-top: 150px;  
+  margin-top: 150px;
 }
-
 
 /* ------------------------------------------------------------------------- */
 
@@ -299,7 +305,7 @@
   font-weight: bold;
 }
 
-:local(.alignInfoTermsOfServices){
+:local(.alignInfoTermsOfServices) {
   text-align: center;
   margin-top: -10px;
   margin-bottom: 15px;
@@ -310,7 +316,7 @@
   display: inline;
 }
 
-:local(.linkTermsOfServices){
+:local(.linkTermsOfServices) {
   composes: link;
   font-style: italic;
 }
@@ -342,8 +348,8 @@
   display: table-cell;
 }
 
-:local(.arrowToLoginAlign){
-  padding-left: 40%; 
+:local(.arrowToLoginAlign) {
+  padding-left: 40%;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -351,7 +357,7 @@
 /* 7. TWO FACTORS AUTHENTICATOR */
 
 /* 7.1 INPUT */
-:local(.inputTwoFactorAuthenticator){
+:local(.inputTwoFactorAuthenticator) {
   color: white;
   background-color: transparent;
   border: none;
@@ -383,8 +389,8 @@
 }
 
 /* 7.2 TEXTS */
-:local(.instructions) {  
-  composes: textDefault from "../../components/bases/textBase.css";  
+:local(.instructions) {
+  composes: textDefault from "../../components/bases/textBase.css";
   text-align: center;
 }
 
@@ -399,4 +405,43 @@
   font-weight: bold;
 }
 
-/* ------------------------------------------------------------------------- */ 
+/* ------------------------------------------------------------------------- */
+
+/* 8. SEED */
+
+/* 8.1 INPUT ( TEXTAREA ) */
+:local(.inputTextArea) {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin-bottom: 25px;
+  border-radius: 6px;
+  border-style: none;
+  max-width: 79%;
+  width: 60%;
+  height: 50px;
+  padding: 10% 20%;
+  position: relative;
+  font-family: roboto;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  white-space: normal;
+  overflow: hidden;
+  resize: none;
+}
+
+:local(.inputTextAreaError) {
+  composes: inputTextArea;
+  color: #ff445b;
+  border: 1px solid #ff445b;
+}
+
+/* 8.2 TEXTS */
+:local(.insertSeed) {
+  margin: 40px 0 30px 0;
+  text-align: center;
+  font-size: 19px;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------------- */
