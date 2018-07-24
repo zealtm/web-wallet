@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { twoFactorAuth } from "../redux/userAction";
+
+// REDUX
+import { bindActionCreators } from "redux";
+import { verifyTwoFactorAuth } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -14,191 +16,190 @@ import i18n from "../../../utils/i18n";
 import style from "../style.css";
 
 class MultiFactorAuth extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            inputs: {
-                factorAuthenticator: undefined
-            },
-            factorAuthenticator: {
-                field_1: undefined,
-                field_2: undefined,
-                field_3: undefined,
-                field_4: undefined,
-                field_5: undefined,
-                field_6: undefined
-            },
-            errors: undefined
-        };
+  constructor() {
+    super();
+    this.state = {
+      twoFactorFields: {
+        field_1: undefined,
+        field_2: undefined,
+        field_3: undefined,
+        field_4: undefined,
+        field_5: undefined,
+        field_6: undefined
+      },
+      errors: undefined
+    };
+  }
+
+  getInput = input => {
+    let { name, value } = input;
+    let { twoFactorFields } = this.state;
+
+    this.setState({
+      ...this.state,
+      twoFactorFields: { ...twoFactorFields, [name]: value },
+      errors: undefined
+    });
+    return;
+  };
+
+  inputValidator = () => {
+    let { errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
+    let { field_1, field_2, field_3, field_4, field_5, field_6 } = this.state.twoFactorFields;
+    let token = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
+    let input = { type: "text" , name: "2FA", value: token, placeholder: "2FA", required: true }
+    let { messageError, errors } = inputValidator({ inputs: input });
+
+    if (errors.length > 0) {
+      errorInput(messageError);
+      return this.setState({
+        ...this.state,
+        errors
+      });
     }
 
-    getInput = input => {
-        let { name, value } = input;
-        let { factorAuthenticator } = this.state;
-        this.setState({
-            ...this.state,
-            factorAuthenticator: { ...factorAuthenticator, [name]: value },
-            errors: undefined
-        });
-        return;
-    };
+    clearMessage();
+    verifyTwoFactorAuth(token);
+  };
 
-    inputValidator = () => {
-        let { clearMessage, errorInput, twoFactorAuth } = this.props;
-        let { field_1, field_2, field_3, field_4, field_5, field_6 } = this.state.factorAuthenticator;
-        let factorAuthenticator = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
-        let { messageError, errors } = inputValidator({ inputs: { type: "factorAuthenticator", value: factorAuthenticator } });
+  render() {
+    let { errors, twoFactorFields } = this.state;
 
-        if (errors.length > 0) {
-            errorInput(messageError);
-            this.setState({
-                ...this.state,
-                errors
-            });
-        } else {
-            clearMessage();
-            twoFactorAuth();
-        }
-    };
+    return (
+      <div className={style.contGeneral}>
+        <img src="../../images/logo.svg" className={style.logo} />
+        <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 
-    render() {
-        let { errors, factorAuthenticator } = this.state;
+        <div className={style.instructions}>
+          <strong>{i18n.t("2FA_INSTRUCTIONS_TITLE")}</strong>
+          <br />
+          {i18n.t("2FA_INSTRUCTIONS_1")}
+        </div>
 
-        return (
-            <div className={style.contGeneral}>
-                <img src="../../images/logo.svg" className={style.logo} />
-                <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
+        <div className={style.alignInputTwoFactorAuthenticator}>
+          <input
+            name="field_1"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
 
-                <div className={style.instructions}>
-                    <strong>{i18n.t("2FA_INSTRUCTIONS_TITLE")}</strong>
-                    <br />{i18n.t("2FA_INSTRUCTIONS_1")}
-                </div>
+          <input
+            name="field_2"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
 
-                <div className={style.alignInputTwoFactorAuthenticator}>
-                    <input
-                        name="field_1"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
+          <input
+            name="field_3"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
 
-                    <input
-                        name="field_2"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
+          <input
+            name="field_4"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
 
-                    <input
-                        name="field_3"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
+          <input
+            name="field_5"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
 
-                    <input
-                        name="field_4"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
+          <input
+            name="field_6"
+            maxLength="1"
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors
+                ? style.inputTwoFactorAuthenticatorError
+                : style.inputTwoFactorAuthenticator
+            }
+          />
+        </div>
 
+        <div className={style.instructions_2}>
+          {i18n.t("2FA_INSTRUCTIONS_2")}
+          <Link className={style.linkWhereToFind} to="#">
+            {i18n.t("2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND")}
+          </Link>
+        </div>
 
-                    <input
-                        name="field_5"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
-
-                    <input
-                        name="field_6"
-                        maxLength="1"
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                        className={
-                            errors
-                                ? style.inputTwoFactorAuthenticatorError
-                                : style.inputTwoFactorAuthenticator
-                        }
-                    />
-                </div>
-
-                <div className={style.instructions_2}>
-                    {i18n.t("2FA_INSTRUCTIONS_2")}
-                    <Link className={style.linkWhereToFind} to="#">
-                        {i18n.t("2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND")}
-                    </Link>
-                </div>
-
-                <button
-                    className={
-                        factorAuthenticator.field_1
-                            && factorAuthenticator.field_2
-                            && factorAuthenticator.field_3
-                            && factorAuthenticator.field_4
-                            && factorAuthenticator.field_5
-                            && factorAuthenticator.field_6
-                            ? style.buttonGreen : style.buttonBorderGreen}
-                    onClick={() => this.inputValidator()}
-                >
-                    {i18n.t("BTN_LOGIN")}
-
-                </button>
-
-            </div>
-        );
-    }
+        <button
+          className={
+            twoFactorFields.field_1 &&
+            twoFactorFields.field_2 &&
+            twoFactorFields.field_3 &&
+            twoFactorFields.field_4 &&
+            twoFactorFields.field_5 &&
+            twoFactorFields.field_6
+              ? style.buttonGreen
+              : style.buttonBorderGreen
+          }
+          onClick={() => this.inputValidator()}
+        >
+          {i18n.t("BTN_LOGIN")}
+        </button>
+      </div>
+    );
+  }
 }
 
 MultiFactorAuth.propTypes = {
-    twoFactorAuth: PropTypes.func,
-    clearMessage: PropTypes.func,
-    errorInput: PropTypes.func
+  verifyTwoFactorAuth: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        {
-            twoFactorAuth,
-            clearMessage,
-            errorInput
-        },
-        dispatch
-    );
+  bindActionCreators(
+    {
+      verifyTwoFactorAuth,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
-    null,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(MultiFactorAuth);

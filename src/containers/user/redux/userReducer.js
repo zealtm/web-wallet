@@ -1,31 +1,45 @@
 const initialState = {
-  // LOGIN, 2FA, SEED, PIN
+  user: {
+    token: undefined
+  },
   pages: {
     login: 0,
     create: 0,
     reset: 0
   },
-  user: {}
-};
+  errors: []
+}
 
 const user = (state = initialState, action) => {
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
         ...state,
+        user: {
+          token: action.user.token
+        },
         pages: {
-          login: action.payload.page,
+          login: action.pages.login,
           create: 0,
           reset: 0
-        },
-        user: action.payload.user
+        }
       };
 
-    case "POST_2FA_AUTHENTICATE":
+    case "GET_USER_2FA":
+      return {
+        ...state,
+      };
+
+    case "POST_USER_CREATE_2FA":
+      return {
+        ...state,
+      };
+
+    case "POST_USER_VERIFY_2FA":
       return {
         ...state,
         pages: {
-          login: action.payload.page,
+          login: action.pages.login,
           create: 0,
           reset: 0
         }
@@ -51,6 +65,12 @@ const user = (state = initialState, action) => {
           reset: action.payload.page
         },
         user: action.payload.user
+      };
+
+    case "CLEAR_USER_ERROR":
+      return {
+        ...state,
+        errors: []
       };
 
     default: {

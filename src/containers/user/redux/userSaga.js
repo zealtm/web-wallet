@@ -1,25 +1,25 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken } from "../../../utils/localStorage";
 import AuthService from "../../../services/authService";
+import { setAuthToken, getAuthToken } from "../../../utils/localStorage"
 const authService = new AuthService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(
-      authService.authenticate,
-      action.email,
-      action.password
-    );
+    const request = yield call(authService.authenticate,
+      action.payload.email,
+      action.payload.password);
 
     if (request.status === 200) {
-      yield call(setAuthToken, request.data.token);
-
+      yield call(setAuthToken, request.data.data.token);
+      const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
       return yield put({
         type: "POST_USER_AUTHENTICATE",
-        payload: {
-          page: 1,
-          user: request
+        user: {
+          token: getAuthToken()
+        },
+        pages: {
+          login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
         }
       });
     }
@@ -30,33 +30,84 @@ export function* authenticateUser(action) {
         message: "Failed to try authentication"
       }
     });
+
   } catch (error) {
     yield put({
       type: "REQUEST_FAILED",
       payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
+        message: "Your request could not be completed. Check your connection or try again later"
       }
     });
   }
 }
 
-export function* twoFactorAuth() {
+export function* hasTwoFactorAuth() {
   try {
-    return yield put({
-      type: "POST_2FA_AUTHENTICATE",
-      payload: {
-        page: 2
-      }
+    const response = yield call(authService.hasTwoFactorAuth);
+    if (response.status === 200)
+      return yield put({
+        type: "GET_USER_2FA",
+        response
+      });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message: "Could not verify 2fa"
+    });
+
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      message: error.message
+    });
+  }
+}
+
+export function* createTwoFactorAuth() {
+  try {
+    const response = yield call(authService.createTwoFactorAuth);
+    if (response.status === 201)
+      return yield put({
+        type: "POST_USER_CREATE_2FA",
+        response
+      });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message: "Could not enable two-factor authentication"
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      message: error.message
+    });
+  }
+}
+
+export function* verifyTwoFactorAuth(action) {
+  try {
+    const response = yield call(authService.verifyTwoFactoryAuth, action.payload.token);
+     
+    if (response.status === 200)
+      return yield put({
+        type: "POST_USER_VERIFY_2FA",
+        response,
+        pages: {
+          login: 2
+        }        
+      });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message: "Invalid value inserted"
     });
   } catch (error) {
     yield put({
       type: "REQUEST_FAILED",
       payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
+        message: error.message
       }
-    });
+    })
   }
 }
 
@@ -101,7 +152,9 @@ export function* resetUser() {
 export default function* rootSaga() {
   yield [
     fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
-    fork(takeLatest, "POST_2FA_AUTHENTICATE_API", twoFactorAuth),
+    fork(takeLatest, "POST_USER_CREATE_2FA_API", createTwoFactorAuth),
+    fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
+    fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
     fork(takeLatest, "POST_USER_RESET_USER_API", resetUser)
   ];
