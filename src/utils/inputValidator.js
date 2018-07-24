@@ -28,6 +28,7 @@ Username: username
 E-mail or Username: emailUsername
 Password: password
 Password Repeat/Confirmation: passwordRepeat
+Two Factor: 2FA
 
 */
 
@@ -52,9 +53,9 @@ export const inputValidator = inputs => {
         let { checkbox } = inputs;
 
         Object.keys(checkbox).map(value => {
-          let { checked, required } = checkbox[value];
+          let { checked, label, required } = checkbox[value];
           if (required === true && checked === false) {
-            errors.push(value);
+            errors.push(label);
           }
         });
       } else {
@@ -74,7 +75,7 @@ export const inputValidator = inputs => {
         // Check length
         if (
           !isLength(trim(value.toString()), {
-            min: minLength !== -1 ? minLength : 4,
+            min: minLength !== -1 ? minLength : 3,
             max: maxLength !== -1 ? maxLength : 128
           })
         )
@@ -143,6 +144,18 @@ export const inputValidator = inputs => {
             errors.push(name);
             inputName.push(placeholder);
             messageError = i18n.t("RESET_NEW_PASSWORD_ERROR_2");
+          }
+        }
+
+        if (name === "2FA" || name === "2fa") {
+          let regex = new RegExp("^[0-9]+$");
+
+          if (
+            !isLength(trim(value.toString()), { min: 6, max: 6 }) ||
+            !regex.test(trim(value.toString()))
+          ) {
+            errors.push(name);
+            inputName.push(placeholder);
           }
         }
 

@@ -70,7 +70,7 @@ class NewPassword extends React.Component {
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: { type: name, value } },
+      inputs: { ...inputs, [name]: value ? input : undefined },
       passwordHint
     });
 
@@ -129,11 +129,13 @@ class NewPassword extends React.Component {
   };
 
   render() {
+    let { inputs, passwordHint, errors } = this.state;
+
     return (
       <div className={style.formLogin}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <img
-          src="../../../images/icons/email@1x.png"
+          src="../../../images/icons/email/email@1x.png"
           className={style.iconHeader}
         />
 
@@ -143,16 +145,26 @@ class NewPassword extends React.Component {
         <input
           name="password"
           type="password"
+          required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
-          className={style.inputTextDefault}
+          className={
+            errors && errors.includes("password")
+              ? style.inputTextError
+              : style.inputTextDefault
+          }
           onChange={input => this.getInput(input.target)}
         />
 
         <input
           type="password"
           name="passwordRepeat"
+          required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
-          className={style.inputTextDefault}
+          className={
+            errors && errors.includes("passwordRepeat")
+              ? style.inputTextError
+              : style.inputTextDefault
+          }
           onChange={input => this.getInput(input.target)}
         />
 
@@ -165,7 +177,15 @@ class NewPassword extends React.Component {
         </div>
 
         <button
-          className={style.buttonBorderGreen}
+          className={
+            passwordHint[0] &&
+            passwordHint[1] &&
+            passwordHint[2] &&
+            passwordHint[3] &&
+            inputs.passwordRepeat
+              ? style.buttonGreen
+              : style.buttonBorderGreen
+          }
           onClick={() => this.inputValidator()}
         >
           {i18n.t("BTN_SAVE")}

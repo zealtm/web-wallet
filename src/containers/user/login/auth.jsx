@@ -34,12 +34,12 @@ class Auth extends React.Component {
   }
 
   getInput = input => {
-    let { name } = input;
+    let { name, value } = input;
     let { inputs } = this.state;
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: input },
+      inputs: { ...inputs, [name]: value ? input : undefined },
       errors: undefined
     });
   };
@@ -63,7 +63,7 @@ class Auth extends React.Component {
   };
 
   render() {
-    let { errors } = this.state;
+    let { inputs, errors } = this.state;
 
     return (
       <div className={style.contGeneral}>
@@ -104,7 +104,11 @@ class Auth extends React.Component {
         </Link>
 
         <button
-          className={style.buttonBorderGreen}
+          className={
+            inputs.emailUsername && inputs.password && !errors
+              ? style.buttonGreen
+              : style.buttonBorderGreen
+          }
           onClick={() => {
             this.inputValidator();
           }}

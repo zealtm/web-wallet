@@ -10,6 +10,7 @@
   "PLACEHOLDER_LAST_NAME": "Last name",
   "PLACEHOLDER_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat Password",
+  "PLACEHOLDER_USERNAME_EMAIL": "Terms of Services",
 
   "BTN_SUBMIT": "Submit",
   "BTN_BACK": "Back",

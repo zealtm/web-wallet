@@ -25,10 +25,7 @@ class CreateUser extends React.Component {
         password: undefined,
         passwordRepeat: undefined,
         checkbox: {
-          checkboxTerms: {
-            checked: false,
-            required: true
-          }
+          checkboxTerms: undefined
         }
       },
       step: 0,
@@ -39,18 +36,15 @@ class CreateUser extends React.Component {
   getInput = input => {
     let { inputs } = this.state;
     let { name, type, value } = input;
-
     if (type === "checkbox") {
+      console.warn(input)
       this.setState({
         ...this.state,
         inputs: {
           ...inputs,
           checkbox: {
             ...inputs.checkbox,
-            [name]: {
-              ...inputs.checkbox[name],
-              checked: !inputs.checkbox[name].checked
-            }
+            [name]: input.checked ? input : undefined
           }
         },
         errors: undefined
@@ -58,7 +52,7 @@ class CreateUser extends React.Component {
     } else {
       this.setState({
         ...this.state,
-        inputs: { ...inputs, [name]: { type: name, value } },
+        inputs: { ...inputs, [name]: value ? input : undefined },
         errors: undefined
       });
     }
@@ -82,8 +76,7 @@ class CreateUser extends React.Component {
   };
 
   render() {
-    let { errors } = this.state;
-    let { checkboxTerms } = this.state.inputs.checkbox;
+    let { inputs, errors } = this.state;
 
     return (
       <div className={style.contNewAccount}>
@@ -96,6 +89,7 @@ class CreateUser extends React.Component {
           <input
             type="text"
             name="firstName"
+            required
             placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
             onChange={event => {
               this.getInput(event.target);
@@ -110,6 +104,7 @@ class CreateUser extends React.Component {
           <input
             type="text"
             name="lastName"
+            required
             placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
             onChange={event => {
               this.getInput(event.target);
@@ -123,6 +118,7 @@ class CreateUser extends React.Component {
           <input
             type="email"
             name="email"
+            required
             placeholder={i18n.t("PLACEHOLDER_EMAIL")}
             onChange={event => {
               this.getInput(event.target);
@@ -137,6 +133,7 @@ class CreateUser extends React.Component {
           <input
             type="password"
             name="password"
+            required
             placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
             onChange={event => {
               this.getInput(event.target);
@@ -151,6 +148,7 @@ class CreateUser extends React.Component {
           <input
             type="password"
             name="passwordRepeat"
+            required
             placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
             onChange={event => {
               this.getInput(event.target);
@@ -166,7 +164,8 @@ class CreateUser extends React.Component {
             <CustomCheckbox
               type="checkbox"
               name="checkboxTerms"
-              checked={checkboxTerms.checked}
+              label={i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
+              required
               onChange={event => {
                 this.getInput(event.target);
               }}
@@ -181,7 +180,14 @@ class CreateUser extends React.Component {
           </div>
 
           <button
-            className={style.buttonBorderGreen}
+            className={
+              !errors &&
+              inputs.lastName &&
+              inputs.firstName &&
+              inputs.email &&
+              inputs.password &&
+              inputs.passwordRepeat &&
+              inputs.checkbox.checkboxTerms ? style.buttonGreen : style.buttonBorderGreen}
             onClick={() => {
               this.inputValidator();
             }}
