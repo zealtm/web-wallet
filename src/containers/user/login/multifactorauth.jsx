@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { twoFactorAuth } from "../redux/userAction";
+import { verifyTwoFactorAuth } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -32,6 +32,7 @@ class MultiFactorAuth extends React.Component {
     getInput = input => {
         let { name, value } = input;
         let { inputs } = this.state;
+
         this.setState({
             ...this.state,
             inputs: { ...inputs, [name]: { type: name, value } },
@@ -40,24 +41,24 @@ class MultiFactorAuth extends React.Component {
     };
 
     inputValidator = () => {
-        let { errorInput, clearMessage, twoFactorAuth } = this.props;
+        let { errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
         let { inputs } = this.state;
         let { messageError, errors } = inputValidator(inputs);
-
+        let inputsValue = Object.keys(inputs).map(index => inputs[index].value);
+        let pinValue = inputsValue.join("").toString();
+        
         clearMessage();
-        twoFactorAuth();
 
         if (errors.length > 0) {
             errorInput(messageError);
-            this.setState({
+            return this.setState({
                 ...this.state,
                 errors
             });
-        } else {
-            clearMessage();
-            twoFactorAuth();
         }
-        return;
+
+        clearMessage();
+        verifyTwoFactorAuth(pinValue);
     };
 
     render() {
@@ -176,7 +177,7 @@ class MultiFactorAuth extends React.Component {
 }
 
 MultiFactorAuth.propTypes = {
-    twoFactorAuth: PropTypes.func,
+    verifyTwoFactorAuth: PropTypes.func,
     clearMessage: PropTypes.func,
     errorInput: PropTypes.func
 };
@@ -184,7 +185,7 @@ MultiFactorAuth.propTypes = {
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            twoFactorAuth,
+            verifyTwoFactorAuth,
             clearMessage,
             errorInput
         },

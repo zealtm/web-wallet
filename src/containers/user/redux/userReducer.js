@@ -29,6 +29,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
       };
+
     case "POST_USER_CREATE_2FA":
       return {
         ...state,
@@ -37,12 +38,11 @@ const user = (state = initialState, action) => {
     case "POST_USER_VERIFY_2FA":
       return {
         ...state,
-      };
-
-    case "CLEAR_USER_ERROR":
-      return {
-        ...state,
-        errors: []
+        pages: {
+          login: action.pages.login,
+          create: 0,
+          reset: 0
+        }
       };
 
     case "POST_USER_CREATE_USER":
@@ -65,6 +65,12 @@ const user = (state = initialState, action) => {
           reset: action.payload.page
         },
         user: action.payload.user
+      };
+
+    case "CLEAR_USER_ERROR":
+      return {
+        ...state,
+        errors: []
       };
 
     default: {

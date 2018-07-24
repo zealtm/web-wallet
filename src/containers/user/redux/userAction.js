@@ -17,10 +17,6 @@ export const verifyTwoFactorAuth = (token) => ({
     }
 });
 
-export const twoFactorAuth = () => ({
-  type: "POST_2FA_AUTHENTICATE_API"
-});
-
 export const createUser = () => ({
   type: "POST_USER_CREATE_USER_API",
 });
