@@ -342,8 +342,12 @@
   display: table-cell;
 }
 
-:local(.arrowToLoginAlign){
+:local(.arrowToLoginAlign) {
   padding-left: 40%; 
+}
+
+:local(.logoCreate) {
+  composes: logoReset;
 }
 
 /* ------------------------------------------------------------------------- */
