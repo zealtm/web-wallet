@@ -53,9 +53,18 @@ export const inputValidator = inputs => {
         let { checkbox } = inputs;
 
         Object.keys(checkbox).map(value => {
+          if (!inputs.checkbox[value]) {
+            errors.push(value);
+            messageError = i18n.t("MESSAGE_TERMS_OF_SERVICE");
+            return;
+          }
+
           let { checked, label, required } = checkbox[value];
-          if (required === true && checked === false) {
-            errors.push(label);
+
+          if (!errors[0]) {
+            if (required === true && checked === false) {
+              errors.push(label);
+            }
           }
         });
       } else {

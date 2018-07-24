@@ -1,5 +1,6 @@
 {
   "MESSAGE_ERROR_FILEDS": "The following fields are missing or wrong: ",
+  "MESSAGE_TERMS_OF_SERVICE": "You need to accept the terms of service",
   "MESSAGE_ERROR_EMPTY_FILEDS": "Some fields are empty",
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
@@ -10,7 +11,7 @@
   "PLACEHOLDER_LAST_NAME": "Last name",
   "PLACEHOLDER_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat Password",
-  "PLACEHOLDER_USERNAME_EMAIL": "Terms of Services",
+  "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
 
   "BTN_SUBMIT": "Submit",
   "BTN_BACK": "Back",
