@@ -1,6 +1,7 @@
 const initialState = {
   user: {
-    token: undefined
+    token: undefined,
+    hasPin: undefined
   },
   pages: {
     login: 0,
@@ -16,7 +17,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          token: action.user.token
+          token: action.user.token,
+          hasPin: action.user.hasPin
         },
         pages: {
           login: action.pages.login,

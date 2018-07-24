@@ -1,22 +1,27 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import AuthService from "../../../services/authService";
+import PinService from "../../../services/pinService";
 import { setAuthToken, getAuthToken } from "../../../utils/localStorage"
 const authService = new AuthService();
+const pinService = new PinService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(authService.authenticate,
-      action.payload.email,
-      action.payload.password);
+    const request = yield call(authService.authenticate, action.payload.email, action.payload.password);
 
     if (request.status === 200) {
       yield call(setAuthToken, request.data.data.token);
+
       const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
+      const pinData = yield call(pinService.consult);
+      const hasPin = pinData.code === 200 ? true : false;
+
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          token: getAuthToken()
+          token: getAuthToken(),
+          hasPin
         },
         pages: {
           login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
@@ -87,14 +92,14 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.payload.token);
-     
+
     if (response.status === 200)
       return yield put({
         type: "POST_USER_VERIFY_2FA",
         response,
         pages: {
           login: 2
-        }        
+        }
       });
 
     yield put({
