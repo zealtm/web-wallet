@@ -36,8 +36,7 @@ export const inputValidator = inputs => {
       });
     } else {
       let { type, value } = inputs[input];
-
-
+      
       // Check if is empty
       if (isEmpty(trim(value.toString()))) errors.push(type);
 

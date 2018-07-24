@@ -87,7 +87,7 @@ class Seed extends React.Component {
           className={
             buttonEnable ? style.buttonEnable : style.buttonBorderGreen
           }
-          onClick={() => {}}
+          onClick={() => { this.inputValidator()}}
         >
           {i18n.t("BTN_IMPORT_SEED")}
         </button>
