@@ -9,7 +9,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 import Footer from "../footer";
 
 // UTILS
-import { inputValidator } from "../../../utils/inputValidator";
+// import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
 
 // STYLE
@@ -25,48 +25,26 @@ class Seed extends React.Component {
         super();
         this.state = {
             inputs: {
-                textAreaSeed: undefined
+                seed: undefined
             },
-            errors: undefined
+            errors: undefined,
+            buttonEnable: false
         };
     }
 
     getInput = input => {
-        let { name, value } = input;
-        let { inputs } = this.state;
+        let { value } = input;
 
         this.setState({
             ...this.state,
-            inputs: { ...inputs, [name]: { type: name, value } },
-            errors: undefined
+            inputs: { seed: value },
+            errors: undefined,
+            buttonEnable: value.split(" ").length >= 12 ? true : false
         });
     };
 
-    inputValidator = () => {
-        let { inputs } = this.state;
-        let { textAreaSeed } = this.state.inputs;
-        let { errorInput, authenticate } = this.props;
-        let { messageError, errors } = inputValidator(inputs);
-
-        if (errors.length > 0) {
-            errorInput(messageError);
-            this.setState({
-                ...this.state,
-                errors
-            });
-        } else {
-            clearMessage();
-            authenticate(textAreaSeed.value);
-        }
-    };
-
-    generateNewSeed = () => {
-        alert("nova seed ok");
-        return;
-    };
-
     render() {
-        let { errors, generateNewSeed } = this.state;
+        let { buttonEnable, errors } = this.state;
 
         return (
             <div className={style.contGeneral}>
@@ -80,7 +58,7 @@ class Seed extends React.Component {
 
                 <input
                     type="textarea"
-                    name="textAreaSeed"
+                    name="seed"
                     onChange={event => {
                         this.getInput(event.target);
                     }}
@@ -94,16 +72,20 @@ class Seed extends React.Component {
                 <button
                     className={style.buttonPurpleClear}
                     onClick={() => {
-                        generateNewSeed();
+                        this.generateNewSeed();
                     }}
                 >
                     {i18n.t("BTN_NEW_SEED")}
                 </button>
 
                 <button
-                    className={style.buttonBorderGreen}
+                    className={
+                        buttonEnable
+                            ? style.buttonEnable
+                            : style.buttonBorderGreen}
+
                     onClick={() => {
-                        this.inputValidator();
+                        this.importSeed();
                     }}
                 >
                     {i18n.t("BTN_IMPORT_SEED")}

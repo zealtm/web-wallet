@@ -52,10 +52,12 @@
 :local(.buttonPurpleClear) {
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
   margin-bottom: 25px;
+  font-family: Roboto;
+  font-weight: bold;
 }
 
 :local(.buttonBorderGreen) {
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";  
 }
 
 /* 1.3 INPUT */
@@ -254,12 +256,6 @@
 :local(.descriptionPIN) {
   composes: description;
   margin-top: 150px;  
-}
-
-/* 5.3 BUTTON*/
-:local(.buttonGreen) {
-  composes: buttonBorderGreen;
-  composes: bgGreenDefault from "../../components/bases/colorBase.css";
 }
 
 /* ------------------------------------------------------------------------- */
