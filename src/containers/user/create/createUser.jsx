@@ -123,7 +123,7 @@ class CreateUser extends React.Component {
           <input
             type="email"
             name="email"
-            placeholder={i18n.t("PLACEHOLDER_USER_EMAIL")}
+            placeholder={i18n.t("PLACEHOLDER_EMAIL")}
             onChange={event => {
               this.getInput(event.target);
             }}

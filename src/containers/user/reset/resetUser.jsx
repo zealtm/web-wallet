@@ -76,7 +76,7 @@ class ResetUser extends React.Component {
         <input
           type="email"
           name="emailUsername"
-          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
           }}

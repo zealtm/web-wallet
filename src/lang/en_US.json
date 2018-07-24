@@ -1,10 +1,11 @@
 {
   "MESSAGE_ERROR_FILEDS": "The following fields are missing or wrong: ",
+  "MESSAGE_ERROR_EMPTY_FILEDS": "Some fields are empty",
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
 
-  "PLACEHOLDER_EMAIL": "Username or Email",
-  "PLACEHOLDER_USER_EMAIL": "Email",
+  "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
+  "PLACEHOLDER_EMAIL": "Email",
   "PLACEHOLDER_FIRST_NAME": "First name",
   "PLACEHOLDER_LAST_NAME": "Last name",
   "PLACEHOLDER_PASSWORD": "Password",

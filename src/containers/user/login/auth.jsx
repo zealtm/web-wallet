@@ -73,9 +73,8 @@ class Auth extends React.Component {
         <input
           type="email"
           name="emailUsername"
-          label="Email"
           required
-          placeholder={i18n.t("PLACEHOLDER_EMAIL")}
+          placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
           }}
@@ -88,7 +87,6 @@ class Auth extends React.Component {
         <input
           type="password"
           name="password"
-          label="Password"
           required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           onChange={event => {
