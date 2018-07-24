@@ -116,6 +116,17 @@ export const inputValidator = inputs => {
           errors.push(type);
         }
       }
+
+      if (type === "seed") {
+        let regex = new RegExp("^[a-z]+$");
+
+        if (
+          !isLength(trim(value.toString()), { min: 12, max: 12 }) ||
+          !regex.test(trim(value.toString()))
+        ){
+          errors.push(name);
+        }
+      }
     }
   });
 

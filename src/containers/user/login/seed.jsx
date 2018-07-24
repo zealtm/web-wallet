@@ -1,124 +1,118 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
+
+// Redux
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { bindActionCreators } from "redux";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Footer from "../footer";
 
 // UTILS
-// import { inputValidator } from "../../../utils/inputValidator";
+import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
 
-const mapSateToProps = store => ({
-    user: store.user,
-    error: store.error
-});
-
 class Seed extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            inputs: {
-                seed: undefined
-            },
-            errors: undefined,
-            buttonEnable: false
-        };
-    }
-
-    getInput = input => {
-        let { value } = input;
-        this.setState({
-            ...this.state,
-            inputs: { seed: value },
-            errors: undefined,
-            buttonEnable: value.split(" ").length >= 12 ? true : false
-        });
-        //  input.setLineWrap(true);
-
+  constructor() {
+    super();
+    this.state = {
+      inputs: {
+        seed: undefined
+      },
+      errors: undefined,
+      buttonEnable: false
     };
+  }
 
-    render() {
-        let { buttonEnable, errors } = this.state;
+  getInput = input => {
+    let { value } = input;
 
-        return (
-            <div className={style.contGeneral}>
-                <img src="../../images/logo.svg" className={style.logo} />
-                <div className={style.seedSlogan}>{i18n.t("SEED_SLOGAN")}</div>
+    this.setState({
+      ...this.state,
+      inputs: { seed: value },
+      errors: undefined,
+      buttonEnable: value.split(" ").length === 12 ? true : false
+    });
+  };
 
-                <div className={style.descriptionSeed}>{i18n.t("LOGIN_HEADER")}</div>
+  inputValidator = () => {
+    let { inputs } = this.state;
+    let { errors, messageError } = inputValidator(inputs);
 
-                <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
+    if (errors.length > 0) {
+        errorInput(messageError);
+        this.setState({
+          ...this.state,
+          errors,
+        });
+      } else {
+        clearMessage();
+  
+        // CÓDIGO
+  
+      }
 
+  };
 
-                <textarea
-                    type="textarea"
-                    name="seed"
-                    cols="15" rows="6"
-                    onChange={event => {
-                        this.getInput(event.target);
-                    }}
-                    className={
-                        errors
-                            ? style.inputTextAreaError
-                            : style.inputTextArea
-                    }
-                />
+  render() {
+    let { buttonEnable, errors } = this.state;
 
+    return (
+      <div className={style.contGeneral}>
+        <img src="../../images/logo.svg" className={style.logo} />
 
-                <button
-                    className={style.buttonPurpleClear}
-                    onClick={() => {
-                        this.generateNewSeed();
-                    }}
-                >
-                    {i18n.t("BTN_NEW_SEED")}
-                </button>
+        <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
 
-                <button
-                    className={
-                        buttonEnable
-                            ? style.buttonEnable
-                            : style.buttonBorderGreen}
+        <textarea
+          type="textarea"
+          name="seed"
+          cols="15"
+          rows="6"
+          required
+          onChange={event => {
+            this.getInput(event.target);
+          }}
+          className={errors ? style.inputTextAreaError : style.inputTextArea}
+        />
 
-                    onClick={() => {
-                        this.importSeed();
-                    }}
-                >
-                    {i18n.t("BTN_IMPORT_SEED")}
-                </button>
+        <button className={style.buttonPurpleClear} onClick={() => {}}>
+          {i18n.t("BTN_NEW_SEED")}
+        </button>
 
-                <Footer />
-            </div>
-        );
-    }
+        <button
+          className={
+            buttonEnable ? style.buttonEnable : style.buttonBorderGreen
+          }
+          onClick={() => {}}
+        >
+          {i18n.t("BTN_IMPORT_SEED")}
+        </button>
+
+        <Footer />
+      </div>
+    );
+  }
 }
 
 Seed.propTypes = {
-    authenticate: PropTypes.func,
-    clearMessage: PropTypes.func,
-    errorInput: PropTypes.func,
-    user: PropTypes.object,
-    error: PropTypes.object
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        {
-            authenticate,
-            clearMessage,
-            errorInput
-        },
-        dispatch
-    );
+  bindActionCreators(
+    {
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
-    mapSateToProps,
-    mapDispatchToProps
+  null,
+  mapDispatchToProps
 )(Seed);
