@@ -34,13 +34,14 @@ class Seed extends React.Component {
 
     getInput = input => {
         let { value } = input;
-
         this.setState({
             ...this.state,
             inputs: { seed: value },
             errors: undefined,
             buttonEnable: value.split(" ").length >= 12 ? true : false
         });
+        //  input.setLineWrap(true);
+
     };
 
     render() {
@@ -56,9 +57,10 @@ class Seed extends React.Component {
                 <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
 
 
-                <input
+                <textarea
                     type="textarea"
                     name="seed"
+                    cols="15" rows="6"
                     onChange={event => {
                         this.getInput(event.target);
                     }}
@@ -68,6 +70,7 @@ class Seed extends React.Component {
                             : style.inputTextArea
                     }
                 />
+
 
                 <button
                     className={style.buttonPurpleClear}

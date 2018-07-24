@@ -384,14 +384,18 @@
   margin-bottom: 25px;
   border-radius: 6px;
   border-style: none;
-  width: 90%;
-  height: 127px;
-  padding: 0 5%;
+  max-width: 79%;
+  width: 60%;
+  height: 50px;
+  padding: 10% 20%;
   position: relative;
   font-family: roboto;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
+  white-space: normal;
+  overflow: hidden;
+  resize: none;
 }
 
 :local(.inputTextAreaError) {
