@@ -33,6 +33,10 @@
   7.1 INPUT
   7.2 TEXTS
 
+8. SEED
+  8.1 INPUT
+  8.2 TEXTS
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -54,6 +58,7 @@
   margin-bottom: 25px;
   font-family: Roboto;
   font-weight: bold;
+  font-size: 17px
 }
 
 :local(.buttonBorderGreen) {
@@ -384,6 +389,10 @@
   padding: 0 5%;
   position: relative;
   font-family: roboto;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+
 }
 
 :local(.inputTextAreaError) {
