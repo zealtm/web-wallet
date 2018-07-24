@@ -43,7 +43,7 @@
 @media screen and (min-width: 1600px) {
   :local(.colLeft) {
     padding: 10% 10%;
-    overflow: auto;
+    overflow: hidden;
   }
 }
 
