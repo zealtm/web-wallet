@@ -352,6 +352,9 @@
   padding-left: 40%;
 }
 
+:local(.logoCreate) {
+  composes: logoReset;
+}
 /* ------------------------------------------------------------------------- */
 
 /* 7. TWO FACTORS AUTHENTICATOR */

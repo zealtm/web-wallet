@@ -80,7 +80,15 @@ class CreateUser extends React.Component {
 
     return (
       <div className={style.contNewAccount}>
-        <img src="../../images/logo.svg" className={style.logo} />
+
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
+
+        <img src="../../images/logo.svg" className={style.logoCreate} />
         <div>
           <div className={style.newAccountHeader}>
             {i18n.t("NEW_ACCOUNT_HEADER")}
@@ -182,12 +190,12 @@ class CreateUser extends React.Component {
           <button
             className={
               !errors &&
-              inputs.lastName &&
-              inputs.firstName &&
-              inputs.email &&
-              inputs.password &&
-              inputs.passwordRepeat &&
-              inputs.checkbox.checkboxTerms ? style.buttonGreen : style.buttonBorderGreen}
+                inputs.lastName &&
+                inputs.firstName &&
+                inputs.email &&
+                inputs.password &&
+                inputs.passwordRepeat &&
+                inputs.checkbox.checkboxTerms ? style.buttonGreen : style.buttonBorderGreen}
             onClick={() => {
               this.inputValidator();
             }}
