@@ -36,8 +36,8 @@ class CreateUser extends React.Component {
   getInput = input => {
     let { inputs } = this.state;
     let { name, type, value } = input;
+    
     if (type === "checkbox") {
-      console.warn(input)
       this.setState({
         ...this.state,
         inputs: {

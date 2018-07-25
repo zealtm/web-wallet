@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+
+// REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { loading, authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
@@ -16,11 +18,6 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
-
-const mapSateToProps = store => ({
-  user: store.user,
-  error: store.error
-});
 
 class Auth extends React.Component {
   constructor() {
@@ -58,15 +55,15 @@ class Auth extends React.Component {
         errors
       });
     } else {
-      loading(true);
+      loading();
       clearMessage();
       authenticate(emailUsername.value, password.value);
-      loading(false);
+      loading();
     }
   };
 
   render() {
-    let { loading } = this.props.user
+    let { loading } = this.props.user;
     let { inputs, errors } = this.state;
 
     return (
@@ -138,9 +135,12 @@ Auth.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object,
-  error: PropTypes.object
+  user: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  user: store.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

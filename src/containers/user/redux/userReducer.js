@@ -9,7 +9,7 @@ const initialState = {
   },
   loading: false,
   errors: []
-}
+};
 
 const user = (state = initialState, action) => {
   switch (action.type) {
@@ -28,12 +28,12 @@ const user = (state = initialState, action) => {
 
     case "GET_USER_2FA":
       return {
-        ...state,
+        ...state
       };
 
     case "POST_USER_CREATE_2FA":
       return {
-        ...state,
+        ...state
       };
 
     case "POST_USER_VERIFY_2FA":
@@ -71,7 +71,7 @@ const user = (state = initialState, action) => {
     case "CHANGE_LOADING_STATE":
       return {
         ...state,
-        loading: action.state
+        loading: !state.loading
       };
 
     case "CLEAR_USER_ERROR":

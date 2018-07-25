@@ -1,9 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
+
+// REDUX
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { bindActionCreators } from "redux";
+import { loading } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+
+// COMPONENTS
+import Loading from "../../../components/loading";
 
 // STYLE
 import style from "../style.css";
@@ -41,7 +46,7 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props;
+    let { loading, clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
     let inputPin = {
@@ -60,7 +65,9 @@ class Pin extends React.Component {
         errors
       });
     } else {
+      loading();
       clearMessage();
+      loading();
 
       // CÓDIGO
     }
@@ -69,6 +76,7 @@ class Pin extends React.Component {
   };
 
   render() {
+    let { loading } = this.props.user;
     let { errors, PIN } = this.state;
 
     return (
@@ -129,7 +137,7 @@ class Pin extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {i18n.t("BTN_LOGIN")}
+          {loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
       </div>
     );
@@ -137,15 +145,19 @@ class Pin extends React.Component {
 }
 
 Pin.propTypes = {
-  authenticate: PropTypes.func,
+  loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };
 
+const mapSateToProps = store => ({
+  user: store.user
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      authenticate,
+      loading,
       clearMessage,
       errorInput
     },
@@ -153,6 +165,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(Pin);

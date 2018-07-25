@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 // REDUX
 import { bindActionCreators } from "redux";
 import { verifyTwoFactorAuth } from "../redux/userAction";
+import { loading } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+
+// COMPONENTS
+import Loading from "../../../components/loading";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -34,7 +38,8 @@ class MultiFactorAuth extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { twoFactorFields } = this.state;
-
+    let { loading } = this.props;
+    loading();
     this.setState({
       ...this.state,
       twoFactorFields: { ...twoFactorFields, [name]: value },
@@ -44,10 +49,23 @@ class MultiFactorAuth extends React.Component {
   };
 
   inputValidator = () => {
-    let { errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
-    let { field_1, field_2, field_3, field_4, field_5, field_6 } = this.state.twoFactorFields;
+    let { loading, errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
+    let {
+      field_1,
+      field_2,
+      field_3,
+      field_4,
+      field_5,
+      field_6
+    } = this.state.twoFactorFields;
     let token = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
-    let input = { type: "text" , name: "2FA", value: token, placeholder: "2FA", required: true }
+    let input = {
+      type: "text",
+      name: "2FA",
+      value: token,
+      placeholder: "2FA",
+      required: true
+    };
     let { messageError, errors } = inputValidator({ inputs: input });
 
     if (errors.length > 0) {
@@ -58,11 +76,14 @@ class MultiFactorAuth extends React.Component {
       });
     }
 
+    loading();
     clearMessage();
     verifyTwoFactorAuth(token);
+    loading();
   };
 
   render() {
+    let { loading } = this.props.user;
     let { errors, twoFactorFields } = this.state;
 
     return (
@@ -176,7 +197,7 @@ class MultiFactorAuth extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {i18n.t("BTN_LOGIN")}
+          {loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
       </div>
     );
@@ -184,14 +205,21 @@ class MultiFactorAuth extends React.Component {
 }
 
 MultiFactorAuth.propTypes = {
+  loading: PropTypes.func,
   verifyTwoFactorAuth: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  user: store.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
       verifyTwoFactorAuth,
       clearMessage,
       errorInput
@@ -200,6 +228,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(MultiFactorAuth);

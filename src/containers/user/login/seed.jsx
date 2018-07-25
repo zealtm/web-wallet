@@ -4,10 +4,12 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { loading } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Footer from "../footer";
+import Loading from "../../../components/loading";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -41,7 +43,7 @@ class Seed extends React.Component {
 
   inputValidator = () => {
     let { inputs } = this.state;
-    let { errorInput } = this.props;
+    let { loading, errorInput } = this.props;
     let { errors, messageError } = inputValidator(inputs);
 
     if (errors.length > 0) {
@@ -51,13 +53,16 @@ class Seed extends React.Component {
         errors
       });
     } else {
+      loading();
       clearMessage();
+      loading();
 
       // CÓDIGO
     }
   };
 
   render() {
+    let { loading } = this.props.user;
     let { buttonEnable, errors } = this.state;
 
     return (
@@ -91,7 +96,7 @@ class Seed extends React.Component {
             this.inputValidator();
           }}
         >
-          {i18n.t("BTN_IMPORT_SEED")}
+          {loading ? <Loading /> : i18n.t("BTN_IMPORT_SEED")}
         </button>
 
         <Footer />
@@ -101,13 +106,20 @@ class Seed extends React.Component {
 }
 
 Seed.propTypes = {
+  loading: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  user: store.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
       clearMessage,
       errorInput
     },
@@ -115,6 +127,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(Seed);

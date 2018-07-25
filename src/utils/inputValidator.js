@@ -192,7 +192,7 @@ export const inputValidator = inputs => {
       }
     });
   }
-  
+
   // REMOVE DUPLICATE ITENS
   errors = errors.filter((item, index, input) => {
     return input.indexOf(item) == index;
@@ -205,7 +205,7 @@ export const inputValidator = inputs => {
   if (errors.length > 0 && messageError === undefined) {
     messageError = i18n.t("MESSAGE_ERROR_FILEDS") + inputName.join(", ");
   }
-  console.warn("AQUI", messageError);
+
   return {
     messageError,
     errors
