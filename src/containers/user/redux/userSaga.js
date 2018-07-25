@@ -9,13 +9,14 @@ const pinService = new PinService();
 export function* authenticateUser(action) {
   try {
     const request = yield call(authService.authenticate, action.payload.email, action.payload.password);
-
+    
     if (request.status === 200) {
       yield call(setAuthToken, request.data.data.token);
 
-      const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
+      const twoFactorAuthData = yield call(authService.hasTwoFactorAuth);
       const pinData = yield call(pinService.consult);
-      const hasPin = pinData.code === 200 ? true : false;
+      const hasPin = pinData.data.code === 200 ? true : false;
+      const nextPage = twoFactorAuthData.data.code === 200 ? 1 : 2;
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
@@ -24,7 +25,7 @@ export function* authenticateUser(action) {
           hasPin
         },
         pages: {
-          login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
+          login: nextPage
         }
       });
     }
@@ -104,7 +105,62 @@ export function* verifyTwoFactorAuth(action) {
 
     yield put({
       type: "REQUEST_FAILED",
-      message: "Invalid value inserted"
+      message: response.message
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: error.message
+      }
+    })
+  }
+}
+
+export function* verifyUserPin(action) {
+  try {
+    let response = yield call(pinService.verify, action.payload.pin);
+     
+    if (response.data.code === 200) {
+      yield put({
+        type: "REQUEST_FAILED",
+        payload: {
+          message: response.data.message
+        }
+      });
+    }
+
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: response.message
+      }
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: error.message
+      }
+    })
+  }
+}
+
+export function* createUserPin(action) {
+  try {
+    let response = yield call(pinService.create, action.payload.pin);
+    if (response.code === 201) {
+      yield put({
+        type: "POST_USER_CREATE_PIN",
+        message: response.message
+      });
+    }
+
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: response.message
+      }
     });
   } catch (error) {
     yield put({
@@ -161,6 +217,8 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
-    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser)
+    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
+    fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
+    fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin)
   ];
 }

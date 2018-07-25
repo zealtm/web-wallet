@@ -7,6 +7,7 @@ class PinService {
     async consult() {
         try {
             let response = await axios.get(`${BASE_URL}/user/pin`, API_HEADER_AUTH);
+    
             return response;
         } catch (error) {
             error.message;

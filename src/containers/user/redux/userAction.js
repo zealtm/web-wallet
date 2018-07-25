@@ -17,11 +17,26 @@ export const verifyTwoFactorAuth = (token) => ({
     }
 });
 
+
+export const verifyUserPin = (pin) => ({
+    type: "POST_USER_VERIFY_PIN_API",
+    payload: {
+        pin
+    }
+})
+
+export const createUserPin = (pin) => ({
+    type: "POST_USER_CREATE_PIN_API",
+    payload: {
+        pin
+    }
+})
+
 export const createUser = () => ({
-  type: "POST_USER_CREATE_USER_API",
+    type: "POST_USER_CREATE_USER_API",
 });
 
 export const resetUser = () => ({
-  type: "POST_USER_RESET_USER_API",
+    type: "POST_USER_RESET_USER_API",
 });
 

@@ -10,7 +10,7 @@ class AuthService {
             }, API_HEADER);
             return response;
         } catch (error) {
-            console.error(error);
+            error.message;
         }
     }
 

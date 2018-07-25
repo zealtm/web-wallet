@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
-
+import { verifyUserPin, createUserPin } from "../redux/userAction"
 // STYLE
 import style from "../style.css";
 
@@ -41,26 +40,26 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props;
+    let { clearMessage, errorInput, user, verifyUserPin, createUserPin } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
-    let inputPin = { type: "password" , name: "PIN", value: pin, placeholder: "PIN", required: true}
+    let inputPin = { type: "password", name: "PIN", value: pin, placeholder: "PIN", required: true }
     let { errors, messageError } = inputValidator({ inputs: inputPin });
 
     if (errors.length > 0) {
       errorInput(messageError);
-      this.setState({
+      return this.setState({
         ...this.state,
         errors,
       });
-    } else {
-      clearMessage();
-
-      // CÓDIGO
-
     }
 
-    return;
+    if (!user.hasPin) {
+      return createUserPin(pin);
+    }
+
+    verifyUserPin(pin);
+    clearMessage();
   };
 
   render() {
@@ -70,7 +69,6 @@ class Pin extends React.Component {
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
-
         <div className={style.alignInputsDefault}>
 
           <input
@@ -139,20 +137,25 @@ class Pin extends React.Component {
 Pin.propTypes = {
   authenticate: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object,
+  createUserPin: PropTypes.func,
+  verifyUserPin: PropTypes.func
 };
+
+const mapSateToProps = store => ({
+  user: store.user.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      authenticate,
+      verifyUserPin,
+      createUserPin,
       clearMessage,
       errorInput
     },
     dispatch
   );
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Pin);
+export default connect(mapSateToProps, mapDispatchToProps)(Pin);
