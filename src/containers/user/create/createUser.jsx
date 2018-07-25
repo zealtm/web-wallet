@@ -89,7 +89,6 @@ class CreateUser extends React.Component {
         </Link>
 
         <img src="../../images/logo.svg" className={style.logoCreate} />
-
         <div>
           <div className={style.newAccountHeader}>
             {i18n.t("NEW_ACCOUNT_HEADER")}
