@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+/*
+Component Props
+color: string -    default: white / Options: "white", "purple", "lunes", "bitcoin"
+width: string + "px" - default: "35px"
+*/
+
 class Loading extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +32,7 @@ class Loading extends Component {
 }
 
 Loading.propTypes = {
-  color: PropTypes.oneOf(["white", "purple", "lunes", "bitcoin"]).isRequired,
+  color: PropTypes.oneOf(["", "white", "purple", "lunes", "bitcoin"]),
   width: PropTypes.string
 };
 

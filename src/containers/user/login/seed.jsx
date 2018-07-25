@@ -41,21 +41,20 @@ class Seed extends React.Component {
 
   inputValidator = () => {
     let { inputs } = this.state;
+    let { errorInput } = this.props;
     let { errors, messageError } = inputValidator(inputs);
 
     if (errors.length > 0) {
-        errorInput(messageError);
-        this.setState({
-          ...this.state,
-          errors,
-        });
-      } else {
-        clearMessage();
-  
-        // CÓDIGO
-  
-      }
+      errorInput(messageError);
+      this.setState({
+        ...this.state,
+        errors
+      });
+    } else {
+      clearMessage();
 
+      // CÓDIGO
+    }
   };
 
   render() {
@@ -72,6 +71,7 @@ class Seed extends React.Component {
           name="seed"
           cols="15"
           rows="6"
+          placeholder={i18n.t("PLACEHOLDER_SEED")}
           required
           onChange={event => {
             this.getInput(event.target);
@@ -87,7 +87,9 @@ class Seed extends React.Component {
           className={
             buttonEnable ? style.buttonEnable : style.buttonBorderGreen
           }
-          onClick={() => { this.inputValidator()}}
+          onClick={() => {
+            this.inputValidator();
+          }}
         >
           {i18n.t("BTN_IMPORT_SEED")}
         </button>

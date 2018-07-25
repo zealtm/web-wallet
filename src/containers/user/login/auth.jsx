@@ -49,7 +49,7 @@ class Auth extends React.Component {
     let { emailUsername, password } = this.state.inputs;
     let { errorInput, authenticate } = this.props;
     let { messageError, errors } = inputValidator(inputs);
-
+    console.warn(messageError)
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({

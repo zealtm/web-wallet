@@ -97,7 +97,6 @@ export const inputValidator = inputs => {
           if (isEmpty(trim(value.toString())))
             inputName.push(placeholder), errors.push(name);
         }
-
         // Check if is a valid email
         if (name === "email") {
           if (!isEmail(trim(value.toString())))
@@ -192,22 +191,23 @@ export const inputValidator = inputs => {
         }
       }
     });
-
-    // REMOVE DUPLICATE ITENS
-    errors = errors.filter((item, index, input) => {
-      return input.indexOf(item) == index;
-    });
-
-    inputName = inputName.filter((item, index, input) => {
-      return input.indexOf(item) == index;
-    });
-
-    if (errors.length > 0 && messageError === undefined) {
-      messageError = i18n.t("MESSAGE_ERROR_FILEDS") + inputName.join(", ");
-    }
-    return {
-      messageError,
-      errors
-    };
   }
+  
+  // REMOVE DUPLICATE ITENS
+  errors = errors.filter((item, index, input) => {
+    return input.indexOf(item) == index;
+  });
+
+  inputName = inputName.filter((item, index, input) => {
+    return input.indexOf(item) == index;
+  });
+
+  if (errors.length > 0 && messageError === undefined) {
+    messageError = i18n.t("MESSAGE_ERROR_FILEDS") + inputName.join(", ");
+  }
+  console.warn("AQUI", messageError);
+  return {
+    messageError,
+    errors
+  };
 };

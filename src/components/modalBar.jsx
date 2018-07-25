@@ -14,6 +14,13 @@ import CloseIcon from "@material-ui/icons/Close";
 // STYLE
 import colorBase from "./bases/colorBase.css";
 
+/*
+Component Props
+type: string -    default: info
+message: string - default: "NO TEXT MESSAGE"
+timer: boolean -   default: disabled / enabled: 6000ms
+*/
+
 // IMAGES
 const imagePath = "/images/modal/";
 
@@ -43,13 +50,6 @@ const style = {
     float: "right"
   }
 };
-
-/*
-Component Props
-type: string -    default: info
-message: string - default: "NO TEXT MESSAGE"
-timer: boolean -   default: disabled / enabled: 6000ms
-*/
 
 class ModalBar extends Component {
   constructor(props) {
