@@ -7,6 +7,7 @@ const initialState = {
     create: 0,
     reset: 0
   },
+  loading: false,
   errors: []
 }
 
@@ -65,6 +66,12 @@ const user = (state = initialState, action) => {
           reset: action.payload.page
         },
         user: action.payload.user
+      };
+
+    case "CHANGE_LOADING_STATE":
+      return {
+        ...state,
+        loading: action.state
       };
 
     case "CLEAR_USER_ERROR":

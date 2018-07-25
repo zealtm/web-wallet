@@ -25,3 +25,8 @@ export const resetUser = () => ({
   type: "POST_USER_RESET_USER_API",
 });
 
+export const loading = (state = false) => ({
+    type: "CHANGE_LOADING_STATE",
+    state
+});
+

@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { authenticate } from "../redux/userAction";
+import { loading, authenticate } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
+import Loading from "../../../components/loading";
 import Footer from "../footer";
 
 // UTILS
@@ -47,9 +48,9 @@ class Auth extends React.Component {
   inputValidator = () => {
     let { inputs } = this.state;
     let { emailUsername, password } = this.state.inputs;
-    let { errorInput, authenticate } = this.props;
+    let { loading, errorInput, authenticate } = this.props;
     let { messageError, errors } = inputValidator(inputs);
-    console.warn(messageError)
+
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -57,12 +58,15 @@ class Auth extends React.Component {
         errors
       });
     } else {
+      loading(true);
       clearMessage();
       authenticate(emailUsername.value, password.value);
+      loading(false);
     }
   };
 
   render() {
+    let { loading } = this.props.user
     let { inputs, errors } = this.state;
 
     return (
@@ -113,7 +117,7 @@ class Auth extends React.Component {
             this.inputValidator();
           }}
         >
-          {i18n.t("BTN_LOGIN")}
+          {loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
 
         <div className={style.doNotHaveAccount}>
@@ -131,6 +135,7 @@ class Auth extends React.Component {
 
 Auth.propTypes = {
   authenticate: PropTypes.func,
+  loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object,
@@ -140,6 +145,7 @@ Auth.propTypes = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
       authenticate,
       clearMessage,
       errorInput

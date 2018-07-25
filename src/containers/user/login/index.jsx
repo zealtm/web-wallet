@@ -8,7 +8,6 @@ import Auth from "./auth";
 import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
 import Seed from "./seed";
-import Loading from "../../../components/loading"
 
 class Login extends React.Component {
   renderContent = () => {
@@ -21,7 +20,7 @@ class Login extends React.Component {
   };
 
   render() {
-    return <div> {this.renderContent()}</div>;
+    return <div>{this.renderContent()}</div>;
   }
 }
 

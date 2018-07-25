@@ -15,7 +15,7 @@ class Loading extends Component {
   renderLoading = () => {
     let { color, width } = this.props;
     if (!color) color = "white";
-    if (!width) width = "35px";
+    if (!width) width = "20px";
 
     return (
       <img
