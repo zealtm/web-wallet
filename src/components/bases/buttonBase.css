@@ -46,7 +46,7 @@
 }
 
 /* 1.1 BUTTON GREEN */
-:local(.buttonGreenLight) {
+:local(.buttonEnable) {
   composes: buttonDefault;
   composes: bgGreenLight from "./colorBase.css";
 }

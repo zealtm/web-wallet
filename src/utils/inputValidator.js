@@ -179,12 +179,12 @@ export const inputValidator = inputs => {
             inputName.push(placeholder);
           }
         }
-        
+
         if (name === "seed") {
           let regex = new RegExp("^[a-z]+$");
 
           if (
-            !isLength(trim(value.toString()), { min: 12, max: 12 }) ||
+            !isLength(trim(value.toString()), { min: 12, max: 12 + 11 }) ||
             !regex.test(trim(value.toString()))
           ) {
             errors.push(name);

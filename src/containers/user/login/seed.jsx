@@ -29,11 +29,11 @@ class Seed extends React.Component {
   }
 
   getInput = input => {
-    let { value } = input;
+    let { name, value } = input;
 
     this.setState({
       ...this.state,
-      inputs: { seed: value },
+      inputs: { [name]: value ? input : undefined },
       errors: undefined,
       buttonEnable: value.split(" ").length === 12 ? true : false
     });
