@@ -8,10 +8,10 @@ const pinService = new PinService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(authService.authenticate, action.payload.email, action.payload.password);
+    const response = yield call(authService.authenticate, action.payload.email, action.payload.password);
     
-    if (request.status === 200) {
-      yield call(setAuthToken, request.data.data.token);
+    if (response.data.code === 200) {
+      yield call(setAuthToken, response.data.data.token);
 
       const twoFactorAuthData = yield call(authService.hasTwoFactorAuth);
       const pinData = yield call(pinService.consult);
@@ -149,6 +149,7 @@ export function* verifyUserPin(action) {
 export function* createUserPin(action) {
   try {
     let response = yield call(pinService.create, action.payload.pin);
+
     if (response.code === 201) {
       yield put({
         type: "POST_USER_CREATE_PIN",
