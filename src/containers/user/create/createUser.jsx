@@ -195,7 +195,7 @@ class CreateUser extends React.Component {
                 inputs.email &&
                 inputs.password &&
                 inputs.passwordRepeat &&
-                inputs.checkbox.checkboxTerms ? style.buttonGreen : style.buttonBorderGreen}
+                inputs.checkbox.checkboxTerms ? style.buttonEnable : style.buttonBorderGreen}
             onClick={() => {
               this.inputValidator();
             }}

@@ -132,7 +132,7 @@ class Pin extends React.Component {
         <button
           className={
             PIN.PIN_1 && PIN.PIN_2 && PIN.PIN_3 && PIN.PIN_4
-              ? style.buttonGreen
+              ? style.buttonEnable
               : style.buttonBorderGreen
           }
           onClick={() => this.inputValidator()}

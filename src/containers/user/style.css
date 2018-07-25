@@ -27,6 +27,7 @@
 6. CREATE / NEW ACCOUNT
   6.1 TEXTS
   6.2 ICONS
+  6.3 INPUT - CHECKBOX
 
 7. TWO FACTORS AUTHENTICATOR 
   7.1 INPUT
@@ -63,11 +64,6 @@
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }
 
-:local(.buttonGreen) {
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-  composes: bgGreenDefault from "../../components/bases/colorBase.css";
-}
-
 /* 1.3 INPUT */
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
@@ -85,6 +81,7 @@
 :local(.doNotLink) {
   composes: linkDefault from "../../components/bases/textBase.css";
   font-size: 16px;
+  font-weight: 900;
 }
 
 /* 1.5 IMAGES */
@@ -102,15 +99,6 @@
   margin-top: 40px;
 }
 
-:local(.resetHeader) {
-  composes: textDefault from "../../components/bases/textBase.css";
-  margin-top: 45px;
-  margin-bottom: 25px;
-  font-size: 22px;
-  text-align: center;
-  font-weight: 800;
-}
-
 /* ------------------------------------------------------------------------- */
 
 /* 2. FOOTER */
@@ -125,7 +113,7 @@
   max-width: 335px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 80px;
+  margin-top: 100px;
   font-weight: 500;
 }
 
@@ -175,6 +163,15 @@
 /* 4. RESET */
 
 /* 4.1 TEXTS */
+:local(.resetHeader) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  margin-top: 45px;
+  margin-bottom: 25px;
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+}
+
 :local(.resetInstruction) {
   composes: textDefault from "../../components/bases/textBase.css";
   text-align: center;
@@ -215,7 +212,7 @@
   height: 58px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
 :local(.iconHeader) {
@@ -303,6 +300,7 @@
   margin-bottom: 55px;
   text-align: center;
   font-weight: bold;
+  font-size: 12px;
 }
 
 :local(.alignInfoTermsOfServices) {
@@ -314,16 +312,18 @@
 :local(.acceptTermsOfServices) {
   composes: textDefault from "../../components/bases/textBase.css";
   display: inline;
+  font-size: 16px;
 }
 
 :local(.linkTermsOfServices) {
   composes: link;
   font-style: italic;
+  font-size: 16px;
 }
 
 :local(.messageConfirmationRegister) {
   composes: textDefault from "../../components/bases/textBase.css";
-  font-size: 22px;
+  font-size: 23px;
   text-align: center;
   font-weight: bold;
   margin-bottom: 80px;
@@ -355,6 +355,15 @@
 :local(.logoCreate) {
   composes: logoReset;
 }
+
+/* 6.3 INPUT - CHECKBOX */
+:loal(.checkbox) {
+  color: white;
+}
+
+:local(.checkboxError) {
+  color: #ff445b;
+}
 /* ------------------------------------------------------------------------- */
 
 /* 7. TWO FACTORS AUTHENTICATOR */
@@ -368,8 +377,8 @@
   width: 49px;
   height: 50px;
   margin: 25px 1px 0px 0px;
-  font-size: 27px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 900;
   font-family: Roboto;
   text-align: center;
 }
@@ -430,7 +439,13 @@
   text-align: center;
   white-space: normal;
   overflow: hidden;
-  resize: none;
+  resize: none;  
+}
+
+:local(.inputTextArea::placeholder) {
+  opacity: 0.5;
+  color: white;
+  font-size: 17px;
 }
 
 :local(.inputTextAreaError) {
