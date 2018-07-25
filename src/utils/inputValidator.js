@@ -183,7 +183,6 @@ export const inputValidator = inputs => {
           let regex = new RegExp("^[a-z]+$");
 
           if (
-            !isLength(trim(value.toString()), { min: 12, max: 12 + 11 }) ||
             !regex.test(trim(value.toString()))
           ) {
             errors.push(name);

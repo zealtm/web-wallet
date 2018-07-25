@@ -17,10 +17,12 @@
   "BTN_SUBMIT": "Submit",
   "BTN_BACK": "Back",
   "BTN_LOGIN": "Login",
+  "BTN_CONFIRM_2FA": "Confirmar",
+  "BTN_CONFIRM_PIN": "Validar",
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
   "BTN_2FA": "Activate 2FA",
-  "BTN_IMPORT_SEED": "IMPORT",
+  "BTN_IMPORT_SEED": "Import",
   "BTN_NEW_SEED": "GENERATE NEW SEED",
 
 

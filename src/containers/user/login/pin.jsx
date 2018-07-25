@@ -137,7 +137,7 @@ class Pin extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {loading ? <Loading /> : i18n.t("BTN_LOGIN")}
+          {loading ? <Loading /> : i18n.t("BTN_CONFIRM_PIN")}
         </button>
       </div>
     );
@@ -147,7 +147,8 @@ class Pin extends React.Component {
 Pin.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
