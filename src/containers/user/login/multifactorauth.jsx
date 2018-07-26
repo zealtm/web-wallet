@@ -38,7 +38,7 @@ class MultiFactorAuth extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { twoFactorFields } = this.state;
-    
+
     this.setState({
       ...this.state,
       twoFactorFields: { ...twoFactorFields, [name]: value },
@@ -78,7 +78,6 @@ class MultiFactorAuth extends React.Component {
     loading();
     clearMessage();
     verifyTwoFactorAuth(token);
-    loading();
   };
 
   render() {

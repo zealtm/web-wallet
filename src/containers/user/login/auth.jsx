@@ -47,7 +47,7 @@ class Auth extends React.Component {
     let { emailUsername, password } = this.state.inputs;
     let { loading, errorInput, authenticate } = this.props;
     let { messageError, errors } = inputValidator(inputs);
-    loading();
+    
     if (errors.length > 0) {
       errorInput(messageError);
       this.setState({
@@ -55,15 +55,17 @@ class Auth extends React.Component {
         errors
       });
     } else {
+      loading();
       clearMessage();
       authenticate(emailUsername.value, password.value);
     }
+
   };
 
   render() {
-    let { loading } = this.props.user;
+    let { user } = this.props;
     let { inputs, errors } = this.state;
-    console.warn(loading)
+
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
@@ -109,10 +111,10 @@ class Auth extends React.Component {
               : style.buttonBorderGreen
           }
           onClick={() => {
-            this.inputValidator(); loading;
+            this.inputValidator();
           }}
         >
-          {loading ? <Loading /> : i18n.t("BTN_LOGIN")}
+          {user.loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
 
         <div className={style.doNotHaveAccount}>

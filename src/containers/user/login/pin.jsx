@@ -67,7 +67,6 @@ class Pin extends React.Component {
     } else {
       loading();
       clearMessage();
-      loading();
 
       // CÓDIGO
     }

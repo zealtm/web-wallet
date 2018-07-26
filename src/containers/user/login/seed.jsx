@@ -55,7 +55,6 @@ class Seed extends React.Component {
     } else {
       loading();
       clearMessage();
-      loading();
 
       // CÓDIGO
     }

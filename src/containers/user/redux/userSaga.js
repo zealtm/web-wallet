@@ -12,8 +12,6 @@ export function* authenticateUser(action) {
       action.payload.password
     );
 
-    console.warn("request", request);
-
     if (request.status === 200) {
       yield call(setAuthToken, request.data.data.token);
       let userToken = yield call(getAuthToken);
@@ -21,8 +19,6 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
-
-      console.warn("hasTwoFactorAuth", hasTwoFactorAuth);
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
@@ -45,13 +41,20 @@ export function* authenticateUser(action) {
     }
 
     yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
       type: "REQUEST_FAILED",
       payload: {
         message: "Failed to try authentication"
       }
     });
   } catch (error) {
-    console.warn(error);
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
     yield put({
       type: "REQUEST_FAILED",
       payload: {
@@ -72,10 +75,18 @@ export function* hasTwoFactorAuth() {
       });
 
     yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
       type: "REQUEST_FAILED",
       message: "Could not verify 2fa"
     });
   } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
     yield put({
       type: "REQUEST_FAILED",
       message: error.message
@@ -93,10 +104,18 @@ export function* createTwoFactorAuth() {
       });
 
     yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
       type: "REQUEST_FAILED",
       message: "Could not enable two-factor authentication"
     });
   } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
     yield put({
       type: "REQUEST_FAILED",
       message: error.message
@@ -121,10 +140,18 @@ export function* verifyTwoFactorAuth(action) {
       });
 
     yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
       type: "REQUEST_FAILED",
       message: "Invalid value inserted"
     });
   } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
     yield put({
       type: "REQUEST_FAILED",
       payload: {
@@ -143,6 +170,10 @@ export function* createUser() {
       }
     });
   } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
     yield put({
       type: "REQUEST_FAILED",
       payload: {

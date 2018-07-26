@@ -23,17 +23,20 @@ const user = (state = initialState, action) => {
           login: action.pages.login,
           create: 0,
           reset: 0
-        }
+        },
+        loading: false
       };
 
     case "GET_USER_2FA":
       return {
-        ...state
+        ...state,
+        loading: false
       };
 
     case "POST_USER_CREATE_2FA":
       return {
-        ...state
+        ...state,
+        loading: false
       };
 
     case "POST_USER_VERIFY_2FA":
@@ -43,7 +46,8 @@ const user = (state = initialState, action) => {
           login: action.pages.login,
           create: 0,
           reset: 0
-        }
+        },
+        loading: false
       };
 
     case "POST_USER_CREATE_USER":
@@ -54,7 +58,8 @@ const user = (state = initialState, action) => {
           create: action.payload.page,
           reset: 0
         },
-        user: action.payload.user
+        user: action.payload.user,
+        loading: false
       };
 
     case "POST_USER_RESET_USER":
@@ -65,7 +70,8 @@ const user = (state = initialState, action) => {
           create: 0,
           reset: action.payload.page
         },
-        user: action.payload.user
+        user: action.payload.user,
+        loading: false
       };
 
     case "CHANGE_LOADING_STATE":
