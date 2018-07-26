@@ -20,8 +20,7 @@ class AuthService {
 
   async hasTwoFactorAuth(token) {
     try {
-      API_HEADER.headers.Authorization = token;
-      console.warn(API_HEADER);
+      API_HEADER.headers.Authorization = token;     
       let response = await axios.get(BASE_URL + "/user/2fa", API_HEADER);
 
       return response;

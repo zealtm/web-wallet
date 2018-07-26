@@ -3,6 +3,7 @@ import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
+import { validateMnemonic } from "./mnemonicSeed";
 
 /*
 DOCUMENTATION:
@@ -181,10 +182,9 @@ export const inputValidator = inputs => {
 
         if (name === "seed") {
           let regex = new RegExp("^[a-z]+$");
-
-          if (
-            !regex.test(trim(value.toString()))
-          ) {
+          let isSeed = validateMnemonic(value.toString());
+          
+          if (!regex.test(trim(value.toString())) || !isSeed) {
             errors.push(name);
           }
         }
