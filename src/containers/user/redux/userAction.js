@@ -23,6 +23,11 @@ export const createUserPin = pin => ({
   pin
 });
 
+export const generateUserSeed = () => ({
+  type: "GENERATE_USER_SEED_API",
+});
+
+
 export const createUser = () => ({
   type: "POST_USER_CREATE_USER_API"
 });

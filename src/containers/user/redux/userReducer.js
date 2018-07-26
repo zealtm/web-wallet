@@ -1,6 +1,7 @@
 const initialState = {
   user: {
     pin: undefined,
+    seed: undefined
   },
   pages: {
     login: 0,
@@ -17,7 +18,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          pin: action.user.pin
+          pin: action.user.pin,
+          seed: action.seed
         },
         pages: {
           login: action.pages.login,
