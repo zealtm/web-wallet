@@ -289,6 +289,7 @@
 
 :local(.descriptionPIN) {
   composes: description;
+  font-weight: bold;
   margin-top: 150px;
 }
 

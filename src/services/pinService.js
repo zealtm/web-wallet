@@ -9,7 +9,7 @@ class PinService {
 
       return response;
     } catch (error) {
-      error.response;
+      return error.response;
     }
   }
 
@@ -26,7 +26,7 @@ class PinService {
 
       return response;
     } catch (error) {
-      error.response;
+      return error.response;
     }
   }
 

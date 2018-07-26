@@ -46,7 +46,7 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, verifyUserPin, clearMessage, errorInput } = this.props;
+    let { user, loading, verifyUserPin, createUserPin, clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
     let inputPin = {
@@ -67,19 +67,21 @@ class Pin extends React.Component {
     } else {
       loading();
       clearMessage();
-      verifyUserPin(pin);
-      // CÓDIGO
+      console.warn(user.user.pin )
+      user.user.pin ? verifyUserPin(pin) : createUserPin(pin);
     }
   };
 
   render() {
-    let { loading } = this.props.user;
+    let { loading, user } = this.props.user;
     let { errors, PIN } = this.state;
 
     return (
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
-        <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
+        <div className={style.descriptionPIN}>
+          {user.pin ? i18n.t("PIN_ENTER") : i18n.t("PIN_CREATE")}
+        </div>
         <div className={style.alignInputsDefault}>
           <input
             type="password"

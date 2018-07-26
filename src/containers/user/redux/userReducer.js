@@ -1,6 +1,6 @@
 const initialState = {
   user: {
-    hasPin: undefined,
+    pin: undefined,
   },
   pages: {
     login: 0,
@@ -17,7 +17,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          hasPin: action.user.hasPin
+          pin: action.user.pin
         },
         pages: {
           login: action.pages.login,

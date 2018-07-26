@@ -40,7 +40,8 @@
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
 
-  "PIN_HEADER": "Enter your PIN",
+  "PIN_ENTER": "ENTER your PIN",
+  "PIN_CREATE": "CREATE your PIN",
   "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
 
   "NEW_ACCOUNT_HEADER": "Enter the necessary data to make your registration",

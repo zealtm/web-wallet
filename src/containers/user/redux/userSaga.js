@@ -23,8 +23,8 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
+      console.warn("twoFactorResponse", twoFactorResponse);
       let pinResponse = yield call(pinService.consult, userToken);
-      console.warn(pinResponse);
       let pin = pinResponse.data.code === 200 ? true : false;
 
       return yield put({
@@ -33,15 +33,12 @@ export function* authenticateUser(action) {
           pin: pin
         },
         pages: {
-          login:
-            twoFactorResponse.data && twoFactorResponse.data.code === 200
-              ? 1
-              : 2
+          login: twoFactorResponse.data.code === 200 ? 1 : 2
         }
       });
     }
 
-    if (response.data.code === 401 || response.data.code === 403) {
+    if (response.data.code === 401) {
       yield put({
         type: "REQUEST_FAILED",
         message: "Inavlid Username/Email or Password"
@@ -132,7 +129,7 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
-
+    console.warn(response)
     if (response.data.code === 200) {
       return yield put({
         type: "POST_USER_VERIFY_2FA",
@@ -203,12 +200,13 @@ export function* verifyUserPin(action) {
 
 export function* createUserPin(action) {
   try {
-    let response = yield call(pinService.create, action.pin);
+    let userToken = yield call(getAuthToken);
+    let response = yield call(pinService.create, action.pin, userToken);
 
-    if (response.code === 201) {
+    if (response.data.code === 201) {
       yield put({
-        type: "POST_USER_CREATE_PIN",
-        message: response.message
+        type: "REQUEST_SUCCESS",
+        message: " you are logged :)"
       });
     }
 

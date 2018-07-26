@@ -183,6 +183,7 @@ export const inputValidator = inputs => {
           let regex = new RegExp("^[a-z]+$");
 
           if (
+            value.trim().split(/\s+/g).length >= 12 &&
             !regex.test(trim(value.toString()))
           ) {
             errors.push(name);
