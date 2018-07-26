@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import i18n from "../../../utils/i18n";
 
 // COMPONENTS
+import Loading from "../../../components/loading";
 import fakeDelay from "../../../components/fakeDelay";
 import Carousel from "../../../components/carousel/carousel";
 import ModalBar from "../../../components/modalBar";
@@ -18,50 +19,50 @@ import Hidden from "@material-ui/core/Hidden";
 // STYLE
 import style from "../style.css";
 
-function Loading({ error }) {
+function Transition({ error }) {
   if (error) {
     console.error(error);
     return "Error!";
   } else {
-    return <h3>Loading...</h3>;
+    return <Loading color="lunes" width="35px"/>;
   }
 }
 
 /* eslint-disable */
 let login = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../user/login")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../user/login")
 });
 
 let reset = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../user/reset")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
 });
 
 let resetNewPassword = Loadable({
   loader: () =>
     fakeDelay(400).then(() => import("../../user/reset/newPassword")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
 });
 
 let create = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../user/create")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../user/create")
 });
 
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/500")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */

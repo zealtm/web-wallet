@@ -1,25 +1,45 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import AuthService from "../../../services/authService";
-import { setAuthToken, getAuthToken } from "../../../utils/localStorage"
+import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
 const authService = new AuthService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(authService.authenticate,
+    const request = yield call(
+      authService.authenticate,
       action.payload.email,
-      action.payload.password);
+      action.payload.password
+    );
+
+    console.warn("request", request);
 
     if (request.status === 200) {
       yield call(setAuthToken, request.data.data.token);
-      const hasTwoFactorAuth = yield call(authService.hasTwoFactorAuth);
+      let userToken = yield call(getAuthToken);
+      const hasTwoFactorAuth = yield call(
+        authService.hasTwoFactorAuth,
+        userToken
+      );
+
+      console.warn("hasTwoFactorAuth", hasTwoFactorAuth);
+
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          token: getAuthToken()
+          token: userToken
         },
         pages: {
           login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
+        }
+      });
+    }
+
+    if (request.status === 401 || request.status === 403) {
+      yield put({
+        type: "REQUEST_FAILED",
+        payload: {
+          message: "Inavlid Username/Email or Password"
         }
       });
     }
@@ -30,12 +50,13 @@ export function* authenticateUser(action) {
         message: "Failed to try authentication"
       }
     });
-
   } catch (error) {
+    console.warn(error);
     yield put({
       type: "REQUEST_FAILED",
       payload: {
-        message: "Your request could not be completed. Check your connection or try again later"
+        message:
+          "Your request could not be completed. Check your connection or try again later"
       }
     });
   }
@@ -54,7 +75,6 @@ export function* hasTwoFactorAuth() {
       type: "REQUEST_FAILED",
       message: "Could not verify 2fa"
     });
-
   } catch (error) {
     yield put({
       type: "REQUEST_FAILED",
@@ -86,15 +106,18 @@ export function* createTwoFactorAuth() {
 
 export function* verifyTwoFactorAuth(action) {
   try {
-    const response = yield call(authService.verifyTwoFactoryAuth, action.payload.token);
-     
+    const response = yield call(
+      authService.verifyTwoFactoryAuth,
+      action.payload.token
+    );
+
     if (response.status === 200)
       return yield put({
         type: "POST_USER_VERIFY_2FA",
         response,
         pages: {
           login: 2
-        }        
+        }
       });
 
     yield put({
@@ -107,7 +130,7 @@ export function* verifyTwoFactorAuth(action) {
       payload: {
         message: error.message
       }
-    })
+    });
   }
 }
 

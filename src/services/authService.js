@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER, API_HEADER_AUTH } from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
 
 class AuthService {
     async authenticate(email, password) {
@@ -14,10 +14,12 @@ class AuthService {
         }
     }
 
-    async hasTwoFactorAuth() {
+    async hasTwoFactorAuth(token) {
         try {
+            API_HEADER.headers.Authorization = token;
+            console.warn(API_HEADER)
             let response = await axios.get(`${BASE_URL}/user/2fa`,
-                API_HEADER_AUTH);
+            API_HEADER);
                 
             return response;
         } catch (error) {
@@ -29,7 +31,7 @@ class AuthService {
         try {
             let response = await axios.post(`${BASE_URL}/user/2fa`,
                 {},
-                API_HEADER_AUTH);
+                API_HEADER);
 
             return response;
         } catch (error) {
@@ -41,7 +43,7 @@ class AuthService {
         try {
             let response = await axios.post(`${BASE_URL}/user/2fa/verify`, {
                 token
-            }, API_HEADER_AUTH);
+            }, API_HEADER);
             return response;
 
         } catch (error) {

@@ -38,8 +38,7 @@ class MultiFactorAuth extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { twoFactorFields } = this.state;
-    let { loading } = this.props;
-    loading();
+    
     this.setState({
       ...this.state,
       twoFactorFields: { ...twoFactorFields, [name]: value },
