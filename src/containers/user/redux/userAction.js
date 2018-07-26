@@ -23,8 +23,23 @@ export const createUserPin = pin => ({
   pin
 });
 
-export const createUser = () => ({
-  type: "POST_USER_CREATE_USER_API"
+export const getCreateUserInfo = (name, surname, email) => ({
+  type: "CHANGE_USER_PERSONAL_INFO",
+  user: {
+    name,
+    surname,
+    email
+  }
+});
+
+export const createUser = (name, surname, email, password) => ({
+  type: "POST_USER_CREATE_USER_API",
+  user: {
+    name,
+    surname,
+    email,
+    password
+  }
 });
 
 export const resetUser = () => ({

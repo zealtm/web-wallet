@@ -4,8 +4,10 @@ import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
 
 // Services
 import AuthService from "../../../services/authService";
+import UserService from "../../../services/userService";
 import PinService from "../../../services/pinService";
 const authService = new AuthService();
+const userService = new UserService();
 const pinService = new PinService();
 
 export function* authenticateUser(action) {
@@ -23,7 +25,6 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
-      console.warn("twoFactorResponse", twoFactorResponse);
       let pinResponse = yield call(pinService.consult, userToken);
       let pin = pinResponse.data.code === 200 ? true : false;
 
@@ -129,7 +130,7 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
-    console.warn(response)
+
     if (response.data.code === 200) {
       return yield put({
         type: "POST_USER_VERIFY_2FA",
@@ -171,7 +172,7 @@ export function* verifyUserPin(action) {
     if (response.data.code === 200) {
       yield put({
         type: "REQUEST_SUCCESS",
-        message: " you are logged :)"
+        message: "You are logged :)"
       });
     }
 
@@ -206,7 +207,7 @@ export function* createUserPin(action) {
     if (response.data.code === 201) {
       yield put({
         type: "REQUEST_SUCCESS",
-        message: " you are logged :)"
+        message: "Pin has been created. You are logged :)"
       });
     }
 
@@ -226,11 +227,25 @@ export function* createUserPin(action) {
   }
 }
 
-export function* createUser() {
+export function* createUser(action) {
   try {
-    return yield put({
-      type: "POST_USER_CREATE_USER",
-      page: 1
+    let response = yield call(userService.createUser, action.user);
+
+    if (response.data.code === 200) {
+      yield put({
+        type: "POST_USER_CREATE_USER",
+        page: 2
+      });
+    }
+
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   } catch (error) {
     yield put({

@@ -1,6 +1,9 @@
 const initialState = {
   user: {
-    pin: undefined,
+    name: undefined,
+    surname: undefined,
+    email: undefined,
+    pin: undefined
   },
   pages: {
     login: 0,
@@ -47,6 +50,19 @@ const user = (state = initialState, action) => {
           create: 0,
           reset: 0
         },
+        loading: false
+      };
+
+    
+    case "CHANGE_USER_PERSONAL_INFO":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: 1,
+          reset: 0
+        },
+        user: action.user,
         loading: false
       };
 

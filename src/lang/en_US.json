@@ -15,6 +15,9 @@
   "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
 
   "BTN_SUBMIT": "Submit",
+  "BTN_CREATE": "Create",
+  "BTN_NEXT": "Next",
+  "BTN_PREV": "Previous",
   "BTN_BACK": "Back",
   "BTN_LOGIN": "Login",
   "BTN_CONFIRM_2FA": "Confirmar",
@@ -49,6 +52,8 @@
   "NEW_ACCOUNT_TERMS_OF_SERVICES": " Terms of Services",
   "NEW_ACCOUNT_MESSAGE_SENDED":
     "A message with an activation link has been sent to your email address",
+  "NEW_ACCOUNT_PASSWORD_HEADER": "Digit your password",
+
 
   "2FA_HEADER": "2FA Confirmation",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",

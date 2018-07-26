@@ -23,12 +23,12 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 10% 8%;
+  padding: 3% 8%;
 }
 
 @media only screen and (max-width: 667px) {
   :local(.colLeft) {
-    padding: 10%;
+    /* padding: 10%; */
     overflow: auto;
   }
 }

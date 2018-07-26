@@ -9,15 +9,11 @@ class Footer extends React.Component {
   render() {
     return (
       <div className={style.footer}>
-        <Link to="/" className={style.footerLink}>
-          {i18n.t("LOGIN_FOOTER_HOME")}
-        </Link>
-        <span className={style.footerSpace}>|</span>
-        <Link to="/" className={style.footerLink}>
+        <Link to="#" className={style.footerLink}>
           {i18n.t("LOGIN_FOOTER_SUPPORT")}
         </Link>
         <span className={style.footerSpace}>|</span>
-        <Link to="/" className={style.footerLink}>
+        <Link to="#" className={style.footerLink}>
           {i18n.t("LOGIN_FOOTER_LANG")}
         </Link>
         <p>&copy; {i18n.t("LOGIN_FOOTER")}</p>

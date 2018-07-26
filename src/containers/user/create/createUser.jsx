@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
+
+// REDUX
 import { connect } from "react-redux";
-import { createUser } from "../redux/userAction";
+import { bindActionCreators } from "redux";
+import { getCreateUserInfo } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -12,7 +13,7 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
-import CustomCheckbox from "../../../components/checkBox";
+// import CustomCheckbox from "../../../components/checkBox";
 
 class CreateUser extends React.Component {
   constructor() {
@@ -21,12 +22,7 @@ class CreateUser extends React.Component {
       inputs: {
         lastName: undefined,
         firstName: undefined,
-        email: undefined,
-        password: undefined,
-        passwordRepeat: undefined,
-        checkbox: {
-          checkboxTerms: undefined
-        }
+        email: undefined
       },
       step: 0,
       errors: undefined
@@ -35,32 +31,19 @@ class CreateUser extends React.Component {
 
   getInput = input => {
     let { inputs } = this.state;
-    let { name, type, value } = input;
-    
-    if (type === "checkbox") {
-      this.setState({
-        ...this.state,
-        inputs: {
-          ...inputs,
-          checkbox: {
-            ...inputs.checkbox,
-            [name]: input.checked ? input : undefined
-          }
-        },
-        errors: undefined
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        inputs: { ...inputs, [name]: value ? input : undefined },
-        errors: undefined
-      });
-    }
+    let { name, value } = input;
+
+    this.setState({
+      ...this.state,
+      inputs: { ...inputs, [name]: value ? input : undefined },
+      errors: undefined
+    });
   };
 
   inputValidator = () => {
-    let { createUser, clearMessage, errorInput } = this.props;
+    let { getCreateUserInfo, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
+    let { firstName, lastName, email } = this.state.inputs;
     let { messageError, errors } = inputValidator(inputs);
 
     if (errors.length > 0) {
@@ -71,7 +54,7 @@ class CreateUser extends React.Component {
       });
     } else {
       clearMessage();
-      createUser();
+      getCreateUserInfo(firstName.value, lastName.value, email.value);
     }
   };
 
@@ -130,37 +113,7 @@ class CreateUser extends React.Component {
             }
           />
 
-          <input
-            type="password"
-            name="password"
-            required
-            placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors && errors.includes("password")
-                ? style.inputTextError
-                : style.inputTextDefault
-            }
-          />
-
-          <input
-            type="password"
-            name="passwordRepeat"
-            required
-            placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors && errors.includes("passwordRepeat")
-                ? style.inputTextError
-                : style.inputTextDefault
-            }
-          />
-
-          <div className={style.alignInfoTermsOfServices}>
+          {/* <div className={style.alignInfoTermsOfServices}>
             <CustomCheckbox
               type="checkbox"
               name="checkboxTerms"
@@ -177,22 +130,22 @@ class CreateUser extends React.Component {
             <Link className={style.linkTermsOfServices} to="#">
               {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
             </Link>
-          </div>
+          </div> */}
 
           <button
             className={
               !errors &&
               inputs.lastName &&
               inputs.firstName &&
-              inputs.email &&
-              inputs.password &&
-              inputs.passwordRepeat &&
-              inputs.checkbox.checkboxTerms ? style.buttonGreen : style.buttonBorderGreen}
+              inputs.email
+                ? style.buttonGreen
+                : style.buttonBorderGreen
+            }
             onClick={() => {
               this.inputValidator();
             }}
           >
-            {i18n.t("BTN_LOGIN")}
+            {i18n.t("BTN_NEXT")}
           </button>
         </div>
       </div>
@@ -201,7 +154,7 @@ class CreateUser extends React.Component {
 }
 
 CreateUser.propTypes = {
-  createUser: PropTypes.func,
+  getCreateUserInfo: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };
@@ -209,7 +162,7 @@ CreateUser.propTypes = {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      createUser,
+      getCreateUserInfo,
       clearMessage,
       errorInput
     },

@@ -1,7 +1,10 @@
 import React from "react";
-import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { loading, createUser } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -13,12 +16,13 @@ import DoneIcon from "@material-ui/icons/Done";
 import ClearIcon from "@material-ui/icons/Clear";
 
 // COMPONENTS
+import Loading from "../../../components/loading";
 import Footer from "../footer";
 
 // STYLE
 import style from "../style.css";
 
-class NewPassword extends React.Component {
+class Password extends React.Component {
   constructor(props) {
     super(props);
 
@@ -78,16 +82,19 @@ class NewPassword extends React.Component {
   };
 
   inputValidator = () => {
-    let { clearMessage, errorInput } = this.props;
+    let { loading, createUser, clearMessage, errorInput } = this.props;
+    let { user } = this.props.user;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
     this.setState({ ...this.state, errors: errors });
 
-    if (errors.length > 0) {
+    if (errors.length > 0 || !user.name || !user.surname || !user.email) {
       errorInput(messageError);
     } else {
+      loading();
       clearMessage();
+      createUser(user.name, user.surname, user.email, inputs.password.value);
     }
 
     return;
@@ -129,13 +136,14 @@ class NewPassword extends React.Component {
   };
 
   render() {
+    let { user } = this.props;
     let { inputs, passwordHint, errors } = this.state;
 
     return (
       <div className={style.formLogin}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.resetHeader}>
-          {i18n.t("RESET_NEW_PASSWORD_HEADER")}
+          {i18n.t("NEW_ACCOUNT_PASSWORD_HEADER")}
         </div>
         <input
           name="password"
@@ -183,7 +191,7 @@ class NewPassword extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {i18n.t("BTN_SAVE")}
+          {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
         </button>
 
         <Footer />
@@ -192,15 +200,23 @@ class NewPassword extends React.Component {
   }
 }
 
-NewPassword.propTypes = {
-  authenticate: PropTypes.func,
+Password.propTypes = {
+  loading: PropTypes.func,
+  createUser: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  user: store.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
+      createUser,
       clearMessage,
       errorInput
     },
@@ -208,6 +224,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
-)(NewPassword);
+)(Password);
