@@ -14,18 +14,18 @@ class AuthService {
       );
       return response;
     } catch (error) {
-      console.error(error);
+      return error.response;
     }
   }
 
   async hasTwoFactorAuth(token) {
     try {
-      API_HEADER.headers.Authorization = token;     
+      API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/user/2fa", API_HEADER);
 
       return response;
     } catch (error) {
-      error.message;
+      return error.response;
     }
   }
 
@@ -35,7 +35,7 @@ class AuthService {
 
       return response;
     } catch (error) {
-      return error.message;
+      return error.response;
     }
   }
 
@@ -50,7 +50,7 @@ class AuthService {
       );
       return response;
     } catch (error) {
-      return error.message;
+      return error.response;
     }
   }
 }

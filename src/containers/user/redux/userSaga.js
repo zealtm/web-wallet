@@ -1,54 +1,52 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import AuthService from "../../../services/authService";
 import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+
+// Services
+import AuthService from "../../../services/authService";
+import PinService from "../../../services/pinService";
 const authService = new AuthService();
+const pinService = new PinService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(
+    let response = yield call(
       authService.authenticate,
-      action.payload.email,
-      action.payload.password
+      action.email,
+      action.password
     );
 
-    if (request.status === 200) {
-      yield call(setAuthToken, request.data.data.token);
+    if (response.data.code === 200) {
+      yield call(setAuthToken, response.data.data.token);
       let userToken = yield call(getAuthToken);
-      const hasTwoFactorAuth = yield call(
+      let twoFactorResponse = yield call(
         authService.hasTwoFactorAuth,
         userToken
       );
+      console.warn("twoFactorResponse", twoFactorResponse);
+      let pinResponse = yield call(pinService.consult, userToken);
+      let pin = pinResponse.data.code === 200 ? true : false;
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          token: userToken
+          pin: pin
         },
         pages: {
-          login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
+          login: twoFactorResponse.data.code === 200 ? 1 : 2
         }
       });
     }
 
-    if (request.status === 401 || request.status === 403) {
+    if (response.data.code === 401) {
       yield put({
         type: "REQUEST_FAILED",
-        payload: {
-          message: "Inavlid Username/Email or Password"
-        }
+        message: "Inavlid Username/Email or Password"
       });
     }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      payload: {
-        message: "Failed to try authentication"
-      }
     });
   } catch (error) {
     yield put({
@@ -57,30 +55,33 @@ export function* authenticateUser(action) {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
 
 export function* hasTwoFactorAuth() {
   try {
-    const response = yield call(authService.hasTwoFactorAuth);
-    if (response.status === 200)
+    let userToken = yield call(getAuthToken);
+    const response = yield call(authService.hasTwoFactorAuth, userToken);
+
+    if (response.data.code === 200) {
       return yield put({
         type: "GET_USER_2FA",
         response
       });
+    }
+
+    if (response.data.code === 401) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: "Could not verify 2fa"
+      });
+    }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Could not verify 2fa"
     });
   } catch (error) {
     yield put({
@@ -89,7 +90,8 @@ export function* hasTwoFactorAuth() {
 
     yield put({
       type: "REQUEST_FAILED",
-      message: error.message
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -118,19 +120,17 @@ export function* createTwoFactorAuth() {
 
     yield put({
       type: "REQUEST_FAILED",
-      message: error.message
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
 
 export function* verifyTwoFactorAuth(action) {
   try {
-    const response = yield call(
-      authService.verifyTwoFactoryAuth,
-      action.payload.token
-    );
-
-    if (response.status === 200)
+    const response = yield call(authService.verifyTwoFactoryAuth, action.token);
+    console.warn(response)
+    if (response.data.code === 200) {
       return yield put({
         type: "POST_USER_VERIFY_2FA",
         response,
@@ -138,14 +138,17 @@ export function* verifyTwoFactorAuth(action) {
           login: 2
         }
       });
+    }
+
+    if (response.data.code === 401) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: "Invalid 2FA token"
+      });
+    }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Invalid value inserted"
     });
   } catch (error) {
     yield put({
@@ -154,9 +157,71 @@ export function* verifyTwoFactorAuth(action) {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message: error.message
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
+    });
+  }
+}
+
+export function* verifyUserPin(action) {
+  try {
+    let userToken = yield call(getAuthToken);
+    let response = yield call(pinService.verify, action.pin, userToken);
+
+    if (response.data.code === 200) {
+      yield put({
+        type: "REQUEST_SUCCESS",
+        message: " you are logged :)"
+      });
+    }
+
+    if (response.data.code === 401) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: "Inavlid PIN"
+      });
+    }
+
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+  } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message:
+        "Your request could not be completed. Check your connection or try again later"
+    });
+  }
+}
+
+export function* createUserPin(action) {
+  try {
+    let userToken = yield call(getAuthToken);
+    let response = yield call(pinService.create, action.pin, userToken);
+
+    if (response.data.code === 201) {
+      yield put({
+        type: "REQUEST_SUCCESS",
+        message: " you are logged :)"
+      });
+    }
+
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+  } catch (error) {
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -165,9 +230,7 @@ export function* createUser() {
   try {
     return yield put({
       type: "POST_USER_CREATE_USER",
-      payload: {
-        page: 1
-      }
+      page: 1
     });
   } catch (error) {
     yield put({
@@ -176,10 +239,8 @@ export function* createUser() {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -188,17 +249,17 @@ export function* resetUser() {
   try {
     return yield put({
       type: "POST_USER_RESET_USER",
-      payload: {
-        page: 1
-      }
+      page: 1
     });
   } catch (error) {
     yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
+
+    yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -208,8 +269,10 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
     fork(takeLatest, "POST_USER_CREATE_2FA_API", createTwoFactorAuth),
     fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
-    fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
-    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser)
+    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
+    fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
+    fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin),
+    fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth)
   ];
 }

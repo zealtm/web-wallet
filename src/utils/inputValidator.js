@@ -183,8 +183,11 @@ export const inputValidator = inputs => {
         if (name === "seed") {
           let regex = new RegExp("^[a-z]+$");
           let isSeed = validateMnemonic(value.toString());
-          
-          if (!regex.test(trim(value.toString())) || !isSeed) {
+          if (
+            value.trim().split(/\s+/g).length >= 12 ||
+            !regex.test(trim(value.toString()))
+            || !isSeed
+          ) {
             errors.push(name);
           }
         }

@@ -14,7 +14,7 @@ const error = (state = initialState, action) => {
         message: {
           type: "success",
           active: true,
-          message: action.payload.message
+          message: action.message
         }
       };
 
@@ -24,7 +24,7 @@ const error = (state = initialState, action) => {
         message: {
           type: "error",
           active: true,
-          message: action.payload.message
+          message: action.message
         }
       };
 
@@ -44,7 +44,7 @@ const error = (state = initialState, action) => {
         message: {
           type: "error",
           active: true,
-          message: action.payload.message
+          message: action.message
         }
       };
 

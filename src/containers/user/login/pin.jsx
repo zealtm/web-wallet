@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading } from "../redux/userAction";
+import { loading, verifyUserPin, createUserPin } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -46,7 +46,7 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, clearMessage, errorInput } = this.props;
+    let { user, loading, verifyUserPin, createUserPin, clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
     let inputPin = {
@@ -60,29 +60,28 @@ class Pin extends React.Component {
 
     if (errors.length > 0) {
       errorInput(messageError);
-      this.setState({
+      return this.setState({
         ...this.state,
         errors
       });
     } else {
       loading();
       clearMessage();
-
-      // CÓDIGO
+      console.warn(user.user.pin )
+      user.user.pin ? verifyUserPin(pin) : createUserPin(pin);
     }
-
-    return;
   };
 
   render() {
-    let { loading } = this.props.user;
+    let { loading, user } = this.props.user;
     let { errors, PIN } = this.state;
 
     return (
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
-        <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
-
+        <div className={style.descriptionPIN}>
+          {user.pin ? i18n.t("PIN_ENTER") : i18n.t("PIN_CREATE")}
+        </div>
         <div className={style.alignInputsDefault}>
           <input
             type="password"
@@ -147,6 +146,8 @@ Pin.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
+  createUserPin: PropTypes.func,
+  verifyUserPin: PropTypes.func,
   user: PropTypes.object
 };
 
@@ -158,6 +159,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loading,
+      verifyUserPin,
+      createUserPin,
       clearMessage,
       errorInput
     },

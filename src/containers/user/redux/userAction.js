@@ -1,9 +1,7 @@
 export const authenticate = (email, password) => ({
   type: "POST_USER_AUTHENTICATE_API",
-  payload: {
-    email,
-    password
-  }
+  email,
+  password
 });
 
 export const createTwoFactorAuth = () => ({
@@ -12,9 +10,17 @@ export const createTwoFactorAuth = () => ({
 
 export const verifyTwoFactorAuth = token => ({
   type: "POST_USER_VERIFY_2FA_API",
-  payload: {
-    token
-  }
+  token
+});
+
+export const verifyUserPin = pin => ({
+  type: "POST_USER_VERIFY_PIN_API",
+  pin
+});
+
+export const createUserPin = pin => ({
+  type: "POST_USER_CREATE_PIN_API",
+  pin
 });
 
 export const createUser = () => ({
@@ -26,5 +32,5 @@ export const resetUser = () => ({
 });
 
 export const loading = () => ({
-  type: "CHANGE_LOADING_STATE",
+  type: "CHANGE_LOADING_STATE"
 });
