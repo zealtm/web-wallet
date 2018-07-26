@@ -262,9 +262,15 @@ export function* createUser(action) {
 
 export function* resetUser() {
   try {
-    return yield put({
+    yield put({
       type: "POST_USER_RESET_USER",
       page: 1
+    });
+
+    yield put({
+      type: "REQUEST_FAILED",
+      message:
+        "Este recurso ainda não está dispoível :)"
     });
   } catch (error) {
     yield put({
