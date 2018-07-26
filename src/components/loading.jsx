@@ -6,7 +6,15 @@ Component Props
 color: string -    default: white / Options: "white", "purple", "lunes", "bitcoin"
 width: string + "px" - default: "35px"
 */
-
+// const style = {
+//   "margin": "0 auto",
+//   text
+// }
+const style = {
+  justifyContent: "center",
+  alignItems: "center",
+  display: "flex"
+};
 class Loading extends Component {
   constructor(props) {
     super(props);
@@ -18,11 +26,13 @@ class Loading extends Component {
     if (!width) width = "20px";
 
     return (
-      <img
-        src={"images/icons/loading/loading-" + color +".gif"}
-        alt="Loading..."
-        width={width}
-      />
+      <div style={style}>
+        <img
+          src={"images/icons/loading/loading-" + color + ".gif"}
+          alt="Loading..."
+          width={width}
+        />
+      </div>
     );
   };
 
