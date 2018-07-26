@@ -46,7 +46,7 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, clearMessage, errorInput } = this.props;
+    let { loading, verifyUserPin, clearMessage, errorInput } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
     let inputPin = {
@@ -144,13 +144,13 @@ Pin.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object,
   createUserPin: PropTypes.func,
-  verifyUserPin: PropTypes.func
+  verifyUserPin: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  user: store.user.user
+  user: store.user
 });
 
 const mapDispatchToProps = dispatch =>

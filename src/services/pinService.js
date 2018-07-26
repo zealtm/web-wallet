@@ -1,42 +1,51 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER_AUTH } from "../constants/apiBaseUrl";
-
+import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
 
 class PinService {
+  async consult(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(BASE_URL + "/user/pin", API_HEADER);
 
-    async consult() {
-        try {
-            let response = await axios.get(`${BASE_URL}/user/pin`, API_HEADER_AUTH);
-    
-            return response;
-        } catch (error) {
-            error.message;
-        }
+      return response;
+    } catch (error) {
+      error.response;
     }
+  }
 
-    async create(pin) {
-        try {
-            let response = await axios.post(`${BASE_URL}/user/pin`, {
-                pin
-            }, API_HEADER_AUTH);
+  async create(pin, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/user/pin",
+        {
+          pin
+        },
+        API_HEADER
+      );
 
-            return response;
-        } catch (error) {
-            error.message;
-        }
+      return response;
+    } catch (error) {
+      error.response;
     }
+  }
 
-    async verify(pin) {
-        try {
-            let response = await axios.post(`${BASE_URL}/user/pin/verify`, {
-                pin
-            }, API_HEADER_AUTH);
+  async verify(pin, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/user/pin/verify",
+        {
+          pin
+        },
+        API_HEADER
+      );
 
-            return response;
-        } catch (error) {
-            error.message;
-        }
+      return response;
+    } catch (error) {
+      return error.response;
     }
+  }
 }
 
 export default PinService;
