@@ -55,10 +55,10 @@ const user = (state = initialState, action) => {
         ...state,
         pages: {
           login: 0,
-          create: action.payload.page,
+          create: action.page,
           reset: 0
         },
-        user: action.payload.user,
+        user: action.user,
         loading: false
       };
 
@@ -68,9 +68,9 @@ const user = (state = initialState, action) => {
         pages: {
           login: 0,
           create: 0,
-          reset: action.payload.page
+          reset: action.page
         },
-        user: action.payload.user,
+        user: action.user,
         loading: false
       };
 

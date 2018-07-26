@@ -6,14 +6,14 @@ const authService = new AuthService();
 
 export function* authenticateUser(action) {
   try {
-    const request = yield call(
+    const response = yield call(
       authService.authenticate,
       action.payload.email,
       action.payload.password
     );
 
-    if (request.status === 200) {
-      yield call(setAuthToken, request.data.data.token);
+    if (response.data.code === 200) {
+      yield call(setAuthToken, response.data.data.token);
       let userToken = yield call(getAuthToken);
       const hasTwoFactorAuth = yield call(
         authService.hasTwoFactorAuth,
@@ -26,29 +26,21 @@ export function* authenticateUser(action) {
           token: userToken
         },
         pages: {
-          login: hasTwoFactorAuth.data.code === 200 ? 1 : 2
+          login:
+            hasTwoFactorAuth.data && hasTwoFactorAuth.data.code === 200 ? 1 : 2
         }
       });
     }
 
-    if (request.status === 401 || request.status === 403) {
+    if (response.data.code === 401 || response.data.code === 403) {
       yield put({
         type: "REQUEST_FAILED",
-        payload: {
-          message: "Inavlid Username/Email or Password"
-        }
+        message: "Inavlid Username/Email or Password"
       });
     }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      payload: {
-        message: "Failed to try authentication"
-      }
     });
   } catch (error) {
     yield put({
@@ -57,30 +49,33 @@ export function* authenticateUser(action) {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
 
 export function* hasTwoFactorAuth() {
   try {
-    const response = yield call(authService.hasTwoFactorAuth);
-    if (response.status === 200)
+    let userToken = yield call(getAuthToken);
+    const response = yield call(authService.hasTwoFactorAuth, userToken);
+
+    if (response.data.code === 200) {
       return yield put({
         type: "GET_USER_2FA",
         response
       });
+    }
+
+    if (response.data.code === 401) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: "Could not verify 2fa"
+      });
+    }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Could not verify 2fa"
     });
   } catch (error) {
     yield put({
@@ -89,7 +84,8 @@ export function* hasTwoFactorAuth() {
 
     yield put({
       type: "REQUEST_FAILED",
-      message: error.message
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -118,7 +114,8 @@ export function* createTwoFactorAuth() {
 
     yield put({
       type: "REQUEST_FAILED",
-      message: error.message
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -130,7 +127,7 @@ export function* verifyTwoFactorAuth(action) {
       action.payload.token
     );
 
-    if (response.status === 200)
+    if (response.data.code === 200) {
       return yield put({
         type: "POST_USER_VERIFY_2FA",
         response,
@@ -138,14 +135,17 @@ export function* verifyTwoFactorAuth(action) {
           login: 2
         }
       });
+    }
+
+    if (response.data.code === 401) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: "Invalid 2FA token"
+      });
+    }
 
     yield put({
       type: "CHANGE_LOADING_STATE"
-    });
-
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Invalid value inserted"
     });
   } catch (error) {
     yield put({
@@ -154,9 +154,8 @@ export function* verifyTwoFactorAuth(action) {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message: error.message
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -165,9 +164,7 @@ export function* createUser() {
   try {
     return yield put({
       type: "POST_USER_CREATE_USER",
-      payload: {
-        page: 1
-      }
+      page: 1
     });
   } catch (error) {
     yield put({
@@ -176,10 +173,8 @@ export function* createUser() {
 
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -188,17 +183,13 @@ export function* resetUser() {
   try {
     return yield put({
       type: "POST_USER_RESET_USER",
-      payload: {
-        page: 1
-      }
+      page: 1
     });
   } catch (error) {
     yield put({
       type: "REQUEST_FAILED",
-      payload: {
-        message:
-          "Your request could not be completed. Check your connection or try again later"
-      }
+      message:
+        "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
