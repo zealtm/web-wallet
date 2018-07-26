@@ -1,8 +1,12 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import AuthService from "../../../services/authService";
 import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+
+// Services
+import AuthService from "../../../services/authService";
+import PinService from "../../../services/pinService";
 const authService = new AuthService();
+const pinService = new PinService();
 
 export function* authenticateUser(action) {
   try {
@@ -12,6 +16,9 @@ export function* authenticateUser(action) {
       action.payload.password
     );
 
+    const pinData = yield call(pinService.consult);
+    const hasPin = pinData.data.code === 200 ? true : false;
+    console.warn(hasPin)
     if (response.data.code === 200) {
       yield call(setAuthToken, response.data.data.token);
       let userToken = yield call(getAuthToken);
@@ -145,7 +152,64 @@ export function* verifyTwoFactorAuth(action) {
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: "REQUEST_FAILED",
+      message: response.message
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: error.message
+      }
+    });
+  }
+}
+
+export function* verifyUserPin(action) {
+  try {
+    let response = yield call(pinService.verify, action.payload.pin);
+
+    if (response.data.code === 200) {
+      yield put({
+        type: "REQUEST_FAILED",
+        payload: {
+          message: response.data.message
+        }
+      });
+    }
+
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: response.message
+      }
+    });
+  } catch (error) {
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: error.message
+      }
+    });
+  }
+}
+
+export function* createUserPin(action) {
+  try {
+    let response = yield call(pinService.create, action.payload.pin);
+
+    if (response.code === 201) {
+      yield put({
+        type: "POST_USER_CREATE_PIN",
+        message: response.message
+      });
+    }
+
+    yield put({
+      type: "REQUEST_FAILED",
+      payload: {
+        message: response.message
+      }
     });
   } catch (error) {
     yield put({
@@ -201,6 +265,8 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
-    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser)
+    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
+    fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
+    fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin)
   ];
 }

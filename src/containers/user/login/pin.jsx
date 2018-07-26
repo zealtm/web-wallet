@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading } from "../redux/userAction";
+import { loading, verifyUserPin, createUserPin } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -60,18 +60,16 @@ class Pin extends React.Component {
 
     if (errors.length > 0) {
       errorInput(messageError);
-      this.setState({
+      return this.setState({
         ...this.state,
         errors
       });
     } else {
       loading();
       clearMessage();
-
+      verifyUserPin(pin);
       // CÓDIGO
     }
-
-    return;
   };
 
   render() {
@@ -82,7 +80,6 @@ class Pin extends React.Component {
       <div className={style.contGeneral}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.descriptionPIN}>{i18n.t("PIN_HEADER")}</div>
-
         <div className={style.alignInputsDefault}>
           <input
             type="password"
@@ -147,17 +144,21 @@ Pin.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  createUserPin: PropTypes.func,
+  verifyUserPin: PropTypes.func
 };
 
 const mapSateToProps = store => ({
-  user: store.user
+  user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loading,
+      verifyUserPin,
+      createUserPin,
       clearMessage,
       errorInput
     },
