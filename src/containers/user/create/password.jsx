@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -59,7 +60,7 @@ class Password extends React.Component {
         /^(?=.*[A-Z])/g,
         /^(?=.*[a-z])/g,
         /^(?=.*[0-9])/g,
-        /^(?=.*[!_+=@#-$%^&*])/g,
+        /^(?=.*[!@#$%^&*(),.?":{}|<>])/g,
         /^(?=.{8,})/g
       ];
 
@@ -89,6 +90,7 @@ class Password extends React.Component {
 
     this.setState({ ...this.state, errors: errors });
 
+    console.warn(errors);
     if (errors.length > 0 || !user.name || !user.surname || !user.email) {
       errorInput(messageError);
     } else {
@@ -141,6 +143,12 @@ class Password extends React.Component {
 
     return (
       <div className={style.formLogin}>
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.resetHeader}>
           {i18n.t("NEW_ACCOUNT_PASSWORD_HEADER")}
@@ -185,11 +193,20 @@ class Password extends React.Component {
             passwordHint[1] &&
             passwordHint[2] &&
             passwordHint[3] &&
+            passwordHint[4] &&
             inputs.passwordRepeat
-              ? style.buttonGreen
+              ? style.buttonEnable
               : style.buttonBorderGreen
           }
-          onClick={() => this.inputValidator()}
+          onClick={
+            passwordHint[0] &&
+            passwordHint[1] &&
+            passwordHint[2] &&
+            passwordHint[3] &&
+            passwordHint[4]
+              ? () => this.inputValidator()
+              : null
+          }
         >
           {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
         </button>

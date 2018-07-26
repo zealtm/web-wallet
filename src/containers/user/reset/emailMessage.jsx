@@ -31,9 +31,9 @@ class EmailMessage extends React.Component {
         <div className={style.resetEmailSend}>
           {i18n.t("RESET_EMAIL_SENDED")}
         </div>
-        <button className={style.buttonBorderGreen}>
+        <button className={style.buttonEnable}>
           <Link className={style.resetLinkLogin} to="/">
-            {i18n.t("BTN_BACK")}
+            {i18n.t("BTN_LOGIN")}
           </Link>
         </button>
       </div>

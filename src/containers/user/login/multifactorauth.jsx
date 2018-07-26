@@ -190,7 +190,7 @@ class MultiFactorAuth extends React.Component {
             twoFactorFields.field_4 &&
             twoFactorFields.field_5 &&
             twoFactorFields.field_6
-              ? style.buttonGreen
+              ? style.buttonEnable
               : style.buttonBorderGreen
           }
           onClick={() => this.inputValidator()}

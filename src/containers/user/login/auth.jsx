@@ -106,7 +106,7 @@ class Auth extends React.Component {
         <button
           className={
             inputs.emailUsername && inputs.password && !errors
-              ? style.buttonGreen
+              ? style.buttonEnable
               : style.buttonBorderGreen
           }
           onClick={() => {

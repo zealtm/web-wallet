@@ -11,7 +11,7 @@
   "PLACEHOLDER_FIRST_NAME": "First name",
   "PLACEHOLDER_LAST_NAME": "Last name",
   "PLACEHOLDER_PASSWORD": "Password",
-  "PLACEHOLDER_PASSWORD_REPEAT": "Repeat Password",
+  "PLACEHOLDER_PASSWORD_REPEAT": "Repeat password",
   "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
 
   "BTN_SUBMIT": "Submit",
@@ -53,7 +53,6 @@
   "NEW_ACCOUNT_MESSAGE_SENDED":
     "A message with an activation link has been sent to your email address",
   "NEW_ACCOUNT_PASSWORD_HEADER": "Digit your password",
-
 
   "2FA_HEADER": "2FA Confirmation",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",

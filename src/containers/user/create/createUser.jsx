@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -63,7 +64,15 @@ class CreateUser extends React.Component {
 
     return (
       <div className={style.contNewAccount}>
-        <img src="../../images/logo.svg" className={style.logo} />
+
+        <Link to="/login">
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
+
+        <img src="../../images/logo.svg" className={style.logoCreate} />
         <div>
           <div className={style.newAccountHeader}>
             {i18n.t("NEW_ACCOUNT_HEADER")}
@@ -138,7 +147,7 @@ class CreateUser extends React.Component {
               inputs.lastName &&
               inputs.firstName &&
               inputs.email
-                ? style.buttonGreen
+                ? style.buttonEnable
                 : style.buttonBorderGreen
             }
             onClick={() => {
