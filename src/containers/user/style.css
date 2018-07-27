@@ -6,6 +6,7 @@
   1.3 INPUT
   1.4 LINKS
   1.5 IMAGES 
+  1.6 SCROLLBAR
 
 2. FOOTER 
   2.1 GENERAL
@@ -97,6 +98,17 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
+}
+
+/* 1.6 SCROLLBAR */
+:local(::-webkit-scrollbar) {
+  color: transparent;
+  width: 3px;
+}
+
+:local(::-webkit-scrollbar-thumb) {
+  border-radius: 6px;
+  background-color: #654fa4;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -430,16 +442,16 @@
   border-radius: 6px;
   border-style: none;
   max-width: 79%;
-  width: 60%;
+  width: 79%;
   height: 50px;
-  padding: 10% 20%;
+  padding: 15% 10%;
   position: relative;
   font-family: roboto;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   white-space: normal;
-  overflow: hidden;
+  overflow: auto;
   resize: none;  
 }
 
