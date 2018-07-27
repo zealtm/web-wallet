@@ -245,8 +245,13 @@ export function* createUser(action) {
         message:
           "You are already registered"
       });
-    }
 
+      yield put({
+        type: "CHANGE_LOADING_STATE"
+      });
+    }
+    
+    return;
   } catch (error) {
     yield put({
       type: "CHANGE_LOADING_STATE"
