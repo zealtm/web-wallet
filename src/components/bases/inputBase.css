@@ -11,9 +11,11 @@
 :local(.inputTextDefault) {
   composes: bgPurpleLight from "./colorBase.css";
   composes: textDefault from "./textBase.css";
-  margin-bottom: 30px;
+  composes: bdPurpleDefault from "./colorBase.css";
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 25px;
   border-radius: 6px;
-  border-style: none;
   width: 90%;
   height: 50px;
   padding: 0 5%;
