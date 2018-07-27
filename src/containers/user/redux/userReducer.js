@@ -82,6 +82,14 @@ const user = (state = initialState, action) => {
         loading: !state.loading
       };
 
+    case "GENERATE_USER_SEED":
+      return {
+        ...state,
+        user: {
+          seed: action.seed
+        }
+      }
+
     case "CLEAR_USER_ERROR":
       return {
         ...state,

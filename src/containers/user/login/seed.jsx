@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading } from "../redux/userAction";
+import { loading, generateUserSeed } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -42,6 +42,7 @@ class Seed extends React.Component {
 
   inputValidator = () => {
     let { inputs } = this.state;
+    console.warn("Input ", inputs);
     let { loading, errorInput } = this.props;
     let { errors, messageError } = inputValidator(inputs);
 
@@ -61,28 +62,31 @@ class Seed extends React.Component {
 
   render() {
     let { loading } = this.props.user;
+    let { seed } = this.props.seed;
     let { buttonEnable, errors } = this.state;
+    let { generateUserSeed } = this.props;
 
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
-
         <textarea
           type="textarea"
           name="seed"
           cols="15"
           rows="6"
           placeholder={i18n.t("PLACEHOLDER_SEED")}
+          value={seed}
           required
-          onChange={event => {
-            this.getInput(event.target);
-          }}
+          onChange={event => this.getInput(event.target)}
           className={errors ? style.inputTextAreaError : style.inputTextArea}
         />
 
-        <button className={style.buttonPurpleClear} onClick={() => {}}>
+        <button
+          className={style.buttonPurpleClear}
+          onClick={() => generateUserSeed()}
+        >
           {i18n.t("BTN_NEW_SEED")}
         </button>
 
@@ -107,16 +111,19 @@ Seed.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
+  generateUserSeed: PropTypes.func,
   user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  user: store.user
+  user: store.user,
+  seed: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      generateUserSeed,
       loading,
       clearMessage,
       errorInput

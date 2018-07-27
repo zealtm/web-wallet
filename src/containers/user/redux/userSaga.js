@@ -273,10 +273,6 @@ export function* generateUserSeed() {
     });
   } catch (error) {
     yield put({
-      type: "REQUEST_FAILED"
-    });
-
-    yield put({
       type: "REQUEST_FAILED",
       message:
         "Your request could not be completed. Check your connection or try again later"
