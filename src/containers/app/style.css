@@ -28,7 +28,7 @@
 
 @media only screen and (max-width: 667px) {
   :local(.colLeft) {
-    /* padding: 10%; */
+    padding: 10% 10%;
     overflow: auto;
   }
 }

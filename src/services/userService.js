@@ -7,7 +7,10 @@ class UserService {
       let response = await axios.post(
         BASE_URL + "/user",
         {
-          userInfo
+          name: userInfo.name,
+          surname: userInfo.surname,
+          email: userInfo.email,
+          password: userInfo.password
         },
         API_HEADER
       );

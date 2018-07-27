@@ -90,7 +90,6 @@ class Password extends React.Component {
 
     this.setState({ ...this.state, errors: errors });
 
-    console.warn(errors);
     if (errors.length > 0 || !user.name || !user.surname || !user.email) {
       errorInput(messageError);
     } else {

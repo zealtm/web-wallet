@@ -230,8 +230,9 @@ export function* createUserPin(action) {
 export function* createUser(action) {
   try {
     let response = yield call(userService.createUser, action.user);
+    console.warn(response)
 
-    if (response.data.code === 200) {
+    if (response.data.code === 201) {
       yield put({
         type: "POST_USER_CREATE_USER",
         page: 2

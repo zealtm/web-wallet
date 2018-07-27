@@ -15,8 +15,8 @@ class Login extends React.Component {
 
     if (login === 0) return <Auth />;
     if (login === 1) return <MultiFactorAuth />;
-    if (login === 9) return <Seed />;
-    if (login === 2) return <Pin />;
+    if (login === 2) return <Seed />;
+    if (login === 3) return <Pin />;
   };
 
   render() {
