@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading } from "../redux/userAction";
+import { loading, setUserSeed } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -13,6 +12,7 @@ import Loading from "../../../components/loading";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
+import { generateMnemonic } from "../../../utils/mnemonicSeed";
 import i18n from "../../../utils/i18n";
 
 // STYLE
@@ -42,9 +42,17 @@ class Seed extends React.Component {
   };
 
   inputValidator = () => {
-    let { inputs } = this.state;
-    let { loading, errorInput } = this.props;
-    let { errors, messageError } = inputValidator(inputs);
+    let { seed } = this.state.inputs;
+    let inputSeed = {
+      type: "text",
+      name: "seed",
+      value: seed == undefined ? "" : seed.value,
+      placeholder: "Seed Words",
+      required: true
+    };
+
+    let { loading, errorInput, setUserSeed } = this.props;
+    let { errors, messageError } = inputValidator({ inputs: inputSeed });
 
     if (errors.length > 0) {
       errorInput(messageError);
@@ -55,35 +63,54 @@ class Seed extends React.Component {
     } else {
       loading();
       clearMessage();
-
-      // CÓDIGO
+      setUserSeed(inputSeed.value);
     }
   };
 
+  setValueSeed = () => {
+
+    let inputSeed = {
+      type: "text",
+      name: "seed",
+      value: generateMnemonic(),
+      placeholder: "Seed Words",
+      required: true
+    };
+
+    this.setState({
+      ...this.state,
+      inputs: {
+        seed: inputSeed
+      }
+    });
+  }
+
   render() {
     let { loading } = this.props.user;
+    let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
-
+    
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
-
         <textarea
           type="textarea"
           name="seed"
           cols="15"
           rows="6"
           placeholder={i18n.t("PLACEHOLDER_SEED")}
+          value={!seed ? undefined : seed.value}
           required
-          onChange={event => {
-            this.getInput(event.target);
-          }}
+          onChange={event => this.getInput(event.target)}
           className={errors ? style.inputTextAreaError : style.inputTextArea}
         />
 
-        <button className={style.buttonPurpleClear} onClick={() => {}}>
+        <button
+          className={style.buttonPurpleClear}
+          onClick={() => this.setValueSeed()}
+        >
           {i18n.t("BTN_NEW_SEED")}
         </button>
 
@@ -108,6 +135,8 @@ Seed.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
+  setUserSeed: PropTypes.func,
+  generateUserSeed: PropTypes.func,
   user: PropTypes.object
 };
 
@@ -118,6 +147,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      setUserSeed,
       loading,
       clearMessage,
       errorInput

@@ -21,7 +21,6 @@ import style from "../style.css";
 
 function Transition({ error }) {
   if (error) {
-    console.error(error);
     return "Error!";
   } else {
     return <Loading color="lunes" width="35px"/>;
