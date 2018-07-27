@@ -42,11 +42,11 @@ class Seed extends React.Component {
   };
 
   inputValidator = () => {
-    let { inputs } = this.state;
+    let { seed } = this.state.inputs;
     let inputSeed = {
       type: "text",
       name: "seed",
-      value: inputs.seed.value,
+      value: seed == undefined ? "" : seed.value,
       placeholder: "Seed Words",
       required: true
     };
