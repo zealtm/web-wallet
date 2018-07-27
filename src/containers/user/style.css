@@ -72,6 +72,7 @@
 
 :local(.inputTextError) {
   composes: inputTextError from "../../components/bases/inputBase.css";
+  color: #ff445b;
 }
 
 /* 1.4 LINKS */
