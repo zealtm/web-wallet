@@ -197,7 +197,7 @@ export const inputValidator = inputs => {
 
         if (name === "seed") {
           let isSeed = validateMnemonic(value.toString());
-          if (value.trim().split(/\s+/g).length < 12 || !isSeed ) {
+          if (value.trim().split(/\s+/g).length != 12 && value.trim().split(/\s+/g).length != 18 || !isSeed ) {
             errors.push(name);
           }
         }
