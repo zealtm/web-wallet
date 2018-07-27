@@ -23,7 +23,7 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
-      console.warn("twoFactorResponse", twoFactorResponse);
+    
       let pinResponse = yield call(pinService.consult, userToken);
       let pin = pinResponse.data.code === 200 ? true : false;
 
@@ -129,7 +129,6 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
-    console.warn(response)
     if (response.data.code === 200) {
       return yield put({
         type: "POST_USER_VERIFY_2FA",

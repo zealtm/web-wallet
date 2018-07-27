@@ -89,7 +89,7 @@ class Seed extends React.Component {
     let { loading } = this.props.user;
     let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
-    console.warn(this.props.user)
+    
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
