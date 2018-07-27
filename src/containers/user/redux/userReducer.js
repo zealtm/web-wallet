@@ -82,12 +82,18 @@ const user = (state = initialState, action) => {
         loading: !state.loading
       };
 
-    case "GENERATE_USER_SEED":
+    case "SET_USER_SEED":
       return {
         ...state,
         user: {
           seed: action.seed
-        }
+        },
+        pages: {
+          login: action.pages.login,
+          create: 0,
+          reset: 0
+        },
+        loading: false
       }
 
     case "CLEAR_USER_ERROR":

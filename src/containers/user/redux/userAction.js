@@ -23,8 +23,11 @@ export const createUserPin = pin => ({
   pin
 });
 
-export const generateUserSeed = () => ({
-  type: "GENERATE_USER_SEED_API",
+export const setUserSeed = (seed) => ({
+  type: "SET_USER_SEED_API",
+  payload: {
+    seed
+  }
 });
 
 

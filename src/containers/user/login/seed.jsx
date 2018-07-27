@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, generateUserSeed } from "../redux/userAction";
+import { loading, setUserSeed } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -51,7 +51,7 @@ class Seed extends React.Component {
       required: true
     };
 
-    let { loading, errorInput } = this.props;
+    let { loading, errorInput, setUserSeed } = this.props;
     let { errors, messageError } = inputValidator({ inputs: inputSeed });
 
     if (errors.length > 0) {
@@ -63,8 +63,7 @@ class Seed extends React.Component {
     } else {
       loading();
       clearMessage();
-
-      // CÓDIGO redux
+      setUserSeed(inputSeed.value);
     }
   };
 
@@ -90,8 +89,7 @@ class Seed extends React.Component {
     let { loading } = this.props.user;
     let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
-    let { generateUserSeed } = this.props;
-
+    console.warn(this.props.user)
     return (
       <div className={style.contGeneral}>
         <img src="../../images/logo.svg" className={style.logo} />
@@ -137,6 +135,7 @@ Seed.propTypes = {
   loading: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
+  setUserSeed: PropTypes.func,
   generateUserSeed: PropTypes.func,
   user: PropTypes.object
 };
@@ -148,7 +147,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      generateUserSeed,
+      setUserSeed,
       loading,
       clearMessage,
       errorInput

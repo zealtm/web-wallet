@@ -1,7 +1,6 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
-import { generateMnemonic } from "../../../utils/mnemonicSeed";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -265,11 +264,15 @@ export function* resetUser() {
   }
 }
 
-export function* generateUserSeed() {
+export function* setUserSeed(action) {
   try {
     return yield put({
-      type: "GENERATE_USER_SEED",
-      seed: generateMnemonic()
+      type: "SET_USER_SEED",
+      seed: action.payload.seed,
+      pages: {
+        login: 3
+      }
+
     });
   } catch (error) {
     yield put({
@@ -290,6 +293,6 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
     fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
-    fork(takeLatest, "GENERATE_USER_SEED_API", generateUserSeed),
+    fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
   ];
 }
