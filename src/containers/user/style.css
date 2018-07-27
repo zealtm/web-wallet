@@ -17,7 +17,7 @@
 
 4. RESET
   4.1 TEXTS
-  4.2 ICONS
+  4.2 ICONSreset
   4.2 LINKS
   4.4 LOGO
 
@@ -72,7 +72,6 @@
 
 :local(.inputTextError) {
   composes: inputTextError from "../../components/bases/inputBase.css";
-  color: #ff445b;
 }
 
 /* 1.4 LINKS */
@@ -94,24 +93,6 @@
   margin-right: auto;
 }
 
-:local(.iconHeader) {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-}
-
-/* 1.6 SCROLLBAR */
-:local(::-webkit-scrollbar) {
-  color: transparent;
-  width: 3px;
-}
-
-:local(::-webkit-scrollbar-thumb) {
-  border-radius: 6px;
-  background-color: #654fa4;
-}
-
 /* ------------------------------------------------------------------------- */
 
 /* 2. FOOTER */
@@ -120,7 +101,6 @@
 :local(.footer) {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   font-size: 12px;
-  display: block;
   text-align: center;
   width: 100%;
   max-width: 335px;
@@ -148,7 +128,6 @@
 /* 3.1 TEXTS */
 :local(.description) {
   composes: textDefault from "../../components/bases/textBase.css";
-  display: block;
   text-align: center;
   margin-top: 45px;
   margin-bottom: 25px;
@@ -165,7 +144,6 @@
 :local(.doNotHaveAccount) {
   composes: textDefault from "../../components/bases/textBase.css";
   font-size: 16px;
-  display: block;
   text-align: center;
   margin-top: 25px;
   margin-bottom: 25px;
@@ -226,13 +204,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;
-}
-
-:local(.iconHeader) {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
 }
 
 :local(.iconListValid) {
@@ -319,7 +290,6 @@
 
 :local(.alignInfoTermsOfServices) {
   text-align: center;
-  margin-top: -10px;
   margin-bottom: 15px;
 }
 
@@ -401,17 +371,12 @@
   composes: inputTwoFactorAuthenticator;
   border-bottom: 1px solid #ff445b;
   color: #ff445b;
+
 }
 
 :local(.alignInputTwoFactorAuthenticator) {
   display: flex;
   justify-content: space-around;
-}
-
-:local(.inputTwoFactorAuthenticatorError) {
-  composes: inputTwoFactorAuthenticator;
-  border-bottom: 1px solid #ff445b;
-  color: #ff445b;
 }
 
 /* 7.2 TEXTS */
@@ -439,9 +404,11 @@
 :local(.inputTextArea) {
   composes: bgPurpleLight from "../../components/bases/colorBase.css";
   composes: textDefault from "../../components/bases/textBase.css";
+  composes: bdPurpleDefault from "../../components/bases/colorBase.css";
   margin-bottom: 25px;
   border-radius: 6px;
-  border-style: none;
+  border-width: 1px;
+  border-style: solid;
   max-width: 79%;
   width: 79%;
   height: 50px;
