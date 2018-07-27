@@ -81,7 +81,8 @@ class Seed extends React.Component {
       ...this.state,
       inputs: {
         seed: inputSeed
-      }
+      },
+      buttonEnable: true
     });
   }
 
