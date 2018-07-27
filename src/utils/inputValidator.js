@@ -3,6 +3,9 @@ import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
+import {
+  validateMnemonic
+} from "./mnemonicSeed";
 
 /*
 DOCUMENTATION:
@@ -36,7 +39,6 @@ export const inputValidator = inputs => {
   let errors = [];
   let inputName = [];
   let messageError = undefined;
-
   Object.keys(inputs).map(input => {
     if (!inputs[input]) {
       errors.push(input);
@@ -50,7 +52,9 @@ export const inputValidator = inputs => {
       if (!inputs[input]) {
         errors.push(input);
       } else if (input === "checkbox") {
-        let { checkbox } = inputs;
+        let {
+          checkbox
+        } = inputs;
 
         Object.keys(checkbox).map(value => {
           if (!inputs.checkbox[value]) {
@@ -59,7 +63,11 @@ export const inputValidator = inputs => {
             return;
           }
 
-          let { checked, label, required } = checkbox[value];
+          let {
+            checked,
+            label,
+            required
+          } = checkbox[value];
 
           if (!errors[0]) {
             if (required === true && checked === false) {
@@ -82,12 +90,10 @@ export const inputValidator = inputs => {
           inputName.push(placeholder), errors.push(name);
 
         // Check length
-        if (
-          !isLength(trim(value.toString()), {
+        if (!isLength(trim(value.toString()), {
             min: minLength !== -1 ? minLength : 3,
             max: maxLength !== -1 ? maxLength : 128
-          })
-        )
+          }))
           inputName.push(placeholder), errors.push(name);
 
         /* CUSTOM VALIDATIONS */
@@ -107,8 +113,10 @@ export const inputValidator = inputs => {
         if (name === "alias" || name === "username") {
           let regex = new RegExp("^[a-z0-9-.@_]+$");
 
-          if (
-            !isLength(trim(value.toString()), { min: 4, max: 30 }) ||
+          if (!isLength(trim(value.toString()), {
+              min: 4,
+              max: 30
+            }) ||
             !regex.test(trim(value.toString()))
           ) {
             inputName.push(placeholder);
@@ -123,8 +131,10 @@ export const inputValidator = inputs => {
 
           if (!isEmail(trim(value.toString()))) error += 1;
 
-          if (
-            !isLength(trim(value.toString()), { min: 4, max: 30 }) ||
+          if (!isLength(trim(value.toString()), {
+              min: 4,
+              max: 30
+            }) ||
             !regex.test(trim(value.toString()))
           ) {
             error += 1;
@@ -158,8 +168,10 @@ export const inputValidator = inputs => {
         if (name === "2FA" || name === "2fa") {
           let regex = new RegExp("^[0-9]+$");
 
-          if (
-            !isLength(trim(value.toString()), { min: 6, max: 6 }) ||
+          if (!isLength(trim(value.toString()), {
+              min: 6,
+              max: 6
+            }) ||
             !regex.test(trim(value.toString()))
           ) {
             errors.push(name);
@@ -170,8 +182,10 @@ export const inputValidator = inputs => {
         if (name === "PIN" || name === "pin") {
           let regex = new RegExp("^[0-9]+$");
 
-          if (
-            !isLength(trim(value.toString()), { min: 4, max: 4 }) ||
+          if (!isLength(trim(value.toString()), {
+              min: 4,
+              max: 4
+            }) ||
             !regex.test(trim(value.toString()))
           ) {
             errors.push(name);
@@ -180,12 +194,8 @@ export const inputValidator = inputs => {
         }
 
         if (name === "seed") {
-          let regex = new RegExp("^[a-z]+$");
-
-          if (
-            value.trim().split(/\s+/g).length >= 12 &&
-            !regex.test(trim(value.toString()))
-          ) {
+          let isSeed = validateMnemonic(value.toString());
+          if (value.trim().split(/\s+/g).length != 12 && value.trim().split(/\s+/g).length != 18 || !isSeed ) {
             errors.push(name);
           }
         }

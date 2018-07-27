@@ -3,7 +3,8 @@ const initialState = {
     name: undefined,
     surname: undefined,
     email: undefined,
-    pin: undefined
+    pin: undefined,
+    seed: undefined
   },
   pages: {
     login: 0,
@@ -20,7 +21,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          pin: action.user.pin
+          pin: action.user.pin,
+          seed: action.seed
         },
         pages: {
           login: action.pages.login,
@@ -95,6 +97,20 @@ const user = (state = initialState, action) => {
         ...state,
         loading: !state.loading
       };
+
+    case "SET_USER_SEED":
+      return {
+        ...state,
+        user: {
+          seed: action.seed
+        },
+        pages: {
+          login: action.pages.login,
+          create: 0,
+          reset: 0
+        },
+        loading: false
+      }
 
     case "CLEAR_USER_ERROR":
       return {
