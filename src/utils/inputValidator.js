@@ -39,7 +39,6 @@ export const inputValidator = inputs => {
   let errors = [];
   let inputName = [];
   let messageError = undefined;
-
   Object.keys(inputs).map(input => {
     if (!inputs[input]) {
       errors.push(input);
@@ -197,13 +196,9 @@ export const inputValidator = inputs => {
         }
 
         if (name === "seed") {
-          let regex = new RegExp("^[a-z]+$");
           let isSeed = validateMnemonic(value.toString());
-          
-          if (
-            value.trim().split(/\s+/g).length >= 12 || !regex.test(trim(value.toString())) ||
-            !isSeed
-          ) {
+          if (value.trim().split(/\s+/g).length < 12 || !isSeed ) {
+            console.warn("CAIU NO IF");
             errors.push(name);
           }
         }

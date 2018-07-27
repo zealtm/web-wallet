@@ -12,6 +12,7 @@ import Loading from "../../../components/loading";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
+import { generateMnemonic } from "../../../utils/mnemonicSeed";
 import i18n from "../../../utils/i18n";
 
 // STYLE
@@ -42,9 +43,16 @@ class Seed extends React.Component {
 
   inputValidator = () => {
     let { inputs } = this.state;
-    console.warn("Input ", inputs);
+    let inputSeed = {
+      type: "text",
+      name: "seed",
+      value: inputs.seed.value,
+      placeholder: "Seed Words",
+      required: true
+    };
+
     let { loading, errorInput } = this.props;
-    let { errors, messageError } = inputValidator(inputs);
+    let { errors, messageError } = inputValidator({ inputs: inputSeed });
 
     if (errors.length > 0) {
       errorInput(messageError);
@@ -56,13 +64,31 @@ class Seed extends React.Component {
       loading();
       clearMessage();
 
-      // CÓDIGO
+      // CÓDIGO redux
     }
   };
 
+  setValueSeed = () => {
+
+    let inputSeed = {
+      type: "text",
+      name: "seed",
+      value: generateMnemonic(),
+      placeholder: "Seed Words",
+      required: true
+    };
+
+    this.setState({
+      ...this.state,
+      inputs: {
+        seed: inputSeed
+      }
+    });
+  }
+
   render() {
     let { loading } = this.props.user;
-    let { seed } = this.props.seed;
+    let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
     let { generateUserSeed } = this.props;
 
@@ -77,7 +103,7 @@ class Seed extends React.Component {
           cols="15"
           rows="6"
           placeholder={i18n.t("PLACEHOLDER_SEED")}
-          value={seed}
+          value={!seed ? undefined : seed.value}
           required
           onChange={event => this.getInput(event.target)}
           className={errors ? style.inputTextAreaError : style.inputTextArea}
@@ -85,7 +111,7 @@ class Seed extends React.Component {
 
         <button
           className={style.buttonPurpleClear}
-          onClick={() => generateUserSeed()}
+          onClick={() => this.setValueSeed()}
         >
           {i18n.t("BTN_NEW_SEED")}
         </button>
@@ -116,8 +142,7 @@ Seed.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  user: store.user,
-  seed: store.user.user
+  user: store.user
 });
 
 const mapDispatchToProps = dispatch =>
