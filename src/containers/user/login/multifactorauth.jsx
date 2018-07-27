@@ -85,7 +85,7 @@ class MultiFactorAuth extends React.Component {
     let { errors, twoFactorFields } = this.state;
 
     return (
-      <div className={style.contGeneral}>
+      <div>
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 

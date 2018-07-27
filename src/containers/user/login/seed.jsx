@@ -91,7 +91,7 @@ class Seed extends React.Component {
     let { buttonEnable, errors } = this.state;
     
     return (
-      <div className={style.contGeneral}>
+      <div>
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>

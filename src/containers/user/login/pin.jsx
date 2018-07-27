@@ -76,7 +76,7 @@ class Pin extends React.Component {
     let { errors, PIN } = this.state;
 
     return (
-      <div className={style.contGeneral}>
+      <div>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.descriptionPIN}>
           {user.pin ? i18n.t("PIN_ENTER") : i18n.t("PIN_CREATE")}
