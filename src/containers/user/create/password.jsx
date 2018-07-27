@@ -18,7 +18,6 @@ import ClearIcon from "@material-ui/icons/Clear";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
-import Footer from "../footer";
 
 // STYLE
 import style from "../style.css";
@@ -209,8 +208,6 @@ class Password extends React.Component {
         >
           {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
         </button>
-
-        <Footer />
       </div>
     );
   }

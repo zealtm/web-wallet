@@ -231,24 +231,22 @@ export function* createUserPin(action) {
 export function* createUser(action) {
   try {
     let response = yield call(userService.createUser, action.user);
-    console.warn(response)
 
     if (response.data.code === 201) {
-      yield put({
+      return yield put({
         type: "POST_USER_CREATE_USER",
         page: 2
       });
     }
 
-    yield put({
-      type: "CHANGE_LOADING_STATE"
-    });
+    if (response.data.code === 500) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message:
+          "You are already registered"
+      });
+    }
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
   } catch (error) {
     yield put({
       type: "CHANGE_LOADING_STATE"
@@ -270,7 +268,7 @@ export function* resetUser() {
     });
 
     yield put({
-      type: "REQUEST_FAILED",
+      type: "REQUEST_INFO",
       message:
         "Este recurso ainda não está dispoível :)"
     });
