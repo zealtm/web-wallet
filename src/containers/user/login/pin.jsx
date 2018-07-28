@@ -20,6 +20,7 @@ import i18n from "../../../utils/i18n";
 class Pin extends React.Component {
   constructor() {
     super();
+    this.field = [];
     this.state = {
       inputs: {
         PIN: undefined
@@ -37,6 +38,15 @@ class Pin extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { PIN } = this.state;
+
+    if (value) {
+      Object.keys(PIN).map((input, key) => {
+        if (name === input && this.field[key + 1]) {
+          this.field[key + 1].focus();
+        }
+      });
+    }
+
     this.setState({
       ...this.state,
       PIN: { ...PIN, [name]: value },
@@ -46,7 +56,14 @@ class Pin extends React.Component {
   };
 
   inputValidator = () => {
-    let { user, loading, verifyUserPin, createUserPin, clearMessage, errorInput } = this.props;
+    let {
+      user,
+      loading,
+      verifyUserPin,
+      createUserPin,
+      clearMessage,
+      errorInput
+    } = this.props;
     let { PIN_1, PIN_2, PIN_3, PIN_4 } = this.state.PIN;
     let pin = PIN_1 + PIN_2 + PIN_3 + PIN_4;
     let inputPin = {
@@ -83,9 +100,13 @@ class Pin extends React.Component {
         </div>
         <div className={style.alignInputsDefault}>
           <input
+            autoFocus
             type="password"
             name="PIN_1"
             maxLength="1"
+            ref={input => {
+              this.field[0] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -95,6 +116,9 @@ class Pin extends React.Component {
             type="password"
             name="PIN_2"
             maxLength="1"
+            ref={input => {
+              this.field[1] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -105,6 +129,9 @@ class Pin extends React.Component {
             type="password"
             name="PIN_3"
             maxLength="1"
+            ref={input => {
+              this.field[2] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -115,6 +142,9 @@ class Pin extends React.Component {
             type="password"
             name="PIN_4"
             maxLength="1"
+            ref={input => {
+              this.field[3] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
