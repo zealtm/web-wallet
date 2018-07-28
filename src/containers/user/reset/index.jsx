@@ -8,16 +8,19 @@ import Footer from "../footer";
 import ResetUser from "./resetUser";
 import Email from "./emailMessage";
 
+// STYLE
+import style from "../style.css";
+
 class Reset extends React.Component {
   renderContent = () => {
     let { reset } = this.props.user.pages;
-    if (reset === 0) return <ResetUser />;    
+    if (reset === 0) return <ResetUser />;
     if (reset === 1) return <Email />;
   };
 
   render() {
     return (
-      <div>
+      <div className={style.contGeneral}>
         {this.renderContent()}
         <Footer />
       </div>
