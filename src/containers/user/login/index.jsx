@@ -9,6 +9,9 @@ import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
 import Seed from "./seed";
 
+// STYLE
+import style from "../style.css";
+
 class Login extends React.Component {
   renderContent = () => {
     let { login } = this.props.user.pages;
@@ -20,7 +23,7 @@ class Login extends React.Component {
   };
 
   render() {
-    return <div>{this.renderContent()}</div>;
+    return <div className={style.contGeneral}>{this.renderContent()}</div>;
   }
 }
 

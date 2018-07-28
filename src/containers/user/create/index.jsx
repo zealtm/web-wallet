@@ -10,6 +10,9 @@ import Password from "./password";
 import Terms from "./terms";
 import Email from "./emailMessage";
 
+// STYLE
+import style from "../style.css";
+
 class Create extends React.Component {
   renderContent = () => {
     let { create } = this.props.user.pages;
@@ -22,7 +25,7 @@ class Create extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={style.contGeneral}>
         {this.renderContent()}
         <Footer />
       </div>
