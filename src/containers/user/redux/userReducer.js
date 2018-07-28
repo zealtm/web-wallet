@@ -102,6 +102,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
+          ...state.user
           seed: action.seed
         },
         pages: {
