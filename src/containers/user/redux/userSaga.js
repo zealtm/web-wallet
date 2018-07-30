@@ -25,17 +25,19 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
-    
+
       let pinResponse = yield call(pinService.consult, userToken);
       let pin = pinResponse.data.code === 200 ? true : false;
+      let login = twoFactorResponse.data.code === 200 ? 1 : 2
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          pin: pin
+          pin,
+          password: action.password
         },
         pages: {
-          login: twoFactorResponse.data.code === 200 ? 1 : 2
+          login
         }
       });
     }
@@ -250,7 +252,7 @@ export function* createUser(action) {
         type: "CHANGE_LOADING_STATE"
       });
     }
-    
+
     return;
   } catch (error) {
     yield put({

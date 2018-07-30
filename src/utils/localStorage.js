@@ -1,3 +1,5 @@
+import {encryptHmacSha512} from "./cryptography";
+
 const nameToken = "auth.token";
 const seedToken = "auth.seed";
 
@@ -7,10 +9,15 @@ export const getAuthToken = () => JSON.parse(localStorage.getItem(nameToken));
 
 export const setUserSeed = (seed) => localStorage.setItem(seedToken, JSON.stringify(seed));
 
-export const getUserSeed= () => JSON.parse(localStorage.getItem(seedToken));
+export const getUserSeed = () => JSON.parse(localStorage.getItem(seedToken));
 
 export const clearAuthToken = () => localStorage.removeItem(nameToken);
 
 export const clear = (value) => localStorage.removeItem(value);
 
 export const clearAll = () => localStorage.clear();
+
+export const setUserData = () => {
+    let data = encryptHmacSha512();
+    localStorage.setItem(JSON.stringify(data));
+}

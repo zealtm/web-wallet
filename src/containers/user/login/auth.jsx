@@ -15,6 +15,7 @@ import Footer from "../footer";
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
+import {encryptMd5} from "../../../utils/cryptography"
 
 // STYLE
 import style from "../style.css";
@@ -57,7 +58,7 @@ class Auth extends React.Component {
     } else {
       loading();
       clearMessage();
-      authenticate(emailUsername.value, password.value);
+      authenticate(emailUsername.value, encryptMd5(password.value));
     }
   };
 

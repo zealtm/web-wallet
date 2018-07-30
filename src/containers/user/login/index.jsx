@@ -15,7 +15,7 @@ import style from "../style.css";
 class Login extends React.Component {
   renderContent = () => {
     let { login } = this.props.user.pages;
-
+    {console.warn(this.props.user)}
     if (login === 0) return <Auth />;
     if (login === 1) return <MultiFactorAuth />;
     if (login === 2) return <Seed />;
