@@ -3,9 +3,7 @@ import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
-import {
-  validateMnemonic
-} from "./mnemonicSeed";
+import { validateMnemonic } from "./mnemonicSeed";
 
 /*
 DOCUMENTATION:
@@ -39,7 +37,6 @@ export const inputValidator = inputs => {
   let errors = [];
   let inputName = [];
   let messageError = undefined;
-  
   Object.keys(inputs).map(input => {
     if (!inputs[input]) {
       errors.push(input);
@@ -52,30 +49,12 @@ export const inputValidator = inputs => {
       // Check if is undefined
       if (!inputs[input]) {
         errors.push(input);
-      } else if (input === "checkbox") {
-        let {
-          checkbox
-        } = inputs;
-
-        Object.keys(checkbox).map(value => {
-          if (!inputs.checkbox[value]) {
-            errors.push(value);
-            messageError = i18n.t("MESSAGE_TERMS_OF_SERVICE");
-            return;
-          }
-
-          let {
-            checked,
-            label,
-            required
-          } = checkbox[value];
-
-          if (!errors[0]) {
-            if (required === true && checked === false) {
-              errors.push(label);
-            }
-          }
-        });
+      } else if (inputs[input].type === "checkbox") {
+        let { checked, label, required } = inputs[input];
+        if (required === true && checked === false) {
+          messageError = i18n.t("MESSAGE_TERMS_OF_SERVICE");
+          errors.push(label);
+        }
       } else {
         let {
           name,
@@ -91,10 +70,12 @@ export const inputValidator = inputs => {
           inputName.push(placeholder), errors.push(name);
 
         // Check length
-        if (!isLength(trim(value.toString()), {
+        if (
+          !isLength(trim(value.toString()), {
             min: minLength !== -1 ? minLength : 3,
             max: maxLength !== -1 ? maxLength : 128
-          }))
+          })
+        )
           inputName.push(placeholder), errors.push(name);
 
         /* CUSTOM VALIDATIONS */
@@ -114,7 +95,8 @@ export const inputValidator = inputs => {
         if (name === "alias" || name === "username") {
           let regex = new RegExp("^[a-z0-9-.@_]+$");
 
-          if (!isLength(trim(value.toString()), {
+          if (
+            !isLength(trim(value.toString()), {
               min: 4,
               max: 30
             }) ||
@@ -132,7 +114,8 @@ export const inputValidator = inputs => {
 
           if (!isEmail(trim(value.toString()))) error += 1;
 
-          if (!isLength(trim(value.toString()), {
+          if (
+            !isLength(trim(value.toString()), {
               min: 4,
               max: 30
             }) ||
@@ -146,7 +129,7 @@ export const inputValidator = inputs => {
 
         if (name === "passwordRepeat") {
           let regex = new RegExp('^[a-zA-z0-9!@#$%^&*(),.?":{}|<>]+$');
-          
+
           if (
             !isLength(trim(value.toString()), { min: 8, max: 64 }) ||
             !regex.test(trim(value.toString()))
@@ -169,7 +152,8 @@ export const inputValidator = inputs => {
         if (name === "2FA" || name === "2fa") {
           let regex = new RegExp("^[0-9]+$");
 
-          if (!isLength(trim(value.toString()), {
+          if (
+            !isLength(trim(value.toString()), {
               min: 6,
               max: 6
             }) ||
@@ -183,7 +167,8 @@ export const inputValidator = inputs => {
         if (name === "PIN" || name === "pin") {
           let regex = new RegExp("^[0-9]+$");
 
-          if (!isLength(trim(value.toString()), {
+          if (
+            !isLength(trim(value.toString()), {
               min: 4,
               max: 4
             }) ||
@@ -196,7 +181,11 @@ export const inputValidator = inputs => {
 
         if (name === "seed") {
           let isSeed = validateMnemonic(value.toString());
-          if (value.trim().split(/\s+/g).length != 12 && value.trim().split(/\s+/g).length != 18 || !isSeed ) {
+          if (
+            (value.trim().split(/\s+/g).length != 12 &&
+              value.trim().split(/\s+/g).length != 18) ||
+            !isSeed
+          ) {
             errors.push(name);
           }
         }

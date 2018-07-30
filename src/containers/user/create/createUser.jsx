@@ -14,7 +14,7 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
-// import CustomCheckbox from "../../../components/checkBox";
+import CustomCheckbox from "../../../components/checkBox";
 
 class CreateUser extends React.Component {
   constructor() {
@@ -23,7 +23,8 @@ class CreateUser extends React.Component {
       inputs: {
         lastName: undefined,
         firstName: undefined,
-        email: undefined
+        email: undefined,
+        checkboxTerms: undefined
       },
       step: 0,
       errors: undefined
@@ -32,11 +33,11 @@ class CreateUser extends React.Component {
 
   getInput = input => {
     let { inputs } = this.state;
-    let { name, value } = input;
-
+    let { type, name, value } = input;
+    
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: value ? input : undefined },
+      inputs: { ...inputs, [name]: type === "checkbox" ? input : value ? input : undefined },
       errors: undefined
     });
   };
@@ -121,7 +122,7 @@ class CreateUser extends React.Component {
             }
           />
 
-          {/* <div className={style.alignInfoTermsOfServices}>
+          <div className={style.alignInfoTermsOfServices}>
             <CustomCheckbox
               type="checkbox"
               name="checkboxTerms"
@@ -138,7 +139,7 @@ class CreateUser extends React.Component {
             <Link className={style.linkTermsOfServices} to="#">
               {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
             </Link>
-          </div> */}
+          </div>
 
           <button
             className={
