@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createUser } from "../redux/userAction";
+import { loading, createUser } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -16,127 +16,146 @@ import i18n from "../../../utils/i18n";
 import style from "../style.css";
 import CustomCheckbox from "../../../components/checkBox";
 
+// COMPONENTS
+import Loading from "../../../components/loading";
+
 class CreateUserTerms extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            inputs: {
-                checkboxTerms: undefined,
-            },
-            checkDownload: false,
-            errors: undefined
-        };
-    }
-
-    getInput = input => {
-        let { type, name, value } = input;
-        let { inputs } = this.state;
-        this.setState({
-            ...this.state,
-            inputs: { ...inputs, [name]: type === "checkbox" ? input : value ? input : undefined },
-            errors: undefined
-        });
+  constructor() {
+    super();
+    this.state = {
+      inputs: {
+        checkboxTerms: undefined
+      },
+      checkDownload: false,
+      errors: undefined
     };
+  }
 
-    checkDownload = () => {
-        this.setState({
-            ...this.state,
-            checkDownload: true,
-        });
+  getInput = input => {
+    let { type, name, value } = input;
+    let { inputs } = this.state;
+    this.setState({
+      ...this.state,
+      inputs: {
+        ...inputs,
+        [name]: type === "checkbox" ? input : value ? input : undefined
+      },
+      errors: undefined
+    });
+  };
+
+  checkDownload = () => {
+    this.setState({
+      ...this.state,
+      checkDownload: true
+    });
+  };
+
+  inputValidator = () => {
+    let { loading, createUser, clearMessage, errorInput, user } = this.props;
+    let { inputs, checkDownload } = this.state;
+    let { messageError, errors } = inputValidator(inputs);
+
+    if (
+      errors.length > 0 ||
+      !user.user.name ||
+      !user.user.surname ||
+      !user.user.email ||
+      !user.user.password ||
+      !checkDownload
+    ) {
+      errorInput(messageError ? messageError : "Baixe os termos");
+      this.setState({
+        ...this.state,
+        errors
+      });
+    } else {
+      loading();
+      clearMessage();
+      createUser(user.name, user.surname, user.email, user.password);
     }
+  };
 
-    inputValidator = () => {
-        let { createUser, clearMessage, errorInput, user } = this.props;
-        let { inputs } = this.state;
-        let { messageError, errors } = inputValidator(inputs);
+  render() {
+    let { user } = this.props;
+    let { inputs, checkDownload } = this.state;
 
-        if (errors.length > 0 || !user.name || !user.surname || !user.email || !user.password) {
-            errorInput(messageError);
-            this.setState({
-                ...this.state,
-                errors
-            });
-        } else {
-            clearMessage();
-            createUser(user.name, user.surname, user.email, user.password );
-        }
-    };
+    return (
+      <div>
+        <img src="../../images/logo.svg" className={style.logo} />
 
-    render() {
+        <div className={style.alignInfoDownloadTerms}>
+          <img src="../../images/gdpr-compliant@1x.png" />
 
-        let { inputs, checkDownload } = this.state;
+          <div className={style.infoDownloadTerms}>
+            <Link
+              className={style.linkDownloadTerms}
+              to="#"
+              onClick={() => this.checkDownload()}
+            >
+              {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
+            </Link>
+          </div>
+        </div>
 
-        return (
-            <div>
-                <img src="../../images/logo.svg" className={style.logo} />
+        <div className={style.alignInfoTermsOfServices}>
+          <CustomCheckbox
+            type="checkbox"
+            name="checkboxTerms"
+            label={i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
+            required
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+          />
 
-                <div className={style.alignInfoDownloadTerms}>
-                    <img src="../../images/gdpr-compliant@1x.png" />
+          <div className={style.acceptTermsOfServices}>
+            {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
+          </div>
+          <Link className={style.linkTermsOfServices} to="#">
+            {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
+          </Link>
+        </div>
 
-                    <div className={style.infoDownloadTerms}>
-                        <Link className={style.linkDownloadTerms} to="#" onClick={() => this.checkDownload()} >
-                            {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
-                        </Link>
-                    </div>
-                </div>
-
-                <div className={style.alignInfoTermsOfServices}>
-                    <CustomCheckbox
-                        type="checkbox"
-                        name="checkboxTerms"
-                        label={i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-                        required
-                        onChange={event => {
-                            this.getInput(event.target);
-                        }}
-                    />
-
-                    <div className={style.acceptTermsOfServices}>
-                        {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-                    </div>
-                    <Link className={style.linkTermsOfServices} to="#">
-                        {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
-                    </Link>
-                </div>
-
-                <button
-                    className={
-                        inputs.checkboxTerms && checkDownload
-                            ? style.buttonEnable
-                            : style.buttonBorderGreen
-                    }
-                    onClick={() => this.inputValidator()}
-                >
-                    {i18n.t("BTN_FINALIZE")}
-                </button>
-            </div>
-        );
-    }
+        <button
+          className={
+            inputs.checkboxTerms && checkDownload
+              ? style.buttonEnable
+              : style.buttonBorderGreen
+          }
+          onClick={() => this.inputValidator()}
+        >
+          {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
+        </button>
+      </div>
+    );
+  }
 }
 
 CreateUserTerms.propTypes = {
-    createUser: PropTypes.func,
-    clearMessage: PropTypes.func,
-    errorInput: PropTypes.func,
-    user: PropTypes.object
-
+  loading: PropTypes.func,
+  createUser: PropTypes.func,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-    user: store.user.user
+  user: store.user
 });
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        {
-            createUser,
-            clearMessage,
-            errorInput
-        },
-        dispatch
-    );
+  bindActionCreators(
+    {
+      loading,
+      createUser,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
-    mapSateToProps,
-    mapDispatchToProps
+  mapSateToProps,
+  mapDispatchToProps
 )(CreateUserTerms);

@@ -16,9 +16,6 @@ import i18n from "../../../utils/i18n";
 import DoneIcon from "@material-ui/icons/Done";
 import ClearIcon from "@material-ui/icons/Clear";
 
-// COMPONENTS
-import Loading from "../../../components/loading";
-
 // STYLE
 import style from "../style.css";
 
@@ -82,7 +79,7 @@ class Password extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, getCreateUserInfoPassword, clearMessage, errorInput } = this.props;
+    let { getCreateUserInfoPassword, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
@@ -135,7 +132,6 @@ class Password extends React.Component {
   };
 
   render() {
-    let { user } = this.props;
     let { inputs, passwordHint, errors } = this.state;
 
     return (
@@ -205,7 +201,7 @@ class Password extends React.Component {
               : null
           }
         >
-          {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
+          {i18n.t("BTN_NEXT")}
         </button>
       </div>
     );
@@ -213,7 +209,6 @@ class Password extends React.Component {
 }
 
 Password.propTypes = {
-  loading: PropTypes.func,
   getCreateUserInfoPassword: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,

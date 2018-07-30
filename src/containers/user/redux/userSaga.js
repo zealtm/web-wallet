@@ -235,7 +235,7 @@ export function* createUser(action) {
     if (response.data.code === 201) {
       return yield put({
         type: "POST_USER_CREATE_USER",
-        page: 2
+        page: 3
       });
     }
 

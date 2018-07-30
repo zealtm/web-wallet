@@ -14,7 +14,6 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
-import CustomCheckbox from "../../../components/checkBox";
 
 class CreateUser extends React.Component {
   constructor() {
@@ -24,7 +23,6 @@ class CreateUser extends React.Component {
         lastName: undefined,
         firstName: undefined,
         email: undefined,
-        checkboxTerms: undefined
       },
       step: 0,
       errors: undefined
@@ -33,11 +31,11 @@ class CreateUser extends React.Component {
 
   getInput = input => {
     let { inputs } = this.state;
-    let { type, name, value } = input;
+    let { name, value } = input;
     
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: type === "checkbox" ? input : value ? input : undefined },
+      inputs: { ...inputs, [name]: value ? input : undefined },
       errors: undefined
     });
   };
@@ -121,25 +119,6 @@ class CreateUser extends React.Component {
                 : style.inputTextDefault
             }
           />
-
-          <div className={style.alignInfoTermsOfServices}>
-            <CustomCheckbox
-              type="checkbox"
-              name="checkboxTerms"
-              label={i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-              required
-              onChange={event => {
-                this.getInput(event.target);
-              }}
-            />
-
-            <div className={style.acceptTermsOfServices}>
-              {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-            </div>
-            <Link className={style.linkTermsOfServices} to="#">
-              {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
-            </Link>
-          </div>
 
           <button
             className={
