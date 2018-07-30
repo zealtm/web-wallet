@@ -23,7 +23,8 @@ class CreateUserTerms extends React.Component {
             inputs: {
                 checkboxTerms: undefined,
             },
-            errors: undefined
+            errors: undefined,
+            checkDownload: false
         };
     }
 
@@ -37,6 +38,12 @@ class CreateUserTerms extends React.Component {
         });
     };
 
+    checkDownload = () => {
+        this.setState({
+            ...this.state,
+            checkDownload: true,
+        });
+    }
 
     inputValidator = () => {
         let { clearMessage, errorInput } = this.props;
@@ -56,7 +63,8 @@ class CreateUserTerms extends React.Component {
     };
 
     render() {
-        let { checkboxTerms } = this.state;
+        
+        let { checkboxTerms, checkDownload } = this.state;
 
         return (
             <div>
@@ -66,7 +74,7 @@ class CreateUserTerms extends React.Component {
                     <img src="../../images/gdpr-compliant@1x.png" />
 
                     <div className={style.infoDownloadTerms}>
-                        <Link className={style.linkDownloadTerms} to="#" target="_blank" >
+                        <Link className={style.linkDownloadTerms} to="#" target="_blank" onClick={() => this.checkDownload} >
                             {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
                         </Link>
                     </div>
@@ -93,7 +101,7 @@ class CreateUserTerms extends React.Component {
 
                 <button
                     className={
-                        checkboxTerms
+                        checkboxTerms && checkDownload
                             ? style.buttonEnable
                             : style.buttonBorderGreen
                     }
