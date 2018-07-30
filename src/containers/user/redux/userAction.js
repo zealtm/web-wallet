@@ -13,14 +13,22 @@ export const verifyTwoFactorAuth = token => ({
   token
 });
 
-export const verifyUserPin = pin => ({
+export const verifyUserPin = (pin, seed, password) => ({
   type: "POST_USER_VERIFY_PIN_API",
-  pin
+  user: {
+    pin,
+    seed,
+    password
+  }
 });
 
-export const createUserPin = pin => ({
+export const createUserPin = (pin, seed, password) => ({
   type: "POST_USER_CREATE_PIN_API",
-  pin
+  user: {
+    pin,
+    seed,
+    password
+  }
 });
 
 export const getCreateUserInfo = (name, surname, email) => ({

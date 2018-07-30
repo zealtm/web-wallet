@@ -84,7 +84,7 @@ class Pin extends React.Component {
     } else {
       loading();
       clearMessage();
-      user.user.pin ? verifyUserPin(pin) : createUserPin(pin);
+      user.user.pin ? verifyUserPin(pin, user.user.seed, user.user.password) : createUserPin(pin, user.user.seed, user.user.password);
     }
   };
 

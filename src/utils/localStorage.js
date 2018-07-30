@@ -1,23 +1,22 @@
-import {encryptHmacSha512} from "./cryptography";
+const authToken = "auth.token";
+const userSeed = "user.seed";
+const userObj = "user.object";
 
-const nameToken = "auth.token";
-const seedToken = "auth.seed";
 
-export const setAuthToken = (token) => localStorage.setItem(nameToken, JSON.stringify(token));
+export const setAuthToken = (token) => localStorage.setItem(authToken, JSON.stringify(token));
 
-export const getAuthToken = () => JSON.parse(localStorage.getItem(nameToken));
+export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
-export const setUserSeed = (seed) => localStorage.setItem(seedToken, JSON.stringify(seed));
+export const setUserSeed = (seed) => localStorage.setItem(userSeed, JSON.stringify(seed));
 
-export const getUserSeed = () => JSON.parse(localStorage.getItem(seedToken));
+export const getUserSeed = () => JSON.parse(localStorage.getItem(userSeed));
 
-export const clearAuthToken = () => localStorage.removeItem(nameToken);
+export const clearAuthToken = () => localStorage.removeItem(authToken);
 
 export const clear = (value) => localStorage.removeItem(value);
 
 export const clearAll = () => localStorage.clear();
 
-export const setUserData = () => {
-    let data = encryptHmacSha512();
-    localStorage.setItem(JSON.stringify(data));
-}
+export const getUserData = () =>  JSON.parse(localStorage.getItem(authToken));
+
+export const setUserData = (user) => localStorage.setItem(userObj, JSON.stringify(user));

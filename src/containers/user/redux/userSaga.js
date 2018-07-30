@@ -1,6 +1,7 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+import { setAuthToken, getAuthToken, setUserData } from "../../../utils/localStorage";
+import { encryptHmacSha512 } from "../../../utils/cryptography";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -170,9 +171,14 @@ export function* verifyTwoFactorAuth(action) {
 export function* verifyUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.verify, action.pin, userToken);
-
+    console.warn("Teste", action.user)
+    let response = yield call(pinService.verify, action.user.pin, userToken);
+    console.warn("Teste2")
     if (response.data.code === 200) {
+      
+      let user = factoryObjectUser(action.user)
+      setUserData(user);
+
       yield put({
         type: "REQUEST_SUCCESS",
         message: "You are logged :)"
@@ -190,6 +196,7 @@ export function* verifyUserPin(action) {
       type: "CHANGE_LOADING_STATE"
     });
   } catch (error) {
+    console.error(error);
     yield put({
       type: "CHANGE_LOADING_STATE"
     });
@@ -205,9 +212,13 @@ export function* verifyUserPin(action) {
 export function* createUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.create, action.pin, userToken);
+    let response = yield call(pinService.create, action.user.pin, userToken);
 
     if (response.data.code === 201) {
+      
+      let user = factoryObjectUser(action.user)
+      setUserData(user);
+      
       yield put({
         type: "REQUEST_SUCCESS",
         message: "Pin has been created. You are logged :)"
@@ -323,4 +334,15 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
   ];
+}
+
+let factoryObjectUser = (user) => {
+    console.warn("Teste 3", user);
+  
+    let newUser = {
+    password: encryptHmacSha512(user.password, user.pin),
+    email: encryptHmacSha512(user.seed, user.pin)
+  }
+  
+  return newUser;
 }
