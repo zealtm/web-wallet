@@ -171,9 +171,8 @@ export function* verifyTwoFactorAuth(action) {
 export function* verifyUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
-    console.warn("Teste", action.user)
     let response = yield call(pinService.verify, action.user.pin, userToken);
-    console.warn("Teste2")
+
     if (response.data.code === 200) {
       
       let user = factoryObjectUser(action.user)
@@ -196,7 +195,6 @@ export function* verifyUserPin(action) {
       type: "CHANGE_LOADING_STATE"
     });
   } catch (error) {
-    console.error(error);
     yield put({
       type: "CHANGE_LOADING_STATE"
     });
@@ -337,7 +335,6 @@ export default function* rootSaga() {
 }
 
 let factoryObjectUser = (user) => {
-    console.warn("Teste 3", user);
   
     let newUser = {
     password: encryptHmacSha512(user.password, user.pin),
