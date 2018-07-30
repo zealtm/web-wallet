@@ -334,7 +334,7 @@ export default function* rootSaga() {
   ];
 }
 
-let factoryObjectUser = (user) => {
+let factoryObjectUser = user => {
   
     let newUser = {
     password: encryptHmacSha512(user.password, user.pin),
