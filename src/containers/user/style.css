@@ -316,6 +316,25 @@
   margin-bottom: 80px;
 }
 
+:local(.alignInfoDownloadTerms) {
+  text-align: center;
+  margin: 180px 0 100px 0;
+}
+
+:local(.infoDownloadTerms) {
+  margin-top: 15px;
+  padding: 0% 25%;
+  font-weight: bold;
+  color: white;
+}
+
+:local(.linkDownloadTerms) {
+  composes: link;
+  font-size: 12px;
+  color: white;
+  text-decoration: none;
+}
+
 /* 6.2 ICONS */
 :local(.iconEmailCreateAccount) {
   composes: iconEmail;

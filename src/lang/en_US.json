@@ -27,6 +27,7 @@
   "BTN_2FA": "Activate 2FA",
   "BTN_IMPORT_SEED": "Import",
   "BTN_NEW_SEED": "GENERATE NEW SEED",
+  "BTN_FINALIZE": "Finalize",
 
   "LOGIN_SLIDE_DESCRIPTION_1":
     "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -53,6 +54,7 @@
   "NEW_ACCOUNT_MESSAGE_SENDED":
     "A message with an activation link has been sent to your email address",
   "NEW_ACCOUNT_PASSWORD_HEADER": "Digit your password",
+  "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click to download and end the registration",
 
   "2FA_HEADER": "2FA Confirmation",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",
