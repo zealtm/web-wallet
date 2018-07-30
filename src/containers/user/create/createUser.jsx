@@ -14,7 +14,6 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
-import CustomCheckbox from "../../../components/checkBox";
 
 class CreateUser extends React.Component {
   constructor() {
@@ -121,25 +120,6 @@ class CreateUser extends React.Component {
                 : style.inputTextDefault
             }
           />
-
-          <div className={style.alignInfoTermsOfServices}>
-            <CustomCheckbox
-              type="checkbox"
-              name="checkboxTerms"
-              label={i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-              required
-              onChange={event => {
-                this.getInput(event.target);
-              }}
-            />
-
-            <div className={style.acceptTermsOfServices}>
-              {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
-            </div>
-            <Link className={style.linkTermsOfServices} to="#">
-              {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
-            </Link>
-          </div>
 
           <button
             className={
