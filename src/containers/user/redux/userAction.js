@@ -32,6 +32,11 @@ export const getCreateUserInfo = (name, surname, email) => ({
   }
 });
 
+export const getCreateUserInfoPassword = (password) => ({
+  type: "CHANGE_USER_PERSONAL_INFO_PASSWORD",
+    password
+});
+
 export const createUser = (name, surname, email, password) => ({
   type: "POST_USER_CREATE_USER_API",
   user: {

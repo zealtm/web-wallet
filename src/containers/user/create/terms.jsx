@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCreateUserTermsInfo } from "../redux/userAction";
+import { createUser } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -23,8 +23,8 @@ class CreateUserTerms extends React.Component {
             inputs: {
                 checkboxTerms: undefined,
             },
-            errors: undefined,
-            checkDownload: false
+            checkDownload: false,
+            errors: undefined
         };
     }
 
@@ -46,11 +46,11 @@ class CreateUserTerms extends React.Component {
     }
 
     inputValidator = () => {
-        let { clearMessage, errorInput } = this.props;
+        let { createUser, clearMessage, errorInput, user } = this.props;
         let { inputs } = this.state;
         let { messageError, errors } = inputValidator(inputs);
 
-        if (errors.length > 0) {
+        if (errors.length > 0 || !user.name || !user.surname || !user.email || !user.password) {
             errorInput(messageError);
             this.setState({
                 ...this.state,
@@ -58,13 +58,13 @@ class CreateUserTerms extends React.Component {
             });
         } else {
             clearMessage();
-            alert("OK");
+            createUser(user.name, user.surname, user.email, user.password );
         }
     };
 
     render() {
-        
-        let { checkboxTerms, checkDownload } = this.state;
+
+        let { inputs, checkDownload } = this.state;
 
         return (
             <div>
@@ -74,7 +74,7 @@ class CreateUserTerms extends React.Component {
                     <img src="../../images/gdpr-compliant@1x.png" />
 
                     <div className={style.infoDownloadTerms}>
-                        <Link className={style.linkDownloadTerms} to="#" target="_blank" onClick={() => this.checkDownload} >
+                        <Link className={style.linkDownloadTerms} to="#" onClick={() => this.checkDownload()} >
                             {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
                         </Link>
                     </div>
@@ -101,7 +101,7 @@ class CreateUserTerms extends React.Component {
 
                 <button
                     className={
-                        checkboxTerms && checkDownload
+                        inputs.checkboxTerms && checkDownload
                             ? style.buttonEnable
                             : style.buttonBorderGreen
                     }
@@ -115,15 +115,21 @@ class CreateUserTerms extends React.Component {
 }
 
 CreateUserTerms.propTypes = {
-    getCreateUserTermsInfo: PropTypes.func,
+    createUser: PropTypes.func,
     clearMessage: PropTypes.func,
-    errorInput: PropTypes.func
+    errorInput: PropTypes.func,
+    user: PropTypes.object
+
 };
+
+const mapSateToProps = store => ({
+    user: store.user.user
+});
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            getCreateUserTermsInfo,
+            createUser,
             clearMessage,
             errorInput
         },
@@ -131,6 +137,6 @@ const mapDispatchToProps = dispatch =>
     );
 
 export default connect(
-    null,
+    mapSateToProps,
     mapDispatchToProps
 )(CreateUserTerms);

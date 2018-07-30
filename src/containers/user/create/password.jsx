@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, createUser } from "../redux/userAction";
+import { loading, getCreateUserInfoPassword } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -82,19 +82,18 @@ class Password extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, createUser, clearMessage, errorInput } = this.props;
-    let { user } = this.props.user;
+    let { loading, getCreateUserInfoPassword, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
 
     this.setState({ ...this.state, errors: errors });
 
-    if (errors.length > 0 || !user.name || !user.surname || !user.email) {
+    if (errors.length > 0) {
       errorInput(messageError);
     } else {
       loading();
       clearMessage();
-      createUser(user.name, user.surname, user.email, inputs.password.value);
+      getCreateUserInfoPassword(inputs.password.value);
     }
 
     return;
@@ -215,7 +214,7 @@ class Password extends React.Component {
 
 Password.propTypes = {
   loading: PropTypes.func,
-  createUser: PropTypes.func,
+  getCreateUserInfoPassword: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object
@@ -229,7 +228,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loading,
-      createUser,
+      getCreateUserInfoPassword,
       clearMessage,
       errorInput
     },

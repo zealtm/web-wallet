@@ -3,6 +3,7 @@ const initialState = {
     name: undefined,
     surname: undefined,
     email: undefined,
+    password: undefined,
     pin: undefined,
     seed: undefined
   },
@@ -64,6 +65,21 @@ const user = (state = initialState, action) => {
           reset: 0
         },
         user: action.user,
+        loading: false
+      };
+
+    case "CHANGE_USER_PERSONAL_INFO_PASSWORD":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: 2,
+          reset: 0
+        },
+        user: {
+          ...state.user,
+          password: action.password
+        },
         loading: false
       };
 

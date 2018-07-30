@@ -17,10 +17,10 @@ class Create extends React.Component {
   renderContent = () => {
     let { create } = this.props.user.pages;
 
-    if (create === 3) return <CreateUser />;
+    if (create === 0) return <CreateUser />;
     if (create === 1) return <Password />;
-    if (create === 0) return <Terms />;
-    if (create === 2) return <Email />;
+    if (create === 2) return <Terms />;
+    if (create === 3) return <Email />;
   };
 
   render() {
