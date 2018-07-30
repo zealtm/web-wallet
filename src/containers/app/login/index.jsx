@@ -23,7 +23,7 @@ function Transition({ error }) {
   if (error) {
     return "Error!";
   } else {
-    return <Loading color="lunes" width="35px"/>;
+    return <Loading color="lunes" width="35px" />;
   }
 }
 
@@ -111,7 +111,7 @@ class Login extends Component {
 
     return (
       <Router>
-        <Switch>
+        <div>
           <Grid container>
             <div>
               {error.active ? (
@@ -119,12 +119,18 @@ class Login extends Component {
               ) : null}
             </div>
             <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
-              {/* INSIDE ROUTES */}
-              <Route exact path="/" component={login} />
-              <Route exact path="/login" component={login} />
-              <Route exact path="/reset" component={reset} />
-              <Route exact path="/new-password" component={resetNewPassword} />
-              <Route exact path="/create" component={create} />
+              {/* INSIDE ROUTES */}{" "}
+              <Switch>
+                <Route exact path="/" component={login} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/reset" component={reset} />
+                <Route
+                  exact
+                  path="/new-password"
+                  component={resetNewPassword}
+                />
+                <Route exact path="/create" component={create} />{" "}
+              </Switch>
             </Grid>
 
             <Hidden smDown>
@@ -133,11 +139,12 @@ class Login extends Component {
               </Grid>
             </Hidden>
           </Grid>
-          
-          <Route path="/404" component={errorNotFound} />
-          <Route path="/500" component={errorInternal} />
-          <Route path={"**"} component={errorNotFound} />
-        </Switch>
+          <Switch>
+            <Route path="/404" component={errorNotFound} />
+            <Route path="/500" component={errorInternal} />
+            <Route path={"**"} component={errorNotFound} />
+          </Switch>
+        </div>
       </Router>
     );
   }

@@ -22,6 +22,7 @@ import style from "../style.css";
 class MultiFactorAuth extends React.Component {
   constructor() {
     super();
+    this.field = [];
     this.state = {
       twoFactorFields: {
         field_1: undefined,
@@ -38,6 +39,14 @@ class MultiFactorAuth extends React.Component {
   getInput = input => {
     let { name, value } = input;
     let { twoFactorFields } = this.state;
+
+    if (value) {
+      Object.keys(twoFactorFields).map((input, key) => {
+        if (name === input && this.field[key + 1]) {
+          this.field[key + 1].focus();
+        }
+      });
+    }
 
     this.setState({
       ...this.state,
@@ -85,7 +94,7 @@ class MultiFactorAuth extends React.Component {
     let { errors, twoFactorFields } = this.state;
 
     return (
-      <div className={style.contGeneral}>
+      <div>
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 
@@ -99,6 +108,10 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_1"
             maxLength="1"
+            autoFocus
+            ref={input => {
+              this.field[0] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -112,6 +125,9 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_2"
             maxLength="1"
+            ref={input => {
+              this.field[1] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -125,6 +141,9 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_3"
             maxLength="1"
+            ref={input => {
+              this.field[2] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -138,6 +157,9 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_4"
             maxLength="1"
+            ref={input => {
+              this.field[3] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -151,6 +173,9 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_5"
             maxLength="1"
+            ref={input => {
+              this.field[4] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -164,6 +189,9 @@ class MultiFactorAuth extends React.Component {
           <input
             name="field_6"
             maxLength="1"
+            ref={input => {
+              this.field[5] = input;
+            }}
             onChange={event => {
               this.getInput(event.target);
             }}

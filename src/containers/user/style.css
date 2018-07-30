@@ -44,6 +44,11 @@
 
 /* 1. GENERAL COMPONENTS */
 
+/* 1.1 CONTAINER GENERAL */
+:local(.contGeneral) {
+  width: 100%;
+}
+
 /* 1.2 BUTTON */
 :local(.buttonEnable) {
   composes: buttonEnable from "../../components/bases/buttonBase.css";
@@ -129,8 +134,8 @@
 :local(.description) {
   composes: textDefault from "../../components/bases/textBase.css";
   text-align: center;
-  margin-top: 45px;
-  margin-bottom: 25px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
 :local(.textForgetPass) {
@@ -156,10 +161,8 @@
 /* 4.1 TEXTS */
 :local(.resetHeader) {
   composes: textDefault from "../../components/bases/textBase.css";
-  margin-top: 45px;
-  margin-bottom: 25px;
+  composes: description;
   font-size: 22px;
-  text-align: center;
   font-weight: bold;
 }
 
@@ -238,7 +241,7 @@
   border-width: 1px;
   border-style: solid;
   width: 55px;
-  padding: 10px 10px 4px;
+  padding: 10px 10px;
   border-radius: 6px;
   height: 35px;
   color: white;

@@ -64,7 +64,6 @@ class CreateUser extends React.Component {
 
     return (
       <div className={style.contNewAccount}>
-
         <Link to="/login">
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
@@ -143,10 +142,7 @@ class CreateUser extends React.Component {
 
           <button
             className={
-              !errors &&
-              inputs.lastName &&
-              inputs.firstName &&
-              inputs.email
+              !errors && inputs.lastName && inputs.firstName && inputs.email
                 ? style.buttonEnable
                 : style.buttonBorderGreen
             }

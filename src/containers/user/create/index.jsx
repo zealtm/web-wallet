@@ -4,26 +4,30 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // COMPONENTS
+import Footer from "../footer";
 import CreateUser from "./createUser";
 import Password from "./password";
 import Terms from "./terms";
 import Email from "./emailMessage";
 
+// STYLE
+import style from "../style.css";
+
 class Create extends React.Component {
   renderContent = () => {
     let { create } = this.props.user.pages;
-    
-    if (create === 0) return <CreateUser />;    
+
+    if (create === 0) return <CreateUser />;
     if (create === 1) return <Password />;
     if (create === 3) return <Terms />;
     if (create === 2) return <Email />;
-
   };
 
   render() {
     return (
-      <div>
+      <div className={style.contGeneral}>
         {this.renderContent()}
+        <Footer />
       </div>
     );
   }

@@ -55,7 +55,6 @@ const user = (state = initialState, action) => {
         loading: false
       };
 
-    
     case "CHANGE_USER_PERSONAL_INFO":
       return {
         ...state,
@@ -111,7 +110,7 @@ const user = (state = initialState, action) => {
           reset: 0
         },
         loading: false
-      }
+      };
 
     case "CLEAR_USER_ERROR":
       return {

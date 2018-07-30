@@ -39,6 +39,7 @@ export const inputValidator = inputs => {
   let errors = [];
   let inputName = [];
   let messageError = undefined;
+  
   Object.keys(inputs).map(input => {
     if (!inputs[input]) {
       errors.push(input);

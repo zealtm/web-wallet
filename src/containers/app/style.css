@@ -24,27 +24,13 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 3% 8%;
+  padding: 0 8%;
 }
 
-@media only screen and (max-width: 667px) {
+@media only screen and (max-width: 958px) {
   :local(.colLeft) {
     padding: 10% 10%;
     overflow: auto;
-  }
-}
-
-@media screen and (max-width: 958px) and (min-width: 667px) {
-  :local(.colLeft) {
-    padding: 10% 30%;
-    overflow: auto;
-  }
-}
-
-@media screen and (min-width: 1600px) {
-  :local(.colLeft) {
-    padding: 10% 10%;
-    overflow: hidden;
   }
 }
 
