@@ -1,6 +1,21 @@
-import { takeLatest } from "redux-saga";
-import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+import {
+  takeLatest
+} from "redux-saga";
+import {
+  put,
+  call,
+  fork
+} from "redux-saga/effects";
+import {
+  setAuthToken,
+  getAuthToken
+} from "../../../utils/localStorage";
+import {
+  internalServerError,
+  unauthorized,
+  badRequest
+} from "../../../utils/statusCodeMessage";
+
 
 // Services
 import AuthService from "../../../services/authService";
@@ -9,6 +24,7 @@ import PinService from "../../../services/pinService";
 const authService = new AuthService();
 const userService = new UserService();
 const pinService = new PinService();
+const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
   try {
@@ -20,19 +36,17 @@ export function* authenticateUser(action) {
 
     if (response.data.code === 200) {
       yield call(setAuthToken, response.data.data.token);
+
       let userToken = yield call(getAuthToken);
-      let twoFactorResponse = yield call(
-        authService.hasTwoFactorAuth,
-        userToken
-      );
-    
+      let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
+
       let pinResponse = yield call(pinService.consult, userToken);
       let pin = pinResponse.data.code === 200 ? true : false;
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          pin: pin
+          pin
         },
         pages: {
           login: twoFactorResponse.data.code === 200 ? 1 : 2
@@ -41,25 +55,18 @@ export function* authenticateUser(action) {
     }
 
     if (response.data.code === 401) {
-      yield put({
-        type: "REQUEST_FAILED",
-        message: "Inavlid Username/Email or Password"
-      });
+      yield put(unauthorized("Inavalid Username/Email or Password"));
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
@@ -76,25 +83,18 @@ export function* hasTwoFactorAuth() {
     }
 
     if (response.data.code === 401) {
-      yield put({
-        type: "REQUEST_FAILED",
-        message: "Could not verify 2fa"
-      });
+      yield put(unauthorized("Could not verify 2fa"));
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
@@ -108,23 +108,16 @@ export function* createTwoFactorAuth() {
       });
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Could not enable two-factor authentication"
-    });
+    yield put(unauthorized("Could not enable two-factor authentication"));
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
@@ -150,18 +143,14 @@ export function* verifyTwoFactorAuth(action) {
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError);
   }
 }
 
@@ -185,18 +174,14 @@ export function* verifyUserPin(action) {
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError);
   }
 }
 
@@ -213,17 +198,16 @@ export function* createUserPin(action) {
     }
 
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
     yield put({
       type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
+      message: "Your request could not be completed. Check your connection or try again later"
     });
   }
 }
@@ -240,28 +224,20 @@ export function* createUser(action) {
     }
 
     if (response.data.code === 500) {
-      yield put({
-        type: "REQUEST_FAILED",
-        message:
-          "You are already registered"
-      });
+      yield put(badRequest("You are already registered"));
 
       yield put({
-        type: "CHANGE_LOADING_STATE"
+        type: changeLoadingState
       });
     }
-    
+
     return;
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
@@ -272,21 +248,13 @@ export function* resetUser() {
       page: 1
     });
 
-    yield put({
-      type: "REQUEST_INFO",
-      message:
-        "Este recurso ainda não está dispoível :)"
-    });
+    yield put(unauthorized("This feature is not yet availables"));
   } catch (error) {
     yield put({
-      type: "CHANGE_LOADING_STATE"
+      type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError);
   }
 }
 
@@ -298,14 +266,9 @@ export function* setUserSeed(action) {
       pages: {
         login: 3
       }
-
     });
   } catch (error) {
-    yield put({
-      type: "REQUEST_FAILED",
-      message:
-        "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
