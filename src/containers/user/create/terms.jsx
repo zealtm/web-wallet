@@ -72,7 +72,7 @@ class CreateUserTerms extends React.Component {
     } else {
       loading();
       clearMessage();
-      createUser(user.name, user.surname, user.email, user.password);
+      createUser(user.user.name, user.user.surname, user.user.email, user.user.password);
     }
   };
 
