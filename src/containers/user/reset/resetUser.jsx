@@ -65,7 +65,7 @@ class ResetUser extends React.Component {
           />
         </Link>
 
-        <img src="../../images/logo.svg" className={style.logoReset} />
+        <img src="../../images/logo.svg" className={style.logo} />
         <img
           src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}

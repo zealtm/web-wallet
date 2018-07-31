@@ -32,9 +32,13 @@ export const getCreateUserInfo = (name, surname, email) => ({
   }
 });
 
+export const backUserInfo = () => ({
+  type: "BACK_USER_PERSONAL_INFO"
+});
+
 export const getCreateUserInfoPassword = (password) => ({
   type: "CHANGE_USER_PERSONAL_INFO_PASSWORD",
-    password
+  password
 });
 
 export const createUser = (name, surname, email, password) => ({

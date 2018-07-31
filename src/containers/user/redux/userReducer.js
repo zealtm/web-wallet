@@ -68,6 +68,17 @@ const user = (state = initialState, action) => {
         loading: false
       };
 
+      case "BACK_USER_PERSONAL_INFO":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: state.pages.create - 1,
+          reset: 0
+        },
+        loading: false
+      };
+
     case "CHANGE_USER_PERSONAL_INFO_PASSWORD":
       return {
         ...state,

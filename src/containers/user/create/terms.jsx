@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, createUser } from "../redux/userAction";
+import { loading, createUser, backUserInfo } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -76,12 +76,26 @@ class CreateUserTerms extends React.Component {
     }
   };
 
+  backLink = () => {
+    let { backUserInfo } = this.props;
+    backUserInfo();
+  }
+
   render() {
     let { user } = this.props;
     let { inputs, checkDownload } = this.state;
 
+
     return (
       <div>
+
+        <Link to="#" onClick={() => this.backLink()}>
+          <img
+            src="../../images/icons/arrow/arrow-white-left@2x.png"
+            className={style.iconArrowBack}
+          />
+        </Link>
+
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.alignInfoDownloadTerms}>
@@ -91,6 +105,7 @@ class CreateUserTerms extends React.Component {
             <Link
               className={style.linkDownloadTerms}
               to="#"
+              target="_blank"
               onClick={() => this.checkDownload()}
             >
               {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
@@ -112,9 +127,6 @@ class CreateUserTerms extends React.Component {
           <div className={style.acceptTermsOfServices}>
             {i18n.t("NEW_ACCOUNT_ACCEPT_TERMS")}
           </div>
-          <Link className={style.linkTermsOfServices} to="#">
-            {i18n.t("NEW_ACCOUNT_TERMS_OF_SERVICES")}
-          </Link>
         </div>
 
         <button
@@ -137,7 +149,9 @@ CreateUserTerms.propTypes = {
   createUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  backUserInfo: PropTypes.object,
+
 };
 
 const mapSateToProps = store => ({
@@ -150,7 +164,8 @@ const mapDispatchToProps = dispatch =>
       loading,
       createUser,
       clearMessage,
-      errorInput
+      errorInput,
+      backUserInfo
     },
     dispatch
   );
