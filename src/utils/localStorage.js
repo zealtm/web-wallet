@@ -21,8 +21,6 @@ export const getUserData = () => JSON.parse(localStorage.getItem(userObj));
 
 export const setUserData = (user) => {
     let userStorage = getUserData();
-
-    console.warn("Storage ", userStorage);
-    localStorage.setItem(userObj, JSON.stringify({ userTeste: { ...userStorage, user } }));
+    localStorage.setItem(userObj, JSON.stringify({ ...userStorage, ...user }));
 }
 
