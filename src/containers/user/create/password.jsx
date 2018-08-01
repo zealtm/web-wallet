@@ -138,6 +138,7 @@ class Password extends React.Component {
 
   render() {
     let { inputs, passwordHint, errors } = this.state;
+    let { password } = this.props.user.user;
 
     return (
       <div className={style.formLogin}>
@@ -156,6 +157,7 @@ class Password extends React.Component {
         <input
           name="password"
           type="password"
+          value={password}
           required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
           className={
@@ -169,6 +171,7 @@ class Password extends React.Component {
         <input
           type="password"
           name="passwordRepeat"
+          value={password}
           required
           placeholder={i18n.t("PLACEHOLDER_PASSWORD_REPEAT")}
           className={
