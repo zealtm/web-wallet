@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, getCreateUserInfoPassword } from "../redux/userAction";
+import { loading, getCreateUserInfoPassword, backUserInfo } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -131,17 +131,24 @@ class Password extends React.Component {
     });
   };
 
+  backLink = () => {
+    let { backUserInfo } = this.props;
+    backUserInfo();    
+  }
+
   render() {
     let { inputs, passwordHint, errors } = this.state;
 
     return (
       <div className={style.formLogin}>
-        <Link to="/login">
+
+        <Link to="#" onClick={() => this.backLink()}>
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
             className={style.iconArrowBack}
           />
         </Link>
+
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.resetHeader}>
           {i18n.t("NEW_ACCOUNT_PASSWORD_HEADER")}
@@ -210,6 +217,7 @@ class Password extends React.Component {
 
 Password.propTypes = {
   getCreateUserInfoPassword: PropTypes.func,
+  backUserInfo: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object
@@ -224,6 +232,7 @@ const mapDispatchToProps = dispatch =>
     {
       loading,
       getCreateUserInfoPassword,
+      backUserInfo,
       clearMessage,
       errorInput
     },
