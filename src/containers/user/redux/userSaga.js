@@ -329,8 +329,6 @@ export default function* rootSaga() {
 }
 
 let factoryObjectUser = user => {
-  console.warn("1");
   setUserPassword(user.password, user.pin);
-  console.warn("2");
   setUserSeedWords(user.seed, user.pin);
 }
