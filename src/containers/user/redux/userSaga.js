@@ -136,10 +136,7 @@ export function* verifyTwoFactorAuth(action) {
     }
 
     if (response.data.code === 401) {
-      yield put({
-        type: "REQUEST_FAILED",
-        message: "Invalid 2FA token"
-      });
+      yield put(unauthorized("Invalid 2FA token"));
     }
 
     yield put({
@@ -150,7 +147,7 @@ export function* verifyTwoFactorAuth(action) {
       type: changeLoadingState
     });
 
-    yield put(internalServerError);
+    yield put(internalServerError());
   }
 }
 
@@ -167,10 +164,7 @@ export function* verifyUserPin(action) {
     }
 
     if (response.data.code === 401) {
-      yield put({
-        type: "REQUEST_FAILED",
-        message: "Inavlid PIN"
-      });
+      yield put(unauthorized("Inavlid PIN"));
     }
 
     yield put({
@@ -205,10 +199,7 @@ export function* createUserPin(action) {
       type: changeLoadingState
     });
 
-    yield put({
-      type: "REQUEST_FAILED",
-      message: "Your request could not be completed. Check your connection or try again later"
-    });
+    yield put(internalServerError());
   }
 }
 
@@ -254,7 +245,7 @@ export function* resetUser() {
       type: changeLoadingState
     });
 
-    yield put(internalServerError);
+    yield put(internalServerError());
   }
 }
 
