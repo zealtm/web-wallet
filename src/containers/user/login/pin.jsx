@@ -91,7 +91,7 @@ class Pin extends React.Component {
   render() {
     let { loading, user } = this.props.user;
     let { errors, PIN } = this.state;
-
+    console.warn(user);
     return (
       <div>
         <img src="../../../images/logo.svg" className={style.logo} />

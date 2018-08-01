@@ -1,7 +1,6 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken, getAuthToken, setUserData } from "../../../utils/localStorage";
-import { encryptHmacSha512 } from "../../../utils/cryptography";
+import { setAuthToken, getAuthToken, setUserPassword, setUserSeedWords } from "../../../utils/localStorage";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -18,7 +17,6 @@ export function* authenticateUser(action) {
       action.email,
       action.password
     );
-
     if (response.data.code === 200) {
       yield call(setAuthToken, response.data.data.token);
       let userToken = yield call(getAuthToken);
@@ -174,9 +172,7 @@ export function* verifyUserPin(action) {
     let response = yield call(pinService.verify, action.user.pin, userToken);
 
     if (response.data.code === 200) {
-      
-      let user = factoryObjectUser(action.user)
-      setUserData(user);
+      yield factoryObjectUser(action.user);
 
       yield put({
         type: "REQUEST_SUCCESS",
@@ -213,10 +209,8 @@ export function* createUserPin(action) {
     let response = yield call(pinService.create, action.user.pin, userToken);
 
     if (response.data.code === 201) {
-      
-      let user = factoryObjectUser(action.user)
-      setUserData(user);
-      
+      yield factoryObjectUser(action.user)
+
       yield put({
         type: "REQUEST_SUCCESS",
         message: "Pin has been created. You are logged :)"
@@ -335,11 +329,8 @@ export default function* rootSaga() {
 }
 
 let factoryObjectUser = user => {
-  
-    let newUser = {
-    password: encryptHmacSha512(user.password, user.pin),
-    email: encryptHmacSha512(user.seed, user.pin)
-  }
-  
-  return newUser;
+  console.warn("1");
+  setUserPassword(user.password, user.pin);
+  console.warn("2");
+  setUserSeedWords(user.seed, user.pin);
 }

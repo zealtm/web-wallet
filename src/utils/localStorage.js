@@ -1,5 +1,5 @@
+import { encryptHmacSha512 } from "./cryptography";
 const authToken = "auth.token";
-const userSeed = "user.seed";
 const userObj = "user.object";
 
 
@@ -7,9 +7,9 @@ export const setAuthToken = (token) => localStorage.setItem(authToken, JSON.stri
 
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
-export const setUserSeed = (seed) => localStorage.setItem(userSeed, JSON.stringify(seed));
+export const setUserSeedWords = (seed, pin) => setUserData({ secretWord: encryptHmacSha512(seed, pin) });
 
-export const getUserSeed = () => JSON.parse(localStorage.getItem(userSeed));
+export const setUserPassword = (password, pin) => setUserData({ secretKey: encryptHmacSha512(password, pin) });
 
 export const clearAuthToken = () => localStorage.removeItem(authToken);
 
@@ -17,6 +17,12 @@ export const clear = (value) => localStorage.removeItem(value);
 
 export const clearAll = () => localStorage.clear();
 
-export const getUserData = () =>  JSON.parse(localStorage.getItem(authToken));
+export const getUserData = () => JSON.parse(localStorage.getItem(userObj));
 
-export const setUserData = (user) => localStorage.setItem(userObj, JSON.stringify(user));
+export const setUserData = (user) => {
+    let userStorage = getUserData();
+
+    console.warn("Storage ", userStorage);
+    localStorage.setItem(userObj, JSON.stringify({ userTeste: { ...userStorage, user } }));
+}
+
