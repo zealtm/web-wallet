@@ -1,6 +1,6 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+import { setAuthToken, getAuthToken, setUserPassword, setUserSeedWords } from "../../../utils/localStorage";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -17,7 +17,6 @@ export function* authenticateUser(action) {
       action.email,
       action.password
     );
-
     if (response.data.code === 200) {
       yield call(setAuthToken, response.data.data.token);
       let userToken = yield call(getAuthToken);
@@ -25,17 +24,19 @@ export function* authenticateUser(action) {
         authService.hasTwoFactorAuth,
         userToken
       );
-    
+
       let pinResponse = yield call(pinService.consult, userToken);
       let pin = pinResponse.data.code === 200 ? true : false;
+      let login = twoFactorResponse.data.code === 200 ? 1 : 2
 
       return yield put({
         type: "POST_USER_AUTHENTICATE",
         user: {
-          pin: pin
+          pin,
+          password: action.password
         },
         pages: {
-          login: twoFactorResponse.data.code === 200 ? 1 : 2
+          login
         }
       });
     }
@@ -168,9 +169,11 @@ export function* verifyTwoFactorAuth(action) {
 export function* verifyUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.verify, action.pin, userToken);
+    let response = yield call(pinService.verify, action.user.pin, userToken);
 
     if (response.data.code === 200) {
+      yield factoryObjectUser(action.user);
+
       yield put({
         type: "REQUEST_SUCCESS",
         message: "You are logged :)"
@@ -203,9 +206,11 @@ export function* verifyUserPin(action) {
 export function* createUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.create, action.pin, userToken);
+    let response = yield call(pinService.create, action.user.pin, userToken);
 
     if (response.data.code === 201) {
+      yield factoryObjectUser(action.user)
+
       yield put({
         type: "REQUEST_SUCCESS",
         message: "Pin has been created. You are logged :)"
@@ -250,7 +255,7 @@ export function* createUser(action) {
         type: "CHANGE_LOADING_STATE"
       });
     }
-    
+
     return;
   } catch (error) {
     yield put({
@@ -321,4 +326,9 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
   ];
+}
+
+let factoryObjectUser = user => {
+  setUserPassword(user.password, user.pin);
+  setUserSeedWords(user.seed, user.pin);
 }

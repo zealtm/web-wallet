@@ -84,14 +84,13 @@ class Pin extends React.Component {
     } else {
       loading();
       clearMessage();
-      user.user.pin ? verifyUserPin(pin) : createUserPin(pin);
+      user.user.pin ? verifyUserPin(pin, user.user.seed, user.user.password) : createUserPin(pin, user.user.seed, user.user.password);
     }
   };
 
   render() {
     let { loading, user } = this.props.user;
     let { errors, PIN } = this.state;
-
     return (
       <div>
         <img src="../../../images/logo.svg" className={style.logo} />
