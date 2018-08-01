@@ -33,7 +33,12 @@ export function* authenticateUser(action) {
       action.email,
       action.password
     );
+    console.warn("1 ", response);
 
+    if (response.error) {
+      console.warn("teste");
+    }
+    console.warn("2");
     if (response.data.code === 200) {
       yield call(setAuthToken, response.data.data.token);
 
@@ -53,11 +58,7 @@ export function* authenticateUser(action) {
         }
       });
     }
-
-    if (response.data.code === 401) {
-      yield put(unauthorized("Inavalid Username/Email or Password"));
-    }
-
+    
     yield put({
       type: changeLoadingState
     });
