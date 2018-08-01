@@ -95,6 +95,7 @@
   width: 160px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 100%;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -202,6 +203,7 @@
 
 :local(.iconEmail) {
   display: block;
+  max-width: 100%;
   width: 55px;
   height: 58px;
   margin-left: auto;
@@ -328,8 +330,28 @@
   composes: iconEmail;
   width: 92px;
   height: 95px;
-  margin-top: 20vh;
+  margin-top: 18vh;
   margin-bottom: 2vh;
+}
+
+:local(.arrowToLoginAlign) {
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  display: flex; 
+  text-align: center;
+}
+
+:local(.arrowCircle) {
+  border-radius: 100%;
+  height: 50px;
+  min-width: 50px;
+  background-color: white;
+}
+
+:local(.arrowCircle img) {
+  margin-top: 19px;
 }
 
 /* 6.3 INPUT - CHECKBOX */

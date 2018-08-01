@@ -28,11 +28,16 @@ class EmailMessage extends React.Component {
             {i18n.t("NEW_ACCOUNT_MESSAGE_SENDED")}
           </div>
 
-            <div className={style.iconArrowBack}>
-              <Link to="/login">
-                <img src="../../../../images/icons/arrow/arrow-green-right@1x.png" />
-              </Link>
+          <div className={style.arrowToLoginAlign}>
+              <div className={style.arrowCircle}>
+
+                <Link to="/login">
+                  <img src="../../../../images/icons/arrow/arrow-green-right@1x.png"/>
+                </Link>
+
+            </div>
           </div>
+
         </div>
       </div>
     );
