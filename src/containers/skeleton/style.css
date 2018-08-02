@@ -26,10 +26,11 @@
     transition: .5s;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1279px) {
     :local .colMenu {
         position: absolute;
         width: 200px;
+        padding-top:0;
     }
 }
 
@@ -53,8 +54,22 @@
     display:block;
     margin-right:16px;
 }
+
+:local .link {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    display: block;
+    padding-top: 5px;
+    color: #ffffff;
+    font-size:11px;
+}
+
 :local .iconMenu {
     width: 17px;
+}
+
+:local .boxUserMenu {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 :local .boxLogo {
@@ -83,4 +98,7 @@
     display:block;
     margin:15px;
     opacity: .3;
+}
+:local .iconNotificationActive {
+    opacity: 1;
 }

@@ -8,6 +8,8 @@ import Header from "./header";
 
 // MATERIAL UI 
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+import Avatar from '@material-ui/core/Avatar';
 
 // STYLE
 import style from "./style.css";
@@ -58,13 +60,22 @@ class Skeleton extends React.Component {
             <div>
                 <Header actionMenu={this.toggleMenu} />
                 <Grid container>
-                    {/* <Hidden mdDown> */}
-                        <Grid item md={2}>
-                            <div className={style.colMenu} style={{left: + (openMenu) ? ' 0px ' : '-232px'}}>
-                                {this.renderMenu()}
-                            </div>
-                        </Grid>
-                    {/* </Hidden> */}
+                    <Grid item md={2}>
+                        <div className={style.colMenu} style={{left: + (openMenu) ? ' 0px ' : '-232px'}}>
+                            <Hidden lgUp>
+                                <Grid container className={style.boxUserMenu}>
+                                    <Grid item xs={4} align="center">
+                                        <Avatar alt="Avatar" src="https://loremflickr.com/80/80" />
+                                    </Grid>
+                                    <Grid item xs={8}>
+                                        Nome Usuario<br />
+                                        <Link to="/logout" className={style.link}>Logout</Link>
+                                    </Grid>
+                                </Grid>
+                            </Hidden>
+                            {this.renderMenu()}
+                        </div>
+                    </Grid>
                     <Grid item xs={12} lg={10}>
                         <div className={style.colContainer}>
                             {children}
@@ -77,7 +88,7 @@ class Skeleton extends React.Component {
 }
 
 Skeleton.propTypes = {
-    children: PropTypes.any
+    children: PropTypes.Component
 };
 
 export default Skeleton;

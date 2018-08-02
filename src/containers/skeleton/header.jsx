@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 //MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
@@ -8,13 +9,48 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Notifications from '@material-ui/icons/Notifications';
 import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 
 //STYLE 
 import style from "./style.css";
 
 class Header extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            balance: '1,300.00',
+            avatar: 'https://loremflickr.com/80/80',
+            notifications: 0,
+        };
+    }
+
+    renderNotifications = () => {
+        const { notifications } = this.state;
+        
+        if (notifications > 0){
+            return (
+                <div className={style.iconNotificationActive}>
+                    <IconButton color="inherit" aria-label="Notifications">
+                        <Badge badgeContent={notifications} color="secondary">
+                            <Notifications />
+                        </Badge>
+                    </IconButton>
+                </div>
+            );
+        }else{
+            return (
+                <div className={style.iconNotification}>
+                    <IconButton color="inherit" aria-label="Notifications">
+                        <Notifications />
+                    </IconButton>
+                </div>
+            );
+        }
+    }
+
     render() {
         const { actionMenu } = this.props;
+        const { balance, avatar } = this.state;
         return (
             <AppBar position="static">
                 <Toolbar className={style.header}>
@@ -30,15 +66,13 @@ class Header extends React.Component {
                         <Hidden xsDown>
                             <span className={style.textGreen}>Balance:</span>
                         </Hidden>
-                        <span className={style.textBalance}> {" "}1,300.00 LUNES</span>
+                        <span className={style.textBalance}> {" "}{balance} LUNES</span>
                     </div>
-                    <div className={style.iconNotification}>
-                        <IconButton color="inherit" aria-label="Notifications">
-                            <Notifications />
-                        </IconButton>
-                    </div>
+                    
+                    {this.renderNotifications()}
+
                     <Hidden mdDown>
-                        <Avatar alt="Avatar" src="https://loremflickr.com/80/80" />
+                        <Avatar alt="Avatar" src={avatar} />
                     </Hidden>
                 </Toolbar>
             </AppBar>
@@ -46,6 +80,9 @@ class Header extends React.Component {
     }
 }
 
-/// adicionar PropTypes
+
+Header.propTypes = {
+    actionMenu: PropTypes.func.isRequired
+};
 
 export default Header;
