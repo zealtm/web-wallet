@@ -37,6 +37,9 @@
   8.1 INPUT
   8.2 TEXTS
 
+9. LOADING
+  9.1 LOGO
+  9.2 ITEMS
 */
 
 /* ------------------------------------------------------------------------- */
@@ -460,20 +463,28 @@
 
 /* ------------------------------------------------------------------------- */
 
+/* 9. LOADING */
+
+/* 9.1 LOGO */
 :local(.logoLoading) {
   composes: logo;
-  width: 40%;
-  margin-bottom: 6%;
+  min-width: 40%;
+  margin-bottom: 5%;
 }
 
+/* 9.2 ITEMS */
 :local(body) {
   background-color: #3b1878;
 }
 
-:local(.screenLoadingContainer) {  
-  width: 50%;
-  height: 100vh;
-  align-content: center;
+:local(.itemsLoadingContainer) {  
+  min-width: 30%;
   text-align: center;
+}
+
+:local(.alignLoadingContainer) {
+  display: flex;
+  height: 100vh;
+  align-items: center;
   justify-content: center;
 }
