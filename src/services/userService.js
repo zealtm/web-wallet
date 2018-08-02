@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
-import { badRequest, internalServerError } from "../utils/statusCodeMessage";
+import { badRequest, internalServerError } from "../containers/errors/statusCodeMessage";
 class UserService {
   async createUser(userInfo) {
     try {

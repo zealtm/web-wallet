@@ -10,7 +10,7 @@ import {
   setAuthToken,
   getAuthToken
 } from "../../../utils/localStorage";
-import { internalServerError } from "../../../utils/statusCodeMessage";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 
 // Services
