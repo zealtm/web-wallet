@@ -28,41 +28,30 @@ const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
   try {
-    let response = yield call(
-      authService.authenticate,
-      action.email,
-      action.password
-    );
-    console.warn("1 ", response);
+    let response = yield call(authService.authenticate, action.email, action.password);
 
     if (response.error) {
-      console.warn("teste");
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
     }
-    console.warn("2");
-    if (response.data.code === 200) {
-      yield call(setAuthToken, response.data.data.token);
 
-      let userToken = yield call(getAuthToken);
-      let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
+    yield call(setAuthToken, response.data.data.token);
 
-      let pinResponse = yield call(pinService.consult, userToken);
-      let pin = pinResponse.data.code === 200 ? true : false;
+    let userToken = yield call(getAuthToken);
+    let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
+    let pinResponse = yield call(pinService.consult, userToken);
+    let pin = pinResponse.data.code === 200 ? true : false;
 
-      return yield put({
-        type: "POST_USER_AUTHENTICATE",
-        user: {
-          pin
-        },
-        pages: {
-          login: twoFactorResponse.data.code === 200 ? 1 : 2
-        }
-      });
-    }
-    
     yield put({
-      type: changeLoadingState
+      type: "POST_USER_AUTHENTICATE",
+      user: { pin },
+      pages: { login: twoFactorResponse.data.code === 200 ? 1 : 2 }
     });
-  } catch (error) {
+
+    return;
+  }
+  catch (error) {
     yield put({
       type: changeLoadingState
     });
@@ -76,25 +65,18 @@ export function* hasTwoFactorAuth() {
     let userToken = yield call(getAuthToken);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
 
-    if (response.data.code === 200) {
-      return yield put({
-        type: "GET_USER_2FA",
-        response
-      });
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
     }
 
-    if (response.data.code === 401) {
-      yield put(unauthorized("Could not verify 2fa"));
-    }
-
-    yield put({
-      type: changeLoadingState
-    });
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    yield put({ type: "GET_USER_2FA", response });
+    yield put({ type: changeLoadingState });
+    return;
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
@@ -102,22 +84,13 @@ export function* hasTwoFactorAuth() {
 export function* createTwoFactorAuth() {
   try {
     const response = yield call(authService.createTwoFactorAuth);
-    if (response.status === 201)
-      return yield put({
-        type: "POST_USER_CREATE_2FA",
-        response
-      });
 
-    yield put({
-      type: changeLoadingState
-    });
-
-    yield put(unauthorized("Could not enable two-factor authentication"));
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    yield put({ type: "POST_USER_CREATE_2FA", response });
+    yield put({ type: changeLoadingState });
+    return;
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
@@ -126,28 +99,17 @@ export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
 
-    if (response.data.code === 200) {
-      return yield put({
-        type: "POST_USER_VERIFY_2FA",
-        response,
-        pages: {
-          login: 2
-        }
-      });
-    }
-
-    if (response.data.code === 401) {
-      yield put(unauthorized("Invalid 2FA token"));
-    }
-
     yield put({
-      type: changeLoadingState
+      type: "POST_USER_VERIFY_2FA",
+      response,
+      pages: { login: 2 }
     });
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
+    yield put({ type: changeLoadingState });
 
+    return;
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
@@ -157,26 +119,18 @@ export function* verifyUserPin(action) {
     let userToken = yield call(getAuthToken);
     let response = yield call(pinService.verify, action.pin, userToken);
 
-    if (response.data.code === 200) {
-      yield put({
-        type: "REQUEST_SUCCESS",
-        message: "You are logged :)"
-      });
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
     }
 
-    if (response.data.code === 401) {
-      yield put(unauthorized("Inavlid PIN"));
-    }
-
-    yield put({
-      type: changeLoadingState
-    });
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
-    yield put(internalServerError);
+    yield put({ type: "REQUEST_SUCCESS", message: "You are logged" });
+    yield put({ type: changeLoadingState });
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
+    yield put(internalServerError());
   }
 }
 
@@ -185,21 +139,18 @@ export function* createUserPin(action) {
     let userToken = yield call(getAuthToken);
     let response = yield call(pinService.create, action.pin, userToken);
 
-    if (response.data.code === 201) {
-      yield put({
-        type: "REQUEST_SUCCESS",
-        message: "Pin has been created. You are logged :)"
-      });
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
     }
 
-    yield put({
-      type: changeLoadingState
-    });
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    let message = "Pin has been created. You are logged";
+    yield put({ type: "REQUEST_SUCCESS", message });
+    yield put({ type: changeLoadingState });
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
@@ -208,27 +159,16 @@ export function* createUser(action) {
   try {
     let response = yield call(userService.createUser, action.user);
 
-    if (response.data.code === 201) {
-      return yield put({
-        type: "POST_USER_CREATE_USER",
-        page: 3
-      });
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
     }
 
-    if (response.data.code === 500) {
-      yield put(badRequest("You are already registered"));
-
-      yield put({
-        type: changeLoadingState
-      });
-    }
-
-    return;
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    return yield put({ type: "POST_USER_CREATE_USER", page: 3 });
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
