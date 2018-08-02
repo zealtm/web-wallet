@@ -13,7 +13,6 @@ import {
 import {
   internalServerError,
   unauthorized,
-  badRequest
 } from "../../../utils/statusCodeMessage";
 
 
