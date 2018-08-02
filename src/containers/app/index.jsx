@@ -10,7 +10,7 @@ import App from "./app";
 import style from "./style.css";
 
 // Access Token verification
-const fakeInfo = true;
+const fakeInfo = false;
 
 let Content = () => {
   if (fakeInfo === false) {

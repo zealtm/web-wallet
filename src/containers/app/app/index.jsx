@@ -5,9 +5,7 @@ import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
-
-// STYLE
-import style from "../style.css";
+import Skeleton from "../../skeleton";
 
 function Loading({ error }) {
   if (error) {
@@ -48,24 +46,19 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Link className={style.link} to="/">
-            Home
-          </Link>
-          <Link className={style.link} to="/wallet">
-            Wallet
-          </Link>
+          <Skeleton>
+            <Switch>
+              {/* INSIDE ROUTES */}
+              <Route exact path="/" component={home} />
+              <Route exact path="/home" component={home} />
+              <Route exact path="/wallet" component={wallet} />
 
-          <Switch>
-            {/* INSIDE ROUTES */}
-            <Route exact path="/" component={home} />
-            <Route exact path="/home" component={home} />
-            <Route exact path="/wallet" component={wallet} />
-
-            {/* ERRORS PAGE */}
-            <Route path="/404" component={errorNotFound} />
-            <Route path="/500" component={errorInternal} />
-            <Route path={"**"} component={errorNotFound} />
-          </Switch>
+              {/* ERRORS PAGE */}
+              <Route path="/404" component={errorNotFound} />
+              <Route path="/500" component={errorInternal} />
+              <Route path={"**"} component={errorNotFound} />
+            </Switch>
+          </Skeleton>
         </div>
       </Router>
     );

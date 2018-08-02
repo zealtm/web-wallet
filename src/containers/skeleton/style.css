@@ -1,0 +1,76 @@
+/*
+
+1. BASE
+  1.1 BOX
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASE */
+
+/* 1.1 BOX */
+:local(.colContainer) {
+    composes: bgPurpleDark from "../../components/bases/colorBase.css";
+    height: 100vh;
+    overflow: auto;
+    padding: 16px;
+}
+
+:local(.colMenu) {
+    composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+    height: 100vh;
+    overflow: auto;
+    padding: 16px;
+}
+
+:local(.header) {
+    composes: bgPurpleDark from "../../components/bases/colorBase.css";
+    height: 80px;
+    box-shadow: 0px 5px 10px 5px rgba(0,0,0,.1);
+    margin:none;
+    padding-right: 0px;
+}
+
+:local(.link) {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    display: block;
+    padding: 16px; 
+    color: #ffffff;
+}
+:local(.link img){
+    float:left;
+    display:block;
+    margin-right:16px;
+}
+  
+:local(.logo) {
+    display: block;
+    width: 120px;
+}
+
+:local .boxBalance {
+    float: right;
+    text-align: right;
+    font-size: 18px;
+    margin-top:18px;
+}
+:local .textBalance {
+    composes: offside from "../../components/bases/textBase.css";
+    font-size: 22px;
+}
+:local .textGreen {
+    composes: clGreenDefault from "../../components/bases/colorBase.css";
+}
+:local .balanceFiat {
+    composes: clGreenDefault from "../../components/bases/colorBase.css";
+    font-size:11px;
+    display:block;
+}
+
+:local .iconNotification {
+    float:right;
+    display:block;
+    margin:15px;
+    opacity: .3;
+}
