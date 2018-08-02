@@ -10,10 +10,7 @@ import {
   setAuthToken,
   getAuthToken
 } from "../../../utils/localStorage";
-import {
-  internalServerError,
-  unauthorized,
-} from "../../../utils/statusCodeMessage";
+import { internalServerError } from "../../../utils/statusCodeMessage";
 
 
 // Services
@@ -161,6 +158,7 @@ export function* createUser(action) {
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
+
       return;
     }
 
@@ -174,17 +172,10 @@ export function* createUser(action) {
 
 export function* resetUser() {
   try {
-    yield put({
-      type: "POST_USER_RESET_USER",
-      page: 1
-    });
-
-    yield put(unauthorized("This feature is not yet availables"));
-  } catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    yield put({ type: "POST_USER_RESET_USER", page: 1 });
+  }
+  catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
