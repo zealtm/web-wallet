@@ -1,10 +1,8 @@
 const type = "REQUEST_FAILED";
 
 export const internalServerError = () => ({
-    error: {
-        type,
-        message: "Your request could not be completed. Check your connection or try again later"
-    }
+    type,
+    message: "Your request could not be completed. Check your connection or try again later"
 })
 
 export const unauthorized = (message) => ({

@@ -27,6 +27,7 @@ export function* authenticateUser(action) {
     let response = yield call(authService.authenticate, action.email, action.password);
 
     if (response.error) {
+
       yield put(response.error);
       yield put({ type: changeLoadingState });
       return;
@@ -48,10 +49,8 @@ export function* authenticateUser(action) {
     return;
   }
   catch (error) {
-    yield put({
-      type: changeLoadingState
-    });
-
+    console.warn(error)
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
