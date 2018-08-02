@@ -459,3 +459,21 @@
 }
 
 /* ------------------------------------------------------------------------- */
+
+:local(.logoLoading) {
+  composes: logo;
+  width: 40%;
+  margin-bottom: 6%;
+}
+
+:local(body) {
+  background-color: #3b1878;
+}
+
+:local(.screenLoadingContainer) {  
+  width: 50%;
+  height: 100vh;
+  align-content: center;
+  text-align: center;
+  justify-content: center;
+}

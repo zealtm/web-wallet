@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
-
-// STYLE
-import style from "../style.css";
 
 function Loading({ error }) {
   if (error) {
@@ -30,6 +27,12 @@ let wallet = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
+let loading = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/loading/loadingBar")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/loading/loadingBar")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
   loading: Loading,
@@ -47,26 +50,10 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Link className={style.link} to="/">
-            Home
-          </Link>
-          <Link className={style.link} to="/wallet">
-            Wallet
-          </Link>
-
           <Switch>
-            {/* INSIDE ROUTES */}
-            <Route exact path="/" component={home} />
-            <Route exact path="/home" component={home} />
             <Route exact path="/wallet" component={wallet} />
-
-            {/* ERRORS PAGE */}
-            <Route path="/404" component={errorNotFound} />
-            <Route path="/500" component={errorInternal} />
-            <Route path={"**"} component={errorNotFound} />
+            <Route exact path="/loading" component={loading} />
           </Switch>
-        </div>
       </Router>
     );
   }
