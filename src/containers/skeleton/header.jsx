@@ -18,36 +18,28 @@ class Header extends React.Component {
         return (
             <AppBar position="static">
                 <Toolbar className={style.header}>
-                    <Hidden mdUp>
-                        <Grid xs={2} sm={1}>
-                            <IconButton color="inherit" aria-label="Menu">
-                                <MenuIcon />
-                            </IconButton>
-                        </Grid>
+                    <Hidden lgUp>
+                        <IconButton color="inherit" aria-label="Menu">
+                            <MenuIcon />
+                        </IconButton>
                     </Hidden>
-                    <Grid xs={2} sm={3}>
+                    <div className={style.boxLogo}>
                         <img src="../../images/logo.svg" className={style.logo} />
-                    </Grid>
-                    <Grid xs={8} sm={9}>
-                        <div className={style.iconNotification}>
-                            <IconButton color="inherit" aria-label="Notifications">
-                                <Notifications />
-                            </IconButton>
-                        </div>  
-                        <div className={style.boxBalance}>
-                            <Hidden smDown>Balance: </Hidden>
-                            <span className={style.textBalance}> {" "}
-                                <span className={style.textGreen}>LUNES</span> 1,300.00
-                            </span>
-                            <span className={style.balanceFiat}>$ 130.00</span>
-                        </div>
-                    </Grid>
-                    <Hidden smDown>
-                        <Grid sm={1}>
-                            <Avatar alt="Avatar" src="https://loremflickr.com/80/80" />
-                        </Grid>
+                    </div>
+                    <div className={style.boxBalance}>
+                        <Hidden xsDown>
+                            <span className={style.textGreen}>Balance:</span>
+                        </Hidden>
+                        <span className={style.textBalance}> {" "}1,300.00 LUNES</span>
+                    </div>
+                    <div className={style.iconNotification}>
+                        <IconButton color="inherit" aria-label="Notifications">
+                            <Notifications />
+                        </IconButton>
+                    </div>
+                    <Hidden mdDown>
+                        <Avatar alt="Avatar" src="https://loremflickr.com/80/80" />
                     </Hidden>
-                        
                 </Toolbar>
             </AppBar>
         )

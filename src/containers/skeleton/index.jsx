@@ -38,7 +38,7 @@ class Skeleton extends React.Component {
         return menuItens.map((item,key) => {
             return (
                 <Link className={style.link} to={item.link} key={key}>
-                    <img src={item.icon} />{item.label}
+                    <img src={item.icon} className={style.iconMenu} />{item.label}
                 </Link>
             )
         });
@@ -50,14 +50,14 @@ class Skeleton extends React.Component {
             <div>
             <Header />
             <Grid container>
-                <Hidden smDown>
-                    <Grid xs={12} sm={12} md={2}>
+                <Hidden mdDown>
+                    <Grid md={2}>
                         <div className={style.colMenu}>
                             {this.renderMenu()}
                         </div>
                     </Grid>
                 </Hidden>
-                <Grid xs={12} sm={12} md={10}>
+                <Grid xs={12} lg={10}>
                     <div className={style.colContainer}>
                         {children}
                     </div>
