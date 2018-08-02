@@ -1,15 +1,6 @@
-import {
-  takeLatest
-} from "redux-saga";
-import {
-  put,
-  call,
-  fork
-} from "redux-saga/effects";
-import {
-  setAuthToken,
-  getAuthToken
-} from "../../../utils/localStorage";
+import { takeLatest } from "redux-saga";
+import { put, call, fork } from "redux-saga/effects";
+import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 
@@ -49,7 +40,6 @@ export function* authenticateUser(action) {
     return;
   }
   catch (error) {
-    console.warn(error)
     yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
@@ -94,13 +84,18 @@ export function* verifyTwoFactorAuth(action) {
   try {
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
 
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: changeLoadingState });
+      return;
+    }
+
     yield put({
       type: "POST_USER_VERIFY_2FA",
       response,
       pages: { login: 2 }
     });
-    yield put({ type: changeLoadingState });
-
+    
     return;
   }
   catch (error) {
