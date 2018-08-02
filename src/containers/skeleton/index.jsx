@@ -8,7 +8,6 @@ import Header from "./header";
 
 // MATERIAL UI 
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
 
 // STYLE
 import style from "./style.css";
@@ -33,36 +32,45 @@ const menuItens = [
 ];
 
 class Skeleton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {openMenu: false};
+    }
 
     renderMenu = () => {
         return menuItens.map((item,key) => {
             return (
-                <Link className={style.link} to={item.link} key={key}>
+                <Link className={style.linkMenu} to={item.link} key={key}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
                 </Link>
             )
         });
     }
 
+    toggleMenu = () => {
+        this.setState({...this.state, openMenu:!this.state.openMenu});
+    }
+
     render() {
         const { children } = this.props;
+        const { openMenu } = this.state;
         return (
             <div>
-            <Header />
-            <Grid container>
-                <Hidden mdDown>
-                    <Grid md={2}>
-                        <div className={style.colMenu}>
-                            {this.renderMenu()}
+                <Header actionMenu={this.toggleMenu} />
+                <Grid container>
+                    {/* <Hidden mdDown> */}
+                        <Grid item md={2}>
+                            <div className={style.colMenu} style={{left: + (openMenu) ? ' 0px ' : '-232px'}}>
+                                {this.renderMenu()}
+                            </div>
+                        </Grid>
+                    {/* </Hidden> */}
+                    <Grid item xs={12} lg={10}>
+                        <div className={style.colContainer}>
+                            {children}
                         </div>
                     </Grid>
-                </Hidden>
-                <Grid xs={12} lg={10}>
-                    <div className={style.colContainer}>
-                        {children}
-                    </div>
                 </Grid>
-            </Grid>
             </div>
         );
     }

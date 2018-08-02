@@ -1,7 +1,6 @@
 import React from "react";
 
-//MATERIAL UI 
-import Grid from "@material-ui/core/Grid";
+//MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,11 +14,12 @@ import style from "./style.css";
 
 class Header extends React.Component {
     render() {
+        const { actionMenu } = this.props;
         return (
             <AppBar position="static">
                 <Toolbar className={style.header}>
                     <Hidden lgUp>
-                        <IconButton color="inherit" aria-label="Menu">
+                        <IconButton color="inherit" aria-label="Menu" onClick={actionMenu}>
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -45,5 +45,7 @@ class Header extends React.Component {
         )
     }
 }
+
+/// adicionar PropTypes
 
 export default Header;
