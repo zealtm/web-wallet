@@ -1,6 +1,6 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
-import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+import { setAuthToken, getAuthToken, setUserPassword, setUserSeedWords } from "../../../utils/localStorage";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 
@@ -108,7 +108,8 @@ export function* verifyUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
     let response = yield call(pinService.verify, action.user.pin, userToken);
-
+    yield factoryObjectUser(action.user)
+    
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
@@ -128,6 +129,7 @@ export function* createUserPin(action) {
   try {
     let userToken = yield call(getAuthToken);
     let response = yield call(pinService.create, action.user.pin, userToken);
+    yield factoryObjectUser(action.user)
 
     if (response.error) {
       yield put(response.error);
@@ -200,4 +202,9 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
   ];
+}
+
+let factoryObjectUser = user => {
+  setUserPassword(user.password, user.pin);
+  setUserSeedWords(user.seed, user.pin);
 }
