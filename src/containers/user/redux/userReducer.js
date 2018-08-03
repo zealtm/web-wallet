@@ -23,7 +23,7 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           pin: action.user.pin,
-          seed: action.seed,
+          seed: action.user.seed,
           password: action.user.password
         },
         pages: {

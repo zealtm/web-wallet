@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -51,7 +52,7 @@ class Seed extends React.Component {
       required: true
     };
 
-    let { loading, errorInput, setUserSeed } = this.props;
+    let { loading, errorInput, setUserSeed, user } = this.props;
     let { errors, messageError } = inputValidator({ inputs: inputSeed });
 
     if (errors.length > 0) {
@@ -63,7 +64,7 @@ class Seed extends React.Component {
     } else {
       loading();
       clearMessage();
-      setUserSeed(inputSeed.value);
+      setUserSeed(inputSeed.value, user.user.password);
     }
   };
 

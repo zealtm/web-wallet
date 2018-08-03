@@ -59,11 +59,10 @@ export const createUser = (name, surname, email, password) => ({
   }
 });
 
-export const setUserSeed = (seed) => ({
+export const setUserSeed = (seed, password) => ({
   type: "SET_USER_SEED_API",
-  payload: {
-    seed
-  }
+    seed,
+    password
 });
 
 export const resetUser = () => ({
