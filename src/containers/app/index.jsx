@@ -5,18 +5,21 @@ import Store from "./store";
 // COMPONENTS
 import Login from "./login";
 import App from "./app";
+import LoadingPage from "../skeleton/loading"
 
 // STYLE
 import style from "./style.css";
 
 // Access Token verification
-const fakeInfo = false;
+const fakeInfo = 3;
 
 let Content = () => {
-  if (fakeInfo === false) {
+  if (fakeInfo === 1) {
     return <App />;
-  } else {
+  } else if (fakeInfo === 2) {
     return <Login />;
+  } else if (fakeInfo === 3){
+    return <LoadingPage />
   }
 }
 

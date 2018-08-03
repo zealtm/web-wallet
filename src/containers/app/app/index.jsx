@@ -8,6 +8,7 @@ import fakeDelay from "../../../components/fakeDelay";
 
 function Loading({ error }) {
   if (error) {
+    console.warn(error)
     return "Error!";
   } else {
     return <h3>Loading...</h3>;
@@ -25,12 +26,6 @@ let wallet = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../wallet")),
   loading: Loading,
   serverSideRequirePath: path.resolve(__dirname, "../../wallet")
-});
-
-let loading = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../user/loading/loadingBar")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../user/loading/loadingBar")
 });
 
 let errorNotFound = Loadable({
@@ -52,7 +47,6 @@ class App extends Component {
       <Router>
           <Switch>
             <Route exact path="/wallet" component={wallet} />
-            <Route exact path="/loading" component={loading} />
           </Switch>
       </Router>
     );
