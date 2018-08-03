@@ -1,6 +1,7 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import { setAuthToken, getAuthToken } from "../../../utils/localStorage";
+import { HEADER_RESPONSE } from "../../../constants/headers";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 
@@ -25,11 +26,12 @@ export function* authenticateUser(action) {
     }
 
     yield call(setAuthToken, response.data.data.token);
-
     let userToken = yield call(getAuthToken);
     let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
     let pinResponse = yield call(pinService.consult, userToken);
     let pin = pinResponse.data.code === 200 ? true : false;
+    console.warn(pinResponse.headers);
+    yield call(twoFactorResponse, pinResponse.headers[HEADER_RESPONSE]);
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
