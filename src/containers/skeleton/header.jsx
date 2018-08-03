@@ -18,9 +18,8 @@ class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            balance: '1,300.00',
             avatar: 'https://loremflickr.com/80/80',
-            notifications: 0,
+            notifications: 1,
         };
     }
 
@@ -32,7 +31,7 @@ class Header extends React.Component {
                 <div className={style.iconNotificationActive}>
                     <IconButton color="inherit" aria-label="Notifications">
                         <Badge badgeContent={notifications} color="secondary">
-                            <Notifications />
+                            <Notifications className={style.animeNotification}/>
                         </Badge>
                     </IconButton>
                 </div>
@@ -50,7 +49,7 @@ class Header extends React.Component {
 
     render() {
         const { actionMenu } = this.props;
-        const { balance, avatar } = this.state;
+        const { avatar } = this.state;
         return (
             <AppBar position="static">
                 <Toolbar className={style.header}>
@@ -64,15 +63,18 @@ class Header extends React.Component {
                     </div>
                     <div className={style.boxBalance}>
                         <Hidden xsDown>
-                            <span className={style.textGreen}>Balance:</span>
+                            <span className={style.textGreen}>Balance </span>
                         </Hidden>
-                        <span className={style.textBalance}> {" "}{balance} LUNES</span>
+                        <span className={style.textBalance}> 8,004 mil LUNES</span>
+                        <span className={style.textBalanceFiat}>$ 300.01</span>
                     </div>
                     
-                    {this.renderNotifications()}
-
+                    <Hidden xsDown>
+                        {this.renderNotifications()}
+                    </Hidden>
+                    
                     <Hidden mdDown>
-                        <Avatar alt="Avatar" src={avatar} />
+                        <Avatar alt="Avatar" src={avatar} className={style.avatarHeader} />
                     </Hidden>
                 </Toolbar>
             </AppBar>

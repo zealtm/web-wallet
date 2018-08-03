@@ -1,7 +1,11 @@
 /*
 
 1. BASE
-  1.1 BOX
+
+2. TEXT
+
+3. IMAGES/UI 
+
 
 */
 
@@ -9,7 +13,6 @@
 
 /* 1. BASE */
 
-/* 1.1 BOX */
 :local(.colContainer) {
     composes: bgPurpleDark from "../../components/bases/colorBase.css";
     height: 100vh;
@@ -26,45 +29,9 @@
     transition: .5s;
 }
 
-@media only screen and (max-width: 1279px) {
-    :local .colMenu {
-        position: absolute;
-        width: 200px;
-        padding-top:0;
-    }
-}
-
 :local(.header) {
     composes: bgPurpleLight from "../../components/bases/colorBase.css";
-    height: 80px;
     box-shadow: 0px 5px 10px 5px rgba(0,0,0,.1);
-    margin:none;
-}
-
-:local(.linkMenu) {
-    composes: linkDefault from "../../components/bases/textBase.css";
-    display: block;
-    padding: 16px; 
-    padding-top: 20px;
-    padding-bottom: 20px;
-    color: #ffffff;
-}
-:local(.linkMenu img){
-    float:left;
-    display:block;
-    margin-right:16px;
-}
-
-:local .link {
-    composes: linkDefault from "../../components/bases/textBase.css";
-    display: block;
-    padding-top: 5px;
-    color: #ffffff;
-    font-size:11px;
-}
-
-:local .iconMenu {
-    width: 17px;
 }
 
 :local .boxUserMenu {
@@ -76,21 +43,78 @@
     flex-grow: 1;
 }
 
-:local .logo {
-    display: block;
-    width: 80px;
-    margin-left:8px;
-}
-
 :local .boxBalance {
     text-align: right;
     font-size: 16px;
 }
+
+@media only screen and (max-width: 599px) {
+    :local .boxBalance {
+        font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 1279px) {
+    :local .colMenu {
+        position: absolute;
+        width: 200px;
+        padding-top:0;
+    }
+}
+
+/* 2. TEXT */
+
+:local(.linkMenu) {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    display: block;
+    padding: 16px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ffffff;
+}
+
+:local .link {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    display: block;
+    padding-top: 5px;
+    color: #ffffff;
+    font-size:11px;
+}
+
 :local .textBalance {
     composes: offside from "../../components/bases/textBase.css";
 }
+
 :local .textGreen {
     composes: clGreenDefault from "../../components/bases/colorBase.css";
+}
+
+:local .textBalanceFiat {
+    composes: clGreenDefault from "../../components/bases/colorBase.css";
+    display:block;
+    font-size: 10px;
+}
+
+/* 3. IMAGES/UI */
+
+:local(.linkMenu img){
+    float:left;
+    display:block;
+    margin-right:16px;
+}
+
+:local .iconMenu {
+    width: 17px;
+}
+
+:local .avatarHeader {
+    margin-left: 15px;
+}
+
+:local .logo {
+    display: block;
+    width: 80px;
+    margin-left:8px;
 }
 
 :local .iconNotification {
@@ -99,6 +123,26 @@
     margin:15px;
     opacity: .3;
 }
+
 :local .iconNotificationActive {
     opacity: 1;
+}
+
+:local .iconNotificationActive:hover .animeNotification {
+    animation: shake .5s;
+    animation-iteration-count: infinite; 
+}
+
+@keyframes :local(shake) {
+    10%, 90% {transform: rotate(0deg);}
+    20%, 80% {transform: rotate(5deg);}
+    30%, 50%, 70% {transform: rotate(-5deg);}
+    40%, 60% {transform: rotate(5deg);}
+}
+
+@media only screen and (max-width: 599px) {
+    :local .logo {
+        width: 55px;
+        margin-left:0px;
+    }
 }
