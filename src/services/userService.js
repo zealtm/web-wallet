@@ -15,7 +15,6 @@ class UserService {
         },
         API_HEADER
       );
-      console.warn(response);
       return response;
     }
     catch (error) {
