@@ -6,10 +6,9 @@ import Store from "./store";
 import { getUserData } from "../../utils/localStorage";
 
 // COMPONENTS
-import Login from "./login";
+// import Login from "./login";
 import App from "./app";
-import App from "./app";
-
+import LoadingPage from "../skeleton/loading"
 
 // STYLE
 import style from "./style.css";
@@ -21,7 +20,7 @@ let Content = () => {
   let { email, secretWord, secretKey } = userData;
 
   if (userData, email, secretWord, secretKey) {
-    
+    return <LoadingPage />
   }
 
   return <App />

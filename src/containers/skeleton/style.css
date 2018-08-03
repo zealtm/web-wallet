@@ -1,0 +1,38 @@
+/*
+
+1. LOADING
+  1.1 LOGO
+  1.2 ITEMS
+
+*/
+
+/* 1. LOADING */
+
+/* 1.1 LOGO */
+:local(.logoLoading) {
+  display: block;
+  max-width: 100%;
+  width: 160px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  min-width: 40%;
+  margin-bottom: 5%;
+}
+
+/* 1.2 ITEMS */
+:local(body) {
+  background-color: #3b1878;
+}
+
+:local(.itemsLoadingContainer) {  
+  min-width: 30%;
+  text-align: center;
+}
+
+:local(.alignLoadingContainer) {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
