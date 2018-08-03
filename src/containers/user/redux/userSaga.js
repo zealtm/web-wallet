@@ -31,7 +31,7 @@ export function* authenticateUser(action) {
     let pinResponse = yield call(pinService.consult, userToken);
     let pin = pinResponse.data.code === 200 ? true : false;
     console.warn(pinResponse.headers);
-    yield call(twoFactorResponse, pinResponse.headers[HEADER_RESPONSE]);
+    yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
@@ -136,7 +136,7 @@ export function* createUserPin(action) {
       yield put({ type: changeLoadingState });
       return;
     }
-
+    yield call(setAuthToken, response.headers[HEADER_RESPONSE]);
     let message = "Pin has been created. You are logged";
     yield put({ type: "REQUEST_SUCCESS", message });
     yield put({ type: changeLoadingState });
