@@ -7,6 +7,7 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
+
   render() {
     return (
       <div className={style.alignLoadingContainer}>

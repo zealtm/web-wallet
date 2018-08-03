@@ -3,36 +3,59 @@ import { Provider } from "react-redux";
 import Store from "./store";
 
 //UTILS
-import { getUserData } from "../../utils/localStorage";
+import { getUserData, clearAll } from "../../utils/localStorage";
 
 // COMPONENTS
-// import Login from "./login";
+import Login from "./login";
 import App from "./app";
-import LoadingPage from "../skeleton/loading"
+import LoadingPage from "../skeleton/loading";
 
 // STYLE
 import style from "./style.css";
 
 // Access Token verification
 
-let Content = () => {
-  let userData = getUserData();
-  let { email, secretWord, secretKey } = userData;
-
-  if (userData, email, secretWord, secretKey) {
-    return <LoadingPage />
+class Routes extends Component {
+  constructor() {
+    super();
+    this.state = {
+      content: undefined
+    };
   }
 
-  return <App />
-}
+  changeContent = content => {
+    this.setState({ content });
+  };
 
-class Routes extends Component {
+  componentDidMount() {
+    this.renderContent();
+  }
+
+  renderContent = () => {
+    try {
+      let userData = getUserData();
+      if (userData) {
+        let { email, secretWord } = userData;
+
+        if ((email, secretWord)) {
+          return this.changeContent(<App />);
+        }
+      }
+
+      return this.changeContent(<Login />);
+    } catch (error) {
+      console.warn(error);
+      clearAll();
+      return this.changeContent(<Login />);
+    }
+  };
+
   render() {
+    let { content } = this.state;
+
     return (
       <div className={style.textDefault}>
-        <Provider store={Store}>
-          <Content />
-        </Provider>
+        <Provider store={Store}>{content ? content : <LoadingPage />}</Provider>
       </div>
     );
   }

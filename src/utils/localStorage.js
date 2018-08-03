@@ -10,9 +10,6 @@ export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 export const setUserSeedWords = (seed, pin) =>
   setUserData({ secretWord: encryptHmacSha512(seed, pin) });
 
-export const setUserPassword = (password, pin) =>
-  setUserData({ secretKey: encryptHmacSha512(password, pin) });
-
 export const clearAuthToken = () => localStorage.removeItem(authToken);
 
 export const clear = value => localStorage.removeItem(value);
