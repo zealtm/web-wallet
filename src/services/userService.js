@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
 import { badRequest, internalServerError } from "../containers/errors/statusCodeMessage";
+import { encryptMd5 } from "../utils/cryptography";
+
 class UserService {
   async createUser(userInfo) {
     try {
@@ -9,11 +11,11 @@ class UserService {
           name: userInfo.name,
           surname: userInfo.surname,
           email: userInfo.email,
-          password: userInfo.password
+          password: encryptMd5(userInfo.password)
         },
         API_HEADER
       );
-
+      console.warn(response);
       return response;
     }
     catch (error) {
