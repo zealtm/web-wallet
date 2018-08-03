@@ -81,6 +81,25 @@
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
   "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
 
-  "SEED_INSERT_SEED": "Insert your SeedWords"
+  "SEED_INSERT_SEED": "Insert your SeedWords",
 
+  "CARD_HOME_TITLE_1": "Portfolio",
+  "CARD_HOME_TITLE_2": "Multicoin Wallet",
+  "CARD_HOME_TITLE_3": "Recharge",
+  "CARD_HOME_TITLE_4": "Ticket",
+  "CARD_HOME_TITLE_5": "Purchase",
+  "CARD_HOME_TITLE_6": "Purchase",
+
+  "CARD_HOME_DESCRIPTION_1": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_2": 
+    "Meet the most well-designed wallets. Send, receive, and view the transaction history in a unique way.",
+  "CARD_HOME_DESCRIPTION_3": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_4": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_5": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..", 
+  "CARD_HOME_DESCRIPTION_6": 
+      "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança.." 
 }

@@ -1,0 +1,65 @@
+/*
+1. BASE
+  1.1 BUTTON
+
+2. CARD
+  2.1 CARD
+
+*/
+
+/* ------------------------------------------------------------------------- */
+/* 1. BASE */
+
+/* 1.1 BUTTON */
+:local(.buttonCard) {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  width: 30%;
+  height: 45px;
+  text-align: center;
+}
+
+/* 2. CARD */
+
+/* 2.1 CARD */
+:local(.cardHome) {
+  composes: bgPrupleMedium from "../../components/bases/colorBase.css";
+  width: 256px;
+  height: 328px;
+  /* width: 299px;
+  height: 384px; */
+  padding: 1%;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px;
+  align-items: center;
+  display: grid;
+  max-width: 100%;
+}
+
+:local(.descriptionCard) {
+  composes: textDefault from "../../components/bases/textBase.css";    
+  padding: 10%; 
+  max-width: 100%;
+}
+
+:local(.cardIcon){
+  margin: auto;
+  max-width: 100%;
+}
+
+:local(.cardTitle) {
+  composes: textDefault from "../../components/bases/textBase.css";    
+  font-weight: bold;
+}
+
+:local(.homeContainer) {
+  justify-content: center;  
+}
+
+@media only screen and (max-width: 958px) {
+    :local(.homeContainer) {
+      overflow: auto;
+      flex-wrap: nowrap !important;
+      overflow-x: scroll;
+    }
+} 

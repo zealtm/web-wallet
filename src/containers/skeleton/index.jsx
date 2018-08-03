@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 // COMPONENTS 
 import Header from "./header";
+import Home from "../home/index";
 
 // MATERIAL UI 
 import Grid from "@material-ui/core/Grid";
@@ -36,11 +37,11 @@ const menuItens = [
 class Skeleton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {openMenu: false};
+        this.state = { openMenu: false };
     }
 
     renderMenu = () => {
-        return menuItens.map((item,key) => {
+        return menuItens.map((item, key) => {
             return (
                 <Link className={style.linkMenu} to={item.link} key={key}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
@@ -50,18 +51,17 @@ class Skeleton extends React.Component {
     }
 
     toggleMenu = () => {
-        this.setState({...this.state, openMenu:!this.state.openMenu});
+        this.setState({ ...this.state, openMenu: !this.state.openMenu });
     }
 
     render() {
-        const { children } = this.props;
         const { openMenu } = this.state;
         return (
             <div>
                 <Header actionMenu={this.toggleMenu} />
                 <Grid container>
                     <Grid item md={2}>
-                        <div className={style.colMenu} style={{left: + (openMenu) ? ' 0px ' : '-232px'}}>
+                        <div className={style.colMenu} style={{ left: + (openMenu) ? ' 0px ' : '-232px' }}>
                             <Hidden lgUp>
                                 <Grid container className={style.boxUserMenu}>
                                     <Grid item xs={4} align="center">
@@ -76,10 +76,12 @@ class Skeleton extends React.Component {
                             {this.renderMenu()}
                         </div>
                     </Grid>
-                    <Grid item xs={12} lg={10}>
+                    <Grid item xs={12} lg={10} className={style.teste}>
+
                         <div className={style.colContainer}>
-                            {children}
+                            <Home />
                         </div>
+
                     </Grid>
                 </Grid>
             </div>

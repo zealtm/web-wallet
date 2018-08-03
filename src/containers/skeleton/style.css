@@ -14,7 +14,7 @@
     composes: bgPurpleDark from "../../components/bases/colorBase.css";
     height: 100vh;
     overflow: auto;
-    padding: 16px;
+    padding: 16px;   
 }
 
 :local(.colMenu) {
@@ -32,6 +32,7 @@
         width: 200px;
         padding-top:0;
     }
+    
 }
 
 :local(.header) {
