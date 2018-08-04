@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "start:production": "webpack-dev-server --hot --config webpack.config.prod.js",
     "build": "webpack",
-    "build:production": "webpack --config webpack.config.prod.js",
+    "start:production": "webpack-dev-server --hot --config webpack.config.prod.js",
+    "build:production": "rm -rf ./public/scripts/* && webpack --config webpack.config.prod.js",
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock && npm install",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
