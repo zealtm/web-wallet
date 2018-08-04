@@ -23,7 +23,8 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           pin: action.user.pin,
-          seed: action.seed
+          seed: action.seed,
+          password: action.user.password
         },
         pages: {
           login: action.pages.login,
@@ -65,6 +66,17 @@ const user = (state = initialState, action) => {
           reset: 0
         },
         user: action.user,
+        loading: false
+      };
+
+      case "BACK_USER_PERSONAL_INFO":
+      return {
+        ...state,
+        pages: {
+          login: 0,
+          create: state.pages.create - 1,
+          reset: 0
+        },
         loading: false
       };
 

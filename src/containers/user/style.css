@@ -19,7 +19,6 @@
   4.1 TEXTS
   4.2 ICONSreset
   4.2 LINKS
-  4.4 LOGO
 
 5. PIN
   5.1 INPUT
@@ -93,9 +92,11 @@
 /* 1.5 IMAGES */
 :local(.logo) {
   display: block;
+  max-width: 100%;
   width: 160px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 100%;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -111,7 +112,7 @@
   max-width: 335px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 65px;
+  margin-top: 40px;
   font-weight: 500;
 }
 
@@ -198,10 +199,12 @@
   float: left;
   width: 24px;
   margin-top: 6px;
+  position: absolute;
 }
 
 :local(.iconEmail) {
   display: block;
+  max-width: 100%;
   width: 55px;
   height: 58px;
   margin-left: auto;
@@ -221,12 +224,6 @@
   composes: defaultP from "../../components/bases/textBase.css";
   color: white;
   text-decoration: none;
-}
-
-/* 4.4 LOGO */
-:local(.logoReset) {
-  composes: logo;
-  padding-right: 24px;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -302,12 +299,6 @@
   font-size: 16px;
 }
 
-:local(.linkTermsOfServices) {
-  composes: link;
-  font-style: italic;
-  font-size: 16px;
-}
-
 :local(.messageConfirmationRegister) {
   composes: textDefault from "../../components/bases/textBase.css";
   font-size: 23px;
@@ -340,26 +331,28 @@
   composes: iconEmail;
   width: 92px;
   height: 95px;
-  margin-top: 20vh;
+  margin-top: 18vh;
   margin-bottom: 2vh;
 }
 
-:local(.arrowToLogin) {
+:local(.arrowToLoginAlign) {
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  display: flex; 
+  text-align: center;
+}
+
+:local(.arrowCircle) {
   border-radius: 100%;
   height: 50px;
-  width: 50px;
+  min-width: 50px;
   background-color: white;
-  text-align: center;
-  vertical-align: middle;
-  display: table-cell;
 }
 
-:local(.arrowToLoginAlign) {
-  padding-left: 40%;
-}
-
-:local(.logoCreate) {
-  composes: logoReset;
+:local(.arrowCircle img) {
+  margin-top: 19px;
 }
 
 /* 6.3 INPUT - CHECKBOX */
@@ -434,7 +427,7 @@
   max-width: 79%;
   width: 79%;
   height: 50px;
-  padding: 15% 10%;
+  padding: 10%;
   position: relative;
   font-family: roboto;
   font-size: 16px;

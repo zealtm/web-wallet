@@ -32,7 +32,7 @@ class CreateUser extends React.Component {
   getInput = input => {
     let { inputs } = this.state;
     let { name, value } = input;
-    
+
     this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : undefined },
@@ -59,7 +59,8 @@ class CreateUser extends React.Component {
   };
 
   render() {
-    let { inputs, errors } = this.state;
+    let { inputs, errors } = this.state; 
+    let { name, surname, email } = this.props.user.user;
 
     return (
       <div className={style.contNewAccount}>
@@ -70,7 +71,7 @@ class CreateUser extends React.Component {
           />
         </Link>
 
-        <img src="../../images/logo.svg" className={style.logoCreate} />
+        <img src="../../images/logo.svg" className={style.logo} />
         <div>
           <div className={style.newAccountHeader}>
             {i18n.t("NEW_ACCOUNT_HEADER")}
@@ -81,6 +82,7 @@ class CreateUser extends React.Component {
             name="firstName"
             required
             placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
+            value={name}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -94,6 +96,7 @@ class CreateUser extends React.Component {
           <input
             type="text"
             name="lastName"
+            value={surname}
             required
             placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
             onChange={event => {
@@ -108,6 +111,7 @@ class CreateUser extends React.Component {
           <input
             type="email"
             name="email"
+            value={email}
             required
             placeholder={i18n.t("PLACEHOLDER_EMAIL")}
             onChange={event => {
@@ -141,8 +145,13 @@ class CreateUser extends React.Component {
 CreateUser.propTypes = {
   getCreateUserInfo: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object,
 };
+
+const mapSateToProps = store => ({
+  user: store.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -155,6 +164,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(CreateUser);
