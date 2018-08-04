@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
+    "start:production": "webpack-dev-server --hot --config webpack.config.prod.js",
     "build": "webpack",
-    "build:production": "webpack -p --config webpack.config.prod.js",
+    "build:production": "webpack --config webpack.config.prod.js",
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock && npm install",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
@@ -69,6 +70,7 @@
     "@material-ui/core": "^1.3.1",
     "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "bip39": "^2.5.0",
     "express": "^4.16.3",
     "i18next": "^11.3.3",
