@@ -30,19 +30,10 @@ class Content extends Component {
 
   renderContent = () => {
     try {
-      let userData = getUserData();
       let { seed, password } = this.props.user.user
 
       if  (seed && password) {
         return this.changeContent(<App />);
-      }
-
-      if (userData) {
-        let { username, secretWord } = userData;
-
-        if ((username && secretWord)) {
-          return this.changeContent(<App />);
-        }
       }
 
       return this.changeContent(<Login />);
