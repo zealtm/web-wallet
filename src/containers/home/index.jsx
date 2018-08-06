@@ -18,7 +18,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 1 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -36,7 +36,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 2 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -54,7 +54,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 3 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -72,7 +72,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 4 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -89,7 +89,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 5 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -107,7 +107,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/wallet/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <div className={style.cardTitle}> 6 {i18n.t("CARD_HOME_TITLE_2")} </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>

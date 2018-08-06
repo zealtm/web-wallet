@@ -25,12 +25,10 @@
   composes: bgPrupleMedium from "../../components/bases/colorBase.css";
   width: 256px;
   height: 328px;
-  /* width: 299px;
-  height: 384px; */
-  padding: 1%;
+  padding: 5% 1%;
   border-radius: 10px;
   text-align: center;
-  margin: 20px;
+  margin: 10px 5px;
   align-items: center;
   display: grid;
   max-width: 100%;
@@ -54,12 +52,16 @@
 
 :local(.homeContainer) {
   justify-content: center;  
+  padding-bottom: 100px;
 }
 
-@media only screen and (max-width: 958px) {
+@media only screen and (max-width: 425px) {
     :local(.homeContainer) {
-      overflow: auto;
       flex-wrap: nowrap !important;
       overflow-x: scroll;
+      justify-content: space-between;
+      height: 75vh;      
+      align-items: center;
+      padding: 0 0 5% 0;
     }
 } 

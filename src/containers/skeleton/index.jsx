@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 // COMPONENTS 
 import Header from "./header";
-import Home from "../home/index";
 
 // MATERIAL UI 
 import Grid from "@material-ui/core/Grid";
@@ -55,6 +54,7 @@ class Skeleton extends React.Component {
     }
 
     render() {
+        const { children } = this.props;
         const { openMenu } = this.state;
         return (
             <div>
@@ -76,19 +76,16 @@ class Skeleton extends React.Component {
                             {this.renderMenu()}
                         </div>
                     </Grid>
-                    <Grid item xs={12} lg={10} className={style.teste}>
-
-                        <div className={style.colContainer}>
-                            <Home />
+                    <Grid item xs={12} lg={10} className={style.colContainer}>
+                        <div>
+                            {children}
                         </div>
-
                     </Grid>
                 </Grid>
             </div>
         );
     }
 }
-
 Skeleton.propTypes = {
     children: PropTypes.Component
 };

@@ -31,8 +31,7 @@
         position: absolute;
         width: 200px;
         padding-top:0;
-    }
-    
+    }    
 }
 
 :local(.header) {
