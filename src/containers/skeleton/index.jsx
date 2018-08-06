@@ -28,10 +28,10 @@ class Skeleton extends React.Component {
             <div>
                 <Header actionMenu={this.toggleMenu} />
                 <Grid container>
-                    <Grid item md={2}>
+                    <Grid item md={2} xl={1}>
                         <Menu openMenu={openMenu} />
                     </Grid>
-                    <Grid item xs={12} lg={10}>
+                    <Grid item xs={12} lg={10} xl={11}>
                         <div className={style.colContainer}>
                             {children}
                         </div>

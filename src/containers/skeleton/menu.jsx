@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 // MATERIAL UI 
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +13,7 @@ import style from "./style.css";
 // array itens menu
 const menuItens = [
     {
-        link: "/",
+        link: "/home",
         label: "Home",
         icon: "../../images/icons/home/home@1x.png",
     },
@@ -27,6 +27,11 @@ const menuItens = [
         label: "Boletos",
         icon: "../../images/icons/home/home@1x.png",
     },
+    {
+        link: "/boleto",
+        label: "Configuraçoes",
+        icon: "../../images/icons/home/home@1x.png",
+    },
 ];
 
 class Menu extends React.Component {
@@ -37,9 +42,9 @@ class Menu extends React.Component {
     renderMenu = () => {
         return menuItens.map((item,key) => {
             return (
-                <Link className={style.linkMenu} to={item.link} key={key}>
+                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
-                </Link>
+                </NavLink>
             )
         });
     }

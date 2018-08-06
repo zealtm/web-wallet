@@ -54,9 +54,11 @@ class Header extends React.Component {
             <AppBar position="static">
                 <Toolbar className={style.header}>
                     <Hidden lgUp>
-                        <IconButton color="inherit" aria-label="Menu" onClick={actionMenu}>
-                            <MenuIcon />
-                        </IconButton>
+                        <div className={style.menuHamb}>
+                            <IconButton color="inherit" aria-label="Menu" onClick={actionMenu}>
+                                <MenuIcon />
+                            </IconButton>
+                        </div>
                     </Hidden>
                     <div className={style.boxLogo}>
                         <img src="../../images/logo.svg" className={style.logo} />
