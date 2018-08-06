@@ -1,10 +1,15 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
 import { unauthorized, internalServerError } from "../containers/errors/statusCodeMessage";
+import { encryptMd5 } from "../utils/cryptography";
+
 class AuthService {
   async authenticate(email, password) {
     try {
-      let response = await axios.post(BASE_URL + "/login", { login: email, password }, API_HEADER);
+      let response = await axios.post(BASE_URL + "/login", {
+        login: email,
+        password: encryptMd5(password)
+      }, API_HEADER);
 
       return response;
     }

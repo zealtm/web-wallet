@@ -7,6 +7,7 @@ import {
   setUserData
 } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
+import { HEADER_RESPONSE } from "../../../constants/headers";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
@@ -33,11 +34,11 @@ export function* authenticateUser(action) {
     }
 
     yield call(setAuthToken, response.data.data.token);
-
     let userToken = yield call(getAuthToken);
     let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
     // let pinResponse = yield call(pinService.consult, userToken);
     // let pin = pinResponse.data.code === 200 ? true : false;
+    yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     yield put({
       type: "POST_USER_AUTHENTICATE",

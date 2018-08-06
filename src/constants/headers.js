@@ -1,0 +1,1 @@
+export const HEADER_RESPONSE = "x-amzn-remapped-authorization";

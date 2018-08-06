@@ -1,38 +1,195 @@
 /*
 
-1. LOADING
-  1.1 LOGO
-  1.2 ITEMS
+1. BASE
+
+2. TEXT
+
+3. IMAGES/UI 
+
 
 */
 
-/* 1. LOADING */
+/* ------------------------------------------------------------------------- */
 
-/* 1.1 LOGO */
-:local(.logoLoading) {
-  display: block;
-  max-width: 100%;
-  width: 160px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
-  min-width: 40%;
-  margin-bottom: 5%;
+/* 1. BASE */
+
+:local(.colContainer) {
+    composes: bgPurpleDark from "../../components/bases/colorBase.css";
+    height: 100vh;
+    overflow: auto;
+    padding: 16px;
 }
 
-/* 1.2 ITEMS */
-:local(body) {
-  background-color: #3b1878;
+:local(.colMenu) {
+    composes: bgPurpleLight from "../../components/bases/colorBase.css";
+    height: 100vh;
+    overflow: auto;
+    padding-top: 30px;
+    transition: .5s;
 }
 
-:local(.itemsLoadingContainer) {  
-  min-width: 30%;
-  text-align: center;
+:local(.header) {
+    composes: bgPurpleLight from "../../components/bases/colorBase.css";
+    box-shadow: 0px 5px 10px 5px rgba(0,0,0,.1);
 }
 
-:local(.alignLoadingContainer) {
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
+:local .boxUserMenu {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+:local .boxLogo {
+    flex-grow: 1;
+}
+
+:local .boxBalance {
+    text-align: right;
+    font-size: 16px;
+}
+
+@media only screen and (max-width: 599px) {
+    :local .boxBalance {
+        font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 1279px) {
+    :local .colMenu {
+        position: absolute;
+        width: 200px;
+        padding-top:0;
+    }
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 2. TEXT */
+
+:local(.linkMenu) {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    composes: bdGreenDefault from "../../components/bases/colorBase.css";
+    display: block;
+    padding-left: 20px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ffffff;
+    opacity: .5;
+    transition: opacity .3s;
+}
+
+
+:local .linkMenu:hover {
+    padding-left: 14px;
+    border-left-style: solid;
+    border-left-width: 6px;
+    opacity: 1;
+}
+
+:local(.linkMenuActive) {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    composes: bdGreenDefault from "../../components/bases/colorBase.css";
+    display: block;
+    padding-left: 20px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #ffffff;
+    padding-left: 14px;
+    border-left-style: solid;
+    border-left-width: 6px;
+    opacity: 1;
+}
+
+:local .link {
+    composes: linkDefault from "../../components/bases/textBase.css";
+    display: block;
+    padding-top: 5px;
+    color: #ffffff;
+    font-size:11px;
+}
+
+:local .textBalance {
+    composes: offside from "../../components/bases/textBase.css";
+}
+
+:local .textGreen {
+    composes: clGreenDefault from "../../components/bases/colorBase.css";
+}
+
+:local .textBalanceFiat {
+    composes: clGreenDefault from "../../components/bases/colorBase.css";
+    display:block;
+    font-size: 10px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 3. IMAGES/UI */
+
+:local .menuHamb {
+    background-color: 'red';
+    margin-left:-16px;
+}
+
+:local(.linkMenu img){
+    float:left;
+    display:block;
+    margin-right:28px;
+}
+
+:local .iconMenu {
+    width: 17px;
+}
+
+:local .avatarHeader {
+    margin-left: 15px;
+}
+
+:local .logo {
+    display: block;
+    width: 80px;
+    margin-left:8px;
+}
+
+:local .iconNotification {
+    float:right;
+    display:block;
+    margin:15px;
+    opacity: .3;
+}
+
+:local .iconNotificationActive {
+    opacity: 1;
+}
+
+:local .iconNotificationActive:hover .animeNotification {
+    animation: shake .5s;
+    animation-iteration-count: infinite; 
+}
+
+/* eslint-disable */
+@keyframes :local(shake) {
+    25%, 75% {transform: rotate(5deg);}
+    50%, 100% {transform: rotate(-5deg);}
+}
+/* eslint-enable */
+
+@media only screen and (max-width: 599px) {
+    :local .logo {
+        width: 75px;
+        margin-left:14px;
+    }
+    :local .menuHamb {
+        background-color: 'red';
+        margin-left:-12px;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    :local .logo {
+        margin-left:-5px;
+    }
+    :local(.linkMenu img){
+        margin-right:16px;
+    }
+    
 }
