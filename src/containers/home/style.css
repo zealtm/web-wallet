@@ -23,12 +23,12 @@
 /* 2.1 CARD */
 :local(.cardHome) {
   composes: bgPrupleMedium from "../../components/bases/colorBase.css";
-  width: 256px;
-  height: 328px;
-  padding: 5% 1%;
+  width: 299px;
+  height: 340px;
+  padding: 7% 1%;
   border-radius: 10px;
   text-align: center;
-  margin: 10px 5px;
+  margin: 10px;
   align-items: center;
   display: grid;
   max-width: 100%;
@@ -36,7 +36,7 @@
 
 :local(.descriptionCard) {
   composes: textDefault from "../../components/bases/textBase.css";    
-  padding: 10%; 
+  padding: 0 8%; 
   max-width: 100%;
 }
 
