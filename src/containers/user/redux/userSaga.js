@@ -30,7 +30,6 @@ export function* authenticateUser(action) {
     let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
     let pinResponse = yield call(pinService.consult, userToken);
     let pin = pinResponse.data.code === 200 ? true : false;
-    console.warn(pinResponse.headers);
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     yield put({
