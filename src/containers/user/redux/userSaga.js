@@ -12,10 +12,10 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 // Services
 import AuthService from "../../../services/authService";
 import UserService from "../../../services/userService";
-import PinService from "../../../services/pinService";
+// import PinService from "../../../services/pinService";
 const authService = new AuthService();
 const userService = new UserService();
-const pinService = new PinService();
+// const pinService = new PinService();
 const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
@@ -36,15 +36,15 @@ export function* authenticateUser(action) {
 
     let userToken = yield call(getAuthToken);
     let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
-    let pinResponse = yield call(pinService.consult, userToken);
-    let pin = pinResponse.data.code === 200 ? true : false;
+    // let pinResponse = yield call(pinService.consult, userToken);
+    // let pin = pinResponse.data.code === 200 ? true : false;
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
         email: action.email,
-        password: encryptHmacSha512Key(action.password),
-        pin
+        password: encryptHmacSha512Key(action.password)
+        // pin
       },
       pages: { login: twoFactorResponse.data.code === 200 ? 1 : 2 }
     });
@@ -101,8 +101,7 @@ export function* verifyTwoFactorAuth(action) {
 
     yield put({
       type: "POST_USER_VERIFY_2FA",
-      response,
-      pages: { login: 2 }
+      response
     });
 
     return;
@@ -112,46 +111,46 @@ export function* verifyTwoFactorAuth(action) {
   }
 }
 
-export function* verifyUserPin(action) {
-  try {
-    let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.verify, action.user.pin, userToken);
-    yield setUserData(action.user);
+// export function* verifyUserPin(action) {
+//   try {
+//     let userToken = yield call(getAuthToken);
+//     let response = yield call(pinService.verify, action.user.pin, userToken);
+//     yield setUserData(action.user);
 
-    if (response.error) {
-      yield put(response.error);
-      yield put({ type: changeLoadingState });
-      return;
-    }
+//     if (response.error) {
+//       yield put(response.error);
+//       yield put({ type: changeLoadingState });
+//       return;
+//     }
 
-    yield put({ type: "REQUEST_SUCCESS", message: "You are logged" });
-    yield put({ type: changeLoadingState });
-  } catch (error) {
-    yield put({ type: changeLoadingState });
-    yield put(internalServerError());
-  }
-}
+//     yield put({ type: "REQUEST_SUCCESS", message: "You are logged" });
+//     yield put({ type: changeLoadingState });
+//   } catch (error) {
+//     yield put({ type: changeLoadingState });
+//     yield put(internalServerError());
+//   }
+// }
 
-export function* createUserPin(action) {
-  try {
-    let userToken = yield call(getAuthToken);
-    let response = yield call(pinService.create, action.user.pin, userToken);
-    yield setUserData(action.user);
+// export function* createUserPin(action) {
+//   try {
+//     let userToken = yield call(getAuthToken);
+//     let response = yield call(pinService.create, action.user.pin, userToken);
+//     yield setUserData(action.user);
 
-    if (response.error) {
-      yield put(response.error);
-      yield put({ type: changeLoadingState });
-      return;
-    }
+//     if (response.error) {
+//       yield put(response.error);
+//       yield put({ type: changeLoadingState });
+//       return;
+//     }
 
-    let message = "Pin has been created. You are logged";
-    yield put({ type: "REQUEST_SUCCESS", message });
-    yield put({ type: changeLoadingState });
-  } catch (error) {
-    yield put({ type: changeLoadingState });
-    yield put(internalServerError());
-  }
-}
+//     let message = "Pin has been created. You are logged";
+//     yield put({ type: "REQUEST_SUCCESS", message });
+//     yield put({ type: changeLoadingState });
+//   } catch (error) {
+//     yield put({ type: changeLoadingState });
+//     yield put(internalServerError());
+//   }
+// }
 
 export function* createUser(action) {
   try {
@@ -203,8 +202,8 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
     fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
     fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
-    fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
-    fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin),
+    // fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
+    // fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed)
   ];

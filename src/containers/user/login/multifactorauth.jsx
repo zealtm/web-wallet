@@ -87,6 +87,8 @@ class MultiFactorAuth extends React.Component {
     loading();
     clearMessage();
     verifyTwoFactorAuth(token);
+    console.warn(this)
+    // this.history.pushState(null, 'home');
   };
 
   render() {

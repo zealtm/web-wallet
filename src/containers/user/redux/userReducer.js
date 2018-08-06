@@ -49,11 +49,6 @@ const user = (state = initialState, action) => {
     case "POST_USER_VERIFY_2FA":
       return {
         ...state,
-        pages: {
-          login: action.pages.login,
-          create: 0,
-          reset: 0
-        },
         loading: false
       };
 

@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Auth from "./auth";
-import Pin from "./pin";
+// import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
 import Seed from "./seed";
 
@@ -18,7 +18,7 @@ class Login extends React.Component {
     if (login === 0) return <Auth />;
     if (login === 1) return <MultiFactorAuth />;
     if (login === 2) return <Seed />;
-    if (login === 3) return <Pin />;
+    // if (login === 3) return <Pin />;
   };
 
   render() {

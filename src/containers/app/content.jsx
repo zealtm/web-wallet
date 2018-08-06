@@ -12,8 +12,6 @@ import Login from "./login";
 import App from "./app";
 import LoadingPage from "../skeleton/loading";
 
-// Access Token verification
-
 class Content extends Component {
   constructor() {
     super();
@@ -40,9 +38,9 @@ class Content extends Component {
       }
 
       if (userData) {
-        let { email, secretWord } = userData;
+        let { username, secretWord } = userData;
 
-        if ((email && secretWord)) {
+        if ((username && secretWord)) {
           return this.changeContent(<App />);
         }
       }
