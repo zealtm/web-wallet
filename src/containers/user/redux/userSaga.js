@@ -1,6 +1,7 @@
 import { takeLatest } from "redux-saga";
 import { put, call, fork } from "redux-saga/effects";
 import { setAuthToken, getAuthToken, setUserPassword, setUserSeedWords } from "../../../utils/localStorage";
+import { HEADER_RESPONSE } from "../../../constants/headers";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 
@@ -25,11 +26,11 @@ export function* authenticateUser(action) {
     }
 
     yield call(setAuthToken, response.data.data.token);
-
     let userToken = yield call(getAuthToken);
     let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
     let pinResponse = yield call(pinService.consult, userToken);
     let pin = pinResponse.data.code === 200 ? true : false;
+    yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
@@ -136,7 +137,7 @@ export function* createUserPin(action) {
       yield put({ type: changeLoadingState });
       return;
     }
-
+    yield call(setAuthToken, response.headers[HEADER_RESPONSE]);
     let message = "Pin has been created. You are logged";
     yield put({ type: "REQUEST_SUCCESS", message });
     yield put({ type: changeLoadingState });
