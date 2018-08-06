@@ -43,7 +43,7 @@ export function* authenticateUser(action) {
       type: "POST_USER_AUTHENTICATE",
       user: {
         email: action.email,
-        password: encryptHmacSha512Key(action.password)
+        password: encryptHmacSha512Key(action.password),
         // pin
       },
       pages: { login: twoFactorResponse.data.code === 200 ? 1 : 2 }
@@ -101,7 +101,8 @@ export function* verifyTwoFactorAuth(action) {
 
     yield put({
       type: "POST_USER_VERIFY_2FA",
-      response
+      response,
+      pages: { login: 2 }
     });
 
     return;
@@ -184,10 +185,7 @@ export function* setUserSeed(action) {
     yield setUserSeedWords(action.seed, action.password);
     return yield put({
       type: "SET_USER_SEED",
-      seed: encryptHmacSha512Key(action.seed),
-      pages: {
-        login: 3
-      }
+      seed: encryptHmacSha512Key(action.seed)
     });
   } catch (error) {
     yield put({ type: changeLoadingState });

@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+
 
 // REDUX
 import { bindActionCreators } from "redux";
@@ -19,6 +20,11 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
+const location = {
+  pathname: '/home',
+  state: { fromDashboard: true }
+}
+
 class MultiFactorAuth extends React.Component {
   constructor() {
     super();
@@ -32,6 +38,7 @@ class MultiFactorAuth extends React.Component {
         field_5: undefined,
         field_6: undefined
       },
+      redirect: false,
       errors: undefined
     };
   }
@@ -87,16 +94,16 @@ class MultiFactorAuth extends React.Component {
     loading();
     clearMessage();
     verifyTwoFactorAuth(token);
-    console.warn(this)
-    // this.history.pushState(null, 'home');
+    // this.setState({ ...this.state, redirect: true });
   };
 
   render() {
     let { loading } = this.props.user;
-    let { errors, twoFactorFields } = this.state;
+    let { redirect, errors, twoFactorFields } = this.state;
 
     return (
       <div>
+        {redirect && <Redirect to='/home'/>}
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 
