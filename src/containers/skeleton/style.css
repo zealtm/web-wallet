@@ -134,10 +134,8 @@
 }
 
 @keyframes :local(shake) {
-    10%, 90% {transform: rotate(0deg);}
-    20%, 80% {transform: rotate(5deg);}
-    30%, 50%, 70% {transform: rotate(-5deg);}
-    40%, 60% {transform: rotate(5deg);}
+    25%, 75% {transform: rotate(5deg);}
+    50%, 100% {transform: rotate(-5deg);}
 }
 
 @media only screen and (max-width: 599px) {
