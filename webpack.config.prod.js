@@ -1,4 +1,5 @@
 /* eslint-disable */
+const webpack = require('webpack');
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ObjectRestSpreadPlugin = require('@sucrase/webpack-object-rest-spread-plugin');
@@ -46,12 +47,11 @@ console.log("\n", "\x1b[0m", "\x1b[21m");
 
 
 module.exports = {
-  entry: "./src/index.jsx",
-  devtool: 'source-map',
+  entry: ["babel-polyfill", "./src/index.jsx"],
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: "babel-loader",
         options: {
@@ -83,6 +83,15 @@ module.exports = {
   },
   plugins: [
     new ObjectRestSpreadPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("production"),
+      },
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    }),
     new HtmlWebpackPlugin({
       template: "public/index.html"
     })
