@@ -119,17 +119,16 @@ class Login extends Component {
               ) : null}
             </div>
             <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
-              {/* INSIDE ROUTES */}{" "}
               <Switch>
+                {/* INSIDE ROUTES */}
                 <Route exact path="/" component={login} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/reset" component={reset} />
-                <Route
-                  exact
-                  path="/new-password"
-                  component={resetNewPassword}
-                />
-                <Route exact path="/create" component={create} />{" "}
+                <Route exact path="/create" component={create} />
+                {/* ERRORS PAGE */}
+                <Route path="/404" component={errorNotFound} />
+                <Route path="/500" component={errorInternal} />
+                <Route path={"**"} component={login} />
               </Switch>
             </Grid>
 
@@ -139,11 +138,6 @@ class Login extends Component {
               </Grid>
             </Hidden>
           </Grid>
-          <Switch>
-            <Route path="/404" component={errorNotFound} />
-            <Route path="/500" component={errorInternal} />
-            <Route path={"**"} component={errorNotFound} />
-          </Switch>
         </div>
       </Router>
     );

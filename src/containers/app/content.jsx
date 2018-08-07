@@ -16,31 +16,42 @@ class Content extends Component {
   constructor() {
     super();
     this.state = {
-      content: undefined
+      content: undefined,
+      type: undefined
     };
   }
 
-  changeContent = content => {
-    this.setState({ content });
+  changeContent = (content, type) => {
+    this.setState({ content, type });
   };
 
   componentDidMount() {
+    console.warn("1");
+    this.renderContent();
+  }
+
+  componentDidUpdate() {
+    console.warn("2");
     this.renderContent();
   }
 
   renderContent = () => {
     try {
-      let { seed, password } = this.props.user.user
+      let { seed, password } = this.props.user.user;
+      let { type } = this.state;
+      console.warn(type);
 
-      if  (seed && password) {
-        return this.changeContent(<App />);
+      if (seed && password && type !== "app") {
+        return this.changeContent(<App />, "app");
       }
 
-      return this.changeContent(<Login />);
+      if ((!seed || !password) && type !== "login") {
+        return this.changeContent(<Login />, "login");
+      }
     } catch (error) {
       console.warn(error);
       clearAll();
-      return this.changeContent(<Login />);
+      return this.changeContent(<Login />, "login");
     }
   };
 

@@ -4,6 +4,7 @@ import {
   setAuthToken,
   getAuthToken,
   setUserSeedWords,
+  getUserSeedWords,
   setUserData
 } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
@@ -44,7 +45,7 @@ export function* authenticateUser(action) {
       type: "POST_USER_AUTHENTICATE",
       user: {
         email: action.email,
-        password: encryptHmacSha512Key(action.password),
+        password: encryptHmacSha512Key(action.password)
         // pin
       },
       pages: { login: twoFactorResponse.data.code === 200 ? 1 : 2 }
