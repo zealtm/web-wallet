@@ -54,6 +54,7 @@
 :local(.homeContainer) {
   justify-content: center;  
   padding-bottom: 100px;
+  margin: auto;
 }
 
 @media only screen and (max-width: 425px) {
