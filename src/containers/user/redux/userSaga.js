@@ -49,7 +49,7 @@ export function* authenticateUser(action) {
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     // let teste = yield call(compareUserSeedWords, seed);
-
+    console.warn(seed)
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
@@ -111,12 +111,20 @@ export function* createTwoFactorAuth() {
 
 export function* verifyTwoFactorAuth(action) {
   try {
+    let seed = yield call(getUserSeedWords);
     const response = yield call(authService.verifyTwoFactoryAuth, action.token);
 
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
       return;
+    }
+
+    if (seed) {
+      yield put({
+        type: "SET_USER_SEED",
+        seed: seed
+      });
     }
 
     yield put({
