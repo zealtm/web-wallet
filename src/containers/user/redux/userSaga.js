@@ -4,7 +4,6 @@ import {
   setAuthToken,
   getAuthToken,
   setUserSeedWords,
-  getUserSeedWords,
   setUserData
 } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
