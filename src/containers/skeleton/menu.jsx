@@ -27,9 +27,23 @@ const menuItens = [
         label: "Boletos",
         icon: "../../images/icons/home/home@1x.png",
     },
+];
+
+// array itens menu
+const menuItensHelp = [
     {
-        link: "/boleto",
-        label: "Configuraçoes",
+        link: "/home",
+        label: "Privacidade",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+    {
+        link: "/home",
+        label: "Configuração",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+    {
+        link: "/home",
+        label: "Suporte",
         icon: "../../images/icons/home/home@1x.png",
     },
 ];
@@ -41,6 +55,16 @@ class Menu extends React.Component {
 
     renderMenu = () => {
         return menuItens.map((item,key) => {
+            return (
+                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key}>
+                    <img src={item.icon} className={style.iconMenu} />{item.label}
+                </NavLink>
+            )
+        });
+    }
+
+    renderMenuHelp = () => {
+        return menuItensHelp.map((item,key) => {
             return (
                 <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
@@ -65,6 +89,9 @@ class Menu extends React.Component {
                     </Grid>
                 </Hidden>
                 {this.renderMenu()}
+                <Hidden lgUp>
+                    {this.renderMenuHelp()}
+                </Hidden>
             </div>
         )
     }
