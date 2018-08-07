@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //UTILS
-import { getUserData, clearAll } from "../../utils/localStorage";
+import { getUsername, clearAll } from "../../utils/localStorage";
 
 // COMPONENTS
 import Login from "./login";
@@ -35,10 +35,11 @@ class Content extends Component {
 
   renderContent = () => {
     try {
-      let { seed, password } = this.props.user.user;
+      let usernameStorage = getUsername();
+      let { username, seed, password } = this.props.user.user;
       let { type } = this.state;
-
-      if (seed && password && type !== "app") {
+      
+      if (seed && password && type !== "app" && usernameStorage === username) {
         return this.changeContent(<App />, "app");
       }
 
@@ -60,7 +61,10 @@ class Content extends Component {
 }
 
 connect.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  username: PropTypes.string,
+  seed: PropTypes.string,
+  password: PropTypes.string
 };
 
 const mapSateToProps = store => ({

@@ -3,8 +3,8 @@ const initialState = {
     name: undefined,
     surname: undefined,
     username: undefined,
+    email: undefined,
     password: undefined,
-    pin: undefined,
     seed: undefined
   },
   pages: {
@@ -23,7 +23,7 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          pin: action.user.pin,
+          username: action.user.username,
           seed: action.user.seed,
           password: action.user.password
         },

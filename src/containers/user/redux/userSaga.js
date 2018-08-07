@@ -5,7 +5,9 @@ import {
   getAuthToken,
   setUserSeedWords,
   getUserSeedWords,
-  setUserData
+  getUsername,
+  setUserData,
+  clearAll
 } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
 import { HEADER_RESPONSE } from "../../../constants/headers";
@@ -22,9 +24,10 @@ const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
   try {
+    let username = yield call(getUsername);
     let response = yield call(
       authService.authenticate,
-      action.email,
+      action.username,
       action.password
     );
 
@@ -33,8 +36,12 @@ export function* authenticateUser(action) {
       yield put({ type: changeLoadingState });
       return;
     }
+    
+    if(username !== action.username) {
+      yield call(clearAll);
+    }
 
-    setUserData({ username: action.email });
+    setUserData({ username: action.username });
 
     let twoFactorResponse = yield call(
       authService.hasTwoFactorAuth,
@@ -48,12 +55,10 @@ export function* authenticateUser(action) {
 
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
-    // let teste = yield call(compareUserSeedWords, seed);
-    console.warn(seed)
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
-        email: action.email,
+        username: action.username,
         password: encryptHmacSha512Key(action.password),
         seed: twoFactor ? undefined : seed
         // pin
