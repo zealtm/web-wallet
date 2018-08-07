@@ -15,8 +15,8 @@
     height: 100vh;
     overflow: auto;
     padding: 16px; 
-    display: flex;
-    align-items: center;
+    /* display: flex; */
+    /* align-items: center; */
     /* justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;  */

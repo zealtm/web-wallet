@@ -52,18 +52,18 @@
 }
 
 :local(.homeContainer) {
-  justify-content: center;  
-  padding-bottom: 100px;
-  margin: auto;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  margin-bottom: 10%;
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 1023px) {
     :local(.homeContainer) {
       flex-wrap: nowrap !important;
       overflow-x: scroll;
       justify-content: space-between;
       height: 75vh;      
       align-items: center;
-      padding: 0 0 5% 0;
     }
 } 
