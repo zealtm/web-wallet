@@ -14,17 +14,26 @@ import Footer from "../footer";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
+import { getUsername } from "../../../utils/localStorage";
 import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "../style.css";
+
+let inputUsername = {
+  type: "email",
+  name: "emailUsername",
+  value: getUsername(),
+  placeholder: "Username or Password",
+  required: true
+};
 
 class Auth extends React.Component {
   constructor() {
     super();
     this.state = {
       inputs: {
-        emailUsername: undefined,
+        emailUsername: inputUsername,
         password: undefined
       },
       errors: undefined
@@ -62,6 +71,7 @@ class Auth extends React.Component {
   };
 
   render() {
+    // let userName = getUsername();
     let { user } = this.props;
     let { inputs, errors } = this.state;
 
@@ -74,6 +84,7 @@ class Auth extends React.Component {
           type="email"
           name="emailUsername"
           required
+          value={inputs.emailUsername.value}
           placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
           onChange={event => {
             this.getInput(event.target);
