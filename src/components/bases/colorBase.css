@@ -28,6 +28,9 @@
 :local(.bgPurpleLight) {
   background-color: #4b2c82;
 }
+:local(.bgPrupleMedium) {
+  background-color: #442181;
+}
 :local(.bgPurpleDark) {
   background-color: #3b1878;
 }
