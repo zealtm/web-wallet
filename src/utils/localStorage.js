@@ -1,4 +1,4 @@
-import { encryptHmacSha512 } from "./cryptography";
+import { encryptAes } from "./cryptography";
 const authToken = "auth.token";
 const userObj = "user.object";
 
@@ -8,13 +8,21 @@ export const setAuthToken = token =>
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
 export const setUserSeedWords = (seed, password) => {
-  setUserData({ secretWord: encryptHmacSha512(seed, password) });
+  setUserData({ secretWord: encryptAes(seed, password) });
 };
 
 export const getUserSeedWords = () => {
   let userData = getUserData();
-  console.warn("userData", userData, userData.secretWord);
   return userData.secretWord;
+};
+
+export const compareUserSeedWords = seed => {
+  let userData = getUserData();
+  if (userData.secretWord === seed) {
+    return true;
+  }
+
+  return false;
 };
 
 export const clearAuthToken = () => localStorage.removeItem(authToken);

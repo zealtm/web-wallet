@@ -4,6 +4,7 @@ import {
   setAuthToken,
   getAuthToken,
   setUserSeedWords,
+  getUserSeedWords,
   setUserData
 } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
@@ -26,28 +27,38 @@ export function* authenticateUser(action) {
       action.email,
       action.password
     );
-    setUserData({ username: action.email });
+
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
       return;
     }
 
-    yield call(setAuthToken, response.data.data.token);
-    let userToken = yield call(getAuthToken);
-    let twoFactorResponse = yield call(authService.hasTwoFactorAuth, userToken);
+    setUserData({ username: action.email });
+
+    let twoFactorResponse = yield call(
+      authService.hasTwoFactorAuth,
+      response.data.data.token
+    );
+    let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
+    let seed = yield call(getUserSeedWords);
+
     // let pinResponse = yield call(pinService.consult, userToken);
     // let pin = pinResponse.data.code === 200 ? true : false;
+
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
+
+    // let teste = yield call(compareUserSeedWords, seed);
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
         email: action.email,
-        password: encryptHmacSha512Key(action.password)
+        password: encryptHmacSha512Key(action.password),
+        seed: twoFactor ? undefined : seed
         // pin
       },
-      pages: { login: twoFactorResponse.data.code === 200 ? 1 : 2 }
+      pages: { login: twoFactor ? 1 : 2 }
     });
 
     return;
@@ -60,12 +71,20 @@ export function* authenticateUser(action) {
 export function* hasTwoFactorAuth() {
   try {
     let userToken = yield call(getAuthToken);
+    let seed = yield call(getUserSeedWords);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
 
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
       return;
+    }
+
+    if (seed) {
+      yield put({
+        type: "SET_USER_SEED",
+        seed: seed
+      });
     }
 
     yield put({ type: "GET_USER_2FA", response });
@@ -184,9 +203,11 @@ export function* resetUser() {
 export function* setUserSeed(action) {
   try {
     yield setUserSeedWords(action.seed, action.password);
+    let seed = yield call(getUserSeedWords);
+
     return yield put({
       type: "SET_USER_SEED",
-      seed: encryptHmacSha512Key(action.seed)
+      seed: seed
     });
   } catch (error) {
     yield put({ type: changeLoadingState });

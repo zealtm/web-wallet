@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Redirect } from "react-router-dom";
 
 // Redux
 import { connect } from "react-redux";
@@ -28,7 +27,6 @@ class Seed extends React.Component {
         seed: undefined
       },
       errors: undefined,
-      redirect: false,
       buttonEnable: false
     };
   }
@@ -92,11 +90,10 @@ class Seed extends React.Component {
   render() {
     let { loading } = this.props.user;
     let { seed } = this.state.inputs;
-    let { buttonEnable, redirect, errors } = this.state;
+    let { buttonEnable, errors } = this.state;
 
     return (
       <div>
-        {redirect && <Redirect to="/home" />}
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>

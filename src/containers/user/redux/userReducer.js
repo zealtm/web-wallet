@@ -2,7 +2,7 @@ const initialState = {
   user: {
     name: undefined,
     surname: undefined,
-    email: undefined,
+    username: undefined,
     password: undefined,
     pin: undefined,
     seed: undefined
@@ -22,6 +22,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         user: {
+          ...state.user,
           pin: action.user.pin,
           seed: action.user.seed,
           password: action.user.password

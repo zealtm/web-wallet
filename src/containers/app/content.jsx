@@ -26,12 +26,10 @@ class Content extends Component {
   };
 
   componentDidMount() {
-    console.warn("1");
     this.renderContent();
   }
 
   componentDidUpdate() {
-    console.warn("2");
     this.renderContent();
   }
 
@@ -39,7 +37,6 @@ class Content extends Component {
     try {
       let { seed, password } = this.props.user.user;
       let { type } = this.state;
-      console.warn(type);
 
       if (seed && password && type !== "app") {
         return this.changeContent(<App />, "app");
