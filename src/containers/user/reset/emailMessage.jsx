@@ -17,12 +17,13 @@ class EmailMessage extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/login">
+         <Link to="#" onClick={() => this.backLink()}>
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
             className={style.iconArrowBack}
           />
         </Link>
+        
         <img src="../../images/logo.svg" className={style.logo} />
         <img
           src="../../../../images/icons/email/email@1x.png"
