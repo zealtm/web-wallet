@@ -15,14 +15,41 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "../style.css";
 
+let input = {
+  type: undefined,
+  name: undefined,
+  value: undefined,
+  placeholder: undefined,
+  required: false
+};
+
 class CreateUser extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    let { name, surname, email } = props.user.user;
     this.state = {
       inputs: {
-        lastName: undefined,
-        firstName: undefined,
-        email: undefined,
+        lastName: {
+          type: "text",
+          name: "lastName",
+          value: surname ? surname : "",
+          placeholder: i18n.t("PLACEHOLDER_LAST_NAME"),
+          required: true
+        },
+        firstName: {
+          type: "text",
+          name: "firstName",
+          value: name ? name : "",
+          placeholder: i18n.t("PLACEHOLDER_FIRST_NAME"),
+          required: true
+        },
+        email: {
+          type: "email",
+          name: "email",
+          value: email ? email : "",
+          placeholder: i18n.t("PLACEHOLDER_EMAIL"),
+          required: true
+        }
       },
       step: 0,
       errors: undefined
@@ -31,11 +58,22 @@ class CreateUser extends React.Component {
 
   getInput = input => {
     let { inputs } = this.state;
-    let { name, value } = input;
+    let { type, name, value, placeholder } = input;
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: value ? input : undefined },
+      inputs: {
+        ...inputs,
+        [name]: value
+          ? input
+          : {
+              type: type,
+              name: name,
+              value: value ? value : "",
+              placeholder: placeholder,
+              required: true
+            }
+      },
       errors: undefined
     });
   };
@@ -43,6 +81,7 @@ class CreateUser extends React.Component {
   inputValidator = () => {
     let { getCreateUserInfo, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
+    console.warn(inputs);
     let { firstName, lastName, email } = this.state.inputs;
     let { messageError, errors } = inputValidator(inputs);
 
@@ -59,8 +98,7 @@ class CreateUser extends React.Component {
   };
 
   render() {
-    let { inputs, errors } = this.state; 
-    let { name, surname, email } = this.props.user.user;
+    let { inputs, errors } = this.state;
 
     return (
       <div className={style.contNewAccount}>
@@ -82,7 +120,7 @@ class CreateUser extends React.Component {
             name="firstName"
             required
             placeholder={i18n.t("PLACEHOLDER_FIRST_NAME")}
-            value={name}
+            value={inputs.firstName.value}
             onChange={event => {
               this.getInput(event.target);
             }}
@@ -96,7 +134,7 @@ class CreateUser extends React.Component {
           <input
             type="text"
             name="lastName"
-            value={surname}
+            value={inputs.lastName.value}
             required
             placeholder={i18n.t("PLACEHOLDER_LAST_NAME")}
             onChange={event => {
@@ -111,7 +149,7 @@ class CreateUser extends React.Component {
           <input
             type="email"
             name="email"
-            value={email}
+            value={inputs.email.value}
             required
             placeholder={i18n.t("PLACEHOLDER_EMAIL")}
             onChange={event => {
@@ -146,7 +184,7 @@ CreateUser.propTypes = {
   getCreateUserInfo: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object,
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({

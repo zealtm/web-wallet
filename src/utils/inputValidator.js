@@ -72,7 +72,7 @@ export const inputValidator = inputs => {
         // Check length
         if (
           !isLength(trim(value.toString()), {
-            min: minLength !== -1 ? minLength : 3,
+            min: minLength !== -1 ? minLength : 2,
             max: maxLength !== -1 ? maxLength : 128
           })
         )
