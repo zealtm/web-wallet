@@ -17,13 +17,13 @@ class EmailMessage extends React.Component {
   render() {
     return (
       <div>
-         <Link to="#" onClick={() => this.backLink()}>
+        <Link to="#" onClick={() => this.backLink()}>
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
             className={style.iconArrowBack}
           />
         </Link>
-        
+
         <img src="../../images/logo.svg" className={style.logo} />
         <img
           src="../../../../images/icons/email/email@1x.png"
@@ -32,11 +32,11 @@ class EmailMessage extends React.Component {
         <div className={style.resetEmailSend}>
           {i18n.t("RESET_EMAIL_SENDED")}
         </div>
-        <button className={style.buttonEnable}>
-          <Link className={style.resetLinkLogin} to="/">
+        <Link className={style.resetLinkLogin} to="/" onClick={() => this.backLink()}>
+          <button className={style.buttonEnable} >
             {i18n.t("BTN_LOGIN")}
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
     );
   }
