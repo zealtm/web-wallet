@@ -1,10 +1,10 @@
 const initialState = {
   coins: {},
-  loading: false,
+  loading: true,
   errors: false
 };
 
-const user = (state = initialState, action) => {
+const skeleton = (state = initialState, action) => {
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
@@ -31,4 +31,4 @@ const user = (state = initialState, action) => {
   }
 };
 
-export default user;
+export default skeleton;
