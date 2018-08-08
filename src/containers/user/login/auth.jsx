@@ -23,7 +23,7 @@ import style from "../style.css";
 let inputUsername = {
   type: "email",
   name: "emailUsername",
-  value: getUsername(),
+  value: getUsername() ? getUsername() : "",
   placeholder: "Username or Password",
   required: true
 };
@@ -46,7 +46,7 @@ class Auth extends React.Component {
 
     this.setState({
       ...this.state,
-      inputs: { ...inputs, [name]: value ? input : undefined },
+      inputs: { ...inputs, [name]: value ? input : { value: "" } },
       errors: undefined
     });
   };
