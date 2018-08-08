@@ -27,11 +27,6 @@ const menuItens = [
         label: "Boletos",
         icon: "../../images/icons/home/home@1x.png",
     },
-    {
-        link: "/boleto",
-        label: "Configuraçoes",
-        icon: "../../images/icons/home/home@1x.png",
-    },
 ];
 
 class Menu extends React.Component {
