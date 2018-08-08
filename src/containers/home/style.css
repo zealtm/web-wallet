@@ -1,6 +1,7 @@
 /*
 1. BASE
   1.1 BUTTON
+  1.2 SCROLLBAR
 
 2. CARD
   2.1 CARD
@@ -15,29 +16,40 @@
   composes: buttonEnable from "../../components/bases/buttonBase.css";
   width: 30%;
   height: 45px;
-  text-align: center;
   font-weight: bold;
+  margin: 2vh;
 }
 
+/* 1.2 SCROLLBAR*/
+::-webkit-scrollbar              {
+  background-color: transparent;
+  height: 5px;
+  width: 5px;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+::-webkit-scrollbar-thumb        {
+  background-color: #654fa4;
+  border-radius: 6px;
+}
 /* 2. CARD */
 
 /* 2.1 CARD */
 :local(.cardHome) {
   composes: bgPrupleMedium from "../../components/bases/colorBase.css";
-  width: 299px;
-  height: 340px;
+  width: 275px;
   padding: 7% 1%;
   border-radius: 10px;
   text-align: center;
   margin: 10px;
   align-items: center;
-  display: grid;
   max-width: 100%;
 }
 
 :local(.descriptionCard) {
   composes: textDefault from "../../components/bases/textBase.css";    
-  padding: 0 8%; 
+  padding: 1vh 2vh; 
   max-width: 100%;
 }
 
@@ -49,6 +61,7 @@
 :local(.cardTitle) {
   composes: textDefault from "../../components/bases/textBase.css";    
   font-weight: bold;
+  padding: 2vh;
 }
 
 :local(.homeContainer) {
