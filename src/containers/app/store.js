@@ -1,18 +1,20 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import user from "../user/redux/userReducer";
-import error from "../errors/redux/errorReducer";
 import userSaga from "../user/redux/userSaga";
+import error from "../errors/redux/errorReducer";
+import skeleton from "../skeleton/redux/skeletonReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 
 const Store = createStore(
-    combineReducers({
-        user,
-        error
-    }),
+  combineReducers({
+    user,
+    skeleton,
+    error
+  }),
 
-    applyMiddleware(sagaMiddleware)
+  applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(userSaga);
