@@ -30,9 +30,9 @@ class Content extends Component {
   }
 
   componentDidUpdate() {
-    console.warn('FOI')
     let { type } = this.state;
     let { loading } = this.props.skeleton;
+
     if (loading) {
       if (type !== "loading") return this.renderLoading();
       return;
