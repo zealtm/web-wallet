@@ -50,7 +50,7 @@ class App extends Component {
           <Skeleton>
             <Switch>
               {/* INSIDE ROUTES */}
-              <Route path="/" component={home} />
+              <Route exact path="/" component={home} />
               <Route path="/home" component={home} />
               <Route path="/wallet" component={wallet} />
 
