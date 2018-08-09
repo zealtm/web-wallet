@@ -81,7 +81,6 @@ class CreateUser extends React.Component {
   inputValidator = () => {
     let { getCreateUserInfo, clearMessage, errorInput } = this.props;
     let { inputs } = this.state;
-    console.warn(inputs);
     let { firstName, lastName, email } = this.state.inputs;
     let { messageError, errors } = inputValidator(inputs);
 
