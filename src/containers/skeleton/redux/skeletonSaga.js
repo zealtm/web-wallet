@@ -1,7 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import { getAuthToken } from "../../../utils/localStorage";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
-
 // Services
 import CoinService from "../../../services/coinService";
 const coinService = new CoinService();

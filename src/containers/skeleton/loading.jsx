@@ -17,6 +17,8 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
+
+
   componentDidMount() {
     this.loadingInfos();
   }
