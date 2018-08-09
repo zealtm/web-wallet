@@ -1,15 +1,14 @@
 import { put, call } from "redux-saga/effects";
 import { getAuthToken } from "../../../utils/localStorage";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
-
 // Services
 import CoinService from "../../../services/coinService";
 const coinService = new CoinService();
 
 
 export function* availableCoins(action) {
+
   try {
-    console.warn('2')
     let token = yield call(getAuthToken);
     let response = yield call(coinService.getAvaliableCoins, token);
     console.warn(response, action);

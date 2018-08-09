@@ -27,6 +27,6 @@ export default function* rootSaga() {
         //skeleton-saga
         fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
         fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
-        fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+        fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress)
     ];
 }

@@ -13,21 +13,22 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
-  
+
 
   componentDidMount() {
     this.loadingInfos();
   }
 
   loadingInfos = () => {
-     let { loading } = this.props.skeleton
+    let { loading } = this.props.skeleton;
+    let { availableCoins } = this.props;
 
-     if(loading) {
-       console.warn('1')
+    if (loading) {
+      console.warn('1')
       availableCoins();
-     }
+    }
   }
-  
+
   render() {
     return (
       <div className={style.alignLoadingContainer}>
