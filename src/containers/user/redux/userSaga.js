@@ -54,6 +54,12 @@ export function* authenticateUser(action) {
 
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
+    if (!twoFactor && seed) {
+      yield put({
+        type: "CHANGE_LOADING_GENERAL_STATE"
+      });
+    }
+
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
@@ -125,6 +131,9 @@ export function* verifyTwoFactorAuth(action) {
     }
 
     if (seed) {
+      yield put({
+        type: "CHANGE_LOADING_GENERAL_STATE"
+      });
       yield put({
         type: "SET_USER_SEED",
         seed: seed
@@ -216,6 +225,10 @@ export function* setUserSeed(action) {
   try {
     yield setUserSeedWords(action.seed, action.password);
     let seed = yield call(getUserSeedWords);
+
+    yield put({
+      type: "CHANGE_LOADING_GENERAL_STATE"
+    });
 
     return yield put({
       type: "SET_USER_SEED",

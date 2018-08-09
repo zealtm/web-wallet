@@ -32,17 +32,17 @@ const menuItens = [
 // array itens menu
 const menuItensHelp = [
   {
-    link: "/home",
+    link: "/privacidade",
     label: "Privacidade",
     icon: "../../images/icons/home/home@1x.png"
   },
   {
-    link: "/home",
+    link: "/configuração",
     label: "Configuração",
     icon: "../../images/icons/home/home@1x.png"
   },
   {
-    link: "/home",
+    link: "/suporte",
     label: "Suporte",
     icon: "../../images/icons/home/home@1x.png"
   }

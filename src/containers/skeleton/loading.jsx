@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadingGeneral, availableCoins, balanceCoins } from "./redux/skeletonAction";
+import {
+  loadingGeneral,
+  availableCoins,
+  balanceCoins
+} from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
@@ -13,21 +17,19 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
-  
-
   componentDidMount() {
     this.loadingInfos();
   }
 
   loadingInfos = () => {
-     let { loading } = this.props.skeleton
-
-     if(loading) {
-       console.warn('1')
+    let { loading } = this.props.skeleton;
+    let { loadingGeneral, availableCoins } = this.props;
+    if (loading) {
       availableCoins();
-     }
-  }
-  
+      // loadingGeneral();
+    }
+  };
+
   render() {
     return (
       <div className={style.alignLoadingContainer}>
@@ -44,6 +46,7 @@ class LoadingPage extends Component {
 }
 
 LoadingPage.propTypes = {
+  errorRequest: PropTypes.func,
   loadingGeneral: PropTypes.func,
   availableCoins: PropTypes.func,
   balanceCoins: PropTypes.func,

@@ -6,3 +6,7 @@ export const errorInput = value => ({
   type: "ERROR_INPUT",
   message: value
 });
+
+export const errorRequest = () => ({
+  type: "REQUEST_FAILED",
+});

@@ -9,7 +9,6 @@ const initialState = {
 const skeleton = (state = initialState, action) => {
   switch (action.type) {
     case "GET_AVAILABLE_COINS":
-      console.warn(action.coins)
       return {
         ...state,
         coins: action.coins
@@ -28,15 +27,16 @@ const skeleton = (state = initialState, action) => {
       };
 
     case "CHANGE_LOADING_GENERAL_STATE":
+      console.warn(1, state.loading)
       return {
         ...state,
         loading: !state.loading
       };
 
-    case "CHANGE_ERROR_STATE":
+    case "CHANGE_SKELETON_ERROR_STATE":
       return {
         ...state,
-        loading: !state.loading
+        errors: action.state
       };
 
     default: {

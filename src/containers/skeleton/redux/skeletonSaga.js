@@ -6,21 +6,18 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 import CoinService from "../../../services/coinService";
 const coinService = new CoinService();
 
-
-export function* availableCoins(action) {
+export function* availableCoins() {
   try {
-    console.warn('2')
     let token = yield call(getAuthToken);
     let response = yield call(coinService.getAvaliableCoins, token);
-    console.warn(response, action);
     yield put({
       type: "GET_AVAILABLE_COINS",
-      coins: response
+      coins: response.data.data.coins
     });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_ERROR_STATE" });
+    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -36,7 +33,7 @@ export function* balanceCoins(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_ERROR_STATE" });
+    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -47,12 +44,12 @@ export function* createCoinsAddress(action) {
     console.warn(response, action);
     yield put({
       type: "POST_CREATE_COINS_ADDRESS",
-      coins: response
+      coins: response.data.data.coins
     });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_ERROR_STATE" });
+    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }

@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { errorRequest } from "../errors/redux/errorAction";
 
 //UTILS
 import { getUsername, clearAll } from "../../utils/localStorage";
@@ -11,6 +13,7 @@ import { getUsername, clearAll } from "../../utils/localStorage";
 import Login from "./login";
 import App from "./app";
 import LoadingPage from "../skeleton/loading";
+import InternalError from "../errors/500";
 
 class Content extends Component {
   constructor() {
@@ -31,13 +34,26 @@ class Content extends Component {
 
   componentDidUpdate() {
     let { type } = this.state;
-    let { loading } = this.props.skeleton;
+    let { loading, errors } = this.props.skeleton;
+
+    if (errors) {
+      if(type !== "error") {
+        errorRequest();
+        this.changeContent(<InternalError />, "error");
+        setTimeout(() => {
+        window.location.reload();
+        }, 3000);
+      }
+
+      return;
+    }
 
     if (loading) {
       if (type !== "loading") return this.renderLoading();
       return;
     }
-    this.renderContent();
+
+    return this.renderContent();
   }
 
   renderLoading = () => {
@@ -47,8 +63,8 @@ class Content extends Component {
   renderContent = () => {
     try {
       let { type } = this.state;
-      let usernameStorage = getUsername();
       let { username, seed, password } = this.props.user.user;
+      let usernameStorage = getUsername();
 
       if (seed && password && type !== "app" && usernameStorage === username) {
         return this.changeContent(<App />, "app");
@@ -72,11 +88,13 @@ class Content extends Component {
 }
 
 connect.propTypes = {
+  errorRequest: PropTypes.func,
   user: PropTypes.object,
   skeleton: PropTypes.object,
   username: PropTypes.string,
   seed: PropTypes.string,
-  password: PropTypes.string
+  password: PropTypes.string,
+  location: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -84,7 +102,15 @@ const mapSateToProps = store => ({
   skeleton: store.skeleton
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      errorRequest
+    },
+    dispatch
+  );
+
 export default connect(
   mapSateToProps,
-  null
+  mapDispatchToProps
 )(Content);
