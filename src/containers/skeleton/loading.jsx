@@ -13,15 +13,16 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
-  
 
-  
+
+
   render() {
     // let { loading } = this.props.skeleton
     // console.warn(loading)
 
     return (
       <div className={style.alignLoadingContainer}>
+
         <div className={style.itemsLoadingContainer}>
           <img src="../../images/logo.svg" className={style.logoLoading} />
 
@@ -29,6 +30,7 @@ class LoadingPage extends Component {
             <Loading color="lunes" width="30px" />
           </div>
         </div>
+
       </div>
     );
   }
