@@ -1,5 +1,4 @@
-import { takeLatest } from "redux-saga";
-import { put, call, fork } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import { getAuthToken } from "../../../utils/localStorage";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
@@ -56,10 +55,4 @@ export function* createCoinsAddress(action) {
     yield put({ type: "CHANGE_ERROR_STATE" });
     yield put(internalServerError());
   }
-}
-
-export default function* rootSaga() {
-  yield [fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins)];
-  yield [fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins)];
-  yield [fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress)];
 }

@@ -1,5 +1,4 @@
-import { takeLatest } from "redux-saga";
-import { put, call, fork } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import {
   setAuthToken,
   getAuthToken,
@@ -36,8 +35,8 @@ export function* authenticateUser(action) {
       yield put({ type: changeLoadingState });
       return;
     }
-    
-    if(username !== action.username) {
+
+    if (username !== action.username) {
       yield call(clearAll);
     }
 
@@ -226,18 +225,4 @@ export function* setUserSeed(action) {
     yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
-}
-
-export default function* rootSaga() {
-  yield [
-    fork(takeLatest, "POST_USER_AUTHENTICATE_API", authenticateUser),
-    fork(takeLatest, "POST_USER_CREATE_2FA_API", createTwoFactorAuth),
-    fork(takeLatest, "POST_USER_VERIFY_2FA_API", verifyTwoFactorAuth),
-    fork(takeLatest, "POST_USER_CREATE_USER_API", createUser),
-    fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
-    // fork(takeLatest, "POST_USER_VERIFY_PIN_API", verifyUserPin),
-    // fork(takeLatest, "POST_USER_CREATE_PIN_API", createUserPin),
-    fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
-    fork(takeLatest, "SET_USER_SEED_API", setUserSeed)
-  ];
 }

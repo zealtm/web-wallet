@@ -2,7 +2,7 @@ const initialState = {
   coins: {},
   address: {},
   balance: {},
-  loading: true,
+  loading: false,
   errors: false
 };
 
