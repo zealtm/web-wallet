@@ -1,37 +1,36 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-//MATERIAL UI 
-import Avatar from '@material-ui/core/Avatar';
+//MATERIAL UI
+import Avatar from "@material-ui/core/Avatar";
 
 //STYLE
 import style from "./style.css";
 
 class UserControl extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      openBox: false, 
-      avatar: 'https://loremflickr.com/80/80',
-    }
+      openBox: false,
+      avatar: "https://loremflickr.com/80/80"
+    };
   }
 
   handleClick = () => {
-    this.setState({...this.state, openBox: !this.state.openBox});
+    this.setState({ ...this.state, openBox: !this.state.openBox });
   };
 
   renderPopup = () => {
-    const {openBox} = this.state;
-    
-    if(openBox){
+    const { openBox } = this.state;
 
-      setTimeout(()=>{
-        this.setState({...this.state, openBox: false})
+    if (openBox) {
+      setTimeout(() => {
+        this.setState({ ...this.state, openBox: false });
       }, 5000);
 
       return (
         <div className={style.menuUser}>
-          <div className={style.arrowUp}></div>
+          <div className={style.arrowUp} />
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>
               <img src="../../images/icons/settings/settings.png" />
@@ -53,21 +52,21 @@ class UserControl extends React.Component {
         </div>
       );
     }
-  }
+  };
 
-  render(){
-    const {avatar} = this.state;
+  render() {
+    const { avatar } = this.state;
 
     return (
       <div>
-        <Avatar 
-          alt="Avatar" 
-          src={avatar} 
+        <Avatar
+          alt="Avatar"
+          src={avatar}
           className={style.avatarHeader}
-          onClick={this.handleClick} />
+          onClick={this.handleClick}
+        />
 
-          {this.renderPopup()}
-
+        {this.renderPopup()}
       </div>
     );
   }
