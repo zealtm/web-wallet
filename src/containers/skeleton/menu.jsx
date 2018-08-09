@@ -12,21 +12,40 @@ import style from "./style.css";
 
 // array itens menu
 const menuItens = [
-  {
-    link: "/home",
-    label: "Home",
-    icon: "../../images/icons/home/home@1x.png"
-  },
-  {
-    link: "/wallet",
-    label: "Wallet",
-    icon: "../../images/icons/wallet/wallet@1x.png"
-  },
-  {
-    link: "/boleto",
-    label: "Boletos",
-    icon: "../../images/icons/home/home@1x.png"
-  }
+    {
+        link: "/home",
+        label: "Home",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+    {
+        link: "/wallet",
+        label: "Wallet",
+        icon: "../../images/icons/wallet/wallet@1x.png",
+    },
+    {
+        link: "/boleto",
+        label: "Boletos",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+];
+
+// array itens menu
+const menuItensHelp = [
+    {
+        link: "/home",
+        label: "Privacidade",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+    {
+        link: "/home",
+        label: "Configuração",
+        icon: "../../images/icons/home/home@1x.png",
+    },
+    {
+        link: "/home",
+        label: "Suporte",
+        icon: "../../images/icons/home/home@1x.png",
+    },
 ];
 
 class Menu extends React.Component {
@@ -36,6 +55,7 @@ class Menu extends React.Component {
 
   renderMenu = () => {
     let { pathname } = this.props.location;
+    const {actionMenu} = this.props;
     
     return menuItens.map((item, key) => {
       let classStyle = style.linkMenu;
@@ -50,6 +70,7 @@ class Menu extends React.Component {
           activeClassName={style.linkMenuActive}
           to={item.link}
           key={key}
+          onClick={actionMenu}
         >
           <img src={item.icon} className={style.iconMenu} />
           {item.label}
@@ -57,6 +78,24 @@ class Menu extends React.Component {
       );
     });
   };
+
+  renderMenuHelp = () => {
+        const {actionMenu} = this.props;
+
+        return menuItensHelp.map((item,key) => {
+            return (
+                <NavLink 
+                    className={style.linkMenu} 
+                    activeClassName={style.linkMenuActive} 
+                    to={item.link} key={key} 
+                    onClick={actionMenu}
+                >
+                    <img src={item.icon} className={style.iconMenu} />
+                    {item.label}
+                </NavLink>
+            )
+        });
+    }
 
   render() {
     const { openMenu } = this.props;
@@ -79,6 +118,9 @@ class Menu extends React.Component {
           </Grid>
         </Hidden>
         {this.renderMenu()}
+        <Hidden lgUp>
+            {this.renderMenuHelp()}
+        </Hidden>
       </div>
     );
   }
@@ -86,7 +128,8 @@ class Menu extends React.Component {
 
 Menu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  actionMenu: PropTypes.func.isRequired
 };
 
 export default withRouter(Menu);
