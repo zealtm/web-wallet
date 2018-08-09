@@ -8,17 +8,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Notifications from '@material-ui/icons/Notifications';
-import Avatar from '@material-ui/core/Avatar';
 import Badge from '@material-ui/core/Badge';
 
 //STYLE 
 import style from "./style.css";
 
+//COMPONENTS
+import UserControl from './userControl.jsx';
+
 class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            avatar: 'https://loremflickr.com/80/80',
             notifications: 1,
         };
     }
@@ -49,7 +50,6 @@ class Header extends React.Component {
 
     render() {
         const { actionMenu } = this.props;
-        const { avatar } = this.state;
         return (
             <AppBar position="static">
                 <Toolbar className={style.header}>
@@ -76,7 +76,7 @@ class Header extends React.Component {
                     </Hidden>
                     
                     <Hidden mdDown>
-                        <Avatar alt="Avatar" src={avatar} className={style.avatarHeader} />
+                        <UserControl />
                     </Hidden>
                 </Toolbar>
             </AppBar>

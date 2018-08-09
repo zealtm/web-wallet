@@ -30,15 +30,26 @@ class Content extends Component {
   }
 
   componentDidUpdate() {
+    let { type } = this.state;
+    let { loading } = this.props.skeleton;
+
+    if (loading) {
+      if (type !== "loading") return this.renderLoading();
+      return;
+    }
     this.renderContent();
   }
 
+  renderLoading = () => {
+    return this.changeContent(<LoadingPage />, "loading");
+  };
+
   renderContent = () => {
     try {
+      let { type } = this.state;
       let usernameStorage = getUsername();
       let { username, seed, password } = this.props.user.user;
-      let { type } = this.state;
-      
+
       if (seed && password && type !== "app" && usernameStorage === username) {
         return this.changeContent(<App />, "app");
       }
@@ -62,13 +73,15 @@ class Content extends Component {
 
 connect.propTypes = {
   user: PropTypes.object,
+  skeleton: PropTypes.object,
   username: PropTypes.string,
   seed: PropTypes.string,
   password: PropTypes.string
 };
 
 const mapSateToProps = store => ({
-  user: store.user
+  user: store.user,
+  skeleton: store.skeleton
 });
 
 export default connect(
