@@ -16,9 +16,11 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 // Services
 import AuthService from "../../../services/authService";
 import UserService from "../../../services/userService";
+import CoinService from "../../../services/coinService";
 // import PinService from "../../../services/pinService";
 const authService = new AuthService();
 const userService = new UserService();
+const coinService = new CoinService();
 // const pinService = new PinService();
 const changeLoadingState = "CHANGE_LOADING_STATE";
 
@@ -36,8 +38,8 @@ export function* authenticateUser(action) {
       yield put({ type: changeLoadingState });
       return;
     }
-    
-    if(username !== action.username) {
+
+    if (username !== action.username) {
       yield call(clearAll);
     }
 
@@ -65,6 +67,10 @@ export function* authenticateUser(action) {
       },
       pages: { login: twoFactor ? 1 : 2 }
     });
+
+    let token = yield call(getAuthToken);
+    let data = yield call(coinService.getCoinPrice, "lunes", "brl", token);
+    console.warn("price ", data);
 
     return;
   } catch (error) {
