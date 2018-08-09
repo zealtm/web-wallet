@@ -54,9 +54,10 @@ class Menu extends React.Component {
     }
 
     renderMenu = () => {
+        const {actionMenu} = this.props;
         return menuItens.map((item,key) => {
             return (
-                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key}>
+                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key} onClick={actionMenu}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
                 </NavLink>
             )
@@ -64,9 +65,10 @@ class Menu extends React.Component {
     }
 
     renderMenuHelp = () => {
+        const {actionMenu} = this.props;
         return menuItensHelp.map((item,key) => {
             return (
-                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key}>
+                <NavLink className={style.linkMenu} activeClassName={style.linkMenuActive} to={item.link} key={key} onClick={actionMenu}>
                     <img src={item.icon} className={style.iconMenu} />{item.label}
                 </NavLink>
             )
@@ -98,7 +100,8 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-    openMenu: PropTypes.bool.isRequired
+    openMenu: PropTypes.bool.isRequired,
+    actionMenu: PropTypes.func.isRequired
 };
 
 export default Menu;
