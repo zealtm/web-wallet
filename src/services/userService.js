@@ -25,6 +25,19 @@ class UserService {
       return internalServerError();
     }
   }
+
+  async getUser(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(BASE_URL + "/user", API_HEADER);
+
+      return response;
+    }
+    catch (error) {
+      internalServerError();
+      return;
+    }
+  }
 }
 
 export default UserService;
