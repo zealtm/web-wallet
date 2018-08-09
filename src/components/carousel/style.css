@@ -5,9 +5,7 @@
 
 :local(.paragraph) {
     color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center
-    
+    text-align: center;    
 }
 
 :local(.imageResponsive){

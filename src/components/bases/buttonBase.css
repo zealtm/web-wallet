@@ -10,6 +10,7 @@
 
 /* 1. BUTTON GENERAL*/
 :local(.buttonGeneral) {
+  composes: textDefault from "./textBase.css";
   border-radius: 6px;
   border: none;
   color: white;

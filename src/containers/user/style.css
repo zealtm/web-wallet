@@ -62,7 +62,6 @@
 :local(.buttonPurpleClear) {
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
   margin-bottom: 25px;
-  font-family: Roboto;
   font-weight: bold;
   font-size: 17px;
 }
@@ -371,6 +370,7 @@
 
 /* 7.1 INPUT */
 :local(.inputTwoFactorAuthenticator) {
+  composes: textDefault from "../../components/bases/textBase.css";
   color: white;
   background-color: transparent;
   border: none;
@@ -380,7 +380,6 @@
   margin: 25px 1px 0px 0px;
   font-size: 32px;
   font-weight: 900;
-  font-family: Roboto;
   text-align: center;
 }
 
@@ -430,8 +429,6 @@
   width: 79%;
   height: 50px;
   padding: 10%;
-  position: relative;
-  font-family: roboto;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
