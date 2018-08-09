@@ -1,8 +1,6 @@
 const initialState = {
   coins: {},
-  address: {},
-  balance: {},
-  loading: true,
+  loading: false,
   errors: false
 };
 
@@ -27,7 +25,6 @@ const skeleton = (state = initialState, action) => {
       };
 
     case "CHANGE_LOADING_GENERAL_STATE":
-      console.warn(1, state.loading)
       return {
         ...state,
         loading: !state.loading
