@@ -34,19 +34,19 @@ class UserControl extends React.Component {
           <div className={style.arrowUp}></div>
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>
-            <img src="../../images/icons/settings/settings.png" />
+              <img src="../../images/icons/settings/settings.png" />
             </div>
             Configurações
           </Link>
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>
-            <img src="../../images/icons/question/question.png" />
+              <img src="../../images/icons/question/question.png" />
             </div>
             Ajuda
           </Link>
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>
-            <img src="../../images/icons/exit/exit.png" />
+              <img src="../../images/icons/exit/exit.png" />
             </div>
             Sair
           </Link>
