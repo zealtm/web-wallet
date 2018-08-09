@@ -16,6 +16,19 @@ class CoinService {
         }
     }
 
+    async getCoinBalance(coinType, address, token) {
+        try {
+            API_HEADER.headers.Authorization = token;
+            let response = await axios.get(BASE_URL + "/coin/" + coinType + "/" + address, API_HEADER);
+
+            return response;
+        }
+        catch (error) {
+            internalServerError();
+            return;
+        }
+    }
+
     async createWalletCoin(coinType, seed, token) {
         try {
             API_HEADER.headers.Authorization = token;
