@@ -1,7 +1,7 @@
 // MATERIAL
 import { withStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
-import colors from "./bases/colors"
+import colors from "./bases/colors";
 
 const checkBoxStyles = {
   root: {
