@@ -1,14 +1,30 @@
 const initialState = {
   coins: {},
-  loading: false,
+  address: {},
+  balance: {},
+  loading: true,
   errors: false
 };
 
 const skeleton = (state = initialState, action) => {
   switch (action.type) {
-    case "POST_USER_AUTHENTICATE":
+    case "GET_AVAILABLE_COINS":
+      console.warn(action.coins)
       return {
         ...state,
+        coins: action.coins
+      };
+
+    case "GET_BALANCE_COINS":
+      return {
+        ...state,
+        coins: action.coins
+      };
+
+    case "POST_CREATE_COINS_ADDRESS":
+      return {
+        ...state,
+        coins: action.coins
       };
 
     case "CHANGE_LOADING_GENERAL_STATE":

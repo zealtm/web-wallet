@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadingGeneral } from "./redux/skeletonAction";
+import { loadingGeneral, availableCoins, balanceCoins } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
@@ -15,11 +15,20 @@ import style from "./style.css";
 class LoadingPage extends Component {
   
 
+  componentDidMount() {
+    this.loadingInfos();
+  }
+
+  loadingInfos = () => {
+     let { loading } = this.props.skeleton
+
+     if(loading) {
+       console.warn('1')
+      availableCoins();
+     }
+  }
   
   render() {
-    // let { loading } = this.props.skeleton
-    // console.warn(loading)
-
     return (
       <div className={style.alignLoadingContainer}>
         <div className={style.itemsLoadingContainer}>
@@ -35,6 +44,9 @@ class LoadingPage extends Component {
 }
 
 LoadingPage.propTypes = {
+  loadingGeneral: PropTypes.func,
+  availableCoins: PropTypes.func,
+  balanceCoins: PropTypes.func,
   skeleton: PropTypes.object
 };
 
@@ -45,7 +57,9 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadingGeneral
+      loadingGeneral,
+      availableCoins,
+      balanceCoins
     },
     dispatch
   );
