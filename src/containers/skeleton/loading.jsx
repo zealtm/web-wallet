@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { loadingGeneral } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
@@ -8,7 +14,12 @@ import style from "./style.css";
 
 class LoadingPage extends Component {
   
+
+  
   render() {
+    // let { loading } = this.props.skeleton
+    // console.warn(loading)
+
     return (
       <div className={style.alignLoadingContainer}>
         <div className={style.itemsLoadingContainer}>
@@ -23,4 +34,23 @@ class LoadingPage extends Component {
   }
 }
 
-export default LoadingPage;
+LoadingPage.propTypes = {
+  skeleton: PropTypes.object
+};
+
+const mapSateToProps = store => ({
+  skeleton: store.skeleton
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      loadingGeneral
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(LoadingPage);
