@@ -11,7 +11,7 @@ const skeleton = (state = initialState, action) => {
         ...state,
       };
 
-    case "CHANGE_LOADING_STATE":
+    case "CHANGE_LOADING_GENERAL_STATE":
       return {
         ...state,
         loading: !state.loading

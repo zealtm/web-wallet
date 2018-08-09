@@ -32,7 +32,7 @@ class Content extends Component {
   componentDidUpdate() {
     let { type } = this.state;
     let { loading } = this.props.skeleton;
-
+    console.warn(loading)
     if (loading) {
       if (type !== "loading") return this.renderLoading();
       return;
