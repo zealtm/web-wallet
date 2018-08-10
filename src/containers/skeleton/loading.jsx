@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  loadingGeneral,
-  availableCoins,
-  balanceCoins
-} from "./redux/skeletonAction";
+import { loadGeneralInfo, balanceCoins } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
@@ -17,25 +13,23 @@ import Loading from "../../components/loading";
 import style from "./style.css";
 
 class LoadingPage extends Component {
-
-
   componentDidMount() {
     this.loadingInfos();
   }
 
   loadingInfos = () => {
     let { loading } = this.props.skeleton;
-    let { loadingGeneral, availableCoins } = this.props;
+    let { loadGeneralInfo } = this.props;
+    let { password } = this.props.user;
+
     if (loading) {
-      availableCoins();
-      // loadingGeneral();
+      loadGeneralInfo(password);
     }
   };
 
   render() {
     return (
       <div className={style.alignLoadingContainer}>
-
         <div className={style.itemsLoadingContainer}>
           <img src="../../images/logo.svg" className={style.logoLoading} />
 
@@ -43,7 +37,6 @@ class LoadingPage extends Component {
             <Loading color="lunes" width="30px" />
           </div>
         </div>
-
       </div>
     );
   }
@@ -51,21 +44,21 @@ class LoadingPage extends Component {
 
 LoadingPage.propTypes = {
   errorRequest: PropTypes.func,
-  loadingGeneral: PropTypes.func,
-  availableCoins: PropTypes.func,
+  loadGeneralInfo: PropTypes.func,
   balanceCoins: PropTypes.func,
-  skeleton: PropTypes.object
+  skeleton: PropTypes.object,
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  skeleton: store.skeleton
+  skeleton: store.skeleton,
+  user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadingGeneral,
-      availableCoins,
+      loadGeneralInfo,
       balanceCoins
     },
     dispatch

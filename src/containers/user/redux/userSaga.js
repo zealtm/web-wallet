@@ -54,12 +54,6 @@ export function* authenticateUser(action) {
 
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
-    if (!twoFactor && seed) {
-      yield put({
-        type: "CHANGE_LOADING_GENERAL_STATE"
-      });
-    }
-
     yield put({
       type: "POST_USER_AUTHENTICATE",
       user: {
@@ -70,6 +64,12 @@ export function* authenticateUser(action) {
       },
       pages: { login: twoFactor ? 1 : 2 }
     });
+
+    if (!twoFactor && seed) {
+      yield put({
+        type: "CHANGE_LOADING_GENERAL_STATE"
+      });
+    }
 
     return;
   } catch (error) {

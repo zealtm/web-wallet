@@ -1,4 +1,5 @@
 export const BASE_URL = "https://a.lunes.io/staging";
+export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
 export const API_HEADER = {
   "headers": {
     "key":

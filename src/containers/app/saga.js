@@ -10,7 +10,7 @@ import {
     setUserSeed
 } from "../user/redux/userSaga";
 
-import { availableCoins, balanceCoins, createCoinsAddress } from "../skeleton/redux/skeletonSaga";
+import { loadGeneralInfo, availableCoins, balanceCoins, createCoinsAddress } from "../skeleton/redux/skeletonSaga";
 
 export default function* rootSaga() {
 
@@ -25,6 +25,7 @@ export default function* rootSaga() {
         fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
 
         //skeleton-saga
+        fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
         fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
         fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
         fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress)

@@ -37,11 +37,11 @@ class Content extends Component {
     let { loading, errors } = this.props.skeleton;
 
     if (errors) {
-      if(type !== "error") {
+      if (type !== "error") {
         errorRequest();
         this.changeContent(<InternalError />, "error");
         setTimeout(() => {
-        window.location.reload();
+          window.location.reload();
         }, 3000);
       }
 

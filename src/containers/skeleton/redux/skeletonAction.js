@@ -2,11 +2,16 @@ export const loadingGeneral = () => ({
   type: "CHANGE_LOADING_GENERAL_STATE"
 });
 
+export const loadGeneralInfo = password => ({
+  type: "GET_GENERAL_INFO_API",
+  password
+});
+
 export const availableCoins = () => ({
   type: "GET_AVAILABLE_COINS_API"
 });
 
-export const createCoinsAddress = (coins) => ({
+export const createCoinsAddress = coins => ({
   type: "POST_CREATE_COINS_ADDRESS_API",
   coins
 });
