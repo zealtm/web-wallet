@@ -6,8 +6,8 @@ const colors = {
     dark: "#3b1878"
   },
   green: {
-    default: "#4cd566",
-    light: "#4cd566",
+    default: "#68f285",
+    light: "#68f285",
     dark: "#000000"
   },
   coins: {
@@ -16,8 +16,8 @@ const colors = {
   },
   messages: {
     info: "#ffffff",
-    success: "#4cd566",
-    error: "#ff445b",
+    success: "#68f285",
+    error: "#f05252",
     warning: "#f7921a"
   }
 }

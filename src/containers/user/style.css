@@ -253,7 +253,7 @@
   composes: inputPINDefault;
   border-width: 1px;
   border-style: solid;
-  color: #ff445b;
+  color: #f05252;
 }
 
 :local(.alignInputsDefault) {
@@ -362,7 +362,7 @@
 }
 
 :local(.checkboxError) {
-  color: #ff445b;
+  color: #f05252;
 }
 /* ------------------------------------------------------------------------- */
 
@@ -385,8 +385,8 @@
 
 :local(.inputTwoFactorAuthenticatorError) {
   composes: inputTwoFactorAuthenticator;
-  border-bottom: 1px solid #ff445b;
-  color: #ff445b;
+  border-bottom: 1px solid #f05252;
+  color: #f05252;
 
 }
 
@@ -445,8 +445,8 @@
 
 :local(.inputTextAreaError) {
   composes: inputTextArea;
-  color: #ff445b;
-  border: 1px solid #ff445b;
+  color: #f05252;
+  border: 1px solid #f05252;
 }
 
 /* 8.2 TEXTS */
@@ -470,7 +470,7 @@
 
 /* 9.2 ITEMS */
 :local(body) {
-  background-color: #3b1878;
+  background-color: #42227d;
 }
 
 :local(.itemsLoadingContainer) {  

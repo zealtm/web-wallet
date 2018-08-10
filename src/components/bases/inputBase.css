@@ -9,7 +9,7 @@
 
 /* 1 INPUT TEXT*/
 :local(.inputTextDefault) {
-  composes: bgPurpleLight from "./colorBase.css";
+  composes: bgPurpleDark from "./colorBase.css";
   composes: textDefault from "./textBase.css";
   composes: bdPurpleDefault from "./colorBase.css";
   border-width: 1px;

@@ -23,7 +23,7 @@
 
 /* 2.1 CARD */
 :local(.cardHome) {
-  composes: bgPrupleMedium from "../../components/bases/colorBase.css";
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   width: 275px;
   padding: 7% 1%;
   border-radius: 10px;

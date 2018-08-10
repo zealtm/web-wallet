@@ -20,30 +20,30 @@
 /* 1 PURPLE */
 /* 1.1 BACKGROUND */
 :local(.bgPurpleDefault) {
-  background-color: #4b2c82;
+  background-color: #473088;
 }
 :local(.bgPurpleClear) {
   background-color: #654fa4;
 }
 :local(.bgPurpleLight) {
-  background-color: #4b2c82;
+  background-color: #473088;
 }
 :local(.bgPrupleMedium) {
   background-color: #442181;
 }
 :local(.bgPurpleDark) {
-  background-color: #3b1878;
+  background-color: #42227d;
 }
 
 /* 1.2 COLOR */
 :local(.clPurpleDefault) {
-  color: #4b2c82;
+  color: #473088;
 }
 :local(.clPurpleLight) {
-  color: #4b2c82;
+  color: #473088;
 }
 :local(.clPurpleDark) {
-  color: #3b1878;
+  color: #42227d;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -51,10 +51,10 @@
 /* 2 GREEN */
 /* 2.1 BACKGROUND */
 :local(.bgGreenDefault) {
-  background-color: #4cd566;
+  background-color: #68f285;
 }
 :local(.bgGreenLight) {
-  background-color: #4cd566;
+  background-color: #68f285;
 }
 :local(.bgGreenDark) {
   background-color: #000;
@@ -62,10 +62,10 @@
 
 /* 2.2 COLOR */
 :local(.clGreenDefault) {
-  color: #4cd566;
+  color: #68f285;
 }
 :local(.clGreenLight) {
-  color: #4cd566;
+  color: #68f285;
 }
 :local(.clGreenDark) {
   color: #000;
@@ -73,19 +73,19 @@
 
 /* 2.3 BORDER */
 :local(.bdPurpleDefault) {
-  border-color: #4b2c82;
+  border-color: #473088;
 }
 :local(.bdGreenDefault) {
-  border-color: #4cd566;
+  border-color: #68f285;
 }
 :local(.bdGreenLight) {
-  border-color: #4cd566;
+  border-color: #68f285;
 }
 :local(.bdGreenDark) {
   border-color: #000;
 }
 :local(.bdError) {
-  border-color: #ff445b;
+  border-color: #f05252;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -112,10 +112,10 @@
 /* 4 MESSAGES */
 /* 4.1 BACKGROUND */
 :local(.bgSuccess) {
-  background-color: #4cd566;
+  background-color: #68f285;
 }
 :local(.bgError) {
-  background-color: #ff445b;
+  background-color: #f05252;
 }
 :local(.bgInfo) {
   background-color: #ffffff;
@@ -123,10 +123,10 @@
 
 /* 4.2 COLOR */
 :local(.clSuccess) {
-  color: #4cd566;
+  color: #68f285;
 }
 :local(.clError) {
-  color: #ff445b;
+  color: #f05252;
 }
 :local(.clInfo) {
   color: #ffffff;
