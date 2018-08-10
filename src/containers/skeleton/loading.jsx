@@ -35,6 +35,7 @@ class LoadingPage extends Component {
   render() {
     return (
       <div className={style.alignLoadingContainer}>
+
         <div className={style.itemsLoadingContainer}>
           <img src="../../images/logo.svg" className={style.logoLoading} />
 
@@ -42,6 +43,7 @@ class LoadingPage extends Component {
             <Loading color="lunes" width="30px" />
           </div>
         </div>
+
       </div>
     );
   }

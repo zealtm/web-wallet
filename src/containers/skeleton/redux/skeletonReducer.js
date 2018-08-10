@@ -1,6 +1,6 @@
 const initialState = {
   coins: {},
-  loading: false,
+  loading: true,
   errors: false
 };
 
