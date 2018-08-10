@@ -15,6 +15,18 @@ class CoinService {
         }
     }
 
+    async getCoinsInfo(token) {
+        try {
+            let response = this.getAvaliableCoins(token)
+
+            return response;
+        }
+        catch (error) {
+            internalServerError();
+            return;
+        }
+    }
+
     async createWalletCoin(coinType, seed, token) {
         try {
             API_HEADER.headers.Authorization = token;
