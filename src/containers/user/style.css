@@ -231,7 +231,7 @@
 /* 5.1 INPUT */
 :local(.inputPINDefault) {
   composes: inputTextDefault from "../../components/bases/textBase.css";
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  composes: bgPurpleDark from "../../components/bases/colorBase.css";
   composes: bdPurpleDefault from "../../components/bases/colorBase.css";
   border-width: 1px;
   border-style: solid;
@@ -413,7 +413,7 @@
 
 /* 8.1 INPUT ( TEXTAREA ) */
 :local(.inputTextArea) {
-  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  composes: bgPurpleDark from "../../components/bases/colorBase.css";
   composes: textDefault from "../../components/bases/textBase.css";
   composes: bdPurpleDefault from "../../components/bases/colorBase.css";
   margin-bottom: 25px;
@@ -434,6 +434,7 @@
 }
 
 :local(.inputTextArea::placeholder) {
+  font-family: 'Noto Sans', sans-serif;
   opacity: 0.5;
   color: white;
   font-size: 17px;
