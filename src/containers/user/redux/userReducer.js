@@ -70,7 +70,7 @@ const user = (state = initialState, action) => {
         loading: false
       };
 
-      case "BACK_USER_PERSONAL_INFO":
+    case "BACK_USER_PERSONAL_INFO":
       return {
         ...state,
         pages: {
@@ -134,6 +134,16 @@ const user = (state = initialState, action) => {
           seed: action.seed
         },
         loading: false
+      };
+
+    case "SET_USER_INFO":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.user.name,
+          surname: action.user.surname
+        }
       };
 
     case "CLEAR_USER_ERROR":

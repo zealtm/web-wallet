@@ -12,7 +12,7 @@ class UserControl extends React.Component {
     super(props);
     this.state = {
       openBox: false,
-      avatar: "https://loremflickr.com/80/80"
+      avatar: "images/icons/lunio/lunio-user@100x100.jpg"
     };
   }
 
@@ -26,7 +26,7 @@ class UserControl extends React.Component {
     if (openBox) {
       setTimeout(() => {
         this.setState({ ...this.state, openBox: false });
-      }, 5000);
+      }, 10000);
 
       return (
         <div className={style.menuUser}>

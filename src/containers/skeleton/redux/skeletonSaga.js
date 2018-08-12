@@ -9,29 +9,38 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 
 // Services
 import CoinService from "../../../services/coinService";
+import UserService from "../../../services/userService";
 const coinService = new CoinService();
+const userService = new UserService();
 
 export function* loadGeneralInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
 
-    let response = yield call(
+    let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
       decryptAes(seed, action.password)
     );
 
-    setAuthToken(response.token);
-    delete response["token"];
+    let responseUser = yield call(userService.getUser, token);
+
+    setAuthToken(responseCoins.token);
+    delete responseCoins["token"];
 
     yield put({
-      type: "GET_GENERAL_INFO",
-      coins: response
+      type: "SET_USER_INFO",
+      user: responseUser.data.data
     });
 
     yield put({
-      type: "CHANGE_LOADING_GENERAL_STATE",
+      type: "GET_GENERAL_INFO",
+      coins: responseCoins
+    });
+
+    yield put({
+      type: "CHANGE_LOADING_GENERAL_STATE"
     });
 
     return;
@@ -61,7 +70,7 @@ export function* availableCoins() {
 export function* balanceCoins(action) {
   try {
     let response = yield call();
-    console.warn(response, action);
+
     yield put({
       type: "GET_BALANCE_COINS",
       coins: response

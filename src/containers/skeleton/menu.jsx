@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink, withRouter } from "react-router-dom";
 
+// REDUX
+import { connect } from "react-redux";
+
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
@@ -99,7 +102,8 @@ class Menu extends React.Component {
   };
 
   render() {
-    const { openMenu } = this.props;
+    const { openMenu, user } = this.props;
+
     return (
       <div
         className={style.colMenu}
@@ -108,10 +112,13 @@ class Menu extends React.Component {
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
             <Grid item xs={4} align="center">
-              <Avatar alt="Avatar" src="https://loremflickr.com/80/80" />
+              <Avatar
+                alt="Avatar"
+                src="images/icons/lunio/lunio-user@100x100.jpg"
+              />
             </Grid>
             <Grid item xs={8}>
-              Nome Usuario
+              {user.name}
               <br />
               <Link to="/logout" className={style.link}>
                 Logout
@@ -129,7 +136,15 @@ class Menu extends React.Component {
 Menu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  actionMenu: PropTypes.func.isRequired
+  actionMenu: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
-export default withRouter(Menu);
+const mapSateToProps = store => ({
+  user: store.user.user
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(withRouter(Menu));
