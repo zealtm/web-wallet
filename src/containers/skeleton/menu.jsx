@@ -102,7 +102,7 @@ class Menu extends React.Component {
   };
 
   render() {
-    const { openMenu, user } = this.props;
+    const { openMenu, user, actionLogout } = this.props;
 
     return (
       <div
@@ -120,7 +120,7 @@ class Menu extends React.Component {
             <Grid item xs={8}>
               {user.name}
               <br />
-              <Link to="/logout" className={style.link}>
+              <Link to="/login" onClick={actionLogout} className={style.link}>
                 Logout
               </Link>
             </Grid>
@@ -137,6 +137,7 @@ Menu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   actionMenu: PropTypes.func.isRequired,
+  actionLogout: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 

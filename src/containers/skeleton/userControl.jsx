@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 //MATERIAL UI
@@ -22,6 +23,7 @@ class UserControl extends React.Component {
 
   renderPopup = () => {
     const { openBox } = this.state;
+    const { actionLogout } = this.props;
 
     if (openBox) {
       setTimeout(() => {
@@ -43,7 +45,7 @@ class UserControl extends React.Component {
             </div>
             Ajuda
           </Link>
-          <Link to="/" className={style.linkPopMenu}>
+          <Link to="/" onClick={actionLogout} className={style.linkPopMenu}>
             <div className={style.boxIcon}>
               <img src="../../images/icons/exit/exit.png" />
             </div>
@@ -71,5 +73,9 @@ class UserControl extends React.Component {
     );
   }
 }
+
+UserControl.propTypes = {
+  actionLogout: PropTypes.func.isRequired,
+};
 
 export default UserControl;
