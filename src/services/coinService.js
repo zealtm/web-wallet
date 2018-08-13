@@ -55,11 +55,12 @@ class CoinService {
 
      /* eslint-disable */ 
       await Promise.all(promises);
+      /* eslint-enable */ 
       
       availableCoins.map((coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
-      /* eslint-enable */ 
+      coins.token = availableCoins.token;
 
       return coins;
     } catch (error) {
