@@ -72,7 +72,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { actionMenu } = this.props;
+    const { actionMenu, actionLogout } = this.props;
     return (
       <AppBar position="static">
         <Toolbar className={style.header}>
@@ -94,7 +94,7 @@ class Header extends React.Component {
           <Hidden xsDown>{this.renderNotifications()}</Hidden>
 
           <Hidden mdDown>
-            <UserControl />
+            <UserControl actionLogout={actionLogout} />
           </Hidden>
         </Toolbar>
       </AppBar>
@@ -104,6 +104,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   actionMenu: PropTypes.func.isRequired,
+  actionLogout: PropTypes.func.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
 };
 
