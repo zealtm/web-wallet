@@ -26,7 +26,6 @@ export function* loadGeneralInfo(action) {
 
     let responseUser = yield call(userService.getUser, token);
 
-    console.warn('responseCoins', responseCoins.lunes.balance)
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -71,7 +70,7 @@ export function* availableCoins() {
 export function* balanceCoins(action) {
   try {
     let response = yield call();
-
+    console.warn(action)
     yield put({
       type: "GET_BALANCE_COINS",
       coins: response

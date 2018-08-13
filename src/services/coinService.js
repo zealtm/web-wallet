@@ -53,12 +53,14 @@ class CoinService {
         }
       });
 
+     /* eslint-disable */ 
       await Promise.all(promises);
       
       availableCoins.map((coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
-      
+      /* eslint-enable */ 
+
       return coins;
     } catch (error) {
       internalServerError();
