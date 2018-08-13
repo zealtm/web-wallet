@@ -3,7 +3,7 @@ import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 class CoinService {
-  async getAvaliableCoins(token) {
+  async getavailableCoins(token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/coin", API_HEADER);
@@ -17,14 +17,15 @@ class CoinService {
   async getGeneralInfo(token, seed) {
     try {
       API_HEADER.headers.Authorization = token;
-      let responseAvaliableCoins = await axios.get(
+      let responseavailableCoins = await axios.get(
         BASE_URL + "/coin",
         API_HEADER
       );
 
-      let avaliableCoins = responseAvaliableCoins.data.data.coins;
+      let availableCoins = responseavailableCoins.data.data.coins;
+      let coins = [];
 
-      await avaliableCoins.map(async (coin, index) => {
+      const promises = availableCoins.map(async (coin, index) => {
         if (coin.status === "active") {
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
@@ -32,7 +33,7 @@ class CoinService {
             API_HEADER
           );
 
-          avaliableCoins[index].address =
+          availableCoins[index].address =
             responseCreateAddress.data.data.address;
 
           let responseBalance = await axios.get(
@@ -44,23 +45,21 @@ class CoinService {
             API_HEADER
           );
 
-          avaliableCoins.token = responseBalance.headers[HEADER_RESPONSE];
-          avaliableCoins[index].balance = responseBalance.data.data;
+          availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
+          availableCoins[index].balance = responseBalance.data.data;
         } else {
-          avaliableCoins[index].address = undefined;
-          avaliableCoins[index].balance = undefined;
+          availableCoins[index].address = undefined;
+          availableCoins[index].balance = undefined;
         }
       });
 
-      console.warn(avaliableCoins[0].balance); //undefined
-      console.warn(avaliableCoins[0]["balance"]); //undefined
-      console.warn(avaliableCoins[0].address); //undefined
-      console.warn(avaliableCoins[0]["address"]); //undefined
-
-      console.warn("avaliableCoins", avaliableCoins); //All objects are here
-      console.warn("avaliableCoins[0]", avaliableCoins[0]); //All objects are here
-
-      return avaliableCoins;
+      await Promise.all(promises);
+      
+      availableCoins.map((coin, index) => {
+        coins[coin.abbreviation] = availableCoins[index];
+      });
+      
+      return coins;
     } catch (error) {
       internalServerError();
       return;

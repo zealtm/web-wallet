@@ -26,8 +26,9 @@ export function* loadGeneralInfo(action) {
 
     let responseUser = yield call(userService.getUser, token);
 
+    console.warn('responseCoins', responseCoins.lunes.balance)
     setAuthToken(responseCoins.token);
-    delete responseCoins["token"];
+    delete responseCoins.token;
 
     yield put({
       type: "SET_USER_INFO",

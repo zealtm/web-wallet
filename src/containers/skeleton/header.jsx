@@ -53,11 +53,9 @@ class Header extends React.Component {
 
   renderBalance = () => {
     let { coins } = this.props;
-    let coin = coins[0];
-    let coinName = coins[0] ? coins[0].abbreviation.toUpperCase() : "UNDEFINED";
-    // console.warn(coins[0] ? coins : "NAO");
-    // let coinBalance = coins[0] ? coins[0].balance : 0;
-    let coinBalance = 0;
+    // console.warn('balance lunes', coins.lunes ? coins.lunes.balance : undefined)
+    let coinName = coins.lunes ? coins.lunes.abbreviation.toUpperCase() : "UNDEFINED";
+    let coinBalance = coins.lunes ? coins.lunes.balance.available : 0;
 
     return (
       <div className={style.boxBalance}>
