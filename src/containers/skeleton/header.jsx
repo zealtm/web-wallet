@@ -53,7 +53,6 @@ class Header extends React.Component {
 
   renderBalance = () => {
     let { coins } = this.props;
-    // console.warn('balance lunes', coins.lunes ? coins.lunes.balance : undefined)
     let coinName = coins.lunes ? coins.lunes.abbreviation.toUpperCase() : "UNDEFINED";
     let coinBalance = coins.lunes ? coins.lunes.balance.available : 0;
 

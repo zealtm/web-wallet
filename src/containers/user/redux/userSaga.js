@@ -24,6 +24,7 @@ const changeLoadingState = "CHANGE_LOADING_STATE";
 export function* authenticateUser(action) {
   try {
     let username = yield call(getUsername);
+    
     let response = yield call(
       authService.authenticate,
       action.username,
