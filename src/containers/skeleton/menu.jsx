@@ -120,7 +120,7 @@ class Menu extends React.Component {
             <Grid item xs={8}>
               {user.name}
               <br />
-              <Link to="/login" onClick={actionLogout} className={style.link}>
+              <Link to="/" onClick={actionLogout} className={style.link}>
                 Logout
               </Link>
             </Grid>
