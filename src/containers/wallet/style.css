@@ -1,0 +1,22 @@
+/*
+
+1. BUTTON
+  1.1 BUTTON RECEIVE
+  1.2 BUTTON SUBMIT
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BUTTON */
+
+/* 1.3 BUTTON RECEIVE */
+:local(.receiveButton) {
+  composes: receiveButton from "../../components/bases/buttonBase.css";
+}
+
+/* 1.3 BUTTON SUBMIT */
+:local(.receiveSubmit) {
+  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+}
+  
