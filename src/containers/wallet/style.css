@@ -1,0 +1,49 @@
+/*
+
+1. a
+  1.1 ab
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. GENERAL*/
+:local(.styleCoinDefalt) {
+    border-radius: 8px;
+    padding: 2%;
+}
+
+:local(.contInfoCoins) {
+    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
+    composes: styleCoinDefalt;
+    background-color: black;
+    box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.5);
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+:local(.coinSelected) {
+    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
+    composes: styleCoinDefalt;
+    background-color: #473088;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+}
+
+:local(.coinBalance) {
+    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
+    composes: styleCoinDefalt;
+    background-color: #473088;
+    height: 50px;
+    width: 70%;
+    text-align: right;
+}
+
+:local(.containerWallet) {
+    background-color: aqua;
+    justify-content: center;
+    display: flex;
+    padding: 2%;
+}
+
+/* ------------------------------------------------------------------------- */
