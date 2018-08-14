@@ -19,6 +19,9 @@ import style from "./style.css";
 //COMPONENTS
 import UserControl from "./userControl.jsx";
 
+//UTILS
+import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -53,9 +56,18 @@ class Header extends React.Component {
 
   renderBalance = () => {
     let { coins } = this.props;
-    let coinName = coins.lunes ? coins.lunes.abbreviation.toUpperCase() : "UNDEFINED";
-    let coinBalance = coins.lunes ? coins.lunes.balance.available : 0;
-    let coinFiat = coins.lunes ? (coins.lunes.price.USD.price * coinBalance).toFixed(2) : 0;
+    let coinSelected = getDefaultCrypto();
+    let fiatSelected = getDefaultFiat();
+    
+    let coinName = coins[coinSelected]
+      ? coins[coinSelected].abbreviation.toUpperCase()
+      : "UNDEFINED";
+    let coinBalance = coins[coinSelected]
+      ? coins[coinSelected].balance.available
+      : 0;
+    let coinFiat = coins[coinSelected]
+      ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
+      : 0;
 
     return (
       <div className={style.boxBalance}>
@@ -73,6 +85,7 @@ class Header extends React.Component {
 
   render() {
     const { actionMenu, actionLogout } = this.props;
+
     return (
       <AppBar position="static">
         <Toolbar className={style.header}>
