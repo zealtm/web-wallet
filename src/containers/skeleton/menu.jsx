@@ -32,25 +32,6 @@ const menuItens = [
   }
 ];
 
-// array itens menu
-const menuItensHelp = [
-  {
-    link: "/privacidade",
-    label: "Privacidade",
-    icon: "../../images/icons/home/home@1x.png"
-  },
-  {
-    link: "/configuração",
-    label: "Configuração",
-    icon: "../../images/icons/home/home@1x.png"
-  },
-  {
-    link: "/suporte",
-    label: "Suporte",
-    icon: "../../images/icons/home/home@1x.png"
-  }
-];
-
 class Menu extends React.Component {
   constructor(props) {
     super(props);
@@ -81,26 +62,7 @@ class Menu extends React.Component {
       );
     });
   };
-
-  renderMenuHelp = () => {
-    const { actionMenu } = this.props;
-
-    return menuItensHelp.map((item, key) => {
-      return (
-        <NavLink
-          className={style.linkMenu}
-          activeClassName={style.linkMenuActive}
-          to={item.link}
-          key={key}
-          onClick={actionMenu}
-        >
-          <img src={item.icon} className={style.iconMenu} />
-          {item.label}
-        </NavLink>
-      );
-    });
-  };
-
+  
   render() {
     const { openMenu, user, actionLogout } = this.props;
 
@@ -118,8 +80,14 @@ class Menu extends React.Component {
               />
             </Grid>
             <Grid item xs={8}>
-              {user.name}
+              <span className={style.userName}>{user.name}</span>
               <br />
+              <Link to="/config" className={style.link}>
+                Configurações
+              </Link>
+              <Link to="/help" className={style.link}>
+                Ajuda
+              </Link>
               <Link to="/" onClick={actionLogout} className={style.link}>
                 Logout
               </Link>
@@ -127,7 +95,6 @@ class Menu extends React.Component {
           </Grid>
         </Hidden>
         {this.renderMenu()}
-        <Hidden lgUp>{this.renderMenuHelp()}</Hidden>
       </div>
     );
   }
