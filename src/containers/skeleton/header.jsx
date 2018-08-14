@@ -60,7 +60,7 @@ class Header extends React.Component {
     let fiatSelected = getDefaultFiat();
     
     let coinName = coins[coinSelected]
-      ? coins.lunes.abbreviation.toUpperCase()
+      ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
     let coinBalance = coins[coinSelected]
       ? coins[coinSelected].balance.available
