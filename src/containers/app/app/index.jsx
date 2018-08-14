@@ -9,7 +9,7 @@ import Skeleton from "../../skeleton";
 
 function Loading({ error }) {
   if (error) {
-    console.warn(error)
+    console.warn(error);
     return "Error!";
   } else {
     return <h3>Loading...</h3>;
