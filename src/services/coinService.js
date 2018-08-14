@@ -1,5 +1,5 @@
 import axios from "axios";
-import { convertCoin } from "../utils/coinConverter";
+import { convertCoin } from "../utils/numbers";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
