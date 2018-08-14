@@ -82,6 +82,13 @@
 
   "SEED_INSERT_SEED": "Insert your SeedWords",
 
+  "MENU_CONFIGURATION": "Configuration",
+  "MENU_SUPPORT": "Support",
+  "MENU_LOGOUT": "Logout",
+
+
+
+
   "CARD_HOME_TITLE_1": "Portfolio",
   "CARD_HOME_TITLE_2": "Multicoin Wallet",
   "CARD_HOME_TITLE_3": "Recharge",

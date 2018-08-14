@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 //MATERIAL UI
 import Avatar from "@material-ui/core/Avatar";
 
+//UTILS
+import i18n from "../../utils/i18n";
+
 //STYLE
 import style from "./style.css";
 
@@ -37,19 +40,19 @@ class UserControl extends React.Component {
             <div className={style.boxIcon}>
               <img src="../../images/icons/settings/settings.png" />
             </div>
-            Configurações
+            {i18n.t("MENU_CONFIGURATION")}
           </Link>
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>
               <img src="../../images/icons/question/question.png" />
             </div>
-            Ajuda
+            {i18n.t("MENU_SUPPORT")}
           </Link>
           <Link to="/" onClick={actionLogout} className={style.linkPopMenu}>
             <div className={style.boxIcon}>
               <img src="../../images/icons/exit/exit.png" />
             </div>
-            Sair
+            {i18n.t("MENU_LOGOUT")}
           </Link>
         </div>
       );

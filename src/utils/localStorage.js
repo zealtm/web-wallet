@@ -46,22 +46,21 @@ export const setUserData = user => {
 
 export const setDefaultFiat = (fiat) => {
   let userStorage = getUserData();
-  localStorage.setItem(userObj, JSON.stringify({ ...userStorage, fiat }));
+  localStorage.setItem(userObj, JSON.stringify({ ...userStorage, defaultFiat: fiat }));
 };
 
 export const getDefaultFiat = () => {
   let userStorage = getUserData();
-  
-  return userStorage;
+  return userStorage.defaultFiat ? userStorage.defaultFiat : 'lunes'
 };
 
 export const setDefaultCryptocoin = (coin) => {
   let userStorage = getUserData();
-  localStorage.setItem(userObj, JSON.stringify({ ...userStorage, coin }));
+  localStorage.setItem(userObj, JSON.stringify({ ...userStorage, defaultCoin: coin }));
 };
 
-export const getDefaultCryptocoin = (coin) => {
+export const getDefaultCryptocoin = () => {
   let userStorage = getUserData();
-  localStorage.setItem(userObj, JSON.stringify({ ...userStorage, coin }));
+  return userStorage.defaultCoin ? userStorage.defaultCoin : 'usd'
 };
 

@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink, withRouter } from "react-router-dom";
 
+// UTILS
+import i18n from "../../utils/i18n";
+
 // REDUX
 import { connect } from "react-redux";
 
@@ -24,11 +27,6 @@ const menuItens = [
     link: "/wallet",
     label: "Wallet",
     icon: "../../images/icons/wallet/wallet@1x.png"
-  },
-  {
-    link: "/boleto",
-    label: "Boletos",
-    icon: "../../images/icons/home/home@1x.png"
   }
 ];
 
@@ -62,7 +60,7 @@ class Menu extends React.Component {
       );
     });
   };
-  
+
   render() {
     const { openMenu, user, actionLogout } = this.props;
 
@@ -83,13 +81,13 @@ class Menu extends React.Component {
               <span className={style.userName}>{user.name}</span>
               <br />
               <Link to="/config" className={style.link}>
-                Configurações
+                {i18n.t("MENU_CONFIGURATION")}
               </Link>
               <Link to="/help" className={style.link}>
-                Ajuda
+                {i18n.t("MENU_SUPPORT")}
               </Link>
               <Link to="/" onClick={actionLogout} className={style.link}>
-                Logout
+                {i18n.t("MENU_LOGOUT")}
               </Link>
             </Grid>
           </Grid>
