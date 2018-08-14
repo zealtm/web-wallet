@@ -1,4 +1,5 @@
 import axios from "axios";
+import { convertCoin } from "../utils/coinConverter";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
@@ -27,6 +28,13 @@ class CoinService {
 
       const promises = availableCoins.map(async (coin, index) => {
         if (coin.status === "active") {
+          let responsePrice = await axios.get(
+            BASE_URL + "/coin/" + coin.abbreviation + "/price",
+            API_HEADER
+          );
+
+          availableCoins[index].price = responsePrice.data.data;
+
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
             { seed },
@@ -44,19 +52,21 @@ class CoinService {
               coin.address,
             API_HEADER
           );
-
+          
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
-          availableCoins[index].balance = responseBalance.data.data;
+          availableCoins[index].balance = responseBalance.data.data
+          availableCoins[index].balance.available = convertCoin(availableCoins[index].balance.available, coin.decimalPoint);
+          availableCoins[index].balance.total = convertCoin(availableCoins[index].balance.total, coin.decimalPoint);
         } else {
           availableCoins[index].address = undefined;
           availableCoins[index].balance = undefined;
         }
       });
 
-     /* eslint-disable */ 
+      /* eslint-disable */
       await Promise.all(promises);
-      /* eslint-enable */ 
-      
+      /* eslint-enable */
+
       availableCoins.map((coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });

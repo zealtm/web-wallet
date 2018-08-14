@@ -55,6 +55,7 @@ class Header extends React.Component {
     let { coins } = this.props;
     let coinName = coins.lunes ? coins.lunes.abbreviation.toUpperCase() : "UNDEFINED";
     let coinBalance = coins.lunes ? coins.lunes.balance.available : 0;
+    let coinFiat = coins.lunes ? (coins.lunes.price.USD.price * coinBalance).toFixed(2) : 0;
 
     return (
       <div className={style.boxBalance}>
@@ -65,7 +66,7 @@ class Header extends React.Component {
           {" "}
           {coinBalance} {coinName}
         </span>
-        <span className={style.textBalanceFiat}>$0</span>
+        <span className={style.textBalanceFiat}>${coinFiat}</span>
       </div>
     );
   };
