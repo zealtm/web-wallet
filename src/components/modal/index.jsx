@@ -9,7 +9,7 @@ class GeneralModal extends React.Component {
   constructor() {
     super();
     this.state = {
-      showModal: false
+      showModal: true
     };
   }
 
@@ -26,7 +26,7 @@ class GeneralModal extends React.Component {
 
     return (
       <div className={style.header}>
-        <div className={style.headerImage} onClick={}>
+        <div className={style.headerImage} onClick={() => this.handleCloseModal()}>
           <img src="/images/icons/arrow/arrow-white-left@2x.png" alt="Back" />
         </div>
         <div className={style.headerTitle}>{title}</div>
@@ -35,10 +35,12 @@ class GeneralModal extends React.Component {
   };
 
   render() {
+    let { showModal } = this.state;
+
     return (
       <div>
         <ReactModal
-          isOpen={true}
+          isOpen={showModal}
           className={style.modalBox}
           overlayClassName={style.overlay}
         >
