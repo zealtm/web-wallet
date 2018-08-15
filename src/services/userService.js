@@ -45,8 +45,8 @@ class UserService {
     const defaultImg = "images/icons/lunio/lunio-user@100x100.jpg"
     try {
       let crypto = encryptMd5(email);
-      let response = await axios.get(`https://en.gravatar.com/${crypto}.json`, HEADER_REQUEST);
-      
+      let response = await axios.get("https://en.gravatar.com/" + crypto + ".json", HEADER_REQUEST);
+
       return response.data.entry[0].thumbnailUrl;
     }
     catch (error) {
