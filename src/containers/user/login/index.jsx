@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Auth from "./auth";
-import GeneralModal from "../../../components/modal";
 
 // import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
@@ -24,7 +23,7 @@ class Login extends React.Component {
   };
 
   render() {
-    return <div className={style.contGeneral}>{this.renderContent()}<GeneralModal title={"Transação"} /></div>;
+    return <div className={style.contGeneral}>{this.renderContent()}</div>;
   }
 }
 
