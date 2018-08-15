@@ -142,6 +142,7 @@ const user = (state = initialState, action) => {
         user: {
           ...state.user,
           name: action.user.name,
+          email: action.user.email,
           surname: action.user.surname
         }
       };
