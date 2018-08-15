@@ -1,5 +1,7 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
+import { HEADER_REQUEST } from "../constants/headers";
+
 import { badRequest, internalServerError } from "../containers/errors/statusCodeMessage";
 import { encryptMd5 } from "../utils/cryptography";
 
@@ -36,6 +38,19 @@ class UserService {
     catch (error) {
       internalServerError();
       return;
+    }
+  }
+
+  async getUserPicture(email) {
+    const defaultImg = "images/icons/lunio/lunio-user@100x100.jpg"
+    try {
+      let crypto = encryptMd5(email);
+      let response = await axios.get(`https://en.gravatar.com/${crypto}.json`, HEADER_REQUEST);
+      
+      return response.data.entry[0].thumbnailUrl;
+    }
+    catch (error) {
+      return defaultImg;
     }
   }
 }

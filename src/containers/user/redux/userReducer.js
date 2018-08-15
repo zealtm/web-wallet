@@ -1,5 +1,6 @@
 const initialState = {
   user: {
+    profilePicture: undefined,
     name: undefined,
     surname: undefined,
     username: undefined,
@@ -141,6 +142,7 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
+          profilePicture: action.user.profilePicture,
           name: action.user.name,
           surname: action.user.surname
         }

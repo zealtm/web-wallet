@@ -1,13 +1,5 @@
 import { put, call } from "redux-saga/effects";
-import {
-  setAuthToken,
-  getAuthToken,
-  setUserSeedWords,
-  getUserSeedWords,
-  getUsername,
-  setUserData,
-  clearAll
-} from "../../../utils/localStorage";
+import { setAuthToken, getAuthToken, setUserSeedWords, getUserSeedWords, getUsername, setUserData, clearAll } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
 import { HEADER_RESPONSE } from "../../../constants/headers";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
@@ -15,16 +7,14 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 // Services
 import AuthService from "../../../services/authService";
 import UserService from "../../../services/userService";
-// import PinService from "../../../services/pinService";
 const authService = new AuthService();
 const userService = new UserService();
-// const pinService = new PinService();
 const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
   try {
     let username = yield call(getUsername);
-    
+
     let response = yield call(
       authService.authenticate,
       action.username,
@@ -50,9 +40,6 @@ export function* authenticateUser(action) {
     let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
     let seed = yield call(getUserSeedWords);
 
-    // let pinResponse = yield call(pinService.consult, userToken);
-    // let pin = pinResponse.data.code === 200 ? true : false;
-
     yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
 
     yield put({
@@ -61,7 +48,6 @@ export function* authenticateUser(action) {
         username: action.username,
         password: encryptHmacSha512Key(action.password),
         seed: twoFactor ? undefined : seed
-        // pin
       },
       pages: { login: twoFactor ? 1 : 2 }
     });
@@ -153,47 +139,6 @@ export function* verifyTwoFactorAuth(action) {
     yield put(internalServerError());
   }
 }
-
-// export function* verifyUserPin(action) {
-//   try {
-//     let userToken = yield call(getAuthToken);
-//     let response = yield call(pinService.verify, action.user.pin, userToken);
-//     yield setUserData(action.user);
-
-//     if (response.error) {
-//       yield put(response.error);
-//       yield put({ type: changeLoadingState });
-//       return;
-//     }
-
-//     yield put({ type: "REQUEST_SUCCESS", message: "You are logged" });
-//     yield put({ type: changeLoadingState });
-//   } catch (error) {
-//     yield put({ type: changeLoadingState });
-//     yield put(internalServerError());
-//   }
-// }
-
-// export function* createUserPin(action) {
-//   try {
-//     let userToken = yield call(getAuthToken);
-//     let response = yield call(pinService.create, action.user.pin, userToken);
-//     yield setUserData(action.user);
-
-//     if (response.error) {
-//       yield put(response.error);
-//       yield put({ type: changeLoadingState });
-//       return;
-//     }
-
-//     let message = "Pin has been created. You are logged";
-//     yield put({ type: "REQUEST_SUCCESS", message });
-//     yield put({ type: changeLoadingState });
-//   } catch (error) {
-//     yield put({ type: changeLoadingState });
-//     yield put(internalServerError());
-//   }
-// }
 
 export function* createUser(action) {
   try {
