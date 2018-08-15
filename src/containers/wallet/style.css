@@ -1,49 +1,137 @@
 /*
 
-1. a
-  1.1 ab
+1. BASES
+  1.1 CONTAINERS
+  1.2 ALIGNMENTS - GENERICS
+
+2. BUTTONS
+  2.1 BUTTON RECEIVE 
+  2.2 BUTTON SUBMIT 
+  1.3 STYLES
+  1.4 TEXTS
+  1.5 LOGO COINS
+
 */
 
 /* ------------------------------------------------------------------------- */
 
-/* 1. GENERAL*/
-:local(.styleCoinDefalt) {
-    border-radius: 8px;
-    padding: 2%;
-}
+/* 1. BASES */
 
-:local(.contInfoCoins) {
-    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
-    composes: styleCoinDefalt;
-    background-color: black;
-    box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.5);
+/* 1.1 CONTAINERS */
+:local(.containerInfoCoins) {
     display: inline-flex;
-    justify-content: space-between;
-}
-
-:local(.coinSelected) {
-    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
-    composes: styleCoinDefalt;
-    background-color: #473088;
-    height: 100px;
-    width: 20%;
-    text-align: center;
-}
-
-:local(.coinBalance) {
-    /* composes: bgPurpleDefault "../../components/bases/colorBase.css"; */
-    composes: styleCoinDefalt;
-    background-color: #473088;
-    height: 50px;
-    width: 70%;
-    text-align: right;
+    width: 100%;
+    justify-content: center;
 }
 
 :local(.containerWallet) {
-    background-color: aqua;
-    justify-content: center;
+    justify-content: center;    
     display: flex;
-    padding: 2%;
 }
 
+/* 1.2 ALIGNMENTS - GENERICS*/
+:local(.floatRightInWeb) {
+    max-width: 100%;
+    padding-left: 10px;    
+    min-width: 60%;
+}
+
+:local(.alignButtonsMobile) {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 1.3 STYLES */
+:local(.styleCoinDefalt) {
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
+}
+
+:local(.coinSelected) {
+    composes: styleCoinDefalt;
+    background-color: #473088;
+    text-align: center;
+    min-height: 99px;
+    max-width: 242px;
+    max-height: 192px;
+    width: 30%;
+    display: grid;
+}
+
+:local(.coinBalance) {
+    composes: styleCoinDefalt;
+    background-color: #473088;
+    font-weight: bold;
+    text-align: right;
+    min-height: 99px;
+    min-width: 150px;
+    max-height: 116px;
+    padding: 10px;
+    display: grid;
+}
+
+/* 1.4 TEXTS */
+:local(.coinBalanceGreen) {
+    composes: linkDefault from "../../components/bases/textBase.css"; 
+    display: inline;
+}
+
+:local(.nameCoinSelected) {
+    font-size: 1.8vh;
+    font-weight: bold;
+}
+
+:local(.porcentageCoinSelected) {
+    composes: textDefault from "../../components/bases/textBase.css";  
+    font-size: 12px;
+}
+
+:local(.valueCoinSelected) {
+    composes: textDefault from "../../components/bases/textBase.css";  
+    font-weight: bold;
+}
+
+:local(.balanceMyAmount) {    
+    font-size: 2vh;
+}
+
+:local(.balanceAmount) {
+    font-weight: normal;
+    font-size: 1.9vh;
+    margin: 4% 0;
+}
+
+/* 1.5 LOGO COINS */
+:local(.logoCoinSelected) {
+    max-width: 35%;
+    margin: 3% 0;
+    justify-self: center;
+}
 /* ------------------------------------------------------------------------- */
+
+/* 2. BUTTONS */
+:local(.alignButtons) {
+    justify-content: space-between;
+    display: flex;
+    margin-top: 10px;
+}
+
+/* 2.1 BUTTON RECEIVE */
+:local(.receiveButton) {
+  composes: receiveButton from "../../components/bases/buttonBase.css";
+  composes: styleCoinDefalt;
+}
+
+/* 2.2 BUTTON SUBMIT */
+:local(.submitButton) {
+  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+  composes: styleCoinDefalt;
+}
+
+@media only screen and (max-width: 599px) {
+    :local .styleCoinDefalt {
+        box-shadow: none;
+    }
+}

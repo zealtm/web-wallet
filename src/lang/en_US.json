@@ -15,6 +15,7 @@
   "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
 
   "BTN_SUBMIT": "Submit",
+  "BTN_RECEIVE": "Receive",
   "BTN_CREATE": "Create",
   "BTN_NEXT": "Next",
   "BTN_PREV": "Previous",
@@ -100,5 +101,7 @@
   "CARD_HOME_DESCRIPTION_5": 
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..", 
   "CARD_HOME_DESCRIPTION_6": 
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança.." 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+
+  "WALLET_MY_AMOUNT": "My sald"
 }
