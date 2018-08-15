@@ -1,8 +1,16 @@
 import React from "react";
 
+// COMPONENTS 
+import CoinsBar from "./coinsBar";
+
 class Wallet extends React.Component {
   render() {
-    return <div>Wallet</div>;
+    return (
+      <div>
+        <CoinsBar />
+ 
+      </div>
+    );
   }
 }
 

@@ -1,0 +1,92 @@
+/*
+
+1. BASE
+
+2. TEXT
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASE */
+
+@import url("~slick-carousel/slick/slick.css");
+
+
+:local .boxCoin {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-left:10px;
+  border-radius:8px;
+  opacity: .8;
+  transition: opacity .5s;
+  height: 60px;
+}
+
+:local .boxCoinActive {
+  composes: bgPurpleClear from "../../components/bases/colorBase.css";
+  composes: boxCoin;
+}
+
+:local .boxCoin:hover {
+  include: bgPurpleClear from "../../components/bases/colorBase.css";
+  cursor: pointer;
+  opacity: 1;
+}
+
+:local .contentCoins {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.05);
+}
+
+:local .boxIconCoin {
+  composes: bgPurpleClear from "../../components/bases/colorBase.css";
+  padding: 18px; 
+  float: left;
+  border-radius:8px;
+}
+
+:local .iconCoin {
+  width: 24px;
+  height: 24px;
+}
+
+:local .arrowControl {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+:local .arrowPercent {
+  width: 10px;
+  margin-bottom:-8px;
+}
+
+:local .boxArrowPercent {
+  margin-top:17px;
+  margin-left:38px;
+  position:absolute;
+}
+
+@media only screen and (max-width: 768px) {
+  :local .boxIconCoin {
+    background-color: transparent;
+  }
+  :local .boxCoinActive {
+    composes: bgPurpleClear from "../../components/bases/colorBase.css";
+    composes: boxCoin;
+    max-width: 80px;
+  }
+}
+
+/* 1. TEXT */
+
+:local .boxLabelCoin {
+  text-align: right;
+  padding-top:12px;
+  padding-right:14px;
+}
+
+:local .labelPercent {
+  font-size:9px;
+}
