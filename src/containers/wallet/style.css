@@ -74,7 +74,7 @@
 
 :local .boxArrowPercent {
   margin-top:17px;
-  margin-left:38px;
+  margin-left:43px;
   position:absolute;
 }
 
@@ -82,6 +82,7 @@
 @media only screen and (max-width: 768px) {
   :local .boxIconCoin {
     background-color: transparent;
+    margin-left:-5px;
   }
   :local .boxCoinActive {
     composes: bgPurpleClear from "../../components/bases/colorBase.css";
