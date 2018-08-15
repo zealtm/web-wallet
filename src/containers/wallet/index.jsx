@@ -1,8 +1,8 @@
 import React from "react";
-
+import GeneralModal from "../../components/modal";
 class Wallet extends React.Component {
   render() {
-    return <div>Em desenvolvimento...</div>;
+    return <div><GeneralModal/></div>;
   }
 }
 
