@@ -70,19 +70,9 @@ class CoinsBar extends React.Component {
   renderArrowPercent = val => {
     const percent = parseFloat(val);
     if (percent < 0) {
-      return (
-        <ArrowDropDown
-          style={{ color: "orange" }}
-          className={style.arrowPercent}
-        />
-      );
+      return <ArrowDropDown className={style.arrowPercentDown} />;
     } else {
-      return (
-        <ArrowDropUp
-          style={{ color: "green" }}
-          className={style.arrowPercent}
-        />
-      );
+      return <ArrowDropUp className={style.arrowPercentUp} />;
     }
   };
 
@@ -132,7 +122,7 @@ class CoinsBar extends React.Component {
       arrows: false,
       draggable: true,
       dots: false,
-      infinite: true,
+      infinite: false,
       speed: 200,
       slidesToShow: 6,
       slidesToScroll: 1,
