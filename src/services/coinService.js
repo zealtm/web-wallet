@@ -1,8 +1,9 @@
 import axios from "axios";
-import { convertCoin } from "../utils/numbers";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
+// UTILS
+import { convertCoin } from "../utils/numbers";
 class CoinService {
   async getavailableCoins(token) {
     try {
