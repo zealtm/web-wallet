@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Auth from "./auth";
+
 // import Pin from "./pin";
 import MultiFactorAuth from "./multifactorauth";
 import Seed from "./seed";
