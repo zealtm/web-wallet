@@ -9,8 +9,10 @@
   2.2 BUTTON SUBMIT 
   1.3 STYLES
   1.4 TEXTS
-  1.5 LOGO COINS
+  1.5 ICON - COINS
 
+ 3. MOBILE
+    3.1 BUTTONS
 */
 
 /* ------------------------------------------------------------------------- */
@@ -73,13 +75,17 @@
 }
 
 /* 1.4 TEXTS */
+:local(.fontSize) {
+    font-size: 24px;
+}
+
 :local(.coinBalanceGreen) {
     composes: linkDefault from "../../components/bases/textBase.css"; 
     display: inline;
 }
 
 :local(.nameCoinSelected) {
-    font-size: 1.8vh;
+    composes: fontSize;    
     font-weight: bold;
 }
 
@@ -94,21 +100,22 @@
 }
 
 :local(.balanceMyAmount) {    
-    font-size: 2vh;
+    composes: fontSize;
 }
 
 :local(.balanceAmount) {
+    composes: fontSize;
     font-weight: normal;
-    font-size: 1.9vh;
-    margin: 4% 0;
+    margin: 15px 0;
 }
 
-/* 1.5 LOGO COINS */
+/* 1.5 ICON - COINS */
 :local(.logoCoinSelected) {
     max-width: 35%;
     margin: 3% 0;
     justify-self: center;
 }
+
 /* ------------------------------------------------------------------------- */
 
 /* 2. BUTTONS */
@@ -130,8 +137,26 @@
   composes: styleCoinDefalt;
 }
 
+/* 3. MOBILE */
+
+/* 3.1 BUTTONS */
+:local(.receiveButtonMobile) {
+    composes: receiveButton from "../../components/bases/buttonBase.css";
+    composes: styleCoinDefalt;
+    height: 40px;
+}
+
+:local(.submitButtonMobile) {
+    composes: receiveSubmit from "../../components/bases/buttonBase.css";
+    composes: styleCoinDefalt;
+    height: 40px;
+}
+
 @media only screen and (max-width: 599px) {
     :local .styleCoinDefalt {
         box-shadow: none;
     }
+    :local(.fontSize) {
+        font-size: 14px;
+    }    
 }
