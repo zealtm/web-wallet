@@ -1,5 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -16,7 +22,7 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import style from "./style.css";
 
 // DATA EXEMPLO
-const coins = [
+const coinse = [
   {
     name: "LUNES",
     balance: "$0.005",
@@ -77,47 +83,63 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    return coins.map((val, index) => {
-      return (
-        <div
-          className={style.baseBoxCoin}
-          key={index}
-          onClick={() => this.selectCoin(val.name)}
-        >
-          <div
-            className={
-              this.state.coinActive === val.name
-                ? style.boxCoinActive
-                : style.boxCoin
-            }
-          >
-            <div className={style.boxIconCoin}>
-              <img
-                className={style.iconCoin}
-                src={`images/coins/${val.name}.png`}
-              />
-            </div>
-            <Hidden smDown>
-              <div className={style.boxLabelCoin}>
-                {val.balance} <br />
-                <div className={style.labelPercent}>
-                  {this.renderArrowPercent(val.percent)}
-                  {val.percent}
-                </div>
-              </div>
-            </Hidden>
-            <Hidden mdUp>
-              <div className={style.boxArrowPercent}>
-                {this.renderArrowPercent(val.percent)}
-              </div>
-            </Hidden>
-          </div>
-        </div>
-      );
+    let { coins } = this.props.skeleton;
+    let teste = [ lunes: { name: "lunes" } , btc: { name: "btc" } ];
+    console.warn("renderCoins", coins);
+    console.warn("renderCoins T", teste);
+
+    return teste.map(coin => {
+      console.warn("coin", coin);
+
+      return;
     });
+
+    // return coins.map((val, index) => {
+    //   console.warn('map', val)
+    //   return (
+    //     <div
+    //       className={style.baseBoxCoin}
+    //       key={index}
+    //       onClick={() => this.selectCoin(coins.abbreviation)}
+    //     >
+    //       <div
+    //         className={
+    //           this.state.coinActive === coins.abbreviation
+    //             ? style.boxCoinActive
+    //             : style.boxCoin
+    //         }
+    //       >
+    //         <div className={style.boxIconCoin}>
+    //           <img
+    //             className={style.iconCoin}
+    //             src={`images/coins/${coins.abbreviation}.png`}
+    //           />
+    //         </div>
+    //         <Hidden smDown>
+    //           <div className={style.boxLabelCoin}>
+    //             {val.balance} <br />
+    //             <div className={style.labelPercent}>
+    //               {this.renderArrowPercent(val.percent)}
+    //               {val.percent}
+    //             </div>
+    //           </div>
+    //         </Hidden>
+    //         <Hidden mdUp>
+    //           <div className={style.boxArrowPercent}>
+    //             {this.renderArrowPercent(val.percent)}
+    //           </div>
+    //         </Hidden>
+    //       </div>
+    //     </div>
+    //   );
+    // });
   };
 
   render() {
+    console.warn("render");
+    let { coins } = this.props.skeleton;
+    console.warn("coins after", coins);
+
     let settings = {
       arrows: false,
       draggable: true,
@@ -186,4 +208,17 @@ class CoinsBar extends React.Component {
   }
 }
 
-export default CoinsBar;
+CoinsBar.propTypes = {
+  user: PropTypes.object,
+  skeleton: PropTypes.object
+};
+
+const mapSateToProps = store => ({
+  user: store.user,
+  skeleton: store.skeleton
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(CoinsBar);
