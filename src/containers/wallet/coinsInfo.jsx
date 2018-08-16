@@ -1,4 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
 
 // STYLE
 import style from "./style.css";
@@ -9,36 +13,45 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { getDefaultFiat } from "../../utils/localStorage";
 
 class CoinsInfo extends React.Component {
   render() {
+    let defaultCoin = getDefaultFiat();
+    let { coins, wallet } = this.props;
+    let coin = coins[wallet.selectedCoin];
+    let fiatBalance = coin.balance[defaultCoin].toFixed(2);
+    let balance = coin.balance.available;
+
     return (
       <div>
         <div className={style.containerWallet}>
           <Grid item xs={12} sm={8} className={style.containerInfoCoins}>
             <div className={style.coinSelected}>
-              <div className={style.nameCoinSelected}> {"Lunes"} </div>
+              <div className={style.nameCoinSelected}>
+                {coin.name.toUpperCase()}
+              </div>
               <img
-                src="../../images/icons/coins/lunes.png"
+                src={"/images/icons/coins/" + coin.abbreviation + ".png"}
                 className={style.logoCoinSelected}
               />
               <div className={style.percentageCoinSelected}> {"+7,63%"} </div>
 
-              <div className={style.valueCoinSelected}> {"$0.00545132"} </div>
+              <div className={style.valueCoinSelected}>
+                {"$" + fiatBalance}
+              </div>
             </div>
 
             <div className={style.floatRightInWeb}>
               <div className={style.coinBalance}>
                 <div className={style.balanceMyAmount}>
-                  {" "}
-                  {i18n.t("WALLET_MY_AMOUNT")}{" "}
+                  {i18n.t("WALLET_MY_AMOUNT")}
                 </div>
-                <div className={style.balanceAmount}> {"142.545.398"} </div>
+                <div className={style.balanceAmount}> {balance} </div>
 
                 <div>
-                  {" "}
-                  {"$ 172.450.424"}
-                  <div className={style.coinBalanceGreen}> {" USD"} </div>
+                  {"$" + fiatBalance}
+                  <div className={style.coinBalanceGreen}> {defaultCoin} </div>
                 </div>
               </div>
 
@@ -49,7 +62,7 @@ class CoinsInfo extends React.Component {
                   </button>
 
                   <button className={style.submitButton}>
-                    {i18n.t("BTN_SUBMIT")}
+                    {i18n.t("BTN_SEND")}
                   </button>
                 </div>
               </Hidden>
@@ -73,4 +86,17 @@ class CoinsInfo extends React.Component {
   }
 }
 
-export default CoinsInfo;
+CoinsInfo.propTypes = {
+  wallet: PropTypes.object.isRequired,
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
+};
+
+const mapSateToProps = store => ({
+  wallet: store.wallet,
+  coins: store.skeleton.coins
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(CoinsInfo);

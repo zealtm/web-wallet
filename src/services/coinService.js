@@ -27,7 +27,6 @@ class CoinService {
       let coins = [];
 
       const promises = availableCoins.map(async (coin, index) => {
-
         if (coin.status === "active") {
           let responsePrice = await axios.get(
             BASE_URL + "/coin/" + coin.abbreviation + "/price",
@@ -56,14 +55,22 @@ class CoinService {
 
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
+
           availableCoins[index].balance.available = convertCoin(
             availableCoins[index].balance.available,
             coin.decimalPoint
           );
+
           availableCoins[index].balance.total = convertCoin(
             availableCoins[index].balance.total,
             coin.decimalPoint
           );
+
+          Object.keys(availableCoins[index].price).map(fiat => {
+            let fiatPrice = availableCoins[index].price[fiat];
+            availableCoins[index].balance[fiat] =
+              fiatPrice.price * availableCoins[index].balance.available;
+          });
         } else {
           availableCoins[index].address = undefined;
           availableCoins[index].balance = undefined;
@@ -77,6 +84,7 @@ class CoinService {
       availableCoins.map((coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
+
       coins.token = availableCoins.token;
 
       return coins;

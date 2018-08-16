@@ -61,7 +61,7 @@ class CoinsBar extends React.Component {
       let coinFiatBalance = (
         coinBalance * coins[val].price[defaultFiat].price
       ).toFixed(2);
-      let coinPercent = percentCalc(coins[val].price[defaultFiat].price, 100);
+      let coinPercent = percentCalc(coins[val].price[defaultFiat].price, 10);
 
       return (
         <div
