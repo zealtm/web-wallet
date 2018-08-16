@@ -1,69 +1,155 @@
 import React, { Component } from "react";
 import Loadable from "react-loadable";
 import path from "path";
+import PropTypes from "prop-types";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { connect } from "react-redux";
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
+import Loading from "../../../components/loading";
 import fakeDelay from "../../../components/fakeDelay";
-import Skeleton from "../../skeleton";
+import Carousel from "../../../components/carousel/carousel";
+import ModalBar from "../../../components/modalBar";
 
-function Loading({ error }) {
+// MATERIAL UI
+import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+
+// STYLE
+import style from "../style.css";
+
+function Transition({ error }) {
   if (error) {
-    console.warn(error);
     return "Error!";
   } else {
-    return <h3>Loading...</h3>;
+    return <Loading color="lunes" width="35px" />;
   }
 }
 
 /* eslint-disable */
-let home = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../home")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../home")
+let login = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/login")),
+  loading: Transition,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/login")
 });
 
-let wallet = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../wallet")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../wallet")
+let reset = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/reset")),
+  loading: Transition,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset")
+});
+
+let resetNewPassword = Loadable({
+  loader: () =>
+    fakeDelay(400).then(() => import("../../user/reset/newPassword")),
+  loading: Transition,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/reset/newPassword")
+});
+
+let create = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../user/create")),
+  loading: Transition,
+  serverSideRequirePath: path.resolve(__dirname, "../../user/create")
 });
 
 let errorNotFound = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/404")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../errors/500")),
-  loading: Loading,
+  loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
 
-class App extends Component {
+const imagePath = "/images/carousel/";
+
+const carouselSteps = [
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
+    imgPath: imagePath + "carousel-01.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
+    imgPath: imagePath + "/carousel-02.png"
+  },
+  {
+    label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
+    imgPath: imagePath + "/carousel-03.png"
+  }
+];
+
+const maxDots = carouselSteps.length;
+
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      newPassword: false
+    };
+  }
+
+  componentDidMount() {
+    this.newPasswordAuth();
+  }
+
+  newPasswordAuth = () => {
+    let newPassword = true;
+    if (newPassword) {
+      this.setState({ newPassword: true });
+    }
+
+    return;
+  };
+
   render() {
+    const { error } = this.props;
+
     return (
       <Router>
         <div>
-          <Skeleton>
-            <Switch>
-              {/* INSIDE ROUTES */}
-              <Route exact path="/" component={home} />
-              <Route path="/home" component={home} />
-              <Route path="/wallet" component={wallet} />
+          <Grid container>
+            <div>
+              {error.active ? (
+                <ModalBar type={error.type} message={error.message} timer />
+              ) : null}
+            </div>
+            <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
+              <Switch>
+                {/* INSIDE ROUTES */}
+                <Route exact path="/" component={login} />
+                <Route exact path="/login" component={login} />
+                <Route exact path="/reset" component={reset} />
+                <Route exact path="/create" component={create} />
+                {/* ERRORS PAGE */}
+                <Route path="/404" component={errorNotFound} />
+                <Route path="/500" component={errorInternal} />
+                <Route path={"**"} component={login} />
+              </Switch>
+            </Grid>
 
-              {/* ERRORS PAGE */}
-              <Route path="/404" component={errorNotFound} />
-              <Route path="/500" component={errorInternal} />
-              <Route path={"**"} component={errorNotFound} />
-            </Switch>
-          </Skeleton>
+            <Hidden smDown>
+              <Grid item md={7} className={style.colRight}>
+                <Carousel imageSteps={carouselSteps} maxDot={maxDots} />
+              </Grid>
+            </Hidden>
+          </Grid>
         </div>
       </Router>
     );
   }
 }
 
-export default App;
+Login.propTypes = {
+  error: PropTypes.object
+};
+
+const mapSateToProps = store => ({
+  error: store.error.message
+});
+
+export default connect(mapSateToProps)(Login);
