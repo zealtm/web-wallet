@@ -24,9 +24,10 @@ export function* loadGeneralInfo(action) {
       decryptAes(seed, action.password)
     );
 
+
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
-
+    yield call(coinService.getCoinHistory, "btc", "brl", "1_Y", 144, token);
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -61,6 +62,7 @@ export function* availableCoins() {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(coinService.getAvaliableCoins, token);
+
     yield put({
       type: "GET_AVAILABLE_COINS",
       coins: response.data.data.coins

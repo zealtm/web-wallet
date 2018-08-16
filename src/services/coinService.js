@@ -116,16 +116,47 @@ class CoinService {
     }
   }
 
-  async getCoinHistory(coinType, fiat, fromDate, toDate, interval, token) {
+  async getCoinHistory(coinType, fiat, range, interval = 60, token) {
     try {
-      let fromDateIso = new Date(fromDate).toISOString();
-      let toDateIso = new Date(toDate).toISOString();
+      range = range.split("_");
+      let fromDateIso = "";
+      let date = new Date();
+      let toDateIso = new Date().toISOString();
+      let value = range[0];
+      let typeValue = range[1];
+      const day = 1440;
+      const week = 10080;
+      const mounth = 43200;
+      const year = 525600;
 
+      switch (typeValue.toLowerCase()) {
+        case "d":
+          fromDateIso = new Date(date.getTime() - ((value * day) * 60000)).toISOString();
+
+          break;
+
+        case "w":
+          fromDateIso = new Date(date.getTime() - ((value * week) * 60000)).toISOString();
+
+          break;
+
+        case "m":
+          fromDateIso = new Date(date.getTime() - ((value * mounth) * 60000)).toISOString();
+
+          break;
+
+        case "y":
+          fromDateIso = new Date(date.getTime() - ((value * year) * 60000)).toISOString();
+          break;
+      }
+
+      console.warn("MARTIN ", fromDateIso, toDateIso);
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
         API_HEADER);
 
+        console.warn(response);
       return response;
     } catch (error) {
       internalServerError();
