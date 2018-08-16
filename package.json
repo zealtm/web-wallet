@@ -83,10 +83,12 @@
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-slick": "^0.23.1",
     "react-swipeable-views": "^0.12.14",
     "react-transition-group": "^2.4.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
+    "slick-carousel": "^1.8.1",
     "validator": "^10.4.0"
   }
 }
