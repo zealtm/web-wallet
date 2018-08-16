@@ -21,7 +21,7 @@ class InfoCoinsTop extends React.Component {
               <img src="../../images/icons/coins/lunes.png"
                 className={style.logoCoinSelected}
               />
-              <div className={style.porcentageCoinSelected}> {"+7,63%"}  </div>
+              <div className={style.percentageCoinSelected}> {"+7,63%"}  </div>
               <div className={style.valueCoinSelected}> {"$0.00545132"}  </div>
             </div>
 
@@ -32,7 +32,7 @@ class InfoCoinsTop extends React.Component {
                 <div className={style.balanceMyAmount}>{i18n.t("WALLET_MY_AMOUNT")}</div>
                 <div className={style.balanceAmount}>{"142.545.398"}</div>
                 <div> {"$ 172.450.424"}
-                <div className={style.coinBalanceGreen}>
+                  <div className={style.coinBalanceGreen}>
                     {" USD"}
                   </div>
 
@@ -56,15 +56,15 @@ class InfoCoinsTop extends React.Component {
         </div>
 
         <Hidden smUp>
-          <div className={style.alignButtonsMobile}>
-            <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SUBMIT")}
-            </button>
+            <div className={style.alignButtonsMobile}>
+              <button className={style.submitButtonMobile}>
+                {i18n.t("BTN_SUBMIT")}
+              </button>
 
-            <button className={style.receiveButtonMobile}>
-              {i18n.t("BTN_RECEIVE")}
-            </button>
-          </div>
+              <button className={style.receiveButtonMobile}>
+                {i18n.t("BTN_RECEIVE")}
+              </button>
+            </div>
         </Hidden>
 
       </div>

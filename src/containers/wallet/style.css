@@ -58,7 +58,8 @@
     min-height: 99px;
     max-width: 242px;
     max-height: 192px;
-    width: 30%;
+    padding-left: 5%;
+    padding-right: 5%;
     display: grid;
 }
 
@@ -85,17 +86,18 @@
 }
 
 :local(.nameCoinSelected) {
-    composes: fontSize;    
+    font-size: 19px;
     font-weight: bold;
 }
 
-:local(.porcentageCoinSelected) {
+:local(.percentageCoinSelected) {
     composes: textDefault from "../../components/bases/textBase.css";  
-    font-size: 12px;
+    font-size: 22px;
 }
 
 :local(.valueCoinSelected) {
     composes: textDefault from "../../components/bases/textBase.css";  
+    composes: fontSize;
     font-weight: bold;
 }
 
@@ -153,10 +155,16 @@
 }
 
 @media only screen and (max-width: 599px) {
-    :local .styleCoinDefalt {
+    :local(.styleCoinDefalt) {
         box-shadow: none;
     }
     :local(.fontSize) {
         font-size: 14px;
+    }    
+    :local(.nameCoinSelected) {
+        font-size: 14px;
+    }
+    :local(.percentageCoinSelected) { 
+        font-size: 12px;
     }    
 }
