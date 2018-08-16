@@ -47,10 +47,10 @@ class CoinService {
 
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -116,14 +116,27 @@ class CoinService {
     }
   }
 
+  async getCoinHistory(coinType, fiat, fromDate, toDate, interval, token) {
+    try {
+      let fromDateIso = new Date(fromDate).toISOString();
+      let toDateIso = new Date(toDate).toISOString();
+
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(
+        `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
+        API_HEADER);
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
   async createWalletCoin(coinType, seed, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.post(
-        BASE_URL + "/coin/" + coinType + "/address",
-        { seed },
-        API_HEADER
-      );
+      let response = await axios.post(BASE_URL + "/coin/" + coinType + "/address", { seed }, API_HEADER);
 
       return response;
     } catch (error) {
