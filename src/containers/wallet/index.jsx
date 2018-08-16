@@ -1,10 +1,10 @@
 import React from "react";
-import InfoCoinsTop from "./infoCoinsTop";
+import CoinsInfo from "./coinsInfo";
 
 class Wallet extends React.Component {
     render() {
         return (
-            <InfoCoinsTop />
+            <CoinsInfo />
         );
     }
 }
