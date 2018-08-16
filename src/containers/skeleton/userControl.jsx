@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -60,13 +61,12 @@ class UserControl extends React.Component {
   };
 
   render() {
-    const { avatar } = this.state;
-
+    const { user } = this.props.user;
     return (
       <div>
         <Avatar
           alt="Avatar"
-          src={avatar}
+          src={user.profilePicture}
           className={style.avatarHeader}
           onClick={this.handleClick}
         />
@@ -79,6 +79,15 @@ class UserControl extends React.Component {
 
 UserControl.propTypes = {
   actionLogout: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
-export default UserControl;
+const mapSateToProps = store => ({
+  user: store.user
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(UserControl);
+
