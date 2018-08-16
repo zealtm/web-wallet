@@ -54,6 +54,7 @@ class CoinsBar extends React.Component {
   renderCoins = () => {
     let { coins } = this.props.skeleton;
     let defaultFiat = getDefaultFiat();
+
     console.warn(coins)
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
@@ -61,7 +62,7 @@ class CoinsBar extends React.Component {
       let coinFiatBalance = (
         coinBalance * coins[val].price[defaultFiat].price
       ).toFixed(2);
-      let coinPercent = percentCalc(coins[val].price[defaultFiat].price, 10);
+      let coinPercent = coins[val].price.percent;
 
       return (
         <div
@@ -87,7 +88,7 @@ class CoinsBar extends React.Component {
                 {"$" + coinFiatBalance} <br />
                 <div className={style.labelPercent}>
                   {this.renderArrowPercent(coinPercent)}
-                  {coinPercent + "%"}
+                  {coinPercent}
                 </div>
               </div>
             </Hidden>

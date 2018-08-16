@@ -3,7 +3,7 @@ import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 // UTILS
-import { convertCoin } from "../utils/numbers";
+import { convertCoin, percentCalc } from "../utils/numbers";
 class CoinService {
   async getavailableCoins(token) {
     try {
@@ -35,6 +35,7 @@ class CoinService {
           );
 
           availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.percent = percentCalc(1, 3) + "%" //CALCULAR PORCENTAGEM
 
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
