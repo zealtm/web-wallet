@@ -82,17 +82,23 @@
 
   "SEED_INSERT_SEED": "Insert your SeedWords",
 
-  "MENU_CONFIGURATION": "Configuration",
   "MENU_SUPPORT": "Support",
   "MENU_LOGOUT": "Logout",
 
-
-
+  "MENU_HOME": "Home",
+  "MENU_PORTFOLIO": "Portfolio",
+  "MENU_WALLET": "Wallet",
+  "MENU_RECHARGE": "Recharge",
+  "MENU_PAY": "Pay",
+  "MENU_PURCHASE": "Purchase",
+  "MENU_CONFIGURATION": "Configuration",
+  "MENU_LEASING": "Leasing",
+  "MENU_PRIVACY": "Privacy",
 
   "CARD_HOME_TITLE_1": "Portfolio",
   "CARD_HOME_TITLE_2": "Multicoin Wallet",
   "CARD_HOME_TITLE_3": "Recharge",
-  "CARD_HOME_TITLE_4": "Ticket",
+  "CARD_HOME_TITLE_4": "Pay",
   "CARD_HOME_TITLE_5": "Purchase",
   "CARD_HOME_TITLE_6": "Purchase",
 
