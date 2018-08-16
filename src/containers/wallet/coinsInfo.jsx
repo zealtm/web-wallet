@@ -20,7 +20,7 @@ class CoinsInfo extends React.Component {
     let defaultCoin = getDefaultFiat();
     let { coins, wallet } = this.props;
     let coin = coins[wallet.selectedCoin];
-    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price
+    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[wallet.selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
@@ -37,11 +37,12 @@ class CoinsInfo extends React.Component {
                 src={"/images/icons/coins/" + coin.abbreviation + ".png"}
                 className={style.logoCoinSelected}
               />
-              <div className={style.percentageCoinSelected}> {coinPercent} </div>
-
-              <div className={style.valueCoinSelected}>
-                {"$" + coinPrice}
+              <div className={style.percentageCoinSelected}>
+                {" "}
+                {coinPercent}{" "}
               </div>
+
+              <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
             </div>
 
             <div className={style.floatRightInWeb}>

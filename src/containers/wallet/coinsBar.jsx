@@ -58,11 +58,11 @@ class CoinsBar extends React.Component {
     console.warn(coins)
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
-      let coinBalance = coins[val].balance.available;
+      let coinBalance = coin.balance.available;
       let coinFiatBalance = (
-        coinBalance * coins[val].price[defaultFiat].price
+        coinBalance * coin.price[defaultFiat].price
       ).toFixed(2);
-      let coinPercent = coins[val].price.percent;
+      let coinPercent = coin.price.percent;
 
       return (
         <div
@@ -80,7 +80,7 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/coins/${coin.abbreviation}.png`}
+                src={`images/icons/coins/${coin.abbreviation}.png`}
               />
             </div>
             <Hidden smDown>
