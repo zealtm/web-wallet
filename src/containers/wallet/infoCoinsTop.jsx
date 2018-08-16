@@ -16,26 +16,26 @@ class InfoCoinsTop extends React.Component {
       <div>
         <div className={style.containerWallet}>
           <Grid xs={12} sm={8} className={style.containerInfoCoins}>
+
             <div className={style.coinSelected}>
+
               <div className={style.nameCoinSelected}> {"Lunes"}  </div>
               <img src="../../images/icons/coins/lunes.png"
-                className={style.logoCoinSelected}
-              />
+                className={style.logoCoinSelected} />
               <div className={style.percentageCoinSelected}> {"+7,63%"}  </div>
+
               <div className={style.valueCoinSelected}> {"$0.00545132"}  </div>
+
             </div>
 
             <div className={style.floatRightInWeb}>
 
               <div className={style.coinBalance}>
+                <div className={style.balanceMyAmount}> {i18n.t("WALLET_MY_AMOUNT")}  </div>
+                <div className={style.balanceAmount}> {"142.545.398"} </div>
 
-                <div className={style.balanceMyAmount}>{i18n.t("WALLET_MY_AMOUNT")}</div>
-                <div className={style.balanceAmount}>{"142.545.398"}</div>
                 <div> {"$ 172.450.424"}
-                  <div className={style.coinBalanceGreen}>
-                    {" USD"}
-                  </div>
-
+                  <div className={style.coinBalanceGreen}>  {" USD"}  </div>
                 </div>
 
               </div>
@@ -52,19 +52,20 @@ class InfoCoinsTop extends React.Component {
                 </div>
               </Hidden>
             </div>
+
           </Grid>
         </div>
 
         <Hidden smUp>
-            <div className={style.alignButtonsMobile}>
-              <button className={style.submitButtonMobile}>
-                {i18n.t("BTN_SUBMIT")}
-              </button>
+          <div className={style.alignButtonsMobile}>
+            <button className={style.submitButtonMobile}>
+              {i18n.t("BTN_SUBMIT")}
+            </button>
 
-              <button className={style.receiveButtonMobile}>
-                {i18n.t("BTN_RECEIVE")}
-              </button>
-            </div>
+            <button className={style.receiveButtonMobile}>
+              {i18n.t("BTN_RECEIVE")}
+            </button>
+          </div>
         </Hidden>
 
       </div>

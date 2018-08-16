@@ -13,6 +13,7 @@
 
  3. MOBILE
     3.1 BUTTONS
+    3.2 (MEDIA)
 */
 
 /* ------------------------------------------------------------------------- */
@@ -154,6 +155,7 @@
     height: 40px;
 }
 
+/* 3.2 (MEDIA) */
 @media only screen and (max-width: 599px) {
     :local(.styleCoinDefalt) {
         box-shadow: none;
