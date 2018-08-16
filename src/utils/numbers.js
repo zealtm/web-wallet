@@ -7,7 +7,7 @@ export const convertCoin = (value, decimal) => {
 };
 
 export const percentCalc = (first, last) => {
-  let result = ((last * 100) / first) - 100
-  return result.toFixed(2) + "%"
-};
+  let result = (last * 100) / first - 100;
 
+  return result.toFixed(2);
+};

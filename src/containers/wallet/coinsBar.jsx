@@ -1,5 +1,15 @@
 import React from "react";
 import Slider from "react-slick";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+// import { bindActionCreators } from "redux";
+// import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+
+// UTILS
+import { percentCalc } from "../../utils/numbers";
+import { getDefaultFiat } from "../../utils/localStorage";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -14,40 +24,6 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // STYLE
 import style from "./style.css";
-
-// DATA EXEMPLO
-const coins = [
-  {
-    name: "LUNES",
-    balance: "$0.005",
-    percent: "-1.55%"
-  },
-  {
-    name: "BTC",
-    balance: "$8,000.30",
-    percent: "8.00%"
-  },
-  {
-    name: "LTC",
-    balance: "$200.00",
-    percent: "5.25%"
-  },
-  {
-    name: "USDT",
-    balance: "$200.00",
-    percent: "5.25%"
-  },
-  {
-    name: "DASH",
-    balance: "$200.00",
-    percent: "5.25%"
-  },
-  {
-    name: "ETH",
-    balance: "$200.00",
-    percent: "5.25%"
-  }
-];
 
 class CoinsBar extends React.Component {
   constructor(props) {
@@ -68,8 +44,7 @@ class CoinsBar extends React.Component {
   };
 
   renderArrowPercent = val => {
-    const percent = parseFloat(val);
-    if (percent < 0) {
+    if (val < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
     } else {
       return <ArrowDropUp className={style.arrowPercentUp} />;
@@ -77,16 +52,27 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    return coins.map((val, index) => {
+    let { coins } = this.props.skeleton;
+    let defaultFiat = getDefaultFiat();
+
+    console.warn(coins)
+    return Object.keys(coins).map((val, index) => {
+      let coin = coins[val];
+      let coinBalance = coin.balance.available;
+      let coinFiatBalance = (
+        coinBalance * coin.price[defaultFiat].price
+      ).toFixed(2);
+      let coinPercent = coin.price.percent;
+
       return (
         <div
           className={style.baseBoxCoin}
           key={index}
-          onClick={() => this.selectCoin(val.name)}
+          onClick={() => this.selectCoin(coin.abbreviation)}
         >
           <div
             className={
-              this.state.coinActive === val.name
+              this.state.coinActive === coins.abbreviation
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -94,21 +80,21 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/coins/${val.name}.png`}
+                src={`images/icons/coins/${coin.abbreviation}.png`}
               />
             </div>
             <Hidden smDown>
               <div className={style.boxLabelCoin}>
-                {val.balance} <br />
+                {"$" + coinFiatBalance} <br />
                 <div className={style.labelPercent}>
-                  {this.renderArrowPercent(val.percent)}
-                  {val.percent}
+                  {this.renderArrowPercent(coinPercent)}
+                  {coinPercent}
                 </div>
               </div>
             </Hidden>
             <Hidden mdUp>
               <div className={style.boxArrowPercent}>
-                {this.renderArrowPercent(val.percent)}
+                {this.renderArrowPercent(coinPercent)}
               </div>
             </Hidden>
           </div>
@@ -186,4 +172,17 @@ class CoinsBar extends React.Component {
   }
 }
 
-export default CoinsBar;
+CoinsBar.propTypes = {
+  user: PropTypes.object,
+  skeleton: PropTypes.object
+};
+
+const mapSateToProps = store => ({
+  user: store.user,
+  skeleton: store.skeleton
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(CoinsBar);

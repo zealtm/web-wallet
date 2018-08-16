@@ -17,7 +17,7 @@
   composes: bgPurpleDark from "../../components/bases/colorBase.css";
   height: 100vh;
   overflow: auto;
-  padding: 16px;
+  padding: 8px;
   padding-left:0;
   padding-right:0;
 }
@@ -33,7 +33,7 @@
 
 :local(.header) {
   composes: bgPurpleLight from "../../components/bases/colorBase.css";
-  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 :local .boxUserMenu {

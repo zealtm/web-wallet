@@ -11,6 +11,8 @@ import {
 } from "../user/redux/userSaga";
 
 import { loadGeneralInfo, availableCoins, balanceCoins, createCoinsAddress } from "../skeleton/redux/skeletonSaga";
+import { } from "../wallet/redux/walletSaga";
+
 
 export default function* rootSaga() {
 

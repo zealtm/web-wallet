@@ -1,15 +1,15 @@
 import React from "react";
-import Modal from "../../components/modal";
 
-// COMPONENTS 
+// COMPONENTS
 import CoinsBar from "./coinsBar";
+import CoinsInfo from "./coinsInfo";
 
 class Wallet extends React.Component {
   render() {
     return (
       <div>
         <CoinsBar />
-        <div><Modal title={"Transação"} content={"Conteúdo"} show={true}/></div>
+        <CoinsInfo />
       </div>
     );
   }

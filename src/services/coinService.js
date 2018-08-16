@@ -1,8 +1,9 @@
 import axios from "axios";
-import { convertCoin } from "../utils/numbers";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
+// UTILS
+import { convertCoin, percentCalc } from "../utils/numbers";
 class CoinService {
   async getavailableCoins(token) {
     try {
@@ -27,7 +28,6 @@ class CoinService {
       let coins = [];
 
       const promises = availableCoins.map(async (coin, index) => {
-
         if (coin.status === "active") {
           let responsePrice = await axios.get(
             BASE_URL + "/coin/" + coin.abbreviation + "/price",
@@ -35,6 +35,7 @@ class CoinService {
           );
 
           availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.percent = percentCalc(1, 3) + "%" //CALCULAR PORCENTAGEM
 
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
@@ -56,14 +57,22 @@ class CoinService {
 
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
+
           availableCoins[index].balance.available = convertCoin(
             availableCoins[index].balance.available,
             coin.decimalPoint
           );
+
           availableCoins[index].balance.total = convertCoin(
             availableCoins[index].balance.total,
             coin.decimalPoint
           );
+
+          Object.keys(availableCoins[index].price).map(fiat => {
+            let fiatPrice = availableCoins[index].price[fiat];
+            availableCoins[index].balance[fiat] =
+              fiatPrice.price * availableCoins[index].balance.available;
+          });
         } else {
           availableCoins[index].address = undefined;
           availableCoins[index].balance = undefined;
@@ -77,6 +86,7 @@ class CoinService {
       availableCoins.map((coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
+
       coins.token = availableCoins.token;
 
       return coins;

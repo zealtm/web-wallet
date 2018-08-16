@@ -4,6 +4,11 @@
 1. BUTTON
   1.1 BUTTON GREEN
   1.2 BUTTON PURPLE
+
+2. BUTTON ACTION
+  2.1 BUTTON RECEIVE
+  2.2 BUTTON SUBMIT
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -75,3 +80,24 @@
 }
 
 /* ------------------------------------------------------------------------- */
+
+/* 2 BUTTON ACTION */
+:local(.actionButtonDefaul) {
+  composes: buttonDefault;
+  font-size: 16px;
+  height: 60px;
+  width: 48%;
+  font-weight: bold;
+}
+
+/* 2.1 BUTTON RECEIVE */
+:local(.receiveButton) {  
+  composes: actionButtonDefaul;
+  composes: bgGreenDefault from "./colorBase.css";
+}
+
+/* 2.2 BUTTON SUBMIT */
+:local(.receiveSubmit) {  
+  composes: actionButtonDefaul;
+  composes: bgError from "./colorBase.css";
+}
