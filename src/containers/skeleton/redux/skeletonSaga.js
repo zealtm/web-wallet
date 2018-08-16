@@ -25,13 +25,19 @@ export function* loadGeneralInfo(action) {
     );
 
     let responseUser = yield call(userService.getUser, token);
+    let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
     yield put({
       type: "SET_USER_INFO",
-      user: responseUser.data.data
+      user: {
+        profilePicture: pictureUser,
+        name: responseUser.data.data.name,
+        surname: responseUser.data.data.surname,
+        email: responseUser.data.data.email
+      }
     });
 
     yield put({

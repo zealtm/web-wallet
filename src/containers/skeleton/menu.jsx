@@ -63,7 +63,7 @@ class Menu extends React.Component {
 
   render() {
     const { openMenu, user, actionLogout } = this.props;
-
+    
     return (
       <div
         className={style.colMenu}
@@ -74,7 +74,7 @@ class Menu extends React.Component {
             <Grid item xs={4} align="center">
               <Avatar
                 alt="Avatar"
-                src="images/icons/lunio/lunio-user@100x100.jpg"
+                src={user.profilePicture}
               />
             </Grid>
             <Grid item xs={8}>
