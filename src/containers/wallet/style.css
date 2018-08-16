@@ -15,10 +15,10 @@
 :local .boxCoin {
   margin-top: 7px;
   margin-bottom: 7px;
-  margin-left:10px;
-  border-radius:8px;
-  opacity: .8;
-  transition: opacity .5s;
+  margin-left: 10px;
+  border-radius: 8px;
+  opacity: 0.8;
+  transition: opacity 0.5s;
   height: 60px;
 }
 
@@ -36,14 +36,14 @@
 :local .contentCoins {
   composes: bgPurpleLight from "../../components/bases/colorBase.css";
   box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.05);
-  margin-left:1px;
+  margin-left: 1px;
 }
 
 :local .boxIconCoin {
   composes: bgPurpleClear from "../../components/bases/colorBase.css";
-  padding: 18px; 
+  padding: 18px;
   float: left;
-  border-radius:8px;
+  border-radius: 8px;
 }
 
 :local .iconCoin {
@@ -59,7 +59,7 @@
 
 :local .arrowPercent {
   width: 10px;
-  margin-bottom:-8px;
+  margin-bottom: -8px;
 }
 
 :local .arrowPercentDown {
@@ -73,16 +73,15 @@
 }
 
 :local .boxArrowPercent {
-  margin-top:17px;
-  margin-left:43px;
-  position:absolute;
+  margin-top: 17px;
+  margin-left: 39px;
+  position: absolute;
 }
-
 
 @media only screen and (max-width: 768px) {
   :local .boxIconCoin {
     background-color: transparent;
-    margin-left:-5px;
+    margin-left: -5px;
   }
   :local .boxCoinActive {
     composes: bgPurpleClear from "../../components/bases/colorBase.css";
@@ -95,10 +94,10 @@
 
 :local .boxLabelCoin {
   text-align: right;
-  padding-top:12px;
-  padding-right:14px;
+  padding-top: 12px;
+  padding-right: 5px;
 }
 
 :local .labelPercent {
-  font-size:9px;
+  font-size: 9px;
 }
