@@ -35,7 +35,7 @@ class CoinService {
           );
 
           availableCoins[index].price = responsePrice.data.data;
-          availableCoins[index].price.percent = percentCalc(1, 3) + "%" //CALCULAR PORCENTAGEM
+          availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
@@ -48,10 +48,10 @@ class CoinService {
 
           let responseBalance = await axios.get(
             BASE_URL +
-            "/coin/" +
-            coin.abbreviation +
-            "/balance/" +
-            coin.address,
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
             API_HEADER
           );
 
@@ -128,7 +128,6 @@ class CoinService {
 
   async getCoinPriceHistory(coinType, fiat, range, interval, token) {
     try {
-      
       range = range.split("_");
       let fromDateIso = "";
       let date = new Date();
@@ -142,33 +141,40 @@ class CoinService {
 
       switch (typeValue.toLowerCase()) {
         case "d":
-          fromDateIso = new Date(date.getTime() - ((value * day) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * day * 60000
+          ).toISOString();
 
           break;
 
         case "w":
-          fromDateIso = new Date(date.getTime() - ((value * week) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * week * 60000
+          ).toISOString();
 
           break;
 
         case "m":
-          fromDateIso = new Date(date.getTime() - ((value * mounth) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * mounth * 60000
+          ).toISOString();
 
           break;
 
         case "y":
-          fromDateIso = new Date(date.getTime() - ((value * year) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * year * 60000
+          ).toISOString();
           break;
       }
 
-      console.warn("MARTIN ", fromDateIso, toDateIso);
       API_HEADER.headers.Authorization = token;
       interval = !interval ? 60 : interval;
       let response = await axios.get(
         `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
-        API_HEADER);
+        API_HEADER
+      );
 
-      console.warn(response);
       return response;
     } catch (error) {
       internalServerError();
@@ -179,7 +185,11 @@ class CoinService {
   async createWalletCoin(coinType, seed, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.post(BASE_URL + "/coin/" + coinType + "/address", { seed }, API_HEADER);
+      let response = await axios.post(
+        BASE_URL + "/coin/" + coinType + "/address",
+        { seed },
+        API_HEADER
+      );
 
       return response;
     } catch (error) {
