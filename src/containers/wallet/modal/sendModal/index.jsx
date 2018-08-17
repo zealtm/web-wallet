@@ -1,6 +1,7 @@
 import React from "react";
 
 // COMPONENTS
+import ButtonContinue from "./buttonContinue";
 import BoxAddress from "./boxAddress";
 import BoxAmount from "./boxAmount";
 import BoxFee from "./boxFee";
@@ -19,21 +20,17 @@ class SendModal extends React.Component {
     };
   }
 
+  handleStep = () => {
+    this.setState({ step: this.state.step + 1 });
+  };
+
   render() {
     switch (this.state.step) {
       case 0:
         return (
           <div className={style.baseStep}>
             <BoxAddress />
-
-            <button
-              className={style.btContinueDisable}
-              onClick={() => {
-                this.setState({ step: this.state.step + 1 });
-              }}
-            >
-              CONTINUAR
-            </button>
+            <ButtonContinue action={this.handleStep} />
           </div>
         );
       case 1:
@@ -41,14 +38,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxAmount />
 
-            <button
-              className={style.btContinue}
-              onClick={() => {
-                this.setState({ step: this.state.step + 1 });
-              }}
-            >
-              CONTINUAR
-            </button>
+            <ButtonContinue action={this.handleStep} />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });
@@ -63,14 +53,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxFee />
 
-            <button
-              className={style.btContinue}
-              onClick={() => {
-                this.setState({ step: this.state.step + 1 });
-              }}
-            >
-              CONTINUAR
-            </button>
+            <ButtonContinue action={this.handleStep} />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });
@@ -85,14 +68,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxConfirm />
 
-            <button
-              className={style.btContinue}
-              onClick={() => {
-                this.setState({ step: this.state.step + 1 });
-              }}
-            >
-              ENVIAR
-            </button>
+            <ButtonContinue action={this.handleStep} label="ENVIAR" />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });
@@ -107,14 +83,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxProcess />
 
-            <button
-              className={style.btContinue}
-              onClick={() => {
-                this.setState({ step: this.state.step + 1 });
-              }}
-            >
-              CONTINUAR
-            </button>
+            <ButtonContinue action={this.handleStep} />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });
@@ -129,7 +98,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxResult />
 
-            <button className={style.btContinue}>FECHAR</button>
+            <ButtonContinue action={this.handleStep} label="FECHAR" />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });
