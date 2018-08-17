@@ -27,7 +27,7 @@ export function* loadGeneralInfo(action) {
 
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
-    yield call(coinService.getCoinHistory, "btc", "brl", "1_Y", 144, token);
+    yield call(coinService.getCoinHistory, "btc", "brl", "1_Y", null, token);
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 

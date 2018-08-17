@@ -116,8 +116,9 @@ class CoinService {
     }
   }
 
-  async getCoinHistory(coinType, fiat, range, interval = 60, token) {
+  async getCoinHistory(coinType, fiat, range, interval, token) {
     try {
+      
       range = range.split("_");
       let fromDateIso = "";
       let date = new Date();
@@ -152,11 +153,12 @@ class CoinService {
 
       console.warn("MARTIN ", fromDateIso, toDateIso);
       API_HEADER.headers.Authorization = token;
+      interval = !interval ? 60 : interval;
       let response = await axios.get(
         `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
         API_HEADER);
 
-        console.warn(response);
+      console.warn(response);
       return response;
     } catch (error) {
       internalServerError();
