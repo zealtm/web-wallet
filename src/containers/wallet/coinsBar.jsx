@@ -64,7 +64,7 @@ class CoinsBar extends React.Component {
         <div
           className={style.baseBoxCoin}
           key={index}
-          onClick={() => setSelectedCoin(coin)}
+          onClick={() => setSelectedCoin(coin.abbreviation)}
         >
           <div
             className={

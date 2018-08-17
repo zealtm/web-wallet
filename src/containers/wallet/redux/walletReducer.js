@@ -1,5 +1,5 @@
 const initialState = {
-  selectedCoin: "btc",
+  selectedCoin: "lunes",
   loading: true,
   errors: []
 };

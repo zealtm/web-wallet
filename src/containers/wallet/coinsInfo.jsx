@@ -10,16 +10,25 @@ import style from "./style.css";
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
+import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // UTILS
 import i18n from "../../utils/i18n";
 import { getDefaultFiat } from "../../utils/localStorage";
 
 class CoinsInfo extends React.Component {
+  renderArrowPercent = val => {
+    if (val < 0) {
+      return <ArrowDropDown className={style.arrowPercentDown} />;
+    } else {
+      return <ArrowDropUp className={style.arrowPercentUp} />;
+    }
+  };
+
   render() {
     let defaultCoin = getDefaultFiat();
     let { coins, wallet } = this.props;
-    console.warn(coins)
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[wallet.selectedCoin].price.percent;
@@ -39,8 +48,8 @@ class CoinsInfo extends React.Component {
                 className={style.logoCoinSelected}
               />
               <div className={style.percentageCoinSelected}>
-                {" "}
-                {coinPercent}{" "}
+                {this.renderArrowPercent(coinPercent)}
+                {coinPercent}
               </div>
 
               <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
