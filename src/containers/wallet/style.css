@@ -268,3 +268,9 @@
         font-size: 12px;
     }    
 }
+
+:local(.mainContainerHistory) {
+    composes: styleCoinDefalt;
+    background-color: #473088;
+    height: 100vh;
+}

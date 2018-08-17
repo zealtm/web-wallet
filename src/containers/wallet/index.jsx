@@ -3,6 +3,7 @@ import React from "react";
 // COMPONENTS
 import CoinsBar from "./coinsBar";
 import CoinsInfo from "./coinsInfo";
+import TransactionHistory from "./transactionHistory";
 
 class Wallet extends React.Component {
   render() {
@@ -10,6 +11,7 @@ class Wallet extends React.Component {
       <div>
         <CoinsBar />
         <CoinsInfo />
+        <TransactionHistory />
       </div>
     );
   }
