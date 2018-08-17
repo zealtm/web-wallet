@@ -1,0 +1,50 @@
+:local(.modalBox) {
+  background-color: #473088;
+  border-radius: 8px;
+  top: 20px;
+  left: 8px;
+  right: 8px;
+  bottom: 20px;
+  margin: auto;
+  max-width: 730px;
+  min-width: 306px;
+  max-height: 639px;
+  min-height: 538px;
+  position: absolute;
+}
+
+:local(.overlay) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(59, 24, 120, 0.8);
+}
+
+:local(.header) {
+  composes: textDefault from "../bases/textBase.css";
+  border-bottom: 2px solid #3b1878;
+  height: 46px;
+  width: 100%;
+}
+
+:local(.headerImage) {
+  float: left;
+  width: 8%;
+  cursor: pointer;
+  padding-top: 9px;
+  text-align: right;
+}
+
+:local(.headerImage > img) {
+  width: 30px;
+}
+
+:local(.headerTitle) {
+  font-weight: bold;
+  font-size: 20px;
+  width: 100%;
+  padding-top: 11px;
+  text-align: center;
+}

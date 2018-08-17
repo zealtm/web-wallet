@@ -82,19 +82,31 @@
 :local(.linkMenu) {
   composes: linkDefault from "../../components/bases/textBase.css";
   composes: bdGreenDefault from "../../components/bases/colorBase.css";
+  font-weight: bold;
   display: block;
   padding-left: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  color: #ffffff;
-  opacity: 0.5;
+  color: #654ea6;
   transition: opacity 0.3s;
+}
+
+:local .linkMenu img {
+  filter: grayscale(100%);
+  opacity: 0.2;
 }
 
 :local .linkMenu:hover {
   padding-left: 14px;
   border-left-style: solid;
   border-left-width: 6px;
+  opacity: 1;
+  color: white;
+  transition: opacity 0.3s;
+}
+
+:local .linkMenu:hover img {
+  filter: grayscale(0);
   opacity: 1;
 }
 
@@ -112,6 +124,11 @@
   opacity: 1;
 }
 
+:local .linkMenuActive img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
 :local .link {
   composes: linkDefault from "../../components/bases/textBase.css";
   display: block;
@@ -121,7 +138,7 @@
 }
 
 :local .userName {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 :local .textBalance {

@@ -27,6 +27,8 @@ export function* loadGeneralInfo(action) {
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
 
+
+
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
