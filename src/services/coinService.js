@@ -116,7 +116,7 @@ class CoinService {
     }
   }
 
-  async getCoinHistory(coinType, fiat, range, interval, token) {
+  async getCoinPriceHistory(coinType, fiat, range, interval, token) {
     try {
       
       range = range.split("_");
