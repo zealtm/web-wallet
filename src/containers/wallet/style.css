@@ -158,8 +158,8 @@
   background-color: #473088;    
   text-align: center;
   max-width: 242px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 8%;
+  padding-right: 8%;
   border-radius: 8px;
 }
 
@@ -171,6 +171,18 @@
   min-width: 150px;
   max-height: 116px;
   padding: 10px;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.styleCoinDefalt) {
+    box-shadow: none;
+  }    
+  :local(.alignContentCoin) {
+    padding: 5% 0;
+  }
+  :local(.coinBalance) {
+    height: 100px;
+  }
 }
 
 /* 2.2 TEXTS */
@@ -211,9 +223,6 @@
 }
 
 @media only screen and (max-width: 599px) {
-  :local(.styleCoinDefalt) {
-    box-shadow: none;
-  }
   :local(.fontSize) {
     font-size: 14px;
   }    
@@ -223,12 +232,6 @@
   :local(.percentageCoinSelected) { 
     font-size: 12px;
     margin: 0;
-  }    
-  :local(.alignContentCoin) {
-    padding: 5% 0;
-  }
-  :local(.coinBalance) {
-    height: 100px;
   }
 }
 
@@ -264,7 +267,13 @@
 
 /* 2.4 ICONS - COINS */
 :local(.iconCoinSelected) {
-  max-width: 35%;    
+  width: 49px;
   margin-top: 10px;
   justify-self: center;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.iconCoinSelected) {
+    width: 34px;
+  }
 }
