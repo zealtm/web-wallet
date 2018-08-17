@@ -18,6 +18,10 @@ class Modal extends React.Component {
     show ? this.handleOpenModal() : null
   }
 
+  // handleModal() {
+  //   this.setState({ showModal: !this.state.showModal });
+  // }
+
   handleOpenModal() {
     this.setState({ showModal: true });
   }
@@ -45,7 +49,7 @@ class Modal extends React.Component {
   renderContent = () => {
     let { content } = this.props
     return (
-      <div>
+      <div className={style.content}>
         {content}
       </div>
     )

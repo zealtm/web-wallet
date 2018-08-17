@@ -1,15 +1,26 @@
 import React from "react";
-import Modal from "../../components/modal";
 
 // COMPONENTS 
 import CoinsBar from "./coinsBar";
+import Modal from "../../components/modal";
+import SendModal from "./modal/sendModal/";
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalSend: true
+    };
+  }
   render() {
     return (
       <div>
         <CoinsBar />
-        <div><Modal title={"Transação"} content={"Conteúdo"} show={true}/></div>
+        <Modal
+          title={"Transação"}
+          content={<SendModal />}
+          show={this.state.modalSend}
+        />
       </div>
     );
   }
