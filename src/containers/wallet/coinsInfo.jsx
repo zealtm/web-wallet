@@ -36,16 +36,17 @@ class CoinsInfo extends React.Component {
     let balance = coin.balance.available;
 
     return (
-      <div>
-        <div className={style.containerWallet}>
-          <Grid item xs={12} sm={8} className={style.containerInfoCoins}>
-            <div className={style.coinSelected}>
+      <div className={style.containerWallet}>
+        <div className={style.mainWalletInfoCoins}>
+          <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
+            <div className={style.contentCoinSelected}>
+            <div className={style.alignContentCoin}>
               <div className={style.nameCoinSelected}>
                 {coin.name.toUpperCase()}
               </div>
               <img
                 src={"/images/icons/coins/" + coin.abbreviation + ".png"}
-                className={style.logoCoinSelected}
+                className={style.iconCoinSelected}
               />
               <div className={style.percentageCoinSelected}>
                 {this.renderArrowPercent(coinPercent)}
@@ -54,8 +55,9 @@ class CoinsInfo extends React.Component {
 
               <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
             </div>
+            </div>
 
-            <div className={style.floatRightInWeb}>
+            <div className={style.floatRightDesktop}>
               <div className={style.coinBalance}>
                 <div className={style.balanceMyAmount}>
                   {i18n.t("WALLET_MY_AMOUNT")}

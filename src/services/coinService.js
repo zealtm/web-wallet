@@ -35,7 +35,7 @@ class CoinService {
           );
 
           availableCoins[index].price = responsePrice.data.data;
-          availableCoins[index].price.percent = percentCalc(1, 3) + "%" //CALCULAR PORCENTAGEM
+          availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
@@ -116,6 +116,62 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL + "/coin/" + coinType + "/price/" + fiat,
+        API_HEADER
+      );
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async getCoinPriceHistory(coinType, fiat, range, interval, token) {
+    try {
+      range = range.split("_");
+      let fromDateIso = "";
+      let date = new Date();
+      let toDateIso = new Date().toISOString();
+      let value = range[0];
+      let typeValue = range[1];
+      const day = 1440;
+      const week = 10080;
+      const mounth = 43200;
+      const year = 525600;
+
+      switch (typeValue.toLowerCase()) {
+        case "d":
+          fromDateIso = new Date(
+            date.getTime() - value * day * 60000
+          ).toISOString();
+
+          break;
+
+        case "w":
+          fromDateIso = new Date(
+            date.getTime() - value * week * 60000
+          ).toISOString();
+
+          break;
+
+        case "m":
+          fromDateIso = new Date(
+            date.getTime() - value * mounth * 60000
+          ).toISOString();
+
+          break;
+
+        case "y":
+          fromDateIso = new Date(
+            date.getTime() - value * year * 60000
+          ).toISOString();
+          break;
+      }
+
+      API_HEADER.headers.Authorization = token;
+      interval = !interval ? 60 : interval;
+      let response = await axios.get(
+        `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
         API_HEADER
       );
 

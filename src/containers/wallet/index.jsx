@@ -1,4 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setWalletLoading } from "./redux/walletAction";
 
 // COMPONENTS
 import CoinsBar from "./coinsBar";
@@ -13,7 +19,18 @@ class Wallet extends React.Component {
       modalSend: true
     };
   }
-  render() {
+
+  renderContent = () => {
+    let { loading } = this.props.wallet;
+    // console.warn("loading", loading);
+    // let { setWalletLoading } = this.props;
+
+    // setWalletLoading(true);
+
+    if (loading) {
+      return <div>Carregando...</div>;
+    }
+
     return (
       <div>
         <CoinsBar />
@@ -25,7 +42,31 @@ class Wallet extends React.Component {
         />
       </div>
     );
+  };
+
+  render() {
+    return this.renderContent();
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  skeleton: PropTypes.object,
+  setWalletLoading: PropTypes.func
+};
+
+const mapSateToProps = store => ({
+  wallet: store.wallet
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setWalletLoading
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(Wallet);
