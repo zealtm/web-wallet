@@ -18,17 +18,11 @@ export function* loadGeneralInfo(action) {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
 
-    let responseCoins = yield call(
-      coinService.getGeneralInfo,
-      token,
-      decryptAes(seed, action.password)
-    );
-
+    let responseCoins = yield call(coinService.getGeneralInfo, token, decryptAes(seed, action.password));
 
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
-
-    yield call(coinService.getCoinPriceHistory, "btc", "brl", "1_Y", null, token);
+    
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -53,7 +47,6 @@ export function* loadGeneralInfo(action) {
 
     return;
   } catch (error) {
-    console.warn(error);
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
