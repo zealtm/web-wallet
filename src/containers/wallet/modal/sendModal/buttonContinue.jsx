@@ -6,9 +6,9 @@ import style from "./style.css";
 
 class ButtonContinue extends React.Component {
   render() {
-    const { action, label = "CONTINUAR" } = this.props;
+    const { action, label = "CONTINUAR", error } = this.props;
     return (
-      <button className={style.btContinueDisable} onClick={action}>
+      <button className={!error?style.btContinueDisable:style.btError} onClick={action}>
         {label}
       </button>
     );
@@ -17,7 +17,8 @@ class ButtonContinue extends React.Component {
 
 ButtonContinue.propTypes = {
   action: PropTypes.object.isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
+  error: PropTypes.bool
 };
 
 export default ButtonContinue;

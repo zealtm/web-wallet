@@ -8,6 +8,7 @@ import BoxFee from "./boxFee";
 import BoxConfirm from "./boxConfirm";
 import BoxProcess from "./boxProcess";
 import BoxResult from "./boxResult";
+import BoxResultError from "./boxResultError";
 
 // STYLE
 import style from "./style.css";
@@ -98,7 +99,22 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxResult />
 
-            <ButtonContinue action={this.handleStep} label="FECHAR" />
+            <ButtonContinue action={this.handleStep} label="ERRO" />
+            <button
+              onClick={() => {
+                this.setState({ step: this.state.step - 1 });
+              }}
+            >
+              voltar temporario
+            </button>
+          </div>
+        );
+      case 6:
+        return (
+          <div className={style.baseStep}>
+            <BoxResultError />
+
+            <ButtonContinue action={this.handleStep} label="FECHAR" error />
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });

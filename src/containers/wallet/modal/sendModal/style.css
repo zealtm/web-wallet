@@ -51,6 +51,12 @@
   composes: bt;
 }
 
+:local(.btError) {
+  composes: buttonGeneral from "../../../../components/bases/buttonBase.css";
+  composes: bgError from "../../../../components/bases/colorBase.css";
+  composes: bt;
+}
+
 :local(.btContinueDisable) {
   composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";
   composes: bt;
@@ -168,4 +174,11 @@
 :local .iconCoin {
   max-width: 50px;
   margin-bottom: 20px;
+}
+
+:local .errorString {
+  composes: clError from "../../../../components/bases/colorBase.css";
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom:40px;
 }
