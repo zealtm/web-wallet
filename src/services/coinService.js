@@ -42,16 +42,29 @@ class CoinService {
         if (coin.status === "active") {
 
           let responsePrice = await axios.get(BASE_URL + "/coin/" + coin.abbreviation + "/price", API_HEADER);
+          availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
+
+          let responseCreateAddress = await axios.post(
+            BASE_URL + "/coin/" + coin.abbreviation + "/address",
+            { seed },
+            API_HEADER
+          );
 
           availableCoins[index].price = responsePrice.data.data;
           let priceHistory = await getPriceHistory(coin.abbreviation, token);
           
           availableCoins[index].price.percent = percentCalc(priceHistory.initial, priceHistory.last) + "%";
-
-          let responseCreateAddress = await axios.post(BASE_URL + "/coin/" + coin.abbreviation + "/address", { seed }, API_HEADER);
           availableCoins[index].address = responseCreateAddress.data.data.address;
-
-          let responseBalance = await axios.get(BASE_URL + "/coin/" + coin.abbreviation + "/balance/" + coin.address, API_HEADER);
+          let responseBalance = await axios.get(
+            BASE_URL +
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
+            API_HEADER
+          );
+          
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
@@ -149,22 +162,30 @@ class CoinService {
 
       switch (typeValue.toLowerCase()) {
         case "d":
-          fromDateIso = new Date(date.getTime() - ((value * day) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * day * 60000
+          ).toISOString();
 
           break;
 
         case "w":
-          fromDateIso = new Date(date.getTime() - ((value * week) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * week * 60000
+          ).toISOString();
 
           break;
 
         case "m":
-          fromDateIso = new Date(date.getTime() - ((value * mounth) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * mounth * 60000
+          ).toISOString();
 
           break;
 
         case "y":
-          fromDateIso = new Date(date.getTime() - ((value * year) * 60000)).toISOString();
+          fromDateIso = new Date(
+            date.getTime() - value * year * 60000
+          ).toISOString();
           break;
       }
 
@@ -184,7 +205,11 @@ class CoinService {
   async createWalletCoin(coinType, seed, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.post(BASE_URL + "/coin/" + coinType + "/address", { seed }, API_HEADER);
+      let response = await axios.post(
+        BASE_URL + "/coin/" + coinType + "/address",
+        { seed },
+        API_HEADER
+      );
 
       return response;
     } catch (error) {
