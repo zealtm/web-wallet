@@ -129,9 +129,7 @@ class SendModal extends React.Component {
           <div className={style.baseStep}>
             <BoxResult />
 
-            <button className={style.btContinue} >
-              FECHAR
-            </button>
+            <button className={style.btContinue}>FECHAR</button>
             <button
               onClick={() => {
                 this.setState({ step: this.state.step - 1 });

@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 
 // STYLE
 import style from "./style.css";
-
 
 class BoxResult extends React.Component {
   render() {
