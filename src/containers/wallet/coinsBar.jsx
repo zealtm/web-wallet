@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+import { bindActionCreators } from "redux";
+import { setSelectedCoin } from "./redux/walletAction";
+import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS
-import { percentCalc } from "../../utils/numbers";
 import { getDefaultFiat } from "../../utils/localStorage";
 
 // MATERIAL UI
@@ -34,10 +34,6 @@ class CoinsBar extends React.Component {
     };
   }
 
-  selectCoin = coin => {
-    this.setState({ coinActive: coin });
-  };
-
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
@@ -52,10 +48,10 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
+    let { wallet, setSelectedCoin } = this.props;
     let { coins } = this.props.skeleton;
     let defaultFiat = getDefaultFiat();
 
-    console.warn(coins)
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
       let coinBalance = coin.balance.available;
@@ -68,11 +64,11 @@ class CoinsBar extends React.Component {
         <div
           className={style.baseBoxCoin}
           key={index}
-          onClick={() => this.selectCoin(coin.abbreviation)}
+          onClick={() => setSelectedCoin(coin)}
         >
           <div
             className={
-              this.state.coinActive === coins.abbreviation
+              wallet.selectedCoin === coin.abbreviation
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -173,16 +169,27 @@ class CoinsBar extends React.Component {
 }
 
 CoinsBar.propTypes = {
-  user: PropTypes.object,
+  wallet: PropTypes.object,
   skeleton: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  user: store.user,
+  wallet: store.wallet,
   skeleton: store.skeleton
 });
 
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setSelectedCoin,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
+
 export default connect(
   mapSateToProps,
-  null
+  mapDispatchToProps
 )(CoinsBar);

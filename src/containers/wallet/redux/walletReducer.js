@@ -9,10 +9,7 @@ const wallet = (state = initialState, action) => {
     case "SET_SELECTED_COIN":
       return {
         ...state,
-        wallet: {
-          ...state.wallet,
-          selectedCoin: action.coin
-        },
+        selectedCoin: action.coin,
         loading: false
       };
 
