@@ -21,6 +21,7 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
+import Close from "@material-ui/icons/Close";
 
 // STYLE
 import style from "./style.css";
@@ -63,7 +64,7 @@ class CoinsBar extends React.Component {
 
       return (
         <div
-          className={style.baseBoxCoin}
+          className={coinStatus ? null : style.boxCoinDisabled}
           key={index}
           onClick={
             coinPercent ? () => setSelectedCoin(coin.abbreviation) : null
@@ -97,7 +98,11 @@ class CoinsBar extends React.Component {
             </Hidden>
             <Hidden mdUp>
               <div className={style.boxArrowPercent}>
-                {this.renderArrowPercent(coinPercent)}
+                {coinStatus ? (
+                  this.renderArrowPercent(coinPercent)
+                ) : (
+                  <Close className={style.arrowPercentDisabled} />
+                )}
               </div>
             </Hidden>
           </div>

@@ -29,6 +29,11 @@
   height: 60px;
 }
 
+:local .boxCoinDisabled {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
 :local .boxCoinActive {
   composes: bgPurpleClear from "../../components/bases/colorBase.css";
   composes: boxCoin;
@@ -79,13 +84,17 @@
   composes: clGreenDefault from "../../components/bases/colorBase.css";
 }
 
+:local .arrowPercentDisabled {
+  padding-top: 2px;
+}
+
 :local .boxArrowPercent {
   margin-top: 17px;
   margin-left: 39px;
   position: absolute;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 812px) {
   :local .boxIconCoin {
     background-color: transparent;
     margin-left: -5px;
@@ -447,7 +456,7 @@
 :local .confirmFee {
   margin-top: 40px;
   margin-bottom: 40px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 :local .txtamount {
