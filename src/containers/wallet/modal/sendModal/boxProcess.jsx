@@ -1,7 +1,7 @@
 import React from "react";
 
 // STYLE
-import style from "./style.css";
+import style from "../../style.css";
 
 class BoxProcess extends React.Component {
   render() {

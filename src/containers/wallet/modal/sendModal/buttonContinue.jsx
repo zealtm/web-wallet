@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // STYLE
-import style from "./style.css";
+import style from "../../style.css";
 
 class ButtonContinue extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class ButtonContinue extends React.Component {
 }
 
 ButtonContinue.propTypes = {
-  action: PropTypes.object.isRequired,
+  action: PropTypes.func.isRequired,
   label: PropTypes.string,
   error: PropTypes.bool
 };

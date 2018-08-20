@@ -76,7 +76,7 @@ class Modal extends React.Component {
 Modal.propTypes = {
   title: PropTypes.string,
   show: PropTypes.bool,
-  content: PropTypes.string.isRequired
+  content: PropTypes.object.isRequired
 };
 
 export default Modal;

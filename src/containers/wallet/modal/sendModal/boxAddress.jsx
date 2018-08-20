@@ -4,10 +4,25 @@ import React from "react";
 import Hidden from "@material-ui/core/Hidden";
 
 // STYLE
-import style from "./style.css";
+import style from "../../style.css";
 
 class BoxAddress extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      address: ""
+    };
+  }
+
+  changeAddress(address) {
+    this.setState({
+      address
+    });
+  }
+
   render() {
+    let { address } = this.state;
+
     return (
       <div>
         <Hidden lgUp>
@@ -40,8 +55,9 @@ class BoxAddress extends React.Component {
           <input
             type="text"
             name="txtaddress"
-            value="asdasdasdasdasdasdasd"
-            placeholder="37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+            value={address}
+            onChange={(event) => this.changeAddress(event.target.value)}
+            placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
             className={style.inputClear}
           />
         </div>

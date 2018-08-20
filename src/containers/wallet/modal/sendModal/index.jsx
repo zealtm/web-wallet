@@ -11,7 +11,7 @@ import BoxResult from "./boxResult";
 import BoxResultError from "./boxResultError";
 
 // STYLE
-import style from "./style.css";
+import style from "../../style.css";
 
 class SendModal extends React.Component {
   constructor(props) {
