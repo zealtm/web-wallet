@@ -54,17 +54,20 @@ class CoinsBar extends React.Component {
 
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
-      let coinBalance = coin.balance.available;
-      let coinFiatBalance = (
-        coinBalance * coin.price[defaultFiat].price
-      ).toFixed(2);
-      let coinPercent = coin.price.percent;
+      let coinStatus = coin.status === "active" ? true : false;
+      let coinBalance = coinStatus ? coin.balance.available : 0;
+      let coinFiatBalance = coinStatus
+        ? (coinBalance * coin.price[defaultFiat].price).toFixed(2)
+        : 0;
+      let coinPercent = coinStatus ? coin.price.percent : 0;
 
       return (
         <div
           className={style.baseBoxCoin}
           key={index}
-          onClick={() => setSelectedCoin(coin.abbreviation)}
+          onClick={
+            coinPercent ? () => setSelectedCoin(coin.abbreviation) : null
+          }
         >
           <div
             className={
@@ -80,13 +83,17 @@ class CoinsBar extends React.Component {
               />
             </div>
             <Hidden smDown>
-              <div className={style.boxLabelCoin}>
-                {"$" + coinFiatBalance} <br />
-                <div className={style.labelPercent}>
-                  {this.renderArrowPercent(coinPercent)}
-                  {coinPercent}
+              {coinStatus ? (
+                <div className={style.boxLabelCoin}>
+                  {"$" + coinFiatBalance} <br />
+                  <div className={style.labelPercent}>
+                    {this.renderArrowPercent(coinPercent)}
+                    {coinPercent}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className={style.boxLabelCoinDisabled}>Unavailable</div>
+              )}
             </Hidden>
             <Hidden mdUp>
               <div className={style.boxArrowPercent}>
@@ -177,7 +184,6 @@ const mapSateToProps = store => ({
   wallet: store.wallet,
   skeleton: store.skeleton
 });
-
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
