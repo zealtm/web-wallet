@@ -11,16 +11,13 @@ import CoinsBar from "./coinsBar";
 import CoinsInfo from "./coinsInfo";
 
 class Wallet extends React.Component {
+
   renderContent = () => {
-    let { loading } = this.props.wallet;
-    // console.warn("loading", loading);
-    // let { setWalletLoading } = this.props;
+    // let { loading } = this.props.wallet;
 
-    // setWalletLoading(true);
-
-    if (loading) {
-      return <div>Carregando...</div>;
-    }
+    // if (loading) {
+    //   return <div>Carregando...</div>;
+    // }
 
     return (
       <div>

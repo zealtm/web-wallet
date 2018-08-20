@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-/*
-Component Props
-color: string -    default: white / Options: "white", "purple", "lunes", "bitcoin"
-width: string + "px" - default: "35px"
-*/
-// const style = {
-//   "margin": "0 auto",
-//   text
-// }
 const style = {
   justifyContent: "center",
   alignItems: "center",
