@@ -6,7 +6,7 @@ import style from "../../style.css";
 class BoxResultError extends React.Component {
   render() {
     return (
-      <div className={style.box}>
+      <div className={style.modalBox}>
         <div className={style.errorString}>
           Falha no procedimento de envio
         </div>

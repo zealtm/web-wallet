@@ -6,7 +6,7 @@ import style from "../../style.css";
 class BoxResult extends React.Component {
   render() {
     return (
-      <div className={style.box}>
+      <div className={style.modalBox}>
         <img src="/images/icons/confirm/confirm.png" />
         {/* <img src="/images/icons/error/error.png" /> */}
         <div>

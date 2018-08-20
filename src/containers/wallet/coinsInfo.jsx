@@ -13,11 +13,28 @@ import Hidden from "@material-ui/core/Hidden";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
+//COMPONENTS
+import Modal from "../../components/modal";
+import SendModal from "./modal/sendModal/";
+
 // UTILS
 import i18n from "../../utils/i18n";
 import { getDefaultFiat } from "../../utils/localStorage";
 
 class CoinsInfo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      modalSend: false
+    };
+  }
+
+  changeModalState = modalName => {
+    console.warn(modalName);
+    console.warn("FOI");
+    return this.setState({ ...this.state, modalSend: true });
+  };
+
   renderArrowPercent = val => {
     if (val < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -29,6 +46,7 @@ class CoinsInfo extends React.Component {
   render() {
     let defaultCoin = getDefaultFiat();
     let { coins, wallet } = this.props;
+    let { modalSend } = this.state;
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[wallet.selectedCoin].price.percent;
@@ -37,24 +55,25 @@ class CoinsInfo extends React.Component {
 
     return (
       <div className={style.containerWallet}>
+        <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
         <div className={style.mainWalletInfoCoins}>
           <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
-            <div className={style.alignContentCoin}>
-              <div className={style.nameCoinSelected}>
-                {coin.name.toUpperCase()}
-              </div>
-              <img
-                src={"/images/icons/coins/" + coin.abbreviation + ".png"}
-                className={style.iconCoinSelected}
-              />
-              <div className={style.percentageCoinSelected}>
-                {this.renderArrowPercent(coinPercent)}
-                {coinPercent}
-              </div>
+              <div className={style.alignContentCoin}>
+                <div className={style.nameCoinSelected}>
+                  {coin.name.toUpperCase()}
+                </div>
+                <img
+                  src={"/images/icons/coins/" + coin.abbreviation + ".png"}
+                  className={style.iconCoinSelected}
+                />
+                <div className={style.percentageCoinSelected}>
+                  {this.renderArrowPercent(coinPercent)}
+                  {coinPercent}
+                </div>
 
-              <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
-            </div>
+                <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
+              </div>
             </div>
 
             <div className={style.floatRightDesktop}>
@@ -72,7 +91,10 @@ class CoinsInfo extends React.Component {
 
               <Hidden xsDown>
                 <div className={style.alignButtons}>
-                  <button className={style.receiveButton}>
+                  <button
+                    className={style.receiveButton}
+                    onClick={() => this.changeModalState("modalSend")}
+                  >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
