@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import QrReader from 'react-qr-reader';
+import React, { Component } from "react";
+import QrReader from "react-qr-reader";
+import PropTypes from "prop-types";
 
 class BoxQrReader extends Component {
     constructor(props) {
@@ -11,7 +12,12 @@ class BoxQrReader extends Component {
     }
 
     handleScan = (data) => {
-        data ? this.setState({ result: data }) : null
+        let { action } = this.props;
+
+        if (!data) {
+            this.setState({ result: data });
+            action();
+        }
     }
 
     handleError = (error) => {
@@ -35,6 +41,7 @@ class BoxQrReader extends Component {
 }
 
 BoxQrReader.propTypes = {
+    action: PropTypes.func
 };
 
 export default BoxQrReader;

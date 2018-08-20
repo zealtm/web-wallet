@@ -25,7 +25,7 @@ class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalSend: false
+      modalSend: true
     };
   }
 

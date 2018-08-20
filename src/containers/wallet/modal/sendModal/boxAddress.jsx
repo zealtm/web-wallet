@@ -1,9 +1,8 @@
 import React from "react";
 import BoxQrReader from "./boxQrReader";
-
+import PropTypes from "prop-types";
 // MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
-
 // STYLE
 import style from "../../style.css";
 
@@ -22,7 +21,9 @@ class BoxAddress extends React.Component {
 
   handleQrCodeReader = () => {
     let { isVisible, address } = this.state;
-    return isVisible ? <BoxQrReader /> : (
+    let { action } = this.props;
+
+    return isVisible ? <BoxQrReader action={action} /> : (
       <div>
         <Hidden lgUp>
           <div className={style.boxQr} onClick={this.showQrCodeReader}>
@@ -71,5 +72,9 @@ class BoxAddress extends React.Component {
     );
   }
 }
+
+BoxAddress.propTypes = {
+  action: PropTypes.func.isRequired,
+};
 
 export default BoxAddress;
