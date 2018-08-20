@@ -115,7 +115,7 @@
 }
 
 :local .boxLabelCoinDisabled {
-  font-size: 10px;
+  font-size: 12px;
   text-align: right;
   padding-top: 25px;
 }
@@ -456,7 +456,7 @@
 :local .confirmFee {
   margin-top: 40px;
   margin-bottom: 40px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 :local .txtamount {
