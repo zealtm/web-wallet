@@ -5,39 +5,40 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
+import Loading from "../../../components/loading";
 import Skeleton from "../../skeleton";
 
-function Loading({ error }) {
+function loading({ error }) {
   if (error) {
     console.warn(error);
     return "Error!";
   } else {
-    return <h3>Loading...</h3>;
+    return <Loading />;
   }
 }
 
 /* eslint-disable */
 let home = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../home")),
-  loading: Loading,
+  loader: () => fakeDelay(0).then(() => import("../../home")),
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../home")
 });
 
 let wallet = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../wallet")),
-  loading: Loading,
+  loader: () => fakeDelay(0).then(() => import("../../wallet")),
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
 let errorNotFound = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../errors/404")),
-  loading: Loading,
+  loader: () => fakeDelay(0).then(() => import("../../errors/404")),
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/404")
 });
 
 let errorInternal = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../errors/500")),
-  loading: Loading,
+  loader: () => fakeDelay(0).then(() => import("../../errors/500")),
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
 /* eslint-enable */
