@@ -12,7 +12,6 @@ import BoxResultError from "./boxResultError";
 
 // STYLE
 import style from "../../style.css";
-import BoxQrReader from "./boxQrReader";
 
 class SendModal extends React.Component {
   constructor(props) {
@@ -35,15 +34,8 @@ class SendModal extends React.Component {
       case 0:
         return (
           <div className={style.baseStep}>
-            <BoxAddress />
+            <BoxAddress action={this.nextStep} />
             <ButtonContinue action={this.nextStep} />
-          </div>
-        );
-        case 10:
-        return (
-          <div className={style.baseStep}>
-            <BoxQrReader />
-            <ButtonContinue action={this.previousStep} />
           </div>
         );
       case 1:
