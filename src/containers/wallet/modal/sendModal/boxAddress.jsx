@@ -1,4 +1,5 @@
 import React from "react";
+import BoxQrReader from "./boxQrReader";
 
 // MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
@@ -10,7 +11,8 @@ class BoxAddress extends React.Component {
   constructor() {
     super();
     this.state = {
-      address: ""
+      address: "",
+      isVisible: false
     };
   }
 
@@ -20,13 +22,19 @@ class BoxAddress extends React.Component {
     });
   }
 
+  handleVisibilityQrCode = () => {
+    this.setState({
+      isVisible: !this.state.isVisible
+    });
+    
+  }
   render() {
     let { address } = this.state;
 
     return (
       <div>
         <Hidden lgUp>
-          <div className={style.boxQr}>
+          <div className={style.boxQr} onClick={() => alert("teste")}>
             <div className={style.boxDecription}>
               <img
                 src="/images/icons/qrcode/qrcode.png"
