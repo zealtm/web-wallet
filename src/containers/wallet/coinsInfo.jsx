@@ -34,7 +34,7 @@ class CoinsInfo extends React.Component {
   };
 
   renderArrowPercent = val => {
-    if (val < 0) {
+    if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
     } else {
       return <ArrowDropUp className={style.arrowPercentUp} />;
