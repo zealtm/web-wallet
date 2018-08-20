@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import QrReader from 'react-qr-reader'
+import React, { Component } from 'react';
+import QrReader from 'react-qr-reader';
 
 class BoxQrReader extends Component {
     constructor(props) {
@@ -8,19 +8,18 @@ class BoxQrReader extends Component {
             delay: 300,
             result: 'No result',
         }
-        this.handleScan = this.handleScan.bind(this)
     }
-    handleScan(data) {
-        if (data) {
-            this.setState({
-                result: data,
-            })
-        }
+
+    handleScan = (data) => {
+        data ? this.setState({ result: data }) : null
     }
-    handleError(err) {
-        console.error(err)
+
+    handleError = (error) => {
+        error ? this.setState({ result: error.message }) : null
     }
+
     render() {
+        let { result } = this.state;
         return (
             <div>
                 <QrReader
@@ -29,10 +28,13 @@ class BoxQrReader extends Component {
                     onScan={this.handleScan}
                     style={{ width: '100%' }}
                 />
-                <p>{this.state.result}</p>
+                <p>{result}</p>
             </div>
         )
     }
 }
+
+BoxQrReader.propTypes = {
+};
 
 export default BoxQrReader;

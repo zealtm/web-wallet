@@ -8,7 +8,7 @@ class ButtonContinue extends React.Component {
   render() {
     const { action, label = "CONTINUAR", error } = this.props;
     return (
-      <button className={!error?style.btContinueDisable:style.btError} onClick={action}>
+      <button className={!error ? style.btContinueDisable : style.btError} onClick={action}>
         {label}
       </button>
     );
