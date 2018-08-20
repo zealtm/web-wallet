@@ -51,7 +51,7 @@ class BoxAddress extends React.Component {
           </div>
         </Hidden>
 
-        <div className={style.box}>
+        <div className={style.modalBox}>
           <div className={style.boxDecription}>
             <img
               src="/images/icons/modal-wallet/carteira.png"
