@@ -116,5 +116,7 @@
   "CARD_HOME_DESCRIPTION_6": 
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
-  "WALLET_MY_AMOUNT": "Balance"
+  "WALLET_MY_AMOUNT": "Balance",
+
+  "TRANSACTION_HISTORY_TITLE": "Transactions"
 }
