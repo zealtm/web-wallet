@@ -1,4 +1,5 @@
 import React from "react";
+import BoxQrReader from "./boxQrReader";
 
 // MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
@@ -9,24 +10,22 @@ import style from "../../style.css";
 class BoxAddress extends React.Component {
   constructor() {
     super();
-    this.state = {
-      address: ""
-    };
+    this.state = { address: "", isVisible: false };
   }
 
-  changeAddress(address) {
-    this.setState({
-      address
-    });
+  changeAddress = (address) => this.setState({ address });
+
+  showQrCodeReader = () => {
+    let { isVisible } = this.state;
+    this.setState({ isVisible: !isVisible });
   }
 
-  render() {
-    let { address } = this.state;
-
-    return (
+  handleQrCodeReader = () => {
+    let { isVisible, address } = this.state;
+    return isVisible ? <BoxQrReader /> : (
       <div>
         <Hidden lgUp>
-          <div className={style.boxQr}>
+          <div className={style.boxQr} onClick={this.showQrCodeReader}>
             <div className={style.boxDecription}>
               <img
                 src="/images/icons/qrcode/qrcode.png"
@@ -34,12 +33,11 @@ class BoxAddress extends React.Component {
               />
               <div>Enviar Scaneando QrCode</div>
             </div>
-
             <div className={style.textHelp}>
               Para esse procedimento em deskop você precisa usar uma webcam para
-              <br />
+            <br />
               visualizar o qrcode que deseja enviar.
-            </div>
+          </div>
           </div>
         </Hidden>
 
@@ -61,6 +59,14 @@ class BoxAddress extends React.Component {
             className={style.inputClear}
           />
         </div>
+      </div>
+    )
+  }
+
+  render() {
+    return (
+      <div>
+        {this.handleQrCodeReader()}
       </div>
     );
   }

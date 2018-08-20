@@ -30,13 +30,11 @@ class CoinsInfo extends React.Component {
   }
 
   changeModalState = modalName => {
-    console.warn(modalName);
-    console.warn("FOI");
-    return this.setState({ ...this.state, modalSend: true });
+    return this.setState({ ...this.state, [modalName]: true });
   };
 
   renderArrowPercent = val => {
-    if (val < 0) {
+    if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
     } else {
       return <ArrowDropUp className={style.arrowPercentUp} />;
