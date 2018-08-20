@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setWalletLoading } from "./redux/walletAction";
 
-class Wallet extends React.Component {
+class WalletLoading {
   /* eslint-disable */
   loading = () => {
     return new Promise(resolve => {
@@ -14,15 +14,6 @@ class Wallet extends React.Component {
     });
   };
 }
-
-Wallet.propTypes = {
-  skeleton: PropTypes.object,
-  setWalletLoading: PropTypes.func
-};
-
-const mapSateToProps = store => ({
-  wallet: store.wallet
-});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -33,6 +24,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  mapSateToProps,
+  null,
   mapDispatchToProps
-)(Wallet);
+)(WalletLoading);

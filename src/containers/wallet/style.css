@@ -105,6 +105,12 @@
   padding-right: 5px;
 }
 
+:local .boxLabelCoinDisabled {
+  font-size: 10px;
+  text-align: right;
+  padding-top: 25px;
+}
+
 :local .labelPercent {
   font-size: 12px;
 }

@@ -5,43 +5,48 @@ import { internalServerError } from "../containers/errors/statusCodeMessage";
 // UTILS
 import { convertCoin, percentCalc } from "../utils/numbers";
 
-
 let getPriceHistory = async (coiName, token) => {
   try {
-    let coinService = new CoinService()
+    let coinService = new CoinService();
     let prices = { initial: 0.01, last: 0.01 };
-    let priceHistories = await coinService.getCoinPriceHistory(coiName, "usd", "1_D", null, token);
+    let priceHistories = await coinService.getCoinPriceHistory(
+      coiName,
+      "usd",
+      "1_D",
+      null,
+      token
+    );
 
-    if (!priceHistories.data.data)
-      return prices;
+    if (!priceHistories.data.data) return prices;
 
     let maxHistories = priceHistories.data.data.history.length - 1;
     prices.initial = priceHistories.data.data.history[0].price;
     prices.last = priceHistories.data.data.history[maxHistories].price;
 
     return prices;
-  }
-  catch (error) {
+  } catch (error) {
     internalServerError();
     return;
   }
-}
-
+};
 
 class CoinService {
-
   async getGeneralInfo(token, seed) {
     try {
-
       API_HEADER.headers.Authorization = token;
-      let responseavailableCoins = await axios.get(BASE_URL + "/coin", API_HEADER);
+      let responseavailableCoins = await axios.get(
+        BASE_URL + "/coin",
+        API_HEADER
+      );
       let availableCoins = responseavailableCoins.data.data.coins;
       let coins = [];
 
       const promises = availableCoins.map(async (coin, index) => {
         if (coin.status === "active") {
-
-          let responsePrice = await axios.get(BASE_URL + "/coin/" + coin.abbreviation + "/price", API_HEADER);
+          let responsePrice = await axios.get(
+            BASE_URL + "/coin/" + coin.abbreviation + "/price",
+            API_HEADER
+          );
           availableCoins[index].price = responsePrice.data.data;
           availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
@@ -53,9 +58,11 @@ class CoinService {
 
           availableCoins[index].price = responsePrice.data.data;
           let priceHistory = await getPriceHistory(coin.abbreviation, token);
-          
-          availableCoins[index].price.percent = percentCalc(priceHistory.initial, priceHistory.last) + "%";
-          availableCoins[index].address = responseCreateAddress.data.data.address;
+
+          availableCoins[index].price.percent =
+            percentCalc(priceHistory.initial, priceHistory.last) + "%";
+          availableCoins[index].address =
+            responseCreateAddress.data.data.address;
           let responseBalance = await axios.get(
             BASE_URL +
               "/coin/" +
@@ -64,7 +71,7 @@ class CoinService {
               coin.address,
             API_HEADER
           );
-          
+
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
@@ -193,10 +200,10 @@ class CoinService {
       interval = !interval ? 60 : interval;
       let response = await axios.get(
         `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
-        API_HEADER);
+        API_HEADER
+      );
       return response;
-    }
-    catch (error) {
+    } catch (error) {
       internalServerError();
       return;
     }
