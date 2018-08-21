@@ -9,7 +9,7 @@ const titles = [
 
 const contents  = [
   <h1>Voucher</h1>,
-  <h1>Lunes</h1>,
+  <h1>Lunes Gift</h1>,
   <h1>Cupom</h1>,
 ];
 

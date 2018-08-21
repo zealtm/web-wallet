@@ -11,32 +11,24 @@ import colors from '../../components/bases/colors';
 const tabStyles = theme => ({
   root: {
     flexGrow: 1,
+    maxWidth: '98%',
     margin: theme.spacing.unit * 2,
   },
   tabsRoot: {
-    marginBottom: theme.spacing.unit * 1,
-    borderBottom: `1px solid ${colors.purple.clear}`
+    margin: theme.spacing.unit * 1,
+    borderBottom: `1px solid ${colors.purple.default}`,
   },
   tabsIndicator: {
     backgroundColor: colors.green.dark,
     height: '3px',
   },
   tabRoot: {
-    backgroundColor: colors.purple.clear,
+    backgroundColor: colors.purple.default,
     fontWeight: 600,
-    borderBottom: `1px solid ${colors.purple.clear}`,
     marginRight: '1px',
     opacity: 0.8,
   }
 });
-
-function TabContainer(props) {
-  return (
-    <div>
-      {props.child}
-    </div>
-  );
-}
 
 class CustomTabs extends React.Component {
   constructor(props) {
@@ -44,7 +36,6 @@ class CustomTabs extends React.Component {
     this.state = {
       value: 0,
     };
-    console.log('titles', props.tabTitles, 'contents', props.tabContents);
   }
 
   handleChange = (event, value) => {
@@ -57,17 +48,19 @@ class CustomTabs extends React.Component {
 
     return (
       <Grid container>
-        <Grid item md={12}>
+        <Grid item xs={12}>
           <Tabs classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
             value={value}
             onChange={this.handleChange}
+            scrollable
+            scrollButtons="auto"
           >
             {
               this.props.tabTitles.map((title, key) => <Tab classes={{ root: classes.tabRoot }} key={key} label={title} />)
             }
           </Tabs>
         </Grid>
-        <Grid item md={12}>
+        <Grid item xs={12}>
           {
             this.props.tabContents.map((content, key) => value === key ? <div key={key}>{ content }</div> : '')
           }
