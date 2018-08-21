@@ -1,38 +1,37 @@
 import React from "react";
-import { connect } from "react-redux";
 import style from "../../style.css";
 import QrCode from "qrcode.react"
 import PropTypes from "prop-types";
 
-
 class Receive extends React.Component {
-    render() {
-        let { seed } = this.props;
-        return (
-            <div className={style.modalBox}>
 
+    hasAddress = () => {
+        let { coin } = this.props;
+        return coin.address ?
+            <div className={style.modalBox}>
                 <QrCode
-                    value={seed}
+                    value={coin.address}
                     size={200}
                     bgColor={"#ffffff"}
                     fgColor={"#000000"}
                     level={"L"}
                 />
+            </div> : ""
+    };
+
+    render() {
+        return (
+            <div>
+                {this.hasAddress()}
             </div>
         );
     }
 }
 
 Receive.propTypes = {
-    seed: PropTypes.string.isRequired
+    coin: PropTypes.object
 };
 
-const mapSateToProps = store => ({
-    seed: store.user.user.seed
-});
 
-export default connect(
-    mapSateToProps,
-    null
-)(Receive);
+export default Receive;
 

@@ -30,7 +30,6 @@ export const getUsername = () => {
   return userData ? userData.username : undefined;
 };
 
-
 export const clearAuthToken = () => localStorage.removeItem(authToken);
 
 export const clear = value => localStorage.removeItem(value);

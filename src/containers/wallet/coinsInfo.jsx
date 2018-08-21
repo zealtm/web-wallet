@@ -53,11 +53,10 @@ class CoinsInfo extends React.Component {
     let coinPercent = coins[wallet.selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
-
     return (
       <div className={style.containerWallet}>
         <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
-        <Modal title={"Receber"} content={<ReceiveModal />} show={modalReceive} />
+        <Modal title={"Receber"} content={<ReceiveModal coin={coin}/>} show={modalReceive} />
         <div className={style.mainWalletInfoCoins}>
           <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
