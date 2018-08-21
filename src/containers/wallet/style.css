@@ -12,6 +12,11 @@
     2.3.1 BUTTONS MOBILE / GRID
   2.4 ICONS - COINS
 
+3. HISTORY
+  3.1 BASES
+  3.2 TEXTS
+  3.3 ICONS
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -279,7 +284,9 @@
 }
 
 /* ------------------------------------------------------------------------- */
+/* 3. HISTORY */
 
+/* 3.1 BASES */
 :local(.nivel1) {
   display: flex;
   justify-content: center;
@@ -291,14 +298,61 @@
 }
 
 :local(.nivel3) {
-  composes: styleCoinDefalt;
+  border-radius: 8px;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
   background-color: #473088;
-  height: 55vh;
-  overflow: auto;
-  padding: 0;  
-  
+  max-height: 55vh;
+  overflow: auto;   
+  padding-bottom: 100px;
 }
 
+:local(.items) {
+  text-align: center;
+  padding: 10px 0; 
+  margin: auto auto;
+}
+
+:local(.itemHistorico) {
+  display: flex;
+  border: 0;
+  border-bottom: 1px;
+  border-color: #3a1d71;
+  border-style: solid;
+  align-items: center;
+  margin: 0 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+:local(.itemDataHistorico) {
+  composes: itemHistorico;
+  background-color: #381e67;
+  cursor: default;
+  padding: 0px;
+  border: 0;
+  font-size: 9px;
+}
+
+:local(.testeao) {
+  display: none;
+  transition: 2s;
+}
+
+:local(.opacidade) {
+  composes: itemHistorico;
+  opacity: 1;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.opacidade) {
+    opacity: 0.5;
+  }
+  :local(.nivel3) {
+    padding-bottom: 60px;
+  }
+}
+
+/* 3.2 TEXTS */
 :local(.text) {
   composes: textDefault from "../../components/bases/textBase.css";  
   text-align: center;
@@ -313,31 +367,9 @@
   font-weight: bold;
 }
 
-:local(.items) {
-  text-align: center;
-  padding: 10px 0; 
-  margin: auto auto;
-}
-
-:local(.itemHistorico) {
-  display: flex;
-  border: 0;
-  border-bottom: 2px;
-  border-color: #3a1d71;
-  border-style: solid;
-  align-items: center;
-  padding: 0 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
 :local(.descriptionHistory) {
   padding: 10px 15px;
   font-size: 12px;
-}
-
-:local(.valueHistory) {
-  text-align: right;
 }
 
 :local(.valueHistory) {
@@ -352,26 +384,21 @@
   composes: clGreenLight from "../../components/bases/colorBase.css";
 }
 
-:local(.itemDataHistorico) {
-  composes: itemHistorico;
-  background-color: #381e67;
-  cursor: default;
-  padding: 0px;
-  border: 0;
-  font-size: 9px;
-}
 :local(.timeHistory) {
   font-weight: bold;
   text-align: center;
 }
+
 :local(.dateHistory) {
   font-size: 9px;
 }
+
 :local(.fromTransactionHistory) {
   composes: clError from "../../components/bases/colorBase.css";
   padding: 0px 15px;
   font-size: 9px;
 }
+
 :local(.forTransactionHistory) {
   composes: clGreenLight from "../../components/bases/colorBase.css";
   padding: 0px 15px;
@@ -381,9 +408,6 @@
 @media only screen and (max-width: 599px) {
   :local(.descriptionHistory) {
     font-size: 9px;
-  }
+  }  
 }
-:local(.testeao) {
-  display: none;
-  transition:  3s;
-}
+

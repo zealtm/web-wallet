@@ -15,7 +15,8 @@ class TransactionHistory extends React.Component {
     constructor() {
         super();
         this.state = {
-            toogleHistory: undefined
+            toogleHistory: undefined,
+            opacidade: true
         };
     }
 
@@ -27,23 +28,23 @@ class TransactionHistory extends React.Component {
     }
 
     renderHistory = () => {
-        let teste = [{ }, { }]
-        let { toogleHistory } = this.state;
+        let teste = [{ }, { }, { }, { }, { }, { }, { }, { }, { }, { }, { }, { } ]
+        let { toogleHistory, opacidade } = this.state;
 
         return teste.map((val, index) => {
             return (
                 <div key={index}>
                     <div>
-                        <Grid item xs={12} className={style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
+                        <Grid item xs={12} className={opacidade ? style.opacidade : style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
                             <Grid item xs={2} className={style.items}>
-                                <div><img src="./images/icons/indicatorsHistory/receive.png" /></div>
+                                <div><img src="./images/icons/indicatorsHistory/submit.png" /></div>
                                 <div className={style.dateHistory}> {"12/mar"} </div>
                             </Grid>
                             <Grid item xs={6} className={style.descriptionHistory}>
                                 {"Digite descrição curta para sua transação"}
                             </Grid>
                             <Grid item xs={4} className={style.valueHistory}>
-                                <div className={style.receiveHistory}> {"+0.00020521"} </div>
+                                <div className={style.submitHistory}> {"+0.00020521"} </div>
                                 <div> {"$ 421.00"} </div>
                             </Grid>
                         </Grid>
@@ -89,14 +90,18 @@ class TransactionHistory extends React.Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
+                                
                         </div>
+
                     </div>
+                    
                 </div>
             )
-        })
+        }) 
     };
 
-    render() {
+    render() {        
+        
         return (
             <div>
                 <div className={style.text}> {i18n.t("TRANSACTION_HISTORY_TITLE")} </div>
@@ -104,7 +109,8 @@ class TransactionHistory extends React.Component {
                     <Grid item xs={12} sm={7} className={style.nivel2}>
                         <Grid item xs={11} md={10} className={style.nivel3}>
                             {this.renderHistory()}
-                        </Grid>
+                            {"########## FIM ##########"}
+                       </Grid>
                     </Grid>
                 </div>
             </div>

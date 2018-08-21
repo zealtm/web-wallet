@@ -5,14 +5,18 @@ import CoinsBar from "./coinsBar";
 import CoinsInfo from "./coinsInfo";
 import TransactionHistory from "./transactionHistory";
 
+//STYLE
+import style from "./style.css";
 
 class Wallet extends React.Component {
   render() {
     return (
-      <div>      
+      <div>
         <CoinsBar />
-        <CoinsInfo />
-        <TransactionHistory />
+        <div>
+          <CoinsInfo />
+          <TransactionHistory />
+        </div>
       </div>
     );
   }

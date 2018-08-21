@@ -45,8 +45,7 @@ class CoinsInfo extends React.Component {
 
 
     return (
-      <div className={style.containerWallet}>
-        <div className={style.containerWallet}>
+        <div>
           <div className={style.mainWalletInfoCoins}>
             <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
               <div className={style.contentCoinSelected}>
@@ -107,7 +106,6 @@ class CoinsInfo extends React.Component {
             </div>
           </Hidden>
         </div>
-      </div>
     );
   }
 }
