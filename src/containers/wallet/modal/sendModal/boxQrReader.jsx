@@ -25,10 +25,8 @@ class BoxQrReader extends Component {
 
   handleError = error => {
     let { previousPage, errorInput } = this.props;
-    if (error) {
-      previousPage();
-      errorInput(error.message);
-    }
+    errorInput(error.message);
+    previousPage();
   };
 
   render() {

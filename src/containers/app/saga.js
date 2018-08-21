@@ -17,7 +17,7 @@ import {
   balanceCoins,
   createCoinsAddress
 } from "../skeleton/redux/skeletonSaga";
-import {} from "../wallet/redux/walletSaga";
+import { } from "../wallet/redux/walletSaga";
 
 export default function* rootSaga() {
   yield [
