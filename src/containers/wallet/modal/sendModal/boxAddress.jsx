@@ -21,9 +21,9 @@ class BoxAddress extends React.Component {
 
   handleQrCodeReader = () => {
     let { isVisible, address } = this.state;
-    let { action } = this.props;
+    let { nextPage, previousPage } = this.props;
 
-    return isVisible ? <BoxQrReader action={action} /> : (
+  return isVisible ? <BoxQrReader nextPage={nextPage}  previousPage={previousPage}/> : (
       <div>
         <Hidden lgUp>
           <div className={style.boxQr} onClick={this.showQrCodeReader}>
@@ -74,7 +74,8 @@ class BoxAddress extends React.Component {
 }
 
 BoxAddress.propTypes = {
-  action: PropTypes.func.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  previousPage: PropTypes.func.isRequired
 };
 
 export default BoxAddress;
