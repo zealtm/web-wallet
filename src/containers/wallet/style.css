@@ -482,3 +482,31 @@
   font-weight: 700;
   margin-bottom:40px;
 }
+
+:local .boxReceive {
+  display: block;
+  width: 100%;
+}
+
+:local .boxReceive .qrCode{
+  text-align: center;
+}
+
+:local .boxReceive .bgQrCode {
+  border-radius: 48px;
+  background-color: #fff;
+  padding: 30px 40px 30px 40px;
+  box-shadow: inset 0 1px 8px 0 #4b2c82;
+}
+
+:local .boxReceive .address{
+  color: #68f285;
+  text-align: center;
+}
+
+:local .boxReceive .qrMessage{
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
