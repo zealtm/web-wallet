@@ -21,47 +21,48 @@ class BoxAddress extends React.Component {
 
   handleQrCodeReader = () => {
     let { isVisible, address } = this.state;
-    let { action } = this.props;
+    let { nextPage } = this.props;
 
-    return isVisible ? <BoxQrReader action={action} /> : (
-      <div>
-        <Hidden lgUp>
-          <div className={style.boxQr} onClick={this.showQrCodeReader}>
+    return isVisible ? <BoxQrReader nextPage={nextPage} previousPage={this.showQrCodeReader} />
+      : (
+        <div>
+          <Hidden lgUp>
+            <div className={style.boxQr} onClick={this.showQrCodeReader}>
+              <div className={style.boxDecription}>
+                <img
+                  src="/images/icons/qrcode/qrcode.png"
+                  className={style.hoverShow}
+                />
+                <div>Enviar Scaneando QrCode</div>
+              </div>
+              <div className={style.textHelp}>
+                Para esse procedimento em deskop você precisa usar uma webcam para
+            <br />
+                visualizar o qrcode que deseja enviar.
+          </div>
+            </div>
+          </Hidden>
+
+          <div className={style.modalBox}>
             <div className={style.boxDecription}>
               <img
-                src="/images/icons/qrcode/qrcode.png"
-                className={style.hoverShow}
+                src="/images/icons/modal-wallet/carteira.png"
+                className={style.icon}
               />
-              <div>Enviar Scaneando QrCode</div>
+              <div>Inserir endereço da Wallet Lunes</div>
             </div>
-            <div className={style.textHelp}>
-              Para esse procedimento em deskop você precisa usar uma webcam para
-            <br />
-              visualizar o qrcode que deseja enviar.
-          </div>
-          </div>
-        </Hidden>
 
-        <div className={style.modalBox}>
-          <div className={style.boxDecription}>
-            <img
-              src="/images/icons/modal-wallet/carteira.png"
-              className={style.icon}
+            <input
+              type="text"
+              name="txtaddress"
+              value={address}
+              onChange={(event) => this.changeAddress(event.target.value)}
+              placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+              className={style.inputClear}
             />
-            <div>Inserir endereço da Wallet Lunes</div>
           </div>
-
-          <input
-            type="text"
-            name="txtaddress"
-            value={address}
-            onChange={(event) => this.changeAddress(event.target.value)}
-            placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
-            className={style.inputClear}
-          />
         </div>
-      </div>
-    )
+      )
   }
 
   render() {
@@ -74,7 +75,7 @@ class BoxAddress extends React.Component {
 }
 
 BoxAddress.propTypes = {
-  action: PropTypes.func.isRequired,
+  nextPage: PropTypes.func.isRequired
 };
 
 export default BoxAddress;
