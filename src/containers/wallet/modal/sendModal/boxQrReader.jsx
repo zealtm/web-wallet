@@ -26,7 +26,6 @@ class BoxQrReader extends Component {
   handleError = error => {
     let { previousPage, errorInput } = this.props;
     if (error) {
-      this.setState({ result: error });
       previousPage();
       errorInput(error.message);
     }
@@ -51,7 +50,7 @@ class BoxQrReader extends Component {
 BoxQrReader.propTypes = {
   nextPage: PropTypes.func,
   previousPage: PropTypes.func,
-  errorInput: PropTypes.func   
+  errorInput: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
