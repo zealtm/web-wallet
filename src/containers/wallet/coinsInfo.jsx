@@ -16,6 +16,8 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 //COMPONENTS
 import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
+import ReceiveModal from "./modal/receiveModal/";
+
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -25,7 +27,8 @@ class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalSend: true
+      modalSend: false,
+      modalReceive: true
     };
   }
 
@@ -44,7 +47,7 @@ class CoinsInfo extends React.Component {
   render() {
     let defaultCoin = getDefaultFiat();
     let { coins, wallet } = this.props;
-    let { modalSend } = this.state;
+    let { modalSend, modalReceive } = this.state;
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[wallet.selectedCoin].price.percent;
@@ -54,6 +57,7 @@ class CoinsInfo extends React.Component {
     return (
       <div className={style.containerWallet}>
         <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
+        <Modal title={"Receber"} content={<ReceiveModal />} show={modalReceive} />
         <div className={style.mainWalletInfoCoins}>
           <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
