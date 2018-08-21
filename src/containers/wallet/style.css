@@ -113,7 +113,7 @@
 
 /* 2.1 BASES */
 :local(.containerWallet) {
-  padding: 0 10px;
+  padding: 0 3px;
 }
 
 :local(.wrapperInfoCoins) {
@@ -288,14 +288,15 @@
 :local(.nivel2) {
   display: flex;
   justify-content: center;
-  background-color: red;
 }
 
 :local(.nivel3) {
   composes: styleCoinDefalt;
   background-color: #473088;
   height: 55vh;
-  /* width: 90%; */
+  overflow: auto;
+  padding: 0;  
+  
 }
 
 :local(.text) {
@@ -304,4 +305,85 @@
   font-size: 16px;
   margin: 15px;
   font-weight: bold;
+}
+
+:local(.titleBlockExplorer) {
+  padding: 10px 15px; 
+  margin: auto auto;
+  font-weight: bold;
+}
+
+:local(.items) {
+  text-align: center;
+  padding: 10px 0; 
+  margin: auto auto;
+}
+
+:local(.itemHistorico) {
+  display: flex;
+  border: 0;
+  border-bottom: 2px;
+  border-color: #3a1d71;
+  border-style: solid;
+  align-items: center;
+  padding: 0 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+:local(.descriptionHistory) {
+  padding: 10px 15px;
+  font-size: 12px;
+}
+
+:local(.valueHistory) {
+  text-align: right;
+}
+
+:local(.valueHistory) {
+  text-align: right;
+}
+
+:local(.submitHistory) {
+  composes: clError from "../../components/bases/colorBase.css";
+}
+
+:local(.receiveHistory) {
+  composes: clGreenLight from "../../components/bases/colorBase.css";
+}
+
+:local(.itemDataHistorico) {
+  composes: itemHistorico;
+  background-color: #381e67;
+  cursor: default;
+  padding: 0px;
+  border: 0;
+  font-size: 9px;
+}
+:local(.timeHistory) {
+  font-weight: bold;
+  text-align: center;
+}
+:local(.dateHistory) {
+  font-size: 9px;
+}
+:local(.fromTransactionHistory) {
+  composes: clError from "../../components/bases/colorBase.css";
+  padding: 0px 15px;
+  font-size: 9px;
+}
+:local(.forTransactionHistory) {
+  composes: clGreenLight from "../../components/bases/colorBase.css";
+  padding: 0px 15px;
+  font-size: 9px;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.descriptionHistory) {
+    font-size: 9px;
+  }
+}
+:local(.testeao) {
+  display: none;
+  transition:  3s;
 }
