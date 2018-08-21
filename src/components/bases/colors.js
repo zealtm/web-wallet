@@ -8,7 +8,7 @@ const colors = {
   green: {
     default: "#68f285",
     light: "#68f285",
-    dark: "#000000"
+    dark: "#4cd566"
   },
   coins: {
     lunes: "#4cd566",
