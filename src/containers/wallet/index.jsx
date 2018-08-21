@@ -13,10 +13,8 @@ class Wallet extends React.Component {
     return (
       <div>
         <CoinsBar />
-        <div>
-          <CoinsInfo />
-          <TransactionHistory />
-        </div>
+        <CoinsInfo />
+        <TransactionHistory />
       </div>
     );
   }
