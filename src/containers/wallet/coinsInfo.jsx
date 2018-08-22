@@ -29,21 +29,16 @@ class CoinsInfo extends React.Component {
   render() {
     let defaultCoin = getDefaultFiat();
     let { coins, wallet } = this.props;
-    // let coin = coins[wallet.selectedCoin];
-    let coin = { name: "lunes" };
-
-    // let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
-    let coinPrice = 0
-
-    // let coinPercent = coins[wallet.selectedCoin].price.percent;
-    let coinPercent = "200%"
-    let fiatBalance = 0.00;
-    // let fiatBalance = coin.balance[defaultCoin].toFixed(2);
-
-    // let balance = coin.balance.available;
-    let balance = 0;
-
-
+    let coin = coins[wallet.selectedCoin];
+    // let coin = { name: "lunes" };
+    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
+    // let coinPrice = 0
+    let coinPercent = coins[wallet.selectedCoin].price.percent;
+    // let coinPercent = "200%"
+    let fiatBalance = coin.balance[defaultCoin].toFixed(2);
+    // let fiatBalance = 0.00;
+    let balance = coin.balance.available;
+    // let balance = 0;
     return (
       <div>
         <div className={style.mainWalletInfoCoins}>
