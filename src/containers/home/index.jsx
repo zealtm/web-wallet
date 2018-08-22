@@ -8,7 +8,18 @@ import Grid from "@material-ui/core/Grid";
 // STYLE
 import style from "./style.css";
 
+import Transaction from "../../services/transaction";
+import {getAuthToken} from "../../utils/localStorage" 
+
 class Home extends React.Component {
+
+  componentDidMount (){
+
+    const token = getAuthToken();
+    const teste = Transaction('btc', token);
+    
+  }
+
   render() {
     return (
       <div >

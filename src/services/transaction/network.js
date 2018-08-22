@@ -28,7 +28,7 @@
 //   insight: 'https://test-insight.bitpay.com/api/'
 // }
 
-module.exports = {
+export const networks = {
   BTC: {
     coinSymbol: 'BTC',
     coinName: 'Bitcoin',

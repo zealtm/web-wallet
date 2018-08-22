@@ -91,7 +91,6 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
-
     "wallet-address-validator": "^0.1.7",
     "validator": "^10.4.0",
     "bitcoinjs-lib": "^3.3.2",

@@ -1,5 +1,5 @@
 import { validate } from 'wallet-address-validator';
-import errorPattern from './errorPattern';
+import {errorPattern} from './errorPattern';
 
 export default (address, currency, testnet) => {
   try {

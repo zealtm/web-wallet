@@ -1,40 +1,43 @@
-import TransactionBtc from "./coins/btc";
-import errorPattern from "../../utils/errorPattern";
-import networks from "./networks";
+import {errorPattern} from "../../utils/errorPattern";
+import {networks} from "./network";
 
 // COINS 
-import TransactionBtc from "./coins/btc";
+import {createTransaction} from "./coins/btc";
+import getFee from "./fee";
 
-export default (coin, testnet) => {
+/* eslint-disable */
+export default async (coin, token, testnet = true) => {
 
   try {
     switch(coin){
       case 'btc':
-        const network = testnet ? networks.BTCTESTNET : networks.BTC;
 
         // dados exemplo
         const data = {
-          "fromAddress":    "mj1oZJa8pphtdjeo51LvEnzxFKHoMcmtFA",
-          "toAddress":      "mhJbcNEzSLsBqJVyzoHJHdutLXAVUBUcxk",
-          "amount":         100
+          network:        testnet ? networks.BTCTESTNET : networks.BTC,
+          seedTeste:      "", // informe aqui uma seed
+          fromAddress:    "mrmBsCMa8jw2btb9rTPpYyZHCED5UDPh5N",
+          toAddress:      "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
+          amount:         1, 
+          fee: null
         };
 
-        const transaction = new TransactionBtc();
-
         // get fee
-        const transactionFee = await transaction.getFee(data, 'btc', token);
+        const transactionFee = await getFee(data, coin, token);
+        data.fee = transactionFee.low;
 
-        const transactionResult = await transaction.createTransaction(
+        const transactionResult = await createTransaction(
           data.fromAddress, 
           data.toAddress, 
-          mnemonic, 
-          transactionFee,
+          data.seedTeste, 
+          data.fee, // escolher entre: low, medium ...
           data.amount, 
           coin, 
-          token
+          token, 
+          data.network
         );
-      
-        return transactionResult;
+
+        // return transactionResult;
 
       // lunes 
       case 'lunes':
