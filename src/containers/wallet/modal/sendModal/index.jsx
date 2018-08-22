@@ -34,7 +34,7 @@ class SendModal extends React.Component {
       case 0:
         return (
           <div className={style.baseStep}>
-            <BoxAddress action={this.nextStep} />
+            <BoxAddress nextPage={this.nextStep} previousPage={this.previousStep} />
             <ButtonContinue action={this.nextStep} />
           </div>
         );

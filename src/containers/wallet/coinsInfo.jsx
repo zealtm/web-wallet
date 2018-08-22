@@ -92,14 +92,14 @@ class CoinsInfo extends React.Component {
 
               <Hidden xsDown>
                 <div className={style.alignButtons}>
-                  <button
-                    className={style.receiveButton}
-                    onClick={() => this.changeModalState("modalSend")}
-                  >
+                  <button className={style.receiveButton}>
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
-                  <button className={style.submitButton}>
+                  <button
+                    className={style.submitButton}
+                    onClick={() => this.changeModalState("modalSend")}
+                  >
                     {i18n.t("BTN_SEND")}
                   </button>
                 </div>
@@ -109,9 +109,12 @@ class CoinsInfo extends React.Component {
         </div>
 
         <Hidden smUp>
-          <div className={style.alignButtonsMobile}>
+          <div
+            className={style.alignButtonsMobile}
+            onClick={() => this.changeModalState("modalSend")}
+          >
             <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SUBMIT")}
+              {i18n.t("BTN_SEND")}
             </button>
 
             <button className={style.receiveButtonMobile}>
