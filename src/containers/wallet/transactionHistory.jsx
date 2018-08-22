@@ -25,7 +25,7 @@ class TransactionHistory extends React.Component {
     }
 
     renderHistory = () => {
-        let mapHistoryItems = [{}, {}]
+        let mapHistoryItems = [{}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},]
         let { toggleHistory} = this.state;
 
         return mapHistoryItems.map((val, index) => {

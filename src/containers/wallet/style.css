@@ -319,6 +319,10 @@
   padding-bottom: 100px;
 }
 
+:local(.contentTransactions::-webkit-scrollbar-thumb) {
+  background-color: #68f285;
+}
+
 :local(.typeItems) {
   text-align: center;
   padding: 10px 0; 
