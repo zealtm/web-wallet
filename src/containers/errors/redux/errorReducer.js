@@ -7,6 +7,7 @@ const initialState = {
 };
 
 const error = (state = initialState, action) => {
+  console.warn(action.type, action.message)
   switch (action.type) {
     case "REQUEST_SUCCESS":
       return {

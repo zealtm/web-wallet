@@ -2,12 +2,27 @@ import React from "react";
 import style from "../../style.css";
 import QrCode from "qrcode.react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { successRequest } from "../../../errors/redux/errorAction";
 import Hidden from "@material-ui/core/Hidden";
+import { bindActionCreators } from "redux";
 
 class Receive extends React.Component {
 
+    copyCoinAddress = () => {
+        let { coin, successRequest } = this.props;
+        const element = document.createElement("textarea");
+        element.value = coin.address;
+        document.body.appendChild(element);
+        element.select();
+        document.execCommand("copy");
+        document.body.removeChild(element);
+        successRequest("Endereço copiado");
+    }
+
     hasAddress = () => {
         let { coin } = this.props;
+
         return coin.address ?
             <div>
                 <div className={style.qrCode}>
@@ -21,21 +36,24 @@ class Receive extends React.Component {
                     />
                 </div>
                 <p className={style.address}>{coin.address}</p>
-                <p className={style.qrMessage}>Endereço copiado</p>
 
                 <div className={style.spacingBox}>
                     <div className={style.alignButtons}>
-                        <div className={style.buttonReceive}>
+                        <div
+                            className={style.buttonReceive}
+                            onClick={() => this.copyCoinAddress()}>
                             <img src="/images/icons/modal-receive/ic_copy@1x.png" />
                             <p>
-                                <span className={style.spanCopy}>
-                                    Copiar
-                                </span>
+                                <span className={style.spanCopy}>Copiar</span>
                             </p>
                         </div>
-                        <div className={style.buttonReceive}>
+
+                        <div
+                            className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_print@1x.png" />
-                            <p><span className={style.spanPrint}>Imprimir</span></p>
+                            <p>
+                                <span className={style.spanPrint}>Imprimir</span>
+                            </p>
                         </div>
                         <div className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
@@ -44,10 +62,12 @@ class Receive extends React.Component {
                             </p>
 
                         </div>
-                        <Hidden xsDown>
+                        <Hidden smUp>
                             <div className={style.buttonReceive}>
                                 <img src="/images/icons/modal-receive/ic_compartilhar@1x.png" />
-                                <p><span className={style.spanShared}>Compartilhar</span></p>
+                                <p>
+                                    <span className={style.spanShared}>Compartilhar</span>
+                                </p>
                             </div>
                         </Hidden>
                     </div>
@@ -66,9 +86,12 @@ class Receive extends React.Component {
 }
 
 Receive.propTypes = {
-    coin: PropTypes.object
+    coin: PropTypes.object,
+    successRequest: PropTypes.func
 };
 
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({ successRequest }, dispatch);
 
-export default Receive;
+export default connect(null, mapDispatchToProps)(Receive);
 
