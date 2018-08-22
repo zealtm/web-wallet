@@ -164,21 +164,6 @@ export const inputValidator = inputs => {
           }
         }
 
-        if (name === "PIN" || name === "pin") {
-          let regex = new RegExp("^[0-9]+$");
-
-          if (
-            !isLength(trim(value.toString()), {
-              min: 4,
-              max: 4
-            }) ||
-            !regex.test(trim(value.toString()))
-          ) {
-            errors.push(name);
-            inputName.push(placeholder);
-          }
-        }
-
         if (name === "seed") {
           let isSeed = validateMnemonic(value.toString());
           if (

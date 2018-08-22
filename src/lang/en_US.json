@@ -23,7 +23,6 @@
   "BTN_BACK": "Back",
   "BTN_LOGIN": "Login",
   "BTN_CONFIRM_2FA": "Confirmar",
-  "BTN_CONFIRM_PIN": "Validar",
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
   "BTN_2FA": "Activate 2FA",
@@ -45,10 +44,6 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
-
-  "PIN_ENTER": "ENTER your PIN",
-  "PIN_CREATE": "CREATE your PIN",
-  "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
 
   "NEW_ACCOUNT_HEADER": "Enter the necessary data to make your registration",
   "NEW_ACCOUNT_ACCEPT_TERMS": "I agree with Terms of Services",
