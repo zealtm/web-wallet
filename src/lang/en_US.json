@@ -98,18 +98,22 @@
   "CARD_HOME_TITLE_5": "Purchase",
   "CARD_HOME_TITLE_6": "Purchase",
 
-  "CARD_HOME_DESCRIPTION_1": 
+  "CARD_HOME_DESCRIPTION_1":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_2": 
+  "CARD_HOME_DESCRIPTION_2":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_3": 
+  "CARD_HOME_DESCRIPTION_3":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_4": 
+  "CARD_HOME_DESCRIPTION_4":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_5": 
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..", 
-  "CARD_HOME_DESCRIPTION_6": 
+  "CARD_HOME_DESCRIPTION_5":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_6":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
-  "WALLET_MY_AMOUNT": "Balance"
+  "WALLET_MY_AMOUNT": "Balance",
+
+  "VOUCHER_NUMBER": "Number",
+  "VOUCHER_CODE": "Code",
+  "VOUCHER_BUTTON": "Rescue"
 }
