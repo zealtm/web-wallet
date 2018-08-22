@@ -6,36 +6,34 @@ import style from "./style.css";
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 
-
 // UTILS
 import i18n from "../../utils/i18n";
-
 
 class TransactionHistory extends React.Component {
     constructor() {
         super();
         this.state = {
-            toogleHistory: undefined,
-            opacidade: true
+            toggleHistory: undefined,
+            opacityItem: true
         };
     }
 
     stateDataHistory = (key) => {
-        let { toogleHistory } = this.state
+        let { toggleHistory } = this.state
         this.setState({
-            toogleHistory: toogleHistory === key ? undefined : key
+            toggleHistory: toggleHistory === key ? undefined : key
         })
     }
 
     renderHistory = () => {
-        let teste = [{ }, { }, { }, { }, { }, { }, { }, { }, { }, { }, { }, { } ]
-        let { toogleHistory, opacidade } = this.state;
+        let mapHistoryItems = [{}]
+        let { toggleHistory, opacityItem } = this.state;
 
-        return teste.map((val, index) => {
+        return mapHistoryItems.map((val, index) => {
             return (
                 <div key={index}>
                     <div>
-                        <Grid item xs={12} className={opacidade ? style.opacidade : style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
+                        <Grid item xs={12} className={opacityItem ? style.opacityItem : style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
                             <Grid item xs={2} className={style.items}>
                                 <div><img src="./images/icons/indicatorsHistory/submit.png" /></div>
                                 <div className={style.dateHistory}> {"12/mar"} </div>
@@ -50,7 +48,7 @@ class TransactionHistory extends React.Component {
                         </Grid>
 
                         <div>
-                            <Grid item xs={12} className={toogleHistory !== index ? style.testeao : null} >
+                            <Grid item xs={12} className={toggleHistory !== index ? style.toggleHistory : null} >
                                 <Grid item xs={12} className={style.itemDataHistorico}>
                                     <Grid item xs={2}> </Grid>
                                     <Grid item xs={6} >
@@ -90,30 +88,40 @@ class TransactionHistory extends React.Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                                
                         </div>
-
                     </div>
-                    
                 </div>
             )
-        }) 
+        })
     };
 
-    render() {        
-        
+    render() {
+
         return (
-            <div>
-                <div className={style.text}> {i18n.t("TRANSACTION_HISTORY_TITLE")} </div>
-                <div className={style.nivel1}>
-                    <Grid item xs={12} sm={7} className={style.nivel2}>
-                        <Grid item xs={11} md={10} className={style.nivel3}>
+            <div >
+                <Grid className={style.containerTransactions}>
+                    <Grid item xs={11} sm={7} md={6}>
+
+                        <div className={style.alignItemsHeaderHistory} >
+                            <div className={style.alignUpdateItems}>
+                                <div className={style.refleshIcon}>
+                                    <img src="images/icons/general/refresh.png" />
+                                </div>
+                                {"Update"}
+                            </div>
+                            <div className={style.text}> 
+                            {i18n.t("TRANSACTION_HISTORY_TITLE")} 
+                            </div>
+                        </div>
+
+                        <div className={style.contentTransactions}>
                             {this.renderHistory()}
-                            {"########## FIM ##########"}
-                       </Grid>
+                        </div>
+
                     </Grid>
-                </div>
+                </Grid>
             </div>
+
         );
     }
 }

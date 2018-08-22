@@ -45,67 +45,68 @@ class CoinsInfo extends React.Component {
 
 
     return (
-        <div>
-          <div className={style.mainWalletInfoCoins}>
-            <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
-              <div className={style.contentCoinSelected}>
-                <div className={style.alignContentCoin}>
-                  <div className={style.nameCoinSelected}>
-                    {coin.name.toUpperCase()}
-                  </div>
-                  <img
-                    src={"/images/icons/coins/" + coin.abbreviation + ".png"}
-                    className={style.iconCoinSelected}
-                  />
-                  <div className={style.percentageCoinSelected}>
-                    {this.renderArrowPercent(coinPercent)}
-                    {coinPercent}
-                  </div>
+      <div>
+        <div className={style.mainWalletInfoCoins}>
+          <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
+            <div className={style.contentCoinSelected}>
+              <div className={style.alignContentCoin}>
+                <div className={style.nameCoinSelected}>
+                  {coin.name.toUpperCase()}
+                </div>
+                <img
+                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
+                  className={style.iconCoinSelected}
+                />
+                <div className={style.percentageCoinSelected}>
+                  {this.renderArrowPercent(coinPercent)}
+                  {coinPercent}
+                </div>
 
-                  <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
+                <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
+              </div>
+            </div>
+
+            <div className={style.floatRightDesktop}>
+              <div className={style.coinBalance}>
+                <div className={style.balanceMyAmount}>
+                  {i18n.t("WALLET_MY_AMOUNT")}
+                </div>
+                <div className={style.balanceAmount}> {balance} </div>
+
+                <div>
+                  {"$" + fiatBalance}
+                  <div className={style.coinBalanceGreen}> {defaultCoin} </div>
                 </div>
               </div>
 
-              <div className={style.floatRightDesktop}>
-                <div className={style.coinBalance}>
-                  <div className={style.balanceMyAmount}>
-                    {i18n.t("WALLET_MY_AMOUNT")}
-                  </div>
-                  <div className={style.balanceAmount}> {balance} </div>
+              <Hidden xsDown>
+                <div className={style.alignButtons}>
+                  <button className={style.receiveButton}>
+                    {i18n.t("BTN_RECEIVE")}
+                  </button>
 
-                  <div>
-                    {"$" + fiatBalance}
-                    <div className={style.coinBalanceGreen}> {defaultCoin} </div>
-                  </div>
+                  <button className={style.submitButton}>
+                    {i18n.t("BTN_SEND")}
+                  </button>
                 </div>
+              </Hidden>
+            </div>
+          </Grid>
+        </div>
 
-                <Hidden xsDown>
-                  <div className={style.alignButtons}>
-                    <button className={style.receiveButton}>
-                      {i18n.t("BTN_RECEIVE")}
-                    </button>
+        <Hidden smUp>
+          <div className={style.alignButtonsMobile}>
+            <button className={style.submitButtonMobile}>
+              {i18n.t("BTN_SUBMIT")}
+            </button>
 
-                    <button className={style.submitButton}>
-                      {i18n.t("BTN_SEND")}
-                    </button>
-                  </div>
-                </Hidden>
-              </div>
-            </Grid>
+            <button className={style.receiveButtonMobile}>
+              {i18n.t("BTN_RECEIVE")}
+            </button>
           </div>
 
-          <Hidden smUp>
-            <div className={style.alignButtonsMobile}>
-              <button className={style.submitButtonMobile}>
-                {i18n.t("BTN_SUBMIT")}
-              </button>
-
-              <button className={style.receiveButtonMobile}>
-                {i18n.t("BTN_RECEIVE")}
-              </button>
-            </div>
-          </Hidden>
-        </div>
+        </Hidden>
+      </div>
     );
   }
 }

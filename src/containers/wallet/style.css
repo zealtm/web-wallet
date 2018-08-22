@@ -117,13 +117,9 @@
 /* 2. COINS INFO */
 
 /* 2.1 BASES */
-:local(.containerWallet) {
-  padding: 0 3px;
-}
-
 :local(.wrapperInfoCoins) {
-  display: inline-flex;
   width: 100%;
+  display: flex;
   justify-content: center;
 }
 
@@ -287,23 +283,23 @@
 /* 3. HISTORY */
 
 /* 3.1 BASES */
-:local(.nivel1) {
+:local(.displayAlign) {
   display: flex;
   justify-content: center;
 }
 
-:local(.nivel2) {
-  display: flex;
-  justify-content: center;
+:local(.containerTransactions) {
+  composes: displayAlign;  
 }
 
-:local(.nivel3) {
+:local(.contentTransactions) {
   border-radius: 8px;
   box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
   background-color: #473088;
   max-height: 55vh;
   overflow: auto;   
   padding-bottom: 100px;
+
 }
 
 :local(.items) {
@@ -319,46 +315,51 @@
   border-color: #3a1d71;
   border-style: solid;
   align-items: center;
-  margin: 0 10px;
   cursor: pointer;
   user-select: none;
+  margin: 0 20px;
 }
 
 :local(.itemDataHistorico) {
-  composes: itemHistorico;
   background-color: #381e67;
+  display: flex;
   cursor: default;
-  padding: 0px;
-  border: 0;
   font-size: 9px;
 }
 
-:local(.testeao) {
+:local(.toggleHistory) {
   display: none;
   transition: 2s;
 }
 
-:local(.opacidade) {
+:local(.alignUpdateItems) {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse
+}
+
+
+:local(.opacityItem) {
   composes: itemHistorico;
   opacity: 1;
 }
 
 @media only screen and (max-width: 599px) {
-  :local(.opacidade) {
+  :local(.opacityItem) {
     opacity: 0.5;
   }
   :local(.nivel3) {
     padding-bottom: 60px;
   }
+  :local(.itemHistorico) {
+    margin: 0;
+  }
 }
 
 /* 3.2 TEXTS */
 :local(.text) {
-  composes: textDefault from "../../components/bases/textBase.css";  
   text-align: center;
   font-size: 16px;
-  margin: 15px;
-  font-weight: bold;
 }
 
 :local(.titleBlockExplorer) {
@@ -374,6 +375,7 @@
 
 :local(.valueHistory) {
   text-align: right;
+  padding-right: 15px;
 }
 
 :local(.submitHistory) {
@@ -409,5 +411,26 @@
   :local(.descriptionHistory) {
     font-size: 9px;
   }  
+  :local(.valueHistory) {
+    padding-right: 10px;
+  }
 }
 
+:local(.alignItemsHeaderHistory) {
+  composes: textDefault from "../../components/bases/textBase.css";  
+  padding: 15px 0;
+  font-weight: bold;
+}
+
+/* 3.2 ICONS */
+:local(.refleshIcon) {
+  composes: displayAlign;  
+  background-color: #473088;
+  border-radius: 20px;
+  padding: 10px;
+  float: right;
+  margin: 5px;
+  align-content: center;
+}
+
+/* ------------------------------------------------------------------------- */
