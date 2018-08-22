@@ -339,6 +339,11 @@
   flex-direction: row-reverse
 }
 
+:local(.alignItemsHeaderHistory) {
+  composes: textDefault from "../../components/bases/textBase.css";  
+  padding: 15px 0;
+  font-weight: bold;
+}
 
 :local(.opacityItem) {
   composes: itemHistorico;
@@ -418,12 +423,6 @@
   :local(.valueHistory) {
     padding-right: 10px;
   }
-}
-
-:local(.alignItemsHeaderHistory) {
-  composes: textDefault from "../../components/bases/textBase.css";  
-  padding: 15px 0;
-  font-weight: bold;
 }
 
 /* 3.2 ICONS */
