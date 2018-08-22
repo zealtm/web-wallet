@@ -12,6 +12,6 @@ export const errorRequest = () => ({
 });
 
 export const successRequest = value => ({
-  type: "ERROR_INPUT",
+  type: "REQUEST_SUCCESS",
   message: value
 });

@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"; import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { successRequest } from "../../../errors/redux/errorAction";
 import style from "../../style.css";
 import QrCode from "qrcode.react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { successRequest } from "../../../errors/redux/errorAction";
+import i18n from "../../../../utils/i18n";
 import Hidden from "@material-ui/core/Hidden";
-import { bindActionCreators } from "redux";
 
 class Receive extends React.Component {
 
@@ -17,7 +17,7 @@ class Receive extends React.Component {
         element.select();
         document.execCommand("copy");
         document.body.removeChild(element);
-        successRequest("Endereço copiado");
+        successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
     hasAddress = () => {
@@ -44,7 +44,7 @@ class Receive extends React.Component {
                             onClick={() => this.copyCoinAddress()}>
                             <img src="/images/icons/modal-receive/ic_copy@1x.png" />
                             <p>
-                                <span className={style.spanCopy}>Copiar</span>
+                                <span className={style.spanCopy}>{i18n.t("BTN_RECEIVE_COPY")}</span>
                             </p>
                         </div>
 
@@ -52,13 +52,13 @@ class Receive extends React.Component {
                             className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_print@1x.png" />
                             <p>
-                                <span className={style.spanPrint}>Imprimir</span>
+                                <span className={style.spanPrint}>{i18n.t("BTN_RECEIVE_PRINT")}</span>
                             </p>
                         </div>
                         <div className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
                             <p>
-                                <span className={style.spanEmail}>Email</span>
+                                <span className={style.spanEmail}>{i18n.t("BTN_RECEIVE_EMAIL")}</span>
                             </p>
 
                         </div>
@@ -66,7 +66,7 @@ class Receive extends React.Component {
                             <div className={style.buttonReceive}>
                                 <img src="/images/icons/modal-receive/ic_compartilhar@1x.png" />
                                 <p>
-                                    <span className={style.spanShared}>Compartilhar</span>
+                                    <span className={style.spanShared}>{i18n.t("BTN_RECEIVE_SHARED")}</span>
                                 </p>
                             </div>
                         </Hidden>

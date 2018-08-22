@@ -56,7 +56,7 @@ class CoinsInfo extends React.Component {
     return (
       <div className={style.containerWallet}>
         <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
-        <Modal title={"Receber"} content={<ReceiveModal coin={coin} />} show={modalReceive} />
+        <Modal title={"Receber"} content={<ReceiveModal coin={coin}/>} show={modalReceive} />
         <div className={style.mainWalletInfoCoins}>
           <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
@@ -92,14 +92,14 @@ class CoinsInfo extends React.Component {
 
               <Hidden xsDown>
                 <div className={style.alignButtons}>
-                  <button className={style.receiveButton}>
+                  <button
+                    className={style.receiveButton}
+                    onClick={() => this.changeModalState("modalSend")}
+                  >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
-                  <button
-                    className={style.submitButton}
-                    onClick={() => this.changeModalState("modalSend")}
-                  >
+                  <button className={style.submitButton}>
                     {i18n.t("BTN_SEND")}
                   </button>
                 </div>
@@ -109,12 +109,9 @@ class CoinsInfo extends React.Component {
         </div>
 
         <Hidden smUp>
-          <div
-            className={style.alignButtonsMobile}
-            onClick={() => this.changeModalState("modalSend")}
-          >
+          <div className={style.alignButtonsMobile}>
             <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SEND")}
+              {i18n.t("BTN_SUBMIT")}
             </button>
 
             <button className={style.receiveButtonMobile}>
