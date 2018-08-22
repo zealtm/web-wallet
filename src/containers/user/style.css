@@ -19,22 +19,18 @@
   4.2 ICONSreset
   4.2 LINKS
 
-5. PIN
-  5.1 INPUT
-  5.2 TEXTS
+5. CREATE / NEW ACCOUNT
+  5.1 TEXTS
+  5.2 ICONS
+  5.3 INPUT - CHECKBOX
 
-6. CREATE / NEW ACCOUNT
-  6.1 TEXTS
-  6.2 ICONS
-  6.3 INPUT - CHECKBOX
+6. TWO FACTORS AUTHENTICATOR 
+  6.1 INPUT
+  6.2 TEXTS
 
-7. TWO FACTORS AUTHENTICATOR 
+7. SEED
   7.1 INPUT
   7.2 TEXTS
-
-8. SEED
-  8.1 INPUT
-  8.2 TEXTS
 
 */
 
@@ -226,33 +222,6 @@
 
 /* ------------------------------------------------------------------------- */
 
-/* PIN */
-
-/* 5.1 INPUT */
-:local(.inputPINDefault) {
-  composes: inputTextDefault from "../../components/bases/textBase.css";
-  composes: bgPurpleDark from "../../components/bases/colorBase.css";
-  composes: bdPurpleDefault from "../../components/bases/colorBase.css";
-  border-width: 1px;
-  border-style: solid;
-  width: 55px;
-  padding: 10px 10px;
-  border-radius: 6px;
-  height: 35px;
-  color: white;
-  font-size: 35px;
-  text-align: center;
-  margin: 1px;
-}
-
-:local(.inputPINError) {
-  composes: bdError from "../../components/bases/colorBase.css";
-  composes: inputPINDefault;
-  border-width: 1px;
-  border-style: solid;
-  color: #f05252;
-}
-
 :local(.alignInputsDefault) {
   width: 100%;
   display: flex;
@@ -260,17 +229,6 @@
 }
 
 /* 5.2 TEXTS */
-:local(.descriptionLinkPIN) {
-  composes: description;
-  margin: 25px 0 25px 0;
-  text-align: right;
-}
-
-:local(.descriptionPIN) {
-  composes: description;
-  font-weight: bold;
-  margin-top: 150px;
-}
 
 /* ------------------------------------------------------------------------- */
 
