@@ -13,8 +13,7 @@ class TransactionHistory extends React.Component {
     constructor() {
         super();
         this.state = {
-            toggleHistory: undefined,
-            opacityItem: true
+            toggleHistory: undefined
         };
     }
 
@@ -26,15 +25,15 @@ class TransactionHistory extends React.Component {
     }
 
     renderHistory = () => {
-        let mapHistoryItems = [{}]
-        let { toggleHistory, opacityItem } = this.state;
+        let mapHistoryItems = [{}, {}]
+        let { toggleHistory} = this.state;
 
         return mapHistoryItems.map((val, index) => {
             return (
                 <div key={index}>
                     <div>
-                        <Grid item xs={12} className={opacityItem ? style.opacityItem : style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
-                            <Grid item xs={2} className={style.items}>
+                        <Grid item xs={12} className={style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
+                            <Grid item xs={2} className={style.typeItems}>
                                 <div><img src="./images/icons/indicatorsHistory/submit.png" /></div>
                                 <div className={style.dateHistory}> {"12/mar"} </div>
                             </Grid>
@@ -61,7 +60,7 @@ class TransactionHistory extends React.Component {
 
                                 <Grid item xs={12}>
                                     <Grid item xs={12} className={style.itemDataHistorico}>
-                                        <Grid item xs={2} className={style.items}>
+                                        <Grid item xs={2} className={style.typeItems}>
                                             <div> {"ID"} </div>
                                         </Grid>
                                         <Grid item xs={10} className={style.descriptionHistory}>
@@ -70,7 +69,7 @@ class TransactionHistory extends React.Component {
                                     </Grid>
 
                                     <Grid item xs={12} className={style.itemDataHistorico}>
-                                        <Grid item xs={2} className={style.items}>
+                                        <Grid item xs={2} className={style.typeItems}>
                                             <div className={style.fromTransactionHistory}> {"De:"} </div>
                                         </Grid>
                                         <Grid item xs={10} >
@@ -79,7 +78,7 @@ class TransactionHistory extends React.Component {
                                     </Grid>
 
                                     <Grid item xs={12} className={style.itemDataHistorico}>
-                                        <Grid item xs={2} className={style.items}>
+                                        <Grid item xs={2} className={style.typeItems}>
                                             <div className={style.forTransactionHistory}> {"Para:"} </div>
                                         </Grid>
                                         <Grid item xs={10} >
@@ -102,19 +101,16 @@ class TransactionHistory extends React.Component {
                 <Grid className={style.containerTransactions}>
                     <Grid item xs={11} sm={7} md={6}>
 
-                        <div className={style.alignItemsHeaderHistory} >
-                            <div className={style.alignUpdateItems}>
-                                <div className={style.refleshIcon}>
-                                    <img src="images/icons/general/refresh.png" />
-                                </div>
-                                {"Update"}
+                        <div className={style.alignItemsHeaderHistory} >   
+                            <div className={style.refleshIcon}>
+                                <img src="images/icons/general/refresh.png" />
                             </div>
-                            <div className={style.text}> 
-                            {i18n.t("TRANSACTION_HISTORY_TITLE")} 
+                            <div className={style.text}>
+                                {i18n.t("TRANSACTION_HISTORY_TITLE")}
                             </div>
                         </div>
 
-                        <div className={style.contentTransactions}>
+                        <div className={style.contentTransactions}>                        
                             {this.renderHistory()}
                         </div>
 
