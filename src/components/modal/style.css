@@ -11,12 +11,12 @@
   max-height: 639px;
   min-height: 538px;
   position: absolute;
-  box-shadow: 0px 10px 50px rgba(0,0,0,.2);
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.2);
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-:local(.content){
+:local(.content) {
   display: flex;
   align-content: center;
   align-items: center;
@@ -35,23 +35,32 @@
 :local(.header) {
   composes: textDefault from "../bases/textBase.css";
   border-bottom: 2px solid #3b1878;
+  display: flex;
   height: 46px;
   width: 100%;
 }
 
 :local(.headerImage) {
-  position: absolute;
   width: 8%;
   cursor: pointer;
   padding-top: 9px;
-  padding-left:9px;
+  padding-left: 9px;
   text-align: center;
-  opacity: .8;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-:local(.headerImage:hover){
-  padding-left:3px;
+:local(.headerImageClose) {
+  float: right;
+  width: 7%;
+  cursor: pointer;
+  padding-top: 11px;
+  padding-left: 9px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+:local(.headerImage:hover) {
+  padding-left: 3px;
   opacity: 1;
 }
 
@@ -60,6 +69,7 @@
 }
 
 :local(.headerTitle) {
+  float: left;
   font-weight: bold;
   font-size: 20px;
   width: 100%;

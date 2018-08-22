@@ -4,12 +4,18 @@ import PropTypes from "prop-types";
 // STYLE
 import style from "../../style.css";
 
+// COMPONENTS
+import Loading from "../../../../components/loading";
+
 class ButtonContinue extends React.Component {
   render() {
-    const { action, label = "CONTINUAR", error } = this.props;
+    const { action, loading, label = "CONTINUAR", error } = this.props;
     return (
-      <button className={!error ? style.btContinueDisable : style.btError} onClick={action}>
-        {label}
+      <button
+        className={!error ? style.btContinueDisable : style.btError}
+        onClick={action}
+      >
+        {loading ? <Loading /> : label}
       </button>
     );
   }
@@ -18,6 +24,7 @@ class ButtonContinue extends React.Component {
 ButtonContinue.propTypes = {
   action: PropTypes.func.isRequired,
   label: PropTypes.string,
+  loading: PropTypes.bool,
   error: PropTypes.bool
 };
 

@@ -4,6 +4,7 @@
   "MESSAGE_ERROR_EMPTY_FILEDS": "Some fields are empty",
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
+  "MESSAGE_INVALID_ADDRESS": "Invalid Address",
 
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",
@@ -116,5 +117,7 @@
   "CARD_HOME_DESCRIPTION_6": 
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
-  "WALLET_MY_AMOUNT": "Balance"
+  "WALLET_BALANCE": "Balance",
+  "WALLET_MODAL_SEND_TITLE": "Transaction"
+
 }
