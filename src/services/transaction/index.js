@@ -3,6 +3,7 @@ import {networks} from "./network";
 
 // COINS 
 import {createTransaction} from "./coins/btc";
+import LunesTransaction from "./coins/lunes.js"
 import getFee from "./fee";
 
 /* eslint-disable */
@@ -41,6 +42,22 @@ export default async (coin, token, testnet = true) => {
 
       // lunes 
       case 'lunes':
+        // get fee
+        const transactionFee = await getFee(data, coin, token);
+
+        const data = {
+          network:        testnet ? networks.LNSTESTNET : networks.LNS,
+          mnemonic: "",
+          toAddress: "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
+          amount: 1,
+          fee: transactionFee.low
+        }
+
+        const lunesTransaction = new LunesTransaction();
+
+        const transactionResult = await lunesTransaction.createLunesTransaction(data);
+
+        // return transactionResult;
         return;
     }
   }catch(error){
