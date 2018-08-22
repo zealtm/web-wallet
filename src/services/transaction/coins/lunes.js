@@ -1,65 +1,64 @@
 //import LunesJsAPI from "lunes-js-api";
 import axios from 'axios';
-import validateAddress from "./validateAddress";
+//import validateAddress from "./validateAddress";
 import { add } from "biggystring";
-import errorPattern from "../../errorPattern";
+import { errorPattern } from "../../../utils/errorPattern";
 
 class LunesTransaction {
 
-  mnemonicToSeed(mnemonic, network){
-    if (mnemonic) {
-      const Lunes = LunesJsAPI.create(network.APICONFIG)
-      const seed = Lunes.Seed.fromExistingPhrase(mnemonic)
-      return seed
-    }
+  // mnemonicToSeed(mnemonic, network){
+  //   if (mnemonic) {
+  //     const Lunes = LunesJsAPI.create(network.APICONFIG)
+  //     const seed = Lunes.Seed.fromExistingPhrase(mnemonic)
+  //     return seed
+  //   }
   
-    return 'Invalid'
-  }
+  //   return 'Invalid'
+  // }
 
   async balance(address, network){
-    try {
-      const validate = await validateAddress(address, network)
-      if (!validate) {
-        throw errorPattern(
-          'Invalid ' + network.coinName + ' Address',
-          406,
-          'ADDRESS_INVALID',
-          'The address ' +
-            address +
-            ' is not a valid ' +
-            network.coinName +
-            ' address.'
-        )
-      }
+    // try {
+    //   const validate = await validateAddress(address, network)
+    //   if (!validate) {
+    //     throw errorPattern(
+    //       'Invalid ' + network.coinName + ' Address',
+    //       406,
+    //       'ADDRESS_INVALID',
+    //       'The address ' +
+    //         address +
+    //         ' is not a valid ' +
+    //         network.coinName +
+    //         ' address.'
+    //     )
+    //   }
   
-      let res = await axios.get(
-        network.apiUrl + '/addresses/balance/details/' + address
-      )
+    //   let res = await axios.get(
+    //     network.apiUrl + '/addresses/balance/details/' + address
+    //   )
   
-      return {
-        network: network.coinSymbol,
-        data: {
-          address: address,
-          confirmed: res.data.available,
-          unconfirmed: null
-        }
-      }
-    } catch (error) {
-      throw errorPattern(
-        error.message || 'Error retrieving balances',
-        error.status || 500,
-        error.messageKey || 'BALANCE_ERROR',
-        error.logMessage || error.stack || ''
-      )
-    }
+    //   return {
+    //     network: network.coinSymbol,
+    //     data: {
+    //       address: address,
+    //       confirmed: res.data.available,
+    //       unconfirmed: null
+    //     }
+    //   }
+    // } catch (error) {
+    //   throw errorPattern(
+    //     error.message || 'Error retrieving balances',
+    //     error.status || 500,
+    //     error.messageKey || 'BALANCE_ERROR',
+    //     error.logMessage || error.stack || ''
+    //   )
+    // }
   }
   
 
   async createLunesTransaction(data){
     try {
-      const {mnemonic, toAddress, transactionAmount, fee, network} = data;
+      const {seed, keyPair, fromAddress, toAddress, transactionAmount, fee, network} = data;
 
-      const seed = this.mnemonicToSeed(mnemonic, network);
       // Check received address
       // const validate = await validateAddress(toAddress, network)
       // if (!validate) {
@@ -83,8 +82,6 @@ class LunesTransaction {
         throw errorPattern("Fee cannot be smaller than 0.", 401, "INVALID_FEE");
       }
 
-      const fromAddress = seed.address;
-
       // 
       const userBalance = await this.balance(fromAddress, network);
 
@@ -102,9 +99,10 @@ class LunesTransaction {
       };
 
       try {
-        const Lunes = LunesJsAPI.create(network.APICONFIG);
-        const transaction = await Lunes.API.Node.v1.assets
-          .transfer(transactionData, seed.keyPair)
+        //const Lunes = LunesJsAPI.create(network.APICONFIG);
+        
+        /*
+        const transaction = await Lunes.API.Node.v1.assets.transfer(transactionData, seed.keyPair)
           .then(res => {
             const result = {
               network: network.coinSymbol,
@@ -115,6 +113,7 @@ class LunesTransaction {
 
             return result;
           });
+        */
 
         return transaction;
       } catch (error) {

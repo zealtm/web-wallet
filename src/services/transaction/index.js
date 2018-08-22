@@ -4,7 +4,8 @@ import {networks} from "./network";
 // COINS 
 import {createTransaction} from "./coins/btc";
 import LunesTransaction from "./coins/lunes.js"
-import getFee from "./fee";
+
+import TransactionService from "./transactionService";
 
 /* eslint-disable */
 export default async (coin, token, testnet = true) => {
@@ -24,7 +25,7 @@ export default async (coin, token, testnet = true) => {
         };
 
         // get fee
-        const transactionFee = await getFee(data, coin, token);
+        const transactionFee = await TransactionService.getFee(data, coin, token);
         data.fee = transactionFee.low;
 
         const transactionResult = await createTransaction(
@@ -43,11 +44,13 @@ export default async (coin, token, testnet = true) => {
       // lunes 
       case 'lunes':
         // get fee
-        const transactionFee = await getFee(data, coin, token);
+        const transactionFee = await TransactionService.getFee(data, coin, token);
 
         const data = {
           network:        testnet ? networks.LNSTESTNET : networks.LNS,
-          mnemonic: "",
+          seed: "",
+          keyPair: "",
+          fromAddress: "",
           toAddress: "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
           amount: 1,
           fee: transactionFee.low

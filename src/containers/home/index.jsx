@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 // STYLE
 import style from "./style.css";
 
-import Transaction from "../../services/transaction";
+import TransactionService from "../../services/transaction/transactionService";
 import {getAuthToken} from "../../utils/localStorage" 
 
 class Home extends React.Component {
@@ -16,7 +16,26 @@ class Home extends React.Component {
   componentDidMount (){
 
     const token = getAuthToken();
-    const teste = Transaction('btc', token);
+
+    // testes transacao
+    const dataFee = {
+      "fromAddress": "mrmBsCMa8jw2btb9rTPpYyZHCED5UDPh5N",
+      "toAddress": "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
+      "amount": 1
+    }
+
+    const novaTransacao = new TransactionService();
+
+    const teste = novaTransacao.transaction(
+      'btc', 
+      token, 
+      1, 
+      100, 
+      "mrmBsCMa8jw2btb9rTPpYyZHCED5UDPh5N", 
+      "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH", 
+      "", // seeed
+      true
+    );
     
   }
 
