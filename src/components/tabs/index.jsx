@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import style from './style.css';
 import colors from '../../components/bases/colors';
 
 const tabStyles = theme => ({
@@ -60,9 +61,9 @@ class CustomTabs extends React.Component {
             }
           </Tabs>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={style.tabContainer}>
           {
-            this.props.tabContents.map((content, key) => value === key ? <div key={key}>{ content }</div> : '')
+            this.props.tabContents.map((content, key) => value === key ? <div className={style.tabContents} key={key}>{ content }</div> : '')
           }
         </Grid>
       </Grid>
