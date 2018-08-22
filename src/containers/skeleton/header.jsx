@@ -10,7 +10,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import Notifications from "@material-ui/icons/Notifications";
 import Badge from "@material-ui/core/Badge";
 
 //STYLE
@@ -37,8 +36,9 @@ class Header extends React.Component {
       return (
         <div className={style.iconNotificationActive}>
           <IconButton color="inherit" aria-label="Notifications">
-            <Badge badgeContent={notifications} color="secondary">
-              <Notifications className={style.animeNotification} />
+            <Badge badgeContent color="secondary" width="5px" height="5px">
+              <img src="/images/icons/general/bell@1x.png" alt="" height="25px" width="25px" classes={{ width: "50px" }} />
+              {/* <Notifications  /> */}
             </Badge>
           </IconButton>
         </div>
@@ -47,7 +47,7 @@ class Header extends React.Component {
       return (
         <div className={style.iconNotification}>
           <IconButton color="inherit" aria-label="Notifications">
-            <Notifications />
+            <img src="/images/icons/general/bell@1x.png" height="25px" width="25px" alt=""/>
           </IconButton>
         </div>
       );

@@ -1,6 +1,6 @@
 const initialState = {
   selectedCoin: "lunes",
-  loading: true,
+  loading: false,
   errors: []
 };
 
@@ -11,6 +11,12 @@ const wallet = (state = initialState, action) => {
         ...state,
         selectedCoin: action.coin,
         loading: false
+      };
+
+    case "SET_WALLET_LOADING":
+      return {
+        ...state,
+        loading: action.state ? action.state : false
       };
 
     default: {
