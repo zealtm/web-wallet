@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "../../style.css";
 
@@ -9,7 +12,7 @@ import Loading from "../../../../components/loading";
 
 class ButtonContinue extends React.Component {
   render() {
-    const { action, loading, label = "CONTINUAR", error } = this.props;
+    const { action, loading, label = i18n.t("BTN_CONFIRM"), error } = this.props;
     return (
       <button
         className={!error ? style.btContinueDisable : style.btError}

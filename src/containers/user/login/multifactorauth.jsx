@@ -223,7 +223,7 @@ class MultiFactorAuth extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {loading ? <Loading /> : i18n.t("BTN_CONFIRM_2FA")}
+          {loading ? <Loading /> : i18n.t("BTN_CONFIRM")}
         </button>
       </div>
     );

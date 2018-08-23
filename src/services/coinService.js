@@ -118,7 +118,6 @@ class CoinService {
 
       return coins;
     } catch (error) {
-      console.warn('error', error)
       internalServerError();
       return;
     }

@@ -35,9 +35,8 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.state;
+    let { step } = this.props.wallet.modal
     let { setWalletModalStep } = this.props;
-
     if (step >= 0) {
       setWalletModalStep(step - 1);
     }
@@ -71,7 +70,7 @@ class CoinsInfo extends React.Component {
           close={
             step === 4 || step === 5 ? null : () => setWalletSendModalOpen()
           }
-          back={step === 4 || step === 5 ? null : () => this.previousStep()}
+          back={step === 0 || step === 4 || step === 5 ? null : () => this.previousStep()}
           show={wallet.modal.open}
         />
         <div className={style.mainWalletInfoCoins}>
