@@ -75,10 +75,10 @@ class CoinService {
             responseCreateAddress.data.data.address;
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 

@@ -10,3 +10,8 @@ export const errorInput = value => ({
 export const errorRequest = () => ({
   type: "REQUEST_FAILED",
 });
+
+export const successRequest = value => ({
+  type: "REQUEST_SUCCESS",
+  message: value
+});

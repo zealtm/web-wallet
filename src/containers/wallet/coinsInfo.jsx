@@ -21,6 +21,8 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 //COMPONENTS
 import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
+import ReceiveModal from "./modal/receiveModal/";
+
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -30,7 +32,8 @@ class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalSend: true,
+      modalSend: false,
+      modalReceive: true
     };
   }
 
@@ -54,6 +57,7 @@ class CoinsInfo extends React.Component {
 
   render() {
     let defaultCoin = getDefaultFiat();
+    let { modalSend, modalReceive } = this.state;
     let { setWalletSendModalOpen, coins, wallet } = this.props;
     let step = wallet.modal.step;
     let coin = coins[wallet.selectedCoin];
@@ -61,9 +65,10 @@ class CoinsInfo extends React.Component {
     let coinPercent = coins[wallet.selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
-
     return (
       <div className={style.containerWallet}>
+        <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
+        <Modal title={"Receber"} content={<ReceiveModal coin={coin} />} show={modalReceive} />
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
@@ -108,14 +113,14 @@ class CoinsInfo extends React.Component {
 
               <Hidden xsDown>
                 <div className={style.alignButtons}>
-                  <button className={style.receiveButton}>
-                    {i18n.t("BTN_RECEIVE")}
-                  </button>
-
                   <button
                     className={style.submitButton}
                     onClick={() => setWalletSendModalOpen()}
                   >
+                    {i18n.t("BTN_RECEIVE")}
+                  </button>
+
+                  <button className={style.submitButton}>
                     {i18n.t("BTN_SEND")}
                   </button>
                 </div>
@@ -130,7 +135,7 @@ class CoinsInfo extends React.Component {
             onClick={() => setWalletSendModalOpen()}
           >
             <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SEND")}
+              {i18n.t("BTN_SUBMIT")}
             </button>
 
             <button className={style.receiveButtonMobile}>
