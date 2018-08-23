@@ -26,6 +26,9 @@ const inputStyle = {
     "&:hover:not(&$disabled):not(&$error):not(&$focused):before": {
       borderBottomColor: colors.purple.dark,
     },
+    disabled: {},
+    error: {},
+    focused: {},
   },
 }
 
@@ -35,15 +38,31 @@ class Voucher extends React.Component {
 
     this.state = {
       phone: '',
-      code: ['','','','']
+      code0: '',
+      code1: '',
+      code2: '',
+      code3: '',
     }
   }
 
   handleChange = name => event => {
+    console.log(name, event.target.value);
     this.setState({
       ...this.state,
       [name]: event.target.value
     });
+  }
+
+  renderCodeInputs = () => {
+    return (
+      [...Array(4).keys()].map((id) => {
+        return (
+          <Grid key={id} item xs={6} sm={3}>
+            <input key={id} className={style.inputTextDefault} placeholder="1234" onChange={this.handleChange(`code${id}`)}/>
+          </Grid>
+        );
+      })
+    )
   }
 
   render() {
@@ -52,9 +71,9 @@ class Voucher extends React.Component {
 
     return (
       <Grid container>
-        {/* TODO: remove after have the offset option to Grid component */}
-        <Grid item xs={false} sm={3} md={3}></Grid>
-        <Grid item xs={12} sm={6} md={6}>
+        {/* TODO: remove after have the offset option to the Grid component */}
+        <Grid item xs={false} sm={3}></Grid>
+        <Grid item xs={12} sm={6}>
           <div className={style.wrap}>
             <label className={style.inputLabel} htmlFor="txtPhone">{i18n.t("VOUCHER_NUMBER")}</label>
             <div className="wrapInput">
@@ -72,24 +91,14 @@ class Voucher extends React.Component {
           <div className={style.wrap}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <Grid container>
-              <Grid item xs={3}>
-                <input className={style.inputTextDefault} placeholder="1234"/>
-              </Grid>
-              <Grid item xs={3}>
-                <input className={style.inputTextDefault} placeholder="1234"/>
-              </Grid>
-              <Grid item xs={3}>
-                <input className={style.inputTextDefault} placeholder="1234"/>
-              </Grid>
-              <Grid item xs={3}>
-                <input className={style.inputTextDefault} placeholder="1234"/>
-              </Grid>
+              {this.renderCodeInputs()}
             </Grid>
           </div>
 
           <div className={style.wrap}>
             <button
               className={style.buttonBorderGreen}
+              onClick={() => console.log(this.state)}
             >
               {i18n.t("VOUCHER_BUTTON")}
             </button>
