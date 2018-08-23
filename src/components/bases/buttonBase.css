@@ -7,7 +7,7 @@
 
 2. BUTTON ACTION
   2.1 BUTTON RECEIVE
-  2.2 BUTTON SUBMIT
+  2.2 BUTTON SEND
 
 */
 
@@ -96,8 +96,8 @@
   composes: bgGreenDefault from "./colorBase.css";
 }
 
-/* 2.2 BUTTON SUBMIT */
-:local(.receiveSubmit) {  
+/* 2.2 BUTTON SEND */
+:local(.sendButton) {  
   composes: actionButtonDefaul;
   composes: bgError from "./colorBase.css";
 }

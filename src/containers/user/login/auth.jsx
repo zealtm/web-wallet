@@ -38,23 +38,21 @@ class Auth extends React.Component {
       },
       errors: undefined
     };
-    this.inputValidator = this.inputValidator.bind(this)
   }
 
   getInput = input => {
     let { name, value } = input;
     let { inputs } = this.state;
 
-    this.setState({      
+    this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : { value: "" } },
-      errors: undefined,      
+      errors: undefined,
     });
   };
 
-  
+
   inputValidator = () => {
-    alert("ok");
     let { inputs } = this.state;
     let { emailUsername, password } = this.state.inputs;
     let { loading, errorInput, authenticate } = this.props;
@@ -72,21 +70,20 @@ class Auth extends React.Component {
       authenticate(emailUsername.value, password.value);
     }
   };
-  
 
-  handleKeyPress(target) {    
-    if (target.charCode === 13) {
-    this.inputValidator()
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
     }
   }
-
+  
   render() {
     // let userName = getUsername();
     let { user } = this.props;
     let { inputs, errors } = this.state;
 
     return (
-      <div onKeyPress={this.handleKeyPress}>      
+      <div onKeyPress={this.handleKeyPress} >
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 
@@ -117,8 +114,7 @@ class Auth extends React.Component {
             errors && errors.includes("password")
               ? style.inputTextError
               : style.inputTextDefault
-          }        
-          
+          }
         />
 
         <Link className={style.textForgetPass} to="/reset">
@@ -131,15 +127,10 @@ class Auth extends React.Component {
               ? style.buttonEnable
               : style.buttonBorderGreen
           }
-          
-
-
           onClick={() => {
             this.inputValidator();
           }}
         >
-
-        
           {user.loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
 

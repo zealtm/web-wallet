@@ -96,9 +96,9 @@ class CreateUser extends React.Component {
     }
   };
 
-  handleKeyPress(target) {
+  handleKeyPress = (target) => {
     if (target.charCode == 13) {
-      alert('input Validator');
+      this.inputValidator()
     }
   }
   

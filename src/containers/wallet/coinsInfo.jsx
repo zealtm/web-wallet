@@ -110,12 +110,12 @@ class CoinsInfo extends React.Component {
             className={style.alignButtonsMobile}
             onClick={() => this.changeModalState("modalSend")}
           >
-            <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SEND")}
-            </button>
-
             <button className={style.receiveButtonMobile}>
               {i18n.t("BTN_RECEIVE")}
+            </button>
+
+            <button className={style.submitButtonMobile}>
+              {i18n.t("BTN_SEND")}
             </button>
           </div>
         </Hidden>

@@ -87,13 +87,19 @@ class Seed extends React.Component {
     });
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+
   render() {
     let { loading } = this.props.user;
     let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
 
     return (
-      <div>
+      <div onKeyPress={this.handleKeyPress}>
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>

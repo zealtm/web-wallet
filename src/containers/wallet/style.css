@@ -264,7 +264,7 @@
 }
 
 :local(.submitButton) {
-  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+  composes: sendButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 
@@ -276,7 +276,7 @@
 }
 
 :local(.submitButtonMobile) {
-  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+  composes: sendButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
   height: 40px;
 }
