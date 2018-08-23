@@ -3,28 +3,13 @@ import { BASE_URL, API_HEADER } from "../../constants/apiBaseUrl";
 import { internalServerError } from "../../containers/errors/statusCodeMessage";
 
 import { errorPattern } from "../../utils/errorPattern";
-import { networks } from "./network";
+import { networks } from "../../constants/network";
 
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
 import { fromSeedBuffer } from "bitcoinjs-lib/src/hdnode";
 
 class TransactionService {
-  async getFee(data, coin, token) {
-    try {
-      API_HEADER.headers.Authorization = token;
-      let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/fee`,
-        data,
-        API_HEADER
-      );
-      //console.log("FEE", response);
-      return response.data.data;
-    } catch (error) {
-      internalServerError();
-      return;
-    }
-  }
 
   async utxo(address, coin, token) {
     try {
