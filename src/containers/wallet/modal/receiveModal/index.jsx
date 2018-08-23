@@ -20,6 +20,19 @@ class Receive extends React.Component {
         successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
+    shareContent = address => {
+        console.warn(address);
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                text: address,
+                url: window.location.href
+            })
+                .then(() => console.warn('Compartilhado com sucesso!'))
+                .catch(error => console.warn('Erro ao compartilhar:', error));
+        }
+    }
+
     hasAddress = () => {
         let { coin } = this.props;
 
@@ -48,19 +61,18 @@ class Receive extends React.Component {
                             </p>
                         </div>
 
-                        <div
+                        {/* <div
                             className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_print@1x.png" />
                             <p>
                                 <span className={style.spanPrint}>{i18n.t("BTN_RECEIVE_PRINT")}</span>
                             </p>
-                        </div>
-                        <div className={style.buttonReceive}>
+                        </div> */}
+                        <div className={style.buttonReceive} onClick={this.shareContent(coin.address)}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
                             <p>
                                 <span className={style.spanEmail}>{i18n.t("BTN_RECEIVE_EMAIL")}</span>
                             </p>
-
                         </div>
                         <Hidden smUp>
                             <div className={style.buttonReceive}>
