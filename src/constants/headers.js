@@ -5,5 +5,3 @@ export const HEADER_REQUEST = {
     "access-control-allow-origin": "*"
   }
 };
-
-// res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
