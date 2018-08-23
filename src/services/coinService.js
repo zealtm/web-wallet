@@ -224,6 +224,21 @@ class CoinService {
       return;
     }
   }
+
+  async getCoinHistory(coin, address, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/coin/" + coin + "/transaction/history/" + address,
+        API_HEADER
+      );
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
 }
 
 export default CoinService;
