@@ -25,7 +25,7 @@ class Receive extends React.Component {
 
         return coin.address ?
             <div>
-                <div className={style.qrCode}>
+                <div className={style.qrCodeReceive}>
                     <QrCode
                         className={style.bgQrCode}
                         value={coin.address}

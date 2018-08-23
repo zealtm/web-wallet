@@ -525,7 +525,9 @@
   width: 100%;
 }
 
-:local .boxReceive .qrCode{
+:local .boxReceive .qrCodeReceive{
+  padding-top: 8%;
+  width: 100%;
   text-align: center;
 }
 

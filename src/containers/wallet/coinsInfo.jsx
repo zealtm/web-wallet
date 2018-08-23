@@ -69,7 +69,7 @@ class CoinsInfo extends React.Component {
     return (
       <div className={style.containerWallet}>
         <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
-        <Modal title={"Receber"} content={<ReceiveModal coin={coin}/>} show={modalReceive} />
+        <Modal title={"Receber"} content={<ReceiveModal coin={coin} />} show={modalReceive} />
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
