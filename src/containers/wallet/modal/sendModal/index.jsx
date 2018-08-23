@@ -1,7 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setWalletModalStep } from "../../redux/walletAction";
 
 // COMPONENTS
-import ButtonContinue from "./buttonContinue";
 import BoxAddress from "./boxAddress";
 import BoxAmount from "./boxAmount";
 import BoxFee from "./boxFee";
@@ -12,7 +17,6 @@ import BoxResultError from "./boxResultError";
 
 // STYLE
 import style from "../../style.css";
-import BoxQrReader from "./boxQrReader";
 
 class SendModal extends React.Component {
   constructor(props) {
@@ -22,112 +26,44 @@ class SendModal extends React.Component {
     };
   }
 
-  nextStep = () => {
-    this.setState({ step: this.state.step + 1 });
+  renderContent = () => {
+    let { modal, wallet } = this.props;
+    if (modal.step === 0) return <BoxAddress coin={wallet.selectedCoin} />;
+    if (modal.step === 1) return <BoxAmount coin={wallet.selectedCoin} />;
+    if (modal.step === 2) return <BoxFee coin={wallet.selectedCoin} />;
+    if (modal.step === 3) return <BoxConfirm coin={wallet.selectedCoin} />;
+    if (modal.step === 4) return <BoxProcess coin={wallet.selectedCoin} />;
+    if (modal.step === 5) return <BoxResult coin={wallet.selectedCoin} />;
+    if (modal.step === 6) return <BoxResultError coin={wallet.selectedCoin} />;
   };
 
-  previousStep = () => {
-    this.setState({ step: this.state.step - 1 });
-  }
-
   render() {
-    switch (this.state.step) {
-      case 0:
-        return (
-          <div className={style.baseStep}>
-            <BoxAddress />
-            <ButtonContinue action={this.nextStep} />
-          </div>
-        );
-        case 10:
-        return (
-          <div className={style.baseStep}>
-            <BoxQrReader />
-            <ButtonContinue action={this.previousStep} />
-          </div>
-        );
-      case 1:
-        return (
-          <div className={style.baseStep}>
-            <BoxAmount />
-
-            <ButtonContinue action={this.nextStep} />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      case 2:
-        return (
-          <div className={style.baseStep}>
-            <BoxFee />
-
-            <ButtonContinue action={this.nextStep} />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      case 3:
-        return (
-          <div className={style.baseStep}>
-            <BoxConfirm />
-
-            <ButtonContinue action={this.nextStep} label="ENVIAR" />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      case 4:
-        return (
-          <div className={style.baseStep}>
-            <BoxProcess />
-
-            <ButtonContinue action={this.nextStep} />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      case 5:
-        return (
-          <div className={style.baseStep}>
-            <BoxResult />
-
-            <ButtonContinue action={this.nextStep} label="ERRO" />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      case 6:
-        return (
-          <div className={style.baseStep}>
-            <BoxResultError />
-
-            <ButtonContinue action={this.nextStep} label="FECHAR" error />
-            <button
-              onClick={this.previousStep}
-            >
-              voltar temporario
-            </button>
-          </div>
-        );
-      default:
-        return <div>ERRO</div>;
-    }
+    return <div className={style.baseStep}>{this.renderContent()}</div>;
   }
 }
 
-export default SendModal;
+SendModal.propTypes = {
+  modal: PropTypes.object.isRequired,
+  wallet: PropTypes.object.isRequired,
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  setWalletModalStep: PropTypes.func.isRequired
+};
+
+const mapSateToProps = store => ({
+  wallet: store.wallet,
+  modal: store.wallet.modal,
+  coins: store.skeleton.coins
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setWalletModalStep
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(SendModal);

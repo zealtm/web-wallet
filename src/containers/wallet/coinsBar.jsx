@@ -55,7 +55,12 @@ class CoinsBar extends React.Component {
 
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
-      let coinStatus = coin.status === "active" ? true : false;
+      let coinBalanceStatus = coin.balance ? true : false;
+      let coinAddressStatus = coin.address ? true : false;
+      let coinStatus =
+        coin.status === "active" && coinBalanceStatus && coinAddressStatus
+          ? true
+          : false;
       let coinBalance = coinStatus ? coin.balance.available : 0;
       let coinFiatBalance = coinStatus
         ? (coinBalance * coin.price[defaultFiat].price).toFixed(2)

@@ -17,7 +17,7 @@ import {
   balanceCoins,
   createCoinsAddress
 } from "../skeleton/redux/skeletonSaga";
-import {} from "../wallet/redux/walletSaga";
+import { validateAddress } from "../wallet/redux/walletSaga";
 
 export default function* rootSaga() {
   yield [
@@ -35,6 +35,9 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
-    fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress)
+    fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+
+    //wallet-saga
+    fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress)
   ];
 }

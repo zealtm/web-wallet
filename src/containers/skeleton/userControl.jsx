@@ -68,7 +68,7 @@ class UserControl extends React.Component {
           alt="Avatar"
           src={user.profilePicture}
           className={style.avatarHeader}
-          onClick={this.handleClick}
+          onClick={() => this.handleClick}
         />
 
         {this.renderPopup()}
@@ -90,4 +90,3 @@ export default connect(
   mapSateToProps,
   null
 )(UserControl);
-
