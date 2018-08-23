@@ -47,9 +47,12 @@ class Auth extends React.Component {
     this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : { value: "" } },
-      errors: undefined
+      errors: undefined,      
     });
+
   };
+
+  
 
   inputValidator = () => {
     let { inputs } = this.state;
@@ -70,13 +73,23 @@ class Auth extends React.Component {
     }
   };
 
+
+  
+  handleKeyPress(target) {
+    if (target.charCode == 13) {
+      alert('input Validator');
+    }
+  }
+
   render() {
     // let userName = getUsername();
     let { user } = this.props;
     let { inputs, errors } = this.state;
+    const keynum = 13;
 
     return (
       <div>
+        {keynum == 13 ? () => { this.inputValidator() } : null}
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 
@@ -107,7 +120,7 @@ class Auth extends React.Component {
             errors && errors.includes("password")
               ? style.inputTextError
               : style.inputTextDefault
-          }
+          }        
         />
 
         <Link className={style.textForgetPass} to="/reset">
@@ -120,10 +133,16 @@ class Auth extends React.Component {
               ? style.buttonEnable
               : style.buttonBorderGreen
           }
+          onKeyPress={this.handleKeyPress}  
+          
+
+
           onClick={() => {
             this.inputValidator();
           }}
         >
+
+        
           {user.loading ? <Loading /> : i18n.t("BTN_LOGIN")}
         </button>
 
