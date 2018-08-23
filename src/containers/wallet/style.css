@@ -308,7 +308,7 @@
   text-align: center;
   align-self: center;
   width: 100%;
-  padding: 30px;
+  padding-top: 30px;
 }
 
 :local .modalBox {
@@ -331,10 +331,9 @@
   }
 }
 
-
-
 :local .boxQr {
   composes: modalBox;
+  text-align: -webkit-center;
   border-bottom: solid 2px rgba(0, 0, 0, 0.2);
   padding-bottom: 0;
 }
@@ -347,6 +346,16 @@
 :local .addressConfirm {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   font-weight: 700;
+}
+
+:local .qrCodeBox {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+:local .qrCode {
+  max-width: 400px;
 }
 
 :local .modalBox .hoverShow {
@@ -493,6 +502,10 @@
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
   max-width: 260px;
+}
+
+:local(.processInfo) {
+  padding-bottom: 30px;
 }
 
 :local .modalIconCoin {

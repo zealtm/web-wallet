@@ -260,8 +260,9 @@ class CoinService {
       }
 
       return valid;
-    } catch (error) {
-      return internalServerError();
+    } catch (er) {
+      let error = { error: internalServerError(), er: er };
+      return error;
     }
   }
 }

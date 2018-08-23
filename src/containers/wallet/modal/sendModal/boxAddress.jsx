@@ -37,9 +37,6 @@ class BoxAddress extends React.Component {
     let { address } = this.state;
     let { coin, getValidateAddress, setWalletSendModalLoading } = this.props;
 
-    console.warn("address", address);
-    console.warn("Entrou");
-    
     setWalletSendModalLoading();
     getValidateAddress(coin, address);
 
@@ -48,16 +45,24 @@ class BoxAddress extends React.Component {
 
   handleQrCodeReader = () => {
     let { isVisible, address } = this.state;
-    let { coin } = this.props;
+    let { coin, modal } = this.props;
 
     if (isVisible) {
-      return <BoxQrReader />;
+      return (
+        <div className={style.boxQr}>
+          <div />
+          <div className={style.qrCode}>
+            <BoxQrReader coin={coin} />
+          </div>
+          <div />
+        </div>
+      );
     }
 
     return (
       <div>
         <Hidden lgUp>
-          <div className={style.boxQr} onClick={this.showQrCodeReader}>
+          <div className={style.boxQr} onClick={() => this.showQrCodeReader()}>
             <div className={style.boxDecription}>
               <img
                 src="/images/icons/qrcode/qrcode.png"
@@ -79,7 +84,7 @@ class BoxAddress extends React.Component {
               src="/images/icons/modal-wallet/carteira.png"
               className={style.icon}
             />
-            <div>Inserir endereço da Wallet {coin}</div>
+            <div>Inserir endereço da Wallet {coin.toUpperCase()}</div>
           </div>
 
           <input
@@ -91,21 +96,17 @@ class BoxAddress extends React.Component {
             className={style.inputClear}
           />
         </div>
-      </div>
-    );
-  };
 
-  render() {
-    let { modal } = this.props;
-    return (
-      <div>
-        {this.handleQrCodeReader()}
         <ButtonContinue
           action={() => this.validateAddress()}
           loading={modal.loading}
         />
       </div>
     );
+  };
+
+  render() {
+    return <div>{this.handleQrCodeReader()}</div>;
   }
 }
 

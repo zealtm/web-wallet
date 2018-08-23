@@ -42,14 +42,18 @@ class BoxFee extends React.Component {
     let {
       modal,
       errorInput,
+      setWalletModalStep,
       setWalletSendModalAmount,
       setWalletSendModalLoading
     } = this.props;
-    let amount = modal.sendAmount - (modal.selectedFee ? modal.selectedFee : 0);
+    let feeAmount = modal.feeValue.selectedFee;
+    let amount = modal.sendAmount - (feeAmount ? feeAmount : 0);
 
-    if(modal.feeValue.selectedFee) {
+    if (feeAmount) {
       setWalletSendModalLoading();
-      setWalletSendModalAmount(modal.sendAmount - amount);
+      setWalletSendModalAmount(amount);
+      setWalletModalStep(3);
+
       return;
     }
 

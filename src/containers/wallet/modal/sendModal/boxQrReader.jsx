@@ -21,12 +21,7 @@ class BoxQrReader extends Component {
   }
 
   handleScan = data => {
-    let {
-      coin,
-      getValidateAddress,
-      setWalletSendModalLoading
-    } = this.props;
-    console.warn(data);
+    let { coin, getValidateAddress, setWalletSendModalLoading } = this.props;
     if (data) {
       setWalletSendModalLoading();
       getValidateAddress(coin, data);
@@ -46,7 +41,6 @@ class BoxQrReader extends Component {
           delay={delay}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{ width: "100%" }}
         />
         <p>{result}</p>
       </div>

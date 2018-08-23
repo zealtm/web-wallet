@@ -13,10 +13,7 @@ export function* validateAddress(action) {
       action.address
     );
 
-    console.warn("response", response);
-
     if (!response.error) {
-      console.warn('FOI')
       yield put({
         type: "SET_WALLET_MODAL_ADDRESS",
         address: action.address

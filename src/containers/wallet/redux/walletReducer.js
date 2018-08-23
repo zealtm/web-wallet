@@ -1,5 +1,5 @@
 const initialState = {
-  selectedCoin: "lunes",
+  selectedCoin: "btc",
   modal: {
     open: false,
     step: 0,
