@@ -25,14 +25,14 @@ class TransactionHistory extends React.Component {
     }
 
     renderHistory = () => {
-        let mapHistoryItems = [{}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},]
-        let { toggleHistory} = this.state;
+        let mapHistoryItems = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},]
+        let { toggleHistory } = this.state;
 
         return mapHistoryItems.map((val, index) => {
             return (
                 <div key={index}>
                     <div>
-                        <Grid item xs={12} className={style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
+                        <Grid item xs={12} className={toggleHistory !== undefined && toggleHistory !== index ? style.opacityItem : style.itemHistorico} onClick={() => this.stateDataHistory(index)}>
                             <Grid item xs={2} className={style.typeItems}>
                                 <div><img src="./images/icons/indicatorsHistory/submit.png" /></div>
                                 <div className={style.dateHistory}> {"12/mar"} </div>
@@ -50,11 +50,13 @@ class TransactionHistory extends React.Component {
                             <Grid item xs={12} className={toggleHistory !== index ? style.toggleHistory : null} >
                                 <Grid item xs={12} className={style.itemDataHistorico}>
                                     <Grid item xs={2}> </Grid>
-                                    <Grid item xs={6} >
+                                    <Grid item xs={6} sm={7} >
                                         <div className={style.titleBlockExplorer}>{"Blockexplorer"}</div>
                                     </Grid>
-                                    <Grid item xs={4} className={style.valueHistory}>
-                                        <div className={style.timeHistory}> {" 10:32:15 AM "} </div>
+                                    <Grid item xs={4} sm={3} className={style.alignTimeInValueHistory}>
+                                        <div className={style.timeInValueHistory}>
+                                            <div> {" 10:32:15 AM "}</div>
+                                        </div>
                                     </Grid>
                                 </Grid>
 
@@ -101,7 +103,7 @@ class TransactionHistory extends React.Component {
                 <Grid className={style.containerTransactions}>
                     <Grid item xs={11} sm={7} md={6}>
 
-                        <div className={style.alignItemsHeaderHistory} >   
+                        <div className={style.alignItemsHeaderHistory} >
                             <div className={style.refleshIcon}>
                                 <img src="images/icons/general/refresh.png" />
                             </div>
@@ -110,7 +112,7 @@ class TransactionHistory extends React.Component {
                             </div>
                         </div>
 
-                        <div className={style.contentTransactions}>                        
+                        <div className={style.contentTransactions}>
                             {this.renderHistory()}
                         </div>
 
