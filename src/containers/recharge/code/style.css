@@ -1,0 +1,6 @@
+:local(.inputTextDefault) {
+  composes: inputTextDefault from "../../../components/bases/inputBase.css";
+  width: 80%;
+  text-align: center;
+  margin-bottom: 10px;
+}

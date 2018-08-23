@@ -113,6 +113,8 @@
 
   "WALLET_MY_AMOUNT": "Balance",
 
+  "RECHARGE_INSTRUCTIONS":"Instructions",
+
   "VOUCHER_NUMBER": "Number",
   "VOUCHER_CODE": "Code",
   "VOUCHER_BUTTON": "Rescue"
