@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletSendModalOpen } from "./redux/walletAction";
+import {
+  setWalletSendModalOpen,
+  setWalletModalStep
+} from "./redux/walletAction";
 
 // STYLE
 import style from "./style.css";
@@ -27,9 +30,20 @@ class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalSend: true
+      modalSend: true,
     };
   }
+
+  previousStep = () => {
+    let { step } = this.state;
+    let { setWalletModalStep } = this.props;
+
+    if (step >= 0) {
+      setWalletModalStep(step - 1);
+    }
+
+    return;
+  };
 
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
@@ -42,6 +56,7 @@ class CoinsInfo extends React.Component {
   render() {
     let defaultCoin = getDefaultFiat();
     let { setWalletSendModalOpen, coins, wallet } = this.props;
+    let step = wallet.modal.step;
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[wallet.selectedCoin].price.percent;
@@ -53,7 +68,10 @@ class CoinsInfo extends React.Component {
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          close={() => setWalletSendModalOpen()}
+          close={
+            step === 4 || step === 5 ? null : () => setWalletSendModalOpen()
+          }
+          back={step === 4 || step === 5 ? null : () => this.previousStep()}
           show={wallet.modal.open}
         />
         <div className={style.mainWalletInfoCoins}>
@@ -129,6 +147,7 @@ class CoinsInfo extends React.Component {
 CoinsInfo.propTypes = {
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  setWalletModalStep: PropTypes.func.isRequired,
   setWalletSendModalOpen: PropTypes.func.isRequired
 };
 
@@ -140,6 +159,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      setWalletModalStep,
       setWalletSendModalOpen
     },
     dispatch

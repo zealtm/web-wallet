@@ -16,14 +16,17 @@ class Modal extends React.Component {
     let backButton = back ? (
       <img src="/images/icons/arrow/arrow-white-left@2x.png" alt="Back" />
     ) : null;
-
+    
     return (
       <div className={style.header}>
-        <div className={style.headerImage} onClick={() => back()}>
+        <div className={style.headerImage} onClick={back ? () => back() : null}>
           {backButton}
         </div>
         <div className={style.headerTitle}>{title}</div>
-        <div className={style.headerImageClose} onClick={() => close()}>
+        <div
+          className={style.headerImageClose}
+          onClick={close ? () => close() : null}
+        >
           {closeButton}
         </div>
       </div>

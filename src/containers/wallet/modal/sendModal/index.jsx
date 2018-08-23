@@ -26,18 +26,6 @@ class SendModal extends React.Component {
     };
   }
 
-  nextStep = () => {
-    let { step } = this.state;
-    let { setWalletModalStep } = this.props;
-
-    if (step >= 0) {
-      setWalletModalStep(step + 1);
-      this.setState({ step: step + 1 });
-    }
-
-    return;
-  };
-
   previousStep = () => {
     let { step } = this.state;
     let { setWalletModalStep } = this.props;
