@@ -56,6 +56,17 @@ const wallet = (state = initialState, action) => {
         }
       };
 
+      case "SET_WALLET_MODAL_RECEIVE_OPEN":
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          open: !state.modal.open,
+          loading: false
+        }
+      };
+
+
     case "SET_WALLET_MODAL_STEP":
       return {
         ...state,
