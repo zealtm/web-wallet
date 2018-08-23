@@ -265,6 +265,21 @@ class CoinService {
       return error;
     }
   }
+
+  async shareCoinAddress(coinName, coinAddress) {
+    try {
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: coinName + ": " + coinAddress,
+          url: window.location.href
+        })
+      }
+    } catch (error) {
+      internalServerError();
+    }
+
+  }
 }
 
 export default CoinService;

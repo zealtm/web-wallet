@@ -45,3 +45,9 @@ export const setWalletLoading = state => ({
 export const clearWalletState = () => ({
   type: "CLEAR_WALLET_STATE"
 });
+
+export const shareCoinAddress = (name, address) => ({
+  type: "SHARE_COIN_ADRESS",
+  name,
+  address
+});

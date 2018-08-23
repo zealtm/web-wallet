@@ -6,6 +6,7 @@ import QrCode from "qrcode.react";
 import PropTypes from "prop-types";
 import i18n from "../../../../utils/i18n";
 import Hidden from "@material-ui/core/Hidden";
+import { shareCoinAddress } from "../../redux/walletAction"
 
 class Receive extends React.Component {
 
@@ -20,36 +21,23 @@ class Receive extends React.Component {
         successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
-    shareContent = address => {
-        console.warn("1", address);
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                text: address,
-                url: window.location.href
-            })
-                .then(() => console.warn('Compartilhado com sucesso!'))
-                .catch(error => console.warn('Erro ao compartilhar:', error));
-        }
-        console.warn("2", address);
-    }
-
     hasAddress = () => {
-        let { coin } = this.props;
+        let { coin, shareCoinAddress } = this.props;
+        let coinAddress = coin.address;
 
-        return coin.address ?
+        return coinAddress ?
             <div>
                 <div className={style.qrCodeReceive}>
                     <QrCode
                         className={style.bgQrCode}
-                        value={coin.address}
+                        value={coinAddress}
                         size={176}
                         bgColor={"#fff"}
                         fgColor={"#000"}
                         level={"L"}
                     />
                 </div>
-                <p className={style.address}>{coin.address}</p>
+                <p className={style.address}>{coinAddress}</p>
 
                 <div className={style.spacingBox}>
                     <div className={style.alignButtons}>
@@ -62,22 +50,17 @@ class Receive extends React.Component {
                             </p>
                         </div>
 
-                        {/* <div
-                            className={style.buttonReceive}>
-                            <img src="/images/icons/modal-receive/ic_print@1x.png" />
-                            <p>
-                                <span className={style.spanPrint}>{i18n.t("BTN_RECEIVE_PRINT")}</span>
-                            </p>
-                        </div> */}
-                        <div className={style.buttonReceive} onClick={() => this.shareContent(coin.address)}>
+                        <div className={style.buttonReceive}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
                             <p>
                                 <span className={style.spanEmail}>{i18n.t("BTN_RECEIVE_EMAIL")}</span>
                             </p>
                         </div>
                         <Hidden smUp>
-                            <div className={style.buttonReceive}>
-                                <img src="/images/icons/modal-receive/ic_compartilhar@1x.png" />
+                            <div
+                                className={style.buttonReceive}
+                                onClick={() => shareCoinAddress(coin.abbreviation, coinAddress)}>
+                                <img src="/images/icons/modal-receive/ic_shared@1x.png" />
                                 <p>
                                     <span className={style.spanShared}>{i18n.t("BTN_RECEIVE_SHARED")}</span>
                                 </p>
@@ -100,11 +83,12 @@ class Receive extends React.Component {
 
 Receive.propTypes = {
     coin: PropTypes.object,
+    shareCoinAddress: PropTypes.func,
     successRequest: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ successRequest }, dispatch);
+    bindActionCreators({ successRequest, shareCoinAddress }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Receive);
 
