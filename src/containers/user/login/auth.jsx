@@ -38,23 +38,23 @@ class Auth extends React.Component {
       },
       errors: undefined
     };
+    this.inputValidator = this.inputValidator.bind(this)
   }
 
   getInput = input => {
     let { name, value } = input;
     let { inputs } = this.state;
 
-    this.setState({
+    this.setState({      
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : { value: "" } },
       errors: undefined,      
     });
-
   };
 
   
-
   inputValidator = () => {
+    alert("ok");
     let { inputs } = this.state;
     let { emailUsername, password } = this.state.inputs;
     let { loading, errorInput, authenticate } = this.props;
@@ -72,12 +72,11 @@ class Auth extends React.Component {
       authenticate(emailUsername.value, password.value);
     }
   };
-
-
   
-  handleKeyPress(target) {
-    if (target.charCode == 13) {
-      alert('input Validator');
+
+  handleKeyPress(target) {    
+    if (target.charCode === 13) {
+    this.inputValidator()
     }
   }
 
@@ -85,11 +84,9 @@ class Auth extends React.Component {
     // let userName = getUsername();
     let { user } = this.props;
     let { inputs, errors } = this.state;
-    const keynum = 13;
 
     return (
-      <div>
-        {keynum == 13 ? () => { this.inputValidator() } : null}
+      <div onKeyPress={this.handleKeyPress}>      
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 
@@ -121,6 +118,7 @@ class Auth extends React.Component {
               ? style.inputTextError
               : style.inputTextDefault
           }        
+          
         />
 
         <Link className={style.textForgetPass} to="/reset">
@@ -133,7 +131,6 @@ class Auth extends React.Component {
               ? style.buttonEnable
               : style.buttonBorderGreen
           }
-          onKeyPress={this.handleKeyPress}  
           
 
 
