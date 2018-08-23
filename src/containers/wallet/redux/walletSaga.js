@@ -39,3 +39,20 @@ export function* validateAddress(action) {
     yield put(internalServerError());
   }
 }
+
+export function* getWalletCoinHistory(action) {
+  try {
+    let response = yield call(
+      coinService.getCoinHistory,
+      action.coin,
+      action.address
+    );
+
+    console.warn(response);
+
+    return;
+  } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put(internalServerError());
+  }
+}

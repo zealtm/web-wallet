@@ -115,6 +115,6 @@
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
   "WALLET_BALANCE": "Balance",
-  "WALLET_MODAL_SEND_TITLE": "Transaction"
-
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+  "TRANSACTION_HISTORY_TITLE": "Transactions"
 }

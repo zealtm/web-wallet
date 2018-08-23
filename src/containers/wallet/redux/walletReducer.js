@@ -1,5 +1,10 @@
 const initialState = {
-  selectedCoin: "btc",
+  selectedCoin: "lunes",
+  coinHistory: {
+    loaded: false,
+    loading: false,
+    history: []
+  },
   modal: {
     open: false,
     step: 0,
@@ -44,6 +49,15 @@ const wallet = (state = initialState, action) => {
         },
         loading: action.state ? action.state : false,
         errors: false
+      };
+
+    case "SET_WALLET_HISTORY_LOADING":
+      return {
+        ...state,
+        coinHistory: {
+          ...state.coinHistory,
+          loading: !state.coinHistory.loading,
+        },
       };
 
     case "SET_WALLET_MODAL_OPEN":
