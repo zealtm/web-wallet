@@ -21,6 +21,11 @@ class Receive extends React.Component {
         successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
+    sendCoinAddressEmail = (coinName, address) => {
+        let { email } = this.props;
+        return window.location.href = `mailto:${email}?body=${coinName}: ${address}`;
+    }
+
     hasAddress = () => {
         let { coin, shareCoinAddress } = this.props;
         let coinAddress = coin.address;
@@ -50,7 +55,7 @@ class Receive extends React.Component {
                             </p>
                         </div>
 
-                        <div className={style.buttonReceive}>
+                        <div className={style.buttonReceive} onClick={() => this.sendCoinAddressEmail("", "")}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
                             <p>
                                 <span className={style.spanEmail}>{i18n.t("BTN_RECEIVE_EMAIL")}</span>
@@ -82,13 +87,18 @@ class Receive extends React.Component {
 }
 
 Receive.propTypes = {
+    email: PropTypes.string,
     coin: PropTypes.object,
     shareCoinAddress: PropTypes.func,
     successRequest: PropTypes.func
 };
 
+const mapStateToProps = store => ({
+    email: store.user.user.email
+})
+
 const mapDispatchToProps = dispatch =>
     bindActionCreators({ successRequest, shareCoinAddress }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Receive);
+export default connect(mapStateToProps, mapDispatchToProps)(Receive);
 
