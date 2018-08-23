@@ -47,7 +47,7 @@ export const clearWalletState = () => ({
 });
 
 export const shareCoinAddress = (name, address) => ({
-  type: "SHARE_COIN_ADRESS",
+  type: "SHARE_COIN_ADRESS_API",
   name,
   address
 });

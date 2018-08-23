@@ -41,10 +41,7 @@ export function* validateAddress(action) {
 
 export function* shareCoinAddress(action) {
   try {
-    let response = yield call(coinService.shareCoinAddress, action.name, action.address);
-    console.warn(response);
-    return response.status ? true : false;
-
+    yield call(coinService.shareCoinAddress, action.name, action.address);
   } catch (error) {
     yield put(internalServerError());
   }
