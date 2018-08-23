@@ -3,6 +3,8 @@ import axios from 'axios';
 //import validateAddress from "./validateAddress";
 import { add } from "biggystring";
 import { errorPattern } from "../../../utils/errorPattern";
+import { BASE_URL, API_HEADER } from "../../../constants/apiBaseUrl";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 class LunesTransaction {
 
@@ -101,6 +103,13 @@ class LunesTransaction {
       try {
         //const Lunes = LunesJsAPI.create(network.APICONFIG);
         
+        API_HEADER.headers.Authorization = token;
+        let response = await axios.post(
+          `https://lunesnode-testnet.lunes.io/assets/transfer`,
+          transactionData,
+          API_HEADER
+        );
+        console.log("LUNES", response);
         /*
         const transaction = await Lunes.API.Node.v1.assets.transfer(transactionData, seed.keyPair)
           .then(res => {
@@ -117,6 +126,7 @@ class LunesTransaction {
 
         return transaction;
       } catch (error) {
+        console.log("erro2");
         throw errorPattern(
           error.data ? error.data.message : "Error on transaction",
           error.status || 500,
@@ -125,6 +135,7 @@ class LunesTransaction {
         );
       }
     } catch (error) {
+      console.log("erro1");
       throw errorPattern(
         error.message || "Error creating transaction",
         error.status || 500,

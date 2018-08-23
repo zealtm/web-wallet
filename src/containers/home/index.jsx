@@ -27,12 +27,12 @@ class Home extends React.Component {
     const novaTransacao = new TransactionService();
 
     const teste = novaTransacao.transaction(
-      'btc', 
+      'lunes', 
       token, 
+      2, 
       1, 
-      100, 
-      "mrmBsCMa8jw2btb9rTPpYyZHCED5UDPh5N", 
-      "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH", 
+      "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", 
+      "37dV3nmnbwL8VSHVm1PGk5JUnPekUAxZGsN", 
       "", // seeed
       true
     );

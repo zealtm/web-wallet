@@ -2,17 +2,15 @@ import axios from "axios";
 import { BASE_URL, API_HEADER } from "../../constants/apiBaseUrl";
 import { internalServerError } from "../../containers/errors/statusCodeMessage";
 
-import {errorPattern} from "../../utils/errorPattern";
-import {networks} from "./network";
+import { errorPattern } from "../../utils/errorPattern";
+import { networks } from "./network";
 
-// COINS 
-import BtcTransaction from "./coins/btc";
-import LunesTransaction from "./coins/lunes"
-
+// COINS
+import { BtcTransaction, LunesTransaction } from "./coins";
+import { fromSeedBuffer } from "bitcoinjs-lib/src/hdnode";
 
 class TransactionService {
-
-  async getFee(data, coin, token){
+  async getFee(data, coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
@@ -28,7 +26,7 @@ class TransactionService {
     }
   }
 
-  async utxo(address, coin, token){
+  async utxo(address, coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
@@ -36,9 +34,9 @@ class TransactionService {
         { fromAddress: address },
         API_HEADER
       );
-  
+
       const utxos = [];
-  
+
       response.data.data.utxos.forEach(utxo => {
         utxos.push({
           txId: utxo.txId,
@@ -46,16 +44,16 @@ class TransactionService {
           value: utxo.value
         });
       });
-  
+
       //console.log("UTXOS", utxos);
       return utxos;
     } catch (error) {
       internalServerError();
       return;
     }
-  }  
+  }
 
-  async broadcast(txhex, coin, token){
+  async broadcast(txhex, coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
@@ -63,7 +61,7 @@ class TransactionService {
         { txHex: txhex },
         API_HEADER
       );
-  
+
       return response;
     } catch (error) {
       internalServerError();
@@ -72,68 +70,63 @@ class TransactionService {
   }
 
   /* eslint-disable */
-  async transaction(coin, token, amount, fee, from, to, seed, testnet = true){
-
+  async transaction(coin, token, amount, fee, from, to, seed, testnet = true) {
     try {
-      switch(coin){
-        case 'btc':
-
+      switch (coin) {
+        case "btc":
           const payload = {
-            network:        testnet ? networks.BTCTESTNET : networks.BTC,
-            seed:           seed,
-            fromAddress:    from,
-            toAddress:      to,
-            amount:         amount, 
-            fee:            fee
+            network: testnet ? networks.BTCTESTNET : networks.BTC,
+            seed: seed,
+            fromAddress: from,
+            toAddress: to,
+            amount: amount,
+            fee: fee
           };
 
           const btctrans = new BtcTransaction();
           const transactionBtcResult = await btctrans.createTransaction(
-            payload.fromAddress, 
-            payload.toAddress, 
-            payload.seedTeste, 
+            payload.fromAddress,
+            payload.toAddress,
+            payload.seedTeste,
             payload.fee,
-            payload.amount, 
-            coin, 
-            token, 
+            payload.amount,
+            coin,
+            token,
             payload.network
           );
 
-          // return transactionBtcResult;
+        // return transactionBtcResult;
 
-        // lunes 
-        case 'lunes':
-          // get fee
-          const transactionFee = await TransactionService.getFee(data, coin, token);
-
+        // lunes
+        case "lunes":
           const data = {
-            network:        testnet ? networks.LNSTESTNET : networks.LNS,
-            seed: "",
+            network: testnet ? networks.LNSTESTNET : networks.LNS,
+            seed: seed,
             keyPair: "",
-            fromAddress: "",
-            toAddress: "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
-            amount: 1,
-            fee: transactionFee.low
-          }
+            fromAddress: from,
+            toAddress: to,
+            amount: amount,
+            fee: fee
+          };
 
           const lunesTransaction = new LunesTransaction();
 
-          const transactionLunesResult = await lunesTransaction.createLunesTransaction(data);
+          const transactionLunesResult = await lunesTransaction.createLunesTransaction(
+            data
+          );
 
           // return transactionLunesResult;
           return;
       }
-    }catch(error){
+    } catch (error) {
       return errorPattern(
         error.message,
-        error.status || 500, 
+        error.status || 500,
         error.messageKey || "INTERNAL_SERVER_ERROR",
         error.logMessage || error.stack || ""
-      )
+      );
     }
-
   }
-  
 }
 
 export default TransactionService;
