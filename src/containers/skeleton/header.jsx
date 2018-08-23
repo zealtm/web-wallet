@@ -37,7 +37,13 @@ class Header extends React.Component {
         <div className={style.iconNotificationActive}>
           <IconButton color="inherit" aria-label="Notifications">
             <Badge badgeContent color="secondary" width="5px" height="5px">
-              <img src="/images/icons/general/bell@1x.png" alt="" height="25px" width="25px" classes={{ width: "50px" }} />
+              <img
+                src="/images/icons/general/bell@1x.png"
+                alt=""
+                height="25px"
+                width="25px"
+                classes={{ width: "50px" }}
+              />
               {/* <Notifications  /> */}
             </Badge>
           </IconButton>
@@ -47,7 +53,12 @@ class Header extends React.Component {
       return (
         <div className={style.iconNotification}>
           <IconButton color="inherit" aria-label="Notifications">
-            <img src="/images/icons/general/bell@1x.png" height="25px" width="25px" alt=""/>
+            <img
+              src="/images/icons/general/bell@1x.png"
+              height="25px"
+              width="25px"
+              alt=""
+            />
           </IconButton>
         </div>
       );
@@ -58,7 +69,7 @@ class Header extends React.Component {
     let { coins } = this.props;
     let coinSelected = getDefaultCrypto();
     let fiatSelected = getDefaultFiat();
-    
+
     let coinName = coins[coinSelected]
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";

@@ -4,6 +4,7 @@
   "MESSAGE_ERROR_EMPTY_FILEDS": "Some fields are empty",
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
+  "MESSAGE_INVALID_ADDRESS": "Invalid Address",
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",
   "PLACEHOLDER_SEED": "Seed Words",
@@ -74,6 +75,7 @@
   "MENU_RECHARGE": "Recharge",
   "MENU_PAY": "Pay",
   "MENU_PURCHASE": "Purchase",
+  "MENU_CUPONS": "Cupons",
   "MENU_CONFIGURATION": "Configuration",
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
@@ -94,5 +96,7 @@
   "BTN_RECEIVE_COPY": "Copy",
   "BTN_RECEIVE_PRINT": "Print",
   "BTN_RECEIVE_EMAIL": "E-mail",
-  "BTN_RECEIVE_SHARED": "Shared"
+  "BTN_RECEIVE_SHARED": "Shared",
+  "WALLET_BALANCE": "Balance",
+  "WALLET_MODAL_SEND_TITLE": "Transaction"
 }

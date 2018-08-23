@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import QrReader from "react-qr-reader";
 import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  getValidateAddress,
+  setWalletSendModalLoading
+} from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 class BoxQrReader extends Component {
@@ -15,18 +21,16 @@ class BoxQrReader extends Component {
   }
 
   handleScan = data => {
-    let { nextPage } = this.props;
-
+    let { coin, getValidateAddress, setWalletSendModalLoading } = this.props;
     if (data) {
-      this.setState({ result: data });
-      nextPage();
+      setWalletSendModalLoading();
+      getValidateAddress(coin, data);
     }
   };
 
   handleError = error => {
-    let { previousPage, errorInput } = this.props;
+    let { errorInput } = this.props;
     errorInput(error.message);
-    previousPage();
   };
 
   render() {
@@ -37,7 +41,6 @@ class BoxQrReader extends Component {
           delay={delay}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{ width: "100%" }}
         />
         <p>{result}</p>
       </div>
@@ -46,13 +49,21 @@ class BoxQrReader extends Component {
 }
 
 BoxQrReader.propTypes = {
-  nextPage: PropTypes.func,
-  previousPage: PropTypes.func,
+  coin: PropTypes.string.isRequired,
+  getValidateAddress: PropTypes.func.isRequired,
+  setWalletSendModalLoading: PropTypes.func.isRequired,
   errorInput: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ errorInput }, dispatch);
+  bindActionCreators(
+    {
+      errorInput,
+      getValidateAddress,
+      setWalletSendModalLoading
+    },
+    dispatch
+  );
 
 export default connect(
   null,
