@@ -18,10 +18,17 @@ export function* loadGeneralInfo(action) {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
 
-    let responseCoins = yield call(coinService.getGeneralInfo, token, decryptAes(seed, action.password));
+    let responseCoins = yield call(
+      coinService.getGeneralInfo,
+      token,
+      decryptAes(seed, action.password)
+    );
+
     let responseUser = yield call(userService.getUser, token);
-    let pictureUser = yield call(userService.getUserPicture, responseUser.data.data.email);
-    
+    let pictureUser = yield call(
+      userService.getUserPicture,
+      responseUser.data.data.email
+    );
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -47,7 +54,7 @@ export function* loadGeneralInfo(action) {
     yield put({
       type: "SET_WALLET_LOADING"
     });
-    
+
     return;
   } catch (error) {
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
@@ -60,9 +67,12 @@ export function* loadWalletInfo(action) {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
 
-    let responseCoins = yield call(coinService.getGeneralInfo, token, decryptAes(seed, action.password));
+    let responseCoins = yield call(
+      coinService.getGeneralInfo,
+      token,
+      decryptAes(seed, action.password)
+    );
 
-    
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -78,7 +88,7 @@ export function* loadWalletInfo(action) {
     yield put({
       type: "SET_WALLET_LOADING"
     });
-    
+
     return;
   } catch (error) {
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
@@ -106,7 +116,7 @@ export function* availableCoins() {
 export function* balanceCoins(action) {
   try {
     let response = yield call();
-    console.warn(action)
+    console.warn(action);
     yield put({
       type: "GET_BALANCE_COINS",
       coins: response

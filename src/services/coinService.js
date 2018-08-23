@@ -1,8 +1,18 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+import CAValidator from "crypto-address-validator";
+import {
+  BASE_URL,
+  LUNESNODE_URL,
+  API_HEADER,
+  HEADER_RESPONSE
+} from "../constants/apiBaseUrl";
+import {
+  modalError,
+  internalServerError
+} from "../containers/errors/statusCodeMessage";
 
 // UTILS
+import i18n from "../utils/i18n";
 import { convertCoin, percentCalc } from "../utils/numbers";
 
 let getPriceHistory = async (coiName, token) => {
@@ -222,6 +232,37 @@ class CoinService {
     } catch (error) {
       internalServerError();
       return;
+    }
+  }
+
+  async validateAddress(coin, address) {
+    try {
+      if (!coin || !address || address.length < 10) {
+        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      }
+
+      if (coin === "lunes") {
+        let response = await axios.post(
+          LUNESNODE_URL + "/addresses/validate/" + address
+        );
+
+        if (!response.valid) {
+          return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+        }
+
+        return response.valid;
+      }
+
+      let valid = await CAValidator.validate(address, coin.toUpperCase());
+
+      if (!valid) {
+        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      }
+
+      return valid;
+    } catch (er) {
+      let error = { error: internalServerError(), er: er };
+      return error;
     }
   }
 }
