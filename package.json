@@ -94,6 +94,7 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
-    "validator": "^10.4.0"
+    "validator": "^10.4.0",
+    "waves.js": "0.0.7-13"
   }
 }

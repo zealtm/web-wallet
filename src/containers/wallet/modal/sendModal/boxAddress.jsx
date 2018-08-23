@@ -17,6 +17,9 @@ import Hidden from "@material-ui/core/Hidden";
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "../../style.css";
 
@@ -50,11 +53,14 @@ class BoxAddress extends React.Component {
     if (isVisible) {
       return (
         <div className={style.boxQr}>
-          <div />
           <div className={style.qrCode}>
             <BoxQrReader coin={coin} />
           </div>
-          <div />
+          <ButtonContinue
+            label={i18n.t("BTN_BACK")}
+            action={() => this.showQrCodeReader()}
+            loading={modal.loading}
+          />
         </div>
       );
     }

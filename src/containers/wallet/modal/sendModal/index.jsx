@@ -26,24 +26,9 @@ class SendModal extends React.Component {
     };
   }
 
-  previousStep = () => {
-    let { step } = this.state;
-    let { setWalletModalStep } = this.props;
-
-    if (step >= 0) {
-      setWalletModalStep(step - 1);
-      this.setState({ step: step - 1 });
-    }
-
-    return;
-  };
-
   renderContent = () => {
     let { modal, wallet } = this.props;
-    if (modal.step === 0)
-      return (
-        <BoxAddress coin={wallet.selectedCoin} />
-      );
+    if (modal.step === 0) return <BoxAddress coin={wallet.selectedCoin} />;
     if (modal.step === 1) return <BoxAmount coin={wallet.selectedCoin} />;
     if (modal.step === 2) return <BoxFee coin={wallet.selectedCoin} />;
     if (modal.step === 3) return <BoxConfirm coin={wallet.selectedCoin} />;
