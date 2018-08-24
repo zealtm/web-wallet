@@ -21,14 +21,14 @@ class Receive extends React.Component {
         successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
-    sendCoinAddressEmail = (coinName, address) => {
+    sendCoinAddressEmail = (coinName, address) => {        
         return window.location.href = "mailto:" + "?body=" + coinName + ":" + address;
     }
 
     hasAddress = () => {
         let { coin, shareCoinAddress } = this.props;
         let coinAddress = coin.address;
-        let coinName = coin.abbreviation;
+        let coinName = coin.name;
         return coinAddress ?
             <div>
                 <div className={style.qrCodeReceive}>

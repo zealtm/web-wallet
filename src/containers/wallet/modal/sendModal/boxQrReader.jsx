@@ -21,10 +21,13 @@ class BoxQrReader extends Component {
   }
 
   handleScan = data => {
-    let { coin, getValidateAddress, setWalletSendModalLoading } = this.props;
+    let { coin, coins, getValidateAddress, setWalletSendModalLoading } = this.props;
+    let coinName = coins[coin].name;
+    console.warn("MOEDA ", coinName);
+
     if (data) {
       setWalletSendModalLoading();
-      getValidateAddress(coin, data);
+      getValidateAddress(coinName, data);
     }
   };
 
@@ -51,10 +54,15 @@ class BoxQrReader extends Component {
 
 BoxQrReader.propTypes = {
   coin: PropTypes.string.isRequired,
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   getValidateAddress: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired,
   errorInput: PropTypes.func
 };
+
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -67,6 +75,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BoxQrReader);

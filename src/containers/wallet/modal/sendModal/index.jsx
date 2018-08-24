@@ -27,6 +27,7 @@ class SendModal extends React.Component {
   }
 
   renderContent = () => {
+    {console.warn(wallet)}
     let { modal, wallet } = this.props;
     if (modal.step === 0) return <BoxAddress coin={wallet.selectedCoin} />;
     if (modal.step === 1) return <BoxAmount coin={wallet.selectedCoin} />;
