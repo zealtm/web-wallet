@@ -7,6 +7,10 @@ export const setWalletSendModalOpen = () => ({
   type: "SET_WALLET_MODAL_OPEN"
 });
 
+export const setWalletReceiveModalOpen = () => ({
+  type: "SET_WALLET_MODAL_RECEIVE_OPEN"
+});
+
 export const setWalletSendModalLoading = () => ({
   type: "SET_WALLET_MODAL_LOADING"
 });

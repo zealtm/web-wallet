@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setWalletSendModalOpen,
+  setWalletReceiveModalOpen,
   setWalletModalStep
 } from "./redux/walletAction";
 
@@ -33,7 +34,7 @@ class CoinsInfo extends React.Component {
     super();
     this.state = {
       modalSend: false,
-      modalReceive: true
+      modalReceive: false
     };
   }
 
@@ -57,8 +58,7 @@ class CoinsInfo extends React.Component {
 
   render() {
     let defaultCoin = getDefaultFiat();
-    let { modalSend, modalReceive } = this.state;
-    let { setWalletSendModalOpen, coins, wallet } = this.props;
+    let { setWalletSendModalOpen, setWalletReceiveModalOpen, coins, wallet } = this.props;
     let step = wallet.modal.step;
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
@@ -67,8 +67,12 @@ class CoinsInfo extends React.Component {
     let balance = coin.balance.available;
     return (
       <div className={style.containerWallet}>
-        <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
-        <Modal title={"Receber"} content={<ReceiveModal coin={coin} />} show={modalReceive} />
+        <Modal
+          title={"Receber"}
+          content={<ReceiveModal coin={coin} />}
+          show={wallet.modal.open}
+          close={() => setWalletReceiveModalOpen()} />
+
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
@@ -114,8 +118,8 @@ class CoinsInfo extends React.Component {
               <Hidden xsDown>
                 <div className={style.alignButtons}>
                   <button
-                    className={style.submitButton}
-                    onClick={() => setWalletSendModalOpen()}
+                    className={style.receiveButton}
+                    onClick={() => setWalletReceiveModalOpen()}
                   >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
@@ -128,7 +132,6 @@ class CoinsInfo extends React.Component {
             </div>
           </Grid>
         </div>
-
         <Hidden smUp>
           <div
             className={style.alignButtonsMobile}
@@ -138,7 +141,8 @@ class CoinsInfo extends React.Component {
               {i18n.t("BTN_SUBMIT")}
             </button>
 
-            <button className={style.receiveButtonMobile}>
+            <button className={style.receiveButtonMobile}
+              onClick={() => setWalletReceiveModalOpen()}>
               {i18n.t("BTN_RECEIVE")}
             </button>
           </div>
@@ -152,7 +156,8 @@ CoinsInfo.propTypes = {
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalOpen: PropTypes.func.isRequired
+  setWalletSendModalOpen: PropTypes.func.isRequired,
+  setWalletReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -164,7 +169,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setWalletModalStep,
-      setWalletSendModalOpen
+      setWalletSendModalOpen,
+      setWalletReceiveModalOpen
     },
     dispatch
   );

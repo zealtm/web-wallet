@@ -22,8 +22,7 @@ class Receive extends React.Component {
     }
 
     sendCoinAddressEmail = (coinName, address) => {
-        let { email } = this.props;
-        return window.location.href = `mailto:${email}?body=${coinName}: ${address}`;
+        return window.location.href = `mailto:""?body=${coinName}: ${address}`;
     }
 
     hasAddress = () => {
