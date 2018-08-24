@@ -114,6 +114,12 @@
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
   "WALLET_BALANCE": "Balance",
-  "WALLET_MODAL_SEND_TITLE": "Transaction"
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+
+  "LEASING_BALANCE": "Saldo total de Lunes", 
+  "LEASING_AMOUNT_LABEL": "Quantidade à emprestar",
+  "LEASING_FEE": "Taxa de fee",
+  "LEASING_HELP_TEXT": "Mantenha algumas Lunes em sua carteira. Assim, você poderá cancelar o Node quando quiser.", 
+  "LEASING_BT_START": "INICIAR LEASING"
 
 }
