@@ -240,7 +240,7 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
-      
+
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
         let response = await axios.post(
@@ -272,7 +272,7 @@ class CoinService {
       if (navigator.share) {
         navigator.share({
           title: document.title,
-          text: coinName + ": " + coinAddress,
+          text: coinName + ":" + coinAddress,
           url: window.location.href
         })
       }
