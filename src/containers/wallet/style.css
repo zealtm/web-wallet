@@ -526,7 +526,7 @@
 }
 
 :local .boxReceive .qrCodeReceive{
-  padding-top: 8%;
+  padding-top: 15%;
   width: 100%;
   text-align: center;
 }

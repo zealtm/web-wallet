@@ -136,16 +136,18 @@ class CoinsInfo extends React.Component {
         <Hidden smUp>
           <div
             className={style.alignButtonsMobile}
-            onClick={() => setWalletSendModalOpen()}
           >
-            <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SUBMIT")}
-            </button>
-
             <button className={style.receiveButtonMobile}
               onClick={() => setWalletReceiveModalOpen()}>
               {i18n.t("BTN_RECEIVE")}
             </button>
+
+            <button className={style.submitButtonMobile}
+              onClick={() => setWalletSendModalOpen()}>
+              {i18n.t("BTN_SEND")}
+            </button>
+
+
           </div>
         </Hidden>
       </div>
