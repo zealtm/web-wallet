@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import style from "./style.css";
 import colors from "../../components/bases/colors";
 
-import Code from './code'
+import Code from './code';
 
 import { inputValidator } from "../../utils/inputValidator";
 
@@ -111,7 +111,7 @@ class Voucher extends React.Component {
           className={style.box}
         >
           <div className={style.wrap}>
-            <label className={style.inputLabel} htmlFor="txtPhone">{i18n.t("VOUCHER_NUMBER")}</label>
+            <label htmlFor="txtPhone">{i18n.t("VOUCHER_NUMBER")}</label>
             <Grid container>
               <Grid item xs={4}>
                 <Input

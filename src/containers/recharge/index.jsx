@@ -1,6 +1,7 @@
 import React from 'react';
 import Tabs from '../../components/tabs';
 import Voucher from './voucher';
+import LunesGift from './lunesGift';
 
 const titles = [
   'Voucher',
@@ -10,7 +11,7 @@ const titles = [
 
 const contents  = [
   <Voucher />,
-  <h1>Lunes Gift</h1>,
+  <LunesGift />,
   <h1>Cupom</h1>,
 ];
 
