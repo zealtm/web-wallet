@@ -240,9 +240,8 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
-      console.warn("moeda ", coin, "endereço 1:", address);
+      
       address = address.replace(coin + ":", "");
-      console.warn("endereço 2:", address);
       if (coin === "lunes") {
         let response = await axios.post(
           LUNESNODE_URL + "/addresses/validate/" + address

@@ -23,7 +23,6 @@ class BoxQrReader extends Component {
   handleScan = data => {
     let { coin, coins, getValidateAddress, setWalletSendModalLoading } = this.props;
     let coinName = coins[coin].name;
-    console.warn("MOEDA ", coinName);
 
     if (data) {
       setWalletSendModalLoading();
