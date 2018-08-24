@@ -28,7 +28,7 @@ class Receive extends React.Component {
     hasAddress = () => {
         let { coin, shareCoinAddress } = this.props;
         let coinAddress = coin.address;
-
+        let coinName = coin.abbreviation;
         return coinAddress ?
             <div>
                 <div className={style.qrCodeReceive}>
@@ -54,7 +54,7 @@ class Receive extends React.Component {
                             </p>
                         </div>
 
-                        <div className={style.buttonReceive} onClick={() => this.sendCoinAddressEmail("", "")}>
+                        <div className={style.buttonReceive} onClick={() => this.sendCoinAddressEmail(coinName, coinAddress)}>
                             <img src="/images/icons/modal-receive/ic_email@1x.png" />
                             <p>
                                 <span className={style.spanEmail}>{i18n.t("BTN_RECEIVE_EMAIL")}</span>
@@ -63,7 +63,7 @@ class Receive extends React.Component {
                         <Hidden smUp>
                             <div
                                 className={style.buttonReceive}
-                                onClick={() => shareCoinAddress(coin.abbreviation, coinAddress)}>
+                                onClick={() => shareCoinAddress(coinName, coinAddress)}>
                                 <img src="/images/icons/modal-receive/ic_shared@1x.png" />
                                 <p>
                                     <span className={style.spanShared}>{i18n.t("BTN_RECEIVE_SHARED")}</span>
