@@ -13,6 +13,9 @@ const initialState = {
     },
     loading: false
   },
+  modalReceive: {
+    open: false
+  },
   loading: false,
   errors: false
 };
@@ -42,6 +45,9 @@ const wallet = (state = initialState, action) => {
           },
           loading: false
         },
+        modalReceive: {
+          open: false
+        },
         loading: action.state ? action.state : false,
         errors: false
       };
@@ -56,12 +62,12 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-      case "SET_WALLET_MODAL_RECEIVE_OPEN":
+    case "SET_WALLET_MODAL_RECEIVE_OPEN":
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          open: !state.modal.open,
+        modalReceive: {
+          ...state.modalReceive,
+          open: !state.modalReceive.open,
           loading: false
         }
       };
