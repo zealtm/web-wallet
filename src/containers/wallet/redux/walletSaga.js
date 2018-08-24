@@ -48,7 +48,18 @@ export function* getWalletCoinHistory(action) {
       action.address
     );
 
-    console.warn(response);
+    if (!response.error) {
+      yield put({
+        type: "SET_WALLET_HISTORY",
+        history: response.data
+      });
+
+      return;
+    }
+
+    yield put({
+      type: "SET_WALLET_HISTORY_LOADING",
+    });
 
     return;
   } catch (error) {

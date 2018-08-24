@@ -1,10 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getWalletCoinHistory } from "./redux/walletAction";
 
 // STYLE
 import style from "./style.css";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
+
+// COMPONENTS
+import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -25,10 +34,20 @@ class TransactionHistory extends React.Component {
   };
 
   renderHistory = () => {
-    let mapHistoryItems = [{}, {}];
     let { toggleHistory } = this.state;
+    let { wallet, skeleton, coins, getWalletCoinHistory } = this.props;
+    let history = wallet.coinHistory.history[wallet.selectedCoin];
+    let address = coins[wallet.selectedCoin].address;
+    console.warn(wallet.coinHistory);
 
-    return mapHistoryItems.map((val, index) => {
+    return;
+    if (wallet.loading || skeleton.loading) return;
+
+    getWalletCoinHistory(wallet.selectedCoin, address);
+
+    if (wallet.coinHistory.history <= 0) return <Loading />;
+
+    return history.map((val, index) => {
       return (
         <div key={index}>
           <div>
@@ -132,7 +151,6 @@ class TransactionHistory extends React.Component {
                 {i18n.t("TRANSACTION_HISTORY_TITLE")}
               </div>
             </div>
-
             <div className={style.contentTransactions}>
               {this.renderHistory()}
             </div>
@@ -143,4 +161,28 @@ class TransactionHistory extends React.Component {
   }
 }
 
-export default TransactionHistory;
+TransactionHistory.propTypes = {
+  wallet: PropTypes.object.isRequired,
+  coins: PropTypes.array.isRequired,
+  skeleton: PropTypes.array.isRequired,
+  getWalletCoinHistory: PropTypes.func.isRequired
+};
+
+const mapSateToProps = store => ({
+  wallet: store.wallet,
+  coins: store.skeleton.coins,
+  skeleton: store.skeleton
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getWalletCoinHistory
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(TransactionHistory);

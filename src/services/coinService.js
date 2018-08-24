@@ -13,6 +13,7 @@ import {
 
 // UTILS
 import i18n from "../utils/i18n";
+import { getDefaultCrypto, setDefaultCrypto } from "../utils/localStorage";
 import { convertCoin, percentCalc } from "../utils/numbers";
 
 let getPriceHistory = async (coiName, token) => {
@@ -44,14 +45,24 @@ class CoinService {
   async getGeneralInfo(token, seed) {
     try {
       API_HEADER.headers.Authorization = token;
+      let coins = [];
+      let defaultCrypto = await getDefaultCrypto();
       let responseavailableCoins = await axios.get(
         BASE_URL + "/coin",
         API_HEADER
       );
       let availableCoins = responseavailableCoins.data.data.coins;
-      let coins = [];
-
       const promises = availableCoins.map(async (coin, index) => {
+        // CHECK ACTIVE DEFAULT COIN
+        if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
+          let coin = availableCoins[index + 1]
+            ? availableCoins[index + 1].abbreviation
+            : availableCoins[index - 1].abbreviation;
+          setDefaultCrypto(coin);
+        }
+
+        availableCoins[index].coinHistory = undefined;
+
         if (coin.status === "active") {
           let responsePrice = await axios.get(
             BASE_URL + "/coin/" + coin.abbreviation + "/price",
@@ -60,19 +71,23 @@ class CoinService {
           availableCoins[index].price = responsePrice.data.data;
           availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
+          // CREATE ADDRESS
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
             { seed },
             API_HEADER
           );
-
-          availableCoins[index].price = responsePrice.data.data;
-          let priceHistory = await getPriceHistory(coin.abbreviation, token);
-
-          availableCoins[index].price.percent =
-            percentCalc(priceHistory.initial, priceHistory.last) + "%";
           availableCoins[index].address =
             responseCreateAddress.data.data.address;
+
+          // GET PRICE
+          let priceHistory = await getPriceHistory(coin.abbreviation, token);
+
+          availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.percent =
+            percentCalc(priceHistory.initial, priceHistory.last) + "%";
+
+          // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
               "/coin/" +
@@ -85,6 +100,7 @@ class CoinService {
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
+          // BALANCE CONVERTER
           availableCoins[index].balance.available = convertCoin(
             availableCoins[index].balance.available,
             coin.decimalPoint
@@ -102,6 +118,7 @@ class CoinService {
           });
         } else {
           availableCoins[index].address = undefined;
+          availableCoins[index].coinHistory = undefined;
           availableCoins[index].balance = undefined;
         }
       });
@@ -110,14 +127,33 @@ class CoinService {
       await Promise.all(promises);
       /* eslint-enable */
 
-      availableCoins.map((coin, index) => {
+      const coinPromisse = availableCoins.map(async (coin, index) => {
+        if (coin.abbreviation === defaultCrypto) {
+          let responseCoinHistory = await axios.get(
+            BASE_URL +
+              "/coin/" +
+              coin.abbreviation +
+              "/transaction/history/" +
+              coin.address,
+            API_HEADER
+          );
+
+          coin.coinHistory = responseCoinHistory
+            ? responseCoinHistory.data.data
+            : undefined;
+        }
+
         coins[coin.abbreviation] = availableCoins[index];
       });
 
-      coins.token = availableCoins.token;
+      /* eslint-disable */
+      await Promise.all(coinPromisse);
+      /* eslint-enable */
 
+      coins.token = availableCoins.token;
       return coins;
     } catch (error) {
+      console.warn(error);
       internalServerError();
       return;
     }

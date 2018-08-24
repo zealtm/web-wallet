@@ -1,11 +1,14 @@
 import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+
+// UTILS
 import {
   setAuthToken,
   getAuthToken,
-  getUserSeedWords
+  getUserSeedWords,
+  getDefaultCrypto
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
 import CoinService from "../../../services/coinService";
@@ -51,10 +54,6 @@ export function* loadGeneralInfo(action) {
       type: "CHANGE_LOADING_GENERAL_STATE"
     });
 
-    yield put({
-      type: "SET_WALLET_LOADING"
-    });
-
     return;
   } catch (error) {
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
@@ -66,6 +65,7 @@ export function* loadWalletInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
+    let defaultCrypto = yield call(getDefaultCrypto);
 
     let responseCoins = yield call(
       coinService.getGeneralInfo,
@@ -75,6 +75,12 @@ export function* loadWalletInfo(action) {
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
+
+    yield put({
+      type: "SET_WALLET_HISTORY",
+      coin: defaultCrypto,
+      history: responseCoins[defaultCrypto].coinHistory
+    });
 
     yield put({
       type: "GET_GENERAL_INFO",
@@ -91,6 +97,7 @@ export function* loadWalletInfo(action) {
 
     return;
   } catch (error) {
+    console.warn(error);
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }

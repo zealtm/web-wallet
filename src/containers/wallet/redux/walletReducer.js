@@ -1,5 +1,7 @@
+import { getDefaultCrypto } from "../../../utils/localStorage";
+
 const initialState = {
-  selectedCoin: "lunes",
+  selectedCoin: getDefaultCrypto(),
   coinHistory: {
     loaded: false,
     loading: false,
@@ -23,6 +25,8 @@ const initialState = {
 };
 
 const wallet = (state = initialState, action) => {
+  let history = state.coinHistory.history;
+
   switch (action.type) {
     case "SET_SELECTED_COIN":
       return {
@@ -33,9 +37,14 @@ const wallet = (state = initialState, action) => {
 
     case "SET_WALLET_LOADING":
       return {
-        selectedCoin: "lunes",
+        selectedCoin: getDefaultCrypto(),
+        coinHistory: {
+          loaded: false,
+          loading: false,
+          history: [...state.coinHistory.history]
+        },
         modal: {
-          open: false,
+          open: state.modal.open,
           step: 0,
           address: undefined,
           sendAmount: undefined,
@@ -56,8 +65,20 @@ const wallet = (state = initialState, action) => {
         ...state,
         coinHistory: {
           ...state.coinHistory,
-          loading: !state.coinHistory.loading,
-        },
+          loading: !state.coinHistory.loading
+        }
+      };
+
+    case "SET_WALLET_HISTORY":
+      history[action.coin] = action.history;
+      console.warn(history);
+      return {
+        ...state,
+        coinHistory: {
+          ...state.coinHistory,
+          history: history,
+          loading: false
+        }
       };
 
     case "SET_WALLET_MODAL_OPEN":
