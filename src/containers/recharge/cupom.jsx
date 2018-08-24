@@ -55,7 +55,7 @@ class Cupom extends React.Component {
           xs={12}
           className={style.box}
         >
-          <div className={style.wrap} style={codeStyle}>
+          <div className={style.wrapCode}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <input
               className={style.inputTextDefault}
