@@ -2,6 +2,7 @@ import React from 'react';
 import Tabs from '../../components/tabs';
 import Voucher from './voucher';
 import LunesGift from './lunesGift';
+import Cupom from './cupom';
 
 const titles = [
   'Voucher',
@@ -12,7 +13,7 @@ const titles = [
 const contents  = [
   <Voucher />,
   <LunesGift />,
-  <h1>Cupom</h1>,
+  <Cupom />,
 ];
 
 class Recharge extends React.Component {
