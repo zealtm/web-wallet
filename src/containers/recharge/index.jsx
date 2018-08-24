@@ -22,7 +22,7 @@ class Recharge extends React.Component {
   render() {
     return (
       <div>
-        <Tabs tabTitles={titles} tabContents={contents}/>
+        <Tabs tabTitles={titles} tabContents={contents} justify="center" />
       </div>
     )
   }

@@ -34,9 +34,6 @@ const inputStyle = {
       borderBottomColor: colors.purple.dark,
     },
   },
-  marginGrid: {
-    marginTop: '2rem'
-  }
 }
 
 class Voucher extends React.Component {
@@ -97,7 +94,7 @@ class Voucher extends React.Component {
 
     let { messageError, errors } = inputValidator({phone: phoneInput, code: codeInput});
 
-    console.log('errorMessage', messageError, 'errors', errors);
+    // console.log('errorMessage', messageError, 'errors', errors);
   }
 
   render() {
@@ -105,10 +102,14 @@ class Voucher extends React.Component {
     const { phone, code } = this.state;
 
     return (
-      <Grid container>
-        {/* TODO: remove after have the offset option to the Grid component */}
-        <Grid item xs={false} sm={3}></Grid>
-        <Grid item xs={12} sm={6}>
+      <Grid container
+        direction="row"
+        justify="center"
+      >
+        <Grid item
+          xs={12}
+          className={style.box}
+        >
           <div className={style.wrap}>
             <label className={style.inputLabel} htmlFor="txtPhone">{i18n.t("VOUCHER_NUMBER")}</label>
             <Grid container>
@@ -138,7 +139,15 @@ class Voucher extends React.Component {
             <Code values={code} onHandleChange={this.handleCodeChange} />
           </div>
 
-          <div className={style.wrap}></div>
+          <div className={style.wrap}>
+            <div className={style.instructions}>
+              <a href="#">
+                {i18n.t("RECHARGE_INSTRUCTIONS")}
+                <img src="/images/icons/recharge/ic_instrucoes.png" alt={i18n.t("RECHARGE_INSTRUCTIONS")} />
+              </a>
+            </div>
+
+          </div>
 
           <div className={style.wrap}>
             <button
