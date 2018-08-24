@@ -98,5 +98,6 @@
   "BTN_RECEIVE_EMAIL": "E-mail",
   "BTN_RECEIVE_SHARED": "Shared",
   "WALLET_BALANCE": "Balance",
-  "WALLET_MODAL_SEND_TITLE": "Transaction"
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+  "WALLET_MODAL_RECEIVE_TITLE": "Receive"
 }
