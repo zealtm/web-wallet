@@ -553,8 +553,8 @@
 :local .boxReceive .spacingBox{
   align-items: center;
   padding: 5% 2% 2% 2%;
-  max-width: 80%;
-  margin-left: 9%;
+  max-width: 50%;
+  margin-left: 23%;
 }
 
 :local .boxReceive .buttonReceive {
