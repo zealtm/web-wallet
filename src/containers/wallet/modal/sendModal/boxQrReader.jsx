@@ -35,6 +35,7 @@ class BoxQrReader extends Component {
 
   render() {
     let { result, delay } = this.state;
+
     return (
       <div>
         <QrReader

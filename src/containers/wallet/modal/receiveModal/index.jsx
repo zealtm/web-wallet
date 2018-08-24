@@ -22,7 +22,7 @@ class Receive extends React.Component {
     }
 
     sendCoinAddressEmail = (coinName, address) => {
-        return window.location.href = "mailto:" + "?body=" + coinName + " : " + address;
+        return window.location.href = "mailto:" + "?body=" + coinName + ":" + address;
     }
 
     hasAddress = () => {

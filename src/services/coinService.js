@@ -241,6 +241,7 @@ class CoinService {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
 
+      address = address.split(coin + ":", "");
       if (coin === "lunes") {
         let response = await axios.post(
           LUNESNODE_URL + "/addresses/validate/" + address
