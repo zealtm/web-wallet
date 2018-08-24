@@ -70,7 +70,7 @@ class CoinsInfo extends React.Component {
         <Modal
           title={"Receber"}
           content={<ReceiveModal coin={coin} />}
-          show={wallet.modal.open}
+          show={wallet.modalReceive.open}
           close={() => setWalletReceiveModalOpen()} />
 
         <Modal
@@ -124,7 +124,8 @@ class CoinsInfo extends React.Component {
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
-                  <button className={style.submitButton}>
+                  <button className={style.submitButton}
+                    onClick={() => setWalletSendModalOpen()}>
                     {i18n.t("BTN_SEND")}
                   </button>
                 </div>
