@@ -24,18 +24,18 @@ class LeasingHistory extends React.Component {
     });
   };
 
-  renderBtCancel = (status) => {
-      if(status===1){
-          return (
-              <div className={style.iconLeasing}>
-                  <img src="images/icons/general/leasing@1x.png" />
-                  {i18n.t("LEASING_BT_CANCEL")}
-              </div>
-          );
-      }else{
-          return null;
-      }
-  }
+  renderBtCancel = status => {
+    if (status === 1) {
+      return (
+        <div className={style.iconLeasing}>
+          <img src="images/icons/general/leasing@1x.png" />
+          {i18n.t("LEASING_BT_CANCEL")}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
 
   renderHistory = () => {
     let mapHistoryItems = [
@@ -68,7 +68,8 @@ class LeasingHistory extends React.Component {
                   ? style.opacityItem
                   : style.itemHistorico
               }
-              onClick={() => this.stateDataHistory(index)} >
+              onClick={() => this.stateDataHistory(index)}
+            >
               <Grid item xs={3}>
                 12 dec 18 16h22
               </Grid>
@@ -89,14 +90,14 @@ class LeasingHistory extends React.Component {
                 xs={12}
                 className={toggleHistory !== index ? style.toggleHistory : null}
               >
-              
-                  <Grid item xs={12} className={style.itemDataHistorico}>
-                    <Grid item xs={12} className={style.descriptionHistory}>
-                        <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                        <a href="#" target="parent">ayudegwdwef54ew68fv46fgdrg5effjbhekyf</a>
-                    </Grid>
+                <Grid item xs={12} className={style.itemDataHistorico}>
+                  <Grid item xs={12} className={style.descriptionHistory}>
+                    <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
+                    <a href="#" target="parent">
+                      ayudegwdwef54ew68fv46fgdrg5effjbhekyf
+                    </a>
                   </Grid>
-
+                </Grid>
               </Grid>
             </div>
           </div>
@@ -117,32 +118,34 @@ class LeasingHistory extends React.Component {
               </div>
             </Grid>
             <Grid item xs={6} md={4}>
-                <div className={style.boxCard}>
-                    {i18n.t("LEASING_BALANCE_ACTIVE")}
-                    <div className={style.strongTextGreen}>300,000 LUNES</div>
-                </div>
+              <div className={style.boxCard}>
+                {i18n.t("LEASING_BALANCE_ACTIVE")}
+                <div className={style.strongTextGreen}>300,000 LUNES</div>
+              </div>
             </Grid>
-            
+
             <Grid item xs={12} md={4}>
-              <button className={style.buttonEnable}>{i18n.t("LEASING_TITLE_NEW")}</button>
+              <button className={style.buttonEnable}>
+                {i18n.t("LEASING_TITLE_NEW")}
+              </button>
             </Grid>
           </Grid>
           <Grid item xs={11} sm={10} md={10}>
             <div className={style.contentTransactions}>
-                <Grid container className={style.headerContent}>
-                    <Grid item xs={3}>
-                    {i18n.t("LEASING")}
-                    </Grid>
-                    <Grid item xs={3}>
-                    {i18n.t("LEASING_TITLE_AMOUNT")}
-                    </Grid>
-                    <Grid item xs={4}>
-                    {i18n.t("LEASING_TITLE_NODE")}
-                    </Grid>
-                    <Grid item xs={2}>
-                    {i18n.t("LEASING_TITLE_STATUS")}
-                    </Grid>
+              <Grid container className={style.headerContent}>
+                <Grid item xs={3}>
+                  {i18n.t("LEASING")}
                 </Grid>
+                <Grid item xs={3}>
+                  {i18n.t("LEASING_TITLE_AMOUNT")}
+                </Grid>
+                <Grid item xs={4}>
+                  {i18n.t("LEASING_TITLE_NODE")}
+                </Grid>
+                <Grid item xs={2}>
+                  {i18n.t("LEASING_TITLE_STATUS")}
+                </Grid>
+              </Grid>
               {this.renderHistory()}
             </div>
           </Grid>
