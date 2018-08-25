@@ -98,5 +98,16 @@
   "BTN_RECEIVE_EMAIL": "E-mail",
   "BTN_RECEIVE_SHARED": "Shared",
   "WALLET_BALANCE": "Balance",
-  "WALLET_MODAL_SEND_TITLE": "Transaction"
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+
+  "LEASING": "Leasing",
+  "LEASING_BT_CANCEL": "Cancelar",
+  "LEASING_TITLE_EXPLORER": "Blockexplorer",
+  "LEASING_BALANCE_LABEL": "Seu Saldo:",
+  "LEASING_BALANCE_ACTIVE": "Em Leasing:",
+  "LEASING_TITLE_NEW": "Novo Leasing",
+  "LEASING_TITLE_AMOUNT": "Emprestado",
+  "LEASING_TITLE_NODE": "Node",
+  "LEASING_TITLE_STATUS": "Status"
+
 }
