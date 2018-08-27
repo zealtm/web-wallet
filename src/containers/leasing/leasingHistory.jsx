@@ -60,9 +60,7 @@ class LeasingHistory extends React.Component {
       return (
         <div key={index}>
           <div>
-            <Grid
-              item
-              xs={12}
+            <Grid item xs={12}
               className={
                 toggleHistory !== undefined && toggleHistory !== index
                   ? style.opacityItem
@@ -74,7 +72,7 @@ class LeasingHistory extends React.Component {
                 12 dec 18 16h22
               </Grid>
               <Grid item xs={3}>
-                <span className={style.textGreen}>$1,000.00</span>
+                <span className={style.textGreen}>1,000.00</span>
               </Grid>
               <Grid item xs={4}>
                 odyx.me
@@ -110,7 +108,8 @@ class LeasingHistory extends React.Component {
     return (
       <div>
         <Grid container className={style.containerTransactions}>
-          <Grid container xs={11} sm={10} md={10}>
+          <Grid container
+            item xs={11} sm={10} md={10}>
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_LABEL")}
