@@ -33,7 +33,14 @@ class Loading extends Component {
 }
 
 Loading.propTypes = {
-  color: PropTypes.oneOf(["", "white", "purple", "lunes", "bitcoin"]),
+  color: PropTypes.oneOf([
+    "",
+    "white",
+    "purple",
+    "lunes",
+    "bitcoin",
+    "general"
+  ]),
   width: PropTypes.string
 };
 

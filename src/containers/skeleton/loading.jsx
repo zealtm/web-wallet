@@ -34,7 +34,7 @@ class LoadingPage extends Component {
           <img src="../../images/logo.svg" className={style.logoLoading} />
 
           <div>
-            <Loading color="lunes" width="30px" />
+            <Loading color="general" width="300px" />
           </div>
         </div>
       </div>
