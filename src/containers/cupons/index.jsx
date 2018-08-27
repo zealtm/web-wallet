@@ -3,29 +3,34 @@ import React from "react";
 // COMPONENTS
 import InstructionsModal from "./instructionsModal"
 import Modal from "../../components/modal";
-
+import i18n from "../../../../utils/i18n";
 
 class Cupons extends React.Component {
     constructor() {
         super();
         this.state = {
+            isOpen: false
         };
     }
 
+    handleModal= () => this.setState({isOpen: !this.state.isOpen});
+
     render() {
-        // let {setWalletReceiveModalOpen} = this.props;
+        let { isOpen } = this.state;
         return (
             <div>
-                <p>Cupons</p>
+                <p onClick={() => this.handleModal()}>Clique aqui!</p>
                 <Modal
                     title={"Instructions"}
                     content={<InstructionsModal />}
-                    show
-                    back
+                    show={isOpen}
+                    close={() => this.handleModal()}
                 />
             </div>
         );
     }
 }
+
+
 
 export default Cupons
