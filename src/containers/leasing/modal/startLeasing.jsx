@@ -1,10 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from '@material-ui/core/styles';
-
-// REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 // COMPONENTS INTERNOS
 import CustomSelect from "./customSelect";
@@ -18,12 +12,21 @@ import style from "../style.css";
 class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      amountValue: "5.000.00"
+    }
   }
+
+  handleAmountValue = (value) => {
+    this.setState({ amountValue: value });
+  }
+
   render() {
-    return <div className={style.baseStep} style={{textAlign:"right", alignSelf:"flex-end", padding:16, color:"#fff"}}>
+    let { amountValue } = this.state;
+    return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
-        <div style={{fontSize:"26px"}}>158 mil LUNES</div>
+        <div style={{ fontSize: "26px" }}>142,5 milhões de Lunes</div>
       </div>
 
       <div className={style.boxLine}>
@@ -33,7 +36,8 @@ class StartLeasing extends React.Component {
           type="text"
           name="txtamount"
           placeholder="0"
-          value={5000}
+          onChange={event => this.handleAmountValue(event.target.value)}
+          value={amountValue}
         />
       </div>
 
@@ -52,8 +56,8 @@ class StartLeasing extends React.Component {
         </span>
       </div>
 
-      <CustomSelect action={()=> alert("teste")} />
-      
+      <CustomSelect action={() => alert("teste")} />
+
       <input
         type="text"
         name="txtaddress"
@@ -66,7 +70,7 @@ class StartLeasing extends React.Component {
 
       <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
       <button className={style.btContinue} >{i18n.t("LEASING_BT_START")}</button>
-      
+
     </div>;
   }
 }

@@ -5,19 +5,23 @@ import Modal from "../../components/modal";
 import StartLeasing from "./modal/startLeasing"; 
 
 class Leasing extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(){
+    super();
+    this.state = {
+      isOpen: true
+    }
   }
+  handleModalLeasing = () => this.setState({isOpen: !this.state.isOpen});
 
   render() {
+    let {isOpen} = this.state;
     return <div>
     Leasing
-    
     <Modal
       title={"Iniciar Leasing"}
       content={<StartLeasing />}
-      show={true}
-      back
+      show={isOpen}
+      back={() => this.handleModalLeasing()}
     />
     </div>;
   }
