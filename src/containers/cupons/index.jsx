@@ -3,7 +3,6 @@ import React from "react";
 // COMPONENTS
 import InstructionsModal from "./instructionsModal"
 import Modal from "../../components/modal";
-import i18n from "../../../../utils/i18n";
 
 class Cupons extends React.Component {
     constructor() {
