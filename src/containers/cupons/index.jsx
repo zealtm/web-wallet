@@ -6,22 +6,16 @@ import Modal from "../../components/modal";
 
 
 class Cupons extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-        };
-    }
 
     render() {
-        // let {setWalletReceiveModalOpen} = this.props;
         return (
             <div>
                 <p>Cupons</p>
                 <Modal
                     title={"Instructions"}
                     content={<InstructionsModal />}
-                    show
-                    back
+                    show={true}
+                    back={true}
                 />
             </div>
         );
