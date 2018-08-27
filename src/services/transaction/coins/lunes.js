@@ -19,47 +19,46 @@ class LunesTransaction {
   // }
 
   async balance(address, network){
-    // try {
-    //   const validate = await validateAddress(address, network)
-    //   if (!validate) {
-    //     throw errorPattern(
-    //       'Invalid ' + network.coinName + ' Address',
-    //       406,
-    //       'ADDRESS_INVALID',
-    //       'The address ' +
-    //         address +
-    //         ' is not a valid ' +
-    //         network.coinName +
-    //         ' address.'
-    //     )
-    //   }
+    try {
+      // const validate = await validateAddress(address, network)
+      // if (!validate) {
+      //   throw errorPattern(
+      //     'Invalid ' + network.coinName + ' Address',
+      //     406,
+      //     'ADDRESS_INVALID',
+      //     'The address ' +
+      //       address +
+      //       ' is not a valid ' +
+      //       network.coinName +
+      //       ' address.'
+      //   )
+      // }
   
-    //   let res = await axios.get(
-    //     network.apiUrl + '/addresses/balance/details/' + address
-    //   )
+      let res = await axios.get(
+        network.apiUrl + '/addresses/balance/details/' + address
+      )
   
-    //   return {
-    //     network: network.coinSymbol,
-    //     data: {
-    //       address: address,
-    //       confirmed: res.data.available,
-    //       unconfirmed: null
-    //     }
-    //   }
-    // } catch (error) {
-    //   throw errorPattern(
-    //     error.message || 'Error retrieving balances',
-    //     error.status || 500,
-    //     error.messageKey || 'BALANCE_ERROR',
-    //     error.logMessage || error.stack || ''
-    //   )
-    // }
+      return {
+        network: network.coinSymbol,
+        data: {
+          address: address,
+          confirmed: res.data.available,
+          unconfirmed: null
+        }
+      }
+    } catch (error) {
+      throw errorPattern(
+        error.message || 'Error retrieving balances',
+        error.status || 500,
+        error.messageKey || 'BALANCE_ERROR',
+        error.logMessage || error.stack || ''
+      )
+    }
   }
-  
 
   async createLunesTransaction(data){
     try {
-      const {seed, keyPair, fromAddress, toAddress, transactionAmount, fee, network} = data;
+      const {token, seed, keyPair, fromAddress, toAddress, transactionAmount, fee, network} = data;
 
       // Check received address
       // const validate = await validateAddress(toAddress, network)
@@ -76,15 +75,16 @@ class LunesTransaction {
       //   )
       // }
 
+      const seed2 = this.mnemonicToSeed(seed, network);
+
       if (transactionAmount <= 0) {
         throw errorPattern("Invalid amount", 401, "INVALID_AMOUNT");
       }
-
       if (fee < 0) {
         throw errorPattern("Fee cannot be smaller than 0.", 401, "INVALID_FEE");
       }
 
-      // 
+      // ja existe este servico em CoinService, mas por enquanto temos que usar a TestNet
       const userBalance = await this.balance(fromAddress, network);
 
       const finalAmount = add(transactionAmount.toString(), fee.toString());
@@ -125,8 +125,9 @@ class LunesTransaction {
         */
 
         return transaction;
+     
       } catch (error) {
-        console.log("erro2");
+        console.log("erro2", error);
         throw errorPattern(
           error.data ? error.data.message : "Error on transaction",
           error.status || 500,

@@ -90,8 +90,9 @@ class TransactionService {
             keyPair: "",
             fromAddress: from,
             toAddress: to,
-            amount: amount,
-            fee: fee
+            transactionAmount: amount,
+            fee: fee, 
+            token: token
           };
 
           const lunesTransaction = new LunesTransaction();

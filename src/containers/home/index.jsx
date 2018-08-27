@@ -29,8 +29,8 @@ class Home extends React.Component {
     const teste = novaTransacao.transaction(
       'lunes', 
       token, 
-      2, 
-      1, 
+      20000000, 
+      100, 
       "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", 
       "37dV3nmnbwL8VSHVm1PGk5JUnPekUAxZGsN", 
       "", // seeed
