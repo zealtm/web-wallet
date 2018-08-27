@@ -7,11 +7,6 @@ import style from "./style.css";
 import i18n from "../../utils/i18n";
 
 class InstructionsModal extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-        };
-    }
     render() {
         return (
             <div className={style.alignInstructions}>
