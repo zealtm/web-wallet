@@ -13,7 +13,7 @@ import { inputValidator } from "../../utils/inputValidator";
 const inputStyle = {
   root: {
     color: colors.messages.info,
-    margin: "1rem 0",
+    margin: "0",
     padding: '5px',
     width: 'calc(100% - 20px)',
     "&:hover:before": {
