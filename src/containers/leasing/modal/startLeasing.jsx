@@ -11,7 +11,7 @@ class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amountValue: 
+      amountValue: 0
     }
   }
 
