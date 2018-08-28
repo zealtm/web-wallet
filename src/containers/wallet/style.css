@@ -147,6 +147,7 @@
   margin-top: 20px;
   justify-content: center;    
   display: flex;
+  padding: 4vh;
 }
 
 :local(.floatRightDesktop) {
@@ -205,6 +206,9 @@
   }
   :local(.coinBalance) {
     height: 100px;
+  }
+  :local(.mainWalletInfoCoins) {
+    padding: 0;
   }
 }
 

@@ -203,8 +203,8 @@ class TransactionHistory extends React.Component {
               {loading ? (
                 <Loading margin={"5% 0 0 0"} color="lunes" />
               ) : (
-                this.renderHistory()
-              )}
+                  this.renderHistory()
+                )}
             </div>
           </Grid>
         </Grid>

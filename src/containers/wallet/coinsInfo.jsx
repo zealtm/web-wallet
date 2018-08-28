@@ -79,7 +79,7 @@ class CoinsInfo extends React.Component {
           show={wallet.modal.open}
         />
         <div className={style.mainWalletInfoCoins}>
-          <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
+          <Grid item xs={11} sm={8} md={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
               <div className={style.alignContentCoin}>
                 <div className={style.nameCoinSelected}>
