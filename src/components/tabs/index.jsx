@@ -24,7 +24,7 @@ const tabStyles = theme => ({
     margin: theme.spacing.unit * 2,
   },
   tabsRoot: {
-    margin: theme.spacing.unit * 1,
+    margin: '-5px',
   },
   tabsIndicator: {
     backgroundColor: colors.green.dark,
@@ -33,12 +33,10 @@ const tabStyles = theme => ({
   tabRoot: {
     fontWeight: 600,
     marginRight: '1px',
-    opacity: 0.8,
-    borderBottom: `1px solid ${colors.purple.clear}`,
+    opacity: 1,
+    borderRadius: '5px 5px 0 0',
     textTransform: 'none',
-    '&$tabSelected': {
-      backgroundColor: colors.purple.default,
-    },
+    backgroundColor: colors.purple.default,
   },
   tabSelected: {},
 });
@@ -75,7 +73,7 @@ class CustomTabs extends React.Component {
             scrollButtons="off"
           >
             {
-              tabTitles.map((title, key) => <Tab classes={{ root: classes.tabRoot, selected: classes.tabSelected }} key={key} label={title} />)
+              tabTitles.map((title, key) => <Tab margin="none" classes={{ root: classes.tabRoot, selected: classes.tabSelected }} key={key} label={title} />)
             }
           </Tabs>
         </Grid>

@@ -1,6 +1,15 @@
-:local(.defaultText) {
-  composes: inputTextDefault from "../../components/bases/textBase.css";
-}
+/*
+1. BASE
+
+2. TEXT
+
+3. INPUTS
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASE */
 
 :local(.row) {
   margin: 1rem 0 1.5rem 0;
@@ -40,24 +49,16 @@
   }
 }
 
-:local(.wrapCode) {
-  margin: calc(6rem + 4px) 0 6rem 0;
-}
+/* 2. TEXT */
 
-@media screen and (min-width: 600px) {
-  :local(.wrapCode) {
-    margin: calc(12rem + 4px) 0 3rem 0;
-  }
+:local(.defaultText) {
+  composes: inputTextDefault from "../../components/bases/textBase.css";
 }
 
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
   text-align: center;
   margin-bottom: 10px;
-}
-
-:local(.buttonBorderGreen) {
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }
 
 :local(label) {
@@ -92,4 +93,8 @@
   position: relative;
   left: 10px;
   top: 5px;
+}
+
+:local(.buttonBorderGreen) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }

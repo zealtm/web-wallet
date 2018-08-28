@@ -30,8 +30,8 @@ const inputStyle = {
     "&:before, &:after": {
       borderBottomColor: colors.purple.dark,
     },
-    "&:hover:not(&$disabled):not(&$error):not(&$focused):before": {
-      borderBottomColor: colors.purple.dark,
+    "&:hover:not($disabled):not($error):not($focused):before": {
+      borderBottomColor: `${colors.purple.dark} !important`,
     },
   },
   disabled: {},
@@ -121,10 +121,7 @@ class Voucher extends React.Component {
                   classes={{
                     root: classes.root,
                     underline: classes.cssUnderline,
-                    input: classes.cssInput,
-                    disabled: classes.disabled,
-                    focused: classes.focused,
-                    error: classes.error
+                    input: classes.cssInput
                   }}
                   placeholder="(xx)"
                   value={phone[0]}
@@ -137,10 +134,7 @@ class Voucher extends React.Component {
                   classes={{
                     root: classes.root,
                     underline: classes.cssUnderline,
-                    input: classes.cssInput,
-                    disabled: classes.disabled,
-                    focused: classes.focused,
-                    error: classes.error
+                    input: classes.cssInput
                   }}
                   placeholder="xxxxx-xxxx"
                   value={phone[1]}
