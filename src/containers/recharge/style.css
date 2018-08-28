@@ -57,15 +57,12 @@
   }
 }
 
-<<<<<<< HEAD
 /* 2. TEXT */
 
 :local(.defaultText) {
   composes: inputTextDefault from "../../components/bases/textBase.css";
 }
 
-=======
->>>>>>> V-134
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
   text-align: center;
