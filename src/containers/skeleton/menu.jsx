@@ -59,8 +59,8 @@ const menuItens = [
     icon: "../../images/icons/general/privacy@1x.png"
   },
   {
-    link: "/configuration",
-    label: i18n.t("MENU_CONFIGURATION"),
+    link: "/settings",
+    label: i18n.t("MENU_SETTING"),
     icon: "../../images/icons/general/configuration@1x.png"
   }
 ];
