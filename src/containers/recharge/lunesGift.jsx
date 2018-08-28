@@ -5,10 +5,6 @@ import style from "./style.css";
 import Code from './code';
 import { inputValidator } from "../../utils/inputValidator";
 
-const codeStyle = {
-  marginTop: 'calc(12rem + 4px)',
-};
-
 class LunesGift extends React.Component {
   constructor() {
     super();
@@ -61,12 +57,12 @@ class LunesGift extends React.Component {
           xs={12}
           className={style.box}
         >
-          <div className={style.wrap} style={codeStyle}>
+          <div className={style.giftRow}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <Code values={code} onHandleChange={this.handleCodeChange} />
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <div className={style.instructions}>
               <a href="#">
                 {i18n.t("RECHARGE_INSTRUCTIONS")}
@@ -76,7 +72,7 @@ class LunesGift extends React.Component {
 
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <button
               className={style.buttonBorderGreen}
               onClick={() => this.inputValidator()}

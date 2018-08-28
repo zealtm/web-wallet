@@ -2,13 +2,21 @@
   composes: inputTextDefault from "../../components/bases/textBase.css";
 }
 
-:local(.wrap) {
-  margin: 1rem 0;
+:local(.row) {
+  margin: 1rem 0 1.5rem 0;
+}
+
+:local(.giftRow) {
+  margin: calc(6rem - 4px) 0 3rem 0;
 }
 
 @media screen and (min-width: 600px) {
-  :local(.wrap) {
-    margin: 1rem 0 3rem 0;
+  :local(.row) {
+    margin: 1rem 5rem 3rem 5rem;
+  }
+
+  :local(.giftRow) {
+    margin: calc(9rem - 10px) 5rem 5rem 5rem;
   }
 }
 
