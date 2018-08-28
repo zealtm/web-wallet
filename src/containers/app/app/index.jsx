@@ -52,6 +52,12 @@ let recharge = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
 
+let settings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -85,6 +91,7 @@ class App extends Component {
               <Route path="/coupons" component={coupons} />
               <Route path="/recharge" component={recharge} />
               <Route path="/leasing" component={leasing} />
+              <Route path="/settings" component={settings} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />
