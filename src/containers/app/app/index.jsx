@@ -40,6 +40,12 @@ let leasing = Loadable({
 });
 
 
+let cupons = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../cupons")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../cupons")
+});
+
 let recharge = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../recharge")),
   loading: Loading,
@@ -76,6 +82,7 @@ class App extends Component {
               <Route exact path="/" component={home} />
               <Route path="/home" component={home} />
               <Route path="/wallet" component={wallet} />
+              <Route path="/cupons" component={cupons} />
               <Route path="/recharge" component={recharge} />
               <Route path="/leasing" component={leasing} />
 
