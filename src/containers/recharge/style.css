@@ -10,6 +10,10 @@
   margin: calc(6rem - 4px) 0 3rem 0;
 }
 
+:local(.cupomRow) {
+  margin: calc(6rem - 4px) 0 calc(7rem - 4px) 0;
+}
+
 @media screen and (min-width: 600px) {
   :local(.row) {
     margin: 1rem 5rem 3rem 5rem;
@@ -17,6 +21,10 @@
 
   :local(.giftRow) {
     margin: calc(9rem - 10px) 5rem 5rem 5rem;
+  }
+
+  :local(.cupomRow) {
+    margin: calc(9rem - 10px) 5rem calc(5rem - 5px) 5rem;
   }
 }
 
@@ -37,16 +45,6 @@
 @media screen and (min-width: 1280px) {
   :local(.box) {
     max-width: 40vw !important;
-  }
-}
-
-:local(.wrapCode) {
-  margin: calc(6rem + 4px) 0 6rem 0;
-}
-
-@media screen and (min-width: 600px) {
-  :local(.wrapCode) {
-    margin: calc(12rem + 4px) 0 3rem 0;
   }
 }
 
