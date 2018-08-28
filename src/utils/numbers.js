@@ -1,11 +1,19 @@
 import i18n from "./i18n";
 
-export const convertCoin = (value, decimal) => {
+export const convertBiggestCoinUnit = (value, decimal) => {
   let number = "1";
   for (let i = 0; i < decimal; i++) {
     number = number + "0";
   }
   return value / parseInt(number);
+};
+
+export const convertSmallerCoinUnit = (value, decimal) => {
+  let number = "1";
+  for (let i = 0; i < decimal; i++) {
+    number = number + "0";
+  }
+  return value * parseInt(number);
 };
 
 export const percentCalc = (first, last) => {

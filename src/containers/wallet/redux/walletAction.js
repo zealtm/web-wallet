@@ -25,9 +25,19 @@ export const setWalletSendModalAmount = amount => ({
   amount
 });
 
-export const setWalletSendModalFee = fee => ({
-  type: "SET_WALLET_MODAL_SEND_FEE",
-  fee
+export const getWalletSendModalFee = (
+  coin,
+  fromAddress,
+  toAddress,
+  amount,
+  decimalPoint
+) => ({
+  type: "GET_WALLET_MODAL_SEND_FEE_API",
+  coin,
+  fromAddress,
+  toAddress,
+  amount,
+  decimalPoint
 });
 
 export const setWalletSendModalSelectedFee = fee => ({

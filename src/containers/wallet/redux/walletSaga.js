@@ -44,6 +44,33 @@ export function* validateAddress(action) {
   }
 }
 
+export function* getWalletSendModalFee(action) {
+  try {
+    let response = yield call(
+      coinService.getFee,
+      action.coin,
+      action.fromAddress,
+      action.toAddress,
+      action.amount,
+      action.decimalPoint
+    );
+
+    yield put({
+      type: "GET_WALLET_MODAL_SEND_FEE",
+      fee: response
+    });
+
+    yield put({
+      type: "SET_WALLET_MODAL_STEP",
+      step: 2
+    });
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* shareCoinAddress(action) {
   try {
     yield call(coinService.shareCoinAddress, action.name, action.address);

@@ -19,7 +19,7 @@ import Loading from "../../components/loading";
 // UTILS
 import i18n from "../../utils/i18n";
 import { formatDate } from "../../utils/numbers";
-import { convertCoin } from "../../utils/numbers";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class TransactionHistory extends React.Component {
   constructor() {
@@ -102,9 +102,10 @@ class TransactionHistory extends React.Component {
                 >
                   {" "}
                   {transaction.type === "RECEIVED" || "-"}
-                  {convertCoin(transaction.amount, decimalPoint).toFixed(
+                  {convertBiggestCoinUnit(
+                    transaction.amount,
                     decimalPoint
-                  )}{" "}
+                  ).toFixed(decimalPoint)}{" "}
                 </div>
                 <div> {/* transaction.price[defaultFiat] */} </div>
               </Grid>

@@ -103,7 +103,6 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-
     case "SET_WALLET_MODAL_STEP":
       return {
         ...state,
@@ -138,12 +137,11 @@ const wallet = (state = initialState, action) => {
         ...state,
         modal: {
           ...state.modal,
-          sendAmount: action.amount,
-          loading: false
+          sendAmount: action.amount
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_FEE":
+    case "GET_WALLET_MODAL_SEND_FEE":
       return {
         ...state,
         modal: {

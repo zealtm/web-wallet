@@ -14,7 +14,11 @@ import {
 // UTILS
 import i18n from "../utils/i18n";
 import { getDefaultCrypto, setDefaultCrypto } from "../utils/localStorage";
-import { convertCoin, percentCalc } from "../utils/numbers";
+import {
+  convertBiggestCoinUnit,
+  percentCalc,
+  convertSmallerCoinUnit
+} from "../utils/numbers";
 
 let getPriceHistory = async (coiName, token) => {
   try {
@@ -90,10 +94,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-            "/coin/" +
-            coin.abbreviation +
-            "/balance/" +
-            coin.address,
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
             API_HEADER
           );
 
@@ -101,12 +105,12 @@ class CoinService {
           availableCoins[index].balance = responseBalance.data.data;
 
           // BALANCE CONVERTER
-          availableCoins[index].balance.available = convertCoin(
+          availableCoins[index].balance.available = convertBiggestCoinUnit(
             availableCoins[index].balance.available,
             coin.decimalPoint
           );
 
-          availableCoins[index].balance.total = convertCoin(
+          availableCoins[index].balance.total = convertBiggestCoinUnit(
             availableCoins[index].balance.total,
             coin.decimalPoint
           );
@@ -276,7 +280,7 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
-      
+
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
         let response = await axios.post(
@@ -310,12 +314,36 @@ class CoinService {
           title: document.title,
           text: coinName + ": " + coinAddress,
           url: window.location.href
-        })
+        });
       }
     } catch (error) {
       internalServerError();
     }
+  }
 
+  async getFee(coinName, fromAddress, toAddress, amount, decimalPoint = 8) {
+    try {
+      let fee = {};
+      amount = convertSmallerCoinUnit(amount, decimalPoint);
+      let response = await axios.post(
+        BASE_URL + "/coin/" + coinName + "/transaction/fee",
+        { fromAddress, toAddress, amount },
+        API_HEADER
+      );
+
+      let data = response.data.data;
+
+      if (response.data.code === 200) {
+        Object.keys(data).map(value => {
+          fee[value] = convertBiggestCoinUnit(data[value], decimalPoint);
+        });
+      }
+
+      return fee;
+    } catch (error) {
+      console.error(error);
+      internalServerError();
+    }
   }
 }
 
