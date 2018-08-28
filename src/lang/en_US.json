@@ -35,6 +35,26 @@
   "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  
+  "JANUARY": "January",
+  "FEBRUARY": "February",
+  "MARCH": "March",
+  "APRIL": "April",
+  "MAY": "May",
+  "JUNE": "June",
+  "JULY": "July",
+  "AUGUST": "August",
+  "SEPTEMBER": "September",
+  "OCTOBER": "October",
+  "NOVEMBER": "November",
+  "DECEMBER": "December",
+
+  "LOGIN_SLIDE_DESCRIPTION_1":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_2":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_3":
+    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_HEADER": "Enter your data",
   "LOGIN_FORGET_PASSWORD_LINK": "Forgot your password?",
   "LOGIN_CREATE_ACCOUNT_LABEL": "Don't have an account?",
@@ -147,5 +167,21 @@
   "SETTINGS_CARD_2": "2FA AUTHENTICATION",
   "SETTINGS_CARD_3": "WALLETS",
   "SETTINGS_CARD_4": "CONSENT",
-  "SETTINGS_CARD_5": "DEFINITIONS"
+  "SETTINGS_CARD_5": "DEFINITIONS",
+  "CARD_HOME_DESCRIPTION_1": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_2": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_3": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_4": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_5": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..", 
+  "CARD_HOME_DESCRIPTION_6": 
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+
+  "WALLET_BALANCE": "Balance",
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+  "TRANSACTION_HISTORY_TITLE": "Transactions"
 }

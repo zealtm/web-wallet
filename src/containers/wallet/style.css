@@ -402,6 +402,11 @@
   font-size: 12px;
 }
 
+:local(.notFound) {
+  text-align: center;
+  padding-top: 5%;
+}
+
 :local(.valueHistory) {
   text-align: right;
   padding-right: 15px;
@@ -413,11 +418,11 @@
   font-weight: bold;
 }
 
-:local(.submitHistory) {
+:local(.sentHistory) {
   composes: clError from "../../components/bases/colorBase.css";
 }
 
-:local(.receiveHistory) {
+:local(.receivedHistory) {
   composes: clGreenLight from "../../components/bases/colorBase.css";
 }
 
@@ -454,6 +459,7 @@
 /* 3.2 ICONS */
 :local(.refleshIcon) {
   composes: displayAlign;  
+  cursor: pointer;
   background-color: #473088;
   border-radius: 20px;
   padding: 6px;

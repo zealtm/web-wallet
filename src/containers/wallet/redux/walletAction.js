@@ -46,6 +46,17 @@ export const setWalletLoading = state => ({
   state
 });
 
+export const getWalletCoinHistory = (coin, address) => ({
+  type: "GET_WALLET_COIN_HISTORY_API",
+  coin,
+  address
+});
+
+export const setWalletCoinHistoryLoading = state => ({
+  type: "SET_WALLET_HISTORY_LOADING",
+  state
+});
+
 export const clearWalletState = () => ({
   type: "CLEAR_WALLET_STATE"
 });

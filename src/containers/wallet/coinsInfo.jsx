@@ -39,7 +39,7 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.props.wallet.modal
+    let { step } = this.props.wallet.modal;
     let { setWalletModalStep } = this.props;
     if (step >= 0) {
       setWalletModalStep(step - 1);
@@ -60,17 +60,14 @@ class CoinsInfo extends React.Component {
     let defaultCoin = getDefaultFiat();
     let { setWalletSendModalOpen, setWalletReceiveModalOpen, coins, wallet } = this.props;
     let step = wallet.modal.step;
+    let selectedCoin = wallet.selectedCoin;
     let coin = coins[wallet.selectedCoin];
-    // let coin = { name: "lunes" };
-    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
-    // let coinPrice = 0
-    let coinPercent = coins[wallet.selectedCoin].price.percent;
-    // let coinPercent = "200%"
+    let coinPrice = coins[selectedCoin].price[defaultCoin].price;
+    let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
-    // let fiatBalance = 0.00;
     let balance = coin.balance.available;
+
     return (
-      
       <div className={style.containerWallet}>
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
@@ -84,7 +81,11 @@ class CoinsInfo extends React.Component {
           close={
             step === 4 || step === 5 ? null : () => setWalletSendModalOpen()
           }
-          back={step === 0 || step === 4 || step === 5 ? null : () => this.previousStep()}
+          back={
+            step === 0 || step === 4 || step === 5
+              ? null
+              : () => this.previousStep()
+          }
           show={wallet.modal.open}
         />
         <div className={style.mainWalletInfoCoins}>
@@ -154,7 +155,6 @@ class CoinsInfo extends React.Component {
 
 
           </div>
-
         </Hidden>
       </div>
     );
