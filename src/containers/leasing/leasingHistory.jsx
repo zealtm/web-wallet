@@ -1,13 +1,11 @@
 import React from "react";
-
-// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-
-// UTILS
 import i18n from "../../utils/i18n";
-
-// STYLE
 import style from "./style.css";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -37,25 +35,11 @@ class LeasingHistory extends React.Component {
     }
   };
 
-  renderHistory = () => {
-    let mapHistoryItems = [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {}
-    ];
-    let { toggleHistory } = this.state;
 
+
+  renderHistory = () => {
+    let mapHistoryItems = [{},{},{},{},{},{},{},{},{},{}];
+    let { toggleHistory } = this.state;
     return mapHistoryItems.map((val, index) => {
       return (
         <div key={index}>
@@ -107,6 +91,7 @@ class LeasingHistory extends React.Component {
   render() {
     return (
       <div>
+        
         <Grid container className={style.containerTransactions}>
           <Grid container
             item xs={11} sm={10} md={10}>
@@ -154,4 +139,22 @@ class LeasingHistory extends React.Component {
   }
 }
 
-export default LeasingHistory;
+LeasingHistory.propTypes = {
+  coins: PropTypes.array.isRequired
+}
+
+const mapSateToProps = store => (console.warn(store.skeleton.coins),{
+  coins: store.skeleton.coins
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(LeasingHistory);

@@ -1,19 +1,17 @@
 import React from "react";
-
-// COMPONENTS INTERNOS
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 import CustomSelect from "./customSelect";
-
-// UTILS 
 import i18n from "../../../utils/i18n";
-
-// STYLE
 import style from "../style.css";
+
 
 class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amountValue: "5.000.00"
+      amountValue: 
     }
   }
 
@@ -21,12 +19,15 @@ class StartLeasing extends React.Component {
     this.setState({ amountValue: value });
   }
 
+
   render() {
     let { amountValue } = this.state;
+    let { coins } = this.props;
+    let balance = coins.lunes.balance.available
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
-        <div style={{ fontSize: "26px" }}>142,5 milhões de Lunes</div>
+        <div style={{ fontSize: "26px" }}>{balance}</div>
       </div>
 
       <div className={style.boxLine}>
@@ -69,10 +70,28 @@ class StartLeasing extends React.Component {
       <div className={style.feeVal}>0.00000000</div>
 
       <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
-      <button className={style.btContinue} >{i18n.t("LEASING_BT_START")}</button>
+      <button className={style.btContinue} onClick={() => alert("teste")}>{i18n.t("LEASING_BT_START")}</button>
 
     </div>;
   }
 }
 
-export default StartLeasing;
+StartLeasing.propTypes = {
+  coins: PropTypes.array.isRequired
+}
+
+const mapSateToProps = store => ({
+  coins: store.skeleton.coins
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(StartLeasing);
