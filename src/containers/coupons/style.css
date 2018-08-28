@@ -5,6 +5,8 @@
 
 3. INPUTS
 
+4. MODAL
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -83,24 +85,6 @@
     left: 0;
     margin-bottom: 2rem;
   }
-}
-
-:local(.instructions) {
-  composes: textDefault from '../../components/bases/textBase.css';
-  display: block;
-  text-align: center;
-}
-
-:local(.instructions a) {
-  text-decoration: none;
-  color: #ffffff;
-}
-
-
-:local(.instructions img) {
-  position: relative;
-  left: 10px;
-  top: 5px;
 }
 
 :local(.buttonBorderGreen) {

@@ -7,6 +7,7 @@ import style from "./style.css";
 import colors from "../../components/bases/colors";
 
 import Code from './code';
+import Instructions from "./instructions";
 
 import { inputValidator } from "../../utils/inputValidator";
 
@@ -151,13 +152,7 @@ class Voucher extends React.Component {
           </div>
 
           <div className={style.row}>
-            <div className={style.instructions}>
-              <a href="#">
-                {i18n.t("RECHARGE_INSTRUCTIONS")}
-                <img src="/images/icons/recharge/ic_instrucoes.png" alt={i18n.t("RECHARGE_INSTRUCTIONS")} />
-              </a>
-            </div>
-
+            <Instructions />
           </div>
 
           <div className={style.row}>

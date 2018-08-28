@@ -1,8 +1,12 @@
 import React from "react"
 import i18n from "../../utils/i18n";
+
 import { Grid } from "@material-ui/core";
 import style from "./style.css";
+
 import Code from './code';
+import Instructions from "./instructions";
+
 import { inputValidator } from "../../utils/inputValidator";
 
 class LunesGift extends React.Component {
@@ -63,13 +67,7 @@ class LunesGift extends React.Component {
           </div>
 
           <div className={style.row}>
-            <div className={style.instructions}>
-              <a href="#">
-                {i18n.t("RECHARGE_INSTRUCTIONS")}
-                <img src="/images/icons/recharge/ic_instrucoes.png" alt={i18n.t("RECHARGE_INSTRUCTIONS")} />
-              </a>
-            </div>
-
+            <Instructions />
           </div>
 
           <div className={style.row}>

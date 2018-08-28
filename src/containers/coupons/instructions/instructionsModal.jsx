@@ -4,7 +4,7 @@ import React from "react";
 import style from "./style.css";
 
 // UTILS
-import i18n from "../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 class InstructionsModal extends React.Component {
     render() {

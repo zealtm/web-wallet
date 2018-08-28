@@ -49,8 +49,8 @@ const menuItens = [
     icon: "../../images/icons/general/leasing@1x.png"
   },
   {
-    link: "/cupons",
-    label: i18n.t("MENU_CUPONS"),
+    link: "/coupons",
+    label: i18n.t("MENU_COUPONS"),
     icon: "../../images/icons/general/pay@1x.png"
   },
   {
