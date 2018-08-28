@@ -59,6 +59,7 @@ export const getDefaultFiat = () => {
 
 export const setDefaultCrypto = coin => {
   let userStorage = getUserData();
+
   localStorage.setItem(
     userObj,
     JSON.stringify({ ...userStorage, defaultCoin: coin })
@@ -67,5 +68,8 @@ export const setDefaultCrypto = coin => {
 
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
-  return userStorage.defaultCoin ? userStorage.defaultCoin : "btc";
+
+  return !userStorage || !userStorage.defaultCoin
+    ? "btc"
+    : !userStorage.defaultCoin;
 };

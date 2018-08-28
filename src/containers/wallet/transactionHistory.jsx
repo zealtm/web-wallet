@@ -26,6 +26,12 @@ class TransactionHistory extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let { wallet, coins, getWalletCoinHistory } = this.props;
+    let address = coins[wallet.selectedCoin].address;
+    getWalletCoinHistory(wallet.selectedCoin, address);
+  }
+
   stateDataHistory = key => {
     let { toggleHistory } = this.state;
     this.setState({
@@ -35,19 +41,14 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { wallet, skeleton, coins, getWalletCoinHistory } = this.props;
-    let history = wallet.coinHistory.history[wallet.selectedCoin];
-    let address = coins[wallet.selectedCoin].address;
-    console.warn(wallet.coinHistory);
-
-    return;
-    if (wallet.loading || skeleton.loading) return;
-
-    getWalletCoinHistory(wallet.selectedCoin, address);
+    let { wallet } = this.props;
+    let hisotry = wallet.coinHistory.history.txs;
+    console.warn("hisotry", hisotry);
 
     if (wallet.coinHistory.history <= 0) return <Loading />;
 
-    return history.map((val, index) => {
+    return Object.keys(history).map((val, index) => {
+      console.warn(val, index);
       return (
         <div key={index}>
           <div>
@@ -164,7 +165,7 @@ class TransactionHistory extends React.Component {
 TransactionHistory.propTypes = {
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
-  skeleton: PropTypes.array.isRequired,
+  skeleton: PropTypes.object.isRequired,
   getWalletCoinHistory: PropTypes.func.isRequired
 };
 

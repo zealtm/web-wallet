@@ -118,7 +118,6 @@ class CoinService {
           });
         } else {
           availableCoins[index].address = undefined;
-          availableCoins[index].coinHistory = undefined;
           availableCoins[index].balance = undefined;
         }
       });
@@ -127,28 +126,9 @@ class CoinService {
       await Promise.all(promises);
       /* eslint-enable */
 
-      const coinPromisse = availableCoins.map(async (coin, index) => {
-        if (coin.abbreviation === defaultCrypto) {
-          let responseCoinHistory = await axios.get(
-            BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/transaction/history/" +
-              coin.address,
-            API_HEADER
-          );
-
-          coin.coinHistory = responseCoinHistory
-            ? responseCoinHistory.data.data
-            : undefined;
-        }
-
+      availableCoins.map(async (coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
-
-      /* eslint-disable */
-      await Promise.all(coinPromisse);
-      /* eslint-enable */
 
       coins.token = availableCoins.token;
       return coins;
@@ -274,13 +254,13 @@ class CoinService {
   async getCoinHistory(coin, address, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.post(
+      let response = await axios.get(
         BASE_URL + "/coin/" + coin + "/transaction/history/" + address,
         API_HEADER
       );
-
-      return response;
+      return response.data.data;
     } catch (error) {
+      console.warn(error);
       internalServerError();
       return;
     }

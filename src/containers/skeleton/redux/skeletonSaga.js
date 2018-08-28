@@ -5,8 +5,7 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 import {
   setAuthToken,
   getAuthToken,
-  getUserSeedWords,
-  getDefaultCrypto
+  getUserSeedWords
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 
@@ -32,6 +31,7 @@ export function* loadGeneralInfo(action) {
       userService.getUserPicture,
       responseUser.data.data.email
     );
+
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
@@ -65,8 +65,6 @@ export function* loadWalletInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
-    let defaultCrypto = yield call(getDefaultCrypto);
-
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -75,12 +73,6 @@ export function* loadWalletInfo(action) {
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
-
-    yield put({
-      type: "SET_WALLET_HISTORY",
-      coin: defaultCrypto,
-      history: responseCoins[defaultCrypto].coinHistory
-    });
 
     yield put({
       type: "GET_GENERAL_INFO",

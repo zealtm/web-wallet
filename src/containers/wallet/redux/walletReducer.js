@@ -25,8 +25,6 @@ const initialState = {
 };
 
 const wallet = (state = initialState, action) => {
-  let history = state.coinHistory.history;
-
   switch (action.type) {
     case "SET_SELECTED_COIN":
       return {
@@ -41,7 +39,7 @@ const wallet = (state = initialState, action) => {
         coinHistory: {
           loaded: false,
           loading: false,
-          history: [...state.coinHistory.history]
+          history: state.coinHistory.history
         },
         modal: {
           open: state.modal.open,
@@ -70,13 +68,11 @@ const wallet = (state = initialState, action) => {
       };
 
     case "SET_WALLET_HISTORY":
-      history[action.coin] = action.history;
-      console.warn(history);
       return {
         ...state,
         coinHistory: {
           ...state.coinHistory,
-          history: history,
+          history: action.history,
           loading: false
         }
       };
