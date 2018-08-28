@@ -122,5 +122,7 @@
   "RECHARGE_INSTRUCTIONS":"Instructions",
   "VOUCHER_NUMBER": "Number",
   "VOUCHER_CODE": "Code",
-  "VOUCHER_BUTTON": "Rescue"
+  "VOUCHER_BUTTON": "Rescue",
+  "BALANCE_ERROR_AMOUNT": "The reported amount should not be greater than or equal to your balance with the rate",
+  "LEASING_NOT_INFORMED_FIELD": "Not informed field"
 }

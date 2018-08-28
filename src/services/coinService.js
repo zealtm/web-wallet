@@ -149,6 +149,21 @@ class CoinService {
     }
   }
 
+  async getCoinFee(coinType) {
+
+    if (coinType === "lunes") {
+      let feeValue = {
+        low: 0.001,
+        medium: 0.001,
+        high: 0.001,
+        selectedFee: 0.001
+      }
+
+      return feeValue
+    }
+
+  }
+
   async getCoinPrice(coinType, fiat, token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -240,7 +255,7 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
-      
+
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
         let response = await axios.post(

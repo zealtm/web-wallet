@@ -55,3 +55,8 @@ export const shareCoinAddress = (name, address) => ({
   name,
   address
 });
+
+export const getCoinFeeValue = (coinType) => ({
+  type: "GET_COIN_FEE_API",
+  coinType,
+});

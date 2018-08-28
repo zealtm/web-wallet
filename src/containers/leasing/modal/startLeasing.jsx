@@ -5,18 +5,25 @@ import PropTypes from "prop-types";
 import CustomSelect from "./customSelect";
 import i18n from "../../../utils/i18n";
 import style from "../style.css";
-
+import { getValidateAddress, } from "../../wallet/redux/walletAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amountValue: 0
+      amountValue: 0,
+      address: ""
     }
   }
 
   handleAmountValue = (value) => {
+    value = parseInt(value);
     this.setState({ amountValue: value });
+  }
+
+  handleAddressValue = (address) => {
+    this.setState({ address });
   }
 
   percentageCalculation = (value) => {
@@ -27,9 +34,32 @@ class StartLeasing extends React.Component {
     this.handleAmountValue(result.toFixed(decimalPoint));
   }
 
+  handleStartLeasing = () => {
+    let { getValidateAddress, coins, feeValue, balance, errorInput } = this.props;
+    let { amountValue, address } = this.state;
+    let isGreatherThenBalance = amountValue + feeValue.low <= balance;
+
+    console.warn(amountValue)
+
+    if (amountValue === 0) {
+      errorInput(i18n.t("LEASING_NOT_INFORMED_FIELD"));
+      return;
+    }
+
+    if (!isGreatherThenBalance) {
+      errorInput(i18n.t("BALANCE_ERROR_AMOUNT"));
+      return;
+    }
+
+    getValidateAddress(coins.lunes.abbreviation, address);
+
+    console.warn("Leasing started!!!")
+    return;
+  }
+
   render() {
-    let { amountValue } = this.state;
-    let { balance } = this.props;
+    let { amountValue, address } = this.state;
+    let { balance, feeValue } = this.props;
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
@@ -71,20 +101,26 @@ class StartLeasing extends React.Component {
         </span>
       </div>
 
-      <CustomSelect action={() => alert("teste")} />
+      <CustomSelect action={() => alert("")} />
 
       <input
         type="text"
         name="txtaddress"
         placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
         className={style.inputClear}
+        onChange={event => this.handleAddressValue(event.target.value)}
+        value={address}
       />
 
       <div className={style.titleFee}>{i18n.t("LEASING_FEE")}</div>
-      <div className={style.feeVal}>0.00000000</div>
+      <div className={style.feeVal}>{feeValue.low}</div>
 
       <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
-      <button className={style.btContinue} onClick={() => alert("teste")}>{i18n.t("LEASING_BT_START")}</button>
+      <button
+        className={style.btContinue}
+        onClick={() => this.handleStartLeasing()}>
+        {i18n.t("LEASING_BT_START")}
+      </button>
 
     </div>;
   }
@@ -92,12 +128,18 @@ class StartLeasing extends React.Component {
 
 StartLeasing.propTypes = {
   coins: PropTypes.array.isRequired,
+  feeValue: PropTypes.object,
   balance: PropTypes.number,
-  decimalPoint: PropTypes.number
+  decimalPoint: PropTypes.number,
+  getValidateAddress: PropTypes.func,
+  getCoinFeeValue: PropTypes.func,
+  errorInput: PropTypes.func
+
 }
 
 const mapSateToProps = store => ({
   coins: store.skeleton.coins,
+  feeValue: store.wallet.coinFee,
   balance: store.skeleton.coins.lunes.balance.available,
   decimalPoint: store.skeleton.coins.lunes.decimalPoint
 });
@@ -105,6 +147,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      getValidateAddress,
+      errorInput
     },
     dispatch
   );

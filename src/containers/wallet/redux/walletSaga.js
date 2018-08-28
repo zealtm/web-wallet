@@ -46,3 +46,20 @@ export function* shareCoinAddress(action) {
     yield put(internalServerError());
   }
 }
+
+export function* getCoinFee(action) {
+  try {
+    let response = yield call(coinService.getCoinFee, action.coinType);
+    yield put({
+      type: "GET_COIN_FEE",
+      coinFee: {
+        low: response.low,
+        medium: response.medium,
+        high: response.high,
+        selectedFee: response.selectedFee
+      }
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
