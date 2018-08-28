@@ -401,11 +401,11 @@
   padding-right: 15px;
 }
 
-:local(.submitHistory) {
+:local(.sentHistory) {
   composes: clError from "../../components/bases/colorBase.css";
 }
 
-:local(.receiveHistory) {
+:local(.receivedHistory) {
   composes: clGreenLight from "../../components/bases/colorBase.css";
 }
 

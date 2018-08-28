@@ -13,10 +13,12 @@ import style from "./style.css";
 import Grid from "@material-ui/core/Grid";
 
 // COMPONENTS
-import Loading from "../../components/loading";
+// import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
+// import { getDefaultFiat } from "../../utils/localStorage";
+import { convertCoin } from "../../utils/numbers";
 
 class TransactionHistory extends React.Component {
   constructor() {
@@ -28,7 +30,7 @@ class TransactionHistory extends React.Component {
 
   componentDidMount() {
     let { wallet, coins, getWalletCoinHistory } = this.props;
-    let address = coins[wallet.selectedCoin].address;
+    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
     getWalletCoinHistory(wallet.selectedCoin, address);
   }
 
@@ -41,14 +43,17 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { wallet } = this.props;
-    let hisotry = wallet.coinHistory.history.txs;
-    console.warn("hisotry", hisotry);
+    let { skeleton, wallet } = this.props;
+    let selectedCoin = wallet.selectedCoin;
+    // let defaultFiat = getDefaultFiat();
+    // let price = skeleton.coins[selectedCoin].price[defaultFiat].price;
+    let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
+    let history = wallet.coinHistory.history.txs;
 
-    if (wallet.coinHistory.history <= 0) return <Loading />;
+    if (wallet.coinHistory.history <= 0) return;
 
     return Object.keys(history).map((val, index) => {
-      console.warn(val, index);
+      let transaction = history[index];
       return (
         <div key={index}>
           <div>
@@ -60,16 +65,33 @@ class TransactionHistory extends React.Component {
             >
               <Grid item xs={2} className={style.typeItems}>
                 <div>
-                  <img src="./images/icons/indicatorsHistory/submit.png" />
+                  <img
+                    src={
+                      "./images/icons/walletHistory/" +
+                      transaction.type.toLowerCase() +
+                      ".png"
+                    }
+                  />
                 </div>
                 <div className={style.dateHistory}> {"12/mar"} </div>
               </Grid>
               <Grid item xs={6} className={style.descriptionHistory}>
-                {"Digite descrição curta para sua transação"}
+                {transaction.description}
               </Grid>
               <Grid item xs={4} className={style.valueHistory}>
-                <div className={style.submitHistory}> {"+0.00020521"} </div>
-                <div> {"$ 421.00"} </div>
+                <div
+                  className={
+                    transaction.type === "RECEIVED"
+                      ? style.receivedHistory
+                      : style.sentHistory
+                  }
+                >
+                  {transaction.type === "RECEIVED" || "-"}
+                  {convertCoin(transaction.amount, decimalPoint).toFixed(
+                    decimalPoint
+                  )}
+                </div>
+                <div> {/* transaction.price[defaultFiat] */} </div>
               </Grid>
             </Grid>
 
@@ -89,7 +111,10 @@ class TransactionHistory extends React.Component {
                     </div>
                   </Grid>
                   <Grid item xs={4} className={style.valueHistory}>
-                    <div className={style.timeHistory}> {" 10:32:15 AM "} </div>
+                    <div className={style.timeHistory}>
+                      {" "}
+                      {transaction.date}{" "}
+                    </div>
                   </Grid>
                 </Grid>
 
@@ -99,7 +124,7 @@ class TransactionHistory extends React.Component {
                       <div> {"ID"} </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <div>{"ayudegwdwef54ew68fv46fgdrg5effjbhekyf"}</div>
+                      <div>{transaction.txID}</div>
                     </Grid>
                   </Grid>
 
@@ -112,7 +137,7 @@ class TransactionHistory extends React.Component {
                     </Grid>
                     <Grid item xs={10}>
                       <div className={style.fromTransactionHistory}>
-                        {"ayudegwdwef54ew68fv46effjbhekyf"}
+                        {transaction.from}
                       </div>
                     </Grid>
                   </Grid>
@@ -126,7 +151,7 @@ class TransactionHistory extends React.Component {
                     </Grid>
                     <Grid item xs={10}>
                       <div className={style.forTransactionHistory}>
-                        {"ayudegwdwef54ew68fv46effjbhekyf"}
+                        {transaction.to}
                       </div>
                     </Grid>
                   </Grid>
