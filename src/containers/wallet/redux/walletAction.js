@@ -48,8 +48,9 @@ export const getWalletCoinHistory = (coin, address) => ({
   address
 });
 
-export const setWalletCoinHistoryLoading = () => ({
-  type: "SET_WALLET_HISTORY_LOADING"
+export const setWalletCoinHistoryLoading = state => ({
+  type: "SET_WALLET_HISTORY_LOADING",
+  state
 });
 
 export const clearWalletState = () => ({

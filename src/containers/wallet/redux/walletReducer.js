@@ -63,7 +63,7 @@ const wallet = (state = initialState, action) => {
         ...state,
         coinHistory: {
           ...state.coinHistory,
-          loading: !state.coinHistory.loading
+          loading: action.state ? true : false
         }
       };
 

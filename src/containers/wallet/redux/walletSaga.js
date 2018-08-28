@@ -59,11 +59,16 @@ export function* getWalletCoinHistory(action) {
         history: response
       });
 
+      yield put({
+        type: "SET_WALLET_HISTORY_LOADING"
+      });
+
       return;
     }
 
     yield put({
-      type: "SET_WALLET_HISTORY_LOADING"
+      type: "SET_WALLET_HISTORY_LOADING",
+      state: true
     });
 
     return;

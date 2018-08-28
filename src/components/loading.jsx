@@ -7,9 +7,10 @@ class Loading extends Component {
   }
 
   renderLoading = () => {
-    let { color, width, height } = this.props;
+    let { color, width, height, margin } = this.props;
     let style = {
       height: height ? height : "",
+      margin: margin ? margin : 0,
       justifyContent: "center",
       alignItems: "center",
       display: "flex"
@@ -43,6 +44,7 @@ Loading.propTypes = {
     "wallet"
   ]),
   width: PropTypes.string,
+  margin: PropTypes.string,
   height: PropTypes.string
 };
 

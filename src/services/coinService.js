@@ -253,9 +253,17 @@ class CoinService {
 
   async getCoinHistory(coin, address, token) {
     try {
+      console.warn(
+        BASE_URL + "/coin/" + coin + "/transaction/history/" + address
+      );
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/transaction/history/" + address,
+        BASE_URL +
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          address +
+          "?size=100",
         API_HEADER
       );
       return response.data.data;

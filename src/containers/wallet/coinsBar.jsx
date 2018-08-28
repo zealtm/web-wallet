@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setSelectedCoin, getWalletCoinHistory } from "./redux/walletAction";
+import {
+  setSelectedCoin,
+  getWalletCoinHistory,
+  setWalletCoinHistoryLoading
+} from "./redux/walletAction";
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS
@@ -41,7 +45,12 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (coin, address) => {
-    let { setSelectedCoin, getWalletCoinHistory } = this.props;
+    let {
+      setSelectedCoin,
+      getWalletCoinHistory,
+      setWalletCoinHistoryLoading
+    } = this.props;
+    setWalletCoinHistoryLoading(true);
     getWalletCoinHistory(coin, address);
     setSelectedCoin(coin);
   };
@@ -197,7 +206,8 @@ CoinsBar.propTypes = {
   wallet: PropTypes.object,
   skeleton: PropTypes.object,
   setSelectedCoin: PropTypes.func,
-  getWalletCoinHistory: PropTypes.func
+  getWalletCoinHistory: PropTypes.func,
+  setWalletCoinHistoryLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -208,6 +218,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      setWalletCoinHistoryLoading,
       getWalletCoinHistory,
       setSelectedCoin,
       clearMessage,

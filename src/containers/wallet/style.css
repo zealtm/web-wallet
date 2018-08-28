@@ -343,6 +343,7 @@
   cursor: pointer;
   user-select: none;
   margin: 0 20px;
+  opacity: 1;
 }
 
 :local(.itemDataHistorico) {
@@ -363,15 +364,20 @@
   font-weight: bold;
 }
 
+:local(.alignTimeInValueHistory) {
+  composes: displayAlign;    
+}
+
+:local(.opacityItem) {
+  composes: itemHistorico;
+  opacity: 0.4;
+}
+
 @media only screen and (max-width: 599px) {
-  :local(.opacityItem) {
-    opacity: 0.5;
-  }
   :local(.nivel3) {
     padding-bottom: 60px;
   }
   :local(.itemHistorico) {
-    opacity: 0.5;
     margin: 0;
   }
   :local(.contentTransactions) {
@@ -396,9 +402,20 @@
   font-size: 12px;
 }
 
+:local(.notFound) {
+  text-align: center;
+  padding-top: 5%;
+}
+
 :local(.valueHistory) {
   text-align: right;
   padding-right: 15px;
+}
+
+:local(.timeInValueHistory) {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
 }
 
 :local(.sentHistory) {
@@ -442,6 +459,7 @@
 /* 3.2 ICONS */
 :local(.refleshIcon) {
   composes: displayAlign;  
+  cursor: pointer;
   background-color: #473088;
   border-radius: 20px;
   padding: 6px;
