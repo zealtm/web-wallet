@@ -73,7 +73,7 @@ class CustomTabs extends React.Component {
             scrollButtons="off"
           >
             {
-              tabTitles.map((title, key) => <Tab margin="none" classes={{ root: classes.tabRoot, selected: classes.tabSelected }} key={key} label={title} />)
+              tabTitles.map((title, key) => <Tab classes={{ root: classes.tabRoot, selected: classes.tabSelected }} key={key} label={title} />)
             }
           </Tabs>
         </Grid>
