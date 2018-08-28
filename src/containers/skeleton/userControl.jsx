@@ -41,7 +41,7 @@ class UserControl extends React.Component {
             <div className={style.boxIcon}>
               <img src="../../images/icons/settings/settings.png" />
             </div>
-            {i18n.t("MENU_CONFIGURATION")}
+            {i18n.t("MENU_SETTING")}
           </Link>
           <Link to="/" className={style.linkPopMenu}>
             <div className={style.boxIcon}>

@@ -5,6 +5,7 @@
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
   "MESSAGE_INVALID_ADDRESS": "Invalid Address",
+
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",
   "PLACEHOLDER_SEED": "Seed Words",
@@ -13,6 +14,7 @@
   "PLACEHOLDER_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat password",
   "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
+
   "BTN_SUBMIT": "Submit",
   "BTN_SEND": "Send",
   "BTN_RECEIVE": "Receive",
@@ -29,6 +31,7 @@
   "BTN_IMPORT_SEED": "Import",
   "BTN_NEW_SEED": "GENERATE NEW SEED",
   "BTN_FINALIZE": "Finalize",
+
   "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -40,6 +43,7 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
+
   "PIN_ENTER": "ENTER your PIN",
   "PIN_CREATE": "CREATE your PIN",
   "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
@@ -48,11 +52,13 @@
   "NEW_ACCOUNT_MESSAGE_SENDED": "A message with an activation link has been sent to your email address",
   "NEW_ACCOUNT_PASSWORD_HEADER": "Digit your password",
   "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click to download and end the registration",
+
   "2FA_HEADER": "2FA Confirmation",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",
   "2FA_INSTRUCTIONS_1": "Confirm with the code provided in google authenticator and enter the 6 digits below",
   "2FA_INSTRUCTIONS_2": "Enter the six-digit code of the second factor of your Monday Wallet!",
   "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": " Where do I find the code?",
+
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
@@ -66,7 +72,9 @@
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
   "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
+
   "SEED_INSERT_SEED": "Insert your SeedWords",
+
   "MENU_SUPPORT": "Support",
   "MENU_LOGOUT": "Logout",
   "MENU_HOME": "Home",
@@ -76,27 +84,33 @@
   "MENU_PAY": "Pay",
   "MENU_PURCHASE": "Purchase",
   "MENU_CUPONS": "Cupons",
-  "MENU_CONFIGURATION": "Configuration",
+  "MENU_SETTING": "Settings",
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
+
   "CARD_HOME_TITLE_1": "Portfolio",
   "CARD_HOME_TITLE_2": "Multicoin Wallet",
   "CARD_HOME_TITLE_3": "Recharge",
   "CARD_HOME_TITLE_4": "Pay",
   "CARD_HOME_TITLE_5": "Purchase",
   "CARD_HOME_TITLE_6": "Purchase",
+
   "CARD_HOME_DESCRIPTION_1": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_2": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_3": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_4": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_5": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_6": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  
   "WALLET_MY_AMOUNT": "Balance",
+
   "MODAL_RECEIVE_MESSAGE": "Copied Address",
+
   "BTN_RECEIVE_COPY": "Copy",
   "BTN_RECEIVE_PRINT": "Print",
   "BTN_RECEIVE_EMAIL": "E-mail",
   "BTN_RECEIVE_SHARED": "Shared",
+  
   "WALLET_BALANCE": "Balance",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
   "WALLET_MODAL_RECEIVE_TITLE": "Receive",
@@ -122,5 +136,13 @@
   "RECHARGE_INSTRUCTIONS":"Instructions",
   "VOUCHER_NUMBER": "Number",
   "VOUCHER_CODE": "Code",
-  "VOUCHER_BUTTON": "Rescue"
+  "VOUCHER_BUTTON": "Rescue",
+
+  "SETTINGS_TITLE": "Choose the right privacy settings for you",
+  "SETTINGS_HEADER_INFO": "Control your personal information. With these settings, you can manage what information is private and what data is saved to your account to enhance your Wallet Monday experience.",
+  "SETTINGS_CARD_1": "USER DATA",
+  "SETTINGS_CARD_2": "2FA AUTHENTICATION",
+  "SETTINGS_CARD_3": "WALLETS",
+  "SETTINGS_CARD_4": "CONSENT",
+  "SETTINGS_CARD_5": "DEFINITIONS"  
 }
