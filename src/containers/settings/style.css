@@ -4,8 +4,9 @@
     1.1 BASES
     1.2 TEXTS
 
+2. TWO FACTORS
+    1.1 BASES
 
-  
 */
 
 /* ------------------------------------------------------------------------- */
@@ -71,5 +72,52 @@
 }
 
 /* ------------------------------------------------------------------------- */
+/* 2. TWO FACTORS */
 
-  
+/* 2.1 BASES */
+:local(.columItems) {
+    background-color: aquamarine;
+    color: #68f285;
+    margin: 0 5px;
+}
+
+:local(.indicatorItem) {
+    background-color: orangered;
+    font-size: 100px;
+    color: #654ea6;
+    font-weight: bold;
+    padding: 15px 0;
+    margin: 5px;
+}
+
+:local(.indicatorItem p) {
+    background-color: blue;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+:local(.item) {
+    background-color: white;
+    display: flex;
+}
+:local(.semNome) {
+    display: flex;
+    justify-content: center;
+}
+
+:local(.containerItems) {
+    background-color: green;
+    display: flex;
+    margin-bottom: 50px;
+    float: right;
+}
+@media only screen and (max-width:599px) {
+    :local(.indicatorItem) {
+        font-size: 12px;
+        color: #68f285;
+    }
+    :local(.semNome) {
+    display: block;
+    }
+}

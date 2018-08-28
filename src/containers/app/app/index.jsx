@@ -39,7 +39,6 @@ let leasing = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../leasing")
 });
 
-
 let cupons = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../cupons")),
   loading: loading,

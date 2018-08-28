@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // STYLE
 import style from "./style.css";
@@ -30,7 +31,9 @@ class Settings extends React.Component {
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
-                                {i18n.t("SETTINGS_CARD_2")}
+                                <Link to="/twoFactors">
+                                    {i18n.t("SETTINGS_CARD_2")}
+                                </Link>
                             </Grid>
                         </Grid>
 
