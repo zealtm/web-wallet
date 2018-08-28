@@ -19,11 +19,17 @@ class StartLeasing extends React.Component {
     this.setState({ amountValue: value });
   }
 
+  percentageCalculation = (value) => {
+    let { balance, decimalPoint } = this.props;
+
+    let amount = parseFloat(balance);
+    let result = (parseInt(value) / 100) * amount;
+    this.handleAmountValue(result.toFixed(decimalPoint));
+  }
 
   render() {
     let { amountValue } = this.state;
-    let { coins } = this.props;
-    let balance = coins.lunes.balance.available
+    let { balance } = this.props;
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
@@ -43,16 +49,24 @@ class StartLeasing extends React.Component {
       </div>
 
       <div className={style.boxFee}>
-        <span className={style.greenLabelFee} >
+        <span
+          className={style.greenLabelFee}
+          onClick={() => this.percentageCalculation(25)}>
           25%
         </span>
-        <span className={style.greenLabelFee} >
+        <span
+          className={style.greenLabelFee}
+          onClick={() => this.percentageCalculation(50)}>
           50%
         </span>
-        <span className={style.yellowLabelFee} >
+        <span
+          className={style.yellowLabelFee}
+          onClick={() => this.percentageCalculation(75)}>
           75%
         </span>
-        <span className={style.redLabelFee} >
+        <span
+          className={style.redLabelFee}
+          onClick={() => this.percentageCalculation(100)}>
           100%
         </span>
       </div>
@@ -77,11 +91,15 @@ class StartLeasing extends React.Component {
 }
 
 StartLeasing.propTypes = {
-  coins: PropTypes.array.isRequired
+  coins: PropTypes.array.isRequired,
+  balance: PropTypes.number,
+  decimalPoint: PropTypes.number
 }
 
 const mapSateToProps = store => ({
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  balance: store.skeleton.coins.lunes.balance.available,
+  decimalPoint: store.skeleton.coins.lunes.decimalPoint
 });
 
 const mapDispatchToProps = dispatch =>
