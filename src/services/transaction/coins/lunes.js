@@ -1,148 +1,62 @@
-//import LunesJsAPI from "lunes-js-api";
-import axios from 'axios';
-//import validateAddress from "./validateAddress";
-import { add } from "biggystring";
 import { errorPattern } from "../../../utils/errorPattern";
 import { BASE_URL, API_HEADER } from "../../../constants/apiBaseUrl";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
+import CoinService from "../../coinService";
+
+const WavesAPI = require('@waves/waves-api');
+const bs = require('biggystring')
+
 class LunesTransaction {
-
-  // mnemonicToSeed(mnemonic, network){
-  //   if (mnemonic) {
-  //     const Lunes = LunesJsAPI.create(network.APICONFIG)
-  //     const seed = Lunes.Seed.fromExistingPhrase(mnemonic)
-  //     return seed
-  //   }
   
-  //   return 'Invalid'
-  // }
-
-  async balance(address, network){
-    try {
-      // const validate = await validateAddress(address, network)
-      // if (!validate) {
-      //   throw errorPattern(
-      //     'Invalid ' + network.coinName + ' Address',
-      //     406,
-      //     'ADDRESS_INVALID',
-      //     'The address ' +
-      //       address +
-      //       ' is not a valid ' +
-      //       network.coinName +
-      //       ' address.'
-      //   )
-      // }
-  
-      let res = await axios.get(
-        network.apiUrl + '/addresses/balance/details/' + address
-      )
-  
-      return {
-        network: network.coinSymbol,
-        data: {
-          address: address,
-          confirmed: res.data.available,
-          unconfirmed: null
-        }
-      }
-    } catch (error) {
-      throw errorPattern(
-        error.message || 'Error retrieving balances',
-        error.status || 500,
-        error.messageKey || 'BALANCE_ERROR',
-        error.logMessage || error.stack || ''
-      )
-    }
-  }
-
   async createLunesTransaction(data){
+    // nao permitir certos valores 
+    if (data.amount <= 0) {
+      throw errorPattern('Invalid amount', 401, 'INVALID_AMOUNT')
+    }
+
+    if (data.fee < 0) {
+      throw errorPattern('Fee cannot be smaller than 0.', 401, 'INVALID_FEE')
+    }
+
+    // conferir saldo da origem
+    const coinService = new CoinService();
+    const userBalance = await coinService.getCoinBalance("lunes", data.fromAddress, data.token);
+   
+    // BIGGYSTRING pra somar grandes valores [ERRO]
+    // const finalAmount = bs.add(data.amount, data.fee);
+    // if (userBalance.data.data.available < finalAmount) {
+    //   throw errorPattern('Balance too small', 401, 'TRANSACTION_LOW_BALANCE')
+    // }
+    
+    // prepara a api 
+    const Waves   = WavesAPI.create(data.network.APICONFIG); // usa a api da MAIN ou TESTNET
+    const seed    = Waves.Seed.fromExistingPhrase(data.seed); // carga de dados usando a seed
+    
+    // prepara a payload
+    const transferData = { 
+      recipient:    data.toAddress,
+      assetId:      'WAVES',
+      amount:       data.amount,
+      //feeAssetId:   data.network.coinSymbol,
+      fee:          data.fee,
+      //timestamp:    Date.now()
+    };
+    
+    // transacionar
     try {
-      const {token, seed, keyPair, fromAddress, toAddress, transactionAmount, fee, network} = data;
-
-      // Check received address
-      // const validate = await validateAddress(toAddress, network)
-      // if (!validate) {
-      //   throw errorPattern(
-      //     'Invalid ' + network.coinName + ' Address',
-      //     406,
-      //     'ADDRESS_INVALID',
-      //     'The address ' +
-      //       toAddress +
-      //       ' is not a valid ' +
-      //       network.coinName +
-      //       ' address.'
-      //   )
-      // }
-
-      const seed2 = this.mnemonicToSeed(seed, network);
-
-      if (transactionAmount <= 0) {
-        throw errorPattern("Invalid amount", 401, "INVALID_AMOUNT");
-      }
-      if (fee < 0) {
-        throw errorPattern("Fee cannot be smaller than 0.", 401, "INVALID_FEE");
-      }
-
-      // ja existe este servico em CoinService, mas por enquanto temos que usar a TestNet
-      const userBalance = await this.balance(fromAddress, network);
-
-      const finalAmount = add(transactionAmount.toString(), fee.toString());
-      if (userBalance.data.confirmed < finalAmount) {
-        throw errorPattern("Balance too small", 401, "TRANSACTION_LOW_BALANCE");
-      }
-
-      // 
-      const transactionData = {
-        assetId: "WAVES",
-        amount: transactionAmount,
-        fee: fee,
-        recipient: toAddress
-      };
-
-      try {
-        //const Lunes = LunesJsAPI.create(network.APICONFIG);
-        
-        API_HEADER.headers.Authorization = token;
-        let response = await axios.post(
-          `https://lunesnode-testnet.lunes.io/assets/transfer`,
-          transactionData,
-          API_HEADER
-        );
-        console.log("LUNES", response);
-        /*
-        const transaction = await Lunes.API.Node.v1.assets.transfer(transactionData, seed.keyPair)
-          .then(res => {
-            const result = {
-              network: network.coinSymbol,
-              data: {
-                txID: res.id
-              }
-            };
-
-            return result;
-          });
-        */
-
-        return transaction;
-     
-      } catch (error) {
-        console.log("erro2", error);
-        throw errorPattern(
-          error.data ? error.data.message : "Error on transaction",
-          error.status || 500,
-          error.messageKey || "ON_TRANSACTION_ERROR",
-          ""
-        );
-      }
-    } catch (error) {
-      console.log("erro1");
-      throw errorPattern(
-        error.message || "Error creating transaction",
-        error.status || 500,
-        error.messageKey || "CREATE_TRANSACTION_ERROR",
-        error.logMessage || error.stack || ""
-      );
+      const transaction = await Waves.API.Node.transactions.broadcast('transfer', transferData, seed.keyPair)
+        .then((responseData) => {
+          return responseData;
+        }).error((error)=>{
+          console.log(error);
+          return error;
+        });
+      console.log(responseData);
+      return transaction;
+    }catch(error){
+      console.log("waves error", error);
+      return error;
     }
   }
 }

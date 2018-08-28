@@ -80,29 +80,24 @@ class TransactionService {
             payload.network
           );
 
-        // return transactionBtcResult;
+          return transactionBtcResult;
 
         // lunes
         case "lunes":
           const data = {
-            network: testnet ? networks.LNSTESTNET : networks.LNS,
-            seed: seed,
-            keyPair: "",
-            fromAddress: from,
-            toAddress: to,
-            transactionAmount: amount,
-            fee: fee, 
-            token: token
+            network:        testnet ? networks.LNSTESTNET : networks.LNS,
+            seed:           seed,
+            fromAddress:    from,
+            toAddress:      to,
+            amount:         amount,
+            fee:            fee, 
+            token:          token
           };
 
-          const lunesTransaction = new LunesTransaction();
+          const lunesTransaction        = new LunesTransaction();
+          const transactionLunesResult  = await lunesTransaction.createLunesTransaction( data );
 
-          const transactionLunesResult = await lunesTransaction.createLunesTransaction(
-            data
-          );
-
-          // return transactionLunesResult;
-          return;
+          return transactionLunesResult;
       }
     } catch (error) {
       return errorPattern(

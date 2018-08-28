@@ -220,7 +220,7 @@ export const networks = {
     }
   },
   LNS: {
-    coinSymbol: 'LNS',
+    coinSymbol: 'LUNES',
     coinName: 'Lunes',
     testnet: false,
     apiUrl: 'https://lunesnode.lunes.io',
@@ -236,7 +236,7 @@ export const networks = {
     }
   },
   LNSTESTNET: {
-    coinSymbol: 'LNS',
+    coinSymbol: 'LUNES',
     coinName: 'Lunes',
     testnet: true,
     apiUrl: 'https://lunesnode-testnet.lunes.io',

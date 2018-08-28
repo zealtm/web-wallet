@@ -15,26 +15,18 @@ class Home extends React.Component {
 
   componentDidMount (){
 
+    // **** EXEMPLO DE TRANSACAO LUNES PARA TESTE */
     const token = getAuthToken();
-
-    // testes transacao
-    const dataFee = {
-      "fromAddress": "mrmBsCMa8jw2btb9rTPpYyZHCED5UDPh5N",
-      "toAddress": "moNjrdaiwked7d8jYoNxpCTZC4CyheckQH",
-      "amount": 1
-    }
-
     const novaTransacao = new TransactionService();
-
     const teste = novaTransacao.transaction(
-      'lunes', 
-      token, 
-      20000000, 
-      100, 
-      "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", 
-      "37dV3nmnbwL8VSHVm1PGk5JUnPekUAxZGsN", 
-      "", // seeed
-      true
+      'lunes', // coin
+      token, // token
+      2, // amount
+      1000000, // fee
+      "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // from
+      "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // to
+      "", // informe aqui uma SEED
+      true // testnet
     );
     
   }
