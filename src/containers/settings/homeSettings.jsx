@@ -22,31 +22,31 @@ class Settings extends React.Component {
 
                     <Grid container className={style.containerCardsSettings}>
 
-                        <Grid item xs={12} sm={3} className={style.cardsSettings}>
+                        <Grid item xs={12} sm={4} md={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
                                 {i18n.t("SETTINGS_CARD_1")}
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} className={style.cardsSettings}>
+                        <Grid item xs={12} sm={4} md={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
                                 {i18n.t("SETTINGS_CARD_2")}
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} className={style.cardsSettings}>
+                        <Grid item xs={12} sm={4} md={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
                                 {i18n.t("SETTINGS_CARD_3")}
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} className={style.cardsSettings}>
+                        <Grid item xs={12} sm={4} md={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
                                 {i18n.t("SETTINGS_CARD_4")}
                             </Grid>
                         </Grid>
 
-                        <Grid item xs={12} sm={3} className={style.cardsSettings}>
+                        <Grid item xs={12} sm={4} md={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>
                                 {i18n.t("SETTINGS_CARD_5")}
                             </Grid>
