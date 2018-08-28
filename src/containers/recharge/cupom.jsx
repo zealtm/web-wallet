@@ -55,7 +55,7 @@ class Cupom extends React.Component {
           xs={12}
           className={style.box}
         >
-          <div className={style.wrapCode}>
+          <div className={style.cupomRow}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <input
               className={style.inputTextDefault}
@@ -67,7 +67,7 @@ class Cupom extends React.Component {
             />
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <div className={style.instructions}>
               <a href="#">
                 {i18n.t("RECHARGE_INSTRUCTIONS")}
@@ -77,7 +77,7 @@ class Cupom extends React.Component {
 
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <button
               className={style.buttonBorderGreen}
               onClick={() => this.inputValidator()}
