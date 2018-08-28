@@ -14,13 +14,13 @@ class Settings extends React.Component {
     render() {
         return (
             <div>
-                <Grid container xs={12} className={style.containerSettings}>
+                <Grid container className={style.containerSettings}>
                     <Grid item xs={10} sm={11} className={style.headerSettings}>
                         <h2>{i18n.t("SETTINGS_TITLE")}</h2>
                         <p>{i18n.t("SETTINGS_HEADER_INFO")}</p>
                     </Grid>
 
-                    <Grid container xs={12} className={style.containerCardsSettings}>
+                    <Grid container className={style.containerCardsSettings}>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
                             <Grid className={style.cards}>

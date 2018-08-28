@@ -58,11 +58,6 @@ const menuItens = [
     label: i18n.t("MENU_PRIVACY"),
     icon: "../../images/icons/general/privacy@1x.png"
   },
-  {
-    link: "/settings",
-    label: i18n.t("MENU_SETTING"),
-    icon: "../../images/icons/general/configuration@1x.png"
-  }
 ];
 
 class Menu extends React.Component {
@@ -112,8 +107,8 @@ class Menu extends React.Component {
             <Grid item xs={8}>
               <span className={style.userName}>{user.name}</span>
               <br />
-              <Link to="/config" className={style.link}>
-                {i18n.t("MENU_CONFIGURATION")}
+              <Link to="/settings" className={style.link}>
+                {i18n.t("MENU_SETTING")}
               </Link>
               <Link to="/help" className={style.link}>
                 {i18n.t("MENU_SUPPORT")}
