@@ -34,6 +34,9 @@ const inputStyle = {
       borderBottomColor: colors.purple.dark,
     },
   },
+  disabled: {},
+  error: {},
+  focused: {},
 }
 
 class Voucher extends React.Component {
@@ -110,12 +113,19 @@ class Voucher extends React.Component {
           xs={12}
           className={style.box}
         >
-          <div className={style.wrap}>
+          <div className={style.row}>
             <label htmlFor="txtPhone">{i18n.t("VOUCHER_NUMBER")}</label>
             <Grid container>
               <Grid item xs={4}>
                 <Input
-                  classes={{ root: classes.root, underline: classes.cssUnderline, input: classes.cssInput }}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput,
+                    disabled: classes.disabled,
+                    focused: classes.focused,
+                    error: classes.error
+                  }}
                   placeholder="(xx)"
                   value={phone[0]}
                   inputProps={{maxLength: 2, required: true}}
@@ -124,7 +134,14 @@ class Voucher extends React.Component {
               </Grid>
               <Grid item xs={8}>
                 <Input
-                  classes={{ root: classes.root, underline: classes.cssUnderline, input: classes.cssInput }}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput,
+                    disabled: classes.disabled,
+                    focused: classes.focused,
+                    error: classes.error
+                  }}
                   placeholder="xxxxx-xxxx"
                   value={phone[1]}
                   inputProps={{maxLength: 9, required: true}}
@@ -134,12 +151,12 @@ class Voucher extends React.Component {
             </Grid>
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <label className={style.marginLabel}>{i18n.t("VOUCHER_CODE")}</label>
             <Code values={code} onHandleChange={this.handleCodeChange} />
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <div className={style.instructions}>
               <a href="#">
                 {i18n.t("RECHARGE_INSTRUCTIONS")}
@@ -149,7 +166,7 @@ class Voucher extends React.Component {
 
           </div>
 
-          <div className={style.wrap}>
+          <div className={style.row}>
             <button
               className={style.buttonBorderGreen}
               onClick={() => this.inputValidator()}
