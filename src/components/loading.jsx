@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-const style = {
-  justifyContent: "center",
-  alignItems: "center",
-  display: "flex"
-};
 class Loading extends Component {
   constructor(props) {
     super(props);
   }
 
   renderLoading = () => {
-    let { color, width } = this.props;
+    let { color, width, height } = this.props;
+    let style = {
+      height: height ? height : "",
+      justifyContent: "center",
+      alignItems: "center",
+      display: "flex"
+    };
     if (!color) color = "white";
     if (!width) width = "20px";
-
     return (
       <div style={style}>
         <img
@@ -39,9 +39,11 @@ Loading.propTypes = {
     "purple",
     "lunes",
     "bitcoin",
-    "general"
+    "general",
+    "wallet"
   ]),
-  width: PropTypes.string
+  width: PropTypes.string,
+  height: PropTypes.string
 };
 
 export default Loading;
