@@ -61,11 +61,16 @@ class CoinsInfo extends React.Component {
     let { setWalletSendModalOpen, setWalletReceiveModalOpen, coins, wallet } = this.props;
     let step = wallet.modal.step;
     let coin = coins[wallet.selectedCoin];
+    // let coin = { name: "lunes" };
     let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
+    // let coinPrice = 0
     let coinPercent = coins[wallet.selectedCoin].price.percent;
+    // let coinPercent = "200%"
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
+    // let fiatBalance = 0.00;
     let balance = coin.balance.available;
     return (
+      
       <div className={style.containerWallet}>
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
@@ -90,7 +95,7 @@ class CoinsInfo extends React.Component {
                   {coin.name.toUpperCase()}
                 </div>
                 <img
-                  src={"/images/icons/coins/" + coin.abbreviation + ".png"}
+                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
                 />
                 <div className={style.percentageCoinSelected}>
@@ -149,6 +154,7 @@ class CoinsInfo extends React.Component {
 
 
           </div>
+
         </Hidden>
       </div>
     );

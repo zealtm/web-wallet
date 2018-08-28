@@ -12,6 +12,11 @@
     2.3.1 BUTTONS MOBILE / GRID
   2.4 ICONS - COINS
 
+3. HISTORY
+  3.1 BASES
+  3.2 TEXTS
+  3.3 ICONS
+
 3. MODAL
 */
 
@@ -132,13 +137,9 @@
 /* 2. COINS INFO */
 
 /* 2.1 BASES */
-:local(.containerWallet) {
-  padding: 0 10px;
-}
-
 :local(.wrapperInfoCoins) {
-  display: inline-flex;
   width: 100%;
+  display: flex;
   justify-content: center;
 }
 
@@ -158,10 +159,12 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+  padding: 0 15px;
 }
 
 :local(.alignContentCoin) {
   padding: 0;
+  max-width: 100px; 
 }
 
 :local(.styleCoinDefalt) {
@@ -296,6 +299,166 @@
   :local(.iconCoinSelected) {
     width: 34px;
   }
+}
+
+/* ------------------------------------------------------------------------- */
+/* 3. HISTORY */
+
+/* 3.1 BASES */
+:local(.displayAlign) {
+  display: flex;
+  justify-content: center;
+}
+
+:local(.containerTransactions) {
+  composes: displayAlign;  
+}
+
+:local(.contentTransactions) {
+  border-radius: 8px;
+  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
+  background-color: #473088;
+  max-height: 55vh;
+  overflow: auto;   
+  padding-bottom: 100px;
+}
+
+:local(.contentTransactions::-webkit-scrollbar-thumb) {
+  background-color: #68f285;
+}
+
+:local(.typeItems) {
+  text-align: center;
+  padding: 10px 0; 
+  margin: auto auto;
+}
+
+:local(.itemHistorico) {
+  display: flex;
+  border: 0;
+  border-bottom: 1px;
+  border-color: #3a1d71;
+  border-style: solid;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 20px;
+  opacity: 1;
+}
+
+:local(.itemDataHistorico) {
+  background-color: #381e67;
+  display: flex;
+  cursor: default;
+  font-size: 9px;
+}
+
+:local(.toggleHistory) {
+  display: none;
+  transition: 2s;
+}
+
+:local(.alignItemsHeaderHistory) {
+  composes: textDefault from "../../components/bases/textBase.css";  
+  padding: 15px 0;
+  font-weight: bold;
+}
+
+:local(.alignTimeInValueHistory) {
+  composes: displayAlign;    
+}
+
+:local(.opacityItem) {
+  composes: itemHistorico;
+  opacity: 0.4;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.nivel3) {
+    padding-bottom: 60px;
+  }
+  :local(.itemHistorico) {
+    margin: 0;
+  }
+  :local(.contentTransactions) {
+    box-shadow: none;
+  }
+}
+
+/* 3.2 TEXTS */
+:local(.text) {
+  text-align: center;
+  font-size: 16px;
+}
+
+:local(.titleBlockExplorer) {
+  padding: 10px 15px; 
+  margin: auto auto;
+  font-weight: bold;
+}
+
+:local(.descriptionHistory) {
+  padding: 10px 15px;
+  font-size: 12px;
+}
+
+:local(.valueHistory) {
+  text-align: right;
+  padding-right: 15px;
+}
+
+:local(.timeInValueHistory) {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+:local(.submitHistory) {
+  composes: clError from "../../components/bases/colorBase.css";
+}
+
+:local(.receiveHistory) {
+  composes: clGreenLight from "../../components/bases/colorBase.css";
+}
+
+:local(.timeHistory) {
+  font-weight: bold;
+  text-align: center;
+}
+
+:local(.dateHistory) {
+  font-size: 9px;
+}
+
+:local(.fromTransactionHistory) {
+  composes: clError from "../../components/bases/colorBase.css";
+  padding: 0px 15px;
+  font-size: 9px;
+}
+
+:local(.forTransactionHistory) {
+  composes: clGreenLight from "../../components/bases/colorBase.css";
+  padding: 0px 15px;
+  font-size: 9px;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.descriptionHistory) {
+    font-size: 9px;
+  }  
+  :local(.valueHistory) {
+    padding-right: 10px;
+  }
+}
+
+/* 3.2 ICONS */
+:local(.refleshIcon) {
+  composes: displayAlign;  
+  background-color: #473088;
+  border-radius: 20px;
+  padding: 6px;
+  float: right;
+  align-content: center;
 }
 
 /* ------------------------------------------------------------------------- */
