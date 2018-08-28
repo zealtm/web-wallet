@@ -118,5 +118,9 @@
   "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier",
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",
   "INSTRUCTION_MODAL_CUPON_4": "Item",
-  "TRANSACTION_HISTORY_TITLE": "Transactions"
+  "TRANSACTION_HISTORY_TITLE": "Transactions",
+  "RECHARGE_INSTRUCTIONS":"Instructions",
+  "VOUCHER_NUMBER": "Number",
+  "VOUCHER_CODE": "Code",
+  "VOUCHER_BUTTON": "Rescue"
 }

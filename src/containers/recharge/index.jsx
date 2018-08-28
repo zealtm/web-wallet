@@ -1,5 +1,8 @@
 import React from 'react';
 import Tabs from '../../components/tabs';
+import Voucher from './voucher';
+import LunesGift from './lunesGift';
+import Cupom from './cupom';
 
 const titles = [
   'Voucher',
@@ -8,9 +11,9 @@ const titles = [
 ];
 
 const contents  = [
-  <h1>Voucher</h1>,
-  <h1>Lunes Gift</h1>,
-  <h1>Cupom</h1>,
+  <Voucher />,
+  <LunesGift />,
+  <Cupom />,
 ];
 
 class Recharge extends React.Component {
@@ -21,7 +24,7 @@ class Recharge extends React.Component {
   render() {
     return (
       <div>
-        <Tabs tabTitles={titles} tabContents={contents}/>
+        <Tabs tabTitles={titles} tabContents={contents} justify="center" />
       </div>
     )
   }
