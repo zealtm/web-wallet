@@ -368,6 +368,11 @@
   font-size: 12px;
 }
 
+:local(.descriptionHistory a) {
+  text-decoration: none;
+  color: white;
+}
+
 :local(.notFound) {
   text-align: center;
   padding-top: 5%;
@@ -398,6 +403,11 @@
 }
 
 :local(.dateHistory) {
+  font-size: 9px;
+}
+
+:local(.idTransactionHistory) {
+  padding: 0px 15px;
   font-size: 9px;
 }
 

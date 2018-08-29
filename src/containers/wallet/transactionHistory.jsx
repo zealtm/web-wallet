@@ -21,6 +21,11 @@ import i18n from "../../utils/i18n";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
+const blockexplorer = {
+  lunes: "https://blockexplorer.lunes.io/tx/",
+  btc: "https://live.blockcypher.com/btc/tx/"
+};
+
 class TransactionHistory extends React.Component {
   constructor() {
     super();
@@ -142,7 +147,16 @@ class TransactionHistory extends React.Component {
                       <div> {"ID:"} </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <div>{transaction.txID}</div>
+                      <a
+                        className={style.idTransactionHistory}
+                        href={
+                          blockexplorer[selectedCoin]
+                            ? blockexplorer[selectedCoin] + transaction.txID
+                            : ""
+                        }
+                      >
+                        {transaction.txID.substring(0, 33) + "..."}
+                      </a>
                     </Grid>
                   </Grid>
 
