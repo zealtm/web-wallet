@@ -1,11 +1,15 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
-import { HEADER_REQUEST } from "../constants/headers";
-
+import {
+  BASE_URL,
+  API_HEADER,
+  HEADER_REQUEST,
+  HEADER_RESPONSE
+} from "../constants/apiBaseUrl";
 import {
   badRequest,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
+import { setAuthToken } from "../utils/localStorage";
 import { encryptMd5 } from "../utils/cryptography";
 
 class UserService {
@@ -21,6 +25,7 @@ class UserService {
         },
         API_HEADER
       );
+
       return response;
     } catch (error) {
       if (error.response.data.code === 500) {
@@ -35,6 +40,7 @@ class UserService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/user", API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {

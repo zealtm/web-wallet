@@ -13,7 +13,11 @@ import {
 
 // UTILS
 import i18n from "../utils/i18n";
-import { getDefaultCrypto, setDefaultCrypto } from "../utils/localStorage";
+import {
+  getDefaultCrypto,
+  setDefaultCrypto,
+  setAuthToken
+} from "../utils/localStorage";
 import {
   convertBiggestCoinUnit,
   percentCalc,
@@ -33,6 +37,8 @@ let getPriceHistory = async (coiName, token) => {
     );
 
     if (!priceHistories.data.data) return prices;
+
+    setAuthToken(priceHistories.headers[HEADER_RESPONSE]);
 
     let maxHistories = priceHistories.data.data.history.length - 1;
     prices.initial = priceHistories.data.data.history[0].price;
@@ -133,7 +139,7 @@ class CoinService {
       availableCoins.map(async (coin, index) => {
         coins[coin.abbreviation] = availableCoins[index];
       });
-
+      setAuthToken(availableCoins.token);
       coins.token = availableCoins.token;
       return coins;
     } catch (error) {
@@ -147,6 +153,8 @@ class CoinService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/coin", API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response;
     } catch (error) {
       internalServerError();
@@ -161,6 +169,7 @@ class CoinService {
         BASE_URL + "/coin/" + coinType + "/balance/" + address,
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -176,6 +185,7 @@ class CoinService {
         BASE_URL + "/coin/" + coinType + "/price/" + fiat,
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -232,6 +242,8 @@ class CoinService {
         `${BASE_URL}/coin/${coinType}/history/${fiat}?from=${fromDateIso}&to=${toDateIso}&interval=${interval}`,
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response;
     } catch (error) {
       internalServerError();
@@ -247,6 +259,8 @@ class CoinService {
         { seed },
         API_HEADER
       );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -267,6 +281,8 @@ class CoinService {
           "?size=100",
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response.data.data;
     } catch (error) {
       console.warn(error);
@@ -330,6 +346,7 @@ class CoinService {
         { fromAddress, toAddress, amount },
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       let data = response.data.data;
 
