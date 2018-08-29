@@ -55,7 +55,7 @@ class TransactionHistory extends React.Component {
     let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
     let history = wallet.coinHistory.history.txs;
 
-    if (wallet.coinHistory.history <= 0) {
+    if (!history || wallet.coinHistory.history <= 0) {
       return <div className={style.notFound}>Nothing Found</div>;
     }
 
