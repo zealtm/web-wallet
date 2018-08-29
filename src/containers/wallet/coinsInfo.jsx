@@ -64,7 +64,7 @@ class CoinsInfo extends React.Component {
     let balance = coin.balance.available;
 
     return (
-      <div className={style.containerWallet}>
+      <div>
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
@@ -78,13 +78,13 @@ class CoinsInfo extends React.Component {
           }
           show={wallet.modal.open}
         />
-        <div className={style.mainWalletInfoCoins}>
-          <Grid item xs={11} sm={8} md={7} className={style.wrapperInfoCoins}>
-            <div className={style.contentCoinSelected}>
-              <div className={style.alignContentCoin}>
-                <div className={style.nameCoinSelected}>
-                  {coin.name.toUpperCase()}
-                </div>
+
+        <Grid container className={style.containerInfo}>
+          <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
+
+            <Grid item xs={4} className={style.coinSel}>
+              <Grid item>
+                <h3>{coin.name.toUpperCase()}</h3>
                 <img
                   src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
@@ -93,57 +93,64 @@ class CoinsInfo extends React.Component {
                   {this.renderArrowPercent(coinPercent)}
                   {coinPercent}
                 </div>
+                <h2>{"$" + coinPrice}</h2>
+              </Grid>
+            </Grid>
 
-                <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
-              </div>
-            </div>
+            <Hidden xsDown>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItem}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}> {defaultCoin} </div>
+                  </div>
+                </Grid>
 
-            <div className={style.floatRightDesktop}>
-              <div className={style.coinBalance}>
-                <div className={style.balanceMyAmount}>
-                  {i18n.t("WALLET_BALANCE")}
-                </div>
-                <div className={style.balanceAmount}> {balance} </div>
-
-                <div>
-                  {"$" + fiatBalance}
-                  <div className={style.coinBalanceGreen}> {defaultCoin} </div>
-                </div>
-              </div>
-
-              <Hidden xsDown>
-                <div className={style.alignButtons}>
+                <Grid item className={style.alignButtons}>
                   <button className={style.receiveButton}>
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
                   <button
-                    className={style.submitButton}
+                    className={style.sendButton}
                     onClick={() => setWalletSendModalOpen()}
                   >
                     {i18n.t("BTN_SEND")}
                   </button>
-                </div>
-              </Hidden>
-            </div>
+                </Grid>
+              </Grid>
+            </Hidden>
+
+            <Hidden smUp>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItemMobile}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}> {defaultCoin} </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Hidden>
           </Grid>
-        </div>
 
-        <Hidden smUp>
-          <div
-            className={style.alignButtonsMobile}
-            onClick={() => setWalletSendModalOpen()}
-          >
-            <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SEND")}
-            </button>
+          <Hidden smUp>
+            <Grid item xs={11} className={style.alignButtons}>
+              <button className={style.receiveButtonMobile}>
+                {i18n.t("BTN_RECEIVE")}
+              </button>
+              <button className={style.sendButtonMobile}
+                onClick={() => setWalletSendModalOpen()}>
+                {i18n.t("BTN_SEND")}
+              </button>
+            </Grid>
+          </Hidden>
 
-            <button className={style.receiveButtonMobile}>
-              {i18n.t("BTN_RECEIVE")}
-            </button>
-          </div>
-        </Hidden>
-      </div>
+        </Grid>
+      </div >
     );
   }
 }

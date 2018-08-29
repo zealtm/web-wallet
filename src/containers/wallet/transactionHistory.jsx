@@ -74,7 +74,7 @@ class TransactionHistory extends React.Component {
               }
               onClick={() => this.stateDataHistory(index)}
             >
-              <Grid item xs={2} className={style.typeItems}>
+              <Grid item xs={3} sm={2} className={style.typeItems}>
                 <div>
                   <img
                     src={
@@ -132,7 +132,7 @@ class TransactionHistory extends React.Component {
                     className={style.alignTimeInValueHistory}
                   >
                     <div className={style.timeInValueHistory}>
-                      <div> {formatDate(transaction.date, "HMS")}</div>
+                      {formatDate(transaction.date, "HMS")}
                     </div>
                   </Grid>
                 </Grid>
@@ -153,7 +153,7 @@ class TransactionHistory extends React.Component {
                         {"De:"}
                       </div>
                     </Grid>
-                    <Grid item xs={10}>
+                    <Grid item xs={10} className={style.descriptionHistory}>
                       <div className={style.fromTransactionHistory}>
                         {transaction.from}
                       </div>
@@ -166,7 +166,7 @@ class TransactionHistory extends React.Component {
                         {"Para:"}
                       </div>
                     </Grid>
-                    <Grid item xs={10}>
+                    <Grid item xs={10} className={style.descriptionHistory}>
                       <div className={style.forTransactionHistory}>
                         {transaction.to}
                       </div>
