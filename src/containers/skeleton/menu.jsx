@@ -51,13 +51,8 @@ const menuItens = [
   {
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
-    icon: "../../images/icons/general/pay@1x.png"
-  },
-  {
-    link: "/privacy",
-    label: i18n.t("MENU_PRIVACY"),
-    icon: "../../images/icons/general/privacy@1x.png"
-  },
+    icon: "../../images/icons/general/cupon@1x.png"
+  }
 ];
 
 class Menu extends React.Component {
