@@ -76,7 +76,7 @@
 
 /* 2.1 BASES */
 :local(.columItems) {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     color: #68f285;
     margin: 0 5px;
 }
@@ -107,7 +107,7 @@
 }
 
 :local(.containerItems) {
-    background-color: green;
+    /* background-color: green; */
     display: flex;
     margin-bottom: 50px;
     float: right;
@@ -116,8 +116,10 @@
 :local(.contendItem) {
     align-items: center;
     justify-content: center;
-    max-width: 100%;
+    width: 100%;
     padding: 5vh 1vh;
+    flex: 1;
+    align-self: flex-end;
 }
 
 :local(.containerItems img) {
@@ -125,7 +127,7 @@
 }
 
 :local(.columItemsMobile) {
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
 @media only screen and (max-width:599px) {
@@ -146,4 +148,74 @@
     :local(.columItems) {
         display: flex;
     }
+}
+
+:local(.teste) {
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
+:local(.inputTwoFactorAuthenticator) {
+    /* composes: textDefault from "../../components/bases/textBase.css"; */
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #979797;
+    width: 49px;
+    height: 50px;
+    margin: 25px 1px 0px 0px;
+    font-size: 32px;
+    font-weight: 900;
+    text-align: center;
+  }
+  
+  :local(.inputTwoFactorAuthenticatorError) {
+    composes: inputTwoFactorAuthenticator;
+    border-bottom: 1px solid #f05252;
+    color: #f05252;
+  }
+  
+  :local(.alignInputTwoFactorAuthenticator) {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  /* 7.2 TEXTS */
+  :local(.instructions) {
+    /* composes: textDefault from "../../components/bases/textBase.css"; */
+    text-align: center;
+  }
+  
+  :local(.instructions_2) {
+    /* composes: description; */
+    margin: 30px 0px 50px 0px;
+  }
+  
+  :local(.linkWhereToFind) {
+    /* composes: link; */
+    color: white;
+    font-weight: bold;
+  }
+
+
+
+  /* 1.2 BUTTON */
+:local(.buttonEnable) {
+    composes: buttonEnable from "../../components/bases/buttonBase.css";
+}
+  
+:local(.buttonBorderGreen) {
+    composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+}
+
+
+:local(.alignItems3) {
+    background-color: yellow;
+    flex: 1;
+    align-self: flex-end;
 }

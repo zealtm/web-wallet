@@ -73,8 +73,8 @@
 
 :local(.buttonBorderGreen) {
   composes: buttonDisabled;
-  composes: bgPurpleDefault from "./colorBase.css";
   composes: bdGreenLight from "./colorBase.css";
+  background-color: transparent;
   border-style: solid;
   border-width: 1px;
 }
