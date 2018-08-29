@@ -61,6 +61,7 @@ class TransactionHistory extends React.Component {
 
     return Object.keys(history).map((val, index) => {
       let transaction = history[index];
+      console.warn(transaction);
       return (
         <div key={index}>
           <div>
@@ -85,7 +86,6 @@ class TransactionHistory extends React.Component {
                   />
                 </div>
                 <div className={style.dateHistory}>
-                  {" "}
                   {formatDate(transaction.date, "DM")}
                 </div>
               </Grid>
@@ -100,7 +100,6 @@ class TransactionHistory extends React.Component {
                       : style.sentHistory
                   }
                 >
-                  {" "}
                   {transaction.type === "RECEIVED" || "-"}
                   {convertBiggestCoinUnit(
                     transaction.amount,
@@ -156,7 +155,7 @@ class TransactionHistory extends React.Component {
                     </Grid>
                     <Grid item xs={10}>
                       <div className={style.fromTransactionHistory}>
-                        {transaction.from}
+                        {transaction.from || "-"}
                       </div>
                     </Grid>
                   </Grid>
@@ -204,8 +203,8 @@ class TransactionHistory extends React.Component {
               {loading ? (
                 <Loading margin={"5% 0 0 0"} color="lunes" />
               ) : (
-                  this.renderHistory()
-                )}
+                this.renderHistory()
+              )}
             </div>
           </Grid>
         </Grid>

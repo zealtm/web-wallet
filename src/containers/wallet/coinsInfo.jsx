@@ -24,7 +24,6 @@ import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
 import ReceiveModal from "./modal/receiveModal/";
 
-
 // UTILS
 import i18n from "../../utils/i18n";
 import { getDefaultFiat } from "../../utils/localStorage";
@@ -58,7 +57,12 @@ class CoinsInfo extends React.Component {
 
   render() {
     let defaultCoin = getDefaultFiat();
-    let { setWalletSendModalOpen, setWalletReceiveModalOpen, coins, wallet } = this.props;
+    let {
+      setWalletSendModalOpen,
+      setWalletReceiveModalOpen,
+      coins,
+      wallet
+    } = this.props;
     let step = wallet.modal.step;
     let selectedCoin = wallet.selectedCoin;
     let coin = coins[wallet.selectedCoin];
@@ -73,21 +77,25 @@ class CoinsInfo extends React.Component {
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
           content={<ReceiveModal coin={coin} />}
           show={wallet.modalReceive.open}
-          close={() => setWalletReceiveModalOpen()} />
+          close={() => setWalletReceiveModalOpen()}
+        />
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
+          show={wallet.modal.open}
           close={
-            step === 4 || step === 5 ? null : () => setWalletSendModalOpen()
+            step === 4 || step === 4 || step === 5
+              ? null
+              : () => setWalletSendModalOpen()
           }
           back={
             step === 0 || step === 4 || step === 5
               ? null
               : () => this.previousStep()
           }
-          show={wallet.modal.open}
         />
+
         <div className={style.mainWalletInfoCoins}>
           <Grid item xs={11} sm={8} md={7} className={style.wrapperInfoCoins}>
             <div className={style.contentCoinSelected}>
@@ -130,8 +138,10 @@ class CoinsInfo extends React.Component {
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
-                  <button className={style.submitButton}
-                    onClick={() => setWalletSendModalOpen()}>
+                  <button
+                    className={style.submitButton}
+                    onClick={() => setWalletSendModalOpen()}
+                  >
                     {i18n.t("BTN_SEND")}
                   </button>
                 </div>
@@ -140,20 +150,20 @@ class CoinsInfo extends React.Component {
           </Grid>
         </div>
         <Hidden smUp>
-          <div
-            className={style.alignButtonsMobile}
-          >
-            <button className={style.receiveButtonMobile}
-              onClick={() => setWalletReceiveModalOpen()}>
+          <div className={style.alignButtonsMobile}>
+            <button
+              className={style.receiveButtonMobile}
+              onClick={() => setWalletReceiveModalOpen()}
+            >
               {i18n.t("BTN_RECEIVE")}
             </button>
 
-            <button className={style.submitButtonMobile}
-              onClick={() => setWalletSendModalOpen()}>
+            <button
+              className={style.submitButtonMobile}
+              onClick={() => setWalletSendModalOpen()}
+            >
               {i18n.t("BTN_SEND")}
             </button>
-
-
           </div>
         </Hidden>
       </div>
