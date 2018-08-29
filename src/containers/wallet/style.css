@@ -9,8 +9,6 @@
   2.1 BASES 
   2.2 TEXTS
   2.3 BUTTONS
-    2.3.1 BUTTONS MOBILE / GRID
-  2.4 ICONS - COINS
 
 3. HISTORY
   3.1 BASES
@@ -137,174 +135,138 @@
 /* 2. COINS INFO */
 
 /* 2.1 BASES */
-:local(.wrapperInfoCoins) {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+:local(.styleCoinDefalt){
+  box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.6);
 }
 
-:local(.mainWalletInfoCoins) {
-  margin-top: 20px;
-  justify-content: center;    
-  display: flex;
-  padding: 4vh;
-}
-
-:local(.floatRightDesktop) {
-  max-width: 100%;
-  padding-left: 10px;    
-  min-width: 60%;
-}
-
-:local(.alignButtonsMobile) {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 15px;
-}
-
-:local(.alignContentCoin) {
-  padding: 0;
-  max-width: 100px; 
-}
-
-:local(.styleCoinDefalt) {
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
-}
-
-:local(.contentCoinSelected) {
-  box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
+:local(.contentInfo) {
   display: flex;
   align-items: center;
-  height: 100%;
-  background-color: #473088;    
-  text-align: center;
-  max-width: 242px;
-  padding-left: 8%;
-  padding-right: 8%;
-  border-radius: 8px;
+  justify-content: space-between;
 }
 
-:local(.coinBalance) {
+:local(.coinSel) {
   composes: styleCoinDefalt;
   background-color: #473088;
-  font-weight: bold;
+  border-radius: 7px;
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+:local(.coinSel img) {
+  width: 49px;
+  height: 49px;
+  margin: 5px;
+}
+
+:local(.floatRight) {
+  height: 100%;
+  padding-left: 1.5%;
+}
+
+:local(.containerInfo) {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+:local(.balanceItem) {
+  background-color: #473088;
   text-align: right;
-  min-width: 150px;
-  max-height: 116px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+:local(.balanceItemMobile) {
+  composes: balanceItem;
+  padding: 5px 10px;
+  height: 100%;
+}
+
+:local(.alignValues) {
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 16px;
+}
+:local(.coinBalanceGreen) {
+  color: #68f285;
+  display: inline;
+}
+:local(.balanceItem p) {
+  font-weight: normal;
+  font-size: 24px;
 }
 
 @media only screen and (max-width: 599px) {
+  :local(.coinSel img) {
+    width: 34px;
+    height: 34px;
+  }
+  :local(.coinSel h3) {
+    font-size: 14px;
+  }
+  :local(.coinSel h2) {
+    font-size: 14px;
+  }
   :local(.styleCoinDefalt) {
     box-shadow: none;
-  }    
-  :local(.alignContentCoin) {
-    padding: 5% 0;
   }
-  :local(.coinBalance) {
-    height: 100px;
+  :local(.balanceItemMobile h2) {
+    font-size: 14px;
   }
-  :local(.mainWalletInfoCoins) {
-    padding: 0;
+  :local(.balanceItem p) {
+    font-size: 18px;
+  }
+  :local(.alignValues) {
+    font-size: 14px;
+  }
+  :local(.containerInfo) {
+    margin-top: 30px
   }
 }
 
 /* 2.2 TEXTS */
-:local(.fontSize) {
-  font-size: 24px;
-}
-
-:local(.coinBalanceGreen) {
-  composes: linkDefault from "../../components/bases/textBase.css"; 
-  display: inline;
-}
-
-:local(.nameCoinSelected) {
+:local(.coinSel h3) {
   font-size: 19px;
-  font-weight: bold;
+  margin: 0;
 }
-
-:local(.percentageCoinSelected) {
-  composes: textDefault from "../../components/bases/textBase.css";  
-  font-size: 22px;
-  margin: 10px 0;
+:local(.coinSel h2) {
+  margin: 0;
 }
-
-:local(.valueCoinSelected) {
-  composes: textDefault from "../../components/bases/textBase.css";  
-  composes: fontSize;
-  font-weight: bold;
-}
-
-:local(.balanceMyAmount) {    
-  composes: fontSize;
-}
-
-:local(.balanceAmount) {
-  composes: fontSize;
-  font-weight: normal;
-  margin: 15px 0;
-}
-
-@media only screen and (max-width: 599px) {
-  :local(.fontSize) {
-    font-size: 14px;
-  }    
-  :local(.nameCoinSelected) {
-    font-size: 14px;
-  }
-  :local(.percentageCoinSelected) { 
-    font-size: 12px;
-    margin: 0;
-  }
+:local(.balanceItem h2) {
+  margin: 0 0 15px 0;
 }
 
 /* 2.3 BUTTONS */
 :local(.alignButtons) {
-  justify-content: space-between;
   display: flex;
-  margin-top: 10px;
+  justify-content: space-between;
+  padding-top: 2%;
 }
-
 :local(.receiveButton) {
   composes: receiveButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 
-:local(.submitButton) {
+:local(.sendButton) {
   composes: receiveSubmit from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 
-/* 2.3.1 BUTTONS MOBILE / GRID */
+:local(.sendButtonMobile) {
+  composes: sendButton;
+  padding: 0;
+  height: 40px;
+}
 :local(.receiveButtonMobile) {
-  composes: receiveButton from "../../components/bases/buttonBase.css";
-  composes: styleCoinDefalt;
+  composes: receiveButton;
+  padding: 0;
   height: 40px;
 }
-
-:local(.submitButtonMobile) {
-  composes: receiveSubmit from "../../components/bases/buttonBase.css";
-  composes: styleCoinDefalt;
-  height: 40px;
-}
-
-/* 2.4 ICONS - COINS */
-:local(.iconCoinSelected) {
-  width: 49px;
-  margin-top: 10px;
-  justify-self: center;
-}
-
-@media only screen and (max-width: 599px) {
-  :local(.iconCoinSelected) {
-    width: 34px;
-  }
-}
-
 /* ------------------------------------------------------------------------- */
 /* 3. HISTORY */
 
