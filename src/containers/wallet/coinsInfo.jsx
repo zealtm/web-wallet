@@ -128,7 +128,10 @@ class CoinsInfo extends React.Component {
                 </Grid>
 
                 <Grid item className={style.alignButtons}>
-                  <button className={style.receiveButton}>
+                  <button
+                    className={style.receiveButton}
+                    onClick={() => setWalletReceiveModalOpen()}
+                  >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
@@ -161,7 +164,10 @@ class CoinsInfo extends React.Component {
 
           <Hidden smUp>
             <Grid item xs={11} className={style.alignButtons}>
-              <button className={style.receiveButtonMobile}>
+              <button
+                className={style.receiveButtonMobile}
+                onClick={() => setWalletReceiveModalOpen()}
+              >
                 {i18n.t("BTN_RECEIVE")}
               </button>
               <button

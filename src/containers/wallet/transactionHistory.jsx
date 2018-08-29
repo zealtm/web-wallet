@@ -222,7 +222,11 @@ class TransactionHistory extends React.Component {
                 className={style.refleshIcon}
                 onClick={() => this.reloadWallet()}
               >
-                <img src="images/icons/general/refresh.png" />
+                <img
+                  width="15px"
+                  height="15px"
+                  src="images/icons/general/refresh@2x.png"
+                />
               </div>
               <div className={style.text}>
                 {i18n.t("TRANSACTION_HISTORY_TITLE")}
