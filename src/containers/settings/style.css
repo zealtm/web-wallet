@@ -124,17 +124,25 @@
     max-width: 100%;
 }
 
+:local(.columItemsMobile) {
+    background-color: aquamarine;
+}
+
 @media only screen and (max-width:599px) {
     :local(.indicatorItem) {
         font-size: 12px;
         color: #68f285;
         text-align: right;
+        padding: 0;
     }
-
+    :local(.indicatorItem p) {
+        margin: 0;
+        /* font-size: 9px; */
+        font-size: 0.6rem;
+    }
     :local(.semNome) {
         display: block;
     }
-
     :local(.columItems) {
         display: flex;
     }

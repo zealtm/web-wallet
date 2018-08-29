@@ -19,7 +19,7 @@ class Security extends React.Component {
                     <Grid item xs={12} className={style.containerItems}>
                         <Hidden smUp>
                             <Grid item xs={6} className={style.columItemsMobile}>
-                                <img src="images/QRCode.png"/>
+                                <img src="images/QRCode.png" />
                             </Grid>
                         </Hidden>
 
@@ -27,25 +27,20 @@ class Security extends React.Component {
 
                             <Grid item xs={12} sm={2} className={style.columItems}>
                                 <Grid className={style.indicatorItem}>
-                                    1
-
-                                    <p>{i18n.t("SECURITY_ITEM_1")}</p>
-
+                                    1 <p>{i18n.t("SECURITY_ITEM_1")}</p>
                                 </Grid>
                                 <Hidden smDown>
                                     <Grid className={style.item}>
                                         <Grid className={style.contendItem}>
                                             <img src="images/google-play@1x.png" />
                                             <img src="images/apple@1x.png" />
-
                                         </Grid>
                                     </Grid>
                                 </Hidden>
                             </Grid>
                             <Grid item xs={12} sm={3} className={style.columItems}>
                                 <Grid className={style.indicatorItem}>
-                                    2
-                                <p> {i18n.t("SECURITY_ITEM_2")} </p>
+                                    2 <p> {i18n.t("SECURITY_ITEM_2")} </p>
                                 </Grid>
                                 <Hidden smDown>
                                     <Grid className={style.item}>
@@ -57,8 +52,7 @@ class Security extends React.Component {
                             </Grid>
                             <Grid item xs={12} sm={4} className={style.columItems}>
                                 <Grid className={style.indicatorItem}>
-                                    3
-                                <p>{i18n.t("SECURITY_ITEM_3")}</p>
+                                    3 <p>{i18n.t("SECURITY_ITEM_3")}</p>
                                 </Grid>
                                 <Hidden smDown>
                                     <Grid className={style.item}>
@@ -99,5 +93,5 @@ class Security extends React.Component {
         );
     }
 }
-     
+
 export default Security;
