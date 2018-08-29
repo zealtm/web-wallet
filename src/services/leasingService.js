@@ -6,7 +6,7 @@ class LeasingService {
         try {
             let response = await axios.get("https://lunes.in/trust.json");
 
-            return response;
+            return response.data.node;
         } catch (error) {
             internalServerError();
             return;

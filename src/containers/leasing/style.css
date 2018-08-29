@@ -408,6 +408,15 @@
   padding: 3px;
   font-size: 12px;
 }
+
+:local .btNodeSelected {
+  background: transparent;
+  border: none;
+  color: #68f285;
+  padding: 3px;
+  font-size: 12px;
+}
+
 :local .baseSelect {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   position: absolute;

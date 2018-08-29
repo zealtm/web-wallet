@@ -1,7 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { getProfessionalNode } from "../redux/leasingAction";
 import CustomSelect from "./customSelect";
 import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
@@ -11,7 +8,8 @@ class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amountValue: "5.000.00"
+      amountValue: "5.000.00",
+      address: "",
     }
   }
 
@@ -19,9 +17,13 @@ class StartLeasing extends React.Component {
     this.setState({ amountValue: value });
   }
 
+  handleAddress = (value) => {
+    console.warn("Foi", value.toString())
+    this.setState({ address: value });
+  }
   render() {
-    let { amountValue } = this.state;
-    let { getProfessionalNode } = this.props;
+    let { amountValue, address } = this.state;
+    let { professionalNode } = this.props;
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
@@ -55,12 +57,14 @@ class StartLeasing extends React.Component {
         </span>
       </div>
 
-      <CustomSelect action={() => alert("teste")} />
+      <CustomSelect nodes={professionalNode} handleAddress={this.handleAddress} />
 
       <input
         type="text"
         name="txtaddress"
         placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+        onChange={(event) => this.handleAddress(event.target.value)}
+        value={address}
         className={style.inputClear}
       />
 
@@ -76,21 +80,8 @@ class StartLeasing extends React.Component {
 
 StartLeasing.propTypes = {
   professionalNode: PropTypes.array,
-  getProfessionalNode: PropTypes.func
 };
 
-const mapSateToProps = store => (console.warn(store), {
-   
-});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { getProfessionalNode },
-    dispatch
-  );
-
-export default connect(
-  mapSateToProps,
-  mapDispatchToProps
-)(StartLeasing);
+export default (StartLeasing);
 

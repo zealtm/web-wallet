@@ -7,7 +7,7 @@ const leasing = (state = initialState, action) => {
     case "GET_PROFESSIONAL_NODE":
       return {
         ...state,
-        coins: action.coins
+        professionalNode: action.professionalNode
       };
 
     default: {
