@@ -105,9 +105,10 @@ class Menu extends React.Component {
               <Link to="/settings" className={style.link}>
                 {i18n.t("MENU_SETTING")}
               </Link>
-              <Link to="/help" className={style.link}>
+              <a href="mailto:support@lunes.io" className={style.link}>
                 {i18n.t("MENU_SUPPORT")}
-              </Link>
+                {/* <Link to="/help" className={style.link}></Link> */}
+              </a>
               <Link to="/" onClick={actionLogout} className={style.link}>
                 {i18n.t("MENU_LOGOUT")}
               </Link>
