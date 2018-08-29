@@ -149,13 +149,14 @@ class TransactionHistory extends React.Component {
                     <Grid item xs={10} className={style.descriptionHistory}>
                       <a
                         className={style.idTransactionHistory}
+                        target="blanck"
                         href={
                           blockexplorer[selectedCoin]
                             ? blockexplorer[selectedCoin] + transaction.txID
                             : ""
                         }
                       >
-                        {transaction.txID.substring(0, 33) + "..."}
+                        {transaction.txID.substring(0, 33) + "..." || "-"}
                       </a>
                     </Grid>
                   </Grid>
@@ -181,10 +182,25 @@ class TransactionHistory extends React.Component {
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
                       <div className={style.forTransactionHistory}>
-                        {transaction.to}
+                        {transaction.to || "-"}
                       </div>
                     </Grid>
                   </Grid>
+
+                  {transaction.promoCode ? (
+                    <Grid item xs={12} className={style.itemDataHistorico}>
+                      <Grid item xs={2} className={style.typeItems}>
+                        <div className={style.forTransactionHistory}>
+                          {"Cupom:"}
+                        </div>
+                      </Grid>
+                      <Grid item xs={10} className={style.descriptionHistory}>
+                        <div className={style.forTransactionHistory}>
+                          {transaction.promoCode}
+                        </div>
+                      </Grid>
+                    </Grid>
+                  ) : null}
                 </Grid>
               </Grid>
             </div>
