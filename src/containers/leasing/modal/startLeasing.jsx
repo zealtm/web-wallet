@@ -1,12 +1,10 @@
 import React from "react";
-
-// COMPONENTS INTERNOS
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getProfessionalNode } from "../redux/leasingAction";
 import CustomSelect from "./customSelect";
-
-// UTILS 
+import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
-
-// STYLE
 import style from "../style.css";
 
 class StartLeasing extends React.Component {
@@ -23,6 +21,7 @@ class StartLeasing extends React.Component {
 
   render() {
     let { amountValue } = this.state;
+    let { getProfessionalNode } = this.props;
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
@@ -75,4 +74,23 @@ class StartLeasing extends React.Component {
   }
 }
 
-export default StartLeasing;
+StartLeasing.propTypes = {
+  professionalNode: PropTypes.array,
+  getProfessionalNode: PropTypes.func
+};
+
+const mapSateToProps = store => (console.warn(store), {
+   
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { getProfessionalNode },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(StartLeasing);
+

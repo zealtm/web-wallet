@@ -12,10 +12,8 @@ import { decryptAes } from "../../../utils/cryptography";
 // Services
 import CoinService from "../../../services/coinService";
 import UserService from "../../../services/userService";
-import LeasingService from "../../../services/leasingService";
 const coinService = new CoinService();
 const userService = new UserService();
-const leasingService = new LeasingService();
 
 export function* loadGeneralInfo(action) {
   try {
@@ -33,11 +31,6 @@ export function* loadGeneralInfo(action) {
       userService.getUserPicture,
       responseUser.data.data.email
     );
-    let data = yield call(
-      leasingService.getProfessionalNodes
-    );
-
-    console.warn(data);
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;

@@ -1,12 +1,7 @@
 import React from "react";
-
-// MATERIAL UI
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
-
-// UTILS
 import i18n from "../../utils/i18n";
-
-// STYLE
 import style from "./style.css";
 
 class LeasingHistory extends React.Component {
@@ -105,6 +100,7 @@ class LeasingHistory extends React.Component {
   };
 
   render() {
+    let { openModal } = this.props;
     return (
       <div>
         <Grid container className={style.containerTransactions}>
@@ -124,7 +120,7 @@ class LeasingHistory extends React.Component {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <button className={style.buttonEnable}>
+              <button className={style.buttonEnable} onClick={() => openModal()}>
                 {i18n.t("LEASING_TITLE_NEW")}
               </button>
             </Grid>
@@ -153,5 +149,9 @@ class LeasingHistory extends React.Component {
     );
   }
 }
+
+LeasingHistory.propTypes = {
+  openModal: PropTypes.func
+};
 
 export default LeasingHistory;
