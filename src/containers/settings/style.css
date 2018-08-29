@@ -58,7 +58,7 @@
     margin-bottom: 3.5%;
 }
 
-@media only screen and (max-width: 599px) {
+/* @media only screen and (max-width: 599px) {
     :local(.headerSettings) {
         padding: 0;   
     }
@@ -69,7 +69,7 @@
     :local(.headerSettings h2) {
         font-size: 9px;     
     }
-}
+} */
 
 /* ------------------------------------------------------------------------- */
 /* 2. TWO FACTORS */
@@ -86,8 +86,8 @@
     font-size: 100px;
     color: #654ea6;
     font-weight: bold;
-    padding: 15px 0;
-    margin: 5px;
+    padding: 15px 0 0;
+    width: 100%;
 }
 
 :local(.indicatorItem p) {
@@ -112,12 +112,30 @@
     margin-bottom: 50px;
     float: right;
 }
+
+:local(.contendItem) {
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 5vh 1vh;
+}
+
+:local(.containerItems img) {
+    max-width: 100%;
+}
+
 @media only screen and (max-width:599px) {
     :local(.indicatorItem) {
         font-size: 12px;
         color: #68f285;
+        text-align: right;
     }
+
     :local(.semNome) {
-    display: block;
+        display: block;
+    }
+
+    :local(.columItems) {
+        display: flex;
     }
 }

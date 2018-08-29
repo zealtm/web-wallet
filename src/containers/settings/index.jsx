@@ -2,7 +2,6 @@ import React from "react";
 // import HomeSettings from "./homeSettings";
 import Security from "./security";
 
-
 class Configuration extends React.Component {
     render() {
         return (

@@ -144,5 +144,11 @@
   "SETTINGS_CARD_2": "2FA AUTHENTICATION",
   "SETTINGS_CARD_3": "WALLETS",
   "SETTINGS_CARD_4": "CONSENT",
-  "SETTINGS_CARD_5": "DEFINITIONS"  
+  "SETTINGS_CARD_5": "DEFINITIONS",
+
+  "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
+  "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
+  "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta."
+
+
 }
