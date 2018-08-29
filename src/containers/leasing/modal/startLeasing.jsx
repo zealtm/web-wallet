@@ -18,7 +18,9 @@ class StartLeasing extends React.Component {
   }
 
   handleAmountValue = (value) => {
-    value = parseInt(value);
+    
+    value = parseFloat(value);
+    console.warn("handle ", value)
     this.setState({ amountValue: value });
   }
 
@@ -30,7 +32,8 @@ class StartLeasing extends React.Component {
     let { balance, decimalPoint } = this.props;
 
     let amount = parseFloat(balance);
-    let result = (parseInt(value) / 100) * amount;
+    let result = (value / 100) * amount;
+    console.warn(result);
     this.handleAmountValue(result.toFixed(decimalPoint));
   }
 
@@ -38,8 +41,6 @@ class StartLeasing extends React.Component {
     let { getValidateAddress, coins, feeValue, balance, errorInput } = this.props;
     let { amountValue, address } = this.state;
     let isGreatherThenBalance = amountValue + feeValue.low <= balance;
-
-    console.warn(amountValue)
 
     if (amountValue === 0) {
       errorInput(i18n.t("LEASING_NOT_INFORMED_FIELD"));
@@ -70,7 +71,7 @@ class StartLeasing extends React.Component {
         <div>{i18n.t("LEASING_AMOUNT_LABEL")}</div>
         <input
           className={style.txtamount}
-          type="text"
+          type="number"
           name="txtamount"
           placeholder="0"
           onChange={event => this.handleAmountValue(event.target.value)}
