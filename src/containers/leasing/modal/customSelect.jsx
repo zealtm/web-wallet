@@ -11,7 +11,8 @@ class CustomSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      nodeName: "Nodes Profissionais"
     }
   }
 
@@ -33,10 +34,11 @@ class CustomSelect extends React.Component {
   }
 
   render() {
+    let { nodeName } = this.state;
     return (
       <div className={style.formBlock}>
         <button className={style.btNode} onClick={() => this.handleSelect()}>
-          Node Name
+          {nodeName}
           {this.renderArrow()}
         </button>
         <div className={style.baseSelect} style={this.state.open ? { display: "block" } : { display: "none" }}>
