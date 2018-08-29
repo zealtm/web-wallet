@@ -1,22 +1,22 @@
-import React from "react"
+import React from "react";
 import i18n from "../../utils/i18n";
 import { Grid } from "@material-ui/core";
 import style from "./style.css";
 import Instructions from "./instructions";
-import { inputValidator } from "../../utils/inputValidator";
+// import { inputValidator } from "../../utils/inputValidator";
 
-const codeStyle = {
-  marginTop: 'calc(12rem + 4px)',
-};
+// const codeStyle = {
+//   marginTop: "calc(12rem + 4px)"
+// };
 
 class Cupom extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      code: '',
+      code: "",
       errors: undefined
-    }
+    };
   }
 
   handleChange = event => {
@@ -24,38 +24,29 @@ class Cupom extends React.Component {
       ...this.state,
       code: event.target.value
     });
-  }
+  };
 
   inputValidator = () => {
-    const {code} = this.state;
-
-    const codeInput = {
-      type: "text",
-      name: "code",
-      placeholder: "Code",
-      value: code.replace(/\D/, ''),
-      required: true,
-      minLength: 16,
-      maxLength: 16,
-    }
-
-    let { messageError, errors } = inputValidator({code: codeInput});
-
-    console.log('state', this.state, 'errorMessage', messageError, 'errors', errors);
-  }
+    // const {code} = this.state;
+    // const codeInput = {
+    //   type: "text",
+    //   name: "code",
+    //   placeholder: "Code",
+    //   value: code.replace(/\D/, ''),
+    //   required: true,
+    //   minLength: 16,
+    //   maxLength: 16,
+    // }
+    // let { messageError, errors } = inputValidator({code: codeInput});
+    // console.log('state', this.state, 'errorMessage', messageError, 'errors', errors);
+  };
 
   render() {
     const { code } = this.state;
 
     return (
-      <Grid container
-        direction="row"
-        justify="center"
-      >
-        <Grid item
-          xs={12}
-          className={style.box}
-        >
+      <Grid container direction="row" justify="center">
+        <Grid item xs={12} className={style.box}>
           <div className={style.cupomRow}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <input
@@ -82,7 +73,7 @@ class Cupom extends React.Component {
           </div>
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 

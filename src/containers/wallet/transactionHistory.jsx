@@ -61,7 +61,6 @@ class TransactionHistory extends React.Component {
 
     return Object.keys(history).map((val, index) => {
       let transaction = history[index];
-      console.warn(transaction);
       return (
         <div key={index}>
           <div>
