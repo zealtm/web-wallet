@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 // STYLE
 import style from "./style.css";
@@ -24,7 +24,7 @@ class Settings extends React.Component {
                     <Grid container className={style.containerCardsSettings}>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
-                            <Link to="/settings/user">
+                            <Link to="user">
                                 <Grid className={style.cards}>
                                     {i18n.t("SETTINGS_CARD_1")}
                                 </Grid>

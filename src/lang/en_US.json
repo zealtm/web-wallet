@@ -169,6 +169,8 @@
   "SETTINGS_CARD_3": "WALLETS",
   "SETTINGS_CARD_4": "CONSENT",
   "SETTINGS_CARD_5": "DEFINITIONS",
+  "SETTINGS_USER": "User profile",
+  "SETTINGS_USER_BACK": "Back to the settings",
   "SETTINGS_USER_IMAGE": "User image",
   "SETTINGS_USER_STATUS": "Status",
   "SETTINGS_USER_ACCOUNT_VERIFIED": "Account verified",
@@ -187,7 +189,7 @@
   "SETTINGS_USER_YEAR": "Year",
   "SETTINGS_USER_SELECT": "Select",
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
-  "SETTINGS_USER_SAVE_DATA": "Save data"
+  "SETTINGS_USER_SAVE_DATA": "Save data",
   "CARD_HOME_DESCRIPTION_1":
     "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_2":

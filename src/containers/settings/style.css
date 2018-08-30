@@ -4,11 +4,7 @@
     1.1 BASES
     1.2 TEXTS
 
-2. USER
 
-  2.1 BASES
-  2.2 TEXTS
-  2.3 AVATAR
 
 */
 
@@ -77,115 +73,6 @@
     :local(.headerSettings h2) {
         font-size: 9px;
     }
-}
-
-/* ------------------------------------------------------------------------- */
-
-/* 2. USER */
-
-/* 2.1 BASE */
-:local(.userContainer) {
-  margin: 0;
-}
-
-@media screen and (min-width: 599px) {
-  :local(.userContainer) {
-    margin: 0 5rem;
-  }
-}
-
-:local(.userRow) {
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
-  margin: 1rem .5rem !important;
-  padding: .5rem;
-  border-radius: 5px;
-}
-
-:local(.userContent) {
-  margin: 0 1.5rem;
-}
-
-:local(.userButtonContainer) {
-  margin: -0.5rem 0.5rem !important;
-}
-
-:local(.userButtonEnable) {
-  composes: buttonEnable from "../../components/bases/buttonBase.css";
-  margin-top: .5rem;
-}
-
-/* 2.2 TEXT */
-:local(.userTextDefault) {
-  composes: userT from "../../components/bases/textBase.css";
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-:local(.userSuccessDefault) {
-  composes: clSuccess from "../../components/bases/colorBase.css";
-}
-
-:local(.userErrorDefault) {
-  composes: clError from "../../components/bases/colorBase.css";
-}
-
-:local(.userWhiteTitle) {
-  composes: userTextDefault;
-  font-weight: 600;
-}
-
-:local(.userSuccessStatus) {
-  composes: userSuccessDefault;
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
-:local(.userErrorStatus) {
-  composes: userErrorDefault;
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
-:local(.userStatusItem) {
-  position: relative;
-  top: -0.5rem;
-  left: 0.5rem;
-}
-
-:local(.userSelectLabel) {
-  composes: userTextDefault;
-  display: block;
-  position: relative;
-  margin-bottom: .5rem;
-}
-
-/* 2.3 AVATAR */
-:local(.userAvatarAlign) {
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
-}
-
-:local(.userAvatar) {
-  width: 7rem !important;
-  height: 7rem !important;
-}
-
-:local(.userBtnAvatar) {
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
-  width: 3rem !important;
-  height: 3rem !important;
-  cursor: pointer;
-  margin-top: -2.5rem;
-  padding: 0;
-  box-shadow: 0px 3px 6px 0px rgba(0,0,0,.3);
-}
-
-@media screen and (min-width: 599px) {
-  :local(.userAvatar) {
-    width: 8rem !important;
-    height: 8rem !important;
-  }
 }
 
 /* ------------------------------------------------------------------------- */
