@@ -88,12 +88,19 @@ class InputSecurity extends React.Component {
     verifyTwoFactorAuth(token);
   };
 
+
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator();
+    }
+
+  }
   render() {
     let { loading } = this.props.user;
     let { errors, twoFactorFields } = this.state;
 
     return (
-      <div>       
+      <div onKeyPress={this.handleKeyPress}>
 
         <div className={style.alignInputTwoFactorAuthenticator}>
           <input
@@ -195,18 +202,20 @@ class InputSecurity extends React.Component {
           />
         </div>
 
-        <br/>
+        <br />
 
         <button
           className={
             twoFactorFields.field_1 &&
-            twoFactorFields.field_2 &&
-            twoFactorFields.field_3 &&
-            twoFactorFields.field_4 &&
-            twoFactorFields.field_5 &&
-            twoFactorFields.field_6
+              twoFactorFields.field_2 &&
+              twoFactorFields.field_3 &&
+              twoFactorFields.field_4 &&
+              twoFactorFields.field_5 &&
+              twoFactorFields.field_6
               ? style.buttonEnable
-              : style.buttonBorderGreen
+              : errors
+                ? style.buttonError
+                : style.buttonBorderGreen
           }
           onClick={() => this.inputValidator()}
         >
