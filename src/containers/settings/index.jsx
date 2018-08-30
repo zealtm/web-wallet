@@ -1,13 +1,11 @@
 import React from "react";
-// import HomeSettings from "./homeSettings";
-import Security from "./security/security";
+import HomeSettings from "./homeSettings";
 
 class Configuration extends React.Component {
     render() {
         return (
             <div>
-                {/* <HomeSettings/> */}
-                <Security/>
+                <HomeSettings/>
             </div>
         );
     }
