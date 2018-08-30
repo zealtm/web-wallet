@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // STYLE
 import style from "../style.css";
@@ -18,7 +19,28 @@ class Security extends React.Component {
     render() {
         return (
             <div className={style.containerSecurity}>
-                <Grid xs={11} sm={8} >
+                <Grid item xs={11} sm={8} >
+
+                    <Grid container className={style.headerSecurity}>
+                        <Hidden smUp>
+                            <Grid item xs={12}>
+                                <h3>{i18n.t("SECURITY_TITLE")} </h3>
+                            </Grid>
+                        </Hidden>
+                        <Grid item xs={6} sm={2}>
+                            <p>{i18n.t("SECURITY_LINK_RETURN")}</p>
+                        </Grid>
+                        <Hidden xsDown>
+                            <Grid item xs={12} sm={3} md={4}>
+                                <h3>{i18n.t("SECURITY_TITLE")}</h3>
+                            </Grid>
+                        </Hidden>
+
+                        <Grid item xs={6} sm={5} id={"hr"}>
+                            <hr />
+                        </Grid>
+                    </Grid>
+
                     <Grid container className={style.allSecurity}>
                         <Grid item xs={12} className={style.containerItems}>
                             <Hidden smUp>
@@ -27,7 +49,7 @@ class Security extends React.Component {
                                 </Grid>
                             </Hidden>
 
-                            <Grid item xs={6} sm={12} className={style.semNome}>
+                            <Grid item xs={6} sm={12} className={style.counterItems}>
                                 <Grid item xs={12} sm={3} className={style.columItems}>
                                     <Grid className={style.indicatorItem}>
                                         {"1"} <p>{i18n.t("SECURITY_ITEM_1")}</p>
@@ -49,21 +71,25 @@ class Security extends React.Component {
                         <Hidden xsDown>
                             <Grid container className={style.containerItemsWeb}>
                                 <Grid item xs={3} className={style.item}>
-                                    <Grid className={style.contendItemSpecific}>
-                                        <img src="images/apple@1x.png" />
+                                    <Grid>
+                                        <Link to="#">
+                                            <img src="images/apple@1x.png" />
+                                        </Link>
                                         <br />
-                                        <img src="images/google-play@1x.png" />
+                                        <Link to="#">
+                                            <img src="images/google-play@1x.png" />
+                                        </Link>
                                     </Grid>
                                 </Grid>
 
                                 <Grid item xs={3} className={style.item}>
-                                    <Grid className={style.contendItem}>
+                                    <Grid className={style.contentItem}>
                                         <img src="images/QRCode.png" />
                                     </Grid>
                                 </Grid>
 
                                 <Grid item xs={3} className={style.item}>
-                                    <Grid className={style.contendItem}>
+                                    <Grid className={style.contentItem}>
                                         <Grid item>
                                             <InputSecurity />
                                         </Grid>
@@ -76,8 +102,12 @@ class Security extends React.Component {
                             <Grid container className={style.columItemsMobile}>
                                 <InputSecurity />
                                 <Grid item xs={12} className={style.alignLaunchMobile} >
-                                    <img src="images/apple@1x.png" />
-                                    <img src="images/google-play@1x.png" />
+                                    <Link to="#">
+                                        <img src="images/apple@1x.png" />
+                                    </Link>
+                                    <Link to="#">
+                                        <img src="images/google-play@1x.png" />
+                                    </Link>
                                 </Grid>
                             </Grid>
                         </Hidden>
