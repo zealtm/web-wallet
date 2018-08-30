@@ -18,7 +18,6 @@ class StartLeasing extends React.Component {
   }
 
   handleAddress = (value) => {
-    console.warn("Foi", value.toString())
     this.setState({ address: value });
   }
   render() {

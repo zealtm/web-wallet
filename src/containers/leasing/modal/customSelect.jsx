@@ -63,7 +63,7 @@ CustomSelect.propTypes = {
   handleAddress: PropTypes.func
 }
 
-const mapSateToProps = store => (console.warn(store), {
+const mapSateToProps = store => ({
   professionalNodes: store.leasing.professionalNode
 });
 

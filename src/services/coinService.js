@@ -94,10 +94,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -137,7 +137,6 @@ class CoinService {
       coins.token = availableCoins.token;
       return coins;
     } catch (error) {
-      console.warn(error);
       internalServerError();
       return;
     }
@@ -260,16 +259,15 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       return response.data.data;
     } catch (error) {
-      console.warn(error);
       internalServerError();
       return;
     }
@@ -341,7 +339,6 @@ class CoinService {
 
       return fee;
     } catch (error) {
-      console.error(error);
       internalServerError();
     }
   }

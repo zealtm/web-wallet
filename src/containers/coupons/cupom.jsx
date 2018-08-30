@@ -4,11 +4,7 @@ import { Grid } from "@material-ui/core";
 import style from "./style.css";
 import Instructions from "./instructions";
 import { inputValidator } from "../../utils/inputValidator";
-
-const codeStyle = {
-  marginTop: 'calc(12rem + 4px)',
-};
-
+ 
 class Cupom extends React.Component {
   constructor() {
     super();
@@ -27,7 +23,7 @@ class Cupom extends React.Component {
   }
 
   inputValidator = () => {
-    const {code} = this.state;
+    const { code } = this.state;
 
     const codeInput = {
       type: "text",
@@ -39,9 +35,7 @@ class Cupom extends React.Component {
       maxLength: 16,
     }
 
-    let { messageError, errors } = inputValidator({code: codeInput});
-
-    console.log('state', this.state, 'errorMessage', messageError, 'errors', errors);
+    inputValidator({ code: codeInput });
   }
 
   render() {
