@@ -97,7 +97,7 @@ class CustomTabs extends React.Component {
   }
 }
 
-CustomTabs.prototypes = {
+CustomTabs.propTypes = {
   tabTitles: PropTypes.array.isRequired,
   tabContents: PropTypes.array.isRequired,
   justify: PropTypes.string
