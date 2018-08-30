@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import i18n from "../../../utils/i18n";
 
 // import Select from "../../../components/select";
-import { Grid, Avatar, Input, Select, MenuItem } from "@material-ui/core";
+import { Grid, Avatar, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Done, Close, ExpandMore } from "@material-ui/icons";
+import { Done, Close } from "@material-ui/icons";
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
+
+import Select from './select';
 
 const customStyle = {
   img: {
@@ -53,46 +55,46 @@ const customStyle = {
   focused: {},
 }
 
+const days = [...Array(31).keys()].map(day => day + 1);
+const months = [...Array(12).keys()].map(month => month + 1);
+const years = [...Array(70).keys()].map(year => year + 1949);
+
+const teste = [1,2,3];
+
 class User extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: {
-        verified: undefined,
-        birthdate: {
-          day: 1,
-          month: 1,
-          year: 1990
-        },
-
-      }
+      verified: undefined,
+      birth_day: undefined,
+      birth_month: undefined,
+      birth_year: undefined,
     }
+
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
+    this.handleBirthMonthChange = this.handleBirthMonthChange.bind(this);
+    this.handleBirthYearChange = this.handleBirthYearChange.bind(this);
   }
 
   changeAvatar = () => {
     alert('Avatar changed!');
   }
 
-  renderSelectItems = (init = 0) => {
-    return [...Array(4).keys()].map(item => <MenuItem key={item} value={init + item}>{init + item}</MenuItem>);
-  }
-
-  handleBirthdateChange = name => event => {
+  handleSelectChange = (name, value) => {
     this.setState({
       ...this.state,
-      user: {
-        ...this.state.user,
-        birthdate: {
-          ...this.state.user.birthdate,
-          [name]: event.target.value
-        }
-      }
-    })
+      [name]: value
+    });
   }
+
+  handleBirthDayChange = (value) => this.handleSelectChange('birth_day', value);
+  handleBirthMonthChange = (value) => this.handleSelectChange('birth_month', value);
+  handleBirthYearChange = (value) => this.handleSelectChange('birth_year', value);
 
   render() {
     const {classes} = this.props;
-    const {user} = this.state;
+    const {verified, birth_day, birth_month, birth_year} = this.state;
 
     return (
       <div className={style.container}>
@@ -136,16 +138,16 @@ class User extends React.Component {
               <div className={style.content}>
                 <p className={style.whiteTitle}>
                   {`${i18n.t("SETTINGS_USER_STATUS")}: `}
-                  <span className={user.userVerified ? style.successStatus : style.errorStatus}>
-                    {user.verified ? i18n.t("SETTINGS_USER_ACCOUNT_VERIFIED") : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
+                  <span className={verified ? style.successStatus : style.errorStatus}>
+                    {verified ? i18n.t("SETTINGS_USER_ACCOUNT_VERIFIED") : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
                 </p>
                 <p className={style.textDefault} style={{margin: '1rem 0 0 0'}}>
-                  {user.verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
+                  {verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
                   <span className={style.statusItem}>{i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}</span>
                 </p>
                 <p className={style.textDefault} style={{marginTop: '0'}}>
-                  {user.verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
+                  {verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
                   <span className={style.statusItem}>{i18n.t("SETTINGS_USER_2FA_VERIFIED")}</span>
                 </p>
               </div>
@@ -219,48 +221,15 @@ class User extends React.Component {
                     <Grid container>
                       <Grid item xs={4}>
                         <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_DAY")}</label>
-                        <Select
-                          value={user.birthdate.day}
-                          onChange={this.handleBirthdateChange('day')}
-                          classes={{
-                            root: classes.selectRoot,
-                          }}
-                        >
-                          <MenuItem value="">
-                            <em>{i18n.t("SETTINGS_USER_SELECT")}</em>
-                          </MenuItem>
-                          { this.renderSelectItems() }
-                        </Select>
+                        <Select action={this.handleBirthDayChange} items={days} value={birth_day}/>
                       </Grid>
                       <Grid item xs={4}>
                         <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_MONTH")}</label>
-                        <Select
-                          value={user.birthdate.month}
-                           onChange={this.handleBirthdateChange('month')}
-                          classes={{
-                            root: classes.selectRoot,
-                          }}
-                        >
-                          <MenuItem value="">
-                            <em>{i18n.t("SETTINGS_USER_SELECT")}</em>
-                          </MenuItem>
-                          { this.renderSelectItems() }
-                        </Select>
+                        <Select action={this.handleBirthMonthChange} items={months} value={birth_month}/>
                       </Grid>
                       <Grid item xs={4}>
                         <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_YEAR")}</label>
-                        <Select
-                          value={user.birthdate.year}
-                           onChange={this.handleBirthdateChange('year')}
-                          classes={{
-                            root: classes.selectRoot,
-                          }}
-                        >
-                          <MenuItem value="">
-                            <em>{i18n.t("SETTINGS_USER_SELECT")}</em>
-                          </MenuItem>
-                          { this.renderSelectItems(1990) }
-                        </Select>
+                        <Select action={this.handleBirthYearChange} items={years} value={birth_year}/>
                       </Grid>
                     </Grid>
                   </div>
@@ -275,6 +244,21 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
+                    />
+                  </div>
+
+                  <div className={style.content}>
+                    <p className={style.textDefault}>{i18n.t("SETTINGS_USER_CONTACT")}</p>
+                    <div style={{float: 'left', width: '40%', marginTop: '5px'}}>
+                      <Select action={() => this.handleSelectChange()} items={teste} value={undefined} />
+                    </div>
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss
+                      }}
+                      style={{width: '50%', float: 'right'}}
                     />
                   </div>
                 </Grid>
@@ -297,6 +281,11 @@ class User extends React.Component {
                     />
                   </div>
 
+                  <div className={style.content}>
+                    {i18n.t("SETTINGS_USER_CITY")}
+                    <Select action={() => this.handleSelectChange()} items={teste} value={undefined} fullWidth/>
+                  </div>
+
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <div className={style.content}>
@@ -308,6 +297,11 @@ class User extends React.Component {
                         input: classes.inputCss
                       }}
                     />
+                  </div>
+
+                  <div className={style.content}>
+                    {i18n.t("SETTINGS_USER_STATE")}
+                    <Select action={() => this.handleSelectChange()} items={teste} value={undefined} fullWidth />
                   </div>
                 </Grid>
               </Grid>
