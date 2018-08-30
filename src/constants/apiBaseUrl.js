@@ -1,4 +1,4 @@
-export const BASE_URL = "https://a.lunes.io/staging";
+export const BASE_URL = "https://a.lunes.io/wallet/staging";
 export const LUNESNODE_URL = "https://lunesnode-testnet.lunes.io";
 export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
 export const HEADER_REQUEST = {
