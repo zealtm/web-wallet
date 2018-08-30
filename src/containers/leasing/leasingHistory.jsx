@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import i18n from "../../utils/i18n";
 import style from "./style.css";
 
+
+
 class LeasingHistory extends React.Component {
   constructor(props) {
     super(props);
@@ -35,10 +37,11 @@ class LeasingHistory extends React.Component {
     }
   };
 
+
+
   renderHistory = () => {
     let mapHistoryItems = [{}, {}, {}];
     let { toggleHistory } = this.state;
-
     return mapHistoryItems.map((val, index) => {
       return (
         <div key={index}>
@@ -99,6 +102,7 @@ class LeasingHistory extends React.Component {
 
     return (
       <div>
+
         <Grid container className={style.containerTransactions}>
           <Grid container item xs={11} sm={10} md={10}>
             <Grid item xs={6} md={4}>
@@ -147,16 +151,21 @@ class LeasingHistory extends React.Component {
 
 LeasingHistory.propTypes = {
   openModal: PropTypes.func,
-  getProfessionalNode: PropTypes.func
+  getProfessionalNode: PropTypes.func,
+  coins: PropTypes.array.isRequired
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { getProfessionalNode },
-    dispatch
-  );
+
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getProfessionalNode
+}, dispatch);
+
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(LeasingHistory);
+)(LeasingHistory)

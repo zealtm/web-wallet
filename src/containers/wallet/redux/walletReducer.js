@@ -23,6 +23,13 @@ const initialState = {
   modalReceive: {
     open: false
   },
+
+  coinFee: {
+    low: 0.001,
+    medium: 0.001,
+    high: 0.001,
+    selectedFee: undefined
+  },
   loading: false,
   errors: false
 };
@@ -59,6 +66,12 @@ const wallet = (state = initialState, action) => {
         },
         modalReceive: {
           open: false
+        },
+        coinFee: {
+          low: 0.001,
+          medium: 0.001,
+          high: 0.001,
+          selectedFee: undefined
         },
         loading: action.state ? action.state : false,
         errors: false
@@ -179,6 +192,18 @@ const wallet = (state = initialState, action) => {
         ...state,
         error: action.state
       };
+
+    case "GET_COIN_FEE": {
+      return {
+        ...state,
+        coinFee: {
+          low: action.coinFee.low,
+          medium: action.coinFee.medium,
+          high: action.coinFee.high,
+          selectedFee: action.coinFee.selectedFee,
+        }
+      }
+    }
 
     case "CLEAR_WALLET_STATE":
       return {

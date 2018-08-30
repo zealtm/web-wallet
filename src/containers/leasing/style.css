@@ -451,3 +451,11 @@
   margin-bottom:-7px;
   margin-left: 10px;
 }
+
+/*custom input number (remove arrows up and down)*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -21,7 +21,8 @@ import {
   validateAddress,
   getWalletCoinHistory,
   shareCoinAddress,
-  getWalletSendModalFee
+  getWalletSendModalFee,
+  getCoinFee
 } from "../wallet/redux/walletSaga";
 import { getProfessionalNode } from "../leasing/redux/leasingSaga"
 
@@ -47,6 +48,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
     //leasing
-    fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode)
+    fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
+    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee)
   ];
 }
