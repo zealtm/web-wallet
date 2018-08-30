@@ -18,9 +18,7 @@ class StartLeasing extends React.Component {
   }
 
   handleAmountValue = (value) => {
-    
     value = parseFloat(value);
-    console.warn("handle ", value)
     this.setState({ amountValue: value });
   }
 
@@ -33,7 +31,6 @@ class StartLeasing extends React.Component {
 
     let amount = parseFloat(balance);
     let result = (value / 100) * amount;
-    console.warn(result);
     this.handleAmountValue(result.toFixed(decimalPoint));
   }
 
