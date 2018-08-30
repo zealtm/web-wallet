@@ -24,7 +24,7 @@ class Home extends React.Component {
       2, // amount
       1000000, // fee
       "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // from
-      "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // to
+      "37NzqxzFAkFVFaXtp79wRuc9X1T7YTqXgwh", // to
       "", // informe aqui uma SEED
       true // testnet
     );
