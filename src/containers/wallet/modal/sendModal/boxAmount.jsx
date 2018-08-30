@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setWalletSendModalAmount,
-  setWalletModalStep,
+  getWalletSendModalFee,
   setWalletSendModalLoading
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
@@ -45,17 +45,25 @@ class BoxAmount extends React.Component {
   confirmAmount = () => {
     let { amount } = this.state;
     let {
+      modal,
       coins,
       coin,
       errorInput,
-      setWalletSendModalAmount,
-      setWalletModalStep
+      setWalletSendModalLoading,
+      getWalletSendModalFee,
+      setWalletSendModalAmount
     } = this.props;
     let coinBalance = coins[coin].balance.available;
     if (parseFloat(amount) <= coinBalance) {
       setWalletSendModalLoading();
       setWalletSendModalAmount(parseFloat(amount));
-      setWalletModalStep(2);
+      getWalletSendModalFee(
+        coin,
+        coins[coin].address,
+        modal.address,
+        parseFloat(amount),
+        coins[coin].decimalPoint
+      );
       return;
     }
 
@@ -111,7 +119,7 @@ BoxAmount.propTypes = {
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired,
+  getWalletSendModalFee: PropTypes.func.isRequired,
   setWalletSendModalAmount: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired
 };
@@ -124,7 +132,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep,
+      getWalletSendModalFee,
       setWalletSendModalAmount,
       setWalletSendModalLoading,
       errorInput

@@ -31,10 +31,14 @@ class LoadingPage extends Component {
     return (
       <div className={style.alignLoadingContainer}>
         <div className={style.itemsLoadingContainer}>
-          <img src="../../images/logo.svg" className={style.logoLoading} />
+          <img
+            src="../../images/logo.svg"
+            className={style.logoLoading}
+            width="250px"
+          />
 
           <div>
-            <Loading color="lunes" width="30px" />
+            <Loading color="general" width="300px" />
           </div>
         </div>
       </div>

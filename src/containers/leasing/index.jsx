@@ -9,24 +9,26 @@ class Leasing extends React.Component {
   constructor() {
     super();
     this.state = {
-      isOpen: true
-    }
+      isOpen: false
+    };
   }
   handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
     let { isOpen } = this.state;
-    return <div>
+    return (
       <div>
-        <LeasingHistory />
+        <div>
+          <LeasingHistory />
+        </div>
+        <Modal
+          title={"Iniciar Leasing"}
+          content={<StartLeasing />}
+          show={isOpen}
+          back={() => this.handleModalLeasing()}
+        />
       </div>
-      <Modal
-        title={"Iniciar Leasing"}
-        content={<StartLeasing />}
-        show={isOpen}
-        back={() => this.handleModalLeasing()}
-      />
-    </div>;
+    );
   }
 }
 

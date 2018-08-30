@@ -25,7 +25,7 @@ class Wallet extends React.Component {
     if (loading) {
       return (
         <div>
-          <Loading color="lunes" />
+          <Loading color="wallet" height="80vh" width="100px" />
         </div>
       );
     }

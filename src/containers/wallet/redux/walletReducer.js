@@ -1,5 +1,12 @@
+import { getDefaultCrypto } from "../../../utils/localStorage";
+
 const initialState = {
-  selectedCoin: "btc",
+  selectedCoin: getDefaultCrypto(),
+  coinHistory: {
+    loaded: false,
+    loading: false,
+    history: []
+  },
   modal: {
     open: false,
     step: 0,
@@ -31,9 +38,14 @@ const wallet = (state = initialState, action) => {
 
     case "SET_WALLET_LOADING":
       return {
-        selectedCoin: "lunes",
+        selectedCoin: getDefaultCrypto(),
+        coinHistory: {
+          loaded: false,
+          loading: false,
+          history: state.coinHistory.history
+        },
         modal: {
-          open: false,
+          open: state.modal.open,
           step: 0,
           address: undefined,
           sendAmount: undefined,
@@ -50,6 +62,25 @@ const wallet = (state = initialState, action) => {
         },
         loading: action.state ? action.state : false,
         errors: false
+      };
+
+    case "SET_WALLET_HISTORY_LOADING":
+      return {
+        ...state,
+        coinHistory: {
+          ...state.coinHistory,
+          loading: action.state ? true : false
+        }
+      };
+
+    case "SET_WALLET_HISTORY":
+      return {
+        ...state,
+        coinHistory: {
+          ...state.coinHistory,
+          history: action.history,
+          loading: false
+        }
       };
 
     case "SET_WALLET_MODAL_OPEN":
@@ -71,7 +102,6 @@ const wallet = (state = initialState, action) => {
           loading: false
         }
       };
-
 
     case "SET_WALLET_MODAL_STEP":
       return {
@@ -107,12 +137,11 @@ const wallet = (state = initialState, action) => {
         ...state,
         modal: {
           ...state.modal,
-          sendAmount: action.amount,
-          loading: false
+          sendAmount: action.amount
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_FEE":
+    case "GET_WALLET_MODAL_SEND_FEE":
       return {
         ...state,
         modal: {

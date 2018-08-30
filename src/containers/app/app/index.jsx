@@ -16,40 +16,33 @@ function loading({ error }) {
     console.warn(error);
     return "Error!";
   } else {
-    return <Loading />;
+    return <Loading color="wallet" height="80vh" width="100px" />;
   }
 }
 
 /* eslint-disable */
 let home = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../home")),
+  loader: () => fakeDelay(400).then(() => import("../../home")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../home")
 });
 
 let wallet = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../wallet")),
+  loader: () => fakeDelay(400).then(() => import("../../wallet")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
 let leasing = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../leasing")),
+  loader: () => fakeDelay(400).then(() => import("../../leasing")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../leasing")
 });
 
-
 let coupons = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../coupons")),
+  loader: () => fakeDelay(400).then(() => import("../../coupons")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../coupons")
-});
-
-let recharge = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../recharge")),
-  loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
 
 let settings = Loadable({
@@ -95,7 +88,6 @@ class App extends Component {
               <Route path="/home" component={home} />
               <Route path="/wallet" component={wallet} />
               <Route path="/coupons" component={coupons} />
-              <Route path="/recharge" component={recharge} />
               <Route path="/leasing" component={leasing} />
               <Route path="/settings" component={settings} />
               <Route path="/user" component={user} />

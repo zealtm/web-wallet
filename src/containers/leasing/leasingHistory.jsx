@@ -38,29 +38,16 @@ class LeasingHistory extends React.Component {
   };
 
   renderHistory = () => {
-    let mapHistoryItems = [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {}
-    ];
+    let mapHistoryItems = [{}, {}, {}];
     let { toggleHistory } = this.state;
 
     return mapHistoryItems.map((val, index) => {
       return (
         <div key={index}>
           <div>
-            <Grid item xs={12}
+            <Grid
+              item
+              xs={12}
               className={
                 toggleHistory !== undefined && toggleHistory !== index
                   ? style.opacityItem
@@ -69,13 +56,13 @@ class LeasingHistory extends React.Component {
               onClick={() => this.stateDataHistory(index)}
             >
               <Grid item xs={3}>
-                12 dec 18 16h22
+                12/December 16:22:03
               </Grid>
               <Grid item xs={3}>
-                <span className={style.textGreen}>1,000.00</span>
+                <span className={style.textGreen}>300.00000000</span>
               </Grid>
               <Grid item xs={4}>
-                odyx.me
+                spartannode.com
               </Grid>
               <Grid item xs={2}>
                 {this.renderBtCancel(1)}
@@ -108,18 +95,17 @@ class LeasingHistory extends React.Component {
     return (
       <div>
         <Grid container className={style.containerTransactions}>
-          <Grid container
-            item xs={11} sm={10} md={10}>
+          <Grid container item xs={11} sm={10} md={10}>
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_LABEL")}
-                <div className={style.strongText}>142,5 milhões de LUNES</div>
+                <div className={style.strongText}>95655.29059991</div>
               </div>
             </Grid>
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_ACTIVE")}
-                <div className={style.strongTextGreen}>300,000 LUNES</div>
+                <div className={style.strongTextGreen}>0.00000000</div>
               </div>
             </Grid>
 

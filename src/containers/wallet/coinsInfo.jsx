@@ -24,7 +24,6 @@ import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
 import ReceiveModal from "./modal/receiveModal/";
 
-
 // UTILS
 import i18n from "../../utils/i18n";
 import { getDefaultFiat } from "../../utils/localStorage";
@@ -39,7 +38,7 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.props.wallet.modal
+    let { step } = this.props.wallet.modal;
     let { setWalletModalStep } = this.props;
     if (step >= 0) {
       setWalletModalStep(step - 1);
@@ -58,42 +57,50 @@ class CoinsInfo extends React.Component {
 
   render() {
     let defaultCoin = getDefaultFiat();
-    let { setWalletSendModalOpen, setWalletReceiveModalOpen, coins, wallet } = this.props;
+    let {
+      setWalletSendModalOpen,
+      setWalletReceiveModalOpen,
+      coins,
+      wallet
+    } = this.props;
     let step = wallet.modal.step;
+    let selectedCoin = wallet.selectedCoin;
     let coin = coins[wallet.selectedCoin];
-    // let coin = { name: "lunes" };
-    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
-    // let coinPrice = 0
-    let coinPercent = coins[wallet.selectedCoin].price.percent;
-    // let coinPercent = "200%"
+    let coinPrice = coins[selectedCoin].price[defaultCoin].price;
+    let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
-    // let fiatBalance = 0.00;
     let balance = coin.balance.available;
+
     return (
-      
-      <div className={style.containerWallet}>
+      <div>
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
           content={<ReceiveModal coin={coin} />}
           show={wallet.modalReceive.open}
-          close={() => setWalletReceiveModalOpen()} />
+          close={() => setWalletReceiveModalOpen()}
+        />
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          close={
-            step === 4 || step === 5 ? null : () => setWalletSendModalOpen()
-          }
-          back={step === 0 || step === 4 || step === 5 ? null : () => this.previousStep()}
           show={wallet.modal.open}
+          close={
+            step === 4 || step === 4 || step === 5
+              ? null
+              : () => setWalletSendModalOpen()
+          }
+          back={
+            step === 0 || step === 4 || step === 5
+              ? null
+              : () => this.previousStep()
+          }
         />
-        <div className={style.mainWalletInfoCoins}>
-          <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
-            <div className={style.contentCoinSelected}>
-              <div className={style.alignContentCoin}>
-                <div className={style.nameCoinSelected}>
-                  {coin.name.toUpperCase()}
-                </div>
+
+        <Grid container className={style.containerInfo}>
+          <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
+            <Grid item xs={4} className={style.coinSel}>
+              <Grid item>
+                <h3>{coin.name.toUpperCase()}</h3>
                 <img
                   src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
@@ -102,26 +109,25 @@ class CoinsInfo extends React.Component {
                   {this.renderArrowPercent(coinPercent)}
                   {coinPercent}
                 </div>
+                <h2>{"$" + coinPrice}</h2>
+              </Grid>
+            </Grid>
 
-                <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
-              </div>
-            </div>
+            <Hidden xsDown>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItem}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}>
+                      {" "}
+                      {defaultCoin}{" "}
+                    </div>
+                  </div>
+                </Grid>
 
-            <div className={style.floatRightDesktop}>
-              <div className={style.coinBalance}>
-                <div className={style.balanceMyAmount}>
-                  {i18n.t("WALLET_BALANCE")}
-                </div>
-                <div className={style.balanceAmount}> {balance} </div>
-
-                <div>
-                  {"$" + fiatBalance}
-                  <div className={style.coinBalanceGreen}> {defaultCoin} </div>
-                </div>
-              </div>
-
-              <Hidden xsDown>
-                <div className={style.alignButtons}>
+                <Grid item className={style.alignButtons}>
                   <button
                     className={style.receiveButton}
                     onClick={() => setWalletReceiveModalOpen()}
@@ -129,33 +135,50 @@ class CoinsInfo extends React.Component {
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
-                  <button className={style.submitButton}
-                    onClick={() => setWalletSendModalOpen()}>
+                  <button
+                    className={style.sendButton}
+                    onClick={() => setWalletSendModalOpen()}
+                  >
                     {i18n.t("BTN_SEND")}
                   </button>
-                </div>
-              </Hidden>
-            </div>
+                </Grid>
+              </Grid>
+            </Hidden>
+
+            <Hidden smUp>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItemMobile}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}>
+                      {" "}
+                      {defaultCoin}{" "}
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Hidden>
           </Grid>
-        </div>
-        <Hidden smUp>
-          <div
-            className={style.alignButtonsMobile}
-          >
-            <button className={style.receiveButtonMobile}
-              onClick={() => setWalletReceiveModalOpen()}>
-              {i18n.t("BTN_RECEIVE")}
-            </button>
 
-            <button className={style.submitButtonMobile}
-              onClick={() => setWalletSendModalOpen()}>
-              {i18n.t("BTN_SEND")}
-            </button>
-
-
-          </div>
-
-        </Hidden>
+          <Hidden smUp>
+            <Grid item xs={11} className={style.alignButtons}>
+              <button
+                className={style.receiveButtonMobile}
+                onClick={() => setWalletReceiveModalOpen()}
+              >
+                {i18n.t("BTN_RECEIVE")}
+              </button>
+              <button
+                className={style.sendButtonMobile}
+                onClick={() => setWalletSendModalOpen()}
+              >
+                {i18n.t("BTN_SEND")}
+              </button>
+            </Grid>
+          </Hidden>
+        </Grid>
       </div>
     );
   }
