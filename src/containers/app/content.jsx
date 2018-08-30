@@ -74,7 +74,6 @@ class Content extends Component {
         return this.changeContent(<Login />, "login");
       }
     } catch (error) {
-      console.warn(error);
       clearAll();
       return this.changeContent(<Login />, "login");
     }

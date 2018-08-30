@@ -1,12 +1,10 @@
 import React from "react";
-
-// MATERIAL UI
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getProfessionalNode } from "../leasing/redux/leasingAction";
+import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
-
-// UTILS
 import i18n from "../../utils/i18n";
-
-// STYLE
 import style from "./style.css";
 
 class LeasingHistory extends React.Component {
@@ -91,7 +89,14 @@ class LeasingHistory extends React.Component {
     });
   };
 
+  loadModalLeasing = () => {
+    let { openModal, getProfessionalNode } = this.props;
+    openModal();
+    getProfessionalNode();
+  }
+
   render() {
+
     return (
       <div>
         <Grid container className={style.containerTransactions}>
@@ -110,7 +115,7 @@ class LeasingHistory extends React.Component {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <button className={style.buttonEnable}>
+              <button className={style.buttonEnable} onClick={() => this.loadModalLeasing()}>
                 {i18n.t("LEASING_TITLE_NEW")}
               </button>
             </Grid>
@@ -140,4 +145,18 @@ class LeasingHistory extends React.Component {
   }
 }
 
-export default LeasingHistory;
+LeasingHistory.propTypes = {
+  openModal: PropTypes.func,
+  getProfessionalNode: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { getProfessionalNode },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LeasingHistory);

@@ -1,30 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-// MATERIAL 
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
-
 import style from "../style.css";
 
 class CustomSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      nodeName: "Nodes Profissionais",
+      classLabel: style.btNode
     }
   }
 
-  handleSelect = () => {
-    this.setState({ open: !this.state.open });
+  handleSelect = (value, address) => {
+    let { handleAddress } = this.props;
+
+    if (value) {
+      this.setState({ open: !this.state.open, nodeName: value, classLabel: style.btNodeSelected });
+      handleAddress(address);
+    }
+    else {
+      this.setState({ open: !this.state.open, nodeName: "Nodes Profissionais", classLabel: style.btNode });
+      handleAddress("");
+    }
   }
 
-  selectItem = () => {
-    // const {action} = this.props;
-    this.handleSelect();
-    // chamar funcao action
-  }
+  loadNodes = () => {
+    let { professionalNodes } = this.props;
 
+    return professionalNodes.map((node, index) => (
+      <div key={index} onClick={() => this.handleSelect(node.domain, node.address)}>{node.domain}</div>)
+    );
+  }
   renderArrow() {
     if (this.state.open)
       return <ArrowDropUp className={style.arrowSelect} />
@@ -33,19 +43,15 @@ class CustomSelect extends React.Component {
   }
 
   render() {
+    let { nodeName, classLabel } = this.state;
     return (
       <div className={style.formBlock}>
-        <button className={style.btNode} onClick={() => this.handleSelect()}>
-          Node Name
+        <button className={classLabel} onClick={() => this.handleSelect()}>
+          {nodeName}
           {this.renderArrow()}
         </button>
         <div className={style.baseSelect} style={this.state.open ? { display: "block" } : { display: "none" }}>
-          {/* popular com um props  */}
-          <div onClick={this.selectItem}>Node Name</div>
-          <div onClick={this.selectItem}>Node Name</div>
-          <div onClick={this.selectItem}>Node Name</div>
-          <div onClick={this.selectItem}>Node Name</div>
-          <div onClick={this.selectItem}>Node Name</div>
+          {this.loadNodes()}
         </div>
       </div>
     )
@@ -53,7 +59,15 @@ class CustomSelect extends React.Component {
 }
 
 CustomSelect.propTypes = {
-  action: PropTypes.func.isRequired
+  professionalNodes: PropTypes.array,
+  handleAddress: PropTypes.func
 }
 
-export default CustomSelect;
+const mapSateToProps = store => ({
+  professionalNodes: store.leasing.professionalNode
+});
+
+export default connect(
+  mapSateToProps,
+  null
+)(CustomSelect); 

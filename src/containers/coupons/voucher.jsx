@@ -1,6 +1,6 @@
 import React from "react"
 import i18n from "../../utils/i18n";
-
+import PropTypes from "prop-types";
 import { Grid, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import style from "./style.css";
@@ -45,8 +45,8 @@ class Voucher extends React.Component {
     super();
 
     this.state = {
-      phone: ['',''],
-      code: ['','','',''],
+      phone: ['', ''],
+      code: ['', '', '', ''],
       errors: undefined
     }
 
@@ -74,7 +74,7 @@ class Voucher extends React.Component {
   }
 
   inputValidator = () => {
-    const {phone, code} = this.state;
+    const { phone, code } = this.state;
 
     const phoneInput = {
       type: "text",
@@ -96,9 +96,7 @@ class Voucher extends React.Component {
       maxLength: 16,
     }
 
-    let { messageError, errors } = inputValidator({phone: phoneInput, code: codeInput});
-
-    // console.log('errorMessage', messageError, 'errors', errors);
+    inputValidator({ phone: phoneInput, code: codeInput });
   }
 
   render() {
@@ -126,7 +124,7 @@ class Voucher extends React.Component {
                   }}
                   placeholder="(xx)"
                   value={phone[0]}
-                  inputProps={{maxLength: 2, required: true}}
+                  inputProps={{ maxLength: 2, required: true }}
                   onChange={this.handlePhoneChange(0)}
                 />
               </Grid>
@@ -139,7 +137,7 @@ class Voucher extends React.Component {
                   }}
                   placeholder="xxxxx-xxxx"
                   value={phone[1]}
-                  inputProps={{maxLength: 9, required: true}}
+                  inputProps={{ maxLength: 9, required: true }}
                   onChange={this.handlePhoneChange(1)}
                 />
               </Grid>
@@ -167,6 +165,11 @@ class Voucher extends React.Component {
       </Grid>
     );
   }
+}
+
+
+Voucher.propTypes = {
+  classes: PropTypes.object
 }
 
 export default withStyles(inputStyle)(Voucher);

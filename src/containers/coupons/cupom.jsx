@@ -3,11 +3,6 @@ import i18n from "../../utils/i18n";
 import { Grid } from "@material-ui/core";
 import style from "./style.css";
 import Instructions from "./instructions";
-// import { inputValidator } from "../../utils/inputValidator";
-
-// const codeStyle = {
-//   marginTop: "calc(12rem + 4px)"
-// };
 
 class Cupom extends React.Component {
   constructor() {
@@ -24,21 +19,6 @@ class Cupom extends React.Component {
       ...this.state,
       code: event.target.value
     });
-  };
-
-  inputValidator = () => {
-    // const {code} = this.state;
-    // const codeInput = {
-    //   type: "text",
-    //   name: "code",
-    //   placeholder: "Code",
-    //   value: code.replace(/\D/, ''),
-    //   required: true,
-    //   minLength: 16,
-    //   maxLength: 16,
-    // }
-    // let { messageError, errors } = inputValidator({code: codeInput});
-    // console.log('state', this.state, 'errorMessage', messageError, 'errors', errors);
   };
 
   render() {

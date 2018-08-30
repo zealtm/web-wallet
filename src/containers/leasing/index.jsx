@@ -10,7 +10,7 @@ class Leasing extends React.Component {
     super();
     this.state = {
       isOpen: false
-    };
+    }
   }
   handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });
 
@@ -19,16 +19,16 @@ class Leasing extends React.Component {
     return (
       <div>
         <div>
-          <LeasingHistory />
+          <LeasingHistory openModal={this.handleModalLeasing} />
         </div>
         <Modal
           title={"Iniciar Leasing"}
           content={<StartLeasing />}
           show={isOpen}
-          back={() => this.handleModalLeasing()}
+          close={() => this.handleModalLeasing()}
         />
       </div>
-    );
+    )
   }
 }
 

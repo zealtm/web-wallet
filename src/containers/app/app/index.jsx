@@ -13,7 +13,6 @@ import ModalBar from "../../../components/modalBar";
 
 function loading({ error }) {
   if (error) {
-    console.warn(error);
     return "Error!";
   } else {
     return <Loading color="wallet" height="80vh" width="100px" />;

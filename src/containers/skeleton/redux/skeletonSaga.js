@@ -89,7 +89,6 @@ export function* loadWalletInfo(action) {
 
     return;
   } catch (error) {
-    console.warn(error);
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
@@ -112,10 +111,9 @@ export function* availableCoins() {
   }
 }
 
-export function* balanceCoins(action) {
+export function* balanceCoins() {
   try {
     let response = yield call();
-    console.warn(action);
     yield put({
       type: "GET_BALANCE_COINS",
       coins: response
@@ -128,10 +126,9 @@ export function* balanceCoins(action) {
   }
 }
 
-export function* createCoinsAddress(action) {
+export function* createCoinsAddress() {
   try {
     let response = yield call();
-    console.warn(response, action);
     yield put({
       type: "POST_CREATE_COINS_ADDRESS",
       coins: response.data.data.coins

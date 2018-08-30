@@ -44,9 +44,7 @@ class LunesGift extends React.Component {
       maxLength: 16,
     }
 
-    let { messageError, errors } = inputValidator({code: codeInput});
-
-    // console.log('errorMessage', messageError, 'errors', errors);
+    inputValidator({code: codeInput});
   }
 
   render() {
