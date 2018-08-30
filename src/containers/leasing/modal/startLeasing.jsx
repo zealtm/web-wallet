@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import CustomSelect from "./customSelect";
 import i18n from "../../../utils/i18n";
 import style from "../style.css";
-import { getValidateAddress, } from "../../wallet/redux/walletAction";
+import { validateLeasingAddress, clearState } from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 class StartLeasing extends React.Component {
@@ -35,7 +35,7 @@ class StartLeasing extends React.Component {
   }
 
   handleStartLeasing = () => {
-    let { getValidateAddress, coins, feeValue, balance, errorInput } = this.props;
+    let { validateLeasingAddress, coins, feeValue, balance, errorInput } = this.props;
     let { amountValue, address } = this.state;
     let isGreatherThenBalance = amountValue + feeValue.low <= balance;
 
@@ -49,15 +49,26 @@ class StartLeasing extends React.Component {
       return;
     }
 
-    getValidateAddress(coins.lunes.abbreviation, address);
+    validateLeasingAddress(coins.lunes.abbreviation, address);
 
-    console.warn("Leasing started!!!")
+
     return;
+  }
+
+  createLeasing = () => {
+    let { address } = this.state;
+    let { clearState, startNewLeasing } = this.props;
+
+
+    clearState();
+    this.setState({ address: "" });
   }
 
   render() {
     let { amountValue, address } = this.state;
-    let { balance, feeValue, professionalNode } = this.props;
+    let { balance, feeValue, professionalNode, addressIsValid } = this.props;
+    { addressIsValid ? this.createLeasing() : null }
+
     return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
       <div className={style.boxLine}>
         <div>{i18n.t("LEASING_BALANCE")}</div>
@@ -132,8 +143,11 @@ StartLeasing.propTypes = {
   decimalPoint: PropTypes.number,
   getValidateAddress: PropTypes.func,
   getCoinFeeValue: PropTypes.func,
-  errorInput: PropTypes.func
-
+  errorInput: PropTypes.func,
+  validateLeasingAddress: PropTypes.func,
+  addressIsValid: PropTypes.bool,
+  clearState: PropTypes.func,
+  startNewLeasing: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -141,15 +155,16 @@ const mapSateToProps = store => ({
   feeValue: store.wallet.coinFee,
   // balance: store.skeleton.coins.lunes.balance.available,
   balance: 3100.1,
-
-  decimalPoint: store.skeleton.coins.lunes.decimalPoint
+  decimalPoint: store.skeleton.coins.lunes.decimalPoint,
+  addressIsValid: store.leasing.addressIsValid
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getValidateAddress,
-      errorInput
+      validateLeasingAddress,
+      errorInput,
+      clearState
     },
     dispatch
   );
