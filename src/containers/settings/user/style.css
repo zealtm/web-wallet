@@ -67,7 +67,8 @@
 
 :local(.linkDefault) {
   composes: linkDefault from "../../../components/bases/textBase.css";
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 :local(.successDefault) {
@@ -84,9 +85,10 @@
 }
 
 :local(.header p) {
+  font-size: 14px;
+  font-weight: 600;
   text-align: right;
   margin: 0;
-
 }
 
 @media screen and (min-width: 599px) {
