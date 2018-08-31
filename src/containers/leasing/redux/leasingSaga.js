@@ -2,7 +2,9 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
- 
+import { setAuthToken } from "../../../utils/localStorage";
+import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
+
 const leasingService = new LeasingService();
 const coinService = new CoinService();
 
@@ -64,6 +66,29 @@ export function* createLeasing(action) {
     }
     yield put(response.error);
 
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getHistoryLeasing(action) {
+  try {
+    let response = yield call(leasingService.getLeasingHistory, action.coin, action.address);
+
+    if (!response.error) {
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      yield put({
+        type: "GET_HISTORY_LEASING",
+        leasingHistory: response.data
+      });
+
+      return;
+    }
+
+    yield put(response.error);
 
     return;
   } catch (error) {

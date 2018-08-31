@@ -1,6 +1,7 @@
 const initialState = {
   professionalNode: [],
-  addressIsValid: false
+  addressIsValid: false,
+  leasingHistory: []
 };
 
 const leasing = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const leasing = (state = initialState, action) => {
       return {
         ...state,
         // addressIsValid: action.addressIsValid
+      };
+    case "GET_LEASING_HISTORY":
+      return {
+        ...state,
+        leasingHistory: action.leasingHistory
       };
     case "CLEAR_LEASING_STATE":
       return {
