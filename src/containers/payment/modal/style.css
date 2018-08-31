@@ -1,0 +1,87 @@
+/*
+  1. BASES
+  2. TEXTS 
+  3. BUTTONS 
+*/
+
+/* 1. BASES */
+:local .baseStep {
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+  padding: 30px;
+}
+
+:local .modalBox {
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #fff;
+}
+
+:local .inlineInfo {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+:local .inlineInfo > div {
+  padding:10px;
+  border-right: solid 1px rgba(0,0,0,.3);
+}
+
+/* 2. TEXTS */
+:local .strongText {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+:local .textGreen {
+  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+}
+
+:local .strongTextGreen {
+  composes: strongText;
+  composes: textGreen;
+}
+
+:local .inlineInfo label {
+  composes: textGreen;
+  font-size: 11px;
+  display:block;
+  margin-bottom:10px;
+}
+
+@media only screen and (max-width: 599px) {
+  :local .strongText {
+    font-size: 10px;
+  }
+}
+
+/* 3. BUTTONS */
+
+:local .bt {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+:local(.btContinue) {
+  composes: buttonEnable from "../../../components/bases/buttonBase.css";
+  composes: bt;
+}
+/* 
+:local(.btError) {
+  composes: buttonGeneral from "../../../components/bases/buttonBase.css";
+  composes: bgError from "../../../components/bases/colorBase.css";
+  composes: bt;
+}
+
+:local(.btContinueDisable) {
+  composes: buttonBorderGreen from "../../../components/bases/buttonBase.css";
+  composes: bt;
+} */
