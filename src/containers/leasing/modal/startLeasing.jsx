@@ -5,15 +5,16 @@ import PropTypes from "prop-types";
 import CustomSelect from "./customSelect";
 import i18n from "../../../utils/i18n";
 import style from "../style.css";
-import { validateLeasingAddress, clearState } from "../redux/leasingAction";
+import { validateLeasingAddress, clearState, startNewLeasing } from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
+import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
 class StartLeasing extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       amountValue: 0,
-      address: ""
+      toAddress: ""
     }
   }
 
@@ -22,8 +23,8 @@ class StartLeasing extends React.Component {
     this.setState({ amountValue: value });
   }
 
-  handleAddress = (address) => {
-    this.setState({ address });
+  handleAddress = (toAddress) => {
+    this.setState({ toAddress });
   }
 
   percentageCalculation = (value) => {
@@ -36,7 +37,7 @@ class StartLeasing extends React.Component {
 
   handleStartLeasing = () => {
     let { validateLeasingAddress, coins, feeValue, balance, errorInput } = this.props;
-    let { amountValue, address } = this.state;
+    let { amountValue, toAddress } = this.state;
     let isGreatherThenBalance = amountValue + feeValue.low <= balance;
 
     if (amountValue === 0) {
@@ -49,23 +50,26 @@ class StartLeasing extends React.Component {
       return;
     }
 
-    validateLeasingAddress(coins.lunes.abbreviation, address);
+    validateLeasingAddress(coins.lunes.abbreviation, toAddress);
 
 
     return;
   }
 
   createLeasing = () => {
-    let { address } = this.state;
-    let { clearState, startNewLeasing } = this.props;
 
+    let { toAddress, amountValue } = this.state;
+    let { clearState, startNewLeasing, feeValue, user, coinAddress, decimalPoint } = this.props;
+    let leasingData = { toAddress, amount: convertSmallerCoinUnit(amountValue, decimalPoint), feeValue, password: user.password, coinAddress }
+
+    startNewLeasing(leasingData);
 
     clearState();
-    this.setState({ address: "" });
+    this.setState({ toAddress: "" });
   }
 
   render() {
-    let { amountValue, address } = this.state;
+    let { amountValue, toAddress } = this.state;
     let { balance, feeValue, professionalNode, addressIsValid } = this.props;
     { addressIsValid ? this.createLeasing() : null }
 
@@ -117,7 +121,7 @@ class StartLeasing extends React.Component {
         name="txtaddress"
         placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
         onChange={(event) => this.handleAddress(event.target.value)}
-        value={address}
+        value={toAddress}
         className={style.inputClear}
       />
 
@@ -147,16 +151,20 @@ StartLeasing.propTypes = {
   validateLeasingAddress: PropTypes.func,
   addressIsValid: PropTypes.bool,
   clearState: PropTypes.func,
-  startNewLeasing: PropTypes.func
+  startNewLeasing: PropTypes.func,
+  user: PropTypes.object,
+  coinAddress: PropTypes.string
 };
 
-const mapSateToProps = store => ({
+const mapSateToProps = store => (console.warn(store.skeleton.coins.lunes), {
   coins: store.skeleton.coins,
   feeValue: store.wallet.coinFee,
   // balance: store.skeleton.coins.lunes.balance.available,
   balance: 3100.1,
   decimalPoint: store.skeleton.coins.lunes.decimalPoint,
-  addressIsValid: store.leasing.addressIsValid
+  addressIsValid: store.leasing.addressIsValid,
+  user: store.user.user,
+  coinAddress: store.skeleton.coins.lunes.address
 });
 
 const mapDispatchToProps = dispatch =>
@@ -164,7 +172,8 @@ const mapDispatchToProps = dispatch =>
     {
       validateLeasingAddress,
       errorInput,
-      clearState
+      clearState,
+      startNewLeasing
     },
     dispatch
   );

@@ -10,11 +10,15 @@ const leasing = (state = initialState, action) => {
         ...state,
         professionalNode: action.professionalNode
       };
-
     case "VALIDATE_LEASING_ADDRESS":
       return {
         ...state,
         addressIsValid: action.addressIsValid
+      };
+    case "START_LEASING":
+      return {
+        ...state,
+        // addressIsValid: action.addressIsValid
       };
     case "CLEAR_LEASING_STATE":
       return {

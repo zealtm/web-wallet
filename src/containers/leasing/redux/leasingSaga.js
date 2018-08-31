@@ -2,6 +2,7 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
+ 
 const leasingService = new LeasingService();
 const coinService = new CoinService();
 
@@ -20,14 +21,13 @@ export function* getProfessionalNode() {
   }
 }
 
-
 export function* validateLeasingAddress(action) {
   try {
     let response = yield call(coinService.validateAddress,
       action.coin,
       action.address);
-    
-      if (!response.error) {
+
+    if (!response.error) {
       yield put({
         type: "VALIDATE_LEASING_ADDRESS",
         addressIsValid: response
@@ -46,18 +46,22 @@ export function* validateLeasingAddress(action) {
 
 export function* createLeasing(action) {
   try {
-    let response = yield call(coinService.validateAddress,
-      action.coin,
-      action.address);
-    
-      if (!response.error) {
+
+    let leaseData = {
+      address: action.data.coinAddress,
+      amount: action.data.amount,
+      fee: action.data.feeValue,
+      recipient: action.data.toAddress
+    }
+
+    let response = yield call(leasingService.createLeasing, leaseData);
+
+    if (!response.error) {
       yield put({
-        type: "VALIDATE_LEASING_ADDRESS",
-        addressIsValid: response
+        type: "START_LEASING",
       });
       return;
     }
-
     yield put(response.error);
 
 

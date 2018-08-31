@@ -8,11 +8,9 @@ export const validateLeasingAddress = (coin, address) => ({
   address
 });
 
-export const startNewLeasing = (address, amount, fee) => ({
+export const startNewLeasing = (data) => ({
   type: "START_LEASING_API",
-  address,
-  amount,
-  fee
+  data
 });
 
 export const clearState = () => ({
