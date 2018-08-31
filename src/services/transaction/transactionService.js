@@ -7,7 +7,7 @@ import { networks } from "../../constants/network";
 
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
-import { fromSeedBuffer } from "bitcoinjs-lib/src/hdnode";
+// import { fromSeedBuffer } from "bitcoinjs-lib/src/hdnode";
 
 class TransactionService {
 

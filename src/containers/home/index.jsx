@@ -21,7 +21,7 @@ class Home extends React.Component {
     const teste = novaTransacao.transaction(
       'lunes', // coin
       token, // token
-      2, // amount
+      2, // amount ( 10ˆ * precisao)
       1000000, // fee
       "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // from
       "37NzqxzFAkFVFaXtp79wRuc9X1T7YTqXgwh", // to

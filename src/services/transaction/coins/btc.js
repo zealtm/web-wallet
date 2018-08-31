@@ -93,7 +93,6 @@ class BtcTransaction {
   
       // return {txID: broadcastResult};
     } catch (error) {
-      console.log("TX", "erro");
       return error;
     }
   }
