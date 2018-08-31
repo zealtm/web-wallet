@@ -24,7 +24,7 @@ class Settings extends React.Component {
                     <Grid container className={style.containerCardsSettings}>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
-                            <Link to="user">
+                            <Link to="/user">
                                 <Grid className={style.cards}>
                                     {i18n.t("SETTINGS_CARD_1")}
                                 </Grid>

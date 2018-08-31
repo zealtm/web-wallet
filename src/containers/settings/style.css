@@ -44,6 +44,7 @@
     min-width: 130px;
     text-align: center;
     padding: 5px;
+    composes: clInfo from "../../components/bases/colorBase.css";
 }
 
 :local(.cards a, .cards a:visited) {
