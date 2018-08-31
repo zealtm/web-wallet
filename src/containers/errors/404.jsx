@@ -5,33 +5,42 @@ import { Link } from "react-router-dom";
 class NotFoundError extends React.Component {
   render() {
     return (
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center"
-      }}>
+      <div>
         <div style={{
-          width: "40%",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center"
         }}>
-
           <div style={{
-            fontSize: "12vh",
-            color: "#654fa4",
-            display: "flex",
+            width: "38%",
           }}>
-            <div style={{
-              display: "flex",
-              width: "100%",
-              height: "27vh",
-              justifyContent: "space-evenly"
-            }}>
-              <h1 style={{ margin: 0 }}> {"4"} </h1>
-              <h1 style={{ margin: 0 }}> {"0"} </h1>
-              <h1 style={{ margin: 0 }}> {"4"} </h1>
-            </div>
 
+            <div style={{
+              fontSize: "12vh",
+              color: "#654fa4",
+              display: "flex",
+            }}>
+              <div style={{
+                display: "flex",
+                width: "100%",
+                height: "27vh",
+                justifyContent: "space-evenly"
+              }}>
+                <h1 style={{ margin: 0 }}> {"4"} </h1>
+                <h1 style={{ margin: 0 }}> {"0"} </h1>
+                <h1 style={{ margin: 0 }}> {"4"} </h1>
+              </div>
+            </div>
           </div>
-          <div style={{ backgroundColor: "black" }}>
+          <img src="./images/lunio-404@1x.png" style={{
+            position: "absolute",
+            bottom: "0",
+            width: "28vh"
+          }} />
+        </div>
+
+        <div>
+          <div>
             <h3 style={{
               margin: "0",
               textAlign: "center"
@@ -55,11 +64,6 @@ class NotFoundError extends React.Component {
             </h3>
           </div>
         </div>
-        <img src="./images/lunio-404@1x.png" style={{
-          position: "absolute",
-          bottom: "0",
-          width: "28vh"
-        }} />
       </div>
     );
   }
