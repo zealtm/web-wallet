@@ -266,8 +266,8 @@ class User extends React.Component {
             </Grid>
 
             {/* ADDRESS */}
-            <Grid item xs={12} className={style.row}>
-              <Grid container>
+            <Grid item xs={12}>
+              <Grid container className={style.row}>
                 <Grid item xs={12} sm={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
@@ -305,15 +305,15 @@ class User extends React.Component {
                   </div>
                 </Grid>
               </Grid>
-            </Grid>
 
-            <Grid item xs={12} className={style.buttonContainer}>
-              <button
-                className={style.buttonEnable}
-                onClick={() => alert('Data stored!')}
-              >
-                {i18n.t("SETTINGS_USER_SAVE_DATA")}
-              </button>
+              <Grid item xs={12} className={style.buttonContainer}>
+                <button
+                  className={style.buttonEnable}
+                  onClick={() => alert('Data stored!')}
+                >
+                  {i18n.t("SETTINGS_USER_SAVE_DATA")}
+                </button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

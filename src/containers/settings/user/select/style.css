@@ -29,6 +29,7 @@
   max-width: 240px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: -15px;
 }
 :local .baseSelect div {
   display: flex;
