@@ -1,9 +1,19 @@
-import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  put,
+  call
+} from "redux-saga/effects";
+import {
+  internalServerError
+} from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
-import { setAuthToken } from "../../../utils/localStorage";
-import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
+import {
+  setAuthToken,
+  getAuthToken
+} from "../../../utils/localStorage";
+import {
+  HEADER_RESPONSE
+} from "../../../constants/apiBaseUrl";
 
 const leasingService = new LeasingService();
 const coinService = new CoinService();
@@ -89,6 +99,32 @@ export function* getHistoryLeasing(action) {
     }
 
     yield put(response.error);
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getLeasingInfo(action) {
+  try {
+    let token = yield call(getAuthToken);
+    let professionalNodes = yield call(leasingService.getProfessionalNodes);
+    let history = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
+ 
+    if (history) {
+      setAuthToken(history.headers[HEADER_RESPONSE]);
+
+      yield put({
+        type: "GET_INFO_LEASING",
+        leasingHistory: history.data,
+        professionalNodes: professionalNodes
+      });
+
+      return;
+    }
+
+    yield put(history.error);
 
     return;
   } catch (error) {

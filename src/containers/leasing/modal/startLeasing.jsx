@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 import CustomSelect from "./customSelect";
 import i18n from "../../../utils/i18n";
 import style from "../style.css";
-import { validateLeasingAddress, clearState, startNewLeasing } from "../redux/leasingAction";
+import {
+  validateLeasingAddress,
+  clearState,
+  startNewLeasing
+} from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
 import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
@@ -15,28 +19,34 @@ class StartLeasing extends React.Component {
     this.state = {
       amountValue: 0,
       toAddress: ""
-    }
+    };
   }
 
-  handleAmountValue = (value) => {
+  handleAmountValue = value => {
     value = parseFloat(value);
     this.setState({ amountValue: value });
-  }
+  };
 
-  handleAddress = (toAddress) => {
+  handleAddress = toAddress => {
     this.setState({ toAddress });
-  }
+  };
 
-  percentageCalculation = (value) => {
+  percentageCalculation = value => {
     let { balance, decimalPoint } = this.props;
 
     let amount = parseFloat(balance);
     let result = (value / 100) * amount;
     this.handleAmountValue(result.toFixed(decimalPoint));
-  }
+  };
 
   handleStartLeasing = () => {
-    let { validateLeasingAddress, coins, feeValue, balance, errorInput } = this.props;
+    let {
+      validateLeasingAddress,
+      coins,
+      feeValue,
+      balance,
+      errorInput
+    } = this.props;
     let { amountValue, toAddress } = this.state;
     let isGreatherThenBalance = amountValue + feeValue.low <= balance;
 
@@ -52,90 +62,120 @@ class StartLeasing extends React.Component {
 
     validateLeasingAddress(coins.lunes.abbreviation, toAddress);
 
-
     return;
-  }
+  };
 
   createLeasing = () => {
-
     let { toAddress, amountValue } = this.state;
-    let { clearState, startNewLeasing, feeValue, user, coinAddress, decimalPoint } = this.props;
-    let leasingData = { toAddress, amount: convertSmallerCoinUnit(amountValue, decimalPoint), feeValue, password: user.password, coinAddress }
+    let {
+      clearState,
+      startNewLeasing,
+      feeValue,
+      user,
+      coinAddress,
+      decimalPoint
+    } = this.props;
+    let leasingData = {
+      toAddress,
+      amount: convertSmallerCoinUnit(amountValue, decimalPoint),
+      feeValue,
+      password: user.password,
+      coinAddress
+    };
 
     startNewLeasing(leasingData);
 
     clearState();
     this.setState({ toAddress: "" });
-  }
+  };
 
   render() {
     let { amountValue, toAddress } = this.state;
     let { balance, feeValue, professionalNode, addressIsValid } = this.props;
-    { addressIsValid ? this.createLeasing() : null }
+    {
+      addressIsValid ? this.createLeasing() : null;
+    }
 
-    return <div className={style.baseStep} style={{ textAlign: "right", alignSelf: "flex-end", padding: 16, color: "#fff" }}>
-      <div className={style.boxLine}>
-        <div>{i18n.t("LEASING_BALANCE")}</div>
-        <div style={{ fontSize: "26px" }}>{balance}</div>
-      </div>
+    return (
+      <div
+        className={style.baseStep}
+        style={{
+          textAlign: "right",
+          alignSelf: "flex-end",
+          padding: 16,
+          color: "#fff"
+        }}
+      >
+        <div className={style.boxLine}>
+          <div>{i18n.t("LEASING_BALANCE")}</div>
+          <div style={{ fontSize: "26px" }}>{balance}</div>
+        </div>
 
-      <div className={style.boxLine}>
-        <div>{i18n.t("LEASING_AMOUNT_LABEL")}</div>
-        <input
-          className={style.txtamount}
-          type="number"
-          name="txtamount"
-          placeholder="0"
-          onChange={event => this.handleAmountValue(event.target.value)}
-          value={amountValue}
+        <div className={style.boxLine}>
+          <div>{i18n.t("LEASING_AMOUNT_LABEL")}</div>
+          <input
+            className={style.txtamount}
+            type="number"
+            name="txtamount"
+            placeholder="0"
+            onChange={event => this.handleAmountValue(event.target.value)}
+            value={amountValue}
+          />
+        </div>
+
+        <div className={style.boxFee}>
+          <span
+            className={style.greenLabelFee}
+            onClick={() => this.percentageCalculation(25)}
+          >
+            25%
+          </span>
+          <span
+            className={style.greenLabelFee}
+            onClick={() => this.percentageCalculation(50)}
+          >
+            50%
+          </span>
+          <span
+            className={style.yellowLabelFee}
+            onClick={() => this.percentageCalculation(75)}
+          >
+            75%
+          </span>
+          <span
+            className={style.redLabelFee}
+            onClick={() => this.percentageCalculation(100)}
+          >
+            100%
+          </span>
+        </div>
+
+        <CustomSelect
+          nodes={professionalNode}
+          handleAddress={this.handleAddress}
         />
+
+        <input
+          type="text"
+          name="txtaddress"
+          placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+          onChange={event => this.handleAddress(event.target.value)}
+          value={toAddress}
+          className={style.inputClear}
+        />
+
+        <div className={style.titleFee}>{i18n.t("LEASING_FEE")}</div>
+        <div className={style.feeVal}>{feeValue.low}</div>
+
+        <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
+        <button
+          className={style.btContinue}
+          onClick={() => this.handleStartLeasing()}
+        >
+          {i18n.t("LEASING_BT_START")}
+        </button>
       </div>
-
-      <div className={style.boxFee}>
-        <span
-          className={style.greenLabelFee}
-          onClick={() => this.percentageCalculation(25)}>
-          25%
-        </span>
-        <span
-          className={style.greenLabelFee}
-          onClick={() => this.percentageCalculation(50)}>
-          50%
-        </span>
-        <span
-          className={style.yellowLabelFee}
-          onClick={() => this.percentageCalculation(75)}>
-          75%
-        </span>
-        <span
-          className={style.redLabelFee}
-          onClick={() => this.percentageCalculation(100)}>
-          100%
-        </span>
-      </div>
-
-      <CustomSelect nodes={professionalNode} handleAddress={this.handleAddress} />
-
-      <input
-        type="text"
-        name="txtaddress"
-        placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
-        onChange={(event) => this.handleAddress(event.target.value)}
-        value={toAddress}
-        className={style.inputClear}
-      />
-
-      <div className={style.titleFee}>{i18n.t("LEASING_FEE")}</div>
-      <div className={style.feeVal}>{feeValue.low}</div>
-
-      <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
-      <button
-        className={style.btContinue}
-        onClick={() => this.handleStartLeasing()}>
-        {i18n.t("LEASING_BT_START")}
-      </button>
-
-    </div>;
+    );
   }
 }
 
@@ -156,7 +196,7 @@ StartLeasing.propTypes = {
   coinAddress: PropTypes.string
 };
 
-const mapSateToProps = store => (console.warn(store.skeleton.coins.lunes), {
+const mapSateToProps = store => ({
   coins: store.skeleton.coins,
   feeValue: store.wallet.coinFee,
   balance: store.skeleton.coins.lunes.balance.available,

@@ -13,6 +13,11 @@ export const startNewLeasing = (data) => ({
   data
 });
 
+export const getLeasingInfo = (coin, address) => ({
+  type: "GET_INFO_LEASING_API",
+  coin,
+  address
+});
 export const clearState = () => ({
   type: "CLEAR_LEASING_STATE"
 });

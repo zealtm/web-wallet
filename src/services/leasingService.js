@@ -1,7 +1,14 @@
 import axios from "axios";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
-import LUNESNODE_URL, { API_HEADER, BASE_URL } from "../constants/apiBaseUrl";
+import {
+    internalServerError
+} from "../containers/errors/statusCodeMessage";
+import {
+    API_HEADER,
+    BASE_URL,
+    LUNESNODE_URL
+} from "../constants/apiBaseUrl";
 class LeasingService {
+
     async getProfessionalNodes() {
         try {
             let response = await axios.get("https://lunes.in/trust.json");
@@ -34,21 +41,18 @@ class LeasingService {
 
     async getLeasingHistory(coin, address, token) {
         try {
-
             API_HEADER.headers.Authorization = token;
-            address = "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr";
             let url = BASE_URL + "/coin/" + coin + "/leasing/history/" + address;
-
             let response = await axios.get(url, API_HEADER);
 
-            if (response.code === 200) {
-                console.warn("service ", response);
+            if (response.data.code === 200)
                 return response;
-            }
 
-            return internalServerError();
+            internalServerError();
+            return;
 
         } catch (error) {
+
             internalServerError();
             return;
         }

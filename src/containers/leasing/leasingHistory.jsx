@@ -1,13 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfessionalNode } from "../leasing/redux/leasingAction";
+import {
+  getProfessionalNode,
+  getLeasingInfo
+} from "../leasing/redux/leasingAction";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import i18n from "../../utils/i18n";
 import style from "./style.css";
-
-
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -15,6 +16,11 @@ class LeasingHistory extends React.Component {
     this.state = {
       toggleHistory: undefined
     };
+  }
+
+  componentDidMount() {
+    let { getLeasingInfo, coins } = this.props;
+    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address);
   }
 
   stateDataHistory = key => {
@@ -36,8 +42,6 @@ class LeasingHistory extends React.Component {
       return null;
     }
   };
-
-
 
   renderHistory = () => {
     let mapHistoryItems = [{}, {}, {}];
@@ -96,19 +100,18 @@ class LeasingHistory extends React.Component {
     let { openModal, getProfessionalNode } = this.props;
     openModal();
     getProfessionalNode();
-  }
+  };
 
   render() {
-
+    let { balance } = this.props;
     return (
       <div>
-
         <Grid container className={style.containerTransactions}>
           <Grid container item xs={11} sm={10} md={10}>
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_LABEL")}
-                <div className={style.strongText}>95655.29059991</div>
+                <div className={style.strongText}>{balance}</div>
               </div>
             </Grid>
             <Grid item xs={6} md={4}>
@@ -119,7 +122,10 @@ class LeasingHistory extends React.Component {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <button className={style.buttonEnable} onClick={() => this.loadModalLeasing()}>
+              <button
+                className={style.buttonEnable}
+                onClick={() => this.loadModalLeasing()}
+              >
                 {i18n.t("LEASING_TITLE_NEW")}
               </button>
             </Grid>
@@ -152,20 +158,29 @@ class LeasingHistory extends React.Component {
 LeasingHistory.propTypes = {
   openModal: PropTypes.func,
   getProfessionalNode: PropTypes.func,
-  coins: PropTypes.array.isRequired
+  coins: PropTypes.array.isRequired,
+  balance: PropTypes.number,
+  getLeasingInfo: PropTypes.func
 };
 
+const mapStateToProps = store => (
+  console.warn(store),
+  {
+    coins: store.skeleton.coins,
+    balance: store.skeleton.coins.lunes.balance.available
+  }
+);
 
-const mapStateToProps = store => ({
-  coins: store.skeleton.coins
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getProfessionalNode
-}, dispatch);
-
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getProfessionalNode,
+      getLeasingInfo
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LeasingHistory)
+)(LeasingHistory);

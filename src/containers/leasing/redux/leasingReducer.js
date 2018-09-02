@@ -26,17 +26,24 @@ const leasing = (state = initialState, action) => {
         ...state,
         leasingHistory: action.leasingHistory
       };
+    case "GET_INFO_LEASING":
+      return {
+        ...state,
+        leasingHistory: action.leasingHistory,
+        professionalNode: action.professionalNodes
+      };
     case "CLEAR_LEASING_STATE":
       return {
         ...state,
         addressIsValid: false
       };
 
-    default: {
-      return {
-        ...state
-      };
-    }
+    default:
+      {
+        return {
+          ...state
+        };
+      }
   }
 };
 
