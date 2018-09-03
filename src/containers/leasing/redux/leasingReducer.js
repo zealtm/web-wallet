@@ -6,6 +6,7 @@ const initialState = {
 };
 
 const leasing = (state = initialState, action) => {
+
   switch (action.type) {
     case "VALIDATE_LEASING_ADDRESS":
       return {
@@ -22,10 +23,11 @@ const leasing = (state = initialState, action) => {
       return {
         ...state,
         history: action.leasingHistory,
-        professionalNode: action.professionalNodes
+        professionalNode: action.professionalNodes,
+        isLoading: false
       };
-      
-      case "SET_LEASING_LOADING":
+
+    case "SET_LEASING_LOADING":
       return {
         ...state,
         isLoading: action.isLoading

@@ -95,7 +95,7 @@ export function* getLeasingInfo(action) {
       yield put({
         type: "GET_INFO_LEASING",
         leasingHistory: history.data,
-        professionalNodes: professionalNodes
+        professionalNodes
       });
 
       return;

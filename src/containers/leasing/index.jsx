@@ -5,8 +5,9 @@ import { bindActionCreators } from "redux";
 import LeasingHistory from "./leasingHistory";
 import Modal from "../../components/modal";
 import StartLeasing from "./modal/startLeasing";
-import { setLeasingLoading } from "./redux/leasingAction";
+import { setLeasingLoading, getLeasingInfo } from "./redux/leasingAction";
 import Loading from "../../components/loading";
+import PropTypes from "prop-types";
 
 class Leasing extends React.Component {
   constructor() {
@@ -17,38 +18,63 @@ class Leasing extends React.Component {
   }
 
   componentDidMount() {
+    let { getLeasingInfo, coins, setLeasingLoading } = this.props;
     setLeasingLoading(true);
+    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address);
   }
 
   handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });
 
-  render() {
+  renderContent = () => {
     let { isOpen } = this.state;
-    return (
+    let { isLoading } = this.props;
+    return isLoading ? (
       <div>
-        <div>
-          <LeasingHistory openModal={this.handleModalLeasing} />
-        </div>
-        <Modal
-          title={"Iniciar Leasing"}
-          content={<StartLeasing />}
-          show={isOpen}
-          close={() => this.handleModalLeasing()}
-        />
+        <Loading color="wallet" height="80vh" width="100px" />
       </div>
-    );
+    ) :
+      (
+        <div>
+          <div>
+            <LeasingHistory openModal={this.handleModalLeasing} />
+          </div>
+          <Modal
+            title={"Iniciar Leasing"}
+            content={<StartLeasing />}
+            show={isOpen}
+            close={() => this.handleModalLeasing()}
+          />
+        </div>
+      );
+  }
+  render() {
+    return this.renderContent();
   }
 }
+
+Leasing.propTypes = {
+  isLoading: PropTypes.bool,
+  getLeasingInfo: PropTypes.func,
+  setLeasingLoading: PropTypes.func,
+  coins: PropTypes.array.isRequired,
+}
+
+const mapStateToProps = store => ({ 
+  balance: store.skeleton.coins.lunes.balance.available,  
+  isLoading: store.leasing.isLoading,
+  coins: store.skeleton.coins,
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setLeasingLoading
+      setLeasingLoading,
+      getLeasingInfo
     },
     dispatch
   );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Leasing);

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getProfessionalNode,
-  getLeasingInfo
+  getLeasingInfo,
+  setLeasingLoading
 } from "../leasing/redux/leasingAction";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
@@ -17,11 +18,6 @@ class LeasingHistory extends React.Component {
     this.state = {
       toggleHistory: undefined
     };
-  }
-
-  componentDidMount() {
-    let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address);
   }
 
   stateDataHistory = key => {
@@ -49,56 +45,56 @@ class LeasingHistory extends React.Component {
     let { history } = this.props;
     return history
       ? history.txs.map((value, index) => {
-          return (
-            <div key={index}>
+        return (
+          <div key={index}>
+            <div>
+              <Grid
+                item
+                xs={12}
+                className={
+                  toggleHistory !== undefined && toggleHistory !== index
+                    ? style.opacityItem
+                    : style.itemHistorico
+                }
+                onClick={() => this.stateDataHistory(index)}
+              >
+                <Grid item xs={3}>
+                  {formatDate(value.date, "DM")}
+                  &nbsp; {formatDate(value.date, "HMS")}
+                </Grid>
+                <Grid item xs={3}>
+                  <span className={style.textGreen}>{value.amount}</span>
+                </Grid>
+                <Grid item xs={4}>
+                  spartannode.com
+                  </Grid>
+                <Grid item xs={2}>
+                  {this.renderBtCancel(1)}
+                </Grid>
+              </Grid>
+
               <div>
                 <Grid
                   item
                   xs={12}
                   className={
-                    toggleHistory !== undefined && toggleHistory !== index
-                      ? style.opacityItem
-                      : style.itemHistorico
+                    toggleHistory !== index ? style.toggleHistory : null
                   }
-                  onClick={() => this.stateDataHistory(index)}
                 >
-                  <Grid item xs={3}>
-                    {formatDate(value.date, "DM")}
-                    &nbsp; {formatDate(value.date, "HMS")}
-                  </Grid>
-                  <Grid item xs={3}>
-                    <span className={style.textGreen}>{value.amount}</span>
-                  </Grid>
-                  <Grid item xs={4}>
-                    spartannode.com
-                  </Grid>
-                  <Grid item xs={2}>
-                    {this.renderBtCancel(1)}
-                  </Grid>
-                </Grid>
-
-                <div>
-                  <Grid
-                    item
-                    xs={12}
-                    className={
-                      toggleHistory !== index ? style.toggleHistory : null
-                    }
-                  >
-                    <Grid item xs={12} className={style.itemDataHistorico}>
-                      <Grid item xs={12} className={style.descriptionHistory}>
-                        <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                        <a href="#" target="parent">
-                          {value.txID}
-                        </a>
-                      </Grid>
+                  <Grid item xs={12} className={style.itemDataHistorico}>
+                    <Grid item xs={12} className={style.descriptionHistory}>
+                      <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
+                      <a href="#" target="parent">
+                        {value.txID}
+                      </a>
                     </Grid>
                   </Grid>
-                </div>
+                </Grid>
               </div>
             </div>
-          );
-        })
+          </div>
+        );
+      })
       : null;
   };
 
@@ -165,11 +161,11 @@ LeasingHistory.propTypes = {
   coins: PropTypes.array.isRequired,
   balance: PropTypes.number,
   getLeasingInfo: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  setLeasingLoading: PropTypes.func
 };
 
 const mapStateToProps = store => (
-  console.warn(store),
   {
     coins: store.skeleton.coins,
     balance: store.skeleton.coins.lunes.balance.available,
@@ -181,7 +177,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfessionalNode,
-      getLeasingInfo
+      getLeasingInfo,
+      setLeasingLoading
     },
     dispatch
   );
