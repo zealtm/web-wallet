@@ -209,16 +209,19 @@
 /* 2.5 BUTTON */
 :local(.buttonEnable) {
     composes: buttonEnable from "../../components/bases/buttonBase.css";
+    margin-bottom: 10%
 }
   
 :local(.buttonBorderGreen) {
     composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+    margin-bottom: 10%
 }
 
 :local(.buttonError) {
     composes: buttonGeneral from "../../components/bases/buttonBase.css";
     background-color: #f05252;
     border-color: #f05252;
+    margin-bottom: 10%
 }
 
 @media only screen and (max-width:599px) {
