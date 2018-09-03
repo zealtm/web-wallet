@@ -1,7 +1,8 @@
 const initialState = {
   professionalNode: [],
-  addressIsValid: false,
   history: [],
+  balance: undefined,
+  addressIsValid: false,
   isLoading: false
 };
 
@@ -24,6 +25,7 @@ const leasing = (state = initialState, action) => {
         ...state,
         history: action.leasingHistory,
         professionalNode: action.professionalNodes,
+        balance: action.leasingBalance,
         isLoading: false
       };
 

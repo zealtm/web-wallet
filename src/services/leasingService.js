@@ -42,12 +42,21 @@ class LeasingService {
     async getLeasingHistory(coin, address, token) {
         try {
             API_HEADER.headers.Authorization = token;
-            let url = BASE_URL + "/coin/" + coin + "/leasing/history/" + address;
-            let response = await axios.get(url, API_HEADER);
+            let urlHistory = BASE_URL + "/coin/" + coin + "/leasing/history/" + address;
+            let urlBalance = BASE_URL + "/coin/" + coin + "/leasing/balance/" + address;
 
-            if (response.data.code === 200)
-                return response;
+            let responseHistory = await axios.get(urlHistory, API_HEADER);
+            let responseBalance = await axios.get(urlBalance);
 
+
+            if (responseHistory.data.code === 200 && responseBalance.data.code === 200) {
+                let dataResponse = {
+                    balance: responseBalance,
+                    history: responseHistory
+                }
+                console.warn("onj", dataResponse);
+                return dataResponse;
+            }
             internalServerError();
             return;
 

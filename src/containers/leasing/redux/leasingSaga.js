@@ -87,14 +87,15 @@ export function* getLeasingInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let professionalNodes = yield call(leasingService.getProfessionalNodes);
-    let history = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
-
-    if (history) {
-      setAuthToken(history.headers[HEADER_RESPONSE]);
+    let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
+    console.warn(lease.history);
+    if (lease.history) {
+      setAuthToken(lease.history.headers[HEADER_RESPONSE]);
 
       yield put({
         type: "GET_INFO_LEASING",
-        leasingHistory: history.data,
+        leasingHistory: lease.history.data,
+        leasingBalance: lease.balance.data.data.balance,
         professionalNodes
       });
 

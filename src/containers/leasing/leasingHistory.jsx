@@ -104,7 +104,7 @@ class LeasingHistory extends React.Component {
   };
 
   render() {
-    let { balance } = this.props;
+    let { balance, leasingBalance } = this.props;
     return (
       <div>
         <Grid container className={style.containerTransactions}>
@@ -118,7 +118,7 @@ class LeasingHistory extends React.Component {
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_ACTIVE")}
-                <div className={style.strongTextGreen}>0.00000000</div>
+                <div className={style.strongTextGreen}>{leasingBalance}</div>
               </div>
             </Grid>
 
@@ -162,14 +162,16 @@ LeasingHistory.propTypes = {
   balance: PropTypes.number,
   getLeasingInfo: PropTypes.func,
   history: PropTypes.object,
-  setLeasingLoading: PropTypes.func
+  setLeasingLoading: PropTypes.func,
+  leasingBalance: PropTypes.number
 };
 
 const mapStateToProps = store => (
   {
     coins: store.skeleton.coins,
     balance: store.skeleton.coins.lunes.balance.available,
-    history: store.leasing.history.data
+    history: store.leasing.history.data,
+    leasingBalance: store.leasing.balance
   }
 );
 

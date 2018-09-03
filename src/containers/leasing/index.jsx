@@ -59,8 +59,8 @@ Leasing.propTypes = {
   coins: PropTypes.array.isRequired,
 }
 
-const mapStateToProps = store => ({ 
-  balance: store.skeleton.coins.lunes.balance.available,  
+const mapStateToProps = store => ({
+  balance: store.skeleton.coins.lunes.balance.available,
   isLoading: store.leasing.isLoading,
   coins: store.skeleton.coins,
 });
