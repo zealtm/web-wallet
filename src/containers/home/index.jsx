@@ -8,28 +8,7 @@ import Grid from "@material-ui/core/Grid";
 // STYLE
 import style from "./style.css";
 
-import TransactionService from "../../services/transaction/transactionService";
-import { getAuthToken } from "../../utils/localStorage";
-
 class Home extends React.Component {
-  componentDidMount() {
-    // **** EXEMPLO DE TRANSACAO LUNES PARA TESTE */
-    const token = getAuthToken();
-    const transactionService = new TransactionService();
-
-    transactionService.transaction({
-      coin: "lunes", // coin
-      token: token, // token
-      amount: 1000000, // amount ( 10ˆ * precisao)
-      fee: 1000000, // fee
-      from: "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr", // from
-      to: "37NzqxzFAkFVFaXtp79wRuc9X1T7YTqXgwh", // to
-      seed:
-        "relax board logic reason sustain client current during toilet course element impose", // informe aqui uma SEED
-      testnet: true // testnet
-    });
-  }
-
   render() {
     return (
       <div>

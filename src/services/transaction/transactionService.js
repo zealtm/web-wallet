@@ -1,12 +1,13 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER, TESTNET } from "../../constants/apiBaseUrl";
-import { internalServerError } from "../../containers/errors/statusCodeMessage";
-import { errorPattern } from "../../utils/errorPattern";
+import {
+  internalServerError,
+  modalError
+} from "../../containers/errors/statusCodeMessage";
 import { networks } from "../../constants/network";
 
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
-// import { fromSeedBuffer } from "bitcoinjs-lib/src/hdnode";
 
 class TransactionService {
   async utxo(address, coin, token) {
@@ -53,52 +54,55 @@ class TransactionService {
   }
 
   /* eslint-disable */
-  async transaction(transaction, coin, token, amount, fee, from, to, seed) {
+  async transaction(transaction, seed, token) {
     try {
-      switch (transaction.coin) {
-        case "btc":
-          const btctrans = new BtcTransaction();
-          const transactionBtcResult = await btctrans.createTransaction(
-            transaction.from,
-            transaction.to,
-            transaction.seed,
-            transaction.fee,
-            transaction.amount,
-            transaction.coin,
-            transaction.token,
-            TESTNET ? networks.BTCTESTNET : networks.BTC
-          );
+      let { from, to, fee, amount, coin, network } = transaction;
+      if (
+        !from ||
+        !to ||
+        !seed ||
+        !fee ||
+        !amount ||
+        !token ||
+        !coin ||
+        !network
+      ) {
+        modalError(i18n.t("MESSAGE_TRANSACTION_FAILED"));
+        return;
+      }
 
-          return transactionBtcResult;
+      switch (coin) {
+        case "btc":
+          const transactionBtc = new BtcTransaction();
+          const responseBtc = await transactionBtc.createTransaction({
+            fromAddress: from,
+            toAddress: to,
+            seed: seed,
+            fee: fee,
+            amount: amount,
+            coin: coin,
+            token: token,
+            network: TESTNET ? networks.BTCTESTNET : networks.BTC
+          });
+
+          return responseBtc;
 
         case "lunes":
-          console.warn("FOI");
-          const lunesTransaction = new LunesTransaction();
-          const transactionLunesResult = await lunesTransaction.createLunesTransaction(
-            {
-              network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
-              seed: transaction.seed,
-              fromAddress: transaction.from,
-              toAddress: transaction.to,
-              amount: transaction.amount,
-              coin: transaction.coin,
-              fee: transaction.fee,
-              token: transaction.token
-            }
-          );
+          const transactionLunes = new LunesTransaction();
+          const responseLunes = await transactionLunes.createLunesTransaction({
+            network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
+            seed: seed,
+            fromAddress: from,
+            toAddress: to,
+            amount: amount,
+            fee: fee
+          });
 
-          // await Promise.all(transactionLunesResult);
-
-          console.warn("transaction", transactionLunesResult);
-          return transactionLunesResult;
+          return responseLunes;
       }
     } catch (error) {
-      return errorPattern(
-        error.message,
-        error.status || 500,
-        error.messageKey || "INTERNAL_SERVER_ERROR",
-        error.logMessage || error.stack || ""
-      );
+      internalServerError();
+      return;
     }
   }
 }

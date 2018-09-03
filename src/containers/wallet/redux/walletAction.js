@@ -53,6 +53,12 @@ export const setWalletCoinHistoryLoading = state => ({
   state
 });
 
+export const setWalletTransaction = (transaction, password) => ({
+  type: "SET_WALLET_TRANSACTION_API",
+  transaction,
+  password
+});
+
 export const clearWalletState = () => ({
   type: "CLEAR_WALLET_STATE"
 });

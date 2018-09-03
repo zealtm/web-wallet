@@ -5,6 +5,7 @@
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
   "MESSAGE_INVALID_ADDRESS": "Invalid Address",
+  "MESSAGE_TRANSACTION_FAILED": "Your transaction could not be completed.",
 
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",

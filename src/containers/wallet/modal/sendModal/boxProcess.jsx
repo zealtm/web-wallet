@@ -4,8 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletModalStep } from "../../redux/walletAction";
-import { errorInput } from "../../../errors/redux/errorAction";
+import { setWalletTransaction } from "../../redux/walletAction";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
@@ -14,6 +13,27 @@ import Loading from "../../../../components/loading";
 import style from "../../style.css";
 
 class BoxProcess extends React.Component {
+  doTransaction = () => {
+    let { coin, user, modal, setWalletTransaction } = this.props;
+    setWalletTransaction(
+      {
+        coin: coin,
+        fromAddress: "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr",
+        toAddress: modal.address,
+        amount: modal.sendAmount,
+        fee: modal.selectedFee
+      },
+      user.password
+    );
+
+    return;
+  };
+
+  componentDidMount() {
+    this.doTransaction();
+    return;
+  }
+
   render() {
     let { coin, modal } = this.props;
 
@@ -44,21 +64,21 @@ class BoxProcess extends React.Component {
 }
 
 BoxProcess.propTypes = {
+  user: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   modal: PropTypes.object.isRequired,
-  errorInput: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired
+  setWalletTransaction: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
+  user: store.user.user,
   modal: store.wallet.modal
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep,
-      errorInput
+      setWalletTransaction
     },
     dispatch
   );

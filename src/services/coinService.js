@@ -268,7 +268,7 @@ class CoinService {
       console.warn(error);
     }
   }
-  
+
   async getFee(data, coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -292,15 +292,15 @@ class CoinService {
       }
 
       if (coin === "lunes") {
-        let response = await axios.post(
+        let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
         );
 
-        if (!response.valid) {
+        if (!response.data.valid) {
           return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
         }
 
-        return response.valid;
+        return response.data.valid;
       }
 
       let valid = await CAValidator.validate(address, coin.toUpperCase());

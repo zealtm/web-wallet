@@ -17,7 +17,11 @@ import {
   balanceCoins,
   createCoinsAddress
 } from "../skeleton/redux/skeletonSaga";
-import { validateAddress, getWalletCoinHistory } from "../wallet/redux/walletSaga";
+import {
+  validateAddress,
+  getWalletCoinHistory,
+  setWalletTransaction
+} from "../wallet/redux/walletSaga";
 
 export default function* rootSaga() {
   yield [
@@ -39,6 +43,7 @@ export default function* rootSaga() {
 
     //wallet-saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
-    fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory)
+    fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
+    fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction)
   ];
 }
