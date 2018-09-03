@@ -266,6 +266,20 @@ class CoinService {
       return response.data.data;
     } catch (error) {
       console.warn(error);
+    }
+  }
+  
+  async getFee(data, coin, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        `${BASE_URL}/coin/${coin}/transaction/fee`,
+        data,
+        API_HEADER
+      );
+      //console.log("FEE", response);
+      return response.data.data;
+    } catch (error) {
       internalServerError();
       return;
     }
