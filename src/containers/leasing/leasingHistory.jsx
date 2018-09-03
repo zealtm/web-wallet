@@ -8,6 +8,7 @@ import {
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import i18n from "../../utils/i18n";
+import { formatDate } from "../../utils/numbers";
 import style from "./style.css";
 
 class LeasingHistory extends React.Component {
@@ -44,62 +45,66 @@ class LeasingHistory extends React.Component {
   };
 
   renderHistory = () => {
-    let mapHistoryItems = [{}, {}, {}];
     let { toggleHistory } = this.state;
-    return mapHistoryItems.map((val, index) => {
-      return (
-        <div key={index}>
-          <div>
-            <Grid
-              item
-              xs={12}
-              className={
-                toggleHistory !== undefined && toggleHistory !== index
-                  ? style.opacityItem
-                  : style.itemHistorico
-              }
-              onClick={() => this.stateDataHistory(index)}
-            >
-              <Grid item xs={3}>
-                12/December 16:22:03
-              </Grid>
-              <Grid item xs={3}>
-                <span className={style.textGreen}>300.00000000</span>
-              </Grid>
-              <Grid item xs={4}>
-                spartannode.com
-              </Grid>
-              <Grid item xs={2}>
-                {this.renderBtCancel(1)}
-              </Grid>
-            </Grid>
-
-            <div>
-              <Grid
-                item
-                xs={12}
-                className={toggleHistory !== index ? style.toggleHistory : null}
-              >
-                <Grid item xs={12} className={style.itemDataHistorico}>
-                  <Grid item xs={12} className={style.descriptionHistory}>
-                    <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                    <a href="#" target="parent">
-                      ayudegwdwef54ew68fv46fgdrg5effjbhekyf
-                    </a>
+    let { history } = this.props;
+    return history
+      ? history.txs.map((value, index) => {
+          return (
+            <div key={index}>
+              <div>
+                <Grid
+                  item
+                  xs={12}
+                  className={
+                    toggleHistory !== undefined && toggleHistory !== index
+                      ? style.opacityItem
+                      : style.itemHistorico
+                  }
+                  onClick={() => this.stateDataHistory(index)}
+                >
+                  <Grid item xs={3}>
+                    {formatDate(value.date, "DM")}
+                    &nbsp; {formatDate(value.date, "HMS")}
+                  </Grid>
+                  <Grid item xs={3}>
+                    <span className={style.textGreen}>{value.amount}</span>
+                  </Grid>
+                  <Grid item xs={4}>
+                    spartannode.com
+                  </Grid>
+                  <Grid item xs={2}>
+                    {this.renderBtCancel(1)}
                   </Grid>
                 </Grid>
-              </Grid>
+
+                <div>
+                  <Grid
+                    item
+                    xs={12}
+                    className={
+                      toggleHistory !== index ? style.toggleHistory : null
+                    }
+                  >
+                    <Grid item xs={12} className={style.itemDataHistorico}>
+                      <Grid item xs={12} className={style.descriptionHistory}>
+                        <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
+                        <a href="#" target="parent">
+                          {value.txID}
+                        </a>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      );
-    });
+          );
+        })
+      : null;
   };
 
   loadModalLeasing = () => {
-    let { openModal, getProfessionalNode } = this.props;
+    let { openModal } = this.props;
     openModal();
-    getProfessionalNode();
   };
 
   render() {
@@ -157,17 +162,18 @@ class LeasingHistory extends React.Component {
 
 LeasingHistory.propTypes = {
   openModal: PropTypes.func,
-  getProfessionalNode: PropTypes.func,
   coins: PropTypes.array.isRequired,
   balance: PropTypes.number,
-  getLeasingInfo: PropTypes.func
+  getLeasingInfo: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapStateToProps = store => (
   console.warn(store),
   {
     coins: store.skeleton.coins,
-    balance: store.skeleton.coins.lunes.balance.available
+    balance: store.skeleton.coins.lunes.balance.available,
+    history: store.leasing.history.data
   }
 );
 

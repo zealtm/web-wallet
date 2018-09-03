@@ -8,7 +8,8 @@ import style from "../style.css";
 import {
   validateLeasingAddress,
   clearState,
-  startNewLeasing
+  startNewLeasing,
+  getLeasingInfo
 } from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
 import { convertSmallerCoinUnit } from "../../../utils/numbers";
@@ -91,7 +92,7 @@ class StartLeasing extends React.Component {
 
   render() {
     let { amountValue, toAddress } = this.state;
-    let { balance, feeValue, professionalNode, addressIsValid } = this.props;
+    let { balance, feeValue, addressIsValid } = this.props;
     {
       addressIsValid ? this.createLeasing() : null;
     }
@@ -150,10 +151,7 @@ class StartLeasing extends React.Component {
           </span>
         </div>
 
-        <CustomSelect
-          nodes={professionalNode}
-          handleAddress={this.handleAddress}
-        />
+        <CustomSelect handleAddress={this.handleAddress} />
 
         <input
           type="text"
@@ -180,13 +178,10 @@ class StartLeasing extends React.Component {
 }
 
 StartLeasing.propTypes = {
-  professionalNode: PropTypes.array,
   coins: PropTypes.array.isRequired,
   feeValue: PropTypes.object,
   balance: PropTypes.number,
-  decimalPoint: PropTypes.number,
-  getValidateAddress: PropTypes.func,
-  getCoinFeeValue: PropTypes.func,
+  decimalPoint: PropTypes.number,  
   errorInput: PropTypes.func,
   validateLeasingAddress: PropTypes.func,
   addressIsValid: PropTypes.bool,
@@ -203,7 +198,7 @@ const mapSateToProps = store => ({
   decimalPoint: store.skeleton.coins.lunes.decimalPoint,
   addressIsValid: store.leasing.addressIsValid,
   user: store.user.user,
-  coinAddress: store.skeleton.coins.lunes.address
+  coinAddress: store.skeleton.coins.lunes.address,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -212,7 +207,8 @@ const mapDispatchToProps = dispatch =>
       validateLeasingAddress,
       errorInput,
       clearState,
-      startNewLeasing
+      startNewLeasing,
+      getLeasingInfo
     },
     dispatch
   );

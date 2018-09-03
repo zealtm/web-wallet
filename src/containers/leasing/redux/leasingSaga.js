@@ -83,35 +83,12 @@ export function* createLeasing(action) {
   }
 }
 
-export function* getHistoryLeasing(action) {
-  try {
-    let response = yield call(leasingService.getLeasingHistory, action.coin, action.address);
-
-    if (!response.error) {
-      setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      yield put({
-        type: "GET_HISTORY_LEASING",
-        leasingHistory: response.data
-      });
-
-      return;
-    }
-
-    yield put(response.error);
-
-    return;
-  } catch (error) {
-    yield put(internalServerError());
-  }
-}
-
 export function* getLeasingInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let history = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
- 
+
     if (history) {
       setAuthToken(history.headers[HEADER_RESPONSE]);
 
