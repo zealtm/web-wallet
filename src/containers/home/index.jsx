@@ -13,6 +13,10 @@ class Home extends React.Component {
     return (
       <div >
         <Grid container className={style.homeContainer}>
+
+          <Link to="/gl">
+            link 404
+        </Link>
           <Grid item>
             <div className={style.cardHome}>
               <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />

@@ -12,6 +12,9 @@
     "NOVEMBER": "November",
     "DECEMBER": "December",
     "LEASING": "Leasing",
+
+    "PAGE_ERROR_404": "Oh, No!... Page not found",
+
     "MESSAGE_ERROR_FILEDS": "The following fields are missing or wrong",
     "MESSAGE_ERROR_EMPTY_FILEDS": "Some fields are empty",
     "MESSAGE_TERMS_OF_SERVICE": "You need to accept the terms of service",
@@ -43,6 +46,7 @@
     "BTN_CONFIRM_PIN": "Validate",
     "BTN_RESET": "Reset",
     "BTN_SAVE": "Save",
+    "BTN_HOME": "Home",
     "BTN_2FA": "Activate 2FA",
     "BTN_FINALIZE": "Finalize",
     "LOGIN_SLIDE_DESCRIPTION": "Enjoy the usability and technology of this incredible wallet and store your crypto with a high level of security",
