@@ -37,9 +37,9 @@ class CustomSelect extends React.Component {
   };
 
   loadNodes = () => {
-    let { professionalNodes } = this.props;
+    let { professionalNode } = this.props;
 
-    return professionalNodes.map((node, index) => (
+    return professionalNode.map((node, index) => (
       <div
         key={index}
         onClick={() => this.handleSelect(node.domain, node.address)}
@@ -74,12 +74,12 @@ class CustomSelect extends React.Component {
 }
 
 CustomSelect.propTypes = {
-  professionalNodes: PropTypes.array,
+  professionalNode: PropTypes.array,
   handleAddress: PropTypes.func
 };
 
 const mapSateToProps = store => ({
-  professionalNodes: store.leasing.professionalNode
+  professionalNode: store.leasing.professionalNode
 });
 
 export default connect(
