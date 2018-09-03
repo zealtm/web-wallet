@@ -1,9 +1,10 @@
 import React from "react";
+import { Link, withRouter } from "react-router-dom";
 
 // STYLE
 import style from "./style.css";
 
-// MATERIAL UI 
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 
 // UTILS
@@ -23,9 +24,11 @@ class Settings extends React.Component {
                     <Grid container className={style.containerCardsSettings}>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
-                            <Grid className={style.cards}>
-                                {i18n.t("SETTINGS_CARD_1")}
-                            </Grid>
+                            <Link to="/user">
+                                <Grid className={style.cards}>
+                                    {i18n.t("SETTINGS_CARD_1")}
+                                </Grid>
+                            </Link>
                         </Grid>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
@@ -59,4 +62,4 @@ class Settings extends React.Component {
     }
 }
 
-export default Settings;
+export default withRouter(Settings);
