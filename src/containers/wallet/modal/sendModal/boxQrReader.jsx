@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import QrReader from "react-qr-reader";
 import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  getValidateAddress,
+  setWalletSendModalLoading
+} from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 class BoxQrReader extends Component {
@@ -15,29 +21,29 @@ class BoxQrReader extends Component {
   }
 
   handleScan = data => {
-    let { nextPage } = this.props;
+    let { coin, coins, getValidateAddress, setWalletSendModalLoading } = this.props;
+    let coinName = coins[coin].name;
 
     if (data) {
-      this.setState({ result: data });
-      nextPage();
+      setWalletSendModalLoading();
+      getValidateAddress(coinName, data);
     }
   };
 
   handleError = error => {
-    let { previousPage, errorInput } = this.props;
+    let { errorInput } = this.props;
     errorInput(error.message);
-    previousPage();
   };
 
   render() {
     let { result, delay } = this.state;
+
     return (
       <div>
         <QrReader
           delay={delay}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{ width: "100%" }}
         />
         <p>{result}</p>
       </div>
@@ -46,15 +52,28 @@ class BoxQrReader extends Component {
 }
 
 BoxQrReader.propTypes = {
-  nextPage: PropTypes.func,
-  previousPage: PropTypes.func,
+  coin: PropTypes.string.isRequired,
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  getValidateAddress: PropTypes.func.isRequired,
+  setWalletSendModalLoading: PropTypes.func.isRequired,
   errorInput: PropTypes.func
 };
 
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins
+});
+
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ errorInput }, dispatch);
+  bindActionCreators(
+    {
+      errorInput,
+      getValidateAddress,
+      setWalletSendModalLoading
+    },
+    dispatch
+  );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BoxQrReader);

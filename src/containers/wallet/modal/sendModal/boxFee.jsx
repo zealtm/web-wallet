@@ -1,37 +1,158 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  setWalletModalStep,
+  setWalletSendModalAmount,
+  setWalletSendModalLoading,
+  setWalletSendModalSelectedFee
+} from "../../redux/walletAction";
+import { errorInput } from "../../../errors/redux/errorAction";
+
+// COMPONENTS
+import ButtonContinue from "./buttonContinue.jsx";
 
 // STYLE
 import style from "../../style.css";
 
 class BoxFee extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      error: 0
+    };
+  }
+
+  calcFee = type => {
+    let { setWalletSendModalSelectedFee, errorInput, modal } = this.props;
+
+    if (modal.feeValue[type] >= modal.sendAmount) {
+      errorInput("Insufficient funds");
+      return;
+    }
+
+    setWalletSendModalSelectedFee(modal.feeValue[type]);
+    return;
+  };
+
+  confirmFee = () => {
+    let {
+      modal,
+      errorInput,
+      setWalletModalStep,
+      setWalletSendModalAmount,
+      setWalletSendModalLoading
+    } = this.props;
+    let feeAmount = modal.feeValue.selectedFee;
+    let amount = modal.sendAmount - (feeAmount ? feeAmount : 0);
+
+    if (feeAmount) {
+      setWalletSendModalLoading();
+      setWalletSendModalAmount(amount);
+      setWalletModalStep(3);
+
+      return;
+    }
+
+    errorInput("Select a Fee");
+    return;
+  };
+
   render() {
+    let { coin, modal } = this.props;
+    let selectedFee = modal.feeValue.selectedFee
+      ? modal.feeValue.selectedFee
+      : 0;
+    let amount = modal.sendAmount - selectedFee;
+
     return (
       <div className={style.modalBox}>
-        <img src="/images/coins/LUNES.png" className={style.modalIconCoin} />
+        <img
+          src={"/images/icons/coins/" + coin + ".png"}
+          className={style.modalIconCoin}
+        />
         <div>
-          Voce esta enviando{" "}
-          <span className={style.totalConfirm}>20,000.00 LUNES</span>
+          <span>Voce esta enviando </span>
+          <span className={style.totalConfirm}>
+            {amount + " " + coin.toUpperCase()}
+          </span>
         </div>
         <div>
-          para o endereco{" "}
-          <span className={style.addressConfirm}>
-            123j12j312j312j31j23j123j12j312j3
-          </span>
+          <span>para o endereco </span>
+          <span className={style.addressConfirm}>{modal.address}</span>
         </div>
 
         <div className={style.confirmFee}>
-          <div>Sua taxa de transação na rede Lunes é</div>
-          <div className={style.txtamount}>0.001</div>
+          <div>
+            Sua taxa de transação na rede <span> {coin.toUpperCase()} </span> é
+          </div>
+          <div className={style.txtamount}>{selectedFee}</div>
         </div>
 
         <div className={style.boxFee}>
-          <span className={style.greenLabelFee}>Baixa 0.001</span>
-          <span className={style.yellowLabelFee}>Média 0.001</span>
-          <span className={style.redLabelFee}>Alta 0.001</span>
+          <span
+            className={style.greenLabelFee}
+            onClick={() => this.calcFee("low")}
+          >
+            Baixa {modal.feeValue.low}
+          </span>
+          <span
+            className={style.yellowLabelFee}
+            onClick={() => this.calcFee("medium")}
+          >
+            Média {modal.feeValue.medium}
+          </span>
+          <span
+            className={style.redLabelFee}
+            onClick={() => this.calcFee("high")}
+          >
+            Alta {modal.feeValue.high}
+          </span>
+        </div>
+
+        <div className={style.paddingTop8}>
+          <ButtonContinue
+            action={() => this.confirmFee()}
+            loading={modal.loading}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default BoxFee;
+BoxFee.propTypes = {
+  modal: PropTypes.object.isRequired,
+  coin: PropTypes.string.isRequired,
+  coins: PropTypes.array.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  setWalletModalStep: PropTypes.func.isRequired,
+  setWalletSendModalAmount: PropTypes.func.isRequired,
+  setWalletSendModalLoading: PropTypes.func.isRequired,
+  setWalletSendModalSelectedFee: PropTypes.func.isRequired
+};
+
+const mapSateToProps = store => ({
+  modal: store.wallet.modal,
+  coins: store.skeleton.coins
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setWalletModalStep,
+      setWalletSendModalAmount,
+      setWalletSendModalLoading,
+      setWalletSendModalSelectedFee,
+      errorInput
+    },
+    dispatch
+  );
+
+export default connect(
+  mapSateToProps,
+  mapDispatchToProps
+)(BoxFee);

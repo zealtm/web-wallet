@@ -17,7 +17,14 @@ import {
   balanceCoins,
   createCoinsAddress
 } from "../skeleton/redux/skeletonSaga";
-import { } from "../wallet/redux/walletSaga";
+import {
+  validateAddress,
+  getWalletCoinHistory,
+  shareCoinAddress,
+  getWalletSendModalFee,
+  getCoinFee
+} from "../wallet/redux/walletSaga";
+import { getProfessionalNode } from "../leasing/redux/leasingSaga"
 
 export default function* rootSaga() {
   yield [
@@ -29,12 +36,19 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
-
     //skeleton-saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
     fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
-    fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress)
+    fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+    //wallet-saga
+    fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
+    fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
+    fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
+    fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
+    //leasing
+    fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
+    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee)
   ];
 }

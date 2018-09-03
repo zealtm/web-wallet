@@ -4,6 +4,7 @@ import rootSaga from "./saga";
 import skeleton from "../skeleton/redux/skeletonReducer";
 import user from "../user/redux/userReducer";
 import wallet from "../wallet/redux/walletReducer";
+import leasing from "../leasing/redux/leasingReducer";
 import error from "../errors/redux/errorReducer";
 
 
@@ -14,6 +15,7 @@ const Store = createStore(
     user,
     wallet,
     skeleton,
+    leasing,
     error
   }),
 

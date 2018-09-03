@@ -25,3 +25,10 @@ export const forbidden = (message) => ({
         message
     }
 });
+
+export const modalError = (message) => ({
+    error: {
+        type,
+        message
+    }
+});

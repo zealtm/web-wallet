@@ -1,6 +1,6 @@
 const colors = {
   purple: {
-    default: "#4b2c82",
+    default: "#473088",
     clear: "#654fa4",
     light: "#4b2c82",
     dark: "#3b1878"

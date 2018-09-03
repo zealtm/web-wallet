@@ -13,30 +13,41 @@ import ModalBar from "../../../components/modalBar";
 
 function loading({ error }) {
   if (error) {
-    console.warn(error);
     return "Error!";
   } else {
-    return <Loading />;
+    return <Loading color="wallet" height="80vh" width="100px" />;
   }
 }
 
 /* eslint-disable */
 let home = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../home")),
+  loader: () => fakeDelay(400).then(() => import("../../home")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../home")
 });
 
 let wallet = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../wallet")),
+  loader: () => fakeDelay(400).then(() => import("../../wallet")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../wallet")
 });
 
-let recharge = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../recharge")),
+let leasing = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../leasing")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../leasing")
+});
+
+let coupons = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../coupons")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../coupons")
+});
+
+let settings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../recharge")
+  serverSideRequirePath: path.resolve(__dirname, "../../settings")
 });
 
 let errorNotFound = Loadable({
@@ -69,7 +80,9 @@ class App extends Component {
               <Route exact path="/" component={home} />
               <Route path="/home" component={home} />
               <Route path="/wallet" component={wallet} />
-              <Route path="/recharge" component={recharge} />
+              <Route path="/coupons" component={coupons} />
+              <Route path="/leasing" component={leasing} />
+              <Route path="/settings" component={settings} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

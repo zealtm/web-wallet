@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  setWalletSendModalOpen,
+  setWalletReceiveModalOpen,
+  setWalletModalStep
+} from "./redux/walletAction";
 
 // STYLE
 import style from "./style.css";
@@ -16,6 +22,7 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 //COMPONENTS
 import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
+import ReceiveModal from "./modal/receiveModal/";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -25,12 +32,19 @@ class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
-      modalSend: false
+      modalSend: false,
+      modalReceive: false
     };
   }
 
-  changeModalState = modalName => {
-    return this.setState({ ...this.state, [modalName]: true });
+  previousStep = () => {
+    let { step } = this.props.wallet.modal;
+    let { setWalletModalStep } = this.props;
+    if (step >= 0) {
+      setWalletModalStep(step - 1);
+    }
+
+    return;
   };
 
   renderArrowPercent = val => {
@@ -43,82 +57,128 @@ class CoinsInfo extends React.Component {
 
   render() {
     let defaultCoin = getDefaultFiat();
-    let { coins, wallet } = this.props;
-    let { modalSend } = this.state;
+    let {
+      setWalletSendModalOpen,
+      setWalletReceiveModalOpen,
+      coins,
+      wallet
+    } = this.props;
+    let step = wallet.modal.step;
+    let selectedCoin = wallet.selectedCoin;
     let coin = coins[wallet.selectedCoin];
-    let coinPrice = coins[wallet.selectedCoin].price[defaultCoin].price;
-    let coinPercent = coins[wallet.selectedCoin].price.percent;
+    let coinPrice = coins[selectedCoin].price[defaultCoin].price;
+    let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
 
     return (
-      <div className={style.containerWallet}>
-        <Modal title={"Transação"} content={<SendModal />} show={modalSend} />
-        <div className={style.mainWalletInfoCoins}>
-          <Grid item xs={12} sm={7} className={style.wrapperInfoCoins}>
-            <div className={style.contentCoinSelected}>
-              <div className={style.alignContentCoin}>
-                <div className={style.nameCoinSelected}>
-                  {coin.name.toUpperCase()}
-                </div>
+      <div>
+        <Modal
+          title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
+          content={<ReceiveModal coin={coin} />}
+          show={wallet.modalReceive.open}
+          close={() => setWalletReceiveModalOpen()}
+        />
+
+        <Modal
+          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
+          content={<SendModal />}
+          show={wallet.modal.open}
+          close={
+            step === 4 || step === 4 || step === 5
+              ? null
+              : () => setWalletSendModalOpen()
+          }
+          back={
+            step === 0 || step === 4 || step === 5
+              ? null
+              : () => this.previousStep()
+          }
+        />
+
+        <Grid container className={style.containerInfo}>
+          <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
+            <Grid item xs={4} className={style.coinSel}>
+              <Grid item>
+                <h3>{coin.name.toUpperCase()}</h3>
                 <img
-                  src={"/images/icons/coins/" + coin.abbreviation + ".png"}
+                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
                 />
                 <div className={style.percentageCoinSelected}>
                   {this.renderArrowPercent(coinPercent)}
                   {coinPercent}
                 </div>
+                <h2>{"$" + coinPrice}</h2>
+              </Grid>
+            </Grid>
 
-                <div className={style.valueCoinSelected}>{"$" + coinPrice}</div>
-              </div>
-            </div>
+            <Hidden xsDown>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItem}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}>
+                      {" "}
+                      {defaultCoin}{" "}
+                    </div>
+                  </div>
+                </Grid>
 
-            <div className={style.floatRightDesktop}>
-              <div className={style.coinBalance}>
-                <div className={style.balanceMyAmount}>
-                  {i18n.t("WALLET_MY_AMOUNT")}
-                </div>
-                <div className={style.balanceAmount}> {balance} </div>
-
-                <div>
-                  {"$" + fiatBalance}
-                  <div className={style.coinBalanceGreen}> {defaultCoin} </div>
-                </div>
-              </div>
-
-              <Hidden xsDown>
-                <div className={style.alignButtons}>
-                  <button className={style.receiveButton}>
+                <Grid item className={style.alignButtons}>
+                  <button
+                    className={style.receiveButton}
+                    onClick={() => setWalletReceiveModalOpen()}
+                  >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
                   <button
-                    className={style.submitButton}
-                    onClick={() => this.changeModalState("modalSend")}
+                    className={style.sendButton}
+                    onClick={() => setWalletSendModalOpen()}
                   >
                     {i18n.t("BTN_SEND")}
                   </button>
-                </div>
-              </Hidden>
-            </div>
+                </Grid>
+              </Grid>
+            </Hidden>
+
+            <Hidden smUp>
+              <Grid item xs={8} className={style.floatRight}>
+                <Grid item className={style.balanceItemMobile}>
+                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                  <p>{balance} </p>
+                  <div className={style.alignValues}>
+                    {"$" + fiatBalance}
+                    <div className={style.coinBalanceGreen}>
+                      {" "}
+                      {defaultCoin}{" "}
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Hidden>
           </Grid>
-        </div>
 
-        <Hidden smUp>
-          <div
-            className={style.alignButtonsMobile}
-            onClick={() => this.changeModalState("modalSend")}
-          >
-            <button className={style.receiveButtonMobile}>
-              {i18n.t("BTN_RECEIVE")}
-            </button>
-
-            <button className={style.submitButtonMobile}>
-              {i18n.t("BTN_SEND")}
-            </button>
-          </div>
-        </Hidden>
+          <Hidden smUp>
+            <Grid item xs={11} className={style.alignButtons}>
+              <button
+                className={style.receiveButtonMobile}
+                onClick={() => setWalletReceiveModalOpen()}
+              >
+                {i18n.t("BTN_RECEIVE")}
+              </button>
+              <button
+                className={style.sendButtonMobile}
+                onClick={() => setWalletSendModalOpen()}
+              >
+                {i18n.t("BTN_SEND")}
+              </button>
+            </Grid>
+          </Hidden>
+        </Grid>
       </div>
     );
   }
@@ -126,7 +186,10 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   wallet: PropTypes.object.isRequired,
-  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  setWalletModalStep: PropTypes.func.isRequired,
+  setWalletSendModalOpen: PropTypes.func.isRequired,
+  setWalletReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -134,7 +197,17 @@ const mapSateToProps = store => ({
   coins: store.skeleton.coins
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setWalletModalStep,
+      setWalletSendModalOpen,
+      setWalletReceiveModalOpen
+    },
+    dispatch
+  );
+
 export default connect(
   mapSateToProps,
-  null
+  mapDispatchToProps
 )(CoinsInfo);

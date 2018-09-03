@@ -32,8 +32,8 @@
     "lint"
   ],
   "devDependencies": {
-    "@sucrase/webpack-object-rest-spread-plugin": "^1.0.1",
     "@babel/runtime": "7.0.0-beta.55",
+    "@sucrase/webpack-object-rest-spread-plugin": "^1.0.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
@@ -73,10 +73,12 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bip39": "^2.5.0",
+    "crypto-address-validator": "^0.1.0",
     "crypto-js": "^3.1.9-1",
     "i18next": "^11.3.3",
     "i18next-browser-languagedetector": "^2.2.0",
     "prop-types": "^15.6.2",
+    "qrcode.react": "^0.8.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-i18next": "^7.7.0",
@@ -93,6 +95,7 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
-    "validator": "^10.4.0"
+    "validator": "^10.4.0",
+    "waves.js": "0.0.7-13"
   }
 }

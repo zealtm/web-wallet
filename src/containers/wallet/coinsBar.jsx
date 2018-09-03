@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setSelectedCoin } from "./redux/walletAction";
+import {
+  setSelectedCoin,
+  getWalletCoinHistory,
+  setWalletCoinHistoryLoading
+} from "./redux/walletAction";
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS
@@ -40,6 +44,17 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
+  setCoin = (coin, address) => {
+    let {
+      setSelectedCoin,
+      getWalletCoinHistory,
+      setWalletCoinHistoryLoading
+    } = this.props;
+    setWalletCoinHistoryLoading(true);
+    getWalletCoinHistory(coin, address);
+    setSelectedCoin(coin);
+  };
+
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -49,13 +64,18 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    let { wallet, setSelectedCoin } = this.props;
+    let { wallet } = this.props;
     let { coins } = this.props.skeleton;
     let defaultFiat = getDefaultFiat();
 
     return Object.keys(coins).map((val, index) => {
       let coin = coins[val];
-      let coinStatus = coin.status === "active" ? true : false;
+      let coinBalanceStatus = coin.balance ? true : false;
+      let coinAddressStatus = coin.address ? true : false;
+      let coinStatus =
+        coin.status === "active" && coinBalanceStatus && coinAddressStatus
+          ? true
+          : false;
       let coinBalance = coinStatus ? coin.balance.available : 0;
       let coinFiatBalance = coinStatus
         ? (coinBalance * coin.price[defaultFiat].price).toFixed(2)
@@ -67,7 +87,9 @@ class CoinsBar extends React.Component {
           className={coinStatus ? null : style.boxCoinDisabled}
           key={index}
           onClick={
-            coinPercent ? () => setSelectedCoin(coin.abbreviation) : null
+            coinPercent
+              ? () => this.setCoin(coin.abbreviation, coin.address)
+              : null
           }
         >
           <div
@@ -182,7 +204,10 @@ class CoinsBar extends React.Component {
 
 CoinsBar.propTypes = {
   wallet: PropTypes.object,
-  skeleton: PropTypes.object
+  skeleton: PropTypes.object,
+  setSelectedCoin: PropTypes.func,
+  getWalletCoinHistory: PropTypes.func,
+  setWalletCoinHistoryLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -193,6 +218,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      setWalletCoinHistoryLoading,
+      getWalletCoinHistory,
       setSelectedCoin,
       clearMessage,
       errorInput
