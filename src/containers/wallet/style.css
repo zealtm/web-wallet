@@ -252,13 +252,13 @@
   composes: styleCoinDefalt;
 }
 
-:local(.sendButton) {
-  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+:local(.sentButton) {
+  composes: sentButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 
-:local(.sendButtonMobile) {
-  composes: sendButton;
+:local(.sentButtonMobile) {
+  composes: sentButton;
   padding: 0;
   height: 40px;
 }
@@ -393,8 +393,8 @@
   composes: clError from "../../components/bases/colorBase.css";
 }
 
-:local(.submitButton) {
-  composes: sendButton from "../../components/bases/buttonBase.css";
+:local(.sentButton) {
+  composes: submitButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 :local(.receivedHistory) {
@@ -406,8 +406,8 @@
   text-align: center;
 }
 
-:local(.submitButtonMobile) {
-  composes: sendButton from "../../components/bases/buttonBase.css";
+:local(.sentButtonMobile) {
+  composes: submitButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
   height: 40px;
 }
