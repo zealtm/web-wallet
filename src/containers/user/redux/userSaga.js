@@ -1,7 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import { setAuthToken, getAuthToken, setUserSeedWords, getUserSeedWords, getUsername, setUserData, clearAll } from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
-import { HEADER_RESPONSE } from "../../../constants/headers";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
@@ -40,7 +39,10 @@ export function* authenticateUser(action) {
     let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
     let seed = yield call(getUserSeedWords);
 
-    yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
+    // yield call(setAuthToken, twoFactorResponse.headers[HEADER_RESPONSE]);
+    yield call(setAuthToken, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDQsImlhdCI6MTUzNTczNjk4OCwiZXhwIjoxNTM1NzM3Mjg4fQ.2o3BtnFuzyUyv3GQ5kORD18KgMvvJrcEtNRMirZJQTA");
+
+    
 
     yield put({
       type: "POST_USER_AUTHENTICATE",
