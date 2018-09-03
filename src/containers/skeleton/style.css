@@ -15,7 +15,7 @@
 
 :local(.colContainer) {
   composes: bgPurpleDark from "../../components/bases/colorBase.css";
-  height: 100vh;
+  height: 85vh;
   overflow: auto;
   padding: 8px;
   padding-left:0;
