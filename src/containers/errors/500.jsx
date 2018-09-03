@@ -26,59 +26,53 @@ class InternalError extends React.Component {
   render() {
     let { timer } = this.state;
     return (
-
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}>
-
-        <div>
+      <div>
+        <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          marginTop: "8%"
+        }}>
           <div style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
+            width: "25%",
           }}>
 
             <div style={{
-              width: "30%",
+              fontSize: "12vh",
+              color: "#654fa4",
+              display: "flex",
             }}>
-
               <div style={{
-                fontSize: "12vh",
-                color: "#654fa4",
                 display: "flex",
+                width: "100%",
+                height: "27vh",
+                justifyContent: "space-evenly"
               }}>
-                <div style={{
-                  display: "flex",
-                  width: "100%",
-                  height: "27vh",
-                  justifyContent: "space-evenly"
-                }}>
-                  <h1 style={{ margin: 0 }}> {"5"} </h1>
-                  <h1 style={{ margin: 0 }}> {"0"} </h1>
-                  <h1 style={{ margin: 0 }}> {"0"} </h1>
-                </div>
+                <h1 style={{ margin: 0 }}> {"5"} </h1>
+                <h1 style={{ margin: 0 }}> {"0"} </h1>
+                <h1 style={{ margin: 0 }}> {"0"} </h1>
               </div>
             </div>
           </div>
-          <div>
-            <div>
-              <center>
+          <img src="./images/lunio-404@1x.png" style={{
+            position: "absolute",
+            bottom: "0",
+            width: "28vh"
+          }} />
+        </div>
 
-                <h3 style={{ margin: "0" }}> {i18n.t("PAGE_ERROR_500")} </h3>
-                <br />
-                <div style={{
-                  color: "#68f285",
-                  fontWeight: "bold"
-                }}>
-                  <p>
-                    {i18n.t("PAGE_ERROR_500_REDIRECT")}
-                    {"... " + timer}
-                  </p>
-                </div>
-              </center>
-            </div>
+        <div>
+          <div>
+            <h3 style={{
+              margin: "0",
+              textAlign: "center"
+            }}>
+              <p style={{ color: "#68f285" }}>
+                {i18n.t("PAGE_ERROR_500_REDIRECT")}
+                {"... " + timer}
+              </p>
+
+            </h3>
           </div>
         </div>
       </div>

@@ -9,10 +9,11 @@ class NotFoundError extends React.Component {
         <div style={{
           display: "flex",
           justifyContent: "center",
-          alignContent: "center"
+          alignContent: "center",
+          marginTop: "8%"
         }}>
           <div style={{
-            width: "38%",
+            width: "25%",
           }}>
 
             <div style={{
