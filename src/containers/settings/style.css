@@ -5,7 +5,7 @@
     1.2 TEXTS
 
 
-  
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -13,6 +13,10 @@
 /* 1. SETTINGS */
 
 /* 1.1 BASES */
+:local(a) {
+    text-decoration: none;
+}
+
 :local(.containerSettings) {
     justify-content: center;
     border-radius: 8px;
@@ -44,6 +48,12 @@
     min-width: 130px;
     text-align: center;
     padding: 5px;
+    composes: clInfo from "../../components/bases/colorBase.css";
+}
+
+:local(.cards a, .cards a:visited) {
+  text-decoration: none;
+  color: #ffffff;
 }
 
 :local(.cards:hover) {
@@ -59,17 +69,16 @@
 
 @media only screen and (max-width: 599px) {
     :local(.headerSettings) {
-        padding: 0;   
+        padding: 0;
     }
     :local(.headerSettings p) {
-        font-size: 8px;     
+        font-size: 8px;
         margin-bottom: 7%;
     }
     :local(.headerSettings h2) {
-        font-size: 9px;     
+        font-size: 9px;
     }
 }
 
 /* ------------------------------------------------------------------------- */
 
-  
