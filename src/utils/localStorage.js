@@ -70,6 +70,6 @@ export const getDefaultCrypto = () => {
   let userStorage = getUserData();
 
   return !userStorage || !userStorage.defaultCoin
-    ? "btc"
+    ? "lunes"
     : !userStorage.defaultCoin;
 };
