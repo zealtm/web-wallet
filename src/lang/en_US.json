@@ -45,6 +45,7 @@
     "BTN_SAVE": "Save",
     "BTN_2FA": "Activate 2FA",
     "BTN_FINALIZE": "Finalize",
+    "BTN_CONTINUE": "Continue",
     "LOGIN_SLIDE_DESCRIPTION": "Enjoy the usability and technology of this incredible wallet and store your crypto with a high level of security",
     "LOGIN_SLIDE_DESCRIPTION_plural": "",
     "CARD_HOME_DESCRIPTION_1": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
@@ -134,5 +135,35 @@
     "VOUCHER_BUTTON": "Rescue",
     "SETTINGS_HEADER_INFO": "Control your personal information. With these settings, you can manage which information is private and which is saved to your account to enhance your Lunes Wallet experience",
     "SETTINGS_CARD": "WALLETS",
-    "SETTINGS_CARD_plural": "2FA AUTHENTICATION"
+    "SETTINGS_CARD_plural": "2FA AUTHENTICATION", 
+
+    "PAYMENT_MODAL_TITLE": "Pagamento de Boleto",
+    "PAYMENT_PASS_CONFIRMATION": "Para confirmar sua transação, informe sua senha e conclua o envio de ",
+    "PAYMENT_PASS_TO": " para o endereço ", 
+    "PAYMENT_TEXT_HISTORY": "Você pode visualizar a transação em sua seção \"Históricos\"",
+    "PAYMENT_SUCCESS_1": "Você acabou de debitar um boleto no valor de ",
+    "PAYMENT_SUCCESS_2": " em sua carteira Lunes",
+    "PAYMENT_FEE_TEXT_1": "Você esta enviando ",
+    "PAYMENT_FEE_TEXT_2": " para o endereco ",
+    "PAYMENT_FEE_AMOUNT": "Sua taxa de transação na rede ",
+    "PAYMENT_DETAILS_TEXT_1": "Atenção: Confira abaixo os dados do seu pedido, para que não haja erros. Se a informação estiver incorreta, clique em voltar.",
+    "PAYMENT_DETAILS_TEXT_2": " e será pago um título de ",
+    "PAYMENT_DETAILS_TEXT_3": ", conforme informações abaixo:", 
+    "PAYMENT_TITLE_BANK": "Banco/Instituição",
+    "PAYMENT_TITLE_NAME": "Nome", 
+    "PAYMENT_TITLE_DATE": "Vencimento",
+    "PAYMENT_TITLE_DOC": "CPF",
+    "PAYMENT_TITLE_VALUE": "Valor",
+    "PAYMENT_CONFIRM_1": "Confirme os dados para concluir seu pagamento",
+    "PAYMENT_CONFIRM_2": "Será debitado da sua carteira ",
+    "PAYMENT_CONFIRM_3": "O tempo médio de confirmação do pagamento é de até 30 minutos. Somente conclua o pagamento se estiver de acordo.",
+    "PAYMENT_BTN_PAY": "Pagar agora",
+
+    "GDPR_TITLE": "Termo GDPR",
+    "GDPR_DESC": "Lorem ipsum asd asdsd sdsdsjks",
+
+
+    "FEE_LOW": "Baixo",
+    "FEE_MEDIUM": "Medio",
+    "FEE_HIGHT": "Alto"
 }

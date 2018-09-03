@@ -1,5 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+// UTILS
+import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
@@ -17,7 +19,7 @@ class SecurePayment extends React.Component {
   };
 
   confirmPassword = () => {
-    let { password } = this.state;
+    //let { password } = this.state;
 
     // if de validacao e proximo passo aqui
     return;
@@ -25,7 +27,7 @@ class SecurePayment extends React.Component {
 
   render() {
     let { password } = this.state;
-    let {handleStep} = this.props;
+    let { handleStep } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -35,13 +37,13 @@ class SecurePayment extends React.Component {
         />
         <div>
           <span>
-            Para confirmar sua transação, informe sua senha e conclua o envio de{" "}
+            {i18n.t("PAYMENT_PASS_CONFIRMATION")}
           </span>
           <span className={style.totalConfirm}>
             5000 LUNES
           </span>
-          <span> para o endereço </span>
-          <span className={style.addressConfirm}>PAGAMENTO DE CONTA</span>
+          <span> {i18n.t("PAYMENT_PASS_TO")} </span>
+          <span className={style.addressConfirm}>{i18n.t("PAYMENT_MODAL_TITLE")}</span>
         </div>
 
         <div className={style.confirmFee}>
@@ -56,7 +58,7 @@ class SecurePayment extends React.Component {
         </div>
 
         <button className={style.btContinue} onClick={() => handleStep("next")}>
-          Confirmar
+          {i18n.t("BTN_CONFIRM")}
         </button>
       </div>
     );

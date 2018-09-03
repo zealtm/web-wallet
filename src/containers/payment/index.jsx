@@ -1,5 +1,8 @@
 import React from "react";
 
+// UTILS
+import i18n from "../../utils/i18n";
+
 // COMPONENTS
 import Modal from "../../components/modal";
 import PaymentTitleModal from "./modal/paymentTitleModal";
@@ -18,7 +21,7 @@ class Payment extends React.Component {
     return (
       <div>
         <Modal
-          title={"Pagamento de Boleto"}
+          title={i18n.t("PAYMENT_MODAL_TITLE")}
           content={<PaymentTitleModal />}
           show={isOpen}
           // close={() => this.handleModal()}

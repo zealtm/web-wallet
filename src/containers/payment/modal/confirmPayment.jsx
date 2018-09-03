@@ -16,19 +16,18 @@ class ConfirmPayment extends React.Component {
     const { handleStep } = this.props;
     return (
       <div className={style.modalBox}>
-        <div>Confirme os dados para concluir seu pagamento</div>
+        <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
         <div>
-          <span>Será debitado da sua carteira </span>
+          <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
           <span className={style.totalConfirmBlock}>5000 LUNES</span>
         </div>
 
         <div className={style.smallDescription}>
-          O tempo médio de confirmação do pagamento é de até 30 minutos. Somente
-          conclua o pagamento se estiver de acordo.
+          {i18n.t("PAYMENT_CONFIRM_3")}
         </div>
 
         <button className={style.btContinue} onClick={() => handleStep("next")}>
-          Pagar agora
+          {i18n.t("PAYMENT_BTN_PAY")}
         </button>
       </div>
     );

@@ -1,11 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-
-// UTILS
-import i18n from "../../../utils/i18n";
-
-// STYLES
-import style from "./style.css";
 
 // COMPONENTS
 import DetailsPayment from "./detailsPayment";
