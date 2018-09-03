@@ -8,7 +8,7 @@ class Payment extends React.Component {
   constructor() {
     super();
     this.state = {
-      isOpen: false
+      isOpen: true
     }
   }
   handleModal = () => this.setState({ isOpen: !this.state.isOpen });
@@ -21,7 +21,8 @@ class Payment extends React.Component {
           title={"Pagamento de Boleto"}
           content={<PaymentTitleModal />}
           show={isOpen}
-          close={() => this.handleModal()}
+          // close={() => this.handleModal()}
+          back={()=>this.handleModal()}
         />
       </div>
     )
