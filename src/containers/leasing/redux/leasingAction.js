@@ -14,6 +14,12 @@ export const getLeasingInfo = (coin, address) => ({
   coin,
   address
 });
+
+export const setLeasingLoading = isLoading => ({
+  type: "SET_LEASING_LOADING",
+  isLoading
+});
+
 export const clearState = () => ({
   type: "CLEAR_LEASING_STATE"
 });
