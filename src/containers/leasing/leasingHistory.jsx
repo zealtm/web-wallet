@@ -43,6 +43,8 @@ class LeasingHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { history } = this.props;
+    const blockexplorer = "https://blockexplorer.lunes.io/tx/";
+
     return history
       ? history.txs.map((value, index) => {
         return (
@@ -84,7 +86,7 @@ class LeasingHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={12} className={style.descriptionHistory}>
                       <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                      <a href="#" target="parent">
+                      <a href={blockexplorer + value.txID} target="blank">
                         {value.txID}
                       </a>
                     </Grid>
