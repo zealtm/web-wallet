@@ -1,17 +1,10 @@
 import React from "react";
-import PropTypes from 'prop-types';
 
-// COMPONENTS 
+// COMPONENTS
 import CustomSwitch from "./customSwitch";
 
-// UTILS
-import i18n from "../../../utils/i18n";
-
-// MATERIAL 
+// MATERIAL
 import Grid from "@material-ui/core/Grid";
-
-// STYLES
-import style from "./style.css";
 
 const configs = [
   {
@@ -23,66 +16,41 @@ const configs = [
     title: "Alerta de Criptomoedas",
     description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
     name: "check2"
-  },
-  {
-    title: "Atualizacao da Plataforma",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check3"
-  },
-  {
-    title: "Utilizar dados para melhor experiencia",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check4"
-  },
-  {
-    title: "Termo GDPR",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check5"
-  },
-  {
-    title: "Transacoes",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check6"
-  },
-  {
-    title: "Armazenamento em cache",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check7"
-  },
+  }
 ];
 
 class Consent extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = { };
+    this.state = {};
   }
-  
+
   handleSwitch = name => event => {
     this.setState({ [name]: event.target.checked });
   };
 
-  render(){
+  renderSwitch = () => {
+    return configs.map((val, key) => {
+      return (
+        <CustomSwitch
+          key={key}
+          title={val.title}
+          description={val.description}
+          action={this.handleSwitch(val.name)}
+          checked={this.state[val.name]}
+        />
+      );
+    });
+  };
+
+  render() {
     return (
       <Grid container justify="center">
         <Grid item xs={11}>
-         
-        {
-          configs.map((val,key)=>{
-            return (
-              <CustomSwitch
-                key={key}
-                title={val.title}
-                description={val.description}
-                action={this.handleSwitch(val.name)}
-                checked={this.state[val.name]}
-                />
-            )
-          })
-        }
-
+          {this.renderSwitch()}
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
