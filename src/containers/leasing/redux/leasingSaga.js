@@ -2,9 +2,12 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
- 
+import TransactionService from "../../../services/transaction/transactionService";
+import { convertBiggestCoinUnit } from "../../../utils/numbers"
+
 const leasingService = new LeasingService();
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 
 export function* getProfessionalNode() {
@@ -48,13 +51,14 @@ export function* createLeasing(action) {
   try {
 
     let leaseData = {
+
       address: action.data.coinAddress,
-      amount: action.data.amount,
+      amount: convertBiggestCoinUnit(action.data.amount),
       fee: action.data.feeValue,
       recipient: action.data.toAddress
     }
 
-    let response = yield call(leasingService.createLeasing, leaseData);
+    let response = yield call(transactionService.createLeasing, leaseData);
 
     if (!response.error) {
       yield put({

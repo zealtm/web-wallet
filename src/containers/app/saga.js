@@ -25,16 +25,12 @@ import {
   getCoinFee,
   setWalletTransaction
 } from "../wallet/redux/walletSaga";
-<<<<<<< HEAD
 import {
   getProfessionalNode,
   validateLeasingAddress,
   createLeasing
 } from "../leasing/redux/leasingSaga"
 
-=======
-import { getProfessionalNode } from "../leasing/redux/leasingSaga";
->>>>>>> dev
 
 export default function* rootSaga() {
   yield [
