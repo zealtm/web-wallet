@@ -57,72 +57,71 @@ const materialStyle = theme => ({
 
 
 class Definitions extends React.Component {
-  render(){
+  render() {
     const { classes } = this.props;
     return (
       <Grid container justify="center">
         <Grid item xs={11}>
           <div className={style.box}>
 
-          <h2>{i18n.t("SET_DEFINITIONS_TITLE1")}</h2>
-          <div className={style.description}>
-            {i18n.t("SET_DEFINITIONS_DESC1")}
-          </div>
+            <h2>{i18n.t("SET_DEFINITIONS_TITLE_1")}</h2>
+            <div className={style.formSwitch}>
+              {i18n.t("SET_DEFINITIONS_OPTION_1")}
 
-          <hr className={style.line} />
+              <Switch
+                classes={{
+                  switchBase: classes.iOSSwitchBase,
+                  bar: classes.iOSBar,
+                  icon: classes.iOSIcon,
+                  iconChecked: classes.iOSIconChecked,
+                  checked: classes.iOSChecked,
+                }}
+                disableRipple
+                checked={true}
+                value="checkedB"
+              />
 
-          <h2>{i18n.t("SET_DEFINITIONS_TITLE2")}</h2>
-          <div className={style.formSwitch}>
-            {i18n.t("SET_DEFINITIONS_OPTION1")}
+            </div>
+            <div className={style.formSwitch}>
+              {i18n.t("SET_DEFINITIONS_OPTION_2")}
+              <Switch
+                classes={{
+                  switchBase: classes.iOSSwitchBase,
+                  bar: classes.iOSBar,
+                  icon: classes.iOSIcon,
+                  iconChecked: classes.iOSIconChecked,
+                  checked: classes.iOSChecked,
+                }}
+                disableRipple
+                checked={false}
+                value="checkedB"
+              />
 
-            <Switch
-              classes={{
-                switchBase: classes.iOSSwitchBase,
-                bar: classes.iOSBar,
-                icon: classes.iOSIcon,
-                iconChecked: classes.iOSIconChecked,
-                checked: classes.iOSChecked,
-              }}
-              disableRipple
-              checked={true}
-              value="checkedB"
-            />
-            
-          </div>
-          <div className={style.formSwitch}>
-            {i18n.t("SET_DEFINITIONS_OPTION2")}
-            <Switch
-              classes={{
-                switchBase: classes.iOSSwitchBase,
-                bar: classes.iOSBar,
-                icon: classes.iOSIcon,
-                iconChecked: classes.iOSIconChecked,
-                checked: classes.iOSChecked,
-              }}
-              disableRipple
-              checked={false}
-              value="checkedB"
-            />
-            
-          </div>
+            </div>
 
-          <hr className={style.line} />
+            <hr className={style.line} />
 
-          <Grid container justify="center" className={style.formDefinition}>
-            <Grid item xs={11} md={4}>
-              {i18n.t("SET_DEFINITIONS_LABEL_LANG")}
-              <CustomSelectImage action={() => alert("teste")} />
+            <Grid container className={style.formDefinition}>
+              <Grid item xs={12} className={style.contentDefinition} >
+                <Grid item xs={12} sm={3} >
+                  {i18n.t("SET_DEFINITIONS_LABEL_LANG")}
+                  <CustomSelectImage action={() => alert("teste")} />
+                </Grid>
 
-              {i18n.t("SET_DEFINITIONS_LABEL_CURR")}
-              <CustomSelectImage action={() => alert("teste")} />
+                <Grid item xs={12} sm={3} >
+                  {i18n.t("SET_DEFINITIONS_LABEL_CURR")}
+                  <CustomSelectImage action={() => alert("teste")} />
+                </Grid>
+
+                <Grid item xs={12} sm={3} >
+                  {i18n.t("SET_DEFINITIONS_LABEL_COIN")}
+                  <CustomSelectImage action={() => alert("teste")} />
+                </Grid>
+
+              </Grid>
 
             </Grid>
-            <Grid item xs={11} md={4}>
-              {i18n.t("SET_DEFINITIONS_LABEL_COIN")}
-              <CustomSelectImage action={() => alert("teste")} />
-            </Grid>
-          </Grid>
-          
+
           </div>
         </Grid>
       </Grid>

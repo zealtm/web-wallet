@@ -215,11 +215,9 @@
   "SET_BUTTON_REMOVE": "Remover",
   "SET_BUTTON_FAV": "Favoritar",
 
-  "SET_DEFINITIONS_TITLE1": "Definições padrões por região", 
-  "SET_DEFINITIONS_DESC1": "O idioma selecionado será automaticamente exibido quando voce acessar sua plataforma.",
-  "SET_DEFINITIONS_TITLE2": "Opções de Logout", 
-  "SET_DEFINITIONS_OPTION1": "Deletar todos os metadados locais ao fazer logout - o seu próximo login demorará mais para ser processado.", 
-  "SET_DEFINITIONS_OPTION2": "Salve localmente os metadados criptografados para um login mais rápido na sua proxima sessao.",
+  "SET_DEFINITIONS_TITLE_1": "Opções de Logout", 
+  "SET_DEFINITIONS_OPTION_1": "Deletar todos os metadados locais ao fazer logout - o seu próximo login demorará mais para ser processado.", 
+  "SET_DEFINITIONS_OPTION_2": "Salve localmente os metadados criptografados para um login mais rápido na sua proxima sessao.",
   "SET_DEFINITIONS_LABEL_LANG":"Idioma da interface", 
   "SET_DEFINITIONS_LABEL_CURR": "Moeda Fiat padrão",
   "SET_DEFINITIONS_LABEL_COIN": "Moeda padrão"
