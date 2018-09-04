@@ -4,7 +4,6 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
-  HEADER_REQUEST,
   HEADER_RESPONSE
 } from "../constants/apiBaseUrl";
 import {
