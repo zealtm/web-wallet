@@ -89,12 +89,18 @@ class MultiFactorAuth extends React.Component {
     verifyTwoFactorAuth(token);
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+  
   render() {
     let { loading } = this.props.user;
     let { errors, twoFactorFields } = this.state;
 
     return (
-      <div>
+      <div onKeyPress={this.handleKeyPress}>
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 

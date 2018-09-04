@@ -136,7 +136,7 @@ class CoinsInfo extends React.Component {
                   </button>
 
                   <button
-                    className={style.sendButton}
+                    className={style.sentButton}
                     onClick={() => setWalletSendModalOpen()}
                   >
                     {i18n.t("BTN_SEND")}
@@ -171,7 +171,7 @@ class CoinsInfo extends React.Component {
                 {i18n.t("BTN_RECEIVE")}
               </button>
               <button
-                className={style.sendButtonMobile}
+                className={style.sentButtonMobile}
                 onClick={() => setWalletSendModalOpen()}
               >
                 {i18n.t("BTN_SEND")}

@@ -180,6 +180,24 @@ const wallet = (state = initialState, action) => {
         }
       };
 
+    case "SET_WALLET_TRANSACTION":
+      return {
+        ...state,
+        modal: {
+          open: false,
+          step: 0,
+          address: undefined,
+          sendAmount: undefined,
+          feeValue: {
+            low: 0.001,
+            medium: 0.001,
+            high: 0.001,
+            selectedFee: undefined
+          },
+          loading: false
+        }
+      };
+
     case "CHANGE_WALLET_ERROR_STATE":
       return {
         ...state,
