@@ -3,16 +3,7 @@ import { create } from "lunes-js-api";
 
 class LunesTransaction {
 
-  async apiConfigFactory(data) {
-    const lunes = await create(data.network.APICONFIG);
-    const seed = await lunes.Seed.fromExistingPhrase(data.seed);
-    let config = { lunes, seed }
-    return config
-  }
-
   async createLunesTransaction(data) {
-    console.warn(data);
-
     // prepara a api
     const Lunes = await create(data.network.APICONFIG);
     const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
@@ -49,7 +40,7 @@ class LunesTransaction {
       recipient: data.recipient,
       timestamp: Date.now()
     };
-    let config = this.apiConfigFactory();
+    let config = apiConfigFactory();
 
     const transaction = config.lunes.API.Node.v1.leasing.lease(
       leaseData,
@@ -59,15 +50,15 @@ class LunesTransaction {
     return transaction;
   }
 
-  async cancelLeasing(data) {
+  async cancelLeasing(transactionId, fee) {
     let leaseData = {
-      transactionId: data.transactionId,
-      fee: data.fee,
+      transactionId,
+      fee,
       timestamp: Date.now()
     };
 
-    let config = this.apiConfigFactory();
-    const transaction = config.lunes.API.Node.v1.leasing.cancelLeasing(
+    let config = apiConfigFactory();
+    let transaction = config.lunes.API.Node.v1.leasing.cancelLeasing(
       leaseData,
       config.see.keyPair
     );
@@ -76,4 +67,10 @@ class LunesTransaction {
   }
 }
 
+let apiConfigFactory = async (data) => {
+  const lunes = await create(data.network.APICONFIG);
+  const seed = await lunes.Seed.fromExistingPhrase(data.seed);
+  let config = { lunes, seed }
+  return config
+}
 export default LunesTransaction;
