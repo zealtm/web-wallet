@@ -1,9 +1,21 @@
-import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  put,
+  call
+} from "redux-saga/effects";
+import {
+  internalServerError
+} from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 import { convertBiggestCoinUnit } from "../../../utils/numbers"
+import {
+  setAuthToken,
+  getAuthToken
+} from "../../../utils/localStorage";
+import {
+  HEADER_RESPONSE
+} from "../../../constants/apiBaseUrl";
 
 const leasingService = new LeasingService();
 const coinService = new CoinService();
@@ -55,7 +67,8 @@ export function* createLeasing(action) {
       address: action.data.coinAddress,
       amount: convertBiggestCoinUnit(action.data.amount),
       fee: action.data.feeValue,
-      recipient: action.data.toAddress
+      recipient: action.data.toAddress,
+      seed: action.data.seed
     }
 
     let response = yield call(transactionService.createLeasing, leaseData);
@@ -68,6 +81,45 @@ export function* createLeasing(action) {
     }
     yield put(response.error);
 
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getLeasingInfo(action) {
+  try {
+    let token = yield call(getAuthToken);
+    let professionalNodes = yield call(leasingService.getProfessionalNodes);
+    let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
+
+    if (lease.history) {
+      setAuthToken(lease.history.headers[HEADER_RESPONSE]);
+      lease.history.data.data.txs.map(history => {
+
+        if (history.amount) {
+          history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
+        }
+
+        professionalNodes.map(node => {
+          if (history.to === node.address) {
+            history.to = node.domain
+          }
+        });
+      });
+
+      yield put({
+        type: "GET_INFO_LEASING",
+        leasingHistory: lease.history.data,
+        leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
+        professionalNodes
+      });
+
+      return;
+    }
+
+    yield put(history.error);
 
     return;
   } catch (error) {

@@ -1,5 +1,9 @@
-import { takeLatest } from "redux-saga";
-import { fork } from "redux-saga/effects";
+import {
+  takeLatest
+} from "redux-saga";
+import {
+  fork
+} from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -28,7 +32,8 @@ import {
 import {
   getProfessionalNode,
   validateLeasingAddress,
-  createLeasing
+  createLeasing,
+  getLeasingInfo
 } from "../leasing/redux/leasingSaga"
 
 
@@ -60,5 +65,6 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
     fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
     fork(takeLatest, "START_LEASING_API", createLeasing),
+    fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo)
   ];
 }
