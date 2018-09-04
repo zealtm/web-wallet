@@ -32,9 +32,11 @@ class Settings extends React.Component {
                         </Grid>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
-                            <Grid className={style.cards}>
-                                {i18n.t("SETTINGS_CARD_2")}
-                            </Grid>
+                            <Link to="/security">
+                                <Grid className={style.cards}>
+                                    {i18n.t("SETTINGS_CARD_2")}
+                                </Grid>
+                            </Link>
                         </Grid>
 
                         <Grid item xs={12} sm={3} className={style.cardsSettings}>
