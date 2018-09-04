@@ -4,6 +4,7 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
+  HEADER_REQUEST,
   HEADER_RESPONSE
 } from "../constants/apiBaseUrl";
 import {
@@ -310,7 +311,8 @@ class CoinService {
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
         let response = await axios.get(
-          LUNESNODE_URL + "/addresses/validate/" + address
+          LUNESNODE_URL + "/addresses/validate/" + address,
+          HEADER_REQUEST
         );
 
         if (!response.data.valid) {

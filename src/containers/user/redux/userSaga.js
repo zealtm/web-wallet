@@ -1,7 +1,15 @@
 import { put, call } from "redux-saga/effects";
-import { setAuthToken, getAuthToken, setUserSeedWords, getUserSeedWords, getUsername, setUserData, clearAll } from "../../../utils/localStorage";
+import {
+  setAuthToken,
+  getAuthToken,
+  setUserSeedWords,
+  getUserSeedWords,
+  getUsername,
+  setUserData,
+  clearAll
+} from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
-import { HEADER_RESPONSE } from "../../../constants/headers";
+import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
