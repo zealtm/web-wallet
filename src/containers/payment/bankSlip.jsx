@@ -58,20 +58,24 @@ class BankSlip extends React.Component {
     this.state = {
       coin: {
         name: undefined,
+        value: undefined,
         img: undefined
       },
       coins: [
         {
-          title: "Lunes",
-          img: "/images/icons/coins/lunes.png"
+          title: 'Lunes',
+          value: 'lunes',
+          img: '/images/icons/coins/lunes.png'
         },
         {
-          title: "Bitcoin",
-          img: "/images/icons/coins/btc.png"
+          title: 'Bitcoin',
+          value: 'btc',
+          img: '/images/icons/coins/btc.png'
         },
         {
-          title: "Litecoin",
-          img: "/images/icons/coins/ltc.png"
+          title: 'Litecoin',
+          value: 'ltc',
+          img: '/images/icons/coins/ltc.png'
         },
       ],
     }
@@ -79,11 +83,12 @@ class BankSlip extends React.Component {
     this.coinSelected = this.coinSelected.bind(this);
   }
 
-  coinSelected = (value, img = undefined) => {
+  coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
       coin: {
-        name: value,
+        name: title,
+        value,
         img
       }
     })
@@ -161,7 +166,7 @@ class BankSlip extends React.Component {
                   underline: classes.inputCssUnderline,
                   input: classes.inputCss
                 }}
-                placeholder={i18n.t("")}
+                placeholder={i18n.t("PAYMENT_VALUE")}
               />
             </Grid>
           </Grid>
@@ -181,13 +186,13 @@ class BankSlip extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={style.buttonBox} style={{marginTop: '10px'}}>
+        <Grid item xs={12} className={style.transparentBox} style={{marginTop: '10px'}}>
           <button className={style.buttonBorderGreen}>
             {i18n.t("PAYMENT_PAY_NOW")}
           </button>
         </Grid>
 
-        <Grid item xs={12} className={style.buttonBox} style={{marginTop: '10px'}}>
+        <Grid item xs={12} className={style.transparentBox} style={{marginTop: '10px'}}>
           <Instructions>
             {/* TODO: set the modal content */}
             <p>Conteúdo</p>

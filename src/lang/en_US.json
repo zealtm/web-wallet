@@ -146,5 +146,6 @@
     "PAYMENT_DUE_DATE": "Due date",
     "PAYMENT_CPF_CNPJ": "CPF / CNPJ",
     "PAYMENT_VALUE": "Value",
-    "PAYMENT_PAY_NOW": "Pagar agora"
+    "PAYMENT_PAY_NOW": "Pay now",
+    "PAYMENT_FIND_NAME": "Find by name"
 }

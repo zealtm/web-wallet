@@ -5,16 +5,16 @@ import i18n from "../../utils/i18n";
 import style from "./style.css";
 
 import BankSlip from "./bankSlip";
+import History from "./history";
 
 class Payment extends React.Component {
   constructor() {
     super();
   }
 
-
   render() {
     const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
-    const contents = [<BankSlip />, <h1>History</h1>]
+    const contents = [<BankSlip />, <History />]
 
     return (
       <div>

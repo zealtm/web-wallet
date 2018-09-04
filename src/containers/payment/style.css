@@ -18,7 +18,7 @@
   }
 }
 
-:local .buttonBox {
+:local .transparentBox {
   composes: box;
   background-color: transparent;
   padding: 0;
@@ -26,19 +26,6 @@
 
 :local(.row) {
   margin: 0.5rem 0 1rem 0;
-}
-
-:local .line {
-  border-bottom: 2px solid #42227d;
-  margin: 2rem 0;
-  width: 100%;
-}
-
-/* 2. TEXT */
-:local .defaultText {
-  composes: inputTextDefault from "../../components/bases/textBase.css";
-  font-size: 12px;
-  font-weight: normal;
 }
 
 :local .header {
@@ -57,6 +44,13 @@
   }
 }
 
+/* 2. TEXT */
+:local .defaultText {
+  composes: inputTextDefault from "../../components/bases/textBase.css";
+  font-size: 12px;
+  font-weight: normal;
+}
+
 :local .header h1 {
   text-align: center;
   font-size: 14px;
@@ -66,20 +60,23 @@
   font-size: 12px;
 }
 
-:local .center {
-  text-align: center;
-}
-
-:local .coinValue {
-  composes: inputTextDefault from "../../components/bases/textBase.css";
-  font-size: 24px;
-  font-weight: bold;
-  text-align: right;
-  margin-right: 1rem;
-}
-
 /* 3. BUTTONS */
 :local .buttonBorderGreen {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
   background-color: transparent;
+}
+
+
+/* 4. SCROLLBAR */
+::-webkit-scrollbar              {
+  background-color: transparent;
+  height: 5px;
+  width: 5px;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+::-webkit-scrollbar-thumb        {
+  background-color: #654fa4;
+  border-radius: 6px;
 }

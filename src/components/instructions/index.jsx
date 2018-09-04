@@ -28,10 +28,10 @@ class Instructions extends React.Component {
           </a>
         </div>
         <Modal
-            title={"Instructions"}
-            content={<div className={style.alignInstructions}>{children}</div>}
-            show={isOpen}
-            close={() => this.handleModal()}
+          title={"Instructions"}
+          content={<div className={style.alignInstructions}>{children}</div>}
+          show={isOpen}
+          close={() => this.handleModal()}
         />
       </div>
     );

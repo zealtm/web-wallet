@@ -14,16 +14,15 @@ class Dropdown extends React.Component {
   }
 
   toggleList = () => {
-    console.log('open: ', !this.state.listOpen);
     this.setState(prevState => ({
       listOpen: !prevState.listOpen
     }))
   }
 
-  selectListItem = (value, img = undefined) => {
+  selectListItem = (value = undefined, title = undefined, img = undefined) => {
     const {selectItem} = this.props;
 
-    selectItem(value, img);
+    selectItem(value, title, img);
     this.toggleList();
   }
 
@@ -37,7 +36,7 @@ class Dropdown extends React.Component {
     return (
       <ul className={style.list} style={listStyle}>
         <li className={style.listItem}
-          onClick={() => this.selectListItem('')}
+          onClick={() => this.selectListItem()}
         >
           Select a coin..
         </li>
@@ -45,7 +44,7 @@ class Dropdown extends React.Component {
           list.map((item, id) => (
             <li className={style.listItem}
               key={id}
-              onClick={() => this.selectListItem(item.title, item.img)}
+              onClick={() => this.selectListItem(item.value, item.title, item.img)}
             >{item.img ? <img src={item.img} alt={item.title} /> : ''} {item.title}</li>
           ))
         }
@@ -54,7 +53,7 @@ class Dropdown extends React.Component {
   }
 
   handleClick = (ev) => {
-    if (!this.dropdownMenu.contains(ev.target)) {
+    if (this.dropdownMenu && !this.dropdownMenu.contains(ev.target)) {
       // If click outside, close the dropdown
       this.setState({
         ...this.state,
