@@ -28,6 +28,10 @@
   text-align:right;
 }
 
+:local .inlineInfo > div:last-child {
+  border: none;
+}
+
 :local .boxFee {
   display: flex;
   flex-direction: row;

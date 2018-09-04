@@ -24,7 +24,8 @@ import {
   getWalletSendModalFee,
   getCoinFee
 } from "../wallet/redux/walletSaga";
-import { getProfessionalNode } from "../leasing/redux/leasingSaga"
+import { getProfessionalNode } from "../leasing/redux/leasingSaga";
+import {nomeFuncao,getApiTeste} from "../payment/redux/paymentSaga";
 
 export default function* rootSaga() {
   yield [
@@ -49,6 +50,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
     //leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
-    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee)
+    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
+    //payment-saga 
+    fork(takeLatest, "GET_TESTE", nomeFuncao), 
+    fork(takeLatest, "GET_API", getApiTeste)
   ];
 }
