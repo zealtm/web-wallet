@@ -181,7 +181,7 @@ StartLeasing.propTypes = {
   coins: PropTypes.array.isRequired,
   feeValue: PropTypes.object,
   balance: PropTypes.number,
-  decimalPoint: PropTypes.number,  
+  decimalPoint: PropTypes.number,
   errorInput: PropTypes.func,
   validateLeasingAddress: PropTypes.func,
   addressIsValid: PropTypes.bool,
@@ -193,7 +193,7 @@ StartLeasing.propTypes = {
 
 const mapSateToProps = store => ({
   coins: store.skeleton.coins,
-  feeValue: store.wallet.coinFee,
+  feeValue: store.leasing.coinFee,
   balance: store.skeleton.coins.lunes.balance.available,
   decimalPoint: store.skeleton.coins.lunes.decimalPoint,
   addressIsValid: store.leasing.addressIsValid,

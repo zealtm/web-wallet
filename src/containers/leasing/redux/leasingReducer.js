@@ -3,7 +3,13 @@ const initialState = {
   history: [],
   balance: undefined,
   addressIsValid: false,
-  isLoading: false
+  isLoading: false,
+  coinFee: {
+    low: 0.001,
+    medium: 0.001,
+    high: 0.001,
+    selectedFee: undefined
+  },
 };
 
 const leasing = (state = initialState, action) => {
