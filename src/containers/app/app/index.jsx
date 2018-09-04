@@ -50,6 +50,7 @@ let settings = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings")
 });
 
+<<<<<<< HEAD
 let user = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/user")),
   loading: Loading,
@@ -60,6 +61,12 @@ let security = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/security")),
   loading: Loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
+=======
+let walletSettings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/wallet")
+>>>>>>> V-145
 });
 
 let errorNotFound = Loadable({
@@ -97,6 +104,7 @@ class App extends Component {
               <Route path="/settings" component={settings} />
               <Route path="/user" component={user} />
               <Route path="/security" component={security} />
+              <Route path="/wallet-settings" component={walletSettings} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

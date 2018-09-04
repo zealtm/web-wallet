@@ -203,6 +203,16 @@
   "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
   "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",  
   "SECURITY_LINK_RETURN": "Back to the settings",
-  "SECURITY_TITLE": "2FA Authenticator"
+  "SECURITY_TITLE": "2FA Authenticator",
+
+  "SET_ALIAS_DESCRIPTION": "Voce pode customizar um nome para sua carteira Lunes, se preferir. Caso faça essa mudança, o valor a ser descontado de seu saldo é de 5 LUNES.",
+  "SET_ALIAS_SAVE_NAME": "Save name",
+
+  "SET_SEED_TITLE": "BACKUP DE INFORMAÇÃO DA CONTA",
+  "SET_SEED_WORDS": "Suas palavras chaves",
+  "SET_BUTTON_SEED_IMPORT": "Importar Seed",
+
+  "SET_BUTTON_REMOVE": "Remover",
+  "SET_BUTTON_FAV": "Favoritar"
 
 }
