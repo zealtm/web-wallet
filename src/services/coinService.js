@@ -310,6 +310,7 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
+        console.warn(HEADER_REQUEST);
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address,
           HEADER_REQUEST
