@@ -24,7 +24,7 @@ class LunesTransaction {
           return responseData;
         });
 
-      //console.log(transaction);
+      console.warn("transaction", transaction);
       return transaction;
     } catch (error) {
       internalServerError();

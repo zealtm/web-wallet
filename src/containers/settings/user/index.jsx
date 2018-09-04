@@ -267,7 +267,7 @@ class User extends React.Component {
 
             {/* ADDRESS */}
             <Grid item xs={12}>
-              <Grid container className={style.row}>
+              <Grid item xs={12} className={style.row}>
                 <Grid item xs={12} sm={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>{i18n.t("SETTINGS_USER_ADDRESS")}</p>

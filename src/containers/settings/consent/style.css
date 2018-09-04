@@ -1,0 +1,61 @@
+/**
+
+1. CONTAINERS
+2. IMAGES & UI
+3. TEXT
+
+*/
+
+
+/* CONTAINERS */
+
+:local .box {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
+  border-radius: 5px;
+  padding-left: 30px;
+  padding-right: 30px;
+  box-shadow: 0px 0px 10px 5px rgba(0,0,0,.05);
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 599px) {
+
+}
+
+/* IMAGES & UI */
+
+@media screen and (max-width: 599px) {
+ 
+}
+
+/* TEXT */
+
+:local .box h3 {
+  margin:0px;
+  padding:0px;
+}
+
+:local .formSwitch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+:local .boldHead {
+  font-size:16px;
+  font-weight: 700;
+  margin-top:30px;
+}
+
+@media screen and (max-width: 599px) {
+  :local .boldHead {
+    font-size:12px;
+    font-weight: 700;
+    margin-top:20px;
+  }
+}
