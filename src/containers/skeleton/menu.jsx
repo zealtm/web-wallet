@@ -38,11 +38,11 @@ const menuItens = [
   //   label: i18n.t("MENU_RECHARGE"),
   //   icon: "../../images/icons/general/recharge@1x.png"
   // },
-  // {
-  //   link: "/pay",
-  //   label: i18n.t("MENU_PAY"),
-  //   icon: "../../images/icons/general/pay@1x.png"
-  // },
+  {
+    link: "/payment",
+    label: i18n.t("MENU_PAY"),
+    icon: "../../images/icons/general/pay@1x.png"
+  },
   {
     link: "/leasing",
     label: i18n.t("MENU_LEASING"),

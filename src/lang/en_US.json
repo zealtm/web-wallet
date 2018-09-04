@@ -52,7 +52,7 @@
     "CARD_HOME_DESCRIPTION_3": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_DESCRIPTION_4": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_DESCRIPTION_5": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
-    "CARD_HOME_DESCRIPTION_6": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",    
+    "CARD_HOME_DESCRIPTION_6": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_TITLE_1": "Recharge",
     "CARD_HOME_TITLE_2": "Recharge",
     "CARD_HOME_TITLE_3": "Recharge",
@@ -134,5 +134,17 @@
     "VOUCHER_BUTTON": "Rescue",
     "SETTINGS_HEADER_INFO": "Control your personal information. With these settings, you can manage which information is private and which is saved to your account to enhance your Lunes Wallet experience",
     "SETTINGS_CARD": "WALLETS",
-    "SETTINGS_CARD_plural": "2FA AUTHENTICATION"
+    "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
+
+    "PAYMENT_HEADER_TITLE": "Online Payment",
+    "PAYMENT_HEADER_SUBTITLE": "Do your payments online with cryptocoins",
+    "PAYMENT_BANK_SLIP": "Pay Bank Slip",
+    "PAYMENT_HISTORY": "Histories",
+    "PAYMENT_BANK": "Bank",
+    "PAYMENT_NAME": "Name",
+    "PAYMENT_SHORT_DESRIPTION": "Short description",
+    "PAYMENT_DUE_DATE": "Due date",
+    "PAYMENT_CPF_CNPJ": "CPF / CNPJ",
+    "PAYMENT_VALUE": "Value",
+    "PAYMENT_PAY_NOW": "Pagar agora"
 }
