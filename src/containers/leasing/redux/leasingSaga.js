@@ -110,7 +110,7 @@ export function* getLeasingInfo(action) {
       yield put({
         type: "GET_INFO_LEASING",
         leasingHistory: lease.history.data,
-        leasingBalance: lease.balance.data.data.balance,
+        leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
         professionalNodes
       });
 
