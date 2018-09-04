@@ -40,7 +40,9 @@ class Settings extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
-              <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_4")}</Grid>
+              <Link to="/consent">
+                <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_4")}</Grid>
+              </Link>
             </Grid>
 
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
