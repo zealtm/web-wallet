@@ -54,7 +54,7 @@ class InternalError extends React.Component {
               </div>
             </div>
           </div>
-          <img src="./images/lunio-404@1x.png" style={{
+          <img src="./images/lunio-error@1x.gif" style={{
             position: "absolute",
             bottom: "0",
             width: "28vh"
