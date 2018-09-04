@@ -16,7 +16,6 @@ class BtcTransaction {
   }
 
   async createTransaction(data) {
-    console.warn("data", data);
     try {
       const transService = new TransactionService();
       const utxos = await transService.utxo(

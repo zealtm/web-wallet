@@ -117,6 +117,7 @@ const wallet = (state = initialState, action) => {
       };
 
     case "SET_WALLET_MODAL_STEP":
+      console.warn("action.step", action.step);
       return {
         ...state,
         modal: {
@@ -191,8 +192,8 @@ const wallet = (state = initialState, action) => {
       return {
         ...state,
         modal: {
-          open: false,
-          step: 0,
+          open: true,
+          step: state.modal.step,
           address: undefined,
           sendAmount: undefined,
           feeValue: {
@@ -218,9 +219,9 @@ const wallet = (state = initialState, action) => {
           low: action.coinFee.low,
           medium: action.coinFee.medium,
           high: action.coinFee.high,
-          selectedFee: action.coinFee.selectedFee,
+          selectedFee: action.coinFee.selectedFee
         }
-      }
+      };
     }
 
     case "CLEAR_WALLET_STATE":

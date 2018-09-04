@@ -310,10 +310,8 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
-        console.warn(HEADER_REQUEST);
         let response = await axios.get(
-          LUNESNODE_URL + "/addresses/validate/" + address,
-          HEADER_REQUEST
+          LUNESNODE_URL + "/addresses/validate/" + address
         );
 
         if (!response.data.valid) {
@@ -359,10 +357,10 @@ class CoinService {
         { fromAddress, toAddress, amount },
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       let data = response.data.data;
-
       if (response.data.code === 200) {
         Object.keys(data).map(value => {
           fee[value] = convertBiggestCoinUnit(data[value], decimalPoint);
@@ -371,6 +369,37 @@ class CoinService {
 
       return fee;
     } catch (error) {
+      console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async saveTransaction(transaction, coin, describe) {
+    try {
+      let response = await axios.post(
+        BASE_URL +
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          transaction.sender,
+        {
+          txID: transaction.id,
+          from: transaction.sender,
+          to: transaction.recipient,
+          amount: transaction.amount,
+          fee: transaction.fee,
+          describe: describe ? describe : null,
+          price: {
+            USD: 0,
+            EUR: 0,
+            BRL: 0
+          }
+        },
+        API_HEADER
+      );
+      return response;
+    } catch (error) {
+      console.warn(error);
       internalServerError();
     }
   }

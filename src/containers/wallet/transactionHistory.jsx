@@ -94,7 +94,7 @@ class TransactionHistory extends React.Component {
                 </div>
               </Grid>
               <Grid item xs={6} className={style.descriptionHistory}>
-                {transaction.description}
+                {transaction.describe}
               </Grid>
               <Grid item xs={4} className={style.valueHistory}>
                 <div

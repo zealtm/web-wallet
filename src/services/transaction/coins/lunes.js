@@ -3,8 +3,6 @@ import { create } from "lunes-js-api";
 
 class LunesTransaction {
   async createLunesTransaction(data) {
-    console.warn(data);
-
     // prepara a api
     const Lunes = await create(data.network.APICONFIG);
     const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
@@ -25,11 +23,10 @@ class LunesTransaction {
           return responseData;
         });
 
-      console.warn("transaction", transaction);
       return transaction;
     } catch (error) {
       internalServerError();
-      return error;
+      return "error";
     }
   }
 }
