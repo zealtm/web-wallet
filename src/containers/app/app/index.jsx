@@ -39,7 +39,6 @@ let leasing = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../leasing")
 });
 
-
 let coupons = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../coupons")),
   loading: loading,
@@ -59,9 +58,9 @@ let settings = Loadable({
 });
 
 let walletSettings = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/walletSettings")),
+  loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
   loading: Loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../settings/walletSettings")
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/wallet")
 });
 
 let errorNotFound = Loadable({
