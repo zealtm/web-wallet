@@ -9,10 +9,11 @@ export const startNewLeasing = (data) => ({
   data
 });
 
-export const getLeasingInfo = (coin, address) => ({
+export const getLeasingInfo = (coin, address, decimalPoint) => ({
   type: "GET_INFO_LEASING_API",
   coin,
-  address
+  address,
+  decimalPoint
 });
 
 export const setLeasingLoading = isLoading => ({

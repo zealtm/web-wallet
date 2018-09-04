@@ -54,7 +54,6 @@ class LeasingService {
                     balance: responseBalance,
                     history: responseHistory
                 }
-                console.warn("onj", dataResponse);
                 return dataResponse;
             }
             internalServerError();

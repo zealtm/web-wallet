@@ -12,6 +12,9 @@ import {
   getAuthToken
 } from "../../../utils/localStorage";
 import {
+  convertBiggestCoinUnit
+} from "../../../utils/numbers";
+import {
   HEADER_RESPONSE
 } from "../../../constants/apiBaseUrl";
 
@@ -88,9 +91,21 @@ export function* getLeasingInfo(action) {
     let token = yield call(getAuthToken);
     let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
-    console.warn(lease.history);
+
     if (lease.history) {
       setAuthToken(lease.history.headers[HEADER_RESPONSE]);
+      lease.history.data.data.txs.map(history => {
+
+        if (history.amount) {
+          history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
+        }
+
+        professionalNodes.map(node => {
+          if (history.to === node.address) {
+            history.to = node.domain
+          }
+        });
+      });
 
       yield put({
         type: "GET_INFO_LEASING",

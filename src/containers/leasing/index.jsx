@@ -20,7 +20,7 @@ class Leasing extends React.Component {
   componentDidMount() {
     let { getLeasingInfo, coins, setLeasingLoading } = this.props;
     setLeasingLoading(true);
-    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address);
+    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address, coins.lunes.decimalPoint);
   }
 
   handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });

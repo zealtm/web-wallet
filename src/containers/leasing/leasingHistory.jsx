@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getProfessionalNode,
-  getLeasingInfo,
   setLeasingLoading
 } from "../leasing/redux/leasingAction";
 import PropTypes from "prop-types";
@@ -45,59 +44,59 @@ class LeasingHistory extends React.Component {
     let { history } = this.props;
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
 
-    return history
-      ? history.txs.map((value, index) => {
-        return (
-          <div key={index}>
-            <div>
-              <Grid
-                item
-                xs={12}
-                className={
-                  toggleHistory !== undefined && toggleHistory !== index
-                    ? style.opacityItem
-                    : style.itemHistorico
-                }
-                onClick={() => this.stateDataHistory(index)}
-              >
-                <Grid item xs={3}>
-                  {formatDate(value.date, "DM")}
-                  &nbsp; {formatDate(value.date, "HMS")}
-                </Grid>
-                <Grid item xs={3}>
-                  <span className={style.textGreen}>{value.amount}</span>
-                </Grid>
-                <Grid item xs={4}>
-                  spartannode.com
-                  </Grid>
-                <Grid item xs={2}>
-                  {this.renderBtCancel(1)}
+    if (!history || history === undefined) {
+      return <div className={style.notFound}>Nothing Found</div>
+    }
+
+    return history.txs.map((value, index) => ((
+      <div key={index}>
+        <div>
+          <Grid
+            item
+            xs={12}
+            className={
+              toggleHistory !== undefined && toggleHistory !== index
+                ? style.opacityItem
+                : style.itemHistorico
+            }
+            onClick={() => this.stateDataHistory(index)}
+          >
+            <Grid item xs={3}>
+              {formatDate(value.date, "DM")}
+              &nbsp; {formatDate(value.date, "HMS")}
+            </Grid>
+            <Grid item xs={3}>
+              <span className={style.textGreen}>{value.amount}</span>
+            </Grid>
+            <Grid item xs={4}>
+              {value.to}
+            </Grid>
+            <Grid item xs={2}>
+              {this.renderBtCancel(1)}
+            </Grid>
+          </Grid>
+
+          <div>
+            <Grid
+              item
+              xs={12}
+              className={
+                toggleHistory !== index ? style.toggleHistory : null
+              }
+            >
+              <Grid item xs={12} className={style.itemDataHistorico}>
+                <Grid item xs={12} className={style.descriptionHistory}>
+                  <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
+                  <a href={blockexplorer + value.txID} target="blank">
+                    {value.txID}
+                  </a>
                 </Grid>
               </Grid>
-
-              <div>
-                <Grid
-                  item
-                  xs={12}
-                  className={
-                    toggleHistory !== index ? style.toggleHistory : null
-                  }
-                >
-                  <Grid item xs={12} className={style.itemDataHistorico}>
-                    <Grid item xs={12} className={style.descriptionHistory}>
-                      <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                      <a href={blockexplorer + value.txID} target="blank">
-                        {value.txID}
-                      </a>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </div>
-            </div>
+            </Grid>
           </div>
-        );
-      })
-      : null;
+        </div>
+      </div>
+    )));
   };
 
   loadModalLeasing = () => {
@@ -162,7 +161,6 @@ LeasingHistory.propTypes = {
   openModal: PropTypes.func,
   coins: PropTypes.array.isRequired,
   balance: PropTypes.number,
-  getLeasingInfo: PropTypes.func,
   history: PropTypes.object,
   setLeasingLoading: PropTypes.func,
   leasingBalance: PropTypes.number
@@ -181,7 +179,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfessionalNode,
-      getLeasingInfo,
       setLeasingLoading
     },
     dispatch
