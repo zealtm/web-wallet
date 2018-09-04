@@ -128,11 +128,17 @@ class NewPassword extends React.Component {
     });
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+  
   render() {
     let { inputs, passwordHint, errors } = this.state;
 
     return (
-      <div className={style.formLogin}>
+      <div className={style.formLogin} onKeyPress={this.handleKeyPress}>
         <img src="../../../images/logo.svg" className={style.logo} />
         <div className={style.resetHeader}>
           {i18n.t("RESET_NEW_PASSWORD_HEADER")}

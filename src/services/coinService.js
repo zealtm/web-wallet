@@ -100,10 +100,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-            "/coin/" +
-            coin.abbreviation +
-            "/balance/" +
-            coin.address,
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
             API_HEADER
           );
 
@@ -178,18 +178,16 @@ class CoinService {
   }
 
   async getCoinFee(coinType) {
-
     if (coinType === "lunes") {
       let feeValue = {
         low: 0.001,
         medium: 0.001,
         high: 0.001,
         selectedFee: 0.001
-      }
+      };
 
-      return feeValue
+      return feeValue;
     }
-
   }
 
   async getCoinPrice(coinType, fiat, token) {
@@ -288,19 +286,18 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-        "/coin/" +
-        coin +
-        "/transaction/history/" +
-        address +
-        "?size=100",
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          address +
+          "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response.data.data;
     } catch (error) {
-      internalServerError();
-      return;
+      console.warn(error);
     }
   }
 

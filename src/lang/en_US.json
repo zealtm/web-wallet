@@ -5,6 +5,7 @@
   "MESSAGE_PASSWORD": "Password",
   "MESSAGE_USER_EMAIL": "User/Email",
   "MESSAGE_INVALID_ADDRESS": "Invalid Address",
+  "MESSAGE_TRANSACTION_FAILED": "Your transaction could not be completed.",
 
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",
@@ -32,10 +33,6 @@
   "BTN_NEW_SEED": "GENERATE NEW SEED",
   "BTN_FINALIZE": "Finalize",
 
-  "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  
   "JANUARY": "January",
   "FEBRUARY": "February",
   "MARCH": "March",
@@ -115,13 +112,6 @@
   "CARD_HOME_TITLE_5": "Purchase",
   "CARD_HOME_TITLE_6": "Purchase",
 
-  "CARD_HOME_DESCRIPTION_1": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_2": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_3": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_4": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_5": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_6": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-
   "WALLET_MY_AMOUNT": "Balance",
 
   "MODAL_RECEIVE_MESSAGE": "Copied Address",
@@ -131,8 +121,6 @@
   "BTN_RECEIVE_EMAIL": "E-mail",
   "BTN_RECEIVE_SHARED": "Shared",
 
-  "WALLET_BALANCE": "Balance",
-  "WALLET_MODAL_SEND_TITLE": "Transaction",
   "WALLET_MODAL_RECEIVE_TITLE": "Receive",
   "LEASING_BALANCE": "Saldo total de Lunes",
   "LEASING_AMOUNT_LABEL": "Quantidade à emprestar",
@@ -152,7 +140,7 @@
   "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier",
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",
   "INSTRUCTION_MODAL_CUPON_4": "Item",
-  "TRANSACTION_HISTORY_TITLE": "Transactions",
+
   "COUPON_INSTRUCTIONS":"Instructions",
   "COUPON_TITLE_1":"Voucher",
   "COUPON_TITLE_2":"Lunes Gift",
@@ -168,6 +156,46 @@
   "SETTINGS_CARD_3": "WALLETS",
   "SETTINGS_CARD_4": "CONSENT",
   "SETTINGS_CARD_5": "DEFINITIONS",
-  "BALANCE_ERROR_AMOUNT": "The reported amount should not be greater than or equal to your balance with the rate",
-  "LEASING_NOT_INFORMED_FIELD": "Not informed field"
+  "SETTINGS_USER": "User profile",
+  "SETTINGS_USER_BACK": "Back to the settings",
+  "SETTINGS_USER_IMAGE": "User image",
+  "SETTINGS_USER_STATUS": "Status",
+  "SETTINGS_USER_ACCOUNT_VERIFIED": "Account verified",
+  "SETTINGS_USER_ACCOUNT_NOT_VERIFIED": "Account not verified",
+  "SETTINGS_USER_EMAIL_VERIFIED": "E-mail verified",
+  "SETTINGS_USER_2FA_VERIFIED": "2FA authentication verified",
+  "SETTINGS_USER_PASSWORD": "Change password",
+  "SETTINGS_USER_CURRENT_PASSWORD": "Current password",
+  "SETTINGS_USER_NEW_PASSWORD": "New password",
+  "SETTINGS_USER_FIRST_NAME": "First name",
+  "SETTINGS_USER_SURNAME": "Surname",
+  "SETTINGS_USER_ADDRESS": "Address",
+  "SETTINGS_USER_CONTACT": "Phone",
+  "SETTINGS_USER_CODE": "Code",
+  "SETTINGS_USER_NUMBER": "Phone",
+  "SETTINGS_USER_ZIP_CODE": "Zip code",
+  "SETTINGS_USER_DAY": "Day",
+  "SETTINGS_USER_MONTH": "Month",
+  "SETTINGS_USER_YEAR": "Year",
+  "SETTINGS_USER_SELECT": "Select",
+  "SETTINGS_USER_CITY": "City",
+  "SETTINGS_USER_STATE": "State",
+  "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
+  "SETTINGS_USER_SAVE_DATA": "Save data",
+  "CARD_HOME_DESCRIPTION_1":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_2":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_3":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_4":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_5":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_6":
+    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+
+  "WALLET_BALANCE": "Balance",
+  "WALLET_MODAL_SEND_TITLE": "Transaction",
+  "TRANSACTION_HISTORY_TITLE": "Transactions"
 }

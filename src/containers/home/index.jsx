@@ -2,7 +2,7 @@ import React from "react";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
 
-// MATERIAL UI 
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 
 // STYLE
@@ -11,12 +11,17 @@ import style from "./style.css";
 class Home extends React.Component {
   render() {
     return (
-      <div >
+      <div>
         <Grid container className={style.homeContainer}>
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_1")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {i18n.t("CARD_HOME_TITLE_1")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_1")}
               </div>
@@ -26,15 +31,18 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
 
-
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_2")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {i18n.t("CARD_HOME_TITLE_2")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_2")}
               </div>
@@ -44,15 +52,18 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
 
-
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_3")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {i18n.t("CARD_HOME_TITLE_3")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_3")}
               </div>
@@ -62,15 +73,18 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
 
-
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_4")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {i18n.t("CARD_HOME_TITLE_4")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_4")}
               </div>
@@ -80,14 +94,18 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
 
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}>{i18n.t("CARD_HOME_TITLE_5")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {i18n.t("CARD_HOME_TITLE_5")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_5")}
               </div>
@@ -97,14 +115,19 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
 
           <Grid item>
             <div className={style.cardHome}>
-              <img src="/images/icons/general/wallet@3x.png" className={style.cardIcon} />
-              <div className={style.cardTitle}> {i18n.t("CARD_HOME_TITLE_6")} </div>
+              <img
+                src="/images/icons/general/wallet@3x.png"
+                className={style.cardIcon}
+              />
+              <div className={style.cardTitle}>
+                {" "}
+                {i18n.t("CARD_HOME_TITLE_6")}{" "}
+              </div>
               <div className={style.descriptionCard}>
                 {i18n.t("CARD_HOME_DESCRIPTION_6")}
               </div>
@@ -114,7 +137,6 @@ class Home extends React.Component {
                   {i18n.t("BTN_LOGIN")}
                 </button>
               </Link>
-
             </div>
           </Grid>
         </Grid>
