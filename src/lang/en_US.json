@@ -197,5 +197,12 @@
 
   "WALLET_BALANCE": "Balance",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
-  "TRANSACTION_HISTORY_TITLE": "Transactions"
+  "TRANSACTION_HISTORY_TITLE": "Transactions",
+
+  "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
+  "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
+  "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",  
+  "SECURITY_LINK_RETURN": "Back to the settings",
+  "SECURITY_TITLE": "2FA Authenticator"
+
 }
