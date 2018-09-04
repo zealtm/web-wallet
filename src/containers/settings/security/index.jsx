@@ -28,7 +28,9 @@ class Security extends React.Component {
                             </Grid>
                         </Hidden>
                         <Grid item xs={6} sm={2}>
+                        <Link to="settings">
                             <p>{i18n.t("SECURITY_LINK_RETURN")}</p>
+                        </Link>
                         </Grid>
                         <Hidden xsDown>
                             <Grid item xs={12} sm={3} md={4}>
