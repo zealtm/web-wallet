@@ -4,7 +4,6 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
-  HEADER_REQUEST,
   HEADER_RESPONSE
 } from "../constants/apiBaseUrl";
 import {
@@ -101,10 +100,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -287,11 +286,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -310,11 +309,7 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
-        console.warn(HEADER_REQUEST);
-        let response = await axios.get(
-          LUNESNODE_URL + "/addresses/validate/" + address,
-          HEADER_REQUEST
-        );
+        let response = await axios.get(LUNESNODE_URL + "/addresses/validate/" + address);
 
         if (!response.data.valid) {
           return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));

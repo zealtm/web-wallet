@@ -109,7 +109,7 @@ class TransactionService {
     let lunes = new LunesTransaction();
     let response = await lunes.createLeasing(data);
 
-    return response.data.node;
+    return response;
   }
 
   async cancelLeasing(transactionId, fee) {

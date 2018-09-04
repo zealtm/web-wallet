@@ -76,18 +76,17 @@ class StartLeasing extends React.Component {
       coinAddress,
       decimalPoint
     } = this.props;
+
     let leasingData = {
       toAddress,
       amount: convertSmallerCoinUnit(amountValue, decimalPoint),
       feeValue,
       password: user.password,
-      coinAddress
+      coinAddress,
     };
 
     startNewLeasing(leasingData);
-
     clearState();
-    this.setState({ toAddress: "" });
   };
 
   render() {

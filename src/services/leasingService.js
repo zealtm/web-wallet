@@ -28,7 +28,6 @@ class LeasingService {
             let responseHistory = await axios.get(urlHistory, API_HEADER);
             let responseBalance = await axios.get(urlBalance);
 
-
             if (responseHistory.data.code === 200 && responseBalance.data.code === 200) {
                 let dataResponse = {
                     balance: responseBalance,

@@ -24,7 +24,6 @@ class LunesTransaction {
           return responseData;
         });
 
-      console.warn("transaction", transaction);
       return transaction;
     } catch (error) {
       internalServerError();
@@ -33,44 +32,31 @@ class LunesTransaction {
   }
 
   async createLeasing(data) {
-    let leaseData = {
-      sender: data.coinAddress,
-      amount: data.amount,
-      fee: data.fee,
-      recipient: data.recipient,
-      timestamp: Date.now()
-    };
-    let config = apiConfigFactory();
+    const lunes = await create(data.network.APICONFIG);
+    const seed = await lunes.Seed.fromExistingPhrase(data.seed);
 
-    const transaction = config.lunes.API.Node.v1.leasing.lease(
-      leaseData,
-      config.see.keyPair
-    );
+    let leaseData = {
+      recipient: data.recipient,
+      amount: data.amount,
+      fee: data.fee
+    };
+    const transaction = lunes.API.Node.v1.leasing.lease(leaseData, seed.keyPair);
 
     return transaction;
   }
 
-  async cancelLeasing(transactionId, fee) {
+  async cancelLeasing(data) {
     let leaseData = {
-      transactionId,
-      fee,
+      transactionId: data.transactionId,
+      fee: data.fee,
       timestamp: Date.now()
     };
-
-    let config = apiConfigFactory();
-    let transaction = config.lunes.API.Node.v1.leasing.cancelLeasing(
-      leaseData,
-      config.see.keyPair
-    );
+    let lunes = await create(data.network.APICONFIG);
+    let seed = await lunes.Seed.fromExistingPhrase(data.seed);
+    let transaction = lunes.API.Node.v1.leasing.cancelLeasing(leaseData, seed.keyPair);
 
     return transaction
   }
 }
 
-let apiConfigFactory = async (data) => {
-  const lunes = await create(data.network.APICONFIG);
-  const seed = await lunes.Seed.fromExistingPhrase(data.seed);
-  let config = { lunes, seed }
-  return config
-}
 export default LunesTransaction;
