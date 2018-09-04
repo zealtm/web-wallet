@@ -4,8 +4,8 @@ export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
 export const TESTNET = false;
 export const HEADER_REQUEST = {
   headers: {
-    "Access-Control-Allow-Headers": "*"
-    // "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Origin": "*"
   }
 };
 
