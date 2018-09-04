@@ -1,15 +1,14 @@
 import React from "react";
-import HomeSettings from "./homeSettings";
-import Security from "./security/security";
+import Settings from "./settings";
 
 class Configuration extends React.Component {
-    render() {
-        return (
-            <div>
-                <Security/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <Settings />
+      </div>
+    );
+  }
 }
 
 export default Configuration;
