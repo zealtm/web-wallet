@@ -31,7 +31,7 @@ class InternalError extends React.Component {
           display: "flex",
           justifyContent: "center",
           alignContent: "center",
-          marginTop: "8%"
+          marginTop: "10%"
         }}>
           <div style={{
             width: "25%",
