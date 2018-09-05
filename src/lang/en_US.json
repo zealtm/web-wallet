@@ -6,6 +6,7 @@
   "MESSAGE_USER_EMAIL": "User/Email",
   "MESSAGE_INVALID_ADDRESS": "Invalid Address",
   "MESSAGE_TRANSACTION_FAILED": "Your transaction could not be completed.",
+  "MESSAGE_INVALID_VOUCHER": "Invalid Voucher.",
 
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",

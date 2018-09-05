@@ -390,8 +390,6 @@ class CoinService {
 
   async saveTransaction(transaction, coin, describe) {
     try {
-      console.warn(transaction, coin, describe);
-
       let response = await axios.post(
         BASE_URL +
           "/coin/" +
@@ -414,6 +412,8 @@ class CoinService {
         API_HEADER
       );
 
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       console.warn(response);
       return response;
     } catch (error) {
@@ -422,16 +422,53 @@ class CoinService {
     }
   }
 
-  async voucherRescue(data, voucher) {
+  async getVoucherCoin(phone, voucher, token) {
     try {
-      let response = await axios.post(
-        BASE_URL + "/voucher/rescue/" + voucher,
-        { ddi: 55, ddd: data.ddd, phone: data.phone, address: data.address },
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(
+        BASE_URL +
+          "/voucher/" +
+          voucher +
+          "?ddi=" +
+          55 +
+          "&ddd=" +
+          phone[0] +
+          "&phone=" +
+          phone[1],
         API_HEADER
       );
 
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (!response.data.code || response.data.code !== 200) {
+        return;
+      }
+
+      return response.data.data.coin;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async voucherRescue(phone, address, voucher, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/voucher/rescue/" + voucher,
+        { ddi: 55, ddd: phone[0], phone: phone[1], address: address },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (!response.data.code || response.data.code !== 200) {
+        return;
+      }
+
       return response;
     } catch (error) {
+      console.warn(error);
       internalServerError();
     }
   }

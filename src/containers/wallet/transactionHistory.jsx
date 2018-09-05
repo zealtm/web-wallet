@@ -191,7 +191,7 @@ class TransactionHistory extends React.Component {
                     <Grid item xs={12} className={style.itemDataHistorico}>
                       <Grid item xs={2} className={style.typeItems}>
                         <div className={style.forTransactionHistory}>
-                          {"Cupom:"}
+                          {"Promo:"}
                         </div>
                       </Grid>
                       <Grid item xs={10} className={style.descriptionHistory}>

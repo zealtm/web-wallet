@@ -26,6 +26,7 @@ import {
   setWalletTransaction
 } from "../wallet/redux/walletSaga";
 import { getProfessionalNode } from "../leasing/redux/leasingSaga";
+import { getVoucher } from "../coupons/redux/couponsSaga";
 
 export default function* rootSaga() {
   yield [
@@ -52,6 +53,9 @@ export default function* rootSaga() {
 
     //leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
-    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee)
+    fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
+
+    //coupons
+    fork(takeLatest, "GET_VOUCHER_API", getVoucher)
   ];
 }
