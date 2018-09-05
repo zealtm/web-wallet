@@ -352,9 +352,10 @@
 }
 
 /* 3.2 TEXTS */
-:local(.text) {
+:local(.historyTitle) {
   text-align: center;
   font-size: 16px;
+  padding-left: 25px;
 }
 
 :local(.titleBlockExplorer) {

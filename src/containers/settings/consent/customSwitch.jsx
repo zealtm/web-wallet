@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
+
 // MATERIAL 
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
+
 
 // STYLES
 import style from "./style.css";
@@ -51,15 +53,16 @@ const materialStyle = theme => ({
 
 
 class Consent extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
-  render(){
+  render() {
     const { title, description, action, checked, classes } = this.props;
     return (
       <Grid container justify="center">
         <Grid item xs={11}>
+          
           <div className={style.box}>
             <h3>{title}</h3>
             <div className={style.formSwitch}>

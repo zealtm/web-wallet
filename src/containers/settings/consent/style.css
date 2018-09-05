@@ -1,14 +1,71 @@
 /**
 
-1. CONTAINERS
-2. IMAGES & UI
-3. TEXT
+1. HEADER SETTINGS
+2. CONTAINERS
+3. IMAGES & UI
+4. TEXT
 
 */
 
 
-/* CONTAINERS */
+/* ------------------------------------------------------------------------- */
+/* 1. HEADER SETTINGS */
+:local(a) {
+  text-decoration: none;
+}
 
+:local(.containerHeaderSettings) {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+:local(.headerSettingsDefault) { 
+  display: flex;
+}
+
+:local(.headerSettingsDefault p) {
+  color: #68f285;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;  
+}
+
+:local(.headerSettingsDefault h3) {
+  text-align: right;
+  margin: 0;
+  padding-right: 15px;
+}
+
+#hr hr{
+  border: 0;
+  width: 100%;
+  border-bottom: 2px dotted #654fa4;
+  size: 15px;
+  height: 2px;
+}
+
+#hr {
+  display: flex;
+}
+
+@media screen and (max-width: 599px) {
+  :local(.headerSettingsDefault p) {
+    float: left;
+    padding: 0 5px;
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault h3) {
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault) { 
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+
+/*1. CONTAINERS */
 :local .box {
   composes: textDefault from "../../../components/bases/textBase.css";
   composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
@@ -26,14 +83,13 @@
 
 }
 
-/* IMAGES & UI */
+/*2. IMAGES & UI */
 
 @media screen and (max-width: 599px) {
  
 }
 
-/* TEXT */
-
+/*3. TEXT */
 :local .box h3 {
   margin:0px;
   padding:0px;
@@ -45,7 +101,6 @@
   align-items: center;
 }
 
-
 :local .boldHead {
   font-size:16px;
   font-weight: 700;
@@ -56,6 +111,6 @@
   :local .boldHead {
     font-size:12px;
     font-weight: 700;
-    margin-top:20px;
+    margin-top:20px;  
   }
 }

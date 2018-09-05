@@ -228,7 +228,7 @@ class TransactionHistory extends React.Component {
                   src="images/icons/general/refresh@2x.png"
                 />
               </div>
-              <div className={style.text}>
+              <div className={style.historyTitle}>
                 {i18n.t("TRANSACTION_HISTORY_TITLE")}
               </div>
             </div>

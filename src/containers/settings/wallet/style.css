@@ -7,6 +7,61 @@
 */
 
 
+/* 1. HEADER SETTINGS */
+:local(a) {
+  text-decoration: none;
+}
+
+:local(.containerHeaderSettings) {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+:local(.headerSettingsDefault) { 
+  display: flex;
+}
+
+:local(.headerSettingsDefault p) {
+  color: #68f285;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+:local(.headerSettingsDefault h3) {
+  text-align: right;
+  margin: 0;
+  padding-right: 15px;
+}
+
+#hr hr{
+  border: 0;
+  width: 100%;
+  border-bottom: 2px dotted #654fa4;
+  size: 15px;
+  height: 2px;
+}
+
+#hr {
+  display: flex;
+}
+
+@media screen and (max-width: 599px) {
+  :local(.headerSettingsDefault p) {
+    float: left;
+    padding: 0 5px;
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault h3) {
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault) { 
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
 /* CONTAINERS */
 
 :local .box {
@@ -18,6 +73,7 @@
   min-height: 70vh;
   padding-top: 30px;
   overflow-y: auto;
+  /* width: 100%; */
 }
 
 :local .aliasNameRow {
@@ -99,6 +155,7 @@
   background-color: transparent;
   border: solid 1px rgba(255,255,255,.1);
   text-align: center;
+
 }
 
 :local .textArea {
