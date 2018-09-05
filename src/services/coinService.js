@@ -322,11 +322,11 @@ class CoinService {
 
       let valid = await CAValidator.validate(address, coin.toUpperCase());
 
-      // if (!valid) {
-      //   return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
-      // }
+      if (!valid) {
+        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      }
 
-      return true;
+      return valid;
     } catch (er) {
       let error = { error: internalServerError(), er: er };
       return error;
