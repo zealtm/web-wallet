@@ -133,23 +133,27 @@ class BankSlip extends React.Component {
   }
 
   inputValidator = () => {
-    const {number, assignor, name, description, dueDate, cpfCnpj, value}  = this.state.bankSlip;
+    const {bankSlip}  = this.state;
 
     const bankSlipInputs = {};
 
     for (const key in bankSlip) {
       if (bankSlip.hasOwnProperty(key)) {
         bankSlipInputs[key] = {
-          type: "text",
+          type: 'text',
           name: key,
           placeholder: key,
           value: bankSlip[key],
           required: true,
         };
       }
+
+      if (key === 'number') {
+        bankSlipInputs[key]["minLength"] = 48;
+      }
     }
 
-    const { messageError, errors } = inputValidator(bankSlipInputs);
+    const { errors } = inputValidator(bankSlipInputs);
 
     if (errors) {
       this.setState({
@@ -180,13 +184,13 @@ class BankSlip extends React.Component {
               inputProps={{ maxLength: 48, required: true }}
               value={bankSlip.number}
               onChange={this.handleBankSlipNumberChange}
+              error={errors.includes('number')}
             />
           </div>
 
           <Grid container>
             <Grid item xs={12} sm={6}>
               <Input
-                error={errors.includes('assignor')}
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
@@ -195,6 +199,8 @@ class BankSlip extends React.Component {
                 placeholder={i18n.t("PAYMENT_ASSIGNOR")}
                 value={bankSlip.assignor}
                 onChange={this.handleBankSlipDefaultChange('assignor')}
+                error={errors.includes('assignor')}
+                error={errors.includes('assignor')}
               />
               <Input
                 classes={{
@@ -205,6 +211,7 @@ class BankSlip extends React.Component {
                 placeholder={i18n.t("PAYMENT_NAME")}
                 value={bankSlip.name}
                 onChange={this.handleBankSlipDefaultChange('name')}
+                error={errors.includes('name')}
               />
               <Input
                 classes={{
@@ -215,6 +222,7 @@ class BankSlip extends React.Component {
                 placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
                 value={bankSlip.description}
                 onChange={this.handleBankSlipDefaultChange('description')}
+                error={errors.includes('description')}
               />
             </Grid>
 
@@ -228,6 +236,7 @@ class BankSlip extends React.Component {
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
                 value={bankSlip.dueDate}
                 onChange={this.handleBankSlipDefaultChange('dueDate')}
+                error={errors.includes('dueDate')}
               />
               <Input
                 classes={{
@@ -238,6 +247,7 @@ class BankSlip extends React.Component {
                 placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
                 value={bankSlip.cpfCnpj}
                 onChange={this.handleBankSlipDefaultChange('cpfCnpj')}
+                error={errors.includes('cpfCnpj')}
               />
               <Input
                 classes={{
@@ -256,6 +266,7 @@ class BankSlip extends React.Component {
                 }
                 value={bankSlip.value}
                 onChange={this.handleBankSlipDefaultChange('value')}
+                error={errors.includes('value')}
               />
             </Grid>
           </Grid>
