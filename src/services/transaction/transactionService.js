@@ -108,14 +108,13 @@ class TransactionService {
   async createLeasing(data) {
     let lunes = new LunesTransaction();
     let response = await lunes.createLeasing(data);
-    
     return response;
   }
 
   async cancelLeasing(data) {
     let lunes = new LunesTransaction();
     let response = await lunes.cancelLeasing(data);
-
+ 
     return response;
   }
 

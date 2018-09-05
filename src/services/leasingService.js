@@ -22,7 +22,7 @@ class LeasingService {
     async getLeasingHistory(coin, address, token) {
         try {
             API_HEADER.headers.Authorization = token;
-            let urlHistory = BASE_URL + "/coin/" + coin + "/leasing/history/" + address;
+            let urlHistory = BASE_URL + "/coin/" + coin + "/leasing/history/" + address + "?size=100";
             let urlBalance = BASE_URL + "/coin/" + coin + "/leasing/balance/" + address;
 
             let responseHistory = await axios.get(urlHistory, API_HEADER);

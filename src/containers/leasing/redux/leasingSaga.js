@@ -8,7 +8,7 @@ import { setAuthToken, getAuthToken, getUserSeedWords } from "../../../utils/loc
 import { HEADER_RESPONSE, TESTNET } from "../../../constants/apiBaseUrl";
 import { decryptAes } from "../../../utils/cryptography";
 import { networks } from "../../../constants/network";
-import { successRequest } from "../../errors/redux/errorAction";
+import { successRequest, errorRequest, errorInput } from "../../errors/redux/errorAction";
 import i18next from "../../../utils/i18n";
 const leasingService = new LeasingService();
 const coinService = new CoinService();
@@ -66,13 +66,12 @@ export function* createLeasing(action) {
     }
 
     let response = yield call(transactionService.createLeasing, leaseData);
-    if (response) {
+    if (!response.data.error) {
       yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
-      // yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
       return;
     }
 
-    yield put(response.error);
+    yield put(errorRequest(i18next.t("MODAL_LEASING_MESSAGE_FAILURE")));
 
     return;
   } catch (error) {
@@ -82,7 +81,6 @@ export function* createLeasing(action) {
 
 export function* cancelLeasing(action) {
   try {
-    console.warn("saga ", action);
     let userSeed = yield call(getUserSeedWords);
     let seed = yield call(decryptAes, userSeed, action.data.password);
 
@@ -93,20 +91,15 @@ export function* cancelLeasing(action) {
       network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
     }
 
-    let response = yield call(transactionService.cancelLeasing, leaseData);
-
-    if (!response.error) {
-      yield put({
-        type: "CANCEL_LEASING",
-      });
-      return;
-    }
-
-    yield put(response.error);
+    yield call(transactionService.cancelLeasing, leaseData);
+    yield put(successRequest(i18next.t("MODAL_LEASING_CANCEL_SUCCESS")));
 
     return;
   } catch (error) {
-    console.warn(error);
+    if (error.data.error) {
+      yield put(errorInput(i18next.t("MODAL_LEASING_CANCEL_FAILURE")));
+      return
+    }
     yield put(internalServerError());
   }
 }
@@ -114,7 +107,7 @@ export function* cancelLeasing(action) {
 export function* getLeasingInfo(action) {
   try {
     let token = yield call(getAuthToken);
-    // let professionalNodes = yield call(leasingService.getProfessionalNodes);
+    let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
 
     if (lease.history) {
@@ -125,18 +118,18 @@ export function* getLeasingInfo(action) {
           history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
         }
 
-        // professionalNodes.map(node => {
-        //   if (history.to === node.address) {
-        //     history.to = node.domain
-        //   }
-        // });
+        professionalNodes.map(node => {
+          if (history.to === node.address) {
+            history.to = node.domain
+          }
+        });
       });
 
       yield put({
         type: "GET_INFO_LEASING",
         leasingHistory: lease.history.data,
         leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
-        professionalNodes: []
+        professionalNodes
       });
 
       return;
