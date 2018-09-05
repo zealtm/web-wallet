@@ -2,7 +2,7 @@ const initialState = {
   // variaveis necessarias
   // var: type 
   payload: "",
-  coins: [],
+  coins: [ ],
   payment: {
     fee: "",
     number: "",

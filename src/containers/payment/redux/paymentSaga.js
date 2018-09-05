@@ -26,9 +26,21 @@ export function* nomeFuncao(){
 
 export function* getCoinsEnabledSaga(){
   let token = yield call(getAuthToken);
-  let response = yield call(paymentService.getCoins, token);
-
-  console.log(response); // teste
+  // let response = yield call(paymentService.getCoins, token);
+  // console.log(response);
+  
+  const response = [
+    {
+      title: 'Lunes',
+      value: 'lunes',
+      img: '/images/icons/coins/lunes.png'
+    },
+    {
+      title: 'Bitcoin',
+      value: 'btc',
+      img: '/images/icons/coins/btc.png'
+    }
+  ];
 
   yield put(
     {
@@ -41,7 +53,7 @@ export function* getCoinsEnabledSaga(){
 export function* setPaymentSaga(payload){
   const data = {
     number:   payload.pay.number,
-    coin:     "lunes", //payload.pay.coin,
+    coin:     payload.pay.coin,
     amount:   15000, //payload.pay.amount,
     value:    payload.pay.value,
     bank:     payload.pay.assignor,

@@ -1,5 +1,9 @@
 import React from "react";
 
+// REDUX 
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+
 // UTILS
 import i18n from "../../../utils/i18n";
 
@@ -27,7 +31,7 @@ class SecurePayment extends React.Component {
 
   render() {
     let { password } = this.state;
-    let { handleStep } = this.props;
+    let { handleStep, payment } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -40,7 +44,7 @@ class SecurePayment extends React.Component {
             {i18n.t("PAYMENT_PASS_CONFIRMATION")}
           </span>
           <span className={style.totalConfirm}>
-            5000 LUNES
+            {payment.amount+payment.fee} {payment.coin}
           </span>
           <span> {i18n.t("PAYMENT_PASS_TO")} </span>
           <span className={style.addressConfirm}>{i18n.t("PAYMENT_MODAL_TITLE")}</span>
@@ -65,4 +69,17 @@ class SecurePayment extends React.Component {
   }
 }
 
-export default SecurePayment;
+const mapStateToProps = store => ({
+  payment: store.payment.payment,
+  loading: store.payment.loading
+});
+
+const mapDispatchToProps = dispatch =>bindActionCreators(
+  { }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(SecurePayment);
