@@ -58,7 +58,7 @@ class BoxConfirm extends React.Component {
             Para confirmar sua transação, informe sua senha e conclua o envio de{" "}
           </span>
           <span className={style.totalConfirm}>
-            {modal.sendAmount + " " + coin.toUpperCase()}
+            {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
           <span> para o endereço </span>
           <span className={style.addressConfirm}>{modal.address}</span>

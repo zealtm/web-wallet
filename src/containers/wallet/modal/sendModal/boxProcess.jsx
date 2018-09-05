@@ -14,14 +14,16 @@ import style from "../../style.css";
 
 class BoxProcess extends React.Component {
   doTransaction = () => {
-    let { coin, user, modal, setWalletTransaction } = this.props;
+    let { coin, user, modal, coins, setWalletTransaction } = this.props;
     setWalletTransaction(
       {
         coin: coin,
-        fromAddress: "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr",
+        fromAddress: coins[coin].address,
         toAddress: modal.address,
         amount: modal.sendAmount,
-        fee: modal.selectedFee
+        fee: modal.feeValue.selectedFee,
+        feePerByte: modal.feeValue.selectedFeePerByte,
+        decimalPoint: coins[coin].decimalPoint
       },
       user.password
     );
@@ -46,7 +48,7 @@ class BoxProcess extends React.Component {
         <div className={style.processInfo}>
           <span>Voce esta enviando </span>
           <span className={style.totalConfirm}>
-            {modal.sendAmount + " " + coin.toUpperCase()}
+            {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
           <span> para o endereco </span>
           <span className={style.addressConfirm}>{modal.address}</span>
@@ -66,13 +68,15 @@ class BoxProcess extends React.Component {
 BoxProcess.propTypes = {
   user: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   modal: PropTypes.object.isRequired,
   setWalletTransaction: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  modal: store.wallet.modal
+  modal: store.wallet.modal,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

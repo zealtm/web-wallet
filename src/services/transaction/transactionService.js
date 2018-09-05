@@ -7,6 +7,11 @@ import {
 import { networks } from "../../constants/network";
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
+import CoinService from "../../services/coinService";
+
+// UTILS
+import i18n from "../../utils/i18n";
+import { convertSmallerCoinUnit } from "../../utils/numbers";
 
 class TransactionService {
   async utxo(address, coin, token) {
@@ -28,7 +33,6 @@ class TransactionService {
         });
       });
 
-      //console.log("UTXOS", utxos);
       return utxos;
     } catch (error) {
       internalServerError();
@@ -40,7 +44,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/broadcast`,
+        BASE_URL + "/coin/" + coin + "/transaction/broadcast",
         { txHex: txhex },
         API_HEADER
       );
@@ -55,16 +59,27 @@ class TransactionService {
   /* eslint-disable */
   async transaction(transaction, seed, token) {
     try {
-      let { from, to, fee, amount, coin, network } = transaction;
+      let responde = undefined;
+      let coinService = new CoinService();
+      let {
+        fromAddress,
+        toAddress,
+        fee,
+        feePerByte,
+        amount,
+        coin,
+        decimalPoint
+      } = transaction;
       if (
-        !from ||
-        !to ||
+        !fromAddress ||
+        !toAddress ||
         !seed ||
         !fee ||
+        !feePerByte ||
         !amount ||
         !token ||
         !coin ||
-        !network
+        !decimalPoint
       ) {
         modalError(i18n.t("MESSAGE_TRANSACTION_FAILED"));
         return;
@@ -72,36 +87,63 @@ class TransactionService {
 
       switch (coin) {
         case "btc":
-          const transactionBtc = new BtcTransaction();
-          const responseBtc = await transactionBtc.createTransaction({
-            fromAddress: from,
-            toAddress: to,
+          let transactionBtc = new BtcTransaction();
+          let responseBtc = await transactionBtc.createTransaction({
+            fromAddress: fromAddress,
+            toAddress: toAddress,
             seed: seed,
-            fee: fee,
-            amount: amount,
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
             coin: coin,
             token: token,
             network: TESTNET ? networks.BTCTESTNET : networks.BTC
           });
 
-          return responseBtc;
+          if (responseBtc === "error") {
+            return;
+          }
+
+          let responseSaveBtc = await coinService.saveTransaction(
+            {
+              id: responseBtc,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
+            coin,
+            "Teste"
+          );
+
+          return responseSaveBtc;
 
         case "lunes":
-          const transactionLunes = new LunesTransaction();
-          const responseLunes = await transactionLunes.createLunesTransaction({
+          let transactionLunes = new LunesTransaction();
+          let respondeLunes = await transactionLunes.createLunesTransaction({
             network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
             seed: seed,
-            fromAddress: from,
-            toAddress: to,
-            amount: amount,
-            fee: fee
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            fee: convertSmallerCoinUnit(fee, decimalPoint)
           });
 
-          return responseLunes;
+          if (respondeLunes === "error") {
+            return;
+          }
+
+          let responseSaveLunes = await coinService.saveTransaction(
+            respondeLunes,
+            coin,
+            "Teste"
+          );
+
+          return responseSaveLunes;
       }
     } catch (error) {
       internalServerError();
-      return;
+      return error;
     }
   }
 

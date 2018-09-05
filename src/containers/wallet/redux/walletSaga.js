@@ -57,15 +57,20 @@ export function* getWalletSendModalFee(action) {
       action.decimalPoint
     );
 
-    yield put({
-      type: "GET_WALLET_MODAL_SEND_FEE",
-      fee: response
-    });
+    if (response) {
+      yield put({
+        type: "GET_WALLET_MODAL_SEND_FEE",
+        fee: response
+      });
 
-    yield put({
-      type: "SET_WALLET_MODAL_STEP",
-      step: 2
-    });
+      yield put({
+        type: "SET_WALLET_MODAL_STEP",
+        step: 2
+      });
+
+      return;
+    }
+    yield put(internalServerError());
 
     return;
   } catch (error) {
@@ -118,15 +123,10 @@ export function* getWalletCoinHistory(action) {
 
 export function* getCoinFee(action) {
   try {
-    let response = yield call(coinService.getCoinFee, action.coinType);
+    let response = yield call(coinService.getFee, action.coinType);
     yield put({
       type: "GET_COIN_FEE",
-      coinFee: {
-        low: response.low,
-        medium: response.medium,
-        high: response.high,
-        selectedFee: response.selectedFee
-      }
+      fee: response
     });
   } catch (error) {
     yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
@@ -145,15 +145,15 @@ export function* setWalletTransaction(action) {
       token
     );
 
-    if (!response.error) {
-      yield put({
-        type: "SET_WALLET_TRANSACTION",
-        response: response
-      });
-
+    if (response) {
       yield put({
         type: "SET_WALLET_MODAL_STEP",
         step: 5
+      });
+
+      yield put({
+        type: "SET_WALLET_TRANSACTION",
+        response: response
       });
 
       return;

@@ -13,7 +13,7 @@ export const convertSmallerCoinUnit = (value, decimal) => {
   for (let i = 0; i < decimal; i++) {
     number = number + "0";
   }
-  return value * parseInt(number);
+  return parseInt(value * parseInt(number));
 };
 
 export const percentCalc = (first, last) => {

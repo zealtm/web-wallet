@@ -2,7 +2,6 @@ import { internalServerError } from "../../../containers/errors/statusCodeMessag
 import { create } from "lunes-js-api";
 
 class LunesTransaction {
-
   async createLunesTransaction(data) {
     // prepara a api
     const Lunes = await create(data.network.APICONFIG);
@@ -27,7 +26,7 @@ class LunesTransaction {
       return transaction;
     } catch (error) {
       internalServerError();
-      return error;
+      return "error";
     }
   }
 

@@ -25,6 +25,11 @@ export const setWalletSendModalAmount = amount => ({
   amount
 });
 
+export const setWalletSendModalFinalAmount = amount => ({
+  type: "SET_WALLET_MODAL_FINAL_AMOUNT",
+  amount
+});
+
 export const getWalletSendModalFee = (
   coin,
   fromAddress,
@@ -42,6 +47,11 @@ export const getWalletSendModalFee = (
 
 export const setWalletSendModalSelectedFee = fee => ({
   type: "SET_WALLET_MODAL_SEND_SELECTED_FEE",
+  fee
+});
+
+export const setWalletSendModalSelectedFeePerByte = fee => ({
+  type: "SET_WALLET_MODAL_SEND_SELECTED_FEEPERBYTE",
   fee
 });
 
@@ -83,7 +93,7 @@ export const shareCoinAddress = (name, address) => ({
   address
 });
 
-export const getCoinFeeValue = (coinType) => ({
+export const getCoinFeeValue = coinType => ({
   type: "GET_COIN_FEE_API",
-  coinType,
+  coinType
 });
