@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getCoinsEnabled} from "./redux/paymentAction";
+import {getCoinsEnabled, setPayment} from "./redux/paymentAction";
 
 // COMPONENTS
 import Dropdown from "../../components/dropdown";
@@ -152,11 +152,17 @@ class BankSlip extends React.Component {
     openModal();
   }
 
+  setPayment = () => {
+    const {setPayment} = this.props;
+    setPayment(this.state.bankSlip);
+  }
+
   inputValidator = () => {
     this.openModal(); // abrind modal sem validacao para testar 
-    
-    const {number, assignor, name, description, dueDate, cpfCnpj, value}  = this.state.bankSlip;
+    this.setPayment(); // setar os dados no redux, para teste sem validacao 
 
+    const {number, assignor, name, description, dueDate, cpfCnpj, value}  = this.state.bankSlip;
+    
     const bankSlipInputs = {};
 
     for (const key in bankSlip) {
@@ -321,7 +327,8 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    getCoinsEnabled
+    getCoinsEnabled, 
+    setPayment
   }, dispatch
 );
 

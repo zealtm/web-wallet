@@ -35,3 +35,25 @@ export function* getCoinsEnabledSaga(){
   //   }
   // )
 }
+
+export function* setPaymentSaga(payload){
+  console.log(payload);
+
+  const data = {
+    number: payload.number,
+    coin: payload.coin,
+    amount: payload.amount,
+    value: payload.value,
+    bank: payload.assignor,
+    name: payload.name,
+    dateend: payload.dueDate,
+    doc: payload.cpfCnpj
+  }
+
+  yield put(
+    {
+      type: "SET_PAYMENT_REDUCER",
+      payload: data
+    }
+  )
+}

@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX 
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {getFee} from "../redux/paymentAction";
+
 // UTILS
 import i18n from "../../../utils/i18n";
 
@@ -10,14 +15,24 @@ import style from "./style.css";
 class FeePayment extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fee: null
+    }
   }
 
   calcFee(type) {
     return null; // implemento o metodo de fee
   }
 
-  render() {
+  validateForm = () => {
     const { handleStep } = this.props;
+
+    handleStep("next"); // validar a selecao de fee aqui
+  }
+
+  render() {
+    const { loading, payment } = this.props;
+
     return (
       <div className={style.modalBox}>
         <img
@@ -61,7 +76,7 @@ class FeePayment extends React.Component {
           </span>
         </div>
 
-        <button className={style.btContinue} onClick={() => handleStep("next")}>
+        <button className={style.btContinue} onClick={() => this.validateForm()}>
           {i18n.t("BTN_CONTINUE")}
         </button>
       </div>
@@ -69,4 +84,19 @@ class FeePayment extends React.Component {
   }
 }
 
-export default FeePayment;
+const mapStateToProps = store => ({
+  payment: store.payment.payment,
+  loading: store.payment.loading
+});
+
+const mapDispatchToProps = dispatch =>bindActionCreators(
+  {
+    getFee
+  }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(FeePayment);

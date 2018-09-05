@@ -17,16 +17,13 @@ class Payment extends React.Component {
   constructor() {
     super();
     this.state = {
-      isOpen: true
+      isOpen: false
     }
   }
   handleModal = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
     let { isOpen } = this.state;
-
-    // teste redux
-    let {nomeDaFuncao, funcaoApiTeste, payload} = this.props;
 
     const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
     const contents = [<BankSlip openModal={this.handleModal} />, <History />]

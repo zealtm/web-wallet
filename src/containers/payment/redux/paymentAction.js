@@ -6,3 +6,8 @@ export const nomeDaFuncao = () => ({ // nome diferente do Saga pra testar
 export const getCoinsEnabled =()=>({
   type: "GET_API_COINS"
 });
+
+export const setPayment = (payload) =>({
+  type: "SET_PAYMENT", 
+  payload
+})
