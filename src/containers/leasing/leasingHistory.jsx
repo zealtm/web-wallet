@@ -1,13 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getProfessionalNode } from "../leasing/redux/leasingAction";
-import PropTypes from "prop-types";
+
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
+
+// UTILS
 import i18n from "../../utils/i18n";
+
+// STYLES
 import style from "./style.css";
-
-
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -36,8 +42,6 @@ class LeasingHistory extends React.Component {
       return null;
     }
   };
-
-
 
   renderHistory = () => {
     let mapHistoryItems = [{}, {}, {}];
@@ -96,13 +100,11 @@ class LeasingHistory extends React.Component {
     let { openModal, getProfessionalNode } = this.props;
     openModal();
     getProfessionalNode();
-  }
+  };
 
   render() {
-
     return (
       <div>
-
         <Grid container className={style.containerTransactions}>
           <Grid container item xs={11} sm={10} md={10}>
             <Grid item xs={6} md={4}>
@@ -119,7 +121,10 @@ class LeasingHistory extends React.Component {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <button className={style.buttonEnable} onClick={() => this.loadModalLeasing()}>
+              <button
+                className={style.buttonEnable}
+                onClick={() => this.loadModalLeasing()}
+              >
                 {i18n.t("LEASING_TITLE_NEW")}
               </button>
             </Grid>
@@ -155,17 +160,19 @@ LeasingHistory.propTypes = {
   coins: PropTypes.array.isRequired
 };
 
-
 const mapStateToProps = store => ({
   coins: store.skeleton.coins
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getProfessionalNode
-}, dispatch);
-
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getProfessionalNode
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LeasingHistory)
+)(LeasingHistory);

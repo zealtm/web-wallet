@@ -125,7 +125,6 @@ class Voucher extends React.Component {
       errorInput(validator.messageError);
       return;
     }
-    console.warn(coins);
     getVoucher(
       phone,
       coins,

@@ -365,8 +365,6 @@ class CoinService {
       let dataFee = response.data.data.fee;
       let dataFeePerByte = response.data.data.feePerByte;
 
-      console.warn(response);
-
       if (response.data.code === 200) {
         Object.keys(dataFee).map(value => {
           fee[value] = convertBiggestCoinUnit(dataFee[value], decimalPoint);

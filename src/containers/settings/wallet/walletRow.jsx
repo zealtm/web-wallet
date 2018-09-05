@@ -3,46 +3,103 @@ import PropTypes from "prop-types";
 
 // UTILS
 import i18n from "../../../utils/i18n";
+import {
+  removeFavoritesCrypto,
+  setFavoritesCrypto,
+  getFavoritesCrypto
+} from "../../../utils/localStorage";
 
-// MATERIAL 
+// MATERIAL
 import Grid from "@material-ui/core/Grid";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 
 class WalletRow extends React.Component {
-  
-  renderButtonFav(fav){    
-    if(fav){
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      favorites: []
+    };
+  }
+
+  componentDidMount() {
+    let favoritesCoins = getFavoritesCrypto();
+    this.setState({
+      favorites: favoritesCoins ? favoritesCoins : []
+    });
+  }
+
+  removeFavorite = coin => {
+    let { favorites } = this.state;
+    favorites = favorites.filter(item => item !== coin);
+    removeFavoritesCrypto(coin);
+    this.setState({
+      favorites
+    });
+  };
+
+  addFavorites = coin => {
+    let { favorites } = this.state;
+    if (!favorites) favorites = [coin];
+    favorites.push(coin);
+    favorites = favorites.filter((item, index, input) => {
+      return input.indexOf(item) == index;
+    });
+    setFavoritesCrypto(coin);
+    this.setState({
+      favorites
+    });
+  };
+
+  renderButtonFav(coin) {
+    let favorites = getFavoritesCrypto();
+
+    if (favorites && favorites.indexOf(coin) !== -1) {
       return (
-        <button onClick={() => alert(1)} className={style.buttonDanger}>
+        <button
+          onClick={() => this.removeFavorite(coin)}
+          className={style.buttonDanger}
+        >
           {i18n.t("SET_BUTTON_REMOVE")}
-        </button> 
-      )
-    }else{
+        </button>
+      );
+    } else {
       return (
-        <button onClick={() => alert(2)} className={style.buttonPurple}>
+        <button
+          onClick={() => this.addFavorites(coin)}
+          className={style.buttonPurple}
+        >
           {i18n.t("SET_BUTTON_FAV")}
-        </button> 
-      )
+        </button>
+      );
     }
   }
 
-  render(){
-    const {coin} = this.props;
+  render() {
+    const { coin } = this.props;
     return (
       <Grid container justify="center">
         <Grid item xs={2} md={1}>
-          <img src={`images/icons/coins/${coin.name}.png`} className={style.coinIcon} />
+          <img
+            src={"images/icons/coins/" + coin.abbreviation + ".png"}
+            className={style.coinIcon}
+          />
         </Grid>
         <Grid item xs={7} md={8}>
-          <input type="text" placeholder={`Wallet ${coin.name}`} className={style.inputClear} />
+          <input
+            type="text"
+            disabled
+            value={coin.address}
+            className={style.inputClear}
+          />
         </Grid>
         <Grid item xs={3} md={2}>
-          {this.renderButtonFav(coin.favorite)}
+          {this.renderButtonFav(coin.abbreviation)}
         </Grid>
       </Grid>
-    )
+    );
   }
 }
 
