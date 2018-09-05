@@ -18,10 +18,11 @@ class BoxProcess extends React.Component {
     setWalletTransaction(
       {
         coin: coin,
-        fromAddress: "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr",
+        fromAddress: coins[coin].address,
         toAddress: modal.address,
         amount: modal.sendAmount,
         fee: modal.feeValue.selectedFee,
+        feePerByte: modal.feeValue.selectedFeePerByte,
         decimalPoint: coins[coin].decimalPoint
       },
       user.password
@@ -47,7 +48,7 @@ class BoxProcess extends React.Component {
         <div className={style.processInfo}>
           <span>Voce esta enviando </span>
           <span className={style.totalConfirm}>
-            {modal.sendAmount + " " + coin.toUpperCase()}
+            {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
           <span> para o endereco </span>
           <span className={style.addressConfirm}>{modal.address}</span>

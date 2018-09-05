@@ -123,15 +123,10 @@ export function* getWalletCoinHistory(action) {
 
 export function* getCoinFee(action) {
   try {
-    let response = yield call(coinService.getCoinFee, action.coinType);
+    let response = yield call(coinService.getFee, action.coinType);
     yield put({
       type: "GET_COIN_FEE",
-      coinFee: {
-        low: response.low,
-        medium: response.medium,
-        high: response.high,
-        selectedFee: response.selectedFee
-      }
+      fee: response
     });
   } catch (error) {
     yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });

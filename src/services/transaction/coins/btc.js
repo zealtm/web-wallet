@@ -31,14 +31,21 @@ class BtcTransaction {
         }
       ];
 
-      let { inputs, outputs } = coinSelect(utxos, targets, data.fee);
-      console.warn("inputs, outputs ", inputs, outputs);
+      console.warn(utxos, data);
+
+      let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
+      console.warn(
+        "inputs, outputs ",
+        inputs,
+        outputs,
+        coinSelect(utxos, targets, data.fee)
+      );
 
       let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
 
       outputs.forEach(output => {
         if (!output.address) {
-          output.address = data.from;
+          output.address = data.fromAddress;
         }
 
         tx.addOutput(output.address, output.value);
@@ -55,15 +62,16 @@ class BtcTransaction {
       const txHex = tx.build().toHex();
 
       // return;
-      const broadcastResult = await TransactionService.broadcast(
+      const broadcastResult = await transService.broadcast(
         txHex,
         data.coin,
         data.token
       );
 
-      return { txID: broadcastResult };
+      return broadcastResult.data.data.txId;
     } catch (error) {
-      return error;
+      console.warn(error);
+      return "error";
     }
   }
 

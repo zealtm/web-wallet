@@ -322,11 +322,11 @@ class CoinService {
 
       let valid = await CAValidator.validate(address, coin.toUpperCase());
 
-      if (!valid) {
-        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
-      }
+      // if (!valid) {
+      //   return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      // }
 
-      return valid;
+      return true;
     } catch (er) {
       let error = { error: internalServerError(), er: er };
       return error;
@@ -350,7 +350,10 @@ class CoinService {
   async getFee(coinName, fromAddress, toAddress, amount, decimalPoint = 8) {
     try {
       let fee = {};
+      let feePerByte = {};
+
       amount = convertSmallerCoinUnit(amount, decimalPoint);
+
       let response = await axios.post(
         BASE_URL + "/coin/" + coinName + "/transaction/fee",
         { fromAddress, toAddress, amount },
@@ -359,13 +362,23 @@ class CoinService {
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      let data = response.data.data;
+      let dataFee = response.data.data.fee;
+      let dataFeePerByte = response.data.data.feePerByte;
+
       if (response.data.code === 200) {
-        Object.keys(data).map(value => {
-          fee[value] = convertBiggestCoinUnit(data[value], decimalPoint);
+        Object.keys(dataFee).map(value => {
+          fee[value] = convertBiggestCoinUnit(dataFee[value], decimalPoint);
+        });
+
+        Object.keys(dataFeePerByte).map(value => {
+          feePerByte[value] = dataFeePerByte[value];
         });
       }
 
+      fee = {
+        fee,
+        feePerByte
+      };
       return fee;
     } catch (error) {
       console.warn(error);
@@ -375,6 +388,8 @@ class CoinService {
 
   async saveTransaction(transaction, coin, describe) {
     try {
+      console.warn(transaction, coin, describe);
+
       let response = await axios.post(
         BASE_URL +
           "/coin/" +
@@ -396,6 +411,8 @@ class CoinService {
         },
         API_HEADER
       );
+
+      console.warn(response);
       return response;
     } catch (error) {
       console.warn(error);

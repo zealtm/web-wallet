@@ -6,9 +6,10 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setWalletModalStep,
-  setWalletSendModalAmount,
+  setWalletSendModalFinalAmount,
   setWalletSendModalLoading,
-  setWalletSendModalSelectedFee
+  setWalletSendModalSelectedFee,
+  setWalletSendModalSelectedFeePerByte
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -27,14 +28,20 @@ class BoxFee extends React.Component {
   }
 
   calcFee = type => {
-    let { setWalletSendModalSelectedFee, errorInput, modal } = this.props;
+    let {
+      setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeePerByte,
+      errorInput,
+      modal
+    } = this.props;
 
-    if (modal.feeValue[type] >= modal.sendAmount) {
+    if (modal.feeValue.fee[type] >= modal.sendAmount) {
       errorInput("Insufficient funds");
       return;
     }
 
-    setWalletSendModalSelectedFee(modal.feeValue[type]);
+    setWalletSendModalSelectedFee(modal.feeValue.fee[type]);
+    setWalletSendModalSelectedFeePerByte(modal.feeValue.feePerByte[type]);
     return;
   };
 
@@ -43,15 +50,15 @@ class BoxFee extends React.Component {
       modal,
       errorInput,
       setWalletModalStep,
-      setWalletSendModalAmount,
-      setWalletSendModalLoading
+      setWalletSendModalLoading,
+      setWalletSendModalFinalAmount
     } = this.props;
     let feeAmount = modal.feeValue.selectedFee;
     let amount = modal.sendAmount - (feeAmount ? feeAmount : 0);
 
     if (feeAmount) {
       setWalletSendModalLoading();
-      setWalletSendModalAmount(amount);
+      setWalletSendModalFinalAmount(amount);
       setWalletModalStep(3);
 
       return;
@@ -97,19 +104,19 @@ class BoxFee extends React.Component {
             className={style.greenLabelFee}
             onClick={() => this.calcFee("low")}
           >
-            Baixa {modal.feeValue.low}
+            Baixa {modal.feeValue.fee.low}
           </span>
           <span
             className={style.yellowLabelFee}
             onClick={() => this.calcFee("medium")}
           >
-            Média {modal.feeValue.medium}
+            Média {modal.feeValue.fee.medium}
           </span>
           <span
             className={style.redLabelFee}
             onClick={() => this.calcFee("high")}
           >
-            Alta {modal.feeValue.high}
+            Alta {modal.feeValue.fee.high}
           </span>
         </div>
 
@@ -130,9 +137,10 @@ BoxFee.propTypes = {
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
   setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalAmount: PropTypes.func.isRequired,
+  setWalletSendModalFinalAmount: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired,
-  setWalletSendModalSelectedFee: PropTypes.func.isRequired
+  setWalletSendModalSelectedFee: PropTypes.func.isRequired,
+  setWalletSendModalSelectedFeePerByte: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -144,9 +152,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setWalletModalStep,
-      setWalletSendModalAmount,
+      setWalletSendModalFinalAmount,
       setWalletSendModalLoading,
       setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeePerByte,
       errorInput
     },
     dispatch

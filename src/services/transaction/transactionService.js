@@ -45,7 +45,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/broadcast`,
+        BASE_URL + "/coin/" + coin + "/transaction/broadcast",
         { txHex: txhex },
         API_HEADER
       );
@@ -66,6 +66,7 @@ class TransactionService {
         fromAddress,
         toAddress,
         fee,
+        feePerByte,
         amount,
         coin,
         decimalPoint
@@ -75,6 +76,7 @@ class TransactionService {
         !toAddress ||
         !seed ||
         !fee ||
+        !feePerByte ||
         !amount ||
         !token ||
         !coin ||
@@ -92,6 +94,7 @@ class TransactionService {
             toAddress: toAddress,
             seed: seed,
             fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
             amount: convertSmallerCoinUnit(amount, decimalPoint),
             coin: coin,
             token: token,
@@ -103,7 +106,13 @@ class TransactionService {
           }
 
           let responseSaveBtc = await coinService.saveTransaction(
-            responseBtc,
+            {
+              id: responseBtc,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
             coin,
             "Teste"
           );
