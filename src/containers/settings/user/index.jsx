@@ -100,9 +100,8 @@ class User extends React.Component {
 
     return (
       <div>
-
-         <Grid container className={style.containerHeaderSettings} >
-          <Grid item xs={12} className={style.headerSettingsDefault} >
+        <Grid container className={style.containerHeaderSettings}>
+          <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
               <Grid item xs={12}>
                 <h3>{i18n.t("SETTINGS_USER")} </h3>
@@ -110,13 +109,13 @@ class User extends React.Component {
             </Hidden>
             <Grid item sm={1} />
 
-            <Grid item xs={6} sm={2} >
+            <Grid item xs={6} sm={2}>
               <Link to="settings">
                 <p>{i18n.t("SETTING_LINK_RETURN")}</p>
               </Link>
             </Grid>
             <Hidden xsDown>
-              <Grid item xs={12} sm={3}  >
+              <Grid item xs={12} sm={3}>
                 <h3>{i18n.t("SETTINGS_USER")}</h3>
               </Grid>
             </Hidden>
@@ -128,7 +127,6 @@ class User extends React.Component {
         </Grid>
 
         <Grid container className={style.container}>
-
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -165,13 +163,28 @@ class User extends React.Component {
                       : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
                 </p>
-                <p className={style.textDefault} style={{ margin: '1rem 0 0 0' }}>
-                  {verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
-                  <span className={style.statusItem}>{i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}</span>
+                <p
+                  className={style.textDefault}
+                  style={{ margin: "1rem 0 0 0" }}
+                >
+                  {verified ? (
+                    <Done className={style.successDefault} />
+                  ) : (
+                    <Close className={style.errorDefault} />
+                  )}
+                  <span className={style.statusItem}>
+                    {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
+                  </span>
                 </p>
-                <p className={style.textDefault} style={{ marginTop: '0' }}>
-                  {verified ? <Done className={style.successDefault} /> : <Close className={style.errorDefault} />}
-                  <span className={style.statusItem}>{i18n.t("SETTINGS_USER_2FA_VERIFIED")}</span>
+                <p className={style.textDefault} style={{ marginTop: "0" }}>
+                  {verified ? (
+                    <Done className={style.successDefault} />
+                  ) : (
+                    <Close className={style.errorDefault} />
+                  )}
+                  <span className={style.statusItem}>
+                    {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
+                  </span>
                 </p>
               </div>
             </Grid>
@@ -228,7 +241,7 @@ class User extends React.Component {
           <Grid item xs={12} sm={6} md={7}>
             <Grid item xs={12} className={style.row}>
               <Grid container>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_FIRST_NAME")}
@@ -247,22 +260,40 @@ class User extends React.Component {
                     <p className={style.textDefault}>Birthdate</p>
                     <Grid container>
                       <Grid item xs={4}>
-                        <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_DAY")}</label>
-                        <Select action={this.handleBirthDayChange} items={days} value={birth_day} />
+                        <label className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_DAY")}
+                        </label>
+                        <Select
+                          action={this.handleBirthDayChange}
+                          items={days}
+                          value={birth_day}
+                        />
                       </Grid>
                       <Grid item xs={4}>
-                        <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_MONTH")}</label>
-                        <Select action={this.handleBirthMonthChange} items={months} value={birth_month} />
+                        <label className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_MONTH")}
+                        </label>
+                        <Select
+                          action={this.handleBirthMonthChange}
+                          items={months}
+                          value={birth_month}
+                        />
                       </Grid>
                       <Grid item xs={4}>
-                        <label className={style.selectLabel}>{i18n.t("SETTINGS_USER_YEAR")}</label>
-                        <Select action={this.handleBirthYearChange} items={years} value={birth_year} />
+                        <label className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_YEAR")}
+                        </label>
+                        <Select
+                          action={this.handleBirthYearChange}
+                          items={years}
+                          value={birth_year}
+                        />
                       </Grid>
                     </Grid>
                   </div>
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} md={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_SURNAME")}
@@ -277,9 +308,17 @@ class User extends React.Component {
                   </div>
 
                   <div className={style.content}>
-                    <p className={style.textDefault}>{i18n.t("SETTINGS_USER_CONTACT")}</p>
-                    <div style={{ float: 'left', width: '40%', marginTop: '5px' }}>
-                      <Select action={() => this.handleSelectChange()} items={teste} value={undefined} />
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_CONTACT")}
+                    </p>
+                    <div
+                      style={{ float: "left", width: "40%", marginTop: "5px" }}
+                    >
+                      <Select
+                        action={() => this.handleSelectChange()}
+                        items={teste}
+                        value={undefined}
+                      />
                     </div>
                     <Input
                       classes={{
@@ -287,7 +326,7 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      style={{ width: '50%', float: 'right' }}
+                      style={{ width: "50%", float: "right" }}
                     />
                   </div>
                 </Grid>
@@ -314,19 +353,15 @@ class User extends React.Component {
 
                   <div className={style.content}>
                     {i18n.t("SETTINGS_USER_CITY")}
-<<<<<<< HEAD
                     <Select
                       action={() => this.handleSelectChange()}
                       items={teste}
                       value={undefined}
                       fullWidth
                     />
-=======
-                    <Select action={() => this.handleSelectChange()} items={teste} value={undefined} fullWidth />
->>>>>>> V-164
                   </div>
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ZIP_CODE")}
