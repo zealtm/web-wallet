@@ -17,15 +17,14 @@ class PaymentService {
     }
   }
 
-  async getApiTeste(token){
-    console.log("chamando...");
+  async getCoins(token){
     API_HEADER.headers.Authorization = token;
 
     let response = await axios.get(
       "https://a.lunes.io/wallet/staging/service/pagamento",
       API_HEADER
     );
-    return response.data.data;
+    return response.data;
   }
 }
 

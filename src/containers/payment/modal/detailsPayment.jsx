@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {nomeDaFuncao,funcaoApiTeste} from "../redux/paymentAction";
+import {nomeDaFuncao} from "../redux/paymentAction";
 
 
 // UTILS

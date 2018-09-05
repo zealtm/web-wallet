@@ -2,6 +2,7 @@ const initialState = {
   // variaveis necessarias
   // var: type 
   payload: "",
+  coins: [],
   payment: {
     coin: "", 
     amount: "", 
@@ -22,10 +23,10 @@ const payment = (state=initialState, action) => {
         payload: action.payload // atualiza o state inicial "action.payload"
       };
     
-    case "API_REDUCER":
+    case "GET_COINS_REDUCER":
       return {
         ...state,
-        payload: action.payload
+        coins: action.coins
       };
     
     default: {

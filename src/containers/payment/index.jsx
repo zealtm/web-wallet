@@ -1,10 +1,5 @@
 import React from "react";
 
-// REDUX 
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {nomeDaFuncao,funcaoApiTeste} from "./redux/paymentAction";
-
 // UTILS
 import i18n from "../../utils/i18n";
 
@@ -34,7 +29,7 @@ class Payment extends React.Component {
     let {nomeDaFuncao, funcaoApiTeste, payload} = this.props;
 
     const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
-    const contents = [<BankSlip />, <History />]
+    const contents = [<BankSlip openModal={this.handleModal} />, <History />]
 
     return (
       <div>
@@ -56,19 +51,4 @@ class Payment extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
-  payload: store.payment.payload
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    nomeDaFuncao, 
-    funcaoApiTeste
-  }, 
-  dispatch
-);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Payment);
+export default Payment;

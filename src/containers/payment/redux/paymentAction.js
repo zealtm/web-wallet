@@ -3,6 +3,6 @@ export const nomeDaFuncao = () => ({ // nome diferente do Saga pra testar
   // outros campos necessarios pra atualizar via action
 });
 
-export const funcaoApiTeste =()=>({
-  type:"GET_API"
+export const getCoinsEnabled =()=>({
+  type: "GET_API_COINS"
 });

@@ -85,7 +85,7 @@ class Dropdown extends React.Component {
             {titleImg ? <img src={titleImg} alt={title} /> : ''} {title}
           </div>
           <div className={style.icon}>
-            {listOpen ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+            {listOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </div>
         </div>
 

@@ -24,21 +24,14 @@ export function* nomeFuncao(){
   }
 }
 
-export function* getApiTeste(){
+export function* getCoinsEnabledSaga(){
   let token = yield call(getAuthToken);
-  let response = yield call(paymentService.getApiTeste, token);
-  yield put(
-    {
-      type:"API_REDUCER",
-      payload: response
-    }
-  )
-}
-
-export function* handleStep(){
-  yield put(
-    {
-      type: "HANDLE_STEP_REDUCER"
-    }
-  )
+  let response = yield call(paymentService.getCoins, token);
+  console.log(response);
+  // yield put(
+  //   {
+  //     type: "GET_COINS_REDUCER",
+  //     coins: response
+  //   }
+  // )
 }
