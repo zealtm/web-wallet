@@ -118,6 +118,10 @@ class BankSlip extends React.Component {
         name: title,
         value,
         img
+      },
+      bankSlip: {
+        ...this.state.bankSlip,
+        coin: title
       }
     })
   }
@@ -158,10 +162,7 @@ class BankSlip extends React.Component {
   }
 
   inputValidator = () => {
-    const {bankSlip}  = this.state;
-
-    this.openModal(); // abrind modal sem validacao para testar
-    this.setPayment(); // setar os dados no redux, para teste sem validacao
+    const {bankSlip} = this.state;
 
     const bankSlipInputs = {};
 
@@ -187,8 +188,14 @@ class BankSlip extends React.Component {
       this.setState({
         ...this.state,
         errors
-      })
+      });
+      return;
     }
+
+    this.openModal(); // abrind modal sem validacao para testar
+    this.setPayment(); // setar os dados no redux, para teste sem validacao
+    // tem que fazer a funcao pra pegar a quantidade de moedas necessarias para esta transacao e
+    // liberar o botao apos o resultado
   }
 
   render() {
@@ -334,7 +341,7 @@ BankSlip.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  coins: store.payment.coins
+  coinsRedux: store.payment.coins
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

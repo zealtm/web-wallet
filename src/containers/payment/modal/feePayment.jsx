@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 // REDUX 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getFee} from "../redux/paymentAction";
+import {getFeePayment,setFeePayment} from "../redux/paymentAction";
+
+// COMPONENTS
+import ButtonContinue from "./component/buttonContinue";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -16,12 +19,15 @@ class FeePayment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fee: null
+      feeSelect: 0
     }
   }
 
-  calcFee(type) {
-    return null; // implemento o metodo de fee
+  calcFee(value) {
+    this.setState({feeSelect:value});
+
+    const {setFeePayment} = this.props;
+    setFeePayment(value);
   }
 
   validateForm = () => {
@@ -30,8 +36,14 @@ class FeePayment extends React.Component {
     handleStep("next"); // validar a selecao de fee aqui
   }
 
+  componentDidMount = () => {
+    const {getFeePayment, payment} = this.props;
+    getFeePayment(payment.coin, payment.amount);
+  }
+
   render() {
-    const { loading, payment } = this.props;
+    const { loading, payment, fee } = this.props;
+    const { feeSelect } = this.state;
 
     return (
       <div className={style.modalBox}>
@@ -41,7 +53,7 @@ class FeePayment extends React.Component {
         />
         <div>
           <span>{i18n.t("PAYMENT_FEE_TEXT_1")}</span>
-          <span className={style.totalConfirm}>5000 LUNES</span>
+          <span className={style.totalConfirm}>{payment.amount} {payment.coin}</span>
         </div>
         <div>
           <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>
@@ -50,48 +62,52 @@ class FeePayment extends React.Component {
 
         <div className={style.confirmFee}>
           <div>
-            {i18n.t("PAYMENT_FEE_AMOUNT")}<span> LUNES </span> é
+            {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {payment.coin} </span> é
           </div>
-          <div className={style.txtamount}>0.001</div>
+          <div className={style.txtamount}>{feeSelect}</div>
         </div>
 
         <div className={style.boxFee}>
           <span
             className={style.greenLabelFee}
-            onClick={() => this.calcFee("low")}
+            onClick={() => this.calcFee(fee.low)}
           >
-            {i18n.t("FEE_LOW")} 0.001
+            {i18n.t("FEE_LOW")} {fee.low}
           </span>
           <span
             className={style.yellowLabelFee}
-            onClick={() => this.calcFee("medium")}
+            onClick={() => this.calcFee(fee.medium)}
           >
-            {i18n.t("FEE_MEDIUM")} 0.001
+            {i18n.t("FEE_MEDIUM")} {fee.medium}
           </span>
           <span
             className={style.redLabelFee}
-            onClick={() => this.calcFee("high")}
+            onClick={() => this.calcFee(fee.hight)}
           >
-            {i18n.t("FEE_HIGHT")} 0.001
+            {i18n.t("FEE_HIGHT")} {fee.hight}
           </span>
         </div>
 
-        <button className={style.btContinue} onClick={() => this.validateForm()}>
-          {i18n.t("BTN_CONTINUE")}
-        </button>
+        <ButtonContinue 
+          label={i18n.t("BTN_CONTINUE")}
+          action={()=>this.validateForm()}
+          loading={loading} 
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = store => ({
+  fee: store.payment.fee,
   payment: store.payment.payment,
   loading: store.payment.loading
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(
   {
-    getFee
+    getFeePayment,
+    setFeePayment
   }, 
   dispatch
 );

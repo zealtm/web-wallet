@@ -7,12 +7,23 @@ export const getCoinsEnabled = () => ({
   type: "GET_API_COINS"
 });
 
-export const getPaymentData = (payload) => ({
-  type: "VALIDATE_PAYMENT_NUMBER",
-  payload
+export const getPaymentData = (number) => ({
+  type: "GET_PAYMENT_DATA",
+  number
 })
 
-export const setPayment = (payload) => ({
+export const setPayment = (pay) =>({
   type: "SET_PAYMENT",
-  payload
+  pay
+});
+
+export const getFeePayment = (coin, amount) => ({
+  type: "GET_FEE_PAYMENT",
+  coin,
+  amount
+});
+
+export const setFeePayment = (fee) => ({
+  type: "SET_FEE_PAYMENT",
+  fee
 })

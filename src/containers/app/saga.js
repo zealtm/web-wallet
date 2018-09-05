@@ -1,5 +1,5 @@
 import { takeLatest } from "redux-saga";
-import { fork } from "redux-saga/effects";
+import { fork, take } from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -25,7 +25,7 @@ import {
   getCoinFee
 } from "../wallet/redux/walletSaga";
 import { getProfessionalNode } from "../leasing/redux/leasingSaga";
-import {nomeFuncao,getCoinsEnabledSaga, setPaymentSaga} from "../payment/redux/paymentSaga";
+import {nomeFuncao, getCoinsEnabledSaga, setPaymentSaga, getFeePayment,setFeePayment} from "../payment/redux/paymentSaga";
 
 export default function* rootSaga() {
   yield [
@@ -54,6 +54,8 @@ export default function* rootSaga() {
     //payment-saga 
     fork(takeLatest, "GET_TESTE", nomeFuncao), 
     fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga), 
-    fork(takeLatest, "SET_PAYMENT", setPaymentSaga)
+    fork(takeLatest, "SET_PAYMENT", setPaymentSaga), 
+    fork(takeLatest, "GET_FEE_PAYMENT", getFeePayment), 
+    fork(takeLatest, "SET_FEE_PAYMENT", setFeePayment)
   ];
 }
