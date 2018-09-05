@@ -1,10 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+// UTILS
+import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import CustomSwitch from "./customSwitch";
 
 // MATERIAL
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+
+// STYLES
+import style from "./style.css";
 
 const configs = [
   {
@@ -46,6 +54,33 @@ class Consent extends React.Component {
   render() {
     return (
       <Grid container justify="center">
+
+       <Grid container className={style.containerHeaderSettings} >
+          <Grid item xs={12} className={style.headerSettingsDefault} >
+            <Hidden smUp>
+              <Grid item xs={12}>
+                <h3>{i18n.t("CONSENT_TITLE")} </h3>
+              </Grid>
+            </Hidden>
+            <Grid item sm={1} />
+
+            <Grid item xs={6} sm={2} >
+              <Link to="settings">
+                <p>{i18n.t("SETTING_LINK_RETURN")}</p>
+              </Link>
+            </Grid>
+            <Hidden xsDown>
+              <Grid item xs={12} sm={3}  >
+                <h3>{i18n.t("CONSENT_TITLE")}</h3>
+              </Grid>
+            </Hidden>
+
+            <Grid item xs={8} sm={6} id={"hr"}>
+              <hr />
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid item xs={11}>
           {this.renderSwitch()}
         </Grid>

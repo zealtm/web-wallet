@@ -12,7 +12,7 @@ import style from "./style.css";
 
 class WalletRow extends React.Component {
   
-  renderButtonFav(fav){
+  renderButtonFav(fav){    
     if(fav){
       return (
         <button onClick={() => alert(1)} className={style.buttonDanger}>

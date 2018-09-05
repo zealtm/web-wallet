@@ -1,24 +1,86 @@
 
 /*
-  1. BASE
-  2. TEXT
-  3. AVATAR
+  1. HEADER SETTINGS
+  2. BASE
+  3. TEXT
+  4. AVATAR
 */
 
-/* 1 BASE */
+
+/* ------------------------------------------------------------------------- */
+/* 1. HEADER SETTINGS */
+:local(a) {
+  text-decoration: none;
+}
+
+:local(.containerHeaderSettings) {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+:local(.headerSettingsDefault) { 
+  display: flex;
+}
+
+:local(.headerSettingsDefault p) {
+  color: #68f285;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+:local(.headerSettingsDefault h3) {
+  text-align: right;
+  margin: 0;
+  padding-right: 15px;
+}
+
+#hr hr{
+  border: 0;
+  width: 100%;
+  border-bottom: 2px dotted #654fa4;
+  size: 15px;
+  height: 2px;
+}
+
+#hr {
+  display: flex;
+}
+
+@media screen and (max-width: 599px) {
+  :local(.headerSettingsDefault p) {
+    float: left;
+    padding: 0 5px;
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault h3) {
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault) { 
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 2 BASE */
 :local(.container) {
   margin: 0;
+  display: flex;
+  justify-content: center;
+  width: auto;
 }
 
 @media screen and (min-width: 599px) {
   :local(.container) {
-    margin: 0 2rem;
+    /* margin: 0 2rem; */
   }
 }
 
 @media screen and (min-width: 1199px) {
   :local(.container) {
-    margin: 0 5rem;
+    /* margin: 0 5rem; */
   }
 }
 
@@ -58,7 +120,7 @@
   }
 }
 
-/* 2 TEXT */
+/* 3 TEXT */
 :local(.textDefault) {
   composes: textDefault from "../../../components/bases/textBase.css";
   font-size: 12px;
@@ -127,7 +189,7 @@
   margin-bottom: .5rem;
 }
 
-/* 3 AVATAR */
+/* 4 AVATAR */
 :local(.avatarAlign) {
   display: flex;
   justify-content: center;
