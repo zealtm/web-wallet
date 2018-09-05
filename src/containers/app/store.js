@@ -6,7 +6,7 @@ import user from "../user/redux/userReducer";
 import wallet from "../wallet/redux/walletReducer";
 import leasing from "../leasing/redux/leasingReducer";
 import error from "../errors/redux/errorReducer";
-
+import payment from "../payment/redux/paymentReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 
@@ -16,7 +16,8 @@ const Store = createStore(
     wallet,
     skeleton,
     leasing,
-    error
+    error, 
+    payment
   }),
 
   applyMiddleware(sagaMiddleware)

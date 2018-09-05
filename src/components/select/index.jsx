@@ -5,7 +5,7 @@ import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
 import style from "./style.css";
 
-class Dropdown extends React.Component {
+class Select extends React.Component {
 	constructor(props) {
   	super(props);
     this.state = {
@@ -85,7 +85,7 @@ class Dropdown extends React.Component {
             {titleImg ? <img src={titleImg} alt={title} /> : ''} {title}
           </div>
           <div className={style.icon}>
-            {listOpen ? <KeyboardArrowDown /> : <KeyboardArrowUp />}
+            {listOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           </div>
         </div>
 
@@ -95,7 +95,7 @@ class Dropdown extends React.Component {
   }
 }
 
-Dropdown.propTypes = {
+Select.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   title: PropTypes.string.isRequired,
   selectItem: PropTypes.func.isRequired,
@@ -104,4 +104,4 @@ Dropdown.propTypes = {
   height: PropTypes.string,
 }
 
-export default Dropdown;
+export default Select;

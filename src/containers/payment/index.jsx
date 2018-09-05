@@ -1,20 +1,32 @@
 import React from "react";
-import Tabs from "../../components/tabs";
+
+// UTILS
 import i18n from "../../utils/i18n";
 
-import style from "./style.css";
-
+// COMPONENTS
+import Modal from "../../components/modal";
+import PaymentTitleModal from "./modal/paymentTitleModal";
+import Tabs from "../../components/tabs";
 import BankSlip from "./bankSlip";
 import History from "./history";
+
+// STYLE
+import style from "./style.css";
 
 class Payment extends React.Component {
   constructor() {
     super();
+    this.state = {
+      isOpen: false
+    }
   }
+  handleModal = () => this.setState({ isOpen: !this.state.isOpen });
 
   render() {
+    let { isOpen } = this.state;
+
     const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
-    const contents = [<BankSlip />, <History />]
+    const contents = [<BankSlip openModal={this.handleModal} />, <History />]
 
     return (
       <div>
@@ -23,6 +35,14 @@ class Payment extends React.Component {
           <p>{i18n.t("PAYMENT_HEADER_SUBTITLE")}</p>
         </div>
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
+
+        <Modal
+          title={i18n.t("PAYMENT_MODAL_TITLE")}
+          content={<PaymentTitleModal />}
+          show={isOpen}
+          // close={() => this.handleModal()}
+          back={()=>this.handleModal()}
+        />
       </div>
     );
   }

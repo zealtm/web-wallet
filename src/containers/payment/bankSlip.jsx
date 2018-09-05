@@ -2,14 +2,24 @@ import React from "react";
 import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
 
-import Dropdown from "../../components/dropdown";
-import Instructions from "../../components/instructions";
+// REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {getCoinsEnabled, setPayment} from "./redux/paymentAction";
 
+// COMPONENTS
+import Select from "../../components/select";
+import Instructions from "../../components/instructions";
+import colors from "../../components/bases/colors";
+
+// MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import colors from "../../components/bases/colors";
+
+// STYLES
 import style from "./style.css";
 
+// UTILS
 import { inputValidator } from "../../utils/inputValidator";
 
 const customStyle = {
@@ -74,7 +84,7 @@ class BankSlip extends React.Component {
         value: undefined,
         img: undefined
       },
-      coins: [
+      coins: [ // sera alterado para pegar do redux
         {
           title: 'Lunes',
           value: 'lunes',
@@ -94,6 +104,11 @@ class BankSlip extends React.Component {
     }
 
     this.coinSelected = this.coinSelected.bind(this);
+  }
+
+  componentDidMount(){
+    const {getCoinsEnabled} = this.props;
+    getCoinsEnabled();
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -132,8 +147,21 @@ class BankSlip extends React.Component {
     });
   }
 
+  openModal = () => {
+    const {openModal} = this.props;
+    openModal();
+  }
+
+  setPayment = () => {
+    const {setPayment} = this.props;
+    setPayment(this.state.bankSlip);
+  }
+
   inputValidator = () => {
     const {bankSlip}  = this.state;
+
+    this.openModal(); // abrind modal sem validacao para testar
+    this.setPayment(); // setar os dados no redux, para teste sem validacao
 
     const bankSlipInputs = {};
 
@@ -164,8 +192,8 @@ class BankSlip extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
-    const {coins, coin, bankSlip, errors} = this.state;
+    const {classes, coins} = this.props;
+    const {coin, bankSlip, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -275,7 +303,7 @@ class BankSlip extends React.Component {
         <Grid item xs={12} className={style.box} style={{marginTop: '10px'}}>
           <Grid container>
             <Grid item xs={12} sm={6}>
-              <Dropdown list={coins} title={title} titleImg={img} selectItem={this.coinSelected} />
+              <Select list={coins} title={title} titleImg={img} selectItem={this.coinSelected} />
             </Grid>
           </Grid>
         </Grid>
@@ -301,7 +329,23 @@ class BankSlip extends React.Component {
 }
 
 BankSlip.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  openModal: PropTypes.func
 }
 
-export default withStyles(customStyle)(BankSlip);
+const mapStateToProps = store => ({
+  coins: store.payment.coins
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    getCoinsEnabled,
+    validatePaymentNumber,
+    setPayment
+  }, dispatch
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(customStyle)(BankSlip));
+
