@@ -21,4 +21,9 @@ export const getFeePayment = (coin, amount) => ({
 export const setFeePayment = (fee) => ({
   type: "SET_FEE_PAYMENT",
   fee
-})
+});
+
+export const getInvoice = (number) => ({
+  type: "GET_INVOICE", 
+  number
+});

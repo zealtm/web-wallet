@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX 
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getCoinsEnabled, setPayment} from "./redux/paymentAction";
+import {getCoinsEnabled, setPayment, getInvoice} from "./redux/paymentAction";
 
 // COMPONENTS
 import Dropdown from "../../components/dropdown";
@@ -127,6 +127,8 @@ class BankSlip extends React.Component {
   }
 
   handleBankSlipNumberChange = event => {
+    const {getInvoice} = this.props;
+
     this.setState({
       ...this.state,
       bankSlip: {
@@ -137,7 +139,8 @@ class BankSlip extends React.Component {
 
 
     if (event.target.value.length === 48) {
-      alert('Valida o número do boleto');
+      //alert('Valida o número do boleto');
+      getInvoice(event.target.value);
     }
   }
 
@@ -193,11 +196,13 @@ class BankSlip extends React.Component {
   }
 
   render() {
-    const {classes,coinsRedux} = this.props;
+    const {classes,coinsRedux,payment} = this.props;
     const {coins, coin, bankSlip, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
+
+    
 
     return (
       <Grid container direction="row" justify="center">
@@ -328,10 +333,12 @@ BankSlip.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  coinsRedux: store.payment.coins
+  coinsRedux: store.payment.coins, 
+  payment: store.payment.payment
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+    getInvoice,
     getCoinsEnabled, 
     setPayment
   }, dispatch

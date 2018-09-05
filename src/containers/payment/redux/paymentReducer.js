@@ -57,6 +57,15 @@ const payment = (state=initialState, action) => {
         }
       }
     
+    case "GET_INVOICE_REDUCER":
+      return {
+        ...state, 
+        payment: {
+          ...state.payment,
+          ...action.payment
+        }
+      }
+    
     default: {
       return {
         ...state

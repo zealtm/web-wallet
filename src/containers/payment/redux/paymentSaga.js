@@ -70,7 +70,7 @@ export function* setPaymentSaga(payload){
   )
 }
 
-export function* getFeePayment(payload){
+export function* getFeePaymentSaga(payload){
   console.log(payload);
 
   // dados exemplo, tem que fazer chamada aqui
@@ -89,11 +89,25 @@ export function* getFeePayment(payload){
   )
 }
 
-export function* setFeePayment(payload){
+export function* setFeePaymentSaga(payload){
   yield put(
     {
       type: "SET_FEE_PAYMENT_REDUCER",
       fee: payload.fee
     }
   )
+}
+
+export function* getInvoiceSaga(payload){
+  //console.log("get",payload);
+  let token = yield call(getAuthToken);
+  let response = yield call(paymentService.getInvoice, token, payload.number);
+  
+  yield put(
+    {
+      type: "GET_INVOICE_REDUCER",
+      payment: response
+    }
+  )
+  
 }
