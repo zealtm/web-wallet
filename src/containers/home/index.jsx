@@ -13,7 +13,6 @@ class Home extends React.Component {
     return (
       <div>
         <Grid container className={style.homeContainer}>
-          <Link to="/500">link 404</Link>
           <Grid item>
             <div className={style.cardHome}>
               <img
