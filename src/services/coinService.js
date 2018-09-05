@@ -322,9 +322,9 @@ class CoinService {
 
       let valid = await CAValidator.validate(address, coin.toUpperCase());
 
-      if (!valid) {
-        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
-      }
+      // if (!valid) {
+      //   return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      // }
 
       return valid;
     } catch (er) {
@@ -364,6 +364,8 @@ class CoinService {
 
       let dataFee = response.data.data.fee;
       let dataFeePerByte = response.data.data.feePerByte;
+
+      console.warn(response);
 
       if (response.data.code === 200) {
         Object.keys(dataFee).map(value => {
@@ -416,6 +418,20 @@ class CoinService {
       return response;
     } catch (error) {
       console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async voucherRescue(data, voucher) {
+    try {
+      let response = await axios.post(
+        BASE_URL + "/voucher/rescue/" + voucher,
+        { ddi: 55, ddd: data.ddd, phone: data.phone, address: data.address },
+        API_HEADER
+      );
+
+      return response;
+    } catch (error) {
       internalServerError();
     }
   }
