@@ -1,7 +1,16 @@
 const initialState = {
   // variaveis necessarias
   // var: type 
-  payload: ""
+  payload: "",
+  payment: {
+    coin: "", 
+    amount: "", 
+    value: "", 
+    bank: "", 
+    /// continuar campos
+  }, 
+  modal: "",
+  loading: true,
 };
 
 const payment = (state=initialState, action) => {

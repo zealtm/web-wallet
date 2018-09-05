@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX 
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {nomeDaFuncao,funcaoApiTeste} from "../redux/paymentAction";
+
+
 // UTILS
 import i18n from "../../../utils/i18n";
 
@@ -13,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 
 // COMPONENTS
 import CustomSwitch from "./component/customSwitch";
+import ButtonContinue from "./component/buttonContinue";
 
 class DetailsPayment extends React.Component {
   constructor(props) {
@@ -20,8 +27,16 @@ class DetailsPayment extends React.Component {
     this.state = {};
   }
 
+  validateForm = () => {
+    const {handleStep} = this.props;
+    // validar gpdr etc 
+    
+    // atualizar reducer com o proximo modal 
+    handleStep("next"); // aqui tem que ser chamado redux
+  }
+
   render() {
-    const { handleStep } = this.props;
+    const { loading } = this.props;
     return (
       <div className={style.modalBox}>
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
@@ -61,16 +76,31 @@ class DetailsPayment extends React.Component {
           action={() => alert("teste")}
           checked={this.state["check1"]}
         />
-        <button
-          className={style.btContinue}
-          onClick={() => handleStep("next")}
-          style={{ marginTop: 30, marginBottom: 30 }}
-        >
-          {i18n.t("BTN_CONFIRM")}
-        </button>
+
+        <ButtonContinue 
+          label={i18n.t("BTN_CONFIRM")}
+          action={()=>this.validateForm()}
+          loading={loading} 
+        />
+
       </div>
     );
   }
 }
 
-export default DetailsPayment;
+const mapStateToProps = store => ({
+  modal: store.payment.modal,
+  loading: store.payment.loading
+});
+
+const mapDispatchToProps = dispatch =>bindActionCreators(
+  {
+    nomeDaFuncao
+  }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(DetailsPayment);

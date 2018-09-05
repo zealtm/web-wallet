@@ -1,7 +1,7 @@
 /**
 
 1. CONTAINERS
-2. IMAGES & UI
+2. BUTTONS/INPUTS
 3. TEXT
 
 */
@@ -32,6 +32,32 @@
     margin: 0px;
     font-size:11px;
   }
+}
+
+/* BUTTONS/INPUTS */
+:local .bt {
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+:local(.btContinue) {
+  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+  composes: bt;
+}
+
+:local(.btError) {
+  composes: buttonGeneral from "../../../../components/bases/buttonBase.css";
+  composes: bgError from "../../../../components/bases/colorBase.css";
+  composes: bt;
+}
+
+:local(.btContinueDisable) {
+  composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";
+  composes: bt;
 }
 
 /* TEXT */
