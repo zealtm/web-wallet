@@ -1,6 +1,12 @@
 import React from "react";
 import i18n from "../../utils/i18n";
 
+// MATERIAL UI
+import Grid from "@material-ui/core/Grid";
+
+// STYLE
+import style from "./style.css";
+
 class InternalError extends React.Component {
   constructor() {
     super();
@@ -28,69 +34,34 @@ class InternalError extends React.Component {
   render() {
     let { timer } = this.state;
     return (
-      <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            marginTop: "10%"
-          }}
-        >
-          <div
-            style={{
-              width: "25%"
-            }}
-          >
-            <div
-              style={{
-                fontSize: "12vh",
-                color: "#654fa4",
-                display: "flex"
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  height: "27vh",
-                  justifyContent: "space-evenly"
-                }}
-              >
-                <h1 style={{ margin: 0 }}> {"5"} </h1>
-                <h1 style={{ margin: 0 }}> {"0"} </h1>
-                <h1 style={{ margin: 0 }}> {"0"} </h1>
-              </div>
+      <Grid item xs={12}>
+    
+        <Grid className={style.alignMainError}>
+          <Grid className={style.mainError}>
+            <Grid item xs={11} className={style.contentError}>
+              <h1 > {"5"} </h1>
+              <h1 > {"0"} </h1>
+              <h1 > {"0"} </h1>
+              <img src="./images/lunio-error@1x.gif" />
+            </Grid>
+          </Grid>
+        </Grid>
+    
+        <Grid item xs={12} className={style.alignItemsError}>
+          <Grid item xs={11} className={style.itemsError500}>
+            <h3> {i18n.t("PAGE_ERROR_500")} </h3>
+            <div className={style.counter500}>
+            {timer}
             </div>
-          </div>
-          <img
-            src="./images/lunio-error@1x.gif"
-            style={{
-              position: "absolute",
-              bottom: "0",
-              width: "28vh"
-            }}
-          />
-        </div>
-
-        <div>
-          <div>
-            <h3
-              style={{
-                margin: "0",
-                textAlign: "center"
-              }}
-            >
-              <p style={{ color: "#68f285" }}>
-                {i18n.t("PAGE_ERROR_500_REDIRECT")}
-                {"... " + timer}
-              </p>
-            </h3>
-          </div>
-        </div>
-      </div>
+            
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
 
 export default InternalError;
+
+
+

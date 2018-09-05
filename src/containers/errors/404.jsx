@@ -2,70 +2,39 @@ import React from "react";
 import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
 
+// MATERIAL UI
+import Grid from "@material-ui/core/Grid";
+
+// STYLE
+import style from "./style.css";
+
 class NotFoundError extends React.Component {
   render() {
     return (
-      <div>
-        <div style={{
-          display: "flex",
-          justifyContent: "center",
-          alignContent: "center",
-          marginTop: "10%"
-        }}>
-          <div style={{
-            width: "30%",
-          }}>
+      <Grid item xs={12}>
 
-            <div style={{
-              fontSize: "12vh",
-              color: "#654fa4",
-              display: "flex",
-            }}>
-              <div style={{
-                display: "flex",
-                width: "100%",
-                height: "27vh",
-                justifyContent: "space-evenly"
-              }}>
-                <h1 style={{ margin: 0 }}> {"4"} </h1>
-                <h1 style={{ margin: 0 }}> {"0"} </h1>
-                <h1 style={{ margin: 0 }}> {"4"} </h1>
-              </div>
-            </div>
-          </div>
-          <img src="./images/lunio-error@1x.gif" style={{
-            position: "absolute",
-            bottom: "0",
-            width: "28vh"
-          }} />
-        </div>
+        <Grid className={style.alignMainError}>
+          <Grid className={style.mainError}>
+            <Grid item xs={11} className={style.contentError}>
+              <h1 > {"4"} </h1>
+              <h1 > {"0"} </h1>
+              <h1 > {"4"} </h1>
+              <img src="./images/lunio-error@1x.gif" />
+            </Grid>
+          </Grid>
+        </Grid>
 
-        <div>
-          <div>
-            <h3 style={{
-              margin: "0",
-              textAlign: "center"
-            }}>
-              {i18n.t("PAGE_ERROR_404")}
-              <br />
-              <Link to="/">
-                <button style={{
-                  borderRadius: "6px",
-                  backgroundColor: "#68f285",
-                  color: "white",
-                  border: "0",
-                  padding: "5px 10px",
-                  marginTop: "10px",
-                  cursor: "pointer",
-                  fontFamily: "Noto Sans"
-                }}>
-                  {i18n.t("BTN_HOME")}
-                </button>
-              </Link>
-            </h3>
-          </div>
-        </div>
-      </div>
+        <Grid item xs={12} className={style.alignItemsError}>
+          <Grid item xs={11} className={style.itemsError404}>
+            <h2> {i18n.t("PAGE_ERROR_404")} </h2>
+            <Link to="/">
+              <button className={style.buttonToHome}>
+                {i18n.t("BTN_HOME")}
+              </button>
+            </Link>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }

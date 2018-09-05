@@ -140,6 +140,6 @@
     "SETTINGS_CARD": "WALLETS",
     "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
 
-    "PAGE_ERROR_500": "Internal Error",
+    "PAGE_ERROR_500": "Sua sessão expirou, logue novamente",
     "PAGE_ERROR_500_REDIRECT": "Redirecting in"
 }
