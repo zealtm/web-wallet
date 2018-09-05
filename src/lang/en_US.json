@@ -47,12 +47,9 @@
   "NOVEMBER": "November",
   "DECEMBER": "December",
 
-  "LOGIN_SLIDE_DESCRIPTION_1":
-    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_2":
-    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_3":
-    "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_HEADER": "Enter your data",
   "LOGIN_FORGET_PASSWORD_LINK": "Forgot your password?",
   "LOGIN_CREATE_ACCOUNT_LABEL": "Don't have an account?",
@@ -142,10 +139,10 @@
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",
   "INSTRUCTION_MODAL_CUPON_4": "Item",
 
-  "COUPON_INSTRUCTIONS":"Instructions",
-  "COUPON_TITLE_1":"Voucher",
-  "COUPON_TITLE_2":"Lunes Gift",
-  "COUPON_TITLE_3":"Coupon",
+  "COUPON_INSTRUCTIONS": "Instructions",
+  "COUPON_TITLE_1": "Voucher",
+  "COUPON_TITLE_2": "Lunes Gift",
+  "COUPON_TITLE_3": "Coupon",
   "VOUCHER_NUMBER": "Number",
   "VOUCHER_CODE": "Code",
   "VOUCHER_BUTTON": "Rescue",
@@ -183,19 +180,13 @@
   "SETTINGS_USER_STATE": "State",
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
   "SETTINGS_USER_SAVE_DATA": "Save data",
-  "SETTING_WALLETS_TITLE": "Wallets", 
-  "CARD_HOME_DESCRIPTION_1":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_2":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_3":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_4":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_5":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-  "CARD_HOME_DESCRIPTION_6":
-    "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "SETTING_WALLETS_TITLE": "Wallets",
+  "CARD_HOME_DESCRIPTION_1": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_2": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_3": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_4": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_5": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
+  "CARD_HOME_DESCRIPTION_6": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
 
   "WALLET_BALANCE": "Balance",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
@@ -203,7 +194,7 @@
 
   "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
   "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
-  "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",  
+  "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",
   "SETTING_LINK_RETURN": "Back to the settings",
   "SECURITY_TITLE": "2FA Authenticator",
   "DEFINITIONS_TITLE": "Definitions",
@@ -219,13 +210,28 @@
   "SET_BUTTON_REMOVE": "Remover",
   "SET_BUTTON_FAV": "Favoritar",
 
-  "SET_DEFINITIONS_TITLE1": "Definições padrões por região", 
+  "SET_DEFINITIONS_TITLE1": "Definições padrões por região",
   "SET_DEFINITIONS_DESC1": "O idioma selecionado será automaticamente exibido quando voce acessar sua plataforma.",
-  "SET_DEFINITIONS_TITLE2": "Opções de Logout", 
-  "SET_DEFINITIONS_OPTION1": "Deletar todos os metadados locais ao fazer logout - o seu próximo login demorará mais para ser processado.", 
+  "SET_DEFINITIONS_TITLE2": "Opções de Logout",
+  "SET_DEFINITIONS_OPTION1": "Deletar todos os metadados locais ao fazer logout - o seu próximo login demorará mais para ser processado.",
   "SET_DEFINITIONS_OPTION2": "Salve localmente os metadados criptografados para um login mais rápido na sua proxima sessao.",
-  "SET_DEFINITIONS_LABEL_LANG":"Idioma da interface", 
+  "SET_DEFINITIONS_LABEL_LANG": "Idioma da interface",
   "SET_DEFINITIONS_LABEL_CURR": "Moeda Fiat padrão",
-  "SET_DEFINITIONS_LABEL_COIN": "Moeda padrão"
+  "SET_DEFINITIONS_LABEL_COIN": "Moeda padrão",
 
+  "PAGE_ERROR_404": "Oh, No!... Page not found",
+
+  "RESET_NEW_PASSWORD_HINT": "Numbers",
+  "RESET_NEW_PASSWORD_HINT_plural": "Downcase letter",
+  "RESET_NEW_PASSWORD_ERROR": "The password must meet the items described",
+  "RESET_NEW_PASSWORD_ERROR_plural": "",
+
+  "INSTRUCTION_MODAL_CUPON": "Enter the 4-digit code of your coupon",
+  "INSTRUCTION_MODAL_CUPON_plural": "",
+
+  "SETTINGS_CARD": "WALLETS",
+  "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
+
+  "PAGE_ERROR_500": "Sua sessão expirou, logue novamente",
+  "PAGE_ERROR_500_REDIRECT": "Redirecting in"
 }
