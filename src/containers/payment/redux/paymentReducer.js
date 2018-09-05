@@ -4,6 +4,7 @@ const initialState = {
   payload: "",
   coins: [],
   payment: {
+    fee: "",
     number: "",
     coin: "", 
     amount: "", 
@@ -12,6 +13,11 @@ const initialState = {
     name: "", 
     dateend: "", 
     doc: "",
+  },
+  fee: {
+    low: 0,
+    medium: 0,
+    hight: 0
   },
   loading: false,
 };
@@ -34,6 +40,21 @@ const payment = (state=initialState, action) => {
       return {
         ...state, 
         payment: action.payload
+      }
+    
+    case "GET_FEE_PAYMENT_REDUCER":
+      return {
+        ...state, 
+        fee: action.fee
+      }
+    
+    case "SET_FEE_PAYMENT_REDUCER":
+      return {
+        ...state,
+        payment: {
+          ...state.payment, 
+          fee: action.fee
+        }
       }
     
     default: {

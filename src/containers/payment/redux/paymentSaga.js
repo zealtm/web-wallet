@@ -27,33 +27,61 @@ export function* nomeFuncao(){
 export function* getCoinsEnabledSaga(){
   let token = yield call(getAuthToken);
   let response = yield call(paymentService.getCoins, token);
-  console.log(response);
-  // yield put(
-  //   {
-  //     type: "GET_COINS_REDUCER",
-  //     coins: response
-  //   }
-  // )
+
+  console.log(response); // teste
+
+  yield put(
+    {
+      type: "GET_COINS_REDUCER",
+      coins: response
+    }
+  )
 }
 
 export function* setPaymentSaga(payload){
-  console.log(payload);
-
   const data = {
-    number: payload.number,
-    coin: payload.coin,
-    amount: payload.amount,
-    value: payload.value,
-    bank: payload.assignor,
-    name: payload.name,
-    dateend: payload.dueDate,
-    doc: payload.cpfCnpj
+    number:   payload.pay.number,
+    coin:     "lunes", //payload.pay.coin,
+    amount:   15000, //payload.pay.amount,
+    value:    payload.pay.value,
+    bank:     payload.pay.assignor,
+    name:     payload.pay.name,
+    dateend:  payload.pay.dueDate,
+    doc:      payload.pay.cpfCnpj
   }
 
   yield put(
     {
       type: "SET_PAYMENT_REDUCER",
       payload: data
+    }
+  )
+}
+
+export function* getFeePayment(payload){
+  console.log(payload);
+
+  // dados exemplo, tem que fazer chamada aqui
+  const data = {
+    low: 0.001, 
+    medium: 0.001,
+    hight: 0.001
+  }
+
+  // retorno exemplo
+  yield put(
+    {
+      type: "GET_FEE_PAYMENT_REDUCER",
+      fee: data
+    }
+  )
+}
+
+export function* setFeePayment(payload){
+  yield put(
+    {
+      type: "SET_FEE_PAYMENT_REDUCER",
+      fee: payload.fee
     }
   )
 }
