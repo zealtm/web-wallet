@@ -9,6 +9,7 @@ import {
   validateLeasingAddress,
   clearState,
   startNewLeasing,
+  setLeasingLoading,
   getLeasingInfo
 } from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
@@ -75,7 +76,10 @@ class StartLeasing extends React.Component {
       user,
       coinAddress,
       decimalPoint,
-      close
+      close,
+      coins,
+      setLeasingLoading,
+      getLeasingInfo
     } = this.props;
 
     let leasingData = {
@@ -83,12 +87,15 @@ class StartLeasing extends React.Component {
       amount: convertSmallerCoinUnit(amountValue, decimalPoint),
       feeValue,
       password: user.password,
+      coinName: coins.lunes.abbreviation,
       coinAddress,
     };
 
-    startNewLeasing(leasingData);
     clearState();
-    close()
+    startNewLeasing(leasingData);
+    close();
+    setLeasingLoading(true);
+    getLeasingInfo(leasingData.coinName, coinAddress, decimalPoint);
   };
 
   render() {
@@ -190,7 +197,9 @@ StartLeasing.propTypes = {
   startNewLeasing: PropTypes.func,
   user: PropTypes.object,
   coinAddress: PropTypes.string,
-  close: PropTypes.func
+  close: PropTypes.func,
+  getLeasingInfo: PropTypes.func,
+  setLeasingLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -210,7 +219,8 @@ const mapDispatchToProps = dispatch =>
       errorInput,
       clearState,
       startNewLeasing,
-      getLeasingInfo
+      getLeasingInfo,
+      setLeasingLoading
     },
     dispatch
   );

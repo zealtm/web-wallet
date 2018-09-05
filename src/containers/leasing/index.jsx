@@ -40,7 +40,7 @@ class Leasing extends React.Component {
           </div>
           <Modal
             title={"Iniciar Leasing"}
-            content={<StartLeasing close={() => this.handleModalLeasing()}/>}
+            content={<StartLeasing close={() => this.handleModalLeasing()} />}
             show={isOpen}
             close={() => this.handleModalLeasing()}
           />

@@ -45,7 +45,7 @@ class LunesTransaction {
   }
 
   async cancelLeasing(data) {
-
+    
     let leaseData = {
       transactionId: data.transactionId,
       fee: data.fee,

@@ -386,31 +386,23 @@ class CoinService {
 
   async saveTransaction(transaction, coin, describe) {
     try {
-      console.warn(transaction, coin, describe);
+      let endpointUrl = BASE_URL + "/coin/" + coin + "/transaction/history/" + transaction.sender;
+      let transactionData = {
+        txID: transaction.id,
+        from: transaction.sender,
+        to: transaction.recipient,
+        amount: transaction.amount,
+        fee: transaction.fee,
+        describe: describe ? describe : null,
+        price: {
+          USD: 0,
+          EUR: 0,
+          BRL: 0
+        }
+      }
 
-      let response = await axios.post(
-        BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          transaction.sender,
-        {
-          txID: transaction.id,
-          from: transaction.sender,
-          to: transaction.recipient,
-          amount: transaction.amount,
-          fee: transaction.fee,
-          describe: describe ? describe : null,
-          price: {
-            USD: 0,
-            EUR: 0,
-            BRL: 0
-          }
-        },
-        API_HEADER
-      );
+      let response = await axios.post(endpointUrl, transactionData, API_HEADER);
 
-      console.warn(response);
       return response;
     } catch (error) {
       console.warn(error);

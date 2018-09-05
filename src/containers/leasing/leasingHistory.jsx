@@ -4,7 +4,8 @@ import { bindActionCreators } from "redux";
 import {
   getProfessionalNode,
   setLeasingLoading,
-  cancelLeasing
+  cancelLeasing,
+  getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
@@ -20,6 +21,11 @@ class LeasingHistory extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let { getLeasingInfo, coins } = this.props;
+    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address, coins.lunes.decimalPoint);
+    this.renderHistory();
+  }
   stateDataHistory = key => {
     let { toggleHistory } = this.state;
     this.setState({
@@ -167,9 +173,10 @@ LeasingHistory.propTypes = {
   setLeasingLoading: PropTypes.func,
   leasingBalance: PropTypes.number,
   cancelLeasing: PropTypes.func,
+  getLeasingInfo: PropTypes.func,
   coinFee: PropTypes.number,
   decimalPoint: PropTypes.number,
-  user: PropTypes.object,
+  user: PropTypes.object
 };
 
 const mapStateToProps = store => (
@@ -189,7 +196,8 @@ const mapDispatchToProps = dispatch =>
     {
       getProfessionalNode,
       setLeasingLoading,
-      cancelLeasing
+      cancelLeasing,
+      getLeasingInfo
     },
     dispatch
   );

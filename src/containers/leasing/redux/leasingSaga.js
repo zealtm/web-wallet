@@ -8,7 +8,7 @@ import { setAuthToken, getAuthToken, getUserSeedWords } from "../../../utils/loc
 import { HEADER_RESPONSE, TESTNET } from "../../../constants/apiBaseUrl";
 import { decryptAes } from "../../../utils/cryptography";
 import { networks } from "../../../constants/network";
-import { successRequest, errorRequest, errorInput } from "../../errors/redux/errorAction";
+import { successRequest, errorInput } from "../../errors/redux/errorAction";
 import i18next from "../../../utils/i18n";
 const leasingService = new LeasingService();
 const coinService = new CoinService();
@@ -53,28 +53,31 @@ export function* validateLeasingAddress(action) {
 
 export function* createLeasing(action) {
   try {
-
+    let token = yield call(getAuthToken);
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
-    let valueFee = action.data.feeValue.low * 1000000000;
+
     let leaseData = {
       amount: convertBiggestCoinUnit(action.data.amount),
-      fee: valueFee,
+      fee: action.data.feeValue.low * 1000000000,
       recipient: action.data.toAddress,
       seed: seedDecrypt,
-      network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
-    }
+      network: TESTNET ? networks.LNSTESTNET : networks.LNS
+    };
 
     let response = yield call(transactionService.createLeasing, leaseData);
-    if (!response.data.error) {
+    let transaction = yield call(leasingService.saveLeaseTransaction, response, action.data.coinName, token)
+
+    if (transaction.data.code === 200) {
       yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
-      return;
+
+      return
     }
 
-    yield put(errorRequest(i18next.t("MODAL_LEASING_MESSAGE_FAILURE")));
+    yield put(errorInput(i18next.t("MODAL_LEASING_MESSAGE_FAILURE")));
 
     return;
-  } catch (error) {
+  } catch (error) { 
     yield put(internalServerError());
   }
 }
@@ -88,14 +91,14 @@ export function* cancelLeasing(action) {
       fee: action.data.coinFee * 1000000000,
       transactionId: action.data.txid,
       seed,
-      network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
+      network: TESTNET ? networks.LNSTESTNET : networks.LNS
     }
 
     yield call(transactionService.cancelLeasing, leaseData);
     yield put(successRequest(i18next.t("MODAL_LEASING_CANCEL_SUCCESS")));
 
     return;
-  } catch (error) {
+  } catch (error) { 
     if (error.data.error) {
       yield put(errorInput(i18next.t("MODAL_LEASING_CANCEL_FAILURE")));
       return
