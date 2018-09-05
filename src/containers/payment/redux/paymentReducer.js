@@ -7,10 +7,11 @@ const initialState = {
     amount: "", 
     value: "", 
     bank: "", 
-    /// continuar campos
-  }, 
-  modal: "",
-  loading: true,
+    name: "", 
+    dateend: "", 
+    doc: "",
+  },
+  loading: false,
 };
 
 const payment = (state=initialState, action) => {
@@ -26,7 +27,7 @@ const payment = (state=initialState, action) => {
         ...state,
         payload: action.payload
       };
-
+    
     default: {
       return {
         ...state

@@ -5,6 +5,7 @@ import { getAuthToken } from "../../../utils/localStorage";
 
 // importar servico 
 import PaymentService from "../../../services/paymentService";
+
 // iniciar servico 
 const paymentService = new PaymentService();
 
@@ -30,6 +31,14 @@ export function* getApiTeste(){
     {
       type:"API_REDUCER",
       payload: response
+    }
+  )
+}
+
+export function* handleStep(){
+  yield put(
+    {
+      type: "HANDLE_STEP_REDUCER"
     }
   )
 }

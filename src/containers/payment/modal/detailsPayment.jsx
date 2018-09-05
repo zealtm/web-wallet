@@ -36,37 +36,37 @@ class DetailsPayment extends React.Component {
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, payment } = this.props;
     return (
       <div className={style.modalBox}>
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
         <div className={style.strongText} style={{ marginTop: 20 }}>
-          <span className={style.textGreen}>1290 LUNES</span>
+          <span className={style.textGreen}>{payment.amount} {payment.coin}</span>
           {i18n.t("PAYMENT_DETAILS_TEXT_2")}
-          <span className={style.textGreen}>R$ 30,00</span>
+          <span className={style.textGreen}>R$ {payment.value}</span>
           {i18n.t("PAYMENT_DETAILS_TEXT_3")}
         </div>
         <Grid container className={style.inlineInfo}>
           <Grid item xs={6} md={3}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_BANK")}</label>
-            BANCO DO BRASIL
+            {payment.bank}
           </Grid>
           <Grid item xs={6} md={3}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_NAME")}</label>
-            NOME DO USUARIO COMPLETO
+            {payment.name}
           </Grid>
           <Grid item xs={6} md={2}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
-            10/10/2018
+            {payment.dateend}
           </Grid>
           <Grid item xs={6} md={2}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
-            12345678978
+            {payment.doc}
           </Grid>
           <Hidden smDown>
             <Grid item xs={6} md={2}>
               <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_VALUE")}</label>
-              R$30,00
+              R$ {payment.value}
             </Grid>
           </Hidden>
         </Grid>
@@ -89,7 +89,7 @@ class DetailsPayment extends React.Component {
 }
 
 const mapStateToProps = store => ({
-  modal: store.payment.modal,
+  payment: store.payment.payment,
   loading: store.payment.loading
 });
 
