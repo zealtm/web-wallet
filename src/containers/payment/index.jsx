@@ -20,7 +20,7 @@ class Payment extends React.Component {
       <div>
         <div className={style.header}>
           <h1>{i18n.t("PAYMENT_HEADER_TITLE")}</h1>
-          <p className={style.center}>{i18n.t("PAYMENT_HEADER_SUBTITLE")}</p>
+          <p>{i18n.t("PAYMENT_HEADER_SUBTITLE")}</p>
         </div>
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
       </div>

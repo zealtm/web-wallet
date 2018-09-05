@@ -140,12 +140,13 @@
     "PAYMENT_HEADER_SUBTITLE": "Do your payments online with cryptocoins",
     "PAYMENT_BANK_SLIP": "Pay Bank Slip",
     "PAYMENT_HISTORY": "Histories",
-    "PAYMENT_BANK": "Bank",
+    "PAYMENT_ASSIGNOR": "Assignor",
     "PAYMENT_NAME": "Name",
-    "PAYMENT_SHORT_DESRIPTION": "Short description",
+    "PAYMENT_SHORT_DESCRIPTION": "Short description",
     "PAYMENT_DUE_DATE": "Due date",
     "PAYMENT_CPF_CNPJ": "CPF / CNPJ",
     "PAYMENT_VALUE": "Value",
+    "PAYMENT_VALUE_SYMBOL": "$",
     "PAYMENT_PAY_NOW": "Pay now",
     "PAYMENT_FIND_NAME": "Find by name"
 }
