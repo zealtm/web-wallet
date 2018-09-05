@@ -33,7 +33,8 @@ import {
   getProfessionalNode,
   validateLeasingAddress,
   createLeasing,
-  getLeasingInfo
+  getLeasingInfo,
+  cancelLeasing
 } from "../leasing/redux/leasingSaga"
 
 
@@ -65,6 +66,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
     fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
     fork(takeLatest, "START_LEASING_API", createLeasing),
+    fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo)
   ];
 }

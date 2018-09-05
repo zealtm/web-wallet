@@ -46,11 +46,13 @@ class LunesTransaction {
   }
 
   async cancelLeasing(data) {
+
     let leaseData = {
       transactionId: data.transactionId,
       fee: data.fee,
       timestamp: Date.now()
     };
+
     let lunes = await create(data.network.APICONFIG);
     let seed = await lunes.Seed.fromExistingPhrase(data.seed);
     let transaction = lunes.API.Node.v1.leasing.cancelLeasing(leaseData, seed.keyPair);

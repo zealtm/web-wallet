@@ -112,9 +112,10 @@ class TransactionService {
     return response;
   }
 
-  async cancelLeasing(transactionId, fee) {
+  async cancelLeasing(data) {
     let lunes = new LunesTransaction();
-    let response = await lunes.cancelLeasing(transactionId, fee);
+    console.warn("TransactionService ", data);
+    let response = await lunes.cancelLeasing(data);
 
     return response;
   }

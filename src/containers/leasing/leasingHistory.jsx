@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getProfessionalNode,
-  setLeasingLoading
+  setLeasingLoading,
+  cancelLeasing
 } from "../leasing/redux/leasingAction";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
@@ -26,10 +27,11 @@ class LeasingHistory extends React.Component {
     });
   };
 
-  renderBtCancel = status => {
+  renderBtCancel = (status, txid) => {
+    let { coinFee, decimalPoint, cancelLeasing, user } = this.props;
     if (status === 1) {
       return (
-        <div className={style.iconLeasing}>
+        <div className={style.iconLeasing} onClick={() => cancelLeasing({ txid, coinFee, decimalPoint, password: user.password })}>
           <img src="images/icons/general/leasing@1x.png" />
           {i18n.t("LEASING_BT_CANCEL")}
         </div>
@@ -72,7 +74,7 @@ class LeasingHistory extends React.Component {
               {value.to}
             </Grid>
             <Grid item xs={2}>
-              {this.renderBtCancel(1)}
+              {this.renderBtCancel(1, value.txID)}
             </Grid>
           </Grid>
 
@@ -163,7 +165,11 @@ LeasingHistory.propTypes = {
   balance: PropTypes.number,
   history: PropTypes.object,
   setLeasingLoading: PropTypes.func,
-  leasingBalance: PropTypes.number
+  leasingBalance: PropTypes.number,
+  cancelLeasing: PropTypes.func,
+  coinFee: PropTypes.number,
+  decimalPoint: PropTypes.number,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = store => (
@@ -171,7 +177,10 @@ const mapStateToProps = store => (
     coins: store.skeleton.coins,
     balance: store.skeleton.coins.lunes.balance.available,
     history: store.leasing.history.data,
-    leasingBalance: store.leasing.balance
+    leasingBalance: store.leasing.balance,
+    coinFee: store.leasing.coinFee.low,
+    decimalPoint: store.skeleton.coins.lunes.decimalPoint,
+    user: store.user.user
   }
 );
 
@@ -179,7 +188,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfessionalNode,
-      setLeasingLoading
+      setLeasingLoading,
+      cancelLeasing
     },
     dispatch
   );

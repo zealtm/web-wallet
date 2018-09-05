@@ -80,10 +80,41 @@ export function* createLeasing(action) {
   }
 }
 
+export function* cancelLeasing(action) {
+  try {
+    console.warn("saga ", action);
+    let userSeed = yield call(getUserSeedWords);
+    let seed = yield call(decryptAes, userSeed, action.data.password);
+
+    let leaseData = {
+      fee: action.data.coinFee * 1000000000,
+      transactionId: action.data.txid,
+      seed,
+      network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
+    }
+
+    let response = yield call(transactionService.cancelLeasing, leaseData);
+
+    if (!response.error) {
+      yield put({
+        type: "CANCEL_LEASING",
+      });
+      return;
+    }
+
+    yield put(response.error);
+
+    return;
+  } catch (error) {
+    console.warn(error);
+    yield put(internalServerError());
+  }
+}
+
 export function* getLeasingInfo(action) {
   try {
     let token = yield call(getAuthToken);
-    // let professionalNodes = yield call(leasingService.getProfessionalNodes);
+    let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
 
     if (lease.history) {
@@ -94,18 +125,18 @@ export function* getLeasingInfo(action) {
           history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
         }
 
-        // professionalNodes.map(node => {
-        //   if (history.to === node.address) {
-        //     history.to = node.domain
-        //   }
-        // });
+        professionalNodes.map(node => {
+          if (history.to === node.address) {
+            history.to = node.domain
+          }
+        });
       });
 
       yield put({
         type: "GET_INFO_LEASING",
         leasingHistory: lease.history.data,
         leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
-        professionalNodes: []
+        professionalNodes
       });
 
       return;
