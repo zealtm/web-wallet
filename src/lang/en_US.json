@@ -53,7 +53,7 @@
     "CARD_HOME_DESCRIPTION_3": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_DESCRIPTION_4": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_DESCRIPTION_5": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
-    "CARD_HOME_DESCRIPTION_6": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",    
+    "CARD_HOME_DESCRIPTION_6": "Thank you for choosing Lunes as your multicoin wallet. Enjoy the usability and technology of this incrediblewallet and store your cryptos with a high level of security",
     "CARD_HOME_TITLE_1": "Recharge",
     "CARD_HOME_TITLE_2": "Recharge",
     "CARD_HOME_TITLE_3": "Recharge",
@@ -162,8 +162,21 @@
     "GDPR_TITLE": "Termo GDPR",
     "GDPR_DESC": "Lorem ipsum asd asdsd sdsdsjks",
 
-
     "FEE_LOW": "Baixo",
     "FEE_MEDIUM": "Medio",
-    "FEE_HIGHT": "Alto"
+    "FEE_HIGHT": "Alto",
+    
+    "PAYMENT_HEADER_TITLE": "Online Payment",
+    "PAYMENT_HEADER_SUBTITLE": "Do your payments online with cryptocoins",
+    "PAYMENT_BANK_SLIP": "Pay Bank Slip",
+    "PAYMENT_HISTORY": "Histories",
+    "PAYMENT_ASSIGNOR": "Assignor",
+    "PAYMENT_NAME": "Name",
+    "PAYMENT_SHORT_DESCRIPTION": "Short description",
+    "PAYMENT_DUE_DATE": "Due date",
+    "PAYMENT_CPF_CNPJ": "CPF / CNPJ",
+    "PAYMENT_VALUE": "Value",
+    "PAYMENT_VALUE_SYMBOL": "$",
+    "PAYMENT_PAY_NOW": "Pay now",
+    "PAYMENT_FIND_NAME": "Find by name"
 }
