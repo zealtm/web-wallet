@@ -8,11 +8,11 @@ import { setAuthToken, getAuthToken, getUserSeedWords } from "../../../utils/loc
 import { HEADER_RESPONSE, TESTNET } from "../../../constants/apiBaseUrl";
 import { decryptAes } from "../../../utils/cryptography";
 import { networks } from "../../../constants/network";
-
+import { successRequest } from "../../errors/redux/errorAction";
+import i18next from "../../../utils/i18n";
 const leasingService = new LeasingService();
 const coinService = new CoinService();
 const transactionService = new TransactionService();
-
 
 export function* getProfessionalNode() {
   try {
@@ -66,12 +66,12 @@ export function* createLeasing(action) {
     }
 
     let response = yield call(transactionService.createLeasing, leaseData);
-    if (!response.error) {
-      yield put({
-        type: "START_LEASING",
-      });
+    if (response) {
+      yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
+      // yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
       return;
     }
+
     yield put(response.error);
 
     return;
@@ -114,7 +114,7 @@ export function* cancelLeasing(action) {
 export function* getLeasingInfo(action) {
   try {
     let token = yield call(getAuthToken);
-    let professionalNodes = yield call(leasingService.getProfessionalNodes);
+    // let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
 
     if (lease.history) {
@@ -125,18 +125,18 @@ export function* getLeasingInfo(action) {
           history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
         }
 
-        professionalNodes.map(node => {
-          if (history.to === node.address) {
-            history.to = node.domain
-          }
-        });
+        // professionalNodes.map(node => {
+        //   if (history.to === node.address) {
+        //     history.to = node.domain
+        //   }
+        // });
       });
 
       yield put({
         type: "GET_INFO_LEASING",
         leasingHistory: lease.history.data,
         leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
-        professionalNodes
+        professionalNodes: []
       });
 
       return;

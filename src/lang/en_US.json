@@ -119,6 +119,7 @@
   "LEASING_TITLE_AMOUNT": "Emprestado",
   "LEASING_TITLE_NODE": "Node",
   "LEASING_TITLE_STATUS": "Status",
+  "MODAL_LEASING_MESSAGE_SUCCESS":"Leasing iniciado!",
   "INSTRUCTION_MODAL_CUPON_1": "Choose which option you have",
   "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier",
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",

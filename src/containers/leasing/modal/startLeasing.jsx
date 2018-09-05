@@ -74,7 +74,8 @@ class StartLeasing extends React.Component {
       feeValue,
       user,
       coinAddress,
-      decimalPoint
+      decimalPoint,
+      close
     } = this.props;
 
     let leasingData = {
@@ -87,6 +88,7 @@ class StartLeasing extends React.Component {
 
     startNewLeasing(leasingData);
     clearState();
+    close()
   };
 
   render() {
@@ -187,7 +189,8 @@ StartLeasing.propTypes = {
   clearState: PropTypes.func,
   startNewLeasing: PropTypes.func,
   user: PropTypes.object,
-  coinAddress: PropTypes.string
+  coinAddress: PropTypes.string,
+  close: PropTypes.func
 };
 
 const mapSateToProps = store => ({
