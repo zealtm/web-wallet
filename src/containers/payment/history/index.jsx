@@ -2,6 +2,12 @@ import React from "react";
 import i18n from "../../../utils/i18n";
 import PropTypes from "prop-types";
 
+// REDUX 
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {getHistoryPay} from "../redux/paymentAction";
+
+
 import { Grid, Input, InputAdornment, IconButton } from "@material-ui/core";
 import Search from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core/styles";
@@ -47,6 +53,11 @@ class History extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
+  componentDidMount = () => {
+    const {getHistoryPay} = this.props;
+    getHistoryPay(); // lista de historico
+  }
+
   handleSearchChange = event => {
     this.setState({
       ...this.state,
@@ -64,7 +75,7 @@ class History extends React.Component {
   }
 
   render() {
-    const {classes} = this.props;
+    const {classes,history} = this.props;
     const {search} = this.state;
 
     return (
@@ -113,8 +124,8 @@ class History extends React.Component {
 
         <Grid item xs={12} className={style.box}>
           <div className={style.historyItems}>
-            {[0,1,2,3].map(item => (
-              <HistoryItem key={item}/>
+            {history.map((val,key) => (
+              <HistoryItem key={key} item={val} />
             ))}
           </div>
         </Grid>
@@ -127,4 +138,17 @@ History.propTypes = {
   classes: PropTypes.object
 }
 
-export default withStyles(customStyle)(History);
+const mapStateToProps = store => ({
+  history: store.payment.history
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    getHistoryPay
+  }, dispatch
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(customStyle)(History));
+

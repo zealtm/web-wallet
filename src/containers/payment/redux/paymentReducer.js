@@ -16,6 +16,7 @@ const initialState = {
     medium: 0,
     hight: 0
   },
+  history: [],
   loading: false,
 };
 
@@ -55,6 +56,12 @@ const payment = (state=initialState, action) => {
           ...state.payment,
           ...action.payment
         }
+      }
+    
+    case "GET_HISTORY_PAY_REDUCER":
+      return {
+        ...state,
+        history: action.history
       }
     
     default: {

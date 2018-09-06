@@ -23,6 +23,11 @@ export const getInvoice = (number) => ({
   number
 });
 
+export const getHistoryPay = () => ({
+  type: "GET_HISTORY_PAY"
+});
+
+
 // export const calcCoinPayment = (value) => ({
 //   type: "CALC_COIN_PAYMENT",
 //   value
