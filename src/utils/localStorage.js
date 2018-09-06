@@ -95,8 +95,6 @@ export const getFavoritesCrypto = () => {
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
   let favoritesCrypto = getFavoritesCrypto();
-  console.warn(!userStorage || !userStorage.defaultCoin, 0);
-  console.warn(userStorage.defaultCoin, 1);
   if (!favoritesCrypto) favoritesCrypto = ["lunes"];
   return !userStorage || !userStorage.defaultCoin
     ? favoritesCrypto.includes("lunes")

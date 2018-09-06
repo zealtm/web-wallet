@@ -62,6 +62,7 @@ class CoinService {
         BASE_URL + "/coin",
         API_HEADER
       );
+      console.warn(responseavailableCoins);
       let availableCoins = responseavailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
@@ -144,6 +145,7 @@ class CoinService {
       coins.token = availableCoins.token;
       return coins;
     } catch (error) {
+      console.warn(error, error.response);
       internalServerError();
       return;
     }
@@ -350,7 +352,7 @@ class CoinService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.warn(response.data);
+
       let dataFee = response.data.data.fee;
       let dataFeePerByte = response.data.data.feePerByte;
       let dataFeeLunes = response.data.data.feeLunes;

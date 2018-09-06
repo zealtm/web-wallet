@@ -72,7 +72,6 @@ class AuthService {
 
   async verifyTwoFactoryAuth(token2fa, token) {
     try {
-      console.warn(token2fa);
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
         BASE_URL + "/user/2fa/verify",

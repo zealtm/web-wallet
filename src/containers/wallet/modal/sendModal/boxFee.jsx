@@ -9,6 +9,7 @@ import {
   setWalletSendModalFinalAmount,
   setWalletSendModalLoading,
   setWalletSendModalSelectedFee,
+  setWalletSendModalSelectedFeeLunes,
   setWalletSendModalSelectedFeePerByte
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
@@ -30,17 +31,23 @@ class BoxFee extends React.Component {
   calcFee = type => {
     let {
       setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeeLunes,
       setWalletSendModalSelectedFeePerByte,
       errorInput,
-      modal
+      modal,
+      coin,
+      coins
     } = this.props;
-
-    if (modal.feeValue.fee[type] >= modal.sendAmount) {
+    if (
+      modal.feeValue.fee[type] + modal.sendAmount >=
+      coins[coin].balance.available
+    ) {
       errorInput("Insufficient funds");
       return;
     }
 
     setWalletSendModalSelectedFee(modal.feeValue.fee[type]);
+    setWalletSendModalSelectedFeeLunes(modal.feeValue.feeLunes[type]);
     setWalletSendModalSelectedFeePerByte(modal.feeValue.feePerByte[type]);
     return;
   };
@@ -54,11 +61,11 @@ class BoxFee extends React.Component {
       setWalletSendModalFinalAmount
     } = this.props;
     let feeAmount = modal.feeValue.selectedFee;
-    let amount = modal.sendAmount - (feeAmount ? feeAmount : 0);
+    let amount = modal.sendAmount + (feeAmount ? feeAmount : 0);
 
     if (feeAmount) {
       setWalletSendModalLoading();
-      setWalletSendModalFinalAmount(amount);
+      setWalletSendModalFinalAmount(amount.toFixed(8));
       setWalletModalStep(3);
 
       return;
@@ -73,7 +80,7 @@ class BoxFee extends React.Component {
     let selectedFee = modal.feeValue.selectedFee
       ? modal.feeValue.selectedFee
       : 0;
-    let amount = modal.sendAmount - selectedFee;
+    let amount = (modal.sendAmount + selectedFee).toFixed(8);
 
     return (
       <div className={style.modalBox}>
@@ -140,6 +147,7 @@ BoxFee.propTypes = {
   setWalletSendModalFinalAmount: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired,
   setWalletSendModalSelectedFee: PropTypes.func.isRequired,
+  setWalletSendModalSelectedFeeLunes: PropTypes.func.isRequired,
   setWalletSendModalSelectedFeePerByte: PropTypes.func.isRequired
 };
 
@@ -155,6 +163,7 @@ const mapDispatchToProps = dispatch =>
       setWalletSendModalFinalAmount,
       setWalletSendModalLoading,
       setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeeLunes,
       setWalletSendModalSelectedFeePerByte,
       errorInput
     },

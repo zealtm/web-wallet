@@ -1,14 +1,14 @@
 export const networks = {
   BTC: {
-    coinSymbol: 'BTC',
-    coinName: 'Bitcoin',
+    coinSymbol: "BTC",
+    coinName: "Bitcoin",
     testnet: false,
-    derivePath: 'm/44\'/0\'/0\'/0',
+    derivePath: "m/44'/0'/0'/0",
     maxFee: 1000000,
     defaultFee: 1000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x18Bitcoin Signed Message:\n',
-      bech32: 'bc',
+      messagePrefix: "\x18Bitcoin Signed Message:\n",
+      bech32: "bc",
       bip32: {
         public: 0x0488b21e,
         private: 0x0488ade4
@@ -18,22 +18,22 @@ export const networks = {
       wif: 0x80
     },
     electrumx: {
-      networkName: 'BitcoinSegwit',
+      networkName: "BitcoinSegwit",
       peers: [
         {
-          host: 'E-X.not.fyi',
+          host: "E-X.not.fyi",
           port: 50002
         },
         {
-          host: 'elec.luggs.co',
+          host: "elec.luggs.co",
           port: 443
         },
         {
-          host: 'ultra-ecoelectrum.my-gateway.de',
+          host: "ultra-ecoelectrum.my-gateway.de",
           port: 50002
         },
         {
-          host: 'electrum.hsmiths.com',
+          host: "electrum.hsmiths.com",
           port: 50002
         },
         // {
@@ -41,23 +41,23 @@ export const networks = {
         //   port: 50002
         // },
         {
-          host: 'ndnd.selfhost.eu',
+          host: "ndnd.selfhost.eu",
           port: 50002
         }
       ]
     },
-    insight: 'https://insight.bitpay.com/api/'
+    insight: "https://insight.bitpay.com/api/"
   },
   BTCTESTNET: {
-    coinSymbol: 'BTCTESTNET',
-    coinName: 'Bitcoin Testnet',
+    coinSymbol: "BTCTESTNET",
+    coinName: "Bitcoin Testnet",
     testnet: true,
-    derivePath: 'm/44\'/1\'/0\'/0',
+    derivePath: "m/44'/1'/0'/0",
     maxFee: 1000000,
     defaultFee: 1000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x18Bitcoin Signed Message:\n',
-      bech32: 'tb',
+      messagePrefix: "\x18Bitcoin Signed Message:\n",
+      bech32: "tb",
       bip32: {
         public: 0x043587cf,
         private: 0x04358394
@@ -67,14 +67,14 @@ export const networks = {
       wif: 0xef
     },
     electrumx: {
-      networkName: 'BitcoinSegwitTestnet',
+      networkName: "BitcoinSegwitTestnet",
       peers: [
         {
-          host: 'testnet.qtornado.com',
+          host: "testnet.qtornado.com",
           port: 51002
         },
         {
-          host: 'testnet1.bauerj.eu',
+          host: "testnet1.bauerj.eu",
           port: 50002
         }
         // {
@@ -91,17 +91,17 @@ export const networks = {
         // }
       ]
     },
-    insight: 'https://test-insight.bitpay.com/api/'
+    insight: "https://test-insight.bitpay.com/api/"
   },
   LTC: {
-    coinSymbol: 'LTC',
-    coinName: 'Litecoin',
+    coinSymbol: "LTC",
+    coinName: "Litecoin",
     testnet: false,
-    derivePath: 'm/44\'/2\'/0\'/0',
+    derivePath: "m/44'/2'/0'/0",
     maxFee: 1000000,
     defaultFee: 50000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x19Litecoin Signed Message:\n',
+      messagePrefix: "\x19Litecoin Signed Message:\n",
       bip32: {
         public: 0x019da462,
         private: 0x019d9cfe
@@ -111,37 +111,37 @@ export const networks = {
       wif: 0xb0
     },
     electrumx: {
-      networkName: 'Litecoin',
+      networkName: "Litecoin",
       peers: [
         {
-          host: 'elec.luggs.co',
+          host: "elec.luggs.co",
           port: 444
         },
         {
-          host: 'electrum-ltc.bysh.me',
+          host: "electrum-ltc.bysh.me",
           port: 50002
         },
         {
-          host: 'electrum-ltc.festivaldelhumor.org',
+          host: "electrum-ltc.festivaldelhumor.org",
           port: 50002
         },
         {
-          host: 'electrum.ltc.xurious.com',
+          host: "electrum.ltc.xurious.com",
           port: 50002
         }
       ]
     },
-    insight: 'https://insight.litecore.io/api/'
+    insight: "https://insight.litecore.io/api/"
   },
   LTCTESTNET: {
-    coinSymbol: 'LTCTESTNET',
-    coinName: 'Litecoin Testnet',
+    coinSymbol: "LTCTESTNET",
+    coinName: "Litecoin Testnet",
     testnet: true,
-    derivePath: 'm/44\'/1\'/0\'/0',
+    derivePath: "m/44'/1'/0'/0",
     maxFee: 1000000,
     defaultFee: 50000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x18Litecoin Signed Message:\n',
+      messagePrefix: "\x18Litecoin Signed Message:\n",
       bip32: {
         public: 0x0436ef7d,
         private: 0x0436f6e1
@@ -151,14 +151,14 @@ export const networks = {
       wif: 0xef
     },
     electrumx: {
-      networkName: 'LitecoinTestnet',
+      networkName: "LitecoinTestnet",
       peers: [
         {
-          host: 'electrum-ltc.bysh.me',
+          host: "electrum-ltc.bysh.me",
           port: 51002
         },
         {
-          host: 'electrum-ltc.xurious.com',
+          host: "electrum-ltc.xurious.com",
           port: 51002
         }
       ]
@@ -166,14 +166,14 @@ export const networks = {
     insight: undefined
   },
   DASH: {
-    coinSymbol: 'DASH',
-    coinName: 'Dash',
+    coinSymbol: "DASH",
+    coinName: "Dash",
     testnet: false,
-    derivePath: 'm/44\'/5\'/0\'/0',
+    derivePath: "m/44'/5'/0'/0",
     maxFee: 1000000,
     defaultFee: 50000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x19DarkCoin Signed Message:\n',
+      messagePrefix: "\x19DarkCoin Signed Message:\n",
       bip32: {
         public: 0x02fe52f8,
         private: 0x02fe52cc
@@ -183,29 +183,29 @@ export const networks = {
       wif: 0xcc
     },
     electrumx: {
-      networkName: 'Dash',
+      networkName: "Dash",
       peers: [
         {
-          host: 'electrum.dash.siampm.com',
+          host: "electrum.dash.siampm.com",
           port: 50002
         },
         {
-          host: 'electrum.leblancnet.us',
+          host: "electrum.leblancnet.us",
           port: 50016
         }
       ]
     },
-    insight: 'https://insight.dash.org/insight-api-dash/'
+    insight: "https://insight.dash.org/insight-api-dash/"
   },
   DASHTESTNET: {
-    coinSymbol: 'DASHTESTNET',
-    coinName: 'Dash Testenet',
+    coinSymbol: "DASHTESTNET",
+    coinName: "Dash Testenet",
     testnet: true,
-    derivePath: 'm/44\'/1\'/0\'/0',
+    derivePath: "m/44'/1'/0'/0",
     maxFee: 1000000,
     defaultFee: 50000,
     bitcoinjsNetwork: {
-      messagePrefix: '\x19DarkCoin Signed Message:\n',
+      messagePrefix: "\x19DarkCoin Signed Message:\n",
       bip32: {
         public: 0x043587cf,
         private: 0x04358394
@@ -215,40 +215,40 @@ export const networks = {
       wif: 0xef
     },
     electrumx: {
-      networkName: 'DashTestnet',
-      peers: 'undefined'
+      networkName: "DashTestnet",
+      peers: "undefined"
     }
   },
-  LNS: {
-    coinSymbol: 'LUNES',
-    coinName: 'Lunes',
+  LUNES: {
+    coinSymbol: "LUNES",
+    coinName: "Lunes",
     testnet: false,
-    apiUrl: 'https://lunesnode.lunes.io',
+    apiUrl: "https://lunesnode.lunes.io",
     APICONFIG: {
       minimumSeedLength: 25,
       requestOffset: 0,
       requestLimit: 100,
-      logLevel: 'warning',
+      logLevel: "warning",
       timeDiff: 0,
-      networkByte: '1'.charCodeAt(0),
-      nodeAddress: 'https://lunesnode.lunes.io/',
-      matcherAddress: 'https://lunesnode.lunes.io/matcher'
+      networkByte: "1".charCodeAt(0),
+      nodeAddress: "https://lunesnode.lunes.io/",
+      matcherAddress: "https://lunesnode.lunes.io/matcher"
     }
   },
-  LNSTESTNET: {
-    coinSymbol: 'LUNES',
-    coinName: 'Lunes',
+  LUNESTESTNET: {
+    coinSymbol: "LUNES",
+    coinName: "Lunes",
     testnet: true,
-    apiUrl: 'https://lunesnode-testnet.lunes.io',
+    apiUrl: "https://lunesnode-testnet.lunes.io",
     APICONFIG: {
       minimumSeedLength: 25,
       requestOffset: 0,
       requestLimit: 100,
-      logLevel: 'warning',
+      logLevel: "warning",
       timeDiff: 0,
-      networkByte: '0'.charCodeAt(0),
-      nodeAddress: 'https://lunesnode-testnet.lunes.io',
-      matcherAddress: 'https://lunesnode-testnet.lunes.io/matcher'
+      networkByte: "0".charCodeAt(0),
+      nodeAddress: "https://lunesnode-testnet.lunes.io",
+      matcherAddress: "https://lunesnode-testnet.lunes.io/matcher"
     }
   }
-}
+};

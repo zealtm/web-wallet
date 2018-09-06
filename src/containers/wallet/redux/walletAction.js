@@ -50,6 +50,11 @@ export const setWalletSendModalSelectedFee = fee => ({
   fee
 });
 
+export const setWalletSendModalSelectedFeeLunes = fee => ({
+  type: "SET_WALLET_MODAL_SEND_SELECTED_FEELUNES",
+  fee
+});
+
 export const setWalletSendModalSelectedFeePerByte = fee => ({
   type: "SET_WALLET_MODAL_SEND_SELECTED_FEEPERBYTE",
   fee

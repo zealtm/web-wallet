@@ -11,6 +11,7 @@ import CoinService from "../../services/coinService";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { setAuthToken } from "../../utils/localStorage";
 import { convertSmallerCoinUnit } from "../../utils/numbers";
 
 class TransactionService {
@@ -59,6 +60,7 @@ class TransactionService {
   /* eslint-disable */
   async transaction(transaction, seed, token) {
     try {
+      console.warn(transaction);
       let responde = undefined;
       let coinService = new CoinService();
       let {
@@ -66,6 +68,7 @@ class TransactionService {
         toAddress,
         fee,
         feePerByte,
+        feeLunes,
         amount,
         coin,
         decimalPoint
@@ -94,6 +97,7 @@ class TransactionService {
             seed: seed,
             fee: convertSmallerCoinUnit(fee, decimalPoint),
             feePerByte: feePerByte,
+            feeLunes: feeLunes,
             amount: convertSmallerCoinUnit(amount, decimalPoint),
             coin: coin,
             token: token,
@@ -115,13 +119,12 @@ class TransactionService {
             coin,
             "Teste"
           );
-
           return responseSaveBtc;
 
         case "lunes":
           let transactionLunes = new LunesTransaction();
           let respondeLunes = await transactionLunes.createLunesTransaction({
-            network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
+            network: TESTNET ? networks.LUNESTESTNET : networks.LUNES,
             seed: seed,
             fromAddress: fromAddress,
             toAddress: toAddress,
@@ -138,7 +141,7 @@ class TransactionService {
             coin,
             "Teste"
           );
-
+          console.warn(responseSaveLunes, "responseSaveLunes");
           return responseSaveLunes;
       }
     } catch (error) {
@@ -156,10 +159,26 @@ class TransactionService {
   async cancelLeasing(data) {
     let lunes = new LunesTransaction();
     let response = await lunes.cancelLeasing(data);
- 
+
     return response;
   }
 
-}
+  async transactionService(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/service/transferencia",
+        API_HEADER
+      );
+      console.warn(response);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      return response.data.data;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return error;
+    }
+  }
+}
 export default TransactionService;

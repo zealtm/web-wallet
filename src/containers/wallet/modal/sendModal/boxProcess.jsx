@@ -14,7 +14,6 @@ import style from "../../style.css";
 
 class BoxProcess extends React.Component {
   doTransaction = () => {
-    console.warn(modal);
     let { coin, user, modal, coins, setWalletTransaction } = this.props;
     setWalletTransaction(
       {
@@ -24,6 +23,7 @@ class BoxProcess extends React.Component {
         amount: modal.sendAmount,
         fee: modal.feeValue.selectedFee,
         feePerByte: modal.feeValue.selectedFeePerByte,
+        feeLunes: modal.feeValue.selectedFeeLunes,
         decimalPoint: coins[coin].decimalPoint
       },
       user.password

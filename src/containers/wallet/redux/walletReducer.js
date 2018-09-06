@@ -30,7 +30,8 @@ const initialState = {
         high: 0
       },
       selectedFee: undefined,
-      selectedFeePerByte: undefined
+      selectedFeePerByte: undefined,
+      selectedFeeLunes: undefined
     },
     loading: false
   },
@@ -214,6 +215,19 @@ const wallet = (state = initialState, action) => {
           feeValue: {
             ...state.modal.feeValue,
             selectedFeePerByte: action.fee
+          },
+          loading: false
+        }
+      };
+
+    case "SET_WALLET_MODAL_SEND_SELECTED_FEELUNES":
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          feeValue: {
+            ...state.modal.feeValue,
+            selectedFeeLunes: action.fee
           },
           loading: false
         }

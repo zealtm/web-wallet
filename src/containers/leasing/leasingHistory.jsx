@@ -24,12 +24,14 @@ class LeasingHistory extends React.Component {
 
   componentDidMount() {
     let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(coins.lunes.abbreviation,
+    getLeasingInfo(
+      coins.lunes.abbreviation,
       coins.lunes.address,
-      coins.lunes.decimalPoint);
+      coins.lunes.decimalPoint
+    );
   }
 
-  stateDataHistory = (key) => {
+  stateDataHistory = key => {
     let { toggleHistory } = this.state;
 
     this.setState({
@@ -58,12 +60,12 @@ class LeasingHistory extends React.Component {
             if (type === "ACTIVE") {
               confirm(i18n.t("MODAL_LEASING_CONFIRM"))
                 ? cancelLeasing({
-                  txid,
-                  coinFee,
-                  decimalPoint,
-                  password: user.password,
-                  coinName: coins.lunes.abbreviation,
-                })
+                    txid,
+                    coinFee,
+                    decimalPoint,
+                    password: user.password,
+                    coinName: coins.lunes.abbreviation
+                  })
                 : null;
             }
           }}
@@ -81,7 +83,6 @@ class LeasingHistory extends React.Component {
     let { toggleHistory } = this.state;
     let { history } = this.props;
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
-    console.warn(history);
     if (history === undefined) {
       return <div className={style.notFound}>Nothing Found</div>;
     }
