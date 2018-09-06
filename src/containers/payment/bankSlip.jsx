@@ -12,6 +12,7 @@ import Select from "../../components/select";
 import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
+import {DateMask, CpfMask, CnpjMask, MonetaryMask} from "../../components/inputMask";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -64,7 +65,6 @@ const customStyle = {
   error: {},
   focused: {},
 }
-
 
 class BankSlip extends React.Component {
   constructor() {
@@ -166,8 +166,7 @@ class BankSlip extends React.Component {
   }
 
   inputValidator = () => {
-    const {bankSlip} = this.state;
-
+    const {bankSlip, coin} = this.state;
     const bankSlipInputs = {};
 
     for (const key in bankSlip) {
@@ -186,7 +185,15 @@ class BankSlip extends React.Component {
       }
     }
 
-    const { errors } = inputValidator(bankSlipInputs);
+    const coinInput = {
+      type: 'text',
+      name: 'coin',
+      placeholder: 'coin',
+      value: coin.value || '',
+      required: true,
+    };
+
+    const { errors } = inputValidator({...bankSlipInputs, coin: coinInput});
 
     if (errors) {
       this.setState({
@@ -276,6 +283,7 @@ class BankSlip extends React.Component {
                 value={bankSlip.dueDate}
                 onChange={this.handleBankSlipDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
+                inputComponent={DateMask}
               />
               <Input
                 classes={{
@@ -287,6 +295,7 @@ class BankSlip extends React.Component {
                 value={bankSlip.cpfCnpj}
                 onChange={this.handleBankSlipDefaultChange('cpfCnpj')}
                 error={errors.includes('cpfCnpj')}
+                inputComponent={bankSlip.cpfCnpj.length === 11 ? CpfMask : CnpjMask}
               />
               <Input
                 classes={{
@@ -306,6 +315,7 @@ class BankSlip extends React.Component {
                 value={bankSlip.value}
                 onChange={this.handleBankSlipDefaultChange('value')}
                 error={errors.includes('value')}
+                inputComponent={MonetaryMask}
               />
             </Grid>
           </Grid>
@@ -314,7 +324,13 @@ class BankSlip extends React.Component {
         <Grid item xs={12} className={style.box} style={{marginTop: '10px'}}>
           <Grid container>
             <Grid item xs={12} sm={6}>
-              <Select list={coins} title={title} titleImg={img} selectItem={this.coinSelected} />
+              <Select
+                list={coins}
+                title={title}
+                titleImg={img}
+                selectItem={this.coinSelected}
+                error={errors.includes('coin')}
+              />
             </Grid>
           </Grid>
         </Grid>

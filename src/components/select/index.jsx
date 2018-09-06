@@ -53,7 +53,7 @@ class Select extends React.Component {
   }
 
   handleClick = (ev) => {
-    if (this.dropdownMenu && !this.dropdownMenu.contains(ev.target)) {
+    if (this.selectMenu && !this.selectMenu.contains(ev.target)) {
       // If click outside, close the dropdown
       this.setState({
         ...this.state,
@@ -71,15 +71,16 @@ class Select extends React.Component {
   }
 
   render() {
-    const{width, title, titleImg} = this.props;
+    const{width, title, titleImg, error} = this.props;
     const{listOpen} = this.state
 
     const wrapperStyle = {
-      width: width ? width : '180px'
+      width: width ? width : '180px',
+      borderBottom: `1px solid ${error ? '#f44336' : '#42227d'}`,
     }
 
     return(
-      <div className={style.wrapper} style={wrapperStyle} ref={el => this.dropdownMenu = el}>
+      <div className={style.wrapper} style={wrapperStyle} ref={el => this.selectMenu = el}>
         <div className={style.header} onClick={() => this.toggleList()}>
           <div className={style.title}>
             {titleImg ? <img src={titleImg} alt={title} /> : ''} {title}

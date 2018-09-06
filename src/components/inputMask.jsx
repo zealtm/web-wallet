@@ -1,34 +1,83 @@
 import React from "react";
-import PropTypes from "prop-types";
-import MaskFormat from 'react-number-format';
+import NumberFormat from "react-number-format";
+import i18n from "../utils/i18n";
 
-class InputMask extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export const DateMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
 
-  render() {
-    const { inputRef, onChange, ...other } = props;
-
-    return (
-      <MaskFormat
-        {...other}
-        getInputRef={inputRef}
-        onValueChange={values => {
-          onChange({
-            target: {
-              value: values.value,
-            },
-          });
-        }}
-      />
-    );
-  }
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="##/##/####"
+    />
+  );
 }
 
-InputMask.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+export const CpfMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
 
-export default InputMask;
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="###.###.###-##"
+    />
+  );
+}
+
+export const CnpjMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="##.###.###/####-##"
+    />
+  );
+}
+
+export const MonetaryMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      decimalSeparator={i18n.t("PAYMENT_DECIMAL_SEPARATOR")}
+      isNumericString
+      decimalScale={2}
+      fixedDecimalScale
+      allowNegative={false}
+    />
+  );
+}
