@@ -3,50 +3,77 @@ import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 class PaymentService {
-  async getNomeFuncao() {
+  async getCoins(token){
     try {
-      //let response = await axios.get("");
-      let response = {
-        teste: "teste",
-        teste2: "123"
-      }
-      return response;
-    } catch(error) {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        "https://a.lunes.io/wallet/staging/service/pagamento",
+        API_HEADER
+      );
+      return response.data;
+    }catch(error){
       internalServerError();
       return;
     }
   }
 
-  async getPaymentDataData(number, token) {
+  async getInvoice(token, number){
     try {
-      API_HEADER.headers.Authorization = token;
+      //API_HEADER.headers.Authorization = token;
 
-      // const response = await axios.post(
-      //   `${BASE_URL}/payment/validate`,
-      //   {number},
-      //   API_HEADER
+      // let response = await axios.get(
+      //   `https://a.lunes.io/wallet/staging/bill/${number}`
+      //   //API_HEADER
       // );
 
-      // return response.data;
+      // const data = {
+      //   number: response.data.LinhaDigitavel,
+      //   value: response.data.Valor,
+      //   assignor: response.data.Cedente,
+      //   description: response.data.TipoServico,
+      //   dueDate: response.data.DataVencimento
+      // }
 
-      return {
-        cedente: 'Lunes',
-        vencimento: '2018-09-12',
-        valor: 200.00
+      //teste
+      const data = {
+        number: number,
+        value: 45.90,
+        assignor: "Banco Inter",
+        description: "Titulo de Cobranca",
+        dueDate: "24/09/2018"
       }
-    } catch (error) {
-      return internalServerError();
+
+      return data;
+    }catch(error){
+      internalServerError();
+      return;
     }
   }
 
-  async getCoins(token){
-    API_HEADER.headers.Authorization = token;
+  async getAmountCoinPay(token, coin, value){
+    try {
+      API_HEADER.headers.Authorization = token;
 
-    let response = await axios.get(
-      "https://a.lunes.io/wallet/staging/service/pagamento",
-      API_HEADER
-    );
-    return response.data;
+      // let response = await axios.get(
+      //   "url",
+      //   API_HEADER,
+      //   coin,
+      //   value
+      // );
+
+      //teste
+      const response = {
+        data: {
+          amount: 50000
+        }
+      }
+
+      return response.data;
+    }catch(error){
+      internalServerError();
+      return;
+    }
   }
 }
 

@@ -26,12 +26,11 @@ import {
 } from "../wallet/redux/walletSaga";
 import { getProfessionalNode } from "../leasing/redux/leasingSaga";
 import {
-  nomeFuncao,
   getCoinsEnabledSaga,
   setPaymentSaga,
-  getFeePayment,
-  setFeePayment,
-  getPaymentData
+  getFeePaymentSaga,
+  setFeePaymentSaga,
+  getInvoiceSaga
 } from "../payment/redux/paymentSaga";
 
 export default function* rootSaga() {
@@ -59,11 +58,10 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
     //payment-saga
-    fork(takeLatest, "GET_TESTE", nomeFuncao),
     fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
     fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
-    fork(takeLatest, "GET_FEE_PAYMENT", getFeePayment),
-    fork(takeLatest, "SET_FEE_PAYMENT", setFeePayment),
-    fork(takeLatest, "GET_PAYMENT_DATA", getPaymentData)
+    fork(takeLatest, "GET_FEE_PAYMENT", getFeePaymentSaga),
+    fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
+    fork(takeLatest, "GET_INVOICE", getInvoiceSaga)
   ];
 }

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getCoinsEnabled, setPayment, getPaymentData} from "./redux/paymentAction";
+import {getCoinsEnabled, setPayment, getInvoice} from "./redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -128,6 +128,8 @@ class BankSlip extends React.Component {
   }
 
   handleBankSlipNumberChange = event => {
+    const {getInvoice} = this.props;
+
     this.setState({
       ...this.state,
       bankSlip: {
@@ -138,9 +140,8 @@ class BankSlip extends React.Component {
 
 
     if (event.target.value.length === 48) {
-      console.log('Chama a API');
-      const data = getPaymentData(event.target.value);
-      console.log('data', data);
+      alert('Valida o número do boleto');
+      getInvoice(event.target.value);
     }
   }
 
@@ -202,8 +203,8 @@ class BankSlip extends React.Component {
   }
 
   render() {
-    const {classes, loading, /*coins*/} = this.props;
-    const {coin, coins, bankSlip, errors} = this.state;
+    const {classes, loading, coinsRedux, payment} = this.props;
+    const {coins, coin, bankSlip, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -345,12 +346,13 @@ BankSlip.propTypes = {
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
+  payment: store.payment.payment,
   loading: store.payment.loading
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+    getInvoice,
     getCoinsEnabled,
-    getPaymentData,
     setPayment
   }, dispatch
 );

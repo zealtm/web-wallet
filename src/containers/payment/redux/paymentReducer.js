@@ -1,7 +1,4 @@
 const initialState = {
-  // variaveis necessarias
-  // var: type
-  payload: "",
   coins: [ ],
   payment: {
     fee: "",
@@ -24,12 +21,6 @@ const initialState = {
 
 const payment = (state=initialState, action) => {
   switch(action.type){
-    case "NOME_FUNCAO_REDUCER":
-      return {
-        ...state,
-        payload: action.payload // atualiza o state inicial "action.payload"
-      };
-
     case "GET_COINS_REDUCER":
       return {
         ...state,
@@ -60,6 +51,15 @@ const payment = (state=initialState, action) => {
         payment: {
           ...state.payment,
           fee: action.fee
+        }
+      }
+
+    case "GET_INVOICE_REDUCER":
+      return {
+        ...state,
+        payment: {
+          ...state.payment,
+          ...action.payment
         }
       }
 

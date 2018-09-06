@@ -9,100 +9,86 @@ import PaymentService from "../../../services/paymentService";
 // iniciar servico
 const paymentService = new PaymentService();
 
-export function* nomeFuncao(){
+export function* getCoinsEnabledSaga() {
   try {
-    // chama o servico e passa a resposta ao saga
-    let response = yield call(paymentService.getNomeFuncao);
+    let token = yield call(getAuthToken);
+    // let response = yield call(paymentService.getCoins, token);
+    // console.log(response);
+
+    const response = [
+      {
+        title: 'Lunes',
+        value: 'lunes',
+        img: '/images/icons/coins/lunes.png'
+      },
+      {
+        title: 'Bitcoin',
+        value: 'btc',
+        img: '/images/icons/coins/btc.png'
+      }
+    ];
+
     yield put(
       {
-        type: "NOME_FUNCAO_REDUCER",
-        payload: response
+        type: "GET_COINS_REDUCER",
+        coins: response
       }
     )
-  }catch(error){
+  } catch(error) {
     yield put(internalServerError());
   }
 }
 
-export function* getCoinsEnabledSaga(){
-  let token = yield call(getAuthToken);
-  // let response = yield call(paymentService.getCoins, token);
-  // console.log(response);
+export function* setPaymentSaga(payload) {
+  try {
+    // chamar a quantidade de moedas necessarias
+    let token = yield call(getAuthToken);
+    let response = yield call(paymentService.getAmountCoinPay, token, payload.coin, payload.value);
 
-  const response = [
-    {
-      title: 'Lunes',
-      value: 'lunes',
-      img: '/images/icons/coins/lunes.png'
-    },
-    {
-      title: 'Bitcoin',
-      value: 'btc',
-      img: '/images/icons/coins/btc.png'
+    const data = {
+      number:   payload.pay.number,
+      coin:     payload.pay.coin,
+      amount:   response.amount,
+      value:    payload.pay.value,
+      bank:     payload.pay.assignor,
+      name:     payload.pay.name,
+      dateend:  payload.pay.dueDate,
+      doc:      payload.pay.cpfCnpj
     }
-  ];
 
-  yield put(
-    {
-      type: "GET_COINS_REDUCER",
-      coins: response
-    }
-  )
-}
-
-export function* getPaymentData(payload) {
-  const token = yield call(getAuthToken);
-  const response = yield call(paymentService.getPaymentData, payload.number, token);
-
-  console.log('payload', payload, 'response', response);
-  yield put(
-    {
-      type: "GET_PAYMENT_DATA_REDUCER",
-      payment: response.data
-    }
-  )
-}
-
-export function* setPaymentSaga(payload){
-  const data = {
-    number:   payload.pay.number,
-    coin:     payload.pay.coin,
-    amount:   15000, //payload.pay.amount,
-    value:    payload.pay.value,
-    bank:     payload.pay.assignor,
-    name:     payload.pay.name,
-    dateend:  payload.pay.dueDate,
-    doc:      payload.pay.cpfCnpj
+    yield put(
+      {
+        type: "SET_PAYMENT_REDUCER",
+        payload: data
+      }
+    )
+  } catch(error) {
+    yield put(internalServerError());
   }
-
-  yield put(
-    {
-      type: "SET_PAYMENT_REDUCER",
-      payload: data
-    }
-  )
 }
 
-export function* getFeePayment(payload){
-  console.log(payload);
+export function* getFeePaymentSaga(payload) {
+  try {
+    // dados exemplo, tem que fazer chamada aqui
+    const data = {
+      low: 0.001,
+      medium: 0.001,
+      hight: 0.001
+    }
 
-  // dados exemplo, tem que fazer chamada aqui
-  const data = {
-    low: 0.001,
-    medium: 0.001,
-    hight: 0.001
+    // retorno exemplo
+    yield put(
+      {
+        type: "GET_FEE_PAYMENT_REDUCER",
+        fee: data
+      }
+    )
+  } catch(error) {
+    yield put(internalServerError());
   }
-
-  // retorno exemplo
-  yield put(
-    {
-      type: "GET_FEE_PAYMENT_REDUCER",
-      fee: data
-    }
-  )
 }
 
-export function* setFeePayment(payload){
+export function* setFeePaymentSaga(payload) {
   yield put(
     {
       type: "SET_FEE_PAYMENT_REDUCER",
@@ -110,3 +96,32 @@ export function* setFeePayment(payload){
     }
   )
 }
+
+export function* getInvoiceSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(paymentService.getInvoice, token, payload.number);
+
+    yield put(
+      {
+        type: "GET_INVOICE_REDUCER",
+        payment: response
+      }
+    )
+  } catch(error) {
+    yield put(internalServerError());
+  }
+}
+
+// export function* calcCoinPaymentSaga(value){
+//   let token = yield call(getAuthToken);
+//   // AQUI UM ENDPOINT PRA RETORNAR O QTDE DE MOEDAS NECESSARIAS
+//   // let response = yield call(paymentService.getInvoice, token, payload.number);
+
+//   yield put(
+//     {
+//       type: "GET_INVOICE_REDUCER",
+//       payment: response
+//     }
+//   )
+// }
