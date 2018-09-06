@@ -6,9 +6,11 @@ const initialState = {
     coin: "",
     amount: "",
     value: "",
-    bank: "",
+    assignor: '', //bank: "",
     name: "",
-    dateend: "",
+    dueDate: "", // dateend: "",
+    cpfCnpj: '',
+    description: "",
     doc: "",
   },
   fee: {
@@ -17,6 +19,9 @@ const initialState = {
     hight: 0
   },
   loading: false,
+  user: {
+    gpdr: 'unread'
+  },
 };
 
 const payment = (state=initialState, action) => {
@@ -61,6 +66,13 @@ const payment = (state=initialState, action) => {
           ...state.payment,
           ...action.payment
         }
+      }
+
+    case "GET_USER_GDPR_REDUCER":
+      console.log('action', action);
+      return {
+        ...state,
+        user: action.user
       }
 
     default: {

@@ -59,7 +59,7 @@ export const CnpjMask = (props) => {
   );
 }
 
-export const MonetaryMask = (props) => {
+export const MoneyBrlMask = (props) => {
   const { inputRef, onChange, ...other } = props;
 
   return (
@@ -73,7 +73,8 @@ export const MonetaryMask = (props) => {
           },
         });
       }}
-      decimalSeparator={i18n.t("PAYMENT_DECIMAL_SEPARATOR")}
+      thousandSeparator="."
+      decimalSeparator=","
       isNumericString
       decimalScale={2}
       fixedDecimalScale

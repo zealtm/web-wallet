@@ -23,6 +23,10 @@ export const getInvoice = (number) => ({
   number
 });
 
+export const getUserGdpr = () => ({
+  type: "GET_USER_GDPR"
+});
+
 // export const calcCoinPayment = (value) => ({
 //   type: "CALC_COIN_PAYMENT",
 //   value

@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {nomeDaFuncao} from "../redux/paymentAction";
-
+import {getUserGdpr} from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -24,19 +23,34 @@ import ButtonContinue from "./component/buttonContinue";
 class DetailsPayment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      gpdr: this.props.user.gpdr
+    };
   }
 
   validateForm = () => {
     const {handleStep} = this.props;
-    // validar gpdr etc 
-    
-    // atualizar reducer com o proximo modal 
+    // validar gpdr etc
+
+    // atualizar reducer com o proximo modal
     handleStep("next"); // aqui tem que ser chamado redux
   }
 
+  toogleSwitch = () => {
+    this.setState(prevState => ({
+      gdprChecked: !prevState.gdprChecked
+    }))
+  }
+
+  componentWillMount() {
+    const {getUserGdpr} = this.props;
+    getUserGdpr();
+  }
+
   render() {
-    const { loading, payment } = this.props;
+    const {loading, payment, user} = this.props;
+    const {gdprChecked} = this.state;
+
     return (
       <div className={style.modalBox}>
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
@@ -49,7 +63,7 @@ class DetailsPayment extends React.Component {
         <Grid container className={style.inlineInfo}>
           <Grid item xs={6} md={3}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_BANK")}</label>
-            {payment.bank}
+            {payment.assignor}
           </Grid>
           <Grid item xs={6} md={3}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_NAME")}</label>
@@ -57,7 +71,7 @@ class DetailsPayment extends React.Component {
           </Grid>
           <Grid item xs={6} md={2}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
-            {payment.dateend}
+            {payment.dueDate}
           </Grid>
           <Grid item xs={6} md={2}>
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
@@ -73,14 +87,15 @@ class DetailsPayment extends React.Component {
         <CustomSwitch
           title={i18n.t("GDPR_TITLE")}
           description={i18n.t("GDPR_DESC")}
-          action={() => alert("teste")}
-          checked={this.state["check1"]}
+          action={this.toogleSwitch}
+          checked={user.gpdr === 'read'}
+          value="gdprChecked"
         />
 
-        <ButtonContinue 
+        <ButtonContinue
           label={i18n.t("BTN_CONFIRM")}
           action={()=>this.validateForm()}
-          loading={loading} 
+          loading={loading}
         />
 
       </div>
@@ -90,17 +105,18 @@ class DetailsPayment extends React.Component {
 
 const mapStateToProps = store => ({
   payment: store.payment.payment,
-  loading: store.payment.loading
+  loading: store.payment.loading,
+  user: store.payment.user,
 });
 
-const mapDispatchToProps = dispatch =>bindActionCreators(
+const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    nomeDaFuncao
-  }, 
+    getUserGdpr
+  },
   dispatch
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(DetailsPayment);

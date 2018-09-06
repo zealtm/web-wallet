@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-// MATERIAL 
+// MATERIAL
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
@@ -55,7 +55,7 @@ class CustomSwitch extends React.Component {
   }
 
   render(){
-    const { title, description, action, checked, classes } = this.props;
+    const { title, description, action, checked, classes, value } = this.props;
     return (
       <Grid container justify="center">
         <Grid item xs={11}>
@@ -72,7 +72,7 @@ class CustomSwitch extends React.Component {
                   checked: classes.iOSChecked,
                 }}
                 disableRipple
-                value={true}
+                value={value}
                 checked={checked}
                 onChange={action}
               />
@@ -90,6 +90,7 @@ CustomSwitch.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
   checked: PropTypes.bool || false,
 };
 

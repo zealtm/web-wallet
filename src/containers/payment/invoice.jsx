@@ -12,7 +12,7 @@ import Select from "../../components/select";
 import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import {DateMask, CpfMask, CnpjMask, MonetaryMask} from "../../components/inputMask";
+import {DateMask, CpfMask, CnpjMask, MoneyBrlMask} from "../../components/inputMask";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -85,23 +85,6 @@ class Invoice extends React.Component {
         value: undefined,
         img: undefined
       },
-      coins: [ // sera alterado para pegar do redux
-        {
-          title: 'Lunes',
-          value: 'lunes',
-          img: '/images/icons/coins/lunes.png'
-        },
-        {
-          title: 'Bitcoin',
-          value: 'btc',
-          img: '/images/icons/coins/btc.png'
-        },
-        {
-          title: 'Litecoin',
-          value: 'ltc',
-          img: '/images/icons/coins/ltc.png'
-        },
-      ],
     }
 
     this.coinSelected = this.coinSelected.bind(this);
@@ -128,7 +111,7 @@ class Invoice extends React.Component {
   }
 
   handleInvoiceNumberChange = event => {
-    const {getInvoice, payment} = this.props;
+    const {getInvoice} = this.props;
     const {invoice} = this.state;
 
     this.setState({
@@ -140,13 +123,17 @@ class Invoice extends React.Component {
     });
 
     if (event.target.value.length === 48) {
-      getInvoice(event.target.value)
+      getInvoice(event.target.value);
+      const {value, assignor, description, dueDate} = this.props.payment;
 
       this.setState({
         ...this.state,
         invoice: {
-          ...invoice,
-          ...payment
+          ...this.state.invoice,
+          value,
+          assignor,
+          description,
+          dueDate
         }
       });
     }
@@ -174,6 +161,8 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const {invoice, coin} = this.state;
+    const {payment} = this.props;
+
     const invoiceInputs = {};
 
     for (const key in invoice) {
@@ -182,7 +171,7 @@ class Invoice extends React.Component {
           type: 'text',
           name: key,
           placeholder: key,
-          value: invoice[key],
+          value: payment[key] || invoice[key],
           required: true,
         };
       }
@@ -196,19 +185,19 @@ class Invoice extends React.Component {
       type: 'text',
       name: 'coin',
       placeholder: 'coin',
-      value: coin.value || '',
+      value: payment.coin || coin.value || '',
       required: true,
     };
 
     const { errors } = inputValidator({...invoiceInputs, coin: coinInput});
 
-    if (errors) {
-      this.setState({
-        ...this.state,
-        errors
-      });
-      return;
-    }
+    // if (errors.length > 0) {
+    //   this.setState({
+    //     ...this.state,
+    //     errors
+    //   });
+    //   return;
+    // }
 
     this.openModal(); // abrind modal sem validacao para testar
     this.setPayment(); // setar os dados no redux, para teste sem validacao
@@ -217,8 +206,8 @@ class Invoice extends React.Component {
   }
 
   render() {
-    const {classes, loading, coinsRedux} = this.props;
-    const {coins, coin, invoice, errors} = this.state;
+    const {classes, loading, coinsRedux, payment} = this.props;
+    const {coin, invoice, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -250,9 +239,8 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={invoice.assignor}
+                value={payment.assignor || invoice.assignor}
                 onChange={this.handleInvoiceDefaultChange('assignor')}
-                error={errors.includes('assignor')}
                 error={errors.includes('assignor')}
               />
               <Input
@@ -262,7 +250,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_NAME")}
-                value={invoice.name}
+                value={payment.name || invoice.name}
                 onChange={this.handleInvoiceDefaultChange('name')}
                 error={errors.includes('name')}
               />
@@ -273,7 +261,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={invoice.description}
+                value={payment.description || invoice.description}
                 onChange={this.handleInvoiceDefaultChange('description')}
                 error={errors.includes('description')}
               />
@@ -287,7 +275,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={invoice.dueDate}
+                value={payment.dueDate || invoice.dueDate}
                 onChange={this.handleInvoiceDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
                 inputComponent={DateMask}
@@ -316,13 +304,13 @@ class Invoice extends React.Component {
                     disableTypography
                     classes={{root: classes.inputCss}}
                   >
-                    {i18n.t("PAYMENT_VALUE_SYMBOL")}
+                    R$
                   </InputAdornment>
                 }
-                value={invoice.value}
+                value={payment.value || invoice.value}
                 onChange={this.handleInvoiceDefaultChange('value')}
                 error={errors.includes('value')}
-                inputComponent={MonetaryMask}
+                inputComponent={MoneyBrlMask}
               />
             </Grid>
           </Grid>
@@ -376,7 +364,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
     getInvoice,
     getCoinsEnabled,
-    setPayment
+    setPayment,
   }, dispatch
 );
 

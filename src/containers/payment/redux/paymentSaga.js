@@ -5,9 +5,11 @@ import { getAuthToken } from "../../../utils/localStorage";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
+import UserService from "../../../services/userService";
 
 // iniciar servico
 const paymentService = new PaymentService();
+const userService = new UserService();
 
 export function* getCoinsEnabledSaga() {
   try {
@@ -46,14 +48,15 @@ export function* setPaymentSaga(payload) {
     let response = yield call(paymentService.getAmountCoinPay, token, payload.coin, payload.value);
 
     const data = {
-      number:   payload.pay.number,
-      coin:     payload.pay.coin,
-      amount:   response.amount,
-      value:    payload.pay.value,
-      bank:     payload.pay.assignor,
-      name:     payload.pay.name,
-      dateend:  payload.pay.dueDate,
-      doc:      payload.pay.cpfCnpj
+      number: payload.pay.number,
+      coin: payload.pay.coin,
+      amount: response.amount,
+      value: payload.pay.value,
+      assignor: payload.pay.assignor,
+      name: payload.pay.name,
+      dueDate: payload.pay.dueDate,
+      description: payload.pay.description,
+      doc: payload.pay.cpfCnpj
     }
 
     yield put(
@@ -109,6 +112,24 @@ export function* getInvoiceSaga(payload) {
       }
     )
   } catch(error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getUserGdprSaga() {;
+  try {
+    const token = yield call(getAuthToken);
+    const response = yield call(userService.getUser, token);
+
+    const user = response.data.data;
+
+    yield put({
+      type: "GET_USER_GDPR_REDUCER",
+      user: {
+        gdpr: user.gpdr
+      }
+    })
+  } catch (err) {
     yield put(internalServerError());
   }
 }
