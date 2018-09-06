@@ -23,25 +23,17 @@ class LeasingHistory extends React.Component {
 
   componentDidMount() {
     let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(
-      coins.lunes.abbreviation,
+    getLeasingInfo(coins.lunes.abbreviation,
       coins.lunes.address,
-      coins.lunes.decimalPoint
-    );
+      coins.lunes.decimalPoint);
     this.renderHistory();
   }
 
-  stateDataHistory = (key, type) => {
+  stateDataHistory = (key) => {
     let { toggleHistory } = this.state;
-    if (type === "ACTIVE") {
-      this.setState({
-        toggleHistory: toggleHistory === key ? undefined : key
-      });
 
-      return;
-    }
     this.setState({
-      toggleHistory: undefined
+      toggleHistory: toggleHistory === key ? undefined : key
     });
   };
 
@@ -56,8 +48,8 @@ class LeasingHistory extends React.Component {
     return style.opacityItem;
   };
 
-  renderBtCancel = (status, txid, type) => { 
-    let { coinFee, decimalPoint, cancelLeasing, user } = this.props;
+  renderBtCancel = (status, txid, type) => {
+    let { coinFee, decimalPoint, cancelLeasing, user, coins } = this.props;
 
     if (status === 1) {
       return (
@@ -67,11 +59,12 @@ class LeasingHistory extends React.Component {
             if (type === "ACTIVE") {
               confirm(i18n.t("MODAL_LEASING_CONFIRM"))
                 ? cancelLeasing({
-                    txid,
-                    coinFee,
-                    decimalPoint,
-                    password: user.password
-                  })
+                  txid,
+                  coinFee,
+                  decimalPoint,
+                  password: user.password,
+                  coinName: coins.lunes.abbreviation,
+                })
                 : null;
             }
           }}
@@ -101,7 +94,7 @@ class LeasingHistory extends React.Component {
             item
             xs={12}
             className={this.handleClass(index, value.type)}
-            onClick={() => this.stateDataHistory(index, value.type)}
+            onClick={() => this.stateDataHistory(index)}
           >
             <Grid item xs={3}>
               {formatDate(value.date, "DM")}

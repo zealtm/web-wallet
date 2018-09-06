@@ -66,7 +66,7 @@ export function* createLeasing(action) {
     };
 
     let response = yield call(transactionService.createLeasing, leaseData);
-    let transaction = yield call(leasingService.saveLeaseTransaction, response, action.data.coinName, token)
+    let transaction = yield call(leasingService.saveLeaseTransaction, response, action.data.coinName, token);
 
     if (transaction.data.code === 200) {
       yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
@@ -77,7 +77,7 @@ export function* createLeasing(action) {
     yield put(errorInput(i18next.t("MODAL_LEASING_MESSAGE_FAILURE")));
 
     return;
-  } catch (error) { 
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -86,6 +86,7 @@ export function* cancelLeasing(action) {
   try {
     let userSeed = yield call(getUserSeedWords);
     let seed = yield call(decryptAes, userSeed, action.data.password);
+    let token = yield call(getAuthToken);
 
     let leaseData = {
       fee: action.data.coinFee * 1000000000,
@@ -94,11 +95,18 @@ export function* cancelLeasing(action) {
       network: TESTNET ? networks.LNSTESTNET : networks.LNS
     }
 
-    yield call(transactionService.cancelLeasing, leaseData);
-    yield put(successRequest(i18next.t("MODAL_LEASING_CANCEL_SUCCESS")));
+    let response = yield call(transactionService.cancelLeasing, leaseData);
+    let transaction = yield call(leasingService.saveLeaseTransaction, response, action.data.coinName, token);
+
+    if (transaction.data.code === 200) {
+      yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
+
+      return
+    }
 
     return;
-  } catch (error) { 
+  } catch (error) {
+    console.warn(error)
     if (error.data.error) {
       yield put(errorInput(i18next.t("MODAL_LEASING_CANCEL_FAILURE")));
       return
