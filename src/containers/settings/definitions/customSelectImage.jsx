@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 // MATERIAL 
@@ -20,10 +21,19 @@ class CustomSelectImage extends React.Component {
   }
 
   selectItem = () => {
-    // const {action} = this.props;
     this.handleSelect();
-    // chamar funcao action
   }
+
+  renderSelect = () => {
+    let { coins } = this.props;
+    console.warn(coins);
+    // return coins.map((coin, index) => (
+    //   <div onClick={this.selectItem}>
+    //     <img src='images/lang/brasil.png' />
+    //     item selecionar
+    // </div>
+    // ))
+  };
 
   renderArrow() {
     if (this.state.open)
@@ -35,11 +45,15 @@ class CustomSelectImage extends React.Component {
   render() {
     return (
       <div className={style.formBlock}>
-        <button className={style.btSelect} onClick={() => this.handleSelect()}>
+        <button
+          className={style.btSelect} onClick={() => this.handleSelect()}>
           <img src='images/lang/brasil.png' /> item
           {this.renderArrow()}
         </button>
-        <div className={style.baseSelect} style={this.state.open ? { display: "block" } : { display: "none" }}>
+        <div
+          className={style.baseSelect}
+          style={this.state.open ? { display: "block" } : { display: "none" }}
+        >
           {/* popular com um props  */}
           <div onClick={this.selectItem}>
             <img src='images/lang/brasil.png' />
@@ -52,7 +66,16 @@ class CustomSelectImage extends React.Component {
 }
 
 CustomSelectImage.propTypes = {
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
+  coins: PropTypes.array
 }
 
-export default CustomSelectImage;
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins,
+  user: store.user.user
+});
+
+export default connect(
+  mapStateToProps,
+  null
+)(CustomSelectImage);

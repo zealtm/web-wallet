@@ -64,7 +64,7 @@ class Definitions extends React.Component {
     }
   }
 
-  componentDidMount() { 
+  componentDidMount() {
 
     let value = getDefinitionMetadata();
     if (value === null) return true;
@@ -161,7 +161,6 @@ class Definitions extends React.Component {
                 <CustomSelectImage action={() => alert("teste")} />
               </Grid>
             </Grid>
-
           </div>
         </Grid>
       </Grid>
@@ -170,7 +169,7 @@ class Definitions extends React.Component {
 }
 
 Definitions.propTypes = {
-  classes: PropTypes.object.isRequired, 
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(materialStyle)(Definitions);
