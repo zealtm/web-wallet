@@ -76,7 +76,7 @@ class History extends React.Component {
                 <div className={style.icon}>
                   <img src="/images/icons/general/pay@1x.png" alt="Payments"/>
                 </div>
-                <div className={style.bankSlipInfo}>
+                <div className={style.invoiceInfo}>
                   23
                   <br />
                   Boletos

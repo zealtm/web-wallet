@@ -66,12 +66,12 @@ const customStyle = {
   focused: {},
 }
 
-class BankSlip extends React.Component {
+class Invoice extends React.Component {
   constructor() {
     super();
     this.state = {
       errors: [],
-      bankSlip: {
+      invoice: {
         number: '',
         assignor: '',
         name: '',
@@ -120,36 +120,47 @@ class BankSlip extends React.Component {
         value,
         img
       },
-      bankSlip: {
-        ...this.state.bankSlip,
-        coin: title
+      invoice: {
+        ...this.state.invoice,
+        coin: value
       }
     })
   }
 
-  handleBankSlipNumberChange = event => {
-    const {getInvoice} = this.props;
+  handleInvoiceNumberChange = event => {
+    const {getInvoice, payment} = this.props;
+    const {invoice} = this.state;
 
     this.setState({
       ...this.state,
-      bankSlip: {
-        ...this.state.bankSlip,
+      invoice: {
+        ...invoice,
         number: event.target.value.replace(/\D/, '')
       }
     });
 
 
     if (event.target.value.length === 48) {
-      alert('Valida o número do boleto');
-      getInvoice(event.target.value);
+      getInvoice(event.target.value)
+
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          invoice: {
+            ...invoice,
+            ...payment
+          }
+        });
+        console.log('payment', payment);
+      }, 500);
     }
   }
 
-  handleBankSlipDefaultChange = (name) => event => {
+  handleInvoiceDefaultChange = (name) => event => {
     this.setState({
       ...this.state,
-      bankSlip: {
-        ...this.state.bankSlip,
+      invoice: {
+        ...this.state.invoice,
         [name]: event.target.value
       }
     });
@@ -162,26 +173,26 @@ class BankSlip extends React.Component {
 
   setPayment = () => {
     const {setPayment} = this.props;
-    setPayment(this.state.bankSlip);
+    setPayment(this.state.invoice);
   }
 
   inputValidator = () => {
-    const {bankSlip, coin} = this.state;
-    const bankSlipInputs = {};
+    const {invoice, coin} = this.state;
+    const invoiceInputs = {};
 
-    for (const key in bankSlip) {
-      if (bankSlip.hasOwnProperty(key)) {
-        bankSlipInputs[key] = {
+    for (const key in invoice) {
+      if (invoice.hasOwnProperty(key)) {
+        invoiceInputs[key] = {
           type: 'text',
           name: key,
           placeholder: key,
-          value: bankSlip[key],
+          value: invoice[key],
           required: true,
         };
       }
 
       if (key === 'number') {
-        bankSlipInputs[key]["minLength"] = 48;
+        invoiceInputs[key]["minLength"] = 48;
       }
     }
 
@@ -193,7 +204,7 @@ class BankSlip extends React.Component {
       required: true,
     };
 
-    const { errors } = inputValidator({...bankSlipInputs, coin: coinInput});
+    const { errors } = inputValidator({...invoiceInputs, coin: coinInput});
 
     if (errors) {
       this.setState({
@@ -210,8 +221,8 @@ class BankSlip extends React.Component {
   }
 
   render() {
-    const {classes, loading, coinsRedux, payment} = this.props;
-    const {coins, coin, bankSlip, errors} = this.state;
+    const {classes, loading, coinsRedux} = this.props;
+    const {coins, coin, invoice, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -228,8 +239,8 @@ class BankSlip extends React.Component {
               }}
               placeholder="237933802350009031431630033330944400000001000000"
               inputProps={{ maxLength: 48, required: true }}
-              value={bankSlip.number}
-              onChange={this.handleBankSlipNumberChange}
+              value={invoice.number}
+              onChange={this.handleInvoiceNumberChange}
               error={errors.includes('number')}
             />
           </div>
@@ -243,8 +254,8 @@ class BankSlip extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={bankSlip.assignor}
-                onChange={this.handleBankSlipDefaultChange('assignor')}
+                value={invoice.assignor}
+                onChange={this.handleInvoiceDefaultChange('assignor')}
                 error={errors.includes('assignor')}
                 error={errors.includes('assignor')}
               />
@@ -255,8 +266,8 @@ class BankSlip extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_NAME")}
-                value={bankSlip.name}
-                onChange={this.handleBankSlipDefaultChange('name')}
+                value={invoice.name}
+                onChange={this.handleInvoiceDefaultChange('name')}
                 error={errors.includes('name')}
               />
               <Input
@@ -266,8 +277,8 @@ class BankSlip extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={bankSlip.description}
-                onChange={this.handleBankSlipDefaultChange('description')}
+                value={invoice.description}
+                onChange={this.handleInvoiceDefaultChange('description')}
                 error={errors.includes('description')}
               />
             </Grid>
@@ -280,8 +291,8 @@ class BankSlip extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={bankSlip.dueDate}
-                onChange={this.handleBankSlipDefaultChange('dueDate')}
+                value={invoice.dueDate}
+                onChange={this.handleInvoiceDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
                 inputComponent={DateMask}
               />
@@ -292,10 +303,10 @@ class BankSlip extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
-                value={bankSlip.cpfCnpj}
-                onChange={this.handleBankSlipDefaultChange('cpfCnpj')}
+                value={invoice.cpfCnpj}
+                onChange={this.handleInvoiceDefaultChange('cpfCnpj')}
                 error={errors.includes('cpfCnpj')}
-                inputComponent={bankSlip.cpfCnpj.length === 11 ? CpfMask : CnpjMask}
+                inputComponent={invoice.cpfCnpj.length === 11 ? CpfMask : CnpjMask}
               />
               <Input
                 classes={{
@@ -312,8 +323,8 @@ class BankSlip extends React.Component {
                     {i18n.t("PAYMENT_VALUE_SYMBOL")}
                   </InputAdornment>
                 }
-                value={bankSlip.value}
-                onChange={this.handleBankSlipDefaultChange('value')}
+                value={invoice.value}
+                onChange={this.handleInvoiceDefaultChange('value')}
                 error={errors.includes('value')}
                 inputComponent={MonetaryMask}
               />
@@ -325,7 +336,7 @@ class BankSlip extends React.Component {
           <Grid container>
             <Grid item xs={12} sm={6}>
               <Select
-                list={coins}
+                list={coinsRedux}
                 title={title}
                 titleImg={img}
                 selectItem={this.coinSelected}
@@ -355,7 +366,7 @@ class BankSlip extends React.Component {
   }
 }
 
-BankSlip.propTypes = {
+Invoice.propTypes = {
   classes: PropTypes.object,
   openModal: PropTypes.func
 }
@@ -376,5 +387,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(customStyle)(BankSlip));
+)(withStyles(customStyle)(Invoice));
 

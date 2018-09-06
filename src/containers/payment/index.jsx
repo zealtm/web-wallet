@@ -7,7 +7,7 @@ import i18n from "../../utils/i18n";
 import Modal from "../../components/modal";
 import PaymentTitleModal from "./modal/paymentTitleModal";
 import Tabs from "../../components/tabs";
-import BankSlip from "./bankSlip";
+import Invoice from "./invoice";
 import History from "./history";
 
 // STYLE
@@ -26,7 +26,7 @@ class Payment extends React.Component {
     let { isOpen } = this.state;
 
     const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
-    const contents = [<BankSlip openModal={this.handleModal} />, <History />]
+    const contents = [<Invoice openModal={this.handleModal} />, <History />]
 
     return (
       <div>

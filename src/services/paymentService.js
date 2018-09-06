@@ -20,7 +20,7 @@ class PaymentService {
 
   async getInvoice(token, number){
     try {
-      //API_HEADER.headers.Authorization = token;
+      // API_HEADER.headers.Authorization = token;
 
       // let response = await axios.get(
       //   `https://a.lunes.io/wallet/staging/bill/${number}`
