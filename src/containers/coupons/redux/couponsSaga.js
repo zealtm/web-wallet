@@ -21,10 +21,7 @@ export function* getVoucher(action) {
       token
     );
 
-    console.warn("responseCoin", responseCoin);
-
     if (!responseCoin) {
-      console.warn("Error");
       yield put({
         type: "SET_VOUCHER_LOADING"
       });

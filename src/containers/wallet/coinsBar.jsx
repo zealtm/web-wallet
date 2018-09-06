@@ -13,7 +13,7 @@ import {
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS
-import { getDefaultFiat } from "../../utils/localStorage";
+import { getFavoritesCrypto, getDefaultFiat } from "../../utils/localStorage";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -67,8 +67,10 @@ class CoinsBar extends React.Component {
     let { wallet } = this.props;
     let { coins } = this.props.skeleton;
     let defaultFiat = getDefaultFiat();
+    let favoritesCoins = getFavoritesCrypto();
+    favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
 
-    return Object.keys(coins).map((val, index) => {
+    return favoritesCoins.map((val, index) => {
       let coin = coins[val];
       let coinBalanceStatus = coin.balance ? true : false;
       let coinAddressStatus = coin.address ? true : false;
