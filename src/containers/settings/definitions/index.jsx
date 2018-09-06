@@ -14,6 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Hidden from "@material-ui/core/Hidden";
 import style from "./style.css";
+import { setDefinitionMetadata, getDefinitionMetadata } from "../../../utils/localStorage";
 
 const materialStyle = theme => ({
   iOSSwitchBase: {
@@ -59,21 +60,33 @@ class Definitions extends React.Component {
   constructor() {
     super();
     this.state = {
-      switchBoxA: false,
-      switchBoxB: false,
+      switchBoxA: true,
     }
   }
 
+  componentDidMount() { 
+
+    let value = getDefinitionMetadata();
+    if (value === null) return true;
+
+    this.setState({ switchBoxA: value });
+  }
+
   handleSwitchBoxA = () => {
-    this.setState({ switchBoxA: !this.state.switchBoxA });
+    let { switchBoxA } = this.state;
+
+    setDefinitionMetadata(!switchBoxA)
+    this.setState({ switchBoxA: !switchBoxA });
   };
 
-  handleSwitchBoxB = () => {
-    this.setState({ switchBoxB: !this.state.switchBoxB });
-  };
+  switchBoxAIsActive = () => {
+    const { switchBoxA } = this.state;
+    return switchBoxA
+  }
+
   render() {
     const { classes } = this.props;
-    const { switchBoxA, switchBoxB } = this.state;
+    const { switchBoxA } = this.state;
     return (
       <Grid container justify="center">
 
@@ -131,22 +144,6 @@ class Definitions extends React.Component {
               />
 
             </div>
-            <div className={style.formSwitch}>
-              {i18n.t("SET_DEFINITIONS_OPTION2")}
-              <Switch
-                classes={{
-                  switchBase: classes.iOSSwitchBase,
-                  bar: classes.iOSBar,
-                  icon: classes.iOSIcon,
-                  iconChecked: classes.iOSIconChecked,
-                  checked: classes.iOSChecked,
-                }}
-                disableRipple
-                onClick={() => this.handleSwitchBoxB()}
-                checked={switchBoxB}
-              />
-
-            </div>
 
             <hr className={style.line} />
 
@@ -173,7 +170,7 @@ class Definitions extends React.Component {
 }
 
 Definitions.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired, 
 };
 
 export default withStyles(materialStyle)(Definitions);

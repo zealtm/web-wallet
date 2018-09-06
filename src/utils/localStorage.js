@@ -2,8 +2,7 @@ import { encryptAes } from "./cryptography";
 const authToken = "auth.token";
 const userObj = "user.object";
 
-export const setAuthToken = token =>
-  localStorage.setItem(authToken, JSON.stringify(token));
+export const setAuthToken = token => localStorage.setItem(authToken, JSON.stringify(token));
 
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
@@ -102,3 +101,12 @@ export const getDefaultCrypto = () => {
       ? userStorage.defaultCoin
       : "lunes";
 };
+
+export const setDefinitionMetadata = (value) => {
+  if(value === null){
+    value = true; 
+  }
+  localStorage.setItem("definition.delete", value)
+};
+
+export const getDefinitionMetadata = () => localStorage.getItem("definition.delete"); 
