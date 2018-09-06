@@ -14,6 +14,7 @@ import style from "../../style.css";
 
 class BoxProcess extends React.Component {
   doTransaction = () => {
+    console.warn(modal);
     let { coin, user, modal, coins, setWalletTransaction } = this.props;
     setWalletTransaction(
       {

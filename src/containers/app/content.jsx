@@ -42,7 +42,7 @@ class Content extends Component {
         this.changeContent(<InternalError />, "error");
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 9000);
       }
 
       return;

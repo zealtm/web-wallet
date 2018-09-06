@@ -39,11 +39,11 @@ class Settings extends React.Component {
               </Link>
             </Grid>
 
-            <Grid item xs={12} sm={3} className={style.cardsSettings}>
+            {/* <Grid item xs={12} sm={3} className={style.cardsSettings}>
               <Link to="/consent">
                 <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_4")}</Grid>
               </Link>
-            </Grid>
+    </Grid> */}
 
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
               <Link to="/definitions">
