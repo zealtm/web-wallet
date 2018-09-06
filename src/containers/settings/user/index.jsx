@@ -14,6 +14,7 @@ import colors from "../../../components/bases/colors";
 // MATERIAL UI
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -58,19 +59,18 @@ const customStyle = {
     }
   },
   underlineItems: {
+    selected: {
+      backgroundColor: 'red !important',
+    },
     borderBottom: '1px solid ',
     borderBottomColor: `${colors.purple.dark} !important`,
     "&:hover": {
       borderBottom: '2px solid',
-    }
+    },
+    "&:before, &:after": {
+      borderBottom: '5px solid',
+    },
   },
-  input: {
-    color: 'white',
-    "&:before": {
-      color: 'red !important',
-    }
-  },
-  
   disabled: {},
   error: {},
   focused: {},
@@ -79,8 +79,6 @@ const customStyle = {
 const days = [...Array(31).keys()].map(day => day + 1);
 const months = [...Array(12).keys()].map(month => month + 1);
 const years = [...Array(70).keys()].map(year => year + 1949);
-
-const teste = [1, 2, 3];
 
 class User extends React.Component {
   constructor() {
@@ -146,7 +144,7 @@ class User extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container className={style.container}>
+        <Grid item xs={12} className={style.container}>
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -277,16 +275,17 @@ class User extends React.Component {
                   </div>
 
                   <div className={style.content}>
-                    <p className={style.textDefault}>Birthdate</p>
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_BIRTHDATE")}
+                    </p>
                     <Grid container>
 
                       <Grid item xs={4} className={style.selectItem}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_DAY")}
+                        </div>
                         <FormControl className={classes.formControl}>
-                          <InputLabel
-                            classes={{ root: classes.input }}
-                            shrink htmlFor="age-label-placeholder">
-                            {i18n.t("SETTINGS_USER_DAY")}
-                          </InputLabel>
+
                           <Select
                             classes={{
                               selectMenu: classes.underlineItems,
@@ -294,7 +293,6 @@ class User extends React.Component {
                             items={days}
                             value={birth_day}
                             action={this.handleBirthDayChange}
-                            input={<Input name="age" id="age-label-placeholder" />}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -308,12 +306,11 @@ class User extends React.Component {
 
 
                       <Grid item xs={4} className={style.selectItem}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_MONTH")}
+                        </div>
                         <FormControl className={classes.formControl}>
-                          <InputLabel
-                            classes={{ root: classes.input }}
-                            shrink htmlFor="age-label-placeholder">
-                            {i18n.t("SETTINGS_USER_MONTH")}
-                          </InputLabel>
+
                           <Select
                             classes={{
                               selectMenu: classes.underlineItems,
@@ -321,7 +318,6 @@ class User extends React.Component {
                             items={months}
                             value={birth_month}
                             action={this.handleBirthMonthChange}
-                            input={<Input name="age" id="age-label-placeholder" />}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -332,14 +328,12 @@ class User extends React.Component {
                           </Select>
                         </FormControl>
                       </Grid>
-
                       <Grid item xs={4} className={style.selectItem}>
                         <FormControl className={classes.formControl}>
-                          <InputLabel
-                            classes={{ root: classes.input }}
-                            shrink htmlFor="age-label-placeholder">
+                          <div className={style.selectLabel}>
                             {i18n.t("SETTINGS_USER_YEAR")}
-                          </InputLabel>
+                          </div>
+
                           <Select
                             classes={{
                               selectMenu: classes.underlineItems,
@@ -347,7 +341,6 @@ class User extends React.Component {
                             items={years}
                             value={birth_year}
                             action={this.handleBirthMonthChange}
-                            input={<Input name="age" id="age-label-placeholder" />}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -355,9 +348,11 @@ class User extends React.Component {
                             <MenuItem value={"2018"}>2018</MenuItem>
                             <MenuItem value={"2017"}>2017</MenuItem>
                             <MenuItem value={"2016"}>2016</MenuItem>
+
                           </Select>
                         </FormControl>
                       </Grid>
+
 
 
 
@@ -384,13 +379,18 @@ class User extends React.Component {
                       {i18n.t("SETTINGS_USER_CONTACT")}
                     </p>
                     <div
-                      style={{ float: "left", width: "40%", marginTop: "5px" }}
+                      style={{ float: "left", width: "40%" }}
                     >
-                      <Select
-                        action={() => this.handleSelectChange()}
-                        items={teste}
-                        value={undefined}
+                      <Input
+                        type="number"
+                        classes={{
+                          root: classes.inputRoot,
+                          underline: classes.inputCssUnderline,
+                          input: classes.inputCss
+                        }}
+                        style={{ width: "30%", float: "left", marginTop: "15px" }}
                       />
+
                     </div>
                     <Input
                       classes={{
@@ -398,7 +398,7 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      style={{ width: "50%", float: "right" }}
+                      style={{ width: "50%", float: "right", marginTop: "15px" }}
                     />
                   </div>
                 </Grid>
@@ -406,13 +406,11 @@ class User extends React.Component {
             </Grid>
 
             {/* ADDRESS */}
-            <Grid item xs={12}>
-              <Grid item xs={12} className={style.row}>
+            <Grid item xs={12} >
+              <Grid item xs={12} className={style.rowAdress}>
                 <Grid item xs={12}>
                   <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_ADDRESS")}
-                    </p>
+                    {i18n.t("SETTINGS_USER_ADDRESS")}
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -436,9 +434,7 @@ class User extends React.Component {
                 </Grid>
                 <Grid item xs={12}>
                   <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_ZIP_CODE")}
-                    </p>
+                    {i18n.t("SETTINGS_USER_ZIP_CODE")}
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -472,7 +468,7 @@ class User extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </div >
     );
   }
 }
