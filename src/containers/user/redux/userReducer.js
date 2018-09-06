@@ -8,6 +8,7 @@ const initialState = {
     password: undefined,
     seed: undefined
   },
+  twoFactor: false,
   pages: {
     login: 0,
     create: 0,
@@ -28,6 +29,7 @@ const user = (state = initialState, action) => {
           seed: action.user.seed,
           password: action.user.password
         },
+        twoFactor: action.twoFactor,
         pages: {
           login: action.pages.login,
           create: 0,
@@ -39,6 +41,7 @@ const user = (state = initialState, action) => {
     case "GET_USER_2FA":
       return {
         ...state,
+        twoFactor: action.state,
         loading: false
       };
 

@@ -49,12 +49,18 @@ class AuthService {
     }
   }
 
-  async createTwoFactorAuth() {
+  async createTwoFactorAuth(token) {
     try {
+      API_HEADER.headers.Authorization = token;
       let response = await axios.post(BASE_URL + "/user/2fa", {}, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      return response;
+      let data = response.data.data;
+      if (data.qrcode) {
+        return data;
+      }
+
+      return unauthorized("Could not enable two-factor authentication");
     } catch (error) {
       if (error.response.data.code === 500) {
         return unauthorized("Could not enable two-factor authentication");
@@ -64,15 +70,16 @@ class AuthService {
     }
   }
 
-  async verifyTwoFactoryAuth(token) {
+  async verifyTwoFactoryAuth(token2fa, token) {
     try {
+      API_HEADER.headers.Authorization = token;
       let response = await axios.post(
         BASE_URL + "/user/2fa/verify",
-        { token },
+        { token2fa },
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn(response);
       return response;
     } catch (error) {
       if (error.response.data.code === 401) {

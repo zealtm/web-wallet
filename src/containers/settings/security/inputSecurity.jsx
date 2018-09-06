@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 // REDUX
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { verifyTwoFactorAuth } from "../../user/redux/userAction";
-import { loading } from "../../user/redux/userAction";
+import {
+  loadingSettings,
+  verifyTwoFactorAuthSettings
+} from "../redux/settingsAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -56,7 +58,12 @@ class InputSecurity extends React.Component {
   };
 
   inputValidator = () => {
-    let { loading, errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
+    let {
+      loadingSettings,
+      errorInput,
+      clearMessage,
+      verifyTwoFactorAuth
+    } = this.props;
     let {
       field_1,
       field_2,
@@ -83,25 +90,22 @@ class InputSecurity extends React.Component {
       });
     }
 
-    loading();
+    loadingSettings();
     clearMessage();
-    verifyTwoFactorAuth(token);
+    verifyTwoFactorAuthSettings(token);
   };
 
-
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
       this.inputValidator();
     }
-
-  }
+  };
   render() {
-    let { loading } = this.props.user;
+    let { loading } = this.props.settings;
     let { errors, twoFactorFields } = this.state;
 
     return (
       <div onKeyPress={this.handleKeyPress}>
-
         <div className={style.alignInputTwoFactorAuthenticator}>
           <input
             name="field_1"
@@ -184,7 +188,6 @@ class InputSecurity extends React.Component {
             }
           />
 
-
           <input
             name="field_6"
             maxLength="1"
@@ -207,11 +210,11 @@ class InputSecurity extends React.Component {
         <button
           className={
             twoFactorFields.field_1 &&
-              twoFactorFields.field_2 &&
-              twoFactorFields.field_3 &&
-              twoFactorFields.field_4 &&
-              twoFactorFields.field_5 &&
-              twoFactorFields.field_6
+            twoFactorFields.field_2 &&
+            twoFactorFields.field_3 &&
+            twoFactorFields.field_4 &&
+            twoFactorFields.field_5 &&
+            twoFactorFields.field_6
               ? style.buttonEnable
               : errors
                 ? style.buttonError
@@ -227,22 +230,22 @@ class InputSecurity extends React.Component {
 }
 
 InputSecurity.propTypes = {
-  loading: PropTypes.func,
-  verifyTwoFactorAuth: PropTypes.func,
+  loadingSettings: PropTypes.func,
+  verifyTwoFactorAuthSettings: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object
+  settings: PropTypes.object
 };
 
 const mapSateToProps = store => ({
-  user: store.user
+  settings: store.settings
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loading,
-      verifyTwoFactorAuth,
+      loadingSettings,
+      verifyTwoFactorAuthSettings,
       clearMessage,
       errorInput
     },

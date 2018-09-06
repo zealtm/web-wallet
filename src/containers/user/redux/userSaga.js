@@ -45,6 +45,7 @@ export function* authenticateUser(action) {
       authService.hasTwoFactorAuth,
       response.data.data.token
     );
+
     let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
     let seed = yield call(getUserSeedWords);
 
@@ -57,6 +58,7 @@ export function* authenticateUser(action) {
         password: encryptHmacSha512Key(action.password),
         seed: twoFactor ? undefined : seed
       },
+      twoFactor: twoFactor,
       pages: { login: twoFactor ? 1 : 2 }
     });
 
@@ -79,7 +81,7 @@ export function* hasTwoFactorAuth() {
     let userToken = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
-
+    console.warn(response);
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
