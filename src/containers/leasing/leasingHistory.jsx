@@ -95,22 +95,19 @@ class LeasingHistory extends React.Component {
             className={this.handleClass(index, value.type)}
             onClick={() => this.stateDataHistory(index)}
           >
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               {formatDate(value.date, "DM")}
               &nbsp; {formatDate(value.date, "HMS")}
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <span className={style.textGreen}>{value.amount}</span>
             </Grid>
             <Grid item xs={4}>
-              {value.to}
-            </Grid>
-            <Grid item xs={2}>
               {this.renderBtCancel(1, value.txID, value.type)}
             </Grid>
           </Grid>
 
-          <div>
+          <div >
             <Grid
               item
               xs={12}
@@ -120,12 +117,17 @@ class LeasingHistory extends React.Component {
                 <Grid item xs={12} className={style.descriptionHistory}>
                   <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
                   <a href={blockexplorer + value.txID} target="blank">
-                    {value.txID}
+                    {value.txID + "..."}
                   </a>
+                </Grid>
+                <Grid item xs={12} className={style.descriptionHistory}>
+                  <div>{i18n.t("LEASING_TITLE_NODE")}</div>
+                  <div>{value.to + "..."}</div>
                 </Grid>
               </Grid>
             </Grid>
           </div>
+
         </div>
       </div>
     ));
@@ -142,12 +144,14 @@ class LeasingHistory extends React.Component {
       <div>
         <Grid container className={style.containerTransactions}>
           <Grid container item xs={11} sm={10} md={10}>
+
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_LABEL")}
                 <div className={style.strongText}>{balance}</div>
               </div>
             </Grid>
+
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_ACTIVE")}
@@ -164,25 +168,24 @@ class LeasingHistory extends React.Component {
               </button>
             </Grid>
           </Grid>
+
           <Grid item xs={11} sm={10} md={10}>
             <div className={style.contentTransactions}>
               <Grid container className={style.headerContent}>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {i18n.t("LEASING")}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {i18n.t("LEASING_TITLE_AMOUNT")}
                 </Grid>
                 <Grid item xs={4}>
-                  {i18n.t("LEASING_TITLE_NODE")}
-                </Grid>
-                <Grid item xs={2}>
                   {i18n.t("LEASING_TITLE_STATUS")}
                 </Grid>
               </Grid>
               {this.renderHistory()}
             </div>
           </Grid>
+
         </Grid>
       </div>
     );
