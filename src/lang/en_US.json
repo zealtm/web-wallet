@@ -208,6 +208,7 @@
   "INSTRUCTION_MODAL_CUPON_plural": "",
   "SETTINGS_CARD": "WALLETS",
   "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
+  "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
   "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
   "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",
   "MODAL_LEASING_CANCEL_FAILURE": "Não foi possível cancelar"

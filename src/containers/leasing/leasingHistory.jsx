@@ -23,21 +23,59 @@ class LeasingHistory extends React.Component {
 
   componentDidMount() {
     let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address, coins.lunes.decimalPoint);
+    getLeasingInfo(
+      coins.lunes.abbreviation,
+      coins.lunes.address,
+      coins.lunes.decimalPoint
+    );
     this.renderHistory();
   }
-  stateDataHistory = key => {
+
+  stateDataHistory = (key, type) => {
     let { toggleHistory } = this.state;
+    if (type === "ACTIVE") {
+      this.setState({
+        toggleHistory: toggleHistory === key ? undefined : key
+      });
+
+      return;
+    }
     this.setState({
-      toggleHistory: toggleHistory === key ? undefined : key
+      toggleHistory: undefined
     });
   };
 
-  renderBtCancel = (status, txid) => {
+  handleClass = (index, type) => {
+    let { toggleHistory } = this.state;
+    if (type === "ACTIVE") {
+      return toggleHistory !== undefined && toggleHistory !== index
+        ? style.opacityItem
+        : style.itemHistorico;
+    }
+
+    return style.opacityItem;
+  };
+
+  renderBtCancel = (status, txid, type) => { 
     let { coinFee, decimalPoint, cancelLeasing, user } = this.props;
+
     if (status === 1) {
       return (
-        <div className={style.iconLeasing} onClick={() => cancelLeasing({ txid, coinFee, decimalPoint, password: user.password })}>
+        <div
+          className={style.iconLeasing}
+          onClick={() => {
+            if (type === "ACTIVE") {
+              confirm(i18n.t("MODAL_LEASING_CONFIRM"))
+                ? cancelLeasing({
+                    txid,
+                    coinFee,
+                    decimalPoint,
+                    password: user.password
+                  })
+                : null;
+            }
+          }}
+        >
           <img src="images/icons/general/leasing@1x.png" />
           {i18n.t("LEASING_BT_CANCEL")}
         </div>
@@ -53,21 +91,17 @@ class LeasingHistory extends React.Component {
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
 
     if (!history || history === undefined) {
-      return <div className={style.notFound}>Nothing Found</div>
+      return <div className={style.notFound}>Nothing Found</div>;
     }
 
-    return history.txs.map((value, index) => ((
+    return history.txs.map((value, index) => (
       <div key={index}>
         <div>
           <Grid
             item
             xs={12}
-            className={
-              toggleHistory !== undefined && toggleHistory !== index
-                ? style.opacityItem
-                : style.itemHistorico
-            }
-            onClick={() => this.stateDataHistory(index)}
+            className={this.handleClass(index, value.type)}
+            onClick={() => this.stateDataHistory(index, value.type)}
           >
             <Grid item xs={3}>
               {formatDate(value.date, "DM")}
@@ -80,7 +114,7 @@ class LeasingHistory extends React.Component {
               {value.to}
             </Grid>
             <Grid item xs={2}>
-              {this.renderBtCancel(1, value.txID)}
+              {this.renderBtCancel(1, value.txID, value.type)}
             </Grid>
           </Grid>
 
@@ -88,9 +122,7 @@ class LeasingHistory extends React.Component {
             <Grid
               item
               xs={12}
-              className={
-                toggleHistory !== index ? style.toggleHistory : null
-              }
+              className={toggleHistory !== index ? style.toggleHistory : null}
             >
               <Grid item xs={12} className={style.itemDataHistorico}>
                 <Grid item xs={12} className={style.descriptionHistory}>
@@ -104,7 +136,7 @@ class LeasingHistory extends React.Component {
           </div>
         </div>
       </div>
-    )));
+    ));
   };
 
   loadModalLeasing = () => {
@@ -179,17 +211,15 @@ LeasingHistory.propTypes = {
   user: PropTypes.object
 };
 
-const mapStateToProps = store => (
-  {
-    coins: store.skeleton.coins,
-    balance: store.skeleton.coins.lunes.balance.available,
-    history: store.leasing.history.data,
-    leasingBalance: store.leasing.balance,
-    coinFee: store.leasing.coinFee.low,
-    decimalPoint: store.skeleton.coins.lunes.decimalPoint,
-    user: store.user.user
-  }
-);
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins,
+  balance: store.skeleton.coins.lunes.balance.available,
+  history: store.leasing.history.data,
+  leasingBalance: store.leasing.balance,
+  coinFee: store.leasing.coinFee.low,
+  decimalPoint: store.skeleton.coins.lunes.decimalPoint,
+  user: store.user.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
