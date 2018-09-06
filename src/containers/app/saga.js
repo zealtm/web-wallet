@@ -25,7 +25,14 @@ import {
   getCoinFee
 } from "../wallet/redux/walletSaga";
 import { getProfessionalNode } from "../leasing/redux/leasingSaga";
-import {nomeFuncao, getCoinsEnabledSaga, setPaymentSaga, getFeePayment,setFeePayment} from "../payment/redux/paymentSaga";
+import {
+  nomeFuncao,
+  getCoinsEnabledSaga,
+  setPaymentSaga,
+  getFeePayment,
+  setFeePayment,
+  getPaymentData
+} from "../payment/redux/paymentSaga";
 
 export default function* rootSaga() {
   yield [
@@ -51,11 +58,12 @@ export default function* rootSaga() {
     //leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
-    //payment-saga 
-    fork(takeLatest, "GET_TESTE", nomeFuncao), 
-    fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga), 
-    fork(takeLatest, "SET_PAYMENT", setPaymentSaga), 
-    fork(takeLatest, "GET_FEE_PAYMENT", getFeePayment), 
-    fork(takeLatest, "SET_FEE_PAYMENT", setFeePayment)
+    //payment-saga
+    fork(takeLatest, "GET_TESTE", nomeFuncao),
+    fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
+    fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
+    fork(takeLatest, "GET_FEE_PAYMENT", getFeePayment),
+    fork(takeLatest, "SET_FEE_PAYMENT", setFeePayment),
+    fork(takeLatest, "GET_PAYMENT_DATA", getPaymentData)
   ];
 }

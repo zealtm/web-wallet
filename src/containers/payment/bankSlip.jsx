@@ -5,12 +5,13 @@ import PropTypes from "prop-types";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getCoinsEnabled, setPayment} from "./redux/paymentAction";
+import {getCoinsEnabled, setPayment, getPaymentData} from "./redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../components/select";
 import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
+import Loading from "../../components/loading";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -137,7 +138,9 @@ class BankSlip extends React.Component {
 
 
     if (event.target.value.length === 48) {
-      alert('Valida o número do boleto');
+      console.log('Chama a API');
+      const data = getPaymentData(event.target.value);
+      console.log('data', data);
     }
   }
 
@@ -199,8 +202,8 @@ class BankSlip extends React.Component {
   }
 
   render() {
-    const {classes, coins} = this.props;
-    const {coin, bankSlip, errors} = this.state;
+    const {classes, loading, /*coins*/} = this.props;
+    const {coin, coins, bankSlip, errors} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -320,7 +323,7 @@ class BankSlip extends React.Component {
             className={style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
-            {i18n.t("PAYMENT_PAY_NOW")}
+            {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
           </button>
         </Grid>
 
@@ -341,12 +344,13 @@ BankSlip.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  coinsRedux: store.payment.coins
+  coinsRedux: store.payment.coins,
+  loading: store.payment.loading
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     getCoinsEnabled,
-    validatePaymentNumber,
+    getPaymentData,
     setPayment
   }, dispatch
 );

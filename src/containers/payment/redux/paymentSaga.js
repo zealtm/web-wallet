@@ -50,16 +50,17 @@ export function* getCoinsEnabledSaga(){
   )
 }
 
-export function* getPaymentDataSaga() {
-  let token = yield call(getAuthToken);
-  let response = yield call(paymentService.getPaymentData, token);
-  console.log(response);
-  // yield put(
-  //   {
-  //     type: "GET_COINS_REDUCER",
-  //     coins: response
-  //   }
-  // )
+export function* getPaymentData(payload) {
+  const token = yield call(getAuthToken);
+  const response = yield call(paymentService.getPaymentData, payload.number, token);
+
+  console.log('payload', payload, 'response', response);
+  yield put(
+    {
+      type: "GET_PAYMENT_DATA_REDUCER",
+      payment: response.data
+    }
+  )
 }
 
 export function* setPaymentSaga(payload){

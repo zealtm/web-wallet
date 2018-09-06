@@ -39,7 +39,7 @@ const payment = (state=initialState, action) => {
     case "GET_PAYMENT_DATA_REDUCER":
       return {
         ...state,
-        coins: action.payload
+        number: action.number
       };
 
     case "SET_PAYMENT_REDUCER":
