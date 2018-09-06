@@ -10,9 +10,13 @@ import {
   getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import Grid from "@material-ui/core/Grid";
-import i18n from "../../utils/i18n";
 import { formatDate } from "../../utils/numbers";
+
+// STYLES
 import style from "./style.css";
+
+// UTILS
+import i18n from "../../utils/i18n";
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -83,7 +87,9 @@ class LeasingHistory extends React.Component {
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
     console.warn(history);
     if (history === undefined) {
-      return <div className={style.notFound}>Nothing Found</div>;
+      return <div className={style.notFound}>
+        {i18n.t("MESSAGE_NOTHING_FOUND")}
+      </div>;
     }
 
     return history.txs.map((value, index) => (
