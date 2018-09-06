@@ -11,7 +11,13 @@ import { Done, Close } from "@material-ui/icons";
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
 
-import Select from "./select";
+// MATERIAL UI
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+// import Select from "./select";
 
 const customStyle = {
   img: {
@@ -51,9 +57,23 @@ const customStyle = {
       borderColor: `${colors.purple.dark} !important`
     }
   },
+  underlineItems: {
+    borderBottom: '1px solid ',
+    borderBottomColor: `${colors.purple.dark} !important`,
+    "&:hover": {
+      borderBottom: '2px solid',
+    }
+  },
+  input: {
+    color: 'white',
+    "&:before": {
+      color: 'red !important',
+    }
+  },
+  
   disabled: {},
   error: {},
-  focused: {}
+  focused: {},
 };
 
 const days = [...Array(31).keys()].map(day => day + 1);
@@ -170,8 +190,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
                   </span>
@@ -180,8 +200,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
                   </span>
@@ -259,36 +279,88 @@ class User extends React.Component {
                   <div className={style.content}>
                     <p className={style.textDefault}>Birthdate</p>
                     <Grid container>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_DAY")}
-                        </label>
-                        <Select
-                          action={this.handleBirthDayChange}
-                          items={days}
-                          value={birth_day}
-                        />
+
+                      <Grid item xs={4} className={style.selectItem}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel
+                            classes={{ root: classes.input }}
+                            shrink htmlFor="age-label-placeholder">
+                            {i18n.t("SETTINGS_USER_DAY")}
+                          </InputLabel>
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={days}
+                            value={birth_day}
+                            action={this.handleBirthDayChange}
+                            input={<Input name="age" id="age-label-placeholder" />}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_MONTH")}
-                        </label>
-                        <Select
-                          action={this.handleBirthMonthChange}
-                          items={months}
-                          value={birth_month}
-                        />
+
+
+                      <Grid item xs={4} className={style.selectItem}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel
+                            classes={{ root: classes.input }}
+                            shrink htmlFor="age-label-placeholder">
+                            {i18n.t("SETTINGS_USER_MONTH")}
+                          </InputLabel>
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={months}
+                            value={birth_month}
+                            action={this.handleBirthMonthChange}
+                            input={<Input name="age" id="age-label-placeholder" />}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={"jan"}>jan</MenuItem>
+                            <MenuItem value={"fev"}>fev</MenuItem>
+                            <MenuItem value={"mar"}>mar</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_YEAR")}
-                        </label>
-                        <Select
-                          action={this.handleBirthYearChange}
-                          items={years}
-                          value={birth_year}
-                        />
+
+                      <Grid item xs={4} className={style.selectItem}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel
+                            classes={{ root: classes.input }}
+                            shrink htmlFor="age-label-placeholder">
+                            {i18n.t("SETTINGS_USER_YEAR")}
+                          </InputLabel>
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={years}
+                            value={birth_year}
+                            action={this.handleBirthMonthChange}
+                            input={<Input name="age" id="age-label-placeholder" />}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={"2018"}>2018</MenuItem>
+                            <MenuItem value={"2017"}>2017</MenuItem>
+                            <MenuItem value={"2016"}>2016</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
+
+
+
                     </Grid>
                   </div>
                 </Grid>
@@ -353,11 +425,12 @@ class User extends React.Component {
 
                   <div className={style.content}>
                     {i18n.t("SETTINGS_USER_CITY")}
-                    <Select
-                      action={() => this.handleSelectChange()}
-                      items={teste}
-                      value={undefined}
-                      fullWidth
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss
+                      }}
                     />
                   </div>
                 </Grid>
@@ -377,11 +450,12 @@ class User extends React.Component {
 
                   <div className={style.content}>
                     {i18n.t("SETTINGS_USER_STATE")}
-                    <Select
-                      action={() => this.handleSelectChange()}
-                      items={teste}
-                      value={undefined}
-                      fullWidth
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss
+                      }}
                     />
                   </div>
                 </Grid>
