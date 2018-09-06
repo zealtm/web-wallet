@@ -1,5 +1,9 @@
-import { takeLatest } from "redux-saga";
-import { fork } from "redux-saga/effects";
+import {
+  takeLatest
+} from "redux-saga";
+import {
+  fork
+} from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -25,12 +29,19 @@ import {
   getCoinFee,
   setWalletTransaction
 } from "../wallet/redux/walletSaga";
-import { getProfessionalNode } from "../leasing/redux/leasingSaga";
 import { getVoucher } from "../coupons/redux/couponsSaga";
 import {
   getTwoFactorAuth,
   verifyTwoFactorAuthSettings
 } from "../settings/redux/settingsSaga";
+import {
+  getProfessionalNode,
+  validateLeasingAddress,
+  createLeasing,
+  getLeasingInfo,
+  cancelLeasing
+} from "../leasing/redux/leasingSaga"
+
 
 export default function* rootSaga() {
   yield [
@@ -64,6 +75,10 @@ export default function* rootSaga() {
 
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),
-    fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings)
+    fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings),
+    fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
+    fork(takeLatest, "START_LEASING_API", createLeasing),
+    fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
+    fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo)
   ];
 }

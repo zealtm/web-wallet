@@ -100,10 +100,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -286,11 +286,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -309,9 +309,7 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
-        let response = await axios.get(
-          LUNESNODE_URL + "/addresses/validate/" + address
-        );
+        let response = await axios.get(LUNESNODE_URL + "/addresses/validate/" + address);
 
         if (!response.data.valid) {
           return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
@@ -388,31 +386,23 @@ class CoinService {
 
   async saveTransaction(transaction, coin, describe) {
     try {
-      let response = await axios.post(
-        BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          transaction.sender,
-        {
-          txID: transaction.id,
-          from: transaction.sender,
-          to: transaction.recipient,
-          amount: transaction.amount,
-          fee: transaction.fee,
-          describe: describe ? describe : null,
-          price: {
-            USD: 0,
-            EUR: 0,
-            BRL: 0
-          }
-        },
-        API_HEADER
-      );
+      let endpointUrl = BASE_URL + "/coin/" + coin + "/transaction/history/" + transaction.sender;
+      let transactionData = {
+        txID: transaction.id,
+        from: transaction.sender,
+        to: transaction.recipient,
+        amount: transaction.amount,
+        fee: transaction.fee,
+        describe: describe ? describe : null,
+        price: {
+          USD: 0,
+          EUR: 0,
+          BRL: 0
+        }
+      }
 
-      setAuthToken(response.headers[HEADER_RESPONSE]);
+      let response = await axios.post(endpointUrl, transactionData, API_HEADER);
 
-      console.warn(response);
       return response;
     } catch (error) {
       console.warn(error);

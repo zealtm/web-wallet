@@ -16,7 +16,6 @@
   "PLACEHOLDER_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat password",
   "PLACEHOLDER_TERMS_OF_SERVICE": "Terms of Services",
-
   "BTN_SUBMIT": "Submit",
   "BTN_SEND": "Send",
   "BTN_RECEIVE": "Receive",
@@ -33,7 +32,6 @@
   "BTN_IMPORT_SEED": "Import",
   "BTN_NEW_SEED": "GENERATE NEW SEED",
   "BTN_FINALIZE": "Finalize",
-
   "JANUARY": "January",
   "FEBRUARY": "February",
   "MARCH": "March",
@@ -46,7 +44,6 @@
   "OCTOBER": "October",
   "NOVEMBER": "November",
   "DECEMBER": "December",
-
   "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
   "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
@@ -58,7 +55,6 @@
   "LOGIN_FOOTER_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
-
   "PIN_ENTER": "ENTER your PIN",
   "PIN_CREATE": "CREATE your PIN",
   "PIN_FORGET_PIN_LINK": "Forgot your PIN?",
@@ -67,13 +63,11 @@
   "NEW_ACCOUNT_MESSAGE_SENDED": "A message with an activation link has been sent to your email address",
   "NEW_ACCOUNT_PASSWORD_HEADER": "Digit your password",
   "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click to download and end the registration",
-
   "2FA_HEADER": "2FA Confirmation",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",
   "2FA_INSTRUCTIONS_1": "Confirm with the code provided in google authenticator and enter the 6 digits below",
   "2FA_INSTRUCTIONS_2": "Enter the six-digit code of the second factor of your Monday Wallet!",
   "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": " Where do I find the code?",
-
   "RESET_HEADER": "Forgot your password?",
   "RESET_INSTRUCTIONS": "We will send your instructions",
   "RESET_INSTRUCTIONS2": "About resetting it",
@@ -87,9 +81,7 @@
   "RESET_NEW_PASSWORD_HINT_5": "Min 8 characters",
   "RESET_NEW_PASSWORD_ERROR_1": "The password must meet the items described.",
   "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
-
   "SEED_INSERT_SEED": "Insert your SeedWords",
-
   "MENU_SUPPORT": "Support",
   "MENU_LOGOUT": "Logout",
   "MENU_HOME": "Home",
@@ -102,23 +94,18 @@
   "MENU_SETTING": "Settings",
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
-
   "CARD_HOME_TITLE_1": "Portfolio",
   "CARD_HOME_TITLE_2": "Multicoin Wallet",
   "CARD_HOME_TITLE_3": "Recharge",
   "CARD_HOME_TITLE_4": "Pay",
   "CARD_HOME_TITLE_5": "Purchase",
   "CARD_HOME_TITLE_6": "Purchase",
-
   "WALLET_MY_AMOUNT": "Balance",
-
   "MODAL_RECEIVE_MESSAGE": "Copied Address",
-
   "BTN_RECEIVE_COPY": "Copy",
   "BTN_RECEIVE_PRINT": "Print",
   "BTN_RECEIVE_EMAIL": "E-mail",
   "BTN_RECEIVE_SHARED": "Shared",
-
   "WALLET_MODAL_RECEIVE_TITLE": "Receive",
   "LEASING_BALANCE": "Saldo total de Lunes",
   "LEASING_AMOUNT_LABEL": "Quantidade à emprestar",
@@ -134,11 +121,11 @@
   "LEASING_TITLE_AMOUNT": "Emprestado",
   "LEASING_TITLE_NODE": "Node",
   "LEASING_TITLE_STATUS": "Status",
+  "MODAL_LEASING_MESSAGE_SUCCESS": "Leasing iniciado!",
   "INSTRUCTION_MODAL_CUPON_1": "Choose which option you have",
   "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier",
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",
   "INSTRUCTION_MODAL_CUPON_4": "Item",
-
   "COUPON_INSTRUCTIONS": "Instructions",
   "COUPON_TITLE_1": "Voucher",
   "COUPON_TITLE_2": "Lunes Gift",
@@ -146,7 +133,6 @@
   "VOUCHER_NUMBER": "Number",
   "VOUCHER_CODE": "Code",
   "VOUCHER_BUTTON": "Rescue",
-
   "SETTINGS_TITLE": "Choose the right privacy settings for you",
   "SETTINGS_HEADER_INFO": "Control your personal information. With these settings, you can manage what information is private and what data is saved to your account to enhance your Wallet Monday experience.",
   "SETTINGS_CARD_1": "USER DATA",
@@ -187,11 +173,9 @@
   "CARD_HOME_DESCRIPTION_4": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_5": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
   "CARD_HOME_DESCRIPTION_6": "Muito obrigado por escolher a Wallet Lunes como sua carteira multicoin. Aproveite da usabilidade e tecnologia desta incrível carteira e armazene suas criptomoedas com um alto nível de segurança..",
-
   "WALLET_BALANCE": "Balance",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
   "TRANSACTION_HISTORY_TITLE": "Transactions",
-
   "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
   "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
   "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",
@@ -200,16 +184,14 @@
   "DEFINITIONS_TITLE": "Definitions",
   "CONSENT_TITLE": "Consent",
 
+  "SECURITY_LINK_RETURN": "Back to the settings",
   "SET_ALIAS_DESCRIPTION": "Voce pode customizar um nome para sua carteira Lunes, se preferir. Caso faça essa mudança, o valor a ser descontado de seu saldo é de 5 LUNES.",
   "SET_ALIAS_SAVE_NAME": "Save name",
-
   "SET_SEED_TITLE": "BACKUP DE INFORMAÇÃO DA CONTA",
   "SET_SEED_WORDS": "Suas palavras chaves",
   "SET_BUTTON_SEED_IMPORT": "Importar Seed",
-
   "SET_BUTTON_REMOVE": "Remover",
   "SET_BUTTON_FAV": "Favoritar",
-
   "SET_DEFINITIONS_TITLE1": "Definições padrões por região",
   "SET_DEFINITIONS_DESC1": "O idioma selecionado será automaticamente exibido quando voce acessar sua plataforma.",
   "SET_DEFINITIONS_TITLE2": "Opções de Logout",
@@ -221,6 +203,12 @@
 
   "PAGE_ERROR_404": "Oh, No!... Page not found",
 
+  "LOGIN_SLIDE_DESCRIPTION": "Enjoy the usability and technology of this incredible wallet and store your crypto with a high level of security",
+  "LOGIN_SLIDE_DESCRIPTION_plural": "",
+  "COUPON_TITLE": "Coupon",
+  "COUPON_TITLE_plural": "",
+  "2FA_INSTRUCTIONS": "Confirm the code provided in google authenticator and enter the 6 digits below",
+  "2FA_INSTRUCTIONS_plural": "",
   "RESET_NEW_PASSWORD_HINT": "Numbers",
   "RESET_NEW_PASSWORD_HINT_plural": "Downcase letter",
   "RESET_NEW_PASSWORD_ERROR": "The password must meet the items described",
@@ -233,5 +221,11 @@
   "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
 
   "PAGE_ERROR_500": "Sua sessão expirou, logue novamente",
-  "PAGE_ERROR_500_REDIRECT": "Redirecting in"
+  "PAGE_ERROR_500_REDIRECT": "Redirecting in",
+
+  "LEASING_SELECT_NODE_DEFAULT": "Nodes Profissionais",
+  "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
+  "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
+  "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",
+  "MODAL_LEASING_CANCEL_FAILURE": "Não foi possível cancelar"
 }

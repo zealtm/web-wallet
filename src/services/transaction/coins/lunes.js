@@ -29,6 +29,35 @@ class LunesTransaction {
       return "error";
     }
   }
+
+  async createLeasing(data) {
+    const lunes = await create(data.network.APICONFIG);
+    const seed = await lunes.Seed.fromExistingPhrase(data.seed);
+
+    let leaseData = {
+      recipient: data.recipient,
+      amount: data.amount,
+      fee: data.fee
+    };
+    const transaction = lunes.API.Node.v1.leasing.lease(leaseData, seed.keyPair);
+
+    return transaction;
+  }
+
+  async cancelLeasing(data) {
+    
+    let leaseData = {
+      transactionId: data.transactionId,
+      fee: data.fee,
+      timestamp: Date.now()
+    };
+
+    let lunes = await create(data.network.APICONFIG);
+    let seed = await lunes.Seed.fromExistingPhrase(data.seed);
+    let transaction = lunes.API.Node.v1.leasing.cancelLeasing(leaseData, seed.keyPair);
+
+    return transaction
+  }
 }
 
 export default LunesTransaction;

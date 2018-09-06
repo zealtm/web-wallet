@@ -5,7 +5,6 @@ import {
   modalError
 } from "../../containers/errors/statusCodeMessage";
 import { networks } from "../../constants/network";
-
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
 import CoinService from "../../services/coinService";
@@ -147,6 +146,20 @@ class TransactionService {
       return error;
     }
   }
+
+  async createLeasing(data) {
+    let lunes = new LunesTransaction();
+    let response = await lunes.createLeasing(data);
+    return response;
+  }
+
+  async cancelLeasing(data) {
+    let lunes = new LunesTransaction();
+    let response = await lunes.cancelLeasing(data);
+ 
+    return response;
+  }
+
 }
 
 export default TransactionService;
