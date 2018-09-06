@@ -39,13 +39,13 @@ class LeasingService {
             return;
 
         } catch (error) {
-
             internalServerError();
             return;
         }
     }
 
     async saveLeaseTransaction(data, coinName, token) {
+        console.warn(data);
         let endpointUrl = BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
 
         let transactionData = {

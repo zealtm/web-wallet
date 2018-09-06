@@ -26,7 +26,6 @@ class LeasingHistory extends React.Component {
     getLeasingInfo(coins.lunes.abbreviation,
       coins.lunes.address,
       coins.lunes.decimalPoint);
-    this.renderHistory();
   }
 
   stateDataHistory = (key) => {
@@ -50,7 +49,6 @@ class LeasingHistory extends React.Component {
 
   renderBtCancel = (status, txid, type) => {
     let { coinFee, decimalPoint, cancelLeasing, user, coins } = this.props;
-
     if (status === 1) {
       return (
         <div
@@ -82,8 +80,8 @@ class LeasingHistory extends React.Component {
     let { toggleHistory } = this.state;
     let { history } = this.props;
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
-
-    if (!history || history === undefined) {
+    console.warn(history);
+    if (history === undefined) {
       return <div className={style.notFound}>Nothing Found</div>;
     }
 

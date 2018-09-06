@@ -99,7 +99,7 @@ export function* cancelLeasing(action) {
     let transaction = yield call(leasingService.saveLeaseTransaction, response, action.data.coinName, token);
 
     if (transaction.data.code === 200) {
-      yield put(successRequest(i18next.t("MODAL_LEASING_MESSAGE_SUCCESS")));
+      yield put(successRequest(i18next.t("MODAL_LEASING_CANCEL_SUCCESS")));
 
       return
     }
@@ -121,33 +121,37 @@ export function* getLeasingInfo(action) {
     let professionalNodes = yield call(leasingService.getProfessionalNodes);
     let lease = yield call(leasingService.getLeasingHistory, action.coin, action.address, token);
 
-    if (lease.history) {
-      setAuthToken(lease.history.headers[HEADER_RESPONSE]);
-      lease.history.data.data.txs.map(history => {
-
-        if (history.amount) {
-          history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
-        }
-
-        professionalNodes.map(node => {
-          if (history.to === node.address) {
-            history.to = node.domain
-          }
-        });
-      });
-
+    if (lease === undefined) {
       yield put({
         type: "GET_INFO_LEASING",
-        leasingHistory: lease.history.data,
-        leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
+        leasingHistory: [],
+        leasingBalance: 0,
         professionalNodes
       });
-
       return;
     }
 
-    yield put(history.error);
+    setAuthToken(lease.history.headers[HEADER_RESPONSE]);
+    lease.history.data.data.txs.map(history => {
 
+      if (history.amount) {
+        history.amount = convertBiggestCoinUnit(history.amount, action.decimalPoint);
+      }
+
+      professionalNodes.map(node => {
+        if (history.to === node.address) {
+          history.to = node.domain
+        }
+      });
+    });
+
+    yield put({
+      type: "GET_INFO_LEASING",
+      leasingHistory: lease.history.data,
+      leasingBalance: convertBiggestCoinUnit(lease.balance.data.data.balance, action.decimalPoint),
+      professionalNodes
+    });
+    
     return;
   } catch (error) {
     yield put(internalServerError());
