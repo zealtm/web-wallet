@@ -97,8 +97,8 @@ export const getDefaultCrypto = () => {
   let favoritesCrypto = getFavoritesCrypto();
 
   return !userStorage || !userStorage.defaultCoin
-    ? "lunes"
+    ? "btc"
     : favoritesCrypto.includes(userStorage.defaultCoin)
       ? userStorage.defaultCoin
-      : "lunes";
+      : "btc";
 };

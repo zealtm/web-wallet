@@ -4,7 +4,8 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
-  HEADER_RESPONSE
+  HEADER_RESPONSE,
+  TESTNET
 } from "../constants/apiBaseUrl";
 import {
   modalError,
@@ -177,19 +178,6 @@ class CoinService {
     }
   }
 
-  async getCoinFee(coinType) {
-    if (coinType === "lunes") {
-      let feeValue = {
-        low: 0.001,
-        medium: 0.001,
-        high: 0.001,
-        selectedFee: 0.001
-      };
-
-      return feeValue;
-    }
-  }
-
   async getCoinPrice(coinType, fiat, token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -322,9 +310,9 @@ class CoinService {
 
       let valid = await CAValidator.validate(address, coin.toUpperCase());
 
-      // if (!valid) {
-      //   return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
-      // }
+      if (!valid && !TESTNET) {
+        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      }
 
       return valid;
     } catch (er) {
@@ -351,6 +339,7 @@ class CoinService {
     try {
       let fee = {};
       let feePerByte = {};
+      let feeLunes = {};
 
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
@@ -361,9 +350,10 @@ class CoinService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn(response.data);
       let dataFee = response.data.data.fee;
       let dataFeePerByte = response.data.data.feePerByte;
+      let dataFeeLunes = response.data.data.feeLunes;
 
       if (response.data.code === 200) {
         Object.keys(dataFee).map(value => {
@@ -372,6 +362,10 @@ class CoinService {
 
         Object.keys(dataFeePerByte).map(value => {
           feePerByte[value] = dataFeePerByte[value];
+        });
+
+        Object.keys(dataFeeLunes).map(value => {
+          feeLunes[value] = dataFeeLunes[value];
         });
       }
 

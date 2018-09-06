@@ -72,17 +72,19 @@ class AuthService {
 
   async verifyTwoFactoryAuth(token2fa, token) {
     try {
+      console.warn(token2fa);
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
         BASE_URL + "/user/2fa/verify",
-        { token2fa },
+        { token: token2fa },
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.warn(response);
+
       return response;
     } catch (error) {
-      if (error.response.data.code === 401) {
+      console.warn(error.response);
+      if (error.response.data.code === 401 || error.response.status === 400) {
         return unauthorized("Invalid 2FA token");
       }
 

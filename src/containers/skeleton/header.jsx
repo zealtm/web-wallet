@@ -115,7 +115,7 @@ class Header extends React.Component {
             <img src="../../images/logo.svg" className={style.logo} />
           </div>
           {this.renderBalance()}
-          <Hidden xsDown>{this.renderNotifications()}</Hidden>
+          {/* <Hidden xsDown>{this.renderNotifications()}</Hidden> */}
 
           <Hidden mdDown>
             <UserControl actionLogout={actionLogout} />
