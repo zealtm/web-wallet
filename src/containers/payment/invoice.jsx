@@ -139,20 +139,16 @@ class Invoice extends React.Component {
       }
     });
 
-
     if (event.target.value.length === 48) {
       getInvoice(event.target.value)
 
-      setTimeout(() => {
-        this.setState({
-          ...this.state,
-          invoice: {
-            ...invoice,
-            ...payment
-          }
-        });
-        console.log('payment', payment);
-      }, 500);
+      this.setState({
+        ...this.state,
+        invoice: {
+          ...invoice,
+          ...payment
+        }
+      });
     }
   }
 
