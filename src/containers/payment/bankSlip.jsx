@@ -167,7 +167,6 @@ class BankSlip extends React.Component {
   inputValidator = () => {
     this.openModal(); // abrind modal sem validacao para testar 
     this.setPayment(); // setar os dados no redux, para teste sem validacao 
-    // tem que fazer a funcao pra pegar a quantidade de moedas necessarias para esta transacao e liberar o botao apos o resultado
 
     const {number, assignor, name, description, dueDate, cpfCnpj, value}  = this.state.bankSlip;
     
@@ -201,8 +200,6 @@ class BankSlip extends React.Component {
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
-
-    
 
     return (
       <Grid container direction="row" justify="center">
