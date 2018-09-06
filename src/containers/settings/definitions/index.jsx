@@ -13,9 +13,6 @@ import Grid from "@material-ui/core/Grid";
 import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Hidden from "@material-ui/core/Hidden";
-
-
-// STYLES
 import style from "./style.css";
 
 const materialStyle = theme => ({
@@ -57,11 +54,26 @@ const materialStyle = theme => ({
     boxShadow: theme.shadows[1],
   },
 });
-
-
 class Definitions extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      switchBoxA: false,
+      switchBoxB: false,
+    }
+  }
+
+  handleSwitchBoxA = () => {
+    this.setState({ switchBoxA: !this.state.switchBoxA });
+  };
+
+  handleSwitchBoxB = () => {
+    this.setState({ switchBoxB: !this.state.switchBoxB });
+  };
   render() {
     const { classes } = this.props;
+    const { switchBoxA, switchBoxB } = this.state;
     return (
       <Grid container justify="center">
 
@@ -91,8 +103,8 @@ class Definitions extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={11} sm={10}> 
-        <div className={style.box}>
+        <Grid item xs={11} sm={10}>
+          <div className={style.box}>
 
             <h2>{i18n.t("SET_DEFINITIONS_TITLE1")}</h2>
             <div className={style.description}>
@@ -113,9 +125,9 @@ class Definitions extends React.Component {
                   iconChecked: classes.iOSIconChecked,
                   checked: classes.iOSChecked,
                 }}
+                onClick={() => this.handleSwitchBoxA()}
                 disableRipple
-                checked={true}
-                value="checkedB"
+                checked={switchBoxA}
               />
 
             </div>
@@ -130,8 +142,8 @@ class Definitions extends React.Component {
                   checked: classes.iOSChecked,
                 }}
                 disableRipple
-                checked={false}
-                value="checkedB"
+                onClick={() => this.handleSwitchBoxB()}
+                checked={switchBoxB}
               />
 
             </div>
