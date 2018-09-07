@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import NumberMask from "react-number-format";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -8,6 +8,7 @@ import {getUserGdpr} from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
+import {formatCpfCnpj} from "../../../utils/strings";
 
 // STYLES
 import style from "./style.css";
@@ -24,22 +25,33 @@ class DetailsPayment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gpdr: this.props.user.gpdr
+      user: {
+        gdpr: props.user.gdpr
+      }
     };
   }
 
   validateForm = () => {
     const {handleStep} = this.props;
-    // validar gpdr etc
+    const {user} = this.state;
+
+
 
     // atualizar reducer com o proximo modal
+    // Atualizar GDPR no estado e no banco
+
     handleStep("next"); // aqui tem que ser chamado redux
   }
 
   toogleSwitch = () => {
-    this.setState(prevState => ({
-      gdprChecked: !prevState.gdprChecked
-    }))
+    const {user} = this.state;
+    this.setState({
+      ...this.state,
+      user: {
+        ...user,
+        gdpr: user.gdpr === 'read' ? 'unread' : 'read'
+      }
+    })
   }
 
   componentWillMount() {
@@ -48,8 +60,10 @@ class DetailsPayment extends React.Component {
   }
 
   render() {
-    const {loading, payment, user} = this.props;
-    const {gdprChecked} = this.state;
+    const {loading, payment} = this.props;
+    const {user} = this.state;
+
+    const docMask = payment.doc.length === 11 ? "###.###.###-##" : "##.###.###/####-##";
 
     return (
       <div className={style.modalBox}>
@@ -73,9 +87,9 @@ class DetailsPayment extends React.Component {
             <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
             {payment.dueDate}
           </Grid>
-          <Grid item xs={6} md={2}>
-            <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
-            {payment.doc}
+          <Grid item xs={6} md={2} style={{padding: '0'}}>
+            <label className={style.inlineInfoLabel} style={{padding: '10px'}}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
+            <span style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.doc)}</span>
           </Grid>
           <Hidden smDown>
             <Grid item xs={6} md={2}>
@@ -88,16 +102,16 @@ class DetailsPayment extends React.Component {
           title={i18n.t("GDPR_TITLE")}
           description={i18n.t("GDPR_DESC")}
           action={this.toogleSwitch}
-          checked={user.gpdr === 'read'}
-          value="gdprChecked"
+          checked={user.gdpr === 'read'}
+          value="gdpr"
         />
 
         <ButtonContinue
           label={i18n.t("BTN_CONFIRM")}
           action={()=>this.validateForm()}
           loading={loading}
+          error={user.gdpr !== 'read'}
         />
-
       </div>
     );
   }
@@ -111,7 +125,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    getUserGdpr
+    getUserGdpr,
   },
   dispatch
 );

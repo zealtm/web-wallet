@@ -174,7 +174,7 @@
     "PAYMENT_NAME": "Name",
     "PAYMENT_SHORT_DESCRIPTION": "Short description",
     "PAYMENT_DUE_DATE": "Due date",
-    "PAYMENT_CPF_CNPJ": "CPF / CNPJ",
+    "PAYMENT_CPF_CNPJ": "CPF / CNPJ (only numbers)",
     "PAYMENT_VALUE": "Value",
     "PAYMENT_VALUE_SYMBOL": "$",
     "PAYMENT_DECIMAL_SEPARATOR": ",",

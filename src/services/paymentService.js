@@ -51,7 +51,7 @@ class PaymentService {
     }
   }
 
-  async getAmountCoinPay(token, coin, value){
+  async getCoinAmountPay(token, coin, value){
     try {
       API_HEADER.headers.Authorization = token;
 

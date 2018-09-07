@@ -278,7 +278,6 @@ class Invoice extends React.Component {
                 value={payment.dueDate || invoice.dueDate}
                 onChange={this.handleInvoiceDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
-                inputComponent={DateMask}
               />
               <Input
                 classes={{
@@ -290,7 +289,7 @@ class Invoice extends React.Component {
                 value={invoice.cpfCnpj}
                 onChange={this.handleInvoiceDefaultChange('cpfCnpj')}
                 error={errors.includes('cpfCnpj')}
-                inputComponent={invoice.cpfCnpj.length === 11 ? CpfMask : CnpjMask}
+                inputProps={{maxLength: 14}}
               />
               <Input
                 classes={{

@@ -6,10 +6,12 @@ import { getAuthToken } from "../../../utils/localStorage";
 // importar servico
 import PaymentService from "../../../services/paymentService";
 import UserService from "../../../services/userService";
+import CoinService from "../../../services/coinService";
 
 // iniciar servico
 const paymentService = new PaymentService();
 const userService = new UserService();
+const coinService = new CoinService();
 
 export function* getCoinsEnabledSaga() {
   try {
@@ -45,13 +47,17 @@ export function* setPaymentSaga(payload) {
   try {
     // chamar a quantidade de moedas necessarias
     let token = yield call(getAuthToken);
-    let response = yield call(paymentService.getAmountCoinPay, token, payload.coin, payload.value);
+    console.log('coinService', coinService);
+    let response = yield call(coinService.getCoinPrice, payload.pay.coin, 'brl', token);
+
+    const value = parseFloat(payload.pay.value);
+    const amount = parseFloat(value / response.data.data.price);
 
     const data = {
       number: payload.pay.number,
-      coin: payload.pay.coin,
-      amount: response.amount,
-      value: payload.pay.value,
+      coin: payload.pay.coin.toUpperCase(),
+      amount: amount.toFixed(8),
+      value: value.toFixed(2).replace('.', ','),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,

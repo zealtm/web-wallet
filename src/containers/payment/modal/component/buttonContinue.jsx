@@ -17,6 +17,7 @@ class ButtonContinue extends React.Component {
       <button
         className={!error ? style.btContinueDisable : style.btError}
         onClick={action}
+        disabled={error}
       >
         {loading ? <Loading /> : label}
       </button>

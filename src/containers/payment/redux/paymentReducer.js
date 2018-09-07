@@ -69,7 +69,6 @@ const payment = (state=initialState, action) => {
       }
 
     case "GET_USER_GDPR_REDUCER":
-      console.log('action', action);
       return {
         ...state,
         user: action.user

@@ -194,6 +194,7 @@ class CoinService {
 
   async getCoinPrice(coinType, fiat, token) {
     try {
+      console.log('Chamou API', coinType);
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL + "/coin/" + coinType + "/price/" + fiat,
