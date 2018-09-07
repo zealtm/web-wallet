@@ -1,5 +1,10 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER, TESTNET } from "../../constants/apiBaseUrl";
+import {
+  BASE_URL,
+  API_HEADER,
+  TESTNET,
+  HEADER_RESPONSE
+} from "../../constants/apiBaseUrl";
 import {
   internalServerError,
   modalError
@@ -23,7 +28,7 @@ class TransactionService {
         { fromAddress: address },
         API_HEADER
       );
-
+      console.warn(response, "responseUTXO");
       const utxos = [];
 
       response.data.data.utxos.forEach(utxo => {
@@ -166,7 +171,7 @@ class TransactionService {
   async transactionService(token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.post(
+      let response = await axios.get(
         BASE_URL + "/service/transferencia",
         API_HEADER
       );
