@@ -4,7 +4,7 @@ import NumberMask from "react-number-format";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getUserGdpr} from "../redux/paymentAction";
+import {getUserGdpr, setUserGdpr} from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -33,34 +33,34 @@ class DetailsPayment extends React.Component {
     };
   }
 
+  openError = (message) => {
+    this.setState({
+      ...this.state,
+      error: true,
+      errorMsg: message
+    });
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        error: false,
+        errorMsg: ''
+      });
+    }, 4100); // 100ms a mais que os 4000ms do timer nocomponente ModalBar
+  }
+
   validateForm = () => {
     const {handleStep, payment} = this.props;
     const {user, error} = this.state;
 
     if (user.gdpr === 'unread') {
-      this.setState({
-        ...this.state,
-        error: true,
-        errorMsg: 'Você deve aceitar os termos GDPR para continuar'
-      });
+      this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
       return;
     }
 
     if (!payment.amount || parseFloat(payment.amount) > payment.balance) {
-      this.setState({
-        ...this.state,
-        error: true,
-        errorMsg: 'Você não tem saldo suficiente para continuar'
-      });
+      this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
       return;
-    }
-
-    if (error) {
-      this.setState({
-        ...this.state,
-        error: false,
-        errorMsg: '',
-      })
     }
 
     // atualizar reducer com o proximo modal
@@ -71,13 +71,18 @@ class DetailsPayment extends React.Component {
 
   toogleSwitch = () => {
     const {user} = this.state;
+    const {setUserGdpr} = this.props;
+    const newStatus = user.gdpr === 'read' ? 'unread' : 'read';
+
     this.setState({
       ...this.state,
       user: {
         ...user,
-        gdpr: user.gdpr === 'read' ? 'unread' : 'read'
+        gdpr: newStatus
       }
-    })
+    });
+
+    setUserGdpr({gdpr: newStatus});
   }
 
   componentWillMount() {
@@ -88,6 +93,8 @@ class DetailsPayment extends React.Component {
   render() {
     const {loading, payment} = this.props;
     const {user, error, errorMsg} = this.state;
+
+    // const gdpr = payment.user.gdpr || user.gdpr;
 
     return (
       <div className={style.modalBox}>
@@ -137,7 +144,6 @@ class DetailsPayment extends React.Component {
           label={i18n.t("BTN_CONFIRM")}
           action={()=>this.validateForm()}
           loading={loading}
-          error={user.gdpr !== 'read'}
         />
       </div>
     );
@@ -153,6 +159,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     getUserGdpr,
+    setUserGdpr,
   },
   dispatch
 );

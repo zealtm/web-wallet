@@ -185,24 +185,22 @@ class Invoice extends React.Component {
       type: 'text',
       name: 'coin',
       placeholder: 'coin',
-      value: payment.coin || coin.value || '',
+      value: payment.coin.abbreviation || coin.value || '',
       required: true,
     };
 
     const { errors } = inputValidator({...invoiceInputs, coin: coinInput});
 
-    // if (errors.length > 0) {
-    //   this.setState({
-    //     ...this.state,
-    //     errors
-    //   });
-    //   return;
-    // }
+    if (errors.length > 0) {
+      this.setState({
+        ...this.state,
+        errors
+      });
+      return;
+    }
 
-    this.openModal(); // abrind modal sem validacao para testar
-    this.setPayment(); // setar os dados no redux, para teste sem validacao
-    // tem que fazer a funcao pra pegar a quantidade de moedas necessarias para esta transacao e
-    // liberar o botao apos o resultado
+    this.openModal();
+    this.setPayment();
   }
 
   render() {
