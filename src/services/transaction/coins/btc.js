@@ -59,6 +59,8 @@ class BtcTransaction {
         data.token
       );
 
+      console.warn("broadcastResult", broadcastResult);
+
       return broadcastResult.data.data.txId;
     } catch (error) {
       console.warn(error);

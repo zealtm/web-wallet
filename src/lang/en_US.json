@@ -4,9 +4,10 @@
 
   "BTN_GO": "Ir",
   "BTN_COMMING_SOON": "Soon",
-  "LOGIN_SLIDE_DESCRIPTION_1": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_2": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
-  "LOGIN_SLIDE_DESCRIPTION_3": "Enjoy the usability and technology of this incredible portfolio and store your crypto-coins with a high level of security ...",
+  "LOGIN_SLIDE_DESCRIPTION_1": "Faça o pagamento de boleto usando suas criptomoedas favoritas em uma interface fácil e intuitiva.",
+  "LOGIN_SLIDE_DESCRIPTION_2": "Transforme moedas digitais em Reais através de transferência eletrônica para os principais bancos do Brasil.",
+  "LOGIN_SLIDE_DESCRIPTION_3": "Realize recargas de crédito de celular com suas moedas virtuais de forma rápida e segura.",
+  "LOGIN_SLIDE_DESCRIPTION_4": "Envie, receba e armazene as principais criptomoedas do mercado em uma carteira descentralizada.",
   "2FA_INSTRUCTIONS_1": "Confirm with the code provided in google authenticator and enter the 6 digits below",
   "2FA_INSTRUCTIONS_2": "Enter the six-digit code of the second factor of your Monday Wallet!",
   "RESET_NEW_PASSWORD_HINT_1": "Upcase letter",

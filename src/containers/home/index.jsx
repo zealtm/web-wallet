@@ -113,7 +113,7 @@ class Home extends React.Component {
           <Grid item>
             <div className={style.cardHome}>
               <img
-                src="/images/icons/general/wallet@2x.png"
+                src="/images/icons/general/cupons@2x.png"
                 className={style.cardIcon}
               />
               <div className={style.cardTitle}>
