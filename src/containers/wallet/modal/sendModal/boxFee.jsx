@@ -17,6 +17,9 @@ import { errorInput } from "../../../errors/redux/errorAction";
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "../../style.css";
 
@@ -71,7 +74,7 @@ class BoxFee extends React.Component {
       return;
     }
 
-    errorInput("Select a Fee");
+    errorInput(i18n.t("MESSAGE_SELECT_FEE"));
     return;
   };
 
@@ -89,19 +92,20 @@ class BoxFee extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>Voce esta enviando </span>
+          <span>{i18n.t("MODAL_SEND_TO_SEND")}</span>
           <span className={style.totalConfirm}>
             {amount + " " + coin.toUpperCase()}
           </span>
         </div>
         <div>
-          <span>para o endereco </span>
+          <span>{i18n.t("MODAL_SEND_TO_ADDRESS")}</span>
           <span className={style.addressConfirm}>{modal.address}</span>
         </div>
 
         <div className={style.confirmFee}>
           <div>
-            Sua taxa de transação na rede <span> {coin.toUpperCase()} </span> é
+            {i18n.t("MODAL_SEND_FEE_TRANSACTION")}<span> {coin.toUpperCase()} </span>
+            {i18n.t("TEXT_IS")}
           </div>
           <div className={style.txtamount}>{selectedFee}</div>
         </div>
@@ -109,21 +113,23 @@ class BoxFee extends React.Component {
         <div className={style.boxFee}>
           <span
             className={style.greenLabelFee}
-            onClick={() => this.calcFee("low")}
+            onClick={() => this.calcFee(i18n.t("TEXT_LOW"))}
           >
-            Baixa {modal.feeValue.fee.low}
+            {i18n.t("TEXT_LOW")}
+            {modal.feeValue.fee.low}
           </span>
           <span
             className={style.yellowLabelFee}
-            onClick={() => this.calcFee("medium")}
+            onClick={() => this.calcFee(i18n.t("TEXT_MEDIUM"))}
           >
-            Média {modal.feeValue.fee.medium}
+            {i18n.t("TEXT_MEDIUM")} {modal.feeValue.fee.medium}
           </span>
           <span
             className={style.redLabelFee}
-            onClick={() => this.calcFee("high")}
+            onClick={() => this.calcFee(i18n.t("TEXT_HIGH"))}
           >
-            Alta {modal.feeValue.fee.high}
+            {i18n.t("TEXT_HIGH")}
+            {modal.feeValue.fee.high}
           </span>
         </div>
 

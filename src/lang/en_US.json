@@ -1,6 +1,23 @@
 {
   "MESSAGE_TRANSACTION_FAILED": "Your transaction could not be completed.",
-  "MESSAGE_INVALID_VOUCHER": "Invalid Voucher.",
+  "MESSAGE_INVALID_VOUCHER": "Invalid Voucher",
+  "MESSAGE_INVALID_AMOUNT": "Invalid Amount",
+  "MESSAGE_INVALID_PASSWORD": "Invalid Password",
+  "MESSAGE_SELECT_FEE": "Select a Fee",
+  "MESSAGE_NOT_SERVICE": "Service not available",
+  "MESSAGE_NOT_SERVICE_YET": "Service not available yet.",
+
+  "TEXT_IS": "is",
+  "TEXT_LOW": "Low",
+  "TEXT_MEDIUM": "Medium",
+  "TEXT_HIGH": "High",
+  "TEXT_PREV": "Prev",
+  "TEXT_UNAVAILABLE": "Unavailable",
+  "TEXT_TO": "To:",
+  "TEXT_FOR": "For:",
+  "TEXT_PROMOTIONAL": "promo:",
+  "TEXT_ID": "ID:",
+  "TEXT_BLOCKEXPLORER": "Blockexplorer:",
 
   "BTN_GO": "Ir",
   "BTN_COMMING_SOON": "Soon",
@@ -8,6 +25,9 @@
   "LOGIN_SLIDE_DESCRIPTION_2": "Transforme moedas digitais em Reais através de transferência eletrônica para os principais bancos do Brasil.",
   "LOGIN_SLIDE_DESCRIPTION_3": "Realize recargas de crédito de celular com suas moedas virtuais de forma rápida e segura.",
   "LOGIN_SLIDE_DESCRIPTION_4": "Envie, receba e armazene as principais criptomoedas do mercado em uma carteira descentralizada.",
+  "PLACEHOLDER_USER_PASSWORD": "Username or Password",
+  "PLACEHOLDER_EX_ADDRESS": "Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV",  
+  "FEBRUARY": "February",
   "2FA_INSTRUCTIONS_1": "Confirm with the code provided in google authenticator and enter the 6 digits below",
   "2FA_INSTRUCTIONS_2": "Enter the six-digit code of the second factor of your Monday Wallet!",
   "RESET_NEW_PASSWORD_HINT_1": "Upcase letter",
@@ -57,11 +77,13 @@
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
   "SETTINGS_USER_SAVE_DATA": "Save data",
   "SETTING_WALLETS_TITLE": "Wallets",
+  "SETTINGS_ALIAS_WALLET_LUNES": "Wallet Lunes",
   "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
   "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
   "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",
   "SETTING_LINK_RETURN": "Back to the settings",
   "SECURITY_TITLE": "2FA Authenticator",
+  "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "DEFINITIONS_TITLE": "Definitions",
   "CONSENT_TITLE": "Consent",
 
@@ -83,15 +105,6 @@
   "SET_DEFINITIONS_LABEL_COIN": "Moeda padrão",
 
   "PAGE_ERROR_404": "Oh, No!... Page not found",
-
-  "PAGE_ERROR_500": "Sua sessão expirou, logue novamente",
-  "PAGE_ERROR_500_REDIRECT": "Redirecting in",
-
-  "LEASING_SELECT_NODE_DEFAULT": "Nodes Profissionais",
-  "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
-  "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
-  "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",
-  "MODAL_LEASING_CANCEL_FAILURE": "Não foi possível cancelar",
   "JANUARY": "January",
   "MARCH": "March",
   "APRIL": "April",
@@ -271,5 +284,30 @@
   "PAYMENT_VALUE_SYMBOL": "$",
   "PAYMENT_DECIMAL_SEPARATOR": ",",
   "PAYMENT_PAY_NOW": "Pay now",
-  "PAYMENT_FIND_NAME": "Find by name"
+  "PAYMENT_FIND_NAME": "Find by name",
+  "PAGE_ERROR_500": "Sua sessão expirou, logue novamente",
+  "PAGE_ERROR_500_REDIRECT": "Redirecting in",
+  "MESSAGE_NOTHING_FOUND": "Nothing Found",  
+
+  "LEASING_SELECT_NODE_DEFAULT": "Nodes Profissionais",
+  
+  "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
+  "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
+  "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",
+  "MODAL_LEASING_CANCEL_FAILURE": "Não foi possível cancelar",
+
+  "MODAL_TITLE_INSTRUCIONS": "Instructions",
+  "MODAL_TITLE_START_LEASING": "Start Leasing",
+  "MODAL_SEND_QR_CODE": "Enviar Scaneando QrCode",
+  "MODAL_SEND_QR_CODE_INSTRUCTIONS": 
+  "Para esse procedimento em deskop você precisa usar uma webcam para visualizar o qrcode que deseja enviar.",  
+  "MODAL_SEND_QR_CODE_ADDRESS": "Enviar Scaneando QrCode",
+  "MODAL_SEND_AMOUNT_INSTRUCTIONS": "Você também pode enviar uma parte de todos os seus ativos",
+  "MODAL_SEND_INFO_TRANSACTION": "Para confirmar sua transação, informe sua senha e conclua o envio de ",
+  "MODAL_SEND_TO_ADDRESS": "para o endereço",
+  "MODAL_SEND_TO_SEND": "você esta enviando",
+  "MODAL_SEND_FEE_TRANSACTION": "Sua taxa de transação na rede",
+  "MODAL_SEND_INFO_BLOCKCHAIN": "Sua transação esta sendo processada dentro do Blockchain",
+  "MODAL_SEND_INFO_SUCCESS": "O envio foi feito com sucesso",
+  "MODAL_SEND_INFO_ERROR": "Falha no procedimento de envio"
 }

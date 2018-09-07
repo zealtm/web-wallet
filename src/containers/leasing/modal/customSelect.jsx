@@ -1,9 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+// MATERIAL UI
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
+
+// STYLES
 import style from "../style.css";
+
+// UTILS
 import i18next from "../../../utils/i18n";
 
 class CustomSelect extends React.Component {

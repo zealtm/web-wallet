@@ -3,7 +3,11 @@ import React from "react";
 // COMPONENTS
 import InstructionsModal from "./instructionsModal"
 import Modal from "../../../components/modal";
+
+// UTILS
 import i18n from "../../../utils/i18n";
+
+// STYLES
 import style from "./style.css";
 
 class Instructions extends React.Component {
@@ -27,7 +31,7 @@ class Instructions extends React.Component {
           </a>
         </div>
         <Modal
-            title={"Instructions"}
+            title={i18n.t("MODAL_TITLE_INSTRUCIONS")}
             content={<InstructionsModal />}
             show={isOpen}
             close={() => this.handleModal()}

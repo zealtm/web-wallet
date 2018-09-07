@@ -24,7 +24,7 @@ let inputUsername = {
   type: "email",
   name: "emailUsername",
   value: getUsername() ? getUsername() : "",
-  placeholder: "Username or Password",
+  placeholder: i18n.t("PLACEHOLDER_USER_PASSWORD"),
   required: true
 };
 

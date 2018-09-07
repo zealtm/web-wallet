@@ -170,7 +170,7 @@ class StartLeasing extends React.Component {
         <input
           type="text"
           name="txtaddress"
-          placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+          placeholder={i18n.t("PLACEHOLDER_EX_ADDRESS")}
           onChange={event => this.handleAddress(event.target.value)}
           value={toAddress}
           className={style.inputClear}

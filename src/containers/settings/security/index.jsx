@@ -31,7 +31,7 @@ class Security extends React.Component {
   renderTwoFactor = () => {
     let { settings, twoFactor } = this.props;
     if (twoFactor) {
-      return <div>Two Factor Authentication already registered!</div>;
+      return <div>{i18n.t("SECURITY_2FA_REGISTRED")}</div>;
     }
 
     return (

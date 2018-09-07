@@ -22,7 +22,6 @@ class CustomSelectImage extends React.Component {
   selectItem = () => {
     // const {action} = this.props;
     this.handleSelect();
-    // chamar funcao action
   }
 
   renderArrow() {
