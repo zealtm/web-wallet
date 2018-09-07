@@ -134,3 +134,7 @@
 :local(.clInfo) {
   color: #ffffff;
 }
+
+:local(.clWarning) {
+  color: #ffcf49;
+}

@@ -80,6 +80,12 @@ let consent = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
+let payment = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../payment")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../payment")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -118,6 +124,7 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+              <Route path="/payment" component={payment} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

@@ -39,6 +39,8 @@ class CustomSelect extends React.Component {
   loadNodes = () => {
     let { professionalNode } = this.props;
 
+    if (!professionalNode) return <div>No node found</div>;
+
     return professionalNode.map((node, index) => (
       <div
         key={index}

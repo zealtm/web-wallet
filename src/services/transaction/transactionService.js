@@ -28,7 +28,6 @@ class TransactionService {
         { fromAddress: address },
         API_HEADER
       );
-      console.warn(response, "responseUTXO");
       const utxos = [];
 
       response.data.data.utxos.forEach(utxo => {
@@ -65,7 +64,6 @@ class TransactionService {
   /* eslint-disable */
   async transaction(transaction, seed, token) {
     try {
-      console.warn(transaction);
       let responde = undefined;
       let coinService = new CoinService();
       let {
@@ -146,11 +144,9 @@ class TransactionService {
             coin,
             "Teste"
           );
-          console.warn(responseSaveLunes, "responseSaveLunes");
           return responseSaveLunes;
 
         case "ltc":
-          console.warn("foi");
           let transactionLtc = new BtcTransaction();
           let responseLtc = await transactionLtc.createTransaction({
             fromAddress: fromAddress,
@@ -181,11 +177,9 @@ class TransactionService {
             "Teste"
           );
 
-          console.warn(responseSaveLtc);
           return responseSaveLtc;
 
         case "bch":
-          console.warn("foi");
           let transactionBch = new BtcTransaction();
           let responseBch = await transactionBch.createTransaction({
             fromAddress: fromAddress,
@@ -216,7 +210,6 @@ class TransactionService {
             "Teste"
           );
 
-          console.warn(responseSaveBch);
           return responseSaveBch;
       }
     } catch (error) {

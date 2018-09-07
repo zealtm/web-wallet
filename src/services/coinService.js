@@ -62,7 +62,6 @@ class CoinService {
         BASE_URL + "/coin",
         API_HEADER
       );
-      console.warn(responseAvailableCoins);
       let availableCoins = responseAvailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
@@ -145,7 +144,6 @@ class CoinService {
       coins.token = availableCoins.token;
       return coins;
     } catch (error) {
-      console.warn(error, error.response);
       internalServerError();
       return;
     }
@@ -182,6 +180,7 @@ class CoinService {
 
   async getCoinPrice(coinType, fiat, token) {
     try {
+      console.log("Chamou API", coinType);
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL + "/coin/" + coinType + "/price/" + fiat,
