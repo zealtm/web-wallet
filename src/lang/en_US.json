@@ -178,5 +178,6 @@
     "PAYMENT_VALUE": "Value",
     "PAYMENT_VALUE_SYMBOL": "$",
     "PAYMENT_PAY_NOW": "Pay now",
-    "PAYMENT_FIND_NAME": "Find by name"
+    "PAYMENT_FIND_NAME": "Find by name",
+    "PAYMENT_TITLE": "Boletos"
 }

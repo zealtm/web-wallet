@@ -48,6 +48,7 @@ class History extends React.Component {
     super();
     this.state = {
       search: '',
+      historyState: []
     }
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -66,8 +67,14 @@ class History extends React.Component {
   }
 
   handleFilter = () => {
+    // funcao inutilzada
+  }
+
+  renderItem = (val,key) =>{
     const {search} = this.state;
-    console.log('Filter results: ', search);
+    if(val.name.toLowerCase().indexOf(search.toLowerCase()) != -1){
+      return <HistoryItem key={key} item={val} />
+    }
   }
 
   handleMouseDownPassword = event => {
@@ -88,9 +95,9 @@ class History extends React.Component {
                   <img src="/images/icons/general/pay@1x.png" alt="Payments"/>
                 </div>
                 <div className={style.bankSlipInfo}>
-                  23
+                  {history.length}
                   <br />
-                  Boletos
+                  {i18n.t("PAYMENT_TITLE")}
                 </div>
               </div>
             </Grid>
@@ -125,7 +132,7 @@ class History extends React.Component {
         <Grid item xs={12} className={style.box}>
           <div className={style.historyItems}>
             {history.map((val,key) => (
-              <HistoryItem key={key} item={val} />
+              this.renderItem(val,key)
             ))}
           </div>
         </Grid>
