@@ -140,6 +140,41 @@ export function* getUserGdprSaga() {;
   }
 }
 
+export function* getHistoryPaySaga(){
+  try {
+    let token = yield call(getAuthToken);
+    //let response = yield call(paymentService.getHistory, token);
+
+    const response = [
+      {
+        name: "Energia",
+        date: "04/09/2018 17:00",
+        status: "confirmado",
+        coin: "lunes",
+        amount: "50000",
+        value: "45.90",
+      },
+      {
+        name: "Plano Saude",
+        date: "04/09/2018 17:00",
+        status: "confirmado",
+        coin: "lunes",
+        amount: "1000",
+        value: "205.00",
+      },
+    ];
+    
+    yield put(
+      {
+        type: "GET_HISTORY_PAY_REDUCER",
+        history: response
+      }
+    )
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
 // export function* calcCoinPaymentSaga(value){
 //   let token = yield call(getAuthToken);
 //   // AQUI UM ENDPOINT PRA RETORNAR O QTDE DE MOEDAS NECESSARIAS

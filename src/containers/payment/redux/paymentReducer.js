@@ -18,6 +18,7 @@ const initialState = {
     medium: 0,
     hight: 0
   },
+  history: [],
   loading: false,
   user: {
     gpdr: 'unread'
@@ -68,10 +69,10 @@ const payment = (state=initialState, action) => {
         }
       }
 
-    case "GET_USER_GDPR_REDUCER":
+    case "GET_HISTORY_PAY_REDUCER":
       return {
         ...state,
-        user: action.user
+        history: action.history
       }
 
     default: {

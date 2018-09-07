@@ -10,18 +10,20 @@ class HistoryItem extends React.Component {
   }
 
   render() {
+    const {item} = this.props;
+
     return (
       <Grid container>
         <Grid item xs={12} className={style.row}>
           <div className={style.itemLeft}>
-            <p className={style.description}>Energia</p>
-            <p className={style.defaultText}>04/09/2018 17:00</p>
-            <p className={style.statusConfirmed}>confirmado</p>
+            <p className={style.description}>{item.name}</p>
+            <p className={style.defaultText}>{item.date}</p>
+            <p className={style.statusConfirmed}>{item.status}</p>
           </div>
           <div className={style.itemRight}>
-            <p className={style.icon}><img src="/images/icons/coins/lunes.png" alt="Lunes"/> Lunes</p>
-            <p className={style.coinValue}>17642</p>
-            <p>R$ 190,92</p>
+            <p className={style.icon}><img src={`/images/icons/coins/${item.coin}.png`} alt={item.coin}/> {item.coin}</p>
+            <p className={style.coinValue}>{item.amount}</p>
+            <p>R$ {item.value}</p>
           </div>
         </Grid>
         <div className={style.line}></div>
@@ -31,7 +33,7 @@ class HistoryItem extends React.Component {
 }
 
 HistoryItem.propTypes = {
-
+  item: PropTypes.object
 }
 
 export default HistoryItem;
