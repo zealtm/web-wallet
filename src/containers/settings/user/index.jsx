@@ -12,9 +12,7 @@ import style from "./style.css";
 import colors from "../../../components/bases/colors";
 
 // MATERIAL UI
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -118,7 +116,7 @@ class User extends React.Component {
 
     return (
       <div>
-        <Grid container className={style.containerHeaderSettings}>
+        <Grid item xs={12} className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
               <Grid item xs={12}>
@@ -144,7 +142,7 @@ class User extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={style.container}>
+        <Grid container className={style.container}>
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
