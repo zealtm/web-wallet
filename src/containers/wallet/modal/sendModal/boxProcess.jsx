@@ -12,6 +12,9 @@ import Loading from "../../../../components/loading";
 // STYLE
 import style from "../../style.css";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 class BoxProcess extends React.Component {
   doTransaction = () => {
     console.warn(modal);
@@ -47,17 +50,17 @@ class BoxProcess extends React.Component {
           className={style.modalIconCoin}
         />
         <div className={style.processInfo}>
-          <span>Voce esta enviando </span>
+          <span>{i18n.t("MODAL_SEND_TO_SEND")} </span>
           <span className={style.totalConfirm}>
             {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
-          <span> para o endereco </span>
+          <span> {i18n.t("MODAL_SEND_TO_ADDRESS")} </span>
           <span className={style.addressConfirm}>{modal.address}</span>
         </div>
         <Loading width={"30px"} />
         <div className={style.confirmFee}>
           <div className={style.textHelp}>
-            Sua transação esta sendo processada dentro do Blockchain{" "}
+            {i18n.t("MODAL_SEND_INFO_BLOCKCHAIN")}{" "}
             {coin.toUpperCase()}
           </div>
         </div>
