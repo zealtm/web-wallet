@@ -27,6 +27,11 @@ export const getUserGdpr = () => ({
   type: "GET_USER_GDPR"
 });
 
+export const setUserGdpr = (user) => ({
+  type: "SET_USER_GDPR",
+  user
+});
+
 export const getHistoryPay = () => ({
   type: "GET_HISTORY_PAY"
 });

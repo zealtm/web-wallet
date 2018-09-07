@@ -18,7 +18,6 @@ export function* getCoinsEnabledSaga() {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getCoins, token);
-    console.log('getCoins', response);
 
     const services = response.data.services;
 
@@ -32,8 +31,6 @@ export function* getCoinsEnabledSaga() {
         img: `/images/icons/coins/${coin.abbreviation}.png`
       }
     });
-
-    console.log('coins', coins);
 
     yield put(
       {
@@ -66,7 +63,7 @@ export function* setPaymentSaga(payload) {
       number: payload.pay.number,
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
-      amount: amount.toFixed(8),
+      amount: parseFloat(amount.toFixed(8)),
       value: value.toFixed(2).replace('.', ','),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
@@ -74,8 +71,6 @@ export function* setPaymentSaga(payload) {
       description: payload.pay.description,
       cpfCnpj: payload.pay.cpfCnpj
     }
-
-    console.log('payment', data);
 
     yield put(
       {
@@ -140,7 +135,6 @@ export function* getUserGdprSaga() {;
     const response = yield call(userService.getUser, token);
 
     const user = response.data.data;
-    console.log('@@ user');
 
     yield put({
       type: "GET_USER_GDPR_REDUCER",
@@ -149,6 +143,20 @@ export function* getUserGdprSaga() {;
       }
     })
   } catch (err) {
+    yield put(internalServerError());
+  }
+}
+
+export function* setUserGdprSaga(payload) {
+  try {
+    const token = yield call(getAuthToken);
+    const response = yield call(userService.updateUser, payload.user, token);
+
+    yield put({
+      type: "GET_USER_GDPR_REDUCER",
+      user: payload.user
+    })
+  } catch (error) {
     yield put(internalServerError());
   }
 }

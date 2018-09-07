@@ -24,7 +24,7 @@ const initialState = {
   history: [],
   loading: false,
   user: {
-    gdpr: 'read'
+    gdpr: 'unread'
   },
 };
 
@@ -73,6 +73,12 @@ const payment = (state=initialState, action) => {
       }
 
     case "GET_USER_GDPR_REDUCER":
+      return {
+        ...state,
+        user: action.user
+      }
+
+    case "SET_USER_GDPR_REDUCER":
       return {
         ...state,
         user: action.user
