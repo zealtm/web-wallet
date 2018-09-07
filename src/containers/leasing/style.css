@@ -61,7 +61,6 @@
   display: block;
   cursor: default;
   font-size: 9px;
-  padding-left:30px;
 }
 
 :local(.toggleHistory) {

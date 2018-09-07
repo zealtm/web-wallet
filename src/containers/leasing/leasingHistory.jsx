@@ -24,12 +24,14 @@ class LeasingHistory extends React.Component {
 
   componentDidMount() {
     let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(coins.lunes.abbreviation,
+    getLeasingInfo(
+      coins.lunes.abbreviation,
       coins.lunes.address,
-      coins.lunes.decimalPoint);
+      coins.lunes.decimalPoint
+    );
   }
 
-  stateDataHistory = (key) => {
+  stateDataHistory = key => {
     let { toggleHistory } = this.state;
 
     this.setState({
@@ -58,12 +60,12 @@ class LeasingHistory extends React.Component {
             if (type === "ACTIVE") {
               confirm(i18n.t("MODAL_LEASING_CONFIRM"))
                 ? cancelLeasing({
-                  txid,
-                  coinFee,
-                  decimalPoint,
-                  password: user.password,
-                  coinName: coins.lunes.abbreviation,
-                })
+                    txid,
+                    coinFee,
+                    decimalPoint,
+                    password: user.password,
+                    coinName: coins.lunes.abbreviation
+                  })
                 : null;
             }
           }}
@@ -81,7 +83,6 @@ class LeasingHistory extends React.Component {
     let { toggleHistory } = this.state;
     let { history } = this.props;
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
-    console.warn(history);
     if (history === undefined) {
       return <div className={style.notFound}>Nothing Found</div>;
     }
@@ -107,7 +108,7 @@ class LeasingHistory extends React.Component {
             </Grid>
           </Grid>
 
-          <div >
+          <div>
             <Grid
               item
               xs={12}
@@ -117,17 +118,18 @@ class LeasingHistory extends React.Component {
                 <Grid item xs={12} className={style.descriptionHistory}>
                   <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
                   <a href={blockexplorer + value.txID} target="blank">
-                    {value.txID + "..."}
+                    {value.txID}
                   </a>
                 </Grid>
-                <Grid item xs={12} className={style.descriptionHistory}>
-                  <div>{i18n.t("LEASING_TITLE_NODE")}</div>
-                  <div>{value.to + "..."}</div>
-                </Grid>
+                {value.to ? (
+                  <Grid item xs={12} className={style.descriptionHistory}>
+                    <div>{i18n.t("LEASING_TITLE_NODE")}</div>
+                    <div>{value.to}</div>
+                  </Grid>
+                ) : null}
               </Grid>
             </Grid>
           </div>
-
         </div>
       </div>
     ));
@@ -144,7 +146,6 @@ class LeasingHistory extends React.Component {
       <div>
         <Grid container className={style.containerTransactions}>
           <Grid container item xs={11} sm={10} md={10}>
-
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_LABEL")}
@@ -185,7 +186,6 @@ class LeasingHistory extends React.Component {
               {this.renderHistory()}
             </div>
           </Grid>
-
         </Grid>
       </div>
     );
