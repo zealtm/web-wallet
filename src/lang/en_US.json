@@ -74,6 +74,7 @@
   "SETTINGS_USER_SELECT": "Select",
   "SETTINGS_USER_CITY": "City",
   "SETTINGS_USER_STATE": "State",
+  "SETTINGS_USER_BIRTHDATE": "Birthdate",
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
   "SETTINGS_USER_SAVE_DATA": "Save data",
   "SETTING_WALLETS_TITLE": "Wallets",

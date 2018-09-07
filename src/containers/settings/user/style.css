@@ -70,17 +70,18 @@
   display: flex;
   justify-content: center;
   width: auto;
+  padding-bottom: 40px;
 }
 
 @media screen and (min-width: 599px) {
   :local(.container) {
-    /* margin: 0 2rem; */
+    margin: 0 2rem;
   }
 }
 
 @media screen and (min-width: 1199px) {
   :local(.container) {
-    /* margin: 0 5rem; */
+    margin: 0 5rem;
   }
 }
 
@@ -89,6 +90,11 @@
   margin: 1rem .5rem !important;
   padding: 0.25rem;
   border-radius: 5px;
+}
+
+:local(.rowAdress){
+  composes: row;
+  padding: 6px;
 }
 
 :local(.content) {
@@ -186,7 +192,6 @@
   composes: textDefault;
   display: block;
   position: relative;
-  margin-bottom: .5rem;
 }
 
 /* 4 AVATAR */
@@ -216,4 +221,11 @@
     width: 8.5rem !important;
     height: 8.5rem !important;
   }
+}
+:local(.selectItem) {
+  height: 50px;
+}
+
+:local(.selectItem path) {
+  color: #654ea6;
 }
