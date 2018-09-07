@@ -5,9 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setLeasingLoading,
-  cancelLeasing,
-  getLeasingInfo
+  setLeasingLoading, cancelLeasing, getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import Grid from "@material-ui/core/Grid";
 import i18n from "../../utils/i18n";
@@ -23,8 +21,10 @@ class LeasingHistory extends React.Component {
   }
 
   componentDidMount() {
-    let { getLeasingInfo, coins } = this.props;
-    getLeasingInfo(coins.lunes.abbreviation,
+    let {
+      getLeasingInfo,
+      coins } = this.props;
+      getLeasingInfo(coins.lunes.abbreviation,
       coins.lunes.address,
       coins.lunes.decimalPoint);
   }

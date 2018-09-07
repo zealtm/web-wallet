@@ -61,6 +61,7 @@ class CoinService {
         BASE_URL + "/coin",
         API_HEADER
       );
+      
       let availableCoins = responseavailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN

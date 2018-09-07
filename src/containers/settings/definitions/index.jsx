@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
@@ -15,6 +16,7 @@ import Switch from '@material-ui/core/Switch';
 import Hidden from "@material-ui/core/Hidden";
 import style from "./style.css";
 import { setDefinitionMetadata, getDefinitionMetadata } from "../../../utils/localStorage";
+import { compose } from "recompose";
 
 const materialStyle = theme => ({
   iOSSwitchBase: {
@@ -84,6 +86,30 @@ class Definitions extends React.Component {
     return switchBoxA
   }
 
+  renderSelectCoins = () => {
+    let { coins } = this.props;
+    return Object.keys(coins).map((coin, index) => (
+      coin = coins[coin],
+      <div key={index} onClick={this.selectItem}>
+        <div>
+          <img src={"images/icons/coins/" + coin.abbreviation + ".png"} />
+          {coin.abbreviation}
+        </div>
+      </div>
+    ))
+  }
+
+  renderSelectCurrency = () => {
+    let currency = ["BRL", "USD", "EUR"];
+    
+    return currency.map((value, index) => (
+      <div key={index} onClick={this.selectItem}>
+        <img src={"images/lang/brasil.png"} />
+        {value}
+      </div>
+    ))
+  }
+
   render() {
     const { classes } = this.props;
     const { switchBoxA } = this.state;
@@ -142,23 +168,19 @@ class Definitions extends React.Component {
                 disableRipple
                 checked={switchBoxA}
               />
-
             </div>
 
             <hr className={style.line} />
 
             <Grid container justify="center" className={style.formDefinition}>
               <Grid item xs={11} md={4}>
-                {i18n.t("SET_DEFINITIONS_LABEL_LANG")}
-                <CustomSelectImage action={() => alert("teste")} />
-
                 {i18n.t("SET_DEFINITIONS_LABEL_CURR")}
-                <CustomSelectImage action={() => alert("teste")} />
+                <CustomSelectImage type={"fiat"} action={this.renderSelectCurrency} />
 
               </Grid>
               <Grid item xs={11} md={4}>
                 {i18n.t("SET_DEFINITIONS_LABEL_COIN")}
-                <CustomSelectImage action={() => alert("teste")} />
+                <CustomSelectImage type={"crypto"} action={this.renderSelectCoins} />
               </Grid>
             </Grid>
           </div>
@@ -170,6 +192,18 @@ class Definitions extends React.Component {
 
 Definitions.propTypes = {
   classes: PropTypes.object.isRequired,
+  coins: PropTypes.array
 };
 
-export default withStyles(materialStyle)(Definitions);
+const mapSateToProps = store => (console.warn(store), {
+  coins: store.skeleton.coins,
+});
+
+
+export default compose(
+  withStyles(materialStyle),
+  connect(
+    mapSateToProps,
+    null
+  )
+)(Definitions);
