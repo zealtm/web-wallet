@@ -2,6 +2,7 @@ import {put,call} from "redux-saga/effects";
 import {internalServerError} from "../../errors/statusCodeMessage";
 
 import { getAuthToken } from "../../../utils/localStorage";
+import {convertBiggestCoinUnit} from "../../../utils/numbers";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
@@ -16,26 +17,28 @@ const coinService = new CoinService();
 export function* getCoinsEnabledSaga() {
   try {
     let token = yield call(getAuthToken);
-    // let response = yield call(paymentService.getCoins, token);
-    // console.log(response);
+    let response = yield call(paymentService.getCoins, token);
+    console.log('getCoins', response);
 
-    const response = [
-      {
-        title: 'Lunes',
-        value: 'lunes',
-        img: '/images/icons/coins/lunes.png'
-      },
-      {
-        title: 'Bitcoin',
-        value: 'btc',
-        img: '/images/icons/coins/btc.png'
+    const services = response.data.services;
+
+    const coins = services.map(coin => {
+      return {
+        title: coin.name,
+        value: {
+          abbreviation: coin.abbreviation,
+          address: coin.address
+        },
+        img: `/images/icons/coins/${coin.abbreviation}.png`
       }
-    ];
+    });
+
+    console.log('coins', coins);
 
     yield put(
       {
         type: "GET_COINS_REDUCER",
-        coins: response
+        coins
       }
     )
   } catch(error) {
@@ -47,23 +50,32 @@ export function* setPaymentSaga(payload) {
   try {
     // chamar a quantidade de moedas necessarias
     let token = yield call(getAuthToken);
-    console.log('coinService', coinService);
-    let response = yield call(coinService.getCoinPrice, payload.pay.coin, 'brl', token);
+    let response = yield call(coinService.getCoinPrice, payload.pay.coin.abbreviation, 'brl', token);
+    const balanceResponse = yield call(
+      coinService.getCoinBalance,
+      payload.pay.coin.abbreviation,
+      payload.pay.coin.address,
+      token
+    );
 
+    const balance = balanceResponse.data.data.available;
     const value = parseFloat(payload.pay.value);
     const amount = parseFloat(value / response.data.data.price);
 
     const data = {
       number: payload.pay.number,
-      coin: payload.pay.coin.toUpperCase(),
+      coin: payload.pay.coin,
+      balance: convertBiggestCoinUnit(balance, 8),
       amount: amount.toFixed(8),
       value: value.toFixed(2).replace('.', ','),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
       description: payload.pay.description,
-      doc: payload.pay.cpfCnpj
+      cpfCnpj: payload.pay.cpfCnpj
     }
+
+    console.log('payment', data);
 
     yield put(
       {
@@ -128,6 +140,7 @@ export function* getUserGdprSaga() {;
     const response = yield call(userService.getUser, token);
 
     const user = response.data.data;
+    console.log('@@ user');
 
     yield put({
       type: "GET_USER_GDPR_REDUCER",
@@ -163,7 +176,7 @@ export function* getHistoryPaySaga(){
         value: "205.00",
       },
     ];
-    
+
     yield put(
       {
         type: "GET_HISTORY_PAY_REDUCER",

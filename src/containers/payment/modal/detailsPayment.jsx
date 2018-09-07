@@ -20,25 +20,51 @@ import Grid from "@material-ui/core/Grid";
 // COMPONENTS
 import CustomSwitch from "./component/customSwitch";
 import ButtonContinue from "./component/buttonContinue";
+import ModalBar from "../../../components/modalBar";
 
 class DetailsPayment extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      user: {
-        gdpr: props.user.gdpr
-      }
+      error: undefined,
+      errorMsg: '',
+      user: props.user
     };
   }
 
   validateForm = () => {
-    const {handleStep} = this.props;
-    const {user} = this.state;
+    const {handleStep, payment} = this.props;
+    const {user, error} = this.state;
 
+    if (user.gdpr === 'unread') {
+      this.setState({
+        ...this.state,
+        error: true,
+        errorMsg: 'Você deve aceitar os termos GDPR para continuar'
+      });
+      return;
+    }
 
+    if (!payment.amount || parseFloat(payment.amount) > payment.balance) {
+      this.setState({
+        ...this.state,
+        error: true,
+        errorMsg: 'Você não tem saldo suficiente para continuar'
+      });
+      return;
+    }
+
+    if (error) {
+      this.setState({
+        ...this.state,
+        error: false,
+        errorMsg: '',
+      })
+    }
 
     // atualizar reducer com o proximo modal
-    // Atualizar GDPR no estado e no banco
+    // Atualizar GDPR no estado e no banco (???)
 
     handleStep("next"); // aqui tem que ser chamado redux
   }
@@ -61,15 +87,16 @@ class DetailsPayment extends React.Component {
 
   render() {
     const {loading, payment} = this.props;
-    const {user} = this.state;
-
-    const docMask = payment.doc.length === 11 ? "###.###.###-##" : "##.###.###/####-##";
+    const {user, error, errorMsg} = this.state;
 
     return (
       <div className={style.modalBox}>
+        <div>
+          {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+        </div>
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
         <div className={style.strongText} style={{ marginTop: 20 }}>
-          <span className={style.textGreen}>{payment.amount} {payment.coin}</span>
+          <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>
           {i18n.t("PAYMENT_DETAILS_TEXT_2")}
           <span className={style.textGreen}>R$ {payment.value}</span>
           {i18n.t("PAYMENT_DETAILS_TEXT_3")}
@@ -89,7 +116,7 @@ class DetailsPayment extends React.Component {
           </Grid>
           <Grid item xs={6} md={2} style={{padding: '0'}}>
             <label className={style.inlineInfoLabel} style={{padding: '10px'}}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
-            <span style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.doc)}</span>
+            <p style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.cpfCnpj)}</p>
           </Grid>
           <Hidden smDown>
             <Grid item xs={6} md={2}>
@@ -103,7 +130,7 @@ class DetailsPayment extends React.Component {
           description={i18n.t("GDPR_DESC")}
           action={this.toogleSwitch}
           checked={user.gdpr === 'read'}
-          value="gdpr"
+          value="gdprSwitch"
         />
 
         <ButtonContinue

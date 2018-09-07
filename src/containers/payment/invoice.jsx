@@ -12,7 +12,7 @@ import Select from "../../components/select";
 import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import {DateMask, CpfMask, CnpjMask, MoneyBrlMask} from "../../components/inputMask";
+import {DateMask, MoneyBrlMask} from "../../components/inputMask";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -278,6 +278,7 @@ class Invoice extends React.Component {
                 value={payment.dueDate || invoice.dueDate}
                 onChange={this.handleInvoiceDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
+                inputComponent={DateMask}
               />
               <Input
                 classes={{
