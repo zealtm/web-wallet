@@ -18,11 +18,14 @@ class BtcTransaction {
   async createTransaction(data) {
     try {
       const transService = new TransactionService();
+      console.warn(2);
       const utxos = await transService.utxo(
         data.toAddress,
         data.coin,
         data.token
       );
+
+      console.warn("foi", utxos);
 
       const targets = [
         {
@@ -60,13 +63,15 @@ class BtcTransaction {
       tx = this.sign(tx, keyPair);
 
       const txHex = tx.build().toHex();
-
+      console.warn(3);
       // return;
       const broadcastResult = await transService.broadcast(
         txHex,
         data.coin,
         data.token
       );
+
+      console.warn(broadcastResult, "broadcastResult");
 
       return broadcastResult.data.data.txId;
     } catch (error) {

@@ -310,7 +310,13 @@ class CoinService {
         return response.data.valid;
       }
 
-      let valid = await CAValidator.validate(address, coin.toUpperCase());
+      let valid = false;
+      console.warn(coin);
+      if (coin === "bch") {
+        valid = true;
+      } else {
+        valid = await CAValidator.validate(address, coin.toUpperCase());
+      }
 
       if (!valid && !TESTNET) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));

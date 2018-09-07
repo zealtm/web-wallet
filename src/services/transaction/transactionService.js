@@ -148,6 +148,76 @@ class TransactionService {
           );
           console.warn(responseSaveLunes, "responseSaveLunes");
           return responseSaveLunes;
+
+        case "ltc":
+          console.warn("foi");
+          let transactionLtc = new BtcTransaction();
+          let responseLtc = await transactionLtc.createTransaction({
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            seed: seed,
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
+            feeLunes: feeLunes,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            coin: coin,
+            token: token,
+            network: TESTNET ? networks.LTCTESTNET : networks.LTC
+          });
+
+          if (responseLtc === "error") {
+            return;
+          }
+
+          let responseSaveLtc = await coinService.saveTransaction(
+            {
+              id: responseLtc,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
+            coin,
+            "Teste"
+          );
+
+          console.warn(responseSaveLtc);
+          return responseSaveLtc;
+
+        case "bch":
+          console.warn("foi");
+          let transactionBch = new BtcTransaction();
+          let responseBch = await transactionBch.createTransaction({
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            seed: seed,
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
+            feeLunes: feeLunes,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            coin: coin,
+            token: token,
+            network: TESTNET ? networks.LTCTESTNET : networks.LTC
+          });
+
+          if (responseLtc === "error") {
+            return;
+          }
+
+          let responseSaveBch = await coinService.saveTransaction(
+            {
+              id: responseBch,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
+            coin,
+            "Teste"
+          );
+
+          console.warn(responseSaveBch);
+          return responseSaveBch;
       }
     } catch (error) {
       internalServerError();
