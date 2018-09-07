@@ -3,10 +3,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
-import {
-  convertBiggestCoinUnit,
-  convertSmallerCoinUnit
-} from "../../../utils/numbers";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import {
   setAuthToken,
   getAuthToken,

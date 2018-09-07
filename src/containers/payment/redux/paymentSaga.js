@@ -1,5 +1,5 @@
-import {put,call} from "redux-saga/effects";
-import {internalServerError} from "../../errors/statusCodeMessage";
+import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../errors/statusCodeMessage";
 
 import { getAuthToken } from "../../../utils/localStorage";
 
@@ -15,30 +15,24 @@ const coinService = new CoinService();
 
 export function* getCoinsEnabledSaga() {
   try {
-    let token = yield call(getAuthToken);
-    // let response = yield call(paymentService.getCoins, token);
-    // console.log(response);
-
     const response = [
       {
-        title: 'Lunes',
-        value: 'lunes',
-        img: '/images/icons/coins/lunes.png'
+        title: "Lunes",
+        value: "lunes",
+        img: "/images/icons/coins/lunes.png"
       },
       {
-        title: 'Bitcoin',
-        value: 'btc',
-        img: '/images/icons/coins/btc.png'
+        title: "Bitcoin",
+        value: "btc",
+        img: "/images/icons/coins/btc.png"
       }
     ];
 
-    yield put(
-      {
-        type: "GET_COINS_REDUCER",
-        coins: response
-      }
-    )
-  } catch(error) {
+    yield put({
+      type: "GET_COINS_REDUCER",
+      coins: response
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -47,8 +41,12 @@ export function* setPaymentSaga(payload) {
   try {
     // chamar a quantidade de moedas necessarias
     let token = yield call(getAuthToken);
-    console.log('coinService', coinService);
-    let response = yield call(coinService.getCoinPrice, payload.pay.coin, 'brl', token);
+    let response = yield call(
+      coinService.getCoinPrice,
+      payload.pay.coin,
+      "brl",
+      token
+    );
 
     const value = parseFloat(payload.pay.value);
     const amount = parseFloat(value / response.data.data.price);
@@ -57,53 +55,47 @@ export function* setPaymentSaga(payload) {
       number: payload.pay.number,
       coin: payload.pay.coin.toUpperCase(),
       amount: amount.toFixed(8),
-      value: value.toFixed(2).replace('.', ','),
+      value: value.toFixed(2).replace(".", ","),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
       description: payload.pay.description,
       doc: payload.pay.cpfCnpj
-    }
+    };
 
-    yield put(
-      {
-        type: "SET_PAYMENT_REDUCER",
-        payload: data
-      }
-    )
-  } catch(error) {
+    yield put({
+      type: "SET_PAYMENT_REDUCER",
+      payload: data
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* getFeePaymentSaga(payload) {
+export function* getFeePaymentSaga() {
   try {
     // dados exemplo, tem que fazer chamada aqui
     const data = {
       low: 0.001,
       medium: 0.001,
       hight: 0.001
-    }
+    };
 
     // retorno exemplo
-    yield put(
-      {
-        type: "GET_FEE_PAYMENT_REDUCER",
-        fee: data
-      }
-    )
-  } catch(error) {
+    yield put({
+      type: "GET_FEE_PAYMENT_REDUCER",
+      fee: data
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
 export function* setFeePaymentSaga(payload) {
-  yield put(
-    {
-      type: "SET_FEE_PAYMENT_REDUCER",
-      fee: payload.fee
-    }
-  )
+  yield put({
+    type: "SET_FEE_PAYMENT_REDUCER",
+    fee: payload.fee
+  });
 }
 
 export function* getInvoiceSaga(payload) {
@@ -111,18 +103,16 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
-    yield put(
-      {
-        type: "GET_INVOICE_REDUCER",
-        payment: response
-      }
-    )
-  } catch(error) {
+    yield put({
+      type: "GET_INVOICE_REDUCER",
+      payment: response
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* getUserGdprSaga() {;
+export function* getUserGdprSaga() {
   try {
     const token = yield call(getAuthToken);
     const response = yield call(userService.getUser, token);
@@ -134,15 +124,15 @@ export function* getUserGdprSaga() {;
       user: {
         gdpr: user.gpdr
       }
-    })
+    });
   } catch (err) {
     yield put(internalServerError());
   }
 }
 
-export function* getHistoryPaySaga(){
+export function* getHistoryPaySaga() {
   try {
-    let token = yield call(getAuthToken);
+    // let token = yield call(getAuthToken);
     //let response = yield call(paymentService.getHistory, token);
 
     const response = [
@@ -152,7 +142,7 @@ export function* getHistoryPaySaga(){
         status: "confirmado",
         coin: "lunes",
         amount: "50000",
-        value: "45.90",
+        value: "45.90"
       },
       {
         name: "Plano Saude",
@@ -160,17 +150,15 @@ export function* getHistoryPaySaga(){
         status: "confirmado",
         coin: "lunes",
         amount: "1000",
-        value: "205.00",
-      },
-    ];
-    
-    yield put(
-      {
-        type: "GET_HISTORY_PAY_REDUCER",
-        history: response
+        value: "205.00"
       }
-    )
-  }catch(error){
+    ];
+
+    yield put({
+      type: "GET_HISTORY_PAY_REDUCER",
+      history: response
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
