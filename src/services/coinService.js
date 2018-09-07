@@ -58,12 +58,12 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let defaultCrypto = await getDefaultCrypto();
-      let responseavailableCoins = await axios.get(
+      let responseAvailableCoins = await axios.get(
         BASE_URL + "/coin",
         API_HEADER
       );
-      console.warn(responseavailableCoins);
-      let availableCoins = responseavailableCoins.data.data.coins;
+      console.warn(responseAvailableCoins);
+      let availableCoins = responseAvailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
         if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
