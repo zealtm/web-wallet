@@ -82,7 +82,11 @@ class DetailsPayment extends React.Component {
       }
     });
 
+<<<<<<< HEAD
     setUserGdpr({gpdr: newStatus});
+=======
+    setUserGdpr({gdpr: newStatus});
+>>>>>>> e6c92afec0da4f133ca1dc954a42b831ee75812d
   }
 
   componentWillMount() {

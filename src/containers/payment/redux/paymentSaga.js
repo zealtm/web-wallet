@@ -152,6 +152,9 @@ export function* setUserGdprSaga(payload) {
     const token = yield call(getAuthToken);
     const response = yield call(userService.updateUser, payload.user, token);
 
+    console.log('user', payload.user);
+    consokle.log('response', response);
+
     yield put({
       type: "GET_USER_GDPR_REDUCER",
       user: payload.user
