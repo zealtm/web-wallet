@@ -13,36 +13,30 @@ class CustomSelectImage extends React.Component {
     super(props);
     this.state = {
       open: false,
-      value: "",
+      initialValue: "",
     }
   }
 
   componentDidMount() {
 
     let { type } = this.props;
-    let value = undefined;
+    let initialValue = undefined;
 
     if (type === "fiat") {
-      value = getDefaultFiat();
+      initialValue = getDefaultFiat();
     } else {
-      value = getDefaultCrypto();
+      initialValue = getDefaultCrypto();
     }
 
     this.setState({
       ...this.state,
-      value
+      initialValue
     });
   }
 
-  handleSelect = (value) => {
-    console.warn(value);
+  handleSelect = () => {
     this.setState({ open: !this.state.open });
   }
-
-  selectItem = () => {
-
-    this.handleSelect();
-  };
 
   renderArrow() {
     if (this.state.open)
@@ -52,23 +46,29 @@ class CustomSelectImage extends React.Component {
   }
 
   render() {
-    let { action } = this.props;
-    let { value } = this.state
+    let { action, image, value } = this.props;
+    console.warn(image);
     return (
       <div className={style.formBlock}>
-        <button
-          className={style.btSelect} onClick={(event) => this.handleSelect(event.target)}>
-          <img src={"images/lang/" + value + ".png"} />
-          {value || "USD"}
-          {this.renderArrow()}
-        </button>
-        <div
-          className={style.baseSelect}
-          style={this.state.open ? { display: "block" } : { display: "none" }}
-        >
-          {action()}
+        <div>
+          <button
+            className={style.btSelect}
+            onClick={() => this.handleSelect()}>
+
+            <img src={image} />
+            {value}
+            {this.renderArrow()}
+          </button>
+          <div
+            className={style.baseSelect}
+            style={this.state.open ? { display: "block" } : { display: "none" }}
+            onClick={(event) => this.handleSelect(event.target.value)}
+          >
+            {action()}
+          </div>
         </div>
-      </div>
+
+      </div >
     )
   }
 }
@@ -76,7 +76,9 @@ class CustomSelectImage extends React.Component {
 CustomSelectImage.propTypes = {
   action: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  type: PropTypes.string
+  type: PropTypes.string,
+  value: PropTypes.string,
+  image: PropTypes.string
 }
 
 const mapStateToProps = store => ({

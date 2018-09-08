@@ -15,7 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Hidden from "@material-ui/core/Hidden";
 import style from "./style.css";
-import { setDefinitionMetadata, getDefinitionMetadata } from "../../../utils/localStorage";
+import { setDefinitionMetadata, getDefinitionMetadata, setDefaultCrypto, setDefaultFiat, getDefaultCrypto, getDefaultFiat } from "../../../utils/localStorage";
 import { compose } from "recompose";
 
 const materialStyle = theme => ({
@@ -63,15 +63,23 @@ class Definitions extends React.Component {
     super();
     this.state = {
       switchBoxA: true,
+      coinValue: "LUNES",
+      currencyValue: "USD"
     }
   }
 
   componentDidMount() {
+    let currencyDefault = getDefaultFiat();
+    let cryptoDefault = getDefaultCrypto();
+    let metadata = getDefinitionMetadata();
+    if (metadata === null) { return true }
+    else {
+      this.setState({ switchBoxA: metadata })
+    }
+    if (currencyDefault === null) setDefaultFiat("usd");
 
-    let value = getDefinitionMetadata();
-    if (value === null) return true;
+    if (cryptoDefault === null) setDefaultCrypto("lunes");
 
-    this.setState({ switchBoxA: value });
   }
 
   handleSwitchBoxA = () => {
@@ -88,31 +96,58 @@ class Definitions extends React.Component {
 
   renderSelectCoins = () => {
     let { coins } = this.props;
+
     return Object.keys(coins).map((coin, index) => (
       coin = coins[coin],
-      <div key={index} onClick={this.selectItem}>
+      <div key={index}>
         <div>
           <img src={"images/icons/coins/" + coin.abbreviation + ".png"} />
-          {coin.abbreviation}
+          <div
+            onClick={() => this.selectCoin(coin.abbreviation.toUpperCase())}>
+            {coin.abbreviation.toUpperCase()}
+          </div>
         </div>
       </div>
     ))
   }
 
+
   renderSelectCurrency = () => {
     let currency = ["BRL", "USD", "EUR"];
-    
+
     return currency.map((value, index) => (
-      <div key={index} onClick={this.selectItem}>
-        <img src={"images/lang/brasil.png"} />
-        {value}
+      <div key={index}>
+        <img src={"images/lang/BRL.png"} />
+        <div onClick={() => this.selectCurrency(value)}>{value}</div>
       </div>
     ))
   }
 
+  selectCurrency = (currency) => {
+    if (!currency) {
+      setDefaultFiat("usd")
+    }
+    setDefaultFiat(currency.toLowerCase());
+
+    this.setState({
+      currencyValue: currency
+    });
+  }
+
+  selectCoin = (coin) => {
+    if (!coin) {
+      setDefaultCrypto("lunes")
+    }
+
+    setDefaultCrypto(coin.toLowerCase())
+    this.setState({
+      coinValue: coin
+    });
+  }
+
   render() {
     const { classes } = this.props;
-    const { switchBoxA } = this.state;
+    const { switchBoxA, coinValue, currencyValue } = this.state;
     return (
       <Grid container justify="center">
 
@@ -175,12 +210,18 @@ class Definitions extends React.Component {
             <Grid container justify="center" className={style.formDefinition}>
               <Grid item xs={11} md={4}>
                 {i18n.t("SET_DEFINITIONS_LABEL_CURR")}
-                <CustomSelectImage type={"fiat"} action={this.renderSelectCurrency} />
+                <CustomSelectImage type={"fiat"}
+                  action={this.renderSelectCurrency}
+                  image={"images/lang/BRL.png"}
+                  value={currencyValue} />
 
               </Grid>
               <Grid item xs={11} md={4}>
                 {i18n.t("SET_DEFINITIONS_LABEL_COIN")}
-                <CustomSelectImage type={"crypto"} action={this.renderSelectCoins} />
+                <CustomSelectImage type={"crypto"}
+                  action={this.renderSelectCoins}
+                  image={"images/icons/coins/" + coinValue.toLocaleLowerCase() + ".png"}
+                  value={coinValue} />
               </Grid>
             </Grid>
           </div>
