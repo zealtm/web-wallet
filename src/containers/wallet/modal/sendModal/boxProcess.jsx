@@ -18,6 +18,7 @@ import i18n from "../../../../utils/i18n";
 class BoxProcess extends React.Component {
   doTransaction = () => {
     let { coin, user, modal, coins, setWalletTransaction } = this.props;
+    console.warn("coins", coins[coin]);
     setWalletTransaction(
       {
         coin: coin,
@@ -27,6 +28,7 @@ class BoxProcess extends React.Component {
         fee: modal.feeValue.selectedFee,
         feePerByte: modal.feeValue.selectedFeePerByte,
         feeLunes: modal.feeValue.selectedFeeLunes,
+        price: coins[coin].price,
         decimalPoint: coins[coin].decimalPoint
       },
       user.password
@@ -60,8 +62,7 @@ class BoxProcess extends React.Component {
         <Loading width={"30px"} />
         <div className={style.confirmFee}>
           <div className={style.textHelp}>
-            {i18n.t("MODAL_SEND_INFO_BLOCKCHAIN")}{" "}
-            {coin.toUpperCase()}
+            {i18n.t("MODAL_SEND_INFO_BLOCKCHAIN")} {coin.toUpperCase()}
           </div>
         </div>
       </div>

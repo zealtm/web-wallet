@@ -94,7 +94,7 @@ class BoxFee extends React.Component {
         <div>
           <span>{i18n.t("MODAL_SEND_TO_SEND")}</span>
           <span className={style.totalConfirm}>
-            {amount + " " + coin.toUpperCase()}
+            {" " + amount + " " + coin.toUpperCase()}
           </span>
         </div>
         <div>
@@ -104,7 +104,8 @@ class BoxFee extends React.Component {
 
         <div className={style.confirmFee}>
           <div>
-            {i18n.t("MODAL_SEND_FEE_TRANSACTION")}<span> {coin.toUpperCase()} </span>
+            {i18n.t("MODAL_SEND_FEE_TRANSACTION")}
+            <span> {coin.toUpperCase()} </span>
             {i18n.t("TEXT_IS")}
           </div>
           <div className={style.txtamount}>{selectedFee}</div>
@@ -113,23 +114,21 @@ class BoxFee extends React.Component {
         <div className={style.boxFee}>
           <span
             className={style.greenLabelFee}
-            onClick={() => this.calcFee(i18n.t("TEXT_LOW"))}
+            onClick={() => this.calcFee("low")}
           >
-            {i18n.t("TEXT_LOW")}
-            {modal.feeValue.fee.low}
+            {i18n.t("TEXT_LOW")} {modal.feeValue.fee.low || "-"}
           </span>
           <span
             className={style.yellowLabelFee}
-            onClick={() => this.calcFee(i18n.t("TEXT_MEDIUM"))}
+            onClick={() => this.calcFee("medium")}
           >
-            {i18n.t("TEXT_MEDIUM")} {modal.feeValue.fee.medium}
+            {i18n.t("TEXT_MEDIUM")} {modal.feeValue.fee.medium || "-"}
           </span>
           <span
             className={style.redLabelFee}
-            onClick={() => this.calcFee(i18n.t("TEXT_HIGH"))}
+            onClick={() => this.calcFee("high")}
           >
-            {i18n.t("TEXT_HIGH")}
-            {modal.feeValue.fee.high}
+            {i18n.t("TEXT_HIGH")} {modal.feeValue.fee.high || "-"}
           </span>
         </div>
 

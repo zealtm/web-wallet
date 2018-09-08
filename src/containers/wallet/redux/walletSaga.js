@@ -139,32 +139,34 @@ export function* setWalletTransaction(action) {
     let seed = yield call(getUserSeedWords);
     let token = yield call(getAuthToken);
 
-    let responseService = yield call(
+    let lunesWallet = yield call(
       transactionService.transactionService,
+      action.transaction.coin,
       token
     );
 
-    console.warn(responseService);
+    if (lunesWallet) {
+      let response = yield call(
+        transactionService.transaction,
+        action.transaction,
+        lunesWallet,
+        decryptAes(seed, action.password),
+        token
+      );
 
-    let response = yield call(
-      transactionService.transaction,
-      action.transaction,
-      decryptAes(seed, action.password),
-      token
-    );
+      if (response) {
+        yield put({
+          type: "SET_WALLET_MODAL_STEP",
+          step: 5
+        });
 
-    if (response) {
-      yield put({
-        type: "SET_WALLET_MODAL_STEP",
-        step: 5
-      });
+        yield put({
+          type: "SET_WALLET_TRANSACTION",
+          response: response
+        });
 
-      yield put({
-        type: "SET_WALLET_TRANSACTION",
-        response: response
-      });
-
-      return;
+        return;
+      }
     }
 
     yield put({

@@ -96,18 +96,18 @@ class CreateUser extends React.Component {
     }
   };
 
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
-      this.inputValidator()
+      this.inputValidator();
     }
-  }
-  
+  };
+
   render() {
     let { inputs, errors } = this.state;
 
     return (
-      <div className={style.contNewAccount} onKeyPress={this.handleKeyPress}>  
-        <Link to="/login">
+      <div className={style.contNewAccount} onKeyPress={this.handleKeyPress}>
+        <Link to="/">
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
             className={style.iconArrowBack}

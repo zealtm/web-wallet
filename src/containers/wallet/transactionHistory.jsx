@@ -61,9 +61,9 @@ class TransactionHistory extends React.Component {
     let history = wallet.coinHistory.history.txs;
 
     if (!history || wallet.coinHistory.history <= 0) {
-      return <div className={style.notFound}>
-        {i18n.t("MESSAGE_NOTHING_FOUND")}
-      </div>;
+      return (
+        <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
+      );
     }
 
     return Object.keys(history).map((val, index) => {
@@ -166,7 +166,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.fromTransactionHistory}>
-                        {i18n.t("TEXT_TO")}
+                        {i18n.t("TEXT_FROM")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -179,7 +179,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.forTransactionHistory}>
-                        {i18n.t("TEXT_FOR")}
+                        {i18n.t("TEXT_TO")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -238,8 +238,8 @@ class TransactionHistory extends React.Component {
               {loading ? (
                 <Loading margin={"5% 0 0 0"} color="lunes" />
               ) : (
-                  this.renderHistory()
-                )}
+                this.renderHistory()
+              )}
             </div>
           </Grid>
         </Grid>

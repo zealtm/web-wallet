@@ -282,7 +282,7 @@ class CoinService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn(response.data.data);
       return response.data.data;
     } catch (error) {
       console.warn(error);
@@ -387,7 +387,7 @@ class CoinService {
     }
   }
 
-  async saveTransaction(transaction, coin, describe) {
+  async saveTransaction(transaction, coin, price, describe) {
     try {
       let endpointUrl =
         BASE_URL +
@@ -403,9 +403,9 @@ class CoinService {
         fee: transaction.fee,
         describe: describe ? describe : null,
         price: {
-          USD: 0,
-          EUR: 0,
-          BRL: 0
+          USD: price.USD.price,
+          EUR: price.EUR.price,
+          BRL: price.BRL.price
         }
       };
 
