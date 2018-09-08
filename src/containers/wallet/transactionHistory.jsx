@@ -61,7 +61,9 @@ class TransactionHistory extends React.Component {
     let history = wallet.coinHistory.history.txs;
 
     if (!history || wallet.coinHistory.history <= 0) {
-      return <div className={style.notFound}>Nothing Found</div>;
+      return <div className={style.notFound}>
+        {i18n.t("MESSAGE_NOTHING_FOUND")}
+      </div>;
     }
 
     return Object.keys(history).map((val, index) => {
@@ -126,7 +128,7 @@ class TransactionHistory extends React.Component {
                   </Grid>
                   <Grid item xs={6} sm={7}>
                     <div className={style.titleBlockExplorer}>
-                      {"Blockexplorer"}
+                      {i18n.t("TEXT_BLOCKEXPLORER")}
                     </div>
                   </Grid>
                   <Grid
@@ -144,7 +146,7 @@ class TransactionHistory extends React.Component {
                 <Grid item xs={12}>
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
-                      <div> {"ID:"} </div>
+                      <div> {i18n.t("TEXT_ID")} </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
                       <a
@@ -164,7 +166,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.fromTransactionHistory}>
-                        {"De:"}
+                        {i18n.t("TEXT_TO")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -177,7 +179,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.forTransactionHistory}>
-                        {"Para:"}
+                        {i18n.t("TEXT_FOR")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -191,7 +193,7 @@ class TransactionHistory extends React.Component {
                     <Grid item xs={12} className={style.itemDataHistorico}>
                       <Grid item xs={2} className={style.typeItems}>
                         <div className={style.forTransactionHistory}>
-                          {"Promo:"}
+                          {i18n.t("TEXT_PROMOTIONAL")}
                         </div>
                       </Grid>
                       <Grid item xs={10} className={style.descriptionHistory}>
@@ -236,8 +238,8 @@ class TransactionHistory extends React.Component {
               {loading ? (
                 <Loading margin={"5% 0 0 0"} color="lunes" />
               ) : (
-                this.renderHistory()
-              )}
+                  this.renderHistory()
+                )}
             </div>
           </Grid>
         </Grid>

@@ -31,15 +31,7 @@ class BtcTransaction {
         }
       ];
 
-      console.warn(utxos, data);
-
       let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
-      console.warn(
-        "inputs, outputs ",
-        inputs,
-        outputs,
-        coinSelect(utxos, targets, data.fee)
-      );
 
       let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
 
@@ -60,13 +52,14 @@ class BtcTransaction {
       tx = this.sign(tx, keyPair);
 
       const txHex = tx.build().toHex();
-
       // return;
       const broadcastResult = await transService.broadcast(
         txHex,
         data.coin,
         data.token
       );
+
+      console.warn("broadcastResult", broadcastResult);
 
       return broadcastResult.data.data.txId;
     } catch (error) {

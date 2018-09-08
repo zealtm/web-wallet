@@ -31,25 +31,28 @@ class Security extends React.Component {
   renderTwoFactor = () => {
     let { settings, twoFactor } = this.props;
     if (twoFactor) {
-      return <div>Two Factor Authentication already registered!</div>;
+      return <div>{i18n.t("SECURITY_2FA_REGISTRED")}</div>;
     }
 
     return (
-      <div>
+      <Grid item xs={8} className={style.twoFactorQr}>
         <Grid item xs={3} className={style.item}>
           <Grid className={style.contentItem}>
-            <img src={settings.security.urlImage || <Loading />} />
+            <img
+              width="200px"
+              src={settings.security.urlImage || <Loading />}
+            />
           </Grid>
         </Grid>
 
         <Grid item xs={3} className={style.item}>
-          <Grid className={style.contentItem}>
+          <Grid className={(style.contentItem, style.marginLeft)}>
             <Grid item>
               <InputSecurity />
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </Grid>
     );
   };
 
@@ -115,13 +118,13 @@ class Security extends React.Component {
                 <Grid container className={style.containerItemsWeb}>
                   <Grid item xs={3} className={style.item}>
                     <Grid>
-                      <Link to="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
+                      <a to="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
                         <img src="images/apple@1x.png" />
-                      </Link>
+                      </a>
                       <br />
-                      <Link to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
+                      <a to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
                         <img src="images/google-play@1x.png" />
-                      </Link>
+                      </a>
                     </Grid>
                   </Grid>
                   {this.renderTwoFactor()}

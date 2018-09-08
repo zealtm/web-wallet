@@ -11,7 +11,7 @@ class InternalError extends React.Component {
   constructor() {
     super();
     this.state = {
-      timer: 5
+      timer: 10
     };
   }
 
@@ -35,25 +35,21 @@ class InternalError extends React.Component {
     let { timer } = this.state;
     return (
       <Grid item xs={12}>
-    
         <Grid className={style.alignMainError}>
           <Grid className={style.mainError}>
             <Grid item xs={11} className={style.contentError}>
-              <h1 > {"5"} </h1>
-              <h1 > {"0"} </h1>
-              <h1 > {"0"} </h1>
+              <h1> {"5"} </h1>
+              <h1> {"0"} </h1>
+              <h1> {"0"} </h1>
               <img src="./images/lunio-error@1x.gif" />
             </Grid>
           </Grid>
         </Grid>
-    
+
         <Grid item xs={12} className={style.alignItemsError}>
           <Grid item xs={11} className={style.itemsError500}>
             <h3> {i18n.t("PAGE_ERROR_500")} </h3>
-            <div className={style.counter500}>
-            {timer}
-            </div>
-            
+            <div className={style.counter500}>{timer}</div>
           </Grid>
         </Grid>
       </Grid>
@@ -62,6 +58,3 @@ class InternalError extends React.Component {
 }
 
 export default InternalError;
-
-
-

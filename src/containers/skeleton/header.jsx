@@ -20,6 +20,7 @@ import UserControl from "./userControl.jsx";
 
 //UTILS
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
+import i18n from "../../utils/i18n";
 
 class Header extends React.Component {
   constructor(props) {
@@ -83,7 +84,9 @@ class Header extends React.Component {
     return (
       <div className={style.boxBalance}>
         <Hidden xsDown>
-          <span className={style.textGreen}>Balance </span>
+          <span className={style.textGreen}>
+          {i18n.t("WALLET_MY_AMOUNT")}
+          </span>
         </Hidden>
         <span className={style.textBalance}>
           {" "}
@@ -115,7 +118,7 @@ class Header extends React.Component {
             <img src="../../images/logo.svg" className={style.logo} />
           </div>
           {this.renderBalance()}
-          <Hidden xsDown>{this.renderNotifications()}</Hidden>
+          {/* <Hidden xsDown>{this.renderNotifications()}</Hidden> */}
 
           <Hidden mdDown>
             <UserControl actionLogout={actionLogout} />

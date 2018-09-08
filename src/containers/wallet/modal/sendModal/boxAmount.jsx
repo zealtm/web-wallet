@@ -14,6 +14,9 @@ import { errorInput } from "../../../errors/redux/errorAction";
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "../../style.css";
 
@@ -67,7 +70,7 @@ class BoxAmount extends React.Component {
       return;
     }
 
-    return errorInput("Invalid Amount");
+    return errorInput(i18n.t("MESSAGE_INVALID_AMOUNT"));
   };
 
   render() {
@@ -80,7 +83,7 @@ class BoxAmount extends React.Component {
           src={"/images/icons/coins/" + coin + ".png"}
           className={style.modalIconCoin}
         />
-        <div>Informe a quantidade que deseja enviar</div>
+        <div>{i18n.t("MODAL_SEND_QR_CODE_ADDRESS")}</div>
         <input
           className={style.txtamount}
           type="text"
@@ -98,7 +101,7 @@ class BoxAmount extends React.Component {
         </div>
 
         <div className={style.textHelp}>
-          Você também pode enviar uma parte de todos os seus ativos.
+          {i18n.t("MODAL_SEND_AMOUNT_INSTRUCTIONS")}
         </div>
 
         <span className={style.addressConfirm}>{modal.address}</span>

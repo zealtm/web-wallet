@@ -8,9 +8,13 @@ import {
   setLeasingLoading, cancelLeasing, getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import Grid from "@material-ui/core/Grid";
-import i18n from "../../utils/i18n";
 import { formatDate } from "../../utils/numbers";
+
+// STYLES
 import style from "./style.css";
+
+// UTILS
+import i18n from "../../utils/i18n";
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -21,15 +25,15 @@ class LeasingHistory extends React.Component {
   }
 
   componentDidMount() {
-    let {
-      getLeasingInfo,
-      coins } = this.props;
-      getLeasingInfo(coins.lunes.abbreviation,
+    let { getLeasingInfo, coins } = this.props;
+    getLeasingInfo(
+      coins.lunes.abbreviation,
       coins.lunes.address,
-      coins.lunes.decimalPoint);
+      coins.lunes.decimalPoint
+    );
   }
 
-  stateDataHistory = (key) => {
+  stateDataHistory = key => {
     let { toggleHistory } = this.state;
 
     this.setState({
@@ -62,7 +66,7 @@ class LeasingHistory extends React.Component {
                   coinFee,
                   decimalPoint,
                   password: user.password,
-                  coinName: coins.lunes.abbreviation,
+                  coinName: coins.lunes.abbreviation
                 })
                 : null;
             }
@@ -81,9 +85,10 @@ class LeasingHistory extends React.Component {
     let { toggleHistory } = this.state;
     let { history } = this.props;
     const blockexplorer = "https://blockexplorer.lunes.io/tx/";
-    console.warn(history);
     if (history === undefined) {
-      return <div className={style.notFound}>Nothing Found</div>;
+      return <div className={style.notFound}>
+        {i18n.t("MESSAGE_NOTHING_FOUND")}
+      </div>;
     }
 
     return history.txs.map((value, index) => (
@@ -95,17 +100,14 @@ class LeasingHistory extends React.Component {
             className={this.handleClass(index, value.type)}
             onClick={() => this.stateDataHistory(index)}
           >
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               {formatDate(value.date, "DM")}
               &nbsp; {formatDate(value.date, "HMS")}
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <span className={style.textGreen}>{value.amount}</span>
             </Grid>
             <Grid item xs={4}>
-              {value.to}
-            </Grid>
-            <Grid item xs={2}>
               {this.renderBtCancel(1, value.txID, value.type)}
             </Grid>
           </Grid>
@@ -123,6 +125,12 @@ class LeasingHistory extends React.Component {
                     {value.txID}
                   </a>
                 </Grid>
+                {value.to ? (
+                  <Grid item xs={12} className={style.descriptionHistory}>
+                    <div>{i18n.t("LEASING_TITLE_NODE")}</div>
+                    <div>{value.to}</div>
+                  </Grid>
+                ) : null}
               </Grid>
             </Grid>
           </div>
@@ -148,6 +156,7 @@ class LeasingHistory extends React.Component {
                 <div className={style.strongText}>{balance}</div>
               </div>
             </Grid>
+
             <Grid item xs={6} md={4}>
               <div className={style.boxCard}>
                 {i18n.t("LEASING_BALANCE_ACTIVE")}
@@ -164,19 +173,17 @@ class LeasingHistory extends React.Component {
               </button>
             </Grid>
           </Grid>
+
           <Grid item xs={11} sm={10} md={10}>
             <div className={style.contentTransactions}>
               <Grid container className={style.headerContent}>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {i18n.t("LEASING")}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {i18n.t("LEASING_TITLE_AMOUNT")}
                 </Grid>
                 <Grid item xs={4}>
-                  {i18n.t("LEASING_TITLE_NODE")}
-                </Grid>
-                <Grid item xs={2}>
                   {i18n.t("LEASING_TITLE_STATUS")}
                 </Grid>
               </Grid>

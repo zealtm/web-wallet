@@ -9,12 +9,16 @@ import {
   setWalletSendModalFinalAmount,
   setWalletSendModalLoading,
   setWalletSendModalSelectedFee,
+  setWalletSendModalSelectedFeeLunes,
   setWalletSendModalSelectedFeePerByte
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
+
+// UTILS
+import i18n from "../../../../utils/i18n";
 
 // STYLE
 import style from "../../style.css";
@@ -30,17 +34,23 @@ class BoxFee extends React.Component {
   calcFee = type => {
     let {
       setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeeLunes,
       setWalletSendModalSelectedFeePerByte,
       errorInput,
-      modal
+      modal,
+      coin,
+      coins
     } = this.props;
-
-    if (modal.feeValue.fee[type] >= modal.sendAmount) {
+    if (
+      modal.feeValue.fee[type] + modal.sendAmount >=
+      coins[coin].balance.available
+    ) {
       errorInput("Insufficient funds");
       return;
     }
 
     setWalletSendModalSelectedFee(modal.feeValue.fee[type]);
+    setWalletSendModalSelectedFeeLunes(modal.feeValue.feeLunes[type]);
     setWalletSendModalSelectedFeePerByte(modal.feeValue.feePerByte[type]);
     return;
   };
@@ -54,17 +64,17 @@ class BoxFee extends React.Component {
       setWalletSendModalFinalAmount
     } = this.props;
     let feeAmount = modal.feeValue.selectedFee;
-    let amount = modal.sendAmount - (feeAmount ? feeAmount : 0);
+    let amount = modal.sendAmount + (feeAmount ? feeAmount : 0);
 
     if (feeAmount) {
       setWalletSendModalLoading();
-      setWalletSendModalFinalAmount(amount);
+      setWalletSendModalFinalAmount(amount.toFixed(8));
       setWalletModalStep(3);
 
       return;
     }
 
-    errorInput("Select a Fee");
+    errorInput(i18n.t("MESSAGE_SELECT_FEE"));
     return;
   };
 
@@ -73,7 +83,7 @@ class BoxFee extends React.Component {
     let selectedFee = modal.feeValue.selectedFee
       ? modal.feeValue.selectedFee
       : 0;
-    let amount = modal.sendAmount - selectedFee;
+    let amount = (modal.sendAmount + selectedFee).toFixed(8);
 
     return (
       <div className={style.modalBox}>
@@ -82,19 +92,20 @@ class BoxFee extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>Voce esta enviando </span>
+          <span>{i18n.t("MODAL_SEND_TO_SEND")}</span>
           <span className={style.totalConfirm}>
             {amount + " " + coin.toUpperCase()}
           </span>
         </div>
         <div>
-          <span>para o endereco </span>
+          <span>{i18n.t("MODAL_SEND_TO_ADDRESS")}</span>
           <span className={style.addressConfirm}>{modal.address}</span>
         </div>
 
         <div className={style.confirmFee}>
           <div>
-            Sua taxa de transação na rede <span> {coin.toUpperCase()} </span> é
+            {i18n.t("MODAL_SEND_FEE_TRANSACTION")}<span> {coin.toUpperCase()} </span>
+            {i18n.t("TEXT_IS")}
           </div>
           <div className={style.txtamount}>{selectedFee}</div>
         </div>
@@ -102,21 +113,23 @@ class BoxFee extends React.Component {
         <div className={style.boxFee}>
           <span
             className={style.greenLabelFee}
-            onClick={() => this.calcFee("low")}
+            onClick={() => this.calcFee(i18n.t("TEXT_LOW"))}
           >
-            Baixa {modal.feeValue.fee.low}
+            {i18n.t("TEXT_LOW")}
+            {modal.feeValue.fee.low}
           </span>
           <span
             className={style.yellowLabelFee}
-            onClick={() => this.calcFee("medium")}
+            onClick={() => this.calcFee(i18n.t("TEXT_MEDIUM"))}
           >
-            Média {modal.feeValue.fee.medium}
+            {i18n.t("TEXT_MEDIUM")} {modal.feeValue.fee.medium}
           </span>
           <span
             className={style.redLabelFee}
-            onClick={() => this.calcFee("high")}
+            onClick={() => this.calcFee(i18n.t("TEXT_HIGH"))}
           >
-            Alta {modal.feeValue.fee.high}
+            {i18n.t("TEXT_HIGH")}
+            {modal.feeValue.fee.high}
           </span>
         </div>
 
@@ -140,6 +153,7 @@ BoxFee.propTypes = {
   setWalletSendModalFinalAmount: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired,
   setWalletSendModalSelectedFee: PropTypes.func.isRequired,
+  setWalletSendModalSelectedFeeLunes: PropTypes.func.isRequired,
   setWalletSendModalSelectedFeePerByte: PropTypes.func.isRequired
 };
 
@@ -155,6 +169,7 @@ const mapDispatchToProps = dispatch =>
       setWalletSendModalFinalAmount,
       setWalletSendModalLoading,
       setWalletSendModalSelectedFee,
+      setWalletSendModalSelectedFeeLunes,
       setWalletSendModalSelectedFeePerByte,
       errorInput
     },

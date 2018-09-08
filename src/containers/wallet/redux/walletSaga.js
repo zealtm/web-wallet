@@ -138,6 +138,14 @@ export function* setWalletTransaction(action) {
   try {
     let seed = yield call(getUserSeedWords);
     let token = yield call(getAuthToken);
+
+    let responseService = yield call(
+      transactionService.transactionService,
+      token
+    );
+
+    console.warn(responseService);
+
     let response = yield call(
       transactionService.transaction,
       action.transaction,

@@ -48,7 +48,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: seed == undefined ? "" : seed.value,
-      placeholder: "Seed Words",
+      placeholder:i18n.t("PLACEHOLDER_SEED"),
       required: true
     };
 
@@ -74,7 +74,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: generateMnemonic(),
-      placeholder: "Seed Words",
+      placeholder:i18n.t("PLACEHOLDER_SEED"),
       required: true
     };
 

@@ -1,4 +1,5 @@
 const type = "REQUEST_FAILED";
+const typeSuccess = "REQUEST_SUCCESS";
 
 export const internalServerError = () => ({
   type,
@@ -29,5 +30,10 @@ export const forbidden = message => ({
 
 export const modalError = message => ({
   type,
+  message
+});
+
+export const modalSuccess = message => ({
+  typeSuccess,
   message
 });

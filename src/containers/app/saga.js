@@ -1,9 +1,5 @@
-import {
-  takeLatest
-} from "redux-saga";
-import {
-  fork
-} from "redux-saga/effects";
+import { takeLatest } from "redux-saga";
+import { fork } from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -40,8 +36,17 @@ import {
   createLeasing,
   getLeasingInfo,
   cancelLeasing
-} from "../leasing/redux/leasingSaga"
+} from "../leasing/redux/leasingSaga";
 
+import {
+  getCoinsEnabledSaga,
+  setPaymentSaga,
+  getFeePaymentSaga,
+  setFeePaymentSaga,
+  getInvoiceSaga,
+  getUserGdprSaga,
+  getHistoryPaySaga
+} from "../payment/redux/paymentSaga";
 
 export default function* rootSaga() {
   yield [
@@ -79,6 +84,15 @@ export default function* rootSaga() {
     fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
     fork(takeLatest, "START_LEASING_API", createLeasing),
     fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
-    fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo)
+    fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+
+    //payment-saga
+    fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
+    fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
+    fork(takeLatest, "GET_FEE_PAYMENT", getFeePaymentSaga),
+    fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
+    fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
+    fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
+    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga)
   ];
 }

@@ -25,6 +25,7 @@ class StartLeasing extends React.Component {
   }
 
   handleAmountValue = value => {
+    if (!value) value = 0;
     value = parseFloat(value);
     this.setState({ amountValue: value });
   };
@@ -52,7 +53,12 @@ class StartLeasing extends React.Component {
     let { amountValue, toAddress } = this.state;
     let isGreatherThenBalance = amountValue + feeValue.low <= balance;
 
-    if (amountValue === 0) {
+    if (!amountValue || amountValue === 0) {
+      errorInput(i18n.t("LEASING_NOT_INFORMED_FIELD"));
+      return;
+    }
+
+    if (!toAddress) {
       errorInput(i18n.t("LEASING_NOT_INFORMED_FIELD"));
       return;
     }
@@ -85,10 +91,10 @@ class StartLeasing extends React.Component {
     let leasingData = {
       toAddress,
       amount: convertSmallerCoinUnit(amountValue, decimalPoint),
-      feeValue,
+      feeValue: convertSmallerCoinUnit(feeValue, decimalPoint),
       password: user.password,
       coinName: coins.lunes.abbreviation,
-      coinAddress,
+      coinAddress
     };
 
     clearState();
@@ -176,7 +182,7 @@ class StartLeasing extends React.Component {
         <input
           type="text"
           name="txtaddress"
-          placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+          placeholder={i18n.t("PLACEHOLDER_EX_ADDRESS")}
           onChange={event => this.handleAddress(event.target.value)}
           value={toAddress}
           className={style.inputClear}
@@ -221,7 +227,7 @@ const mapSateToProps = store => ({
   decimalPoint: store.skeleton.coins.lunes.decimalPoint,
   addressIsValid: store.leasing.addressIsValid,
   user: store.user.user,
-  coinAddress: store.skeleton.coins.lunes.address,
+  coinAddress: store.skeleton.coins.lunes.address
 });
 
 const mapDispatchToProps = dispatch =>

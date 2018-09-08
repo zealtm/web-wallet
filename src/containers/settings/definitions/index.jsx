@@ -72,7 +72,7 @@ class Definitions extends React.Component {
     let currencyDefault = getDefaultFiat();
     let cryptoDefault = getDefaultCrypto();
     let metadata = getDefinitionMetadata();
-    if (metadata === null) { return true }
+    if (metadata === null) { metadata = true }
     else {
       this.setState({ switchBoxA: metadata })
     }

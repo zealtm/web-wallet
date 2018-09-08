@@ -8,6 +8,7 @@ import leasing from "../leasing/redux/leasingReducer";
 import coupons from "../coupons/redux/couponsReducer";
 import settings from "../settings/redux/settingsReducer";
 import error from "../errors/redux/errorReducer";
+import payment from "../payment/redux/paymentReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 
@@ -19,6 +20,7 @@ const Store = createStore(
     leasing,
     coupons,
     settings,
+    payment,
     error
   }),
 

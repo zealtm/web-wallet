@@ -11,7 +11,12 @@ import { Done, Close } from "@material-ui/icons";
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
 
-import Select from "./select";
+// MATERIAL UI
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+// import Select from "./select";
 
 const customStyle = {
   img: {
@@ -51,16 +56,27 @@ const customStyle = {
       borderColor: `${colors.purple.dark} !important`
     }
   },
+  underlineItems: {
+    selected: {
+      backgroundColor: 'red !important',
+    },
+    borderBottom: '1px solid ',
+    borderBottomColor: `${colors.purple.dark} !important`,
+    "&:hover": {
+      borderBottom: '2px solid',
+    },
+    "&:before, &:after": {
+      borderBottom: '5px solid',
+    },
+  },
   disabled: {},
   error: {},
-  focused: {}
+  focused: {},
 };
 
 const days = [...Array(31).keys()].map(day => day + 1);
 const months = [...Array(12).keys()].map(month => month + 1);
 const years = [...Array(70).keys()].map(year => year + 1949);
-
-const teste = [1, 2, 3];
 
 class User extends React.Component {
   constructor() {
@@ -100,7 +116,7 @@ class User extends React.Component {
 
     return (
       <div>
-        <Grid container className={style.containerHeaderSettings}>
+        <Grid item xs={12} className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
               <Grid item xs={12}>
@@ -170,8 +186,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
                   </span>
@@ -180,8 +196,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
                   </span>
@@ -257,38 +273,87 @@ class User extends React.Component {
                   </div>
 
                   <div className={style.content}>
-                    <p className={style.textDefault}>Birthdate</p>
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_BIRTHDATE")}
+                    </p>
                     <Grid container>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
+
+                      <Grid item xs={4} className={style.selectItem}>
+                        <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_DAY")}
-                        </label>
-                        <Select
-                          action={this.handleBirthDayChange}
-                          items={days}
-                          value={birth_day}
-                        />
+                        </div>
+                        <FormControl className={classes.formControl}>
+
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={days}
+                            value={birth_day}
+                            action={this.handleBirthDayChange}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
+
+
+                      <Grid item xs={4} className={style.selectItem}>
+                        <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_MONTH")}
-                        </label>
-                        <Select
-                          action={this.handleBirthMonthChange}
-                          items={months}
-                          value={birth_month}
-                        />
+                        </div>
+                        <FormControl className={classes.formControl}>
+
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={months}
+                            value={birth_month}
+                            action={this.handleBirthMonthChange}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={"jan"}>jan</MenuItem>
+                            <MenuItem value={"fev"}>fev</MenuItem>
+                            <MenuItem value={"mar"}>mar</MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      <Grid item xs={4}>
-                        <label className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_YEAR")}
-                        </label>
-                        <Select
-                          action={this.handleBirthYearChange}
-                          items={years}
-                          value={birth_year}
-                        />
+                      <Grid item xs={4} className={style.selectItem}>
+                        <FormControl className={classes.formControl}>
+                          <div className={style.selectLabel}>
+                            {i18n.t("SETTINGS_USER_YEAR")}
+                          </div>
+
+                          <Select
+                            classes={{
+                              selectMenu: classes.underlineItems,
+                            }}
+                            items={years}
+                            value={birth_year}
+                            action={this.handleBirthMonthChange}
+                            displayEmpty
+                            name="age"
+                            disableUnderline={true}
+                          >
+                            <MenuItem value={"2018"}>2018</MenuItem>
+                            <MenuItem value={"2017"}>2017</MenuItem>
+                            <MenuItem value={"2016"}>2016</MenuItem>
+
+                          </Select>
+                        </FormControl>
                       </Grid>
+
+
+
+
                     </Grid>
                   </div>
                 </Grid>
@@ -312,13 +377,18 @@ class User extends React.Component {
                       {i18n.t("SETTINGS_USER_CONTACT")}
                     </p>
                     <div
-                      style={{ float: "left", width: "40%", marginTop: "5px" }}
+                      style={{ float: "left", width: "40%" }}
                     >
-                      <Select
-                        action={() => this.handleSelectChange()}
-                        items={teste}
-                        value={undefined}
+                      <Input
+                        type="number"
+                        classes={{
+                          root: classes.inputRoot,
+                          underline: classes.inputCssUnderline,
+                          input: classes.inputCss
+                        }}
+                        style={{ width: "30%", float: "left", marginTop: "15px" }}
                       />
+
                     </div>
                     <Input
                       classes={{
@@ -326,7 +396,7 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      style={{ width: "50%", float: "right" }}
+                      style={{ width: "50%", float: "right", marginTop: "15px" }}
                     />
                   </div>
                 </Grid>
@@ -334,13 +404,11 @@ class User extends React.Component {
             </Grid>
 
             {/* ADDRESS */}
-            <Grid item xs={12}>
-              <Grid item xs={12} className={style.row}>
+            <Grid item xs={12} >
+              <Grid item xs={12} className={style.rowAdress}>
                 <Grid item xs={12}>
                   <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_ADDRESS")}
-                    </p>
+                    {i18n.t("SETTINGS_USER_ADDRESS")}
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -353,19 +421,18 @@ class User extends React.Component {
 
                   <div className={style.content}>
                     {i18n.t("SETTINGS_USER_CITY")}
-                    <Select
-                      action={() => this.handleSelectChange()}
-                      items={teste}
-                      value={undefined}
-                      fullWidth
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss
+                      }}
                     />
                   </div>
                 </Grid>
                 <Grid item xs={12}>
                   <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_ZIP_CODE")}
-                    </p>
+                    {i18n.t("SETTINGS_USER_ZIP_CODE")}
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -377,11 +444,12 @@ class User extends React.Component {
 
                   <div className={style.content}>
                     {i18n.t("SETTINGS_USER_STATE")}
-                    <Select
-                      action={() => this.handleSelectChange()}
-                      items={teste}
-                      value={undefined}
-                      fullWidth
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss
+                      }}
                     />
                   </div>
                 </Grid>
@@ -398,7 +466,7 @@ class User extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </div >
     );
   }
 }

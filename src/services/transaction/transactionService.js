@@ -1,5 +1,10 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER, TESTNET } from "../../constants/apiBaseUrl";
+import {
+  BASE_URL,
+  API_HEADER,
+  TESTNET,
+  HEADER_RESPONSE
+} from "../../constants/apiBaseUrl";
 import {
   internalServerError,
   modalError
@@ -11,6 +16,7 @@ import CoinService from "../../services/coinService";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { setAuthToken } from "../../utils/localStorage";
 import { convertSmallerCoinUnit } from "../../utils/numbers";
 
 class TransactionService {
@@ -22,7 +28,6 @@ class TransactionService {
         { fromAddress: address },
         API_HEADER
       );
-
       const utxos = [];
 
       response.data.data.utxos.forEach(utxo => {
@@ -66,6 +71,7 @@ class TransactionService {
         toAddress,
         fee,
         feePerByte,
+        feeLunes,
         amount,
         coin,
         decimalPoint
@@ -94,6 +100,7 @@ class TransactionService {
             seed: seed,
             fee: convertSmallerCoinUnit(fee, decimalPoint),
             feePerByte: feePerByte,
+            feeLunes: feeLunes,
             amount: convertSmallerCoinUnit(amount, decimalPoint),
             coin: coin,
             token: token,
@@ -115,13 +122,12 @@ class TransactionService {
             coin,
             "Teste"
           );
-
           return responseSaveBtc;
 
         case "lunes":
           let transactionLunes = new LunesTransaction();
           let respondeLunes = await transactionLunes.createLunesTransaction({
-            network: TESTNET ? networks.LUNES : networks.LNSTESTNET,
+            network: TESTNET ? networks.LUNESTESTNET : networks.LUNES,
             seed: seed,
             fromAddress: fromAddress,
             toAddress: toAddress,
@@ -138,8 +144,73 @@ class TransactionService {
             coin,
             "Teste"
           );
-
           return responseSaveLunes;
+
+        case "ltc":
+          let transactionLtc = new BtcTransaction();
+          let responseLtc = await transactionLtc.createTransaction({
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            seed: seed,
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
+            feeLunes: feeLunes,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            coin: coin,
+            token: token,
+            network: TESTNET ? networks.LTCTESTNET : networks.LTC
+          });
+
+          if (responseLtc === "error") {
+            return;
+          }
+
+          let responseSaveLtc = await coinService.saveTransaction(
+            {
+              id: responseLtc,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
+            coin,
+            "Teste"
+          );
+
+          return responseSaveLtc;
+
+        case "bch":
+          let transactionBch = new BtcTransaction();
+          let responseBch = await transactionBch.createTransaction({
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            seed: seed,
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            feePerByte: feePerByte,
+            feeLunes: feeLunes,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            coin: coin,
+            token: token,
+            network: TESTNET ? networks.LTCTESTNET : networks.LTC
+          });
+
+          if (responseLtc === "error") {
+            return;
+          }
+
+          let responseSaveBch = await coinService.saveTransaction(
+            {
+              id: responseBch,
+              sender: fromAddress,
+              recipient: toAddress,
+              amount: convertSmallerCoinUnit(amount, decimalPoint),
+              fee: convertSmallerCoinUnit(fee, decimalPoint)
+            },
+            coin,
+            "Teste"
+          );
+
+          return responseSaveBch;
       }
     } catch (error) {
       internalServerError();
@@ -156,10 +227,26 @@ class TransactionService {
   async cancelLeasing(data) {
     let lunes = new LunesTransaction();
     let response = await lunes.cancelLeasing(data);
- 
+
     return response;
   }
 
-}
+  async transactionService(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(
+        BASE_URL + "/service/transferencia",
+        API_HEADER
+      );
+      console.warn(response);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      return response.data.data;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return error;
+    }
+  }
+}
 export default TransactionService;

@@ -47,7 +47,7 @@ class AliasPage extends React.Component {
                 </Grid>
                 <Grid item xs={6} md={12}>
                   <div className={style.labelCoin}>
-                    {i18n.t("MENU_WALLET")} Lunes
+                    {i18n.t("SETTINGS_ALIAS_WALLET_LUNES")}
                   </div>
                 </Grid>
               </Grid>
@@ -60,7 +60,7 @@ class AliasPage extends React.Component {
                 value={
                   coins["lunes"]
                     ? coins["lunes"].address
-                    : "Service not available"
+                    : i18n.t("MESSAGE_NOT_SERVICE")
                 }
               />
               <div>
@@ -70,13 +70,13 @@ class AliasPage extends React.Component {
                       type="text"
                       className={style.inputClear}
                       disabled
-                      value={"Service not available"}
+                      value={i18n.t("MESSAGE_NOT_SERVICE")}
                     />
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <button
                       className={style.buttonGreen}
-                      onClick={() => errorInput("Service not available yet.")}
+                      onClick={() => errorInput(i18n.t("MESSAGE_NOT_SERVICE_YET"))}
                     >
                       {i18n.t("SET_ALIAS_SAVE_NAME")}
                     </button>

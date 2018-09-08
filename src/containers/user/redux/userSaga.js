@@ -81,7 +81,6 @@ export function* hasTwoFactorAuth() {
     let userToken = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
-    console.warn(response);
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
@@ -120,7 +119,12 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     let seed = yield call(getUserSeedWords);
-    const response = yield call(authService.verifyTwoFactoryAuth, action.token);
+    let userToken = yield call(getAuthToken);
+    const response = yield call(
+      authService.verifyTwoFactoryAuth,
+      action.token,
+      userToken
+    );
 
     if (response.error) {
       yield put(response.error);

@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// UTILS
 import i18n from "../../../../utils/i18n";
 
 // MATERIAL
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
+
+// STYLES
 import style from "./style.css";
 
 class CustomSelect extends React.Component {

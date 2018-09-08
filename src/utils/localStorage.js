@@ -94,9 +94,11 @@ export const getFavoritesCrypto = () => {
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
   let favoritesCrypto = getFavoritesCrypto();
-
+  if (!favoritesCrypto) favoritesCrypto = ["lunes"];
   return !userStorage || !userStorage.defaultCoin
-    ? "lunes"
+    ? favoritesCrypto.includes("lunes")
+      ? "lunes"
+      : favoritesCrypto[0]
     : favoritesCrypto.includes(userStorage.defaultCoin)
       ? userStorage.defaultCoin
       : "lunes";
@@ -109,4 +111,4 @@ export const setDefinitionMetadata = (value) => {
   localStorage.setItem("definition.delete", value)
 };
 
-export const getDefinitionMetadata = () => localStorage.getItem("definition.delete"); 
+export const getDefinitionMetadata = () => localStorage.getItem("definition.delete") ? true : false; 

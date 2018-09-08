@@ -4,7 +4,8 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
-  HEADER_RESPONSE
+  HEADER_RESPONSE,
+  TESTNET
 } from "../constants/apiBaseUrl";
 import {
   modalError,
@@ -57,12 +58,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let defaultCrypto = await getDefaultCrypto();
-      let responseavailableCoins = await axios.get(
+      let responseAvailableCoins = await axios.get(
         BASE_URL + "/coin",
         API_HEADER
       );
-      
-      let availableCoins = responseavailableCoins.data.data.coins;
+      let availableCoins = responseAvailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
         if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
@@ -101,10 +101,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-            "/coin/" +
-            coin.abbreviation +
-            "/balance/" +
-            coin.address,
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
             API_HEADER
           );
 
@@ -175,19 +175,6 @@ class CoinService {
     } catch (error) {
       internalServerError();
       return;
-    }
-  }
-
-  async getCoinFee(coinType) {
-    if (coinType === "lunes") {
-      let feeValue = {
-        low: 0.001,
-        medium: 0.001,
-        high: 0.001,
-        selectedFee: 0.001
-      };
-
-      return feeValue;
     }
   }
 
@@ -287,11 +274,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-        "/coin/" +
-        coin +
-        "/transaction/history/" +
-        address +
-        "?size=100",
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          address +
+          "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -310,7 +297,9 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
-        let response = await axios.get(LUNESNODE_URL + "/addresses/validate/" + address);
+        let response = await axios.get(
+          LUNESNODE_URL + "/addresses/validate/" + address
+        );
 
         if (!response.data.valid) {
           return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
@@ -319,11 +308,17 @@ class CoinService {
         return response.data.valid;
       }
 
-      let valid = await CAValidator.validate(address, coin.toUpperCase());
+      let valid = false;
+      console.warn(coin);
+      if (coin === "bch") {
+        valid = true;
+      } else {
+        valid = await CAValidator.validate(address, coin.toUpperCase());
+      }
 
-      // if (!valid) {
-      //   return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
-      // }
+      if (!valid && !TESTNET) {
+        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      }
 
       return valid;
     } catch (er) {
@@ -350,6 +345,7 @@ class CoinService {
     try {
       let fee = {};
       let feePerByte = {};
+      let feeLunes = {};
 
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
@@ -363,6 +359,7 @@ class CoinService {
 
       let dataFee = response.data.data.fee;
       let dataFeePerByte = response.data.data.feePerByte;
+      let dataFeeLunes = response.data.data.feeLunes;
 
       if (response.data.code === 200) {
         Object.keys(dataFee).map(value => {
@@ -372,11 +369,16 @@ class CoinService {
         Object.keys(dataFeePerByte).map(value => {
           feePerByte[value] = dataFeePerByte[value];
         });
+
+        Object.keys(dataFeeLunes).map(value => {
+          feeLunes[value] = dataFeeLunes[value];
+        });
       }
 
       fee = {
         fee,
-        feePerByte
+        feePerByte,
+        feeLunes
       };
       return fee;
     } catch (error) {
@@ -387,7 +389,12 @@ class CoinService {
 
   async saveTransaction(transaction, coin, describe) {
     try {
-      let endpointUrl = BASE_URL + "/coin/" + coin + "/transaction/history/" + transaction.sender;
+      let endpointUrl =
+        BASE_URL +
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        transaction.sender;
       let transactionData = {
         txID: transaction.id,
         from: transaction.sender,
@@ -400,7 +407,7 @@ class CoinService {
           EUR: 0,
           BRL: 0
         }
-      }
+      };
 
       let response = await axios.post(endpointUrl, transactionData, API_HEADER);
 

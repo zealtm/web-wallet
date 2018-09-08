@@ -10,6 +10,7 @@ export const getTwoFactorAuth = () => ({
   type: "POST_SETTINGS_CREATE_2FA_API"
 });
 
-export const verifyTwoFactorAuthSettings = () => ({
-  type: "GET_SETTINGS_2FA_API"
+export const verifyTwoFactorAuthSettings = token => ({
+  type: "GET_SETTINGS_2FA_API",
+  token
 });

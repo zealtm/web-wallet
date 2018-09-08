@@ -24,8 +24,14 @@ const initialState = {
         medium: 0,
         high: 0
       },
+      feeLunes: {
+        low: 0,
+        medium: 0,
+        high: 0
+      },
       selectedFee: undefined,
-      selectedFeePerByte: undefined
+      selectedFeePerByte: undefined,
+      selectedFeeLunes: undefined
     },
     loading: false
   },
@@ -65,6 +71,11 @@ const wallet = (state = initialState, action) => {
               high: 0.001
             },
             feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
               low: 0,
               medium: 0,
               high: 0
@@ -209,6 +220,19 @@ const wallet = (state = initialState, action) => {
         }
       };
 
+    case "SET_WALLET_MODAL_SEND_SELECTED_FEELUNES":
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          feeValue: {
+            ...state.modal.feeValue,
+            selectedFeeLunes: action.fee
+          },
+          loading: false
+        }
+      };
+
     case "SET_WALLET_TRANSACTION":
       return {
         ...state,
@@ -224,6 +248,11 @@ const wallet = (state = initialState, action) => {
               high: 0.001
             },
             feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
               low: 0,
               medium: 0,
               high: 0
@@ -249,7 +278,8 @@ const wallet = (state = initialState, action) => {
           feeValue: {
             ...state.modal.feeValue,
             fee: action.fee.fee,
-            feePerByte: action.fee.feePerByte
+            feePerByte: action.fee.feePerByte,
+            feeLunes: action.fee.feeLunes
           }
         }
       };
@@ -270,6 +300,11 @@ const wallet = (state = initialState, action) => {
               high: 0.001
             },
             feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
               low: 0,
               medium: 0,
               high: 0

@@ -1,14 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// COMPONENTS
-import LeasingHistory from "./leasingHistory";
-import Modal from "../../components/modal";
-import StartLeasing from "./modal/startLeasing";
-import { setLeasingLoading, getLeasingInfo } from "./redux/leasingAction";
-import Loading from "../../components/loading";
 import PropTypes from "prop-types";
+import { setLeasingLoading, getLeasingInfo } from "./redux/leasingAction";
 
+// COMPONENTS
+import Loading from "../../components/loading";
+import Modal from "../../components/modal";
+import LeasingHistory from "./leasingHistory";
+import StartLeasing from "./modal/startLeasing";
+
+// UTILS
+import i18n from "../../utils/i18n";
 class Leasing extends React.Component {
   constructor() {
     super();
@@ -39,7 +42,7 @@ class Leasing extends React.Component {
             <LeasingHistory openModal={this.handleModalLeasing} />
           </div>
           <Modal
-            title={"Iniciar Leasing"}
+            title={i18n.t("MODAL_TITLE_START_LEASING")}
             content={<StartLeasing close={() => this.handleModalLeasing()} />}
             show={isOpen}
             close={() => this.handleModalLeasing()}

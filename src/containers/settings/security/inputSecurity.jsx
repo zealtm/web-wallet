@@ -62,7 +62,7 @@ class InputSecurity extends React.Component {
       loadingSettings,
       errorInput,
       clearMessage,
-      verifyTwoFactorAuth
+      verifyTwoFactorAuthSettings
     } = this.props;
     let {
       field_1,

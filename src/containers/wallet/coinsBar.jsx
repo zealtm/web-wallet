@@ -27,6 +27,9 @@ import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import Close from "@material-ui/icons/Close";
 
+// UTILS
+import i18n from "../../utils/i18n";
+
 // STYLE
 import style from "./style.css";
 
@@ -117,16 +120,18 @@ class CoinsBar extends React.Component {
                   </div>
                 </div>
               ) : (
-                <div className={style.boxLabelCoinDisabled}>Unavailable</div>
-              )}
+                  <div className={style.boxLabelCoinDisabled}>
+                    {i18n.t("TEXT_UNAVAILABLE")}
+                  </div>
+                )}
             </Hidden>
             <Hidden mdUp>
               <div className={style.boxArrowPercent}>
                 {coinStatus ? (
                   this.renderArrowPercent(coinPercent)
                 ) : (
-                  <Close className={style.arrowPercentDisabled} />
-                )}
+                    <Close className={style.arrowPercentDisabled} />
+                  )}
               </div>
             </Hidden>
           </div>
@@ -173,7 +178,7 @@ class CoinsBar extends React.Component {
             <Grid item xs={1} className={style.arrowControl}>
               <IconButton
                 color="inherit"
-                aria-label="Prev"
+                aria-label={i18n.t("TEXT_PREV")}
                 onClick={() => this.moveSlide("prev")}
               >
                 <KeyboardArrowLeft />
@@ -191,7 +196,7 @@ class CoinsBar extends React.Component {
             <Grid item xs={1} className={style.arrowControl}>
               <IconButton
                 color="inherit"
-                aria-label="Prev"
+                aria-label={i18n.t("TEXT_PREV")}
                 onClick={() => this.moveSlide()}
               >
                 <KeyboardArrowRight />
