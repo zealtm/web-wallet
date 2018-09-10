@@ -1,6 +1,14 @@
 const initialState = {
   user: {
     profilePicture: undefined,
+    birthday: undefined,
+    city: undefined,
+    country: undefined,
+    gdpr: undefined,
+    phone: undefined,
+    state: undefined,
+    street: undefined,
+    zipcode: undefined,
     name: undefined,
     surname: undefined,
     username: undefined,
