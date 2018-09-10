@@ -71,15 +71,17 @@ class Definitions extends React.Component {
   componentDidMount() {
     let currencyDefault = getDefaultFiat();
     let cryptoDefault = getDefaultCrypto();
-    let metadata = getDefinitionMetadata();
-    if (metadata === null) { metadata = true }
-    else {
-      this.setState({ switchBoxA: metadata })
+    let metadata = JSON.parse(getDefinitionMetadata());
+
+    if (metadata === null) {
+      metadata = true
     }
+
     if (currencyDefault === null) setDefaultFiat("usd");
 
     if (cryptoDefault === null) setDefaultCrypto("lunes");
 
+    this.setState({ switchBoxA: metadata });
   }
 
   handleSwitchBoxA = () => {
@@ -88,11 +90,6 @@ class Definitions extends React.Component {
     setDefinitionMetadata(!switchBoxA)
     this.setState({ switchBoxA: !switchBoxA });
   };
-
-  switchBoxAIsActive = () => {
-    const { switchBoxA } = this.state;
-    return switchBoxA
-  }
 
   renderSelectCoins = () => {
     let { coins } = this.props;

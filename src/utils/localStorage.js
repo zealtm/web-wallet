@@ -105,10 +105,17 @@ export const getDefaultCrypto = () => {
 };
 
 export const setDefinitionMetadata = (value) => {
-  if(value === null){
-    value = true; 
+  if (value === null) {
+    value = true;
   }
   localStorage.setItem("definition.delete", value)
 };
 
-export const getDefinitionMetadata = () => localStorage.getItem("definition.delete") ? true : false; 
+export const getDefinitionMetadata = () => {
+  let isDelete = JSON.parse(localStorage.getItem("definition.delete"));
+
+  if (isDelete == null)
+    return true
+
+  return isDelete;
+} 

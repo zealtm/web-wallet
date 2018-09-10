@@ -25,14 +25,14 @@ class Skeleton extends React.Component {
   };
 
   logout = () => {
-    let deleteMeta = getDefinitionMetadata();
-    console.warn(deleteMeta)
-    
-    if (deleteMeta || deleteMeta == null) {
+    let deleteMeta = JSON.parse(getDefinitionMetadata());
+    console.warn("this is logout", deleteMeta);
+
+    if (deleteMeta === true || deleteMeta == null) {
       clearAll();
     }
 
-    return window.location.reload();
+    window.location.reload(true);
   };
 
   render() {

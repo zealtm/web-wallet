@@ -47,7 +47,6 @@ class CustomSelectImage extends React.Component {
 
   render() {
     let { action, image, value } = this.props;
-    console.warn(image);
     return (
       <div className={style.formBlock}>
         <div>
