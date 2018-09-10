@@ -19,6 +19,7 @@ import style from "./style.css";
 import UserControl from "./userControl.jsx";
 
 //UTILS
+import { TESTNET } from "../../constants/apiBaseUrl";
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import i18n from "../../utils/i18n";
 
@@ -84,9 +85,7 @@ class Header extends React.Component {
     return (
       <div className={style.boxBalance}>
         <Hidden xsDown>
-          <span className={style.textGreen}>
-          {i18n.t("WALLET_MY_AMOUNT")}
-          </span>
+          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")}</span>
         </Hidden>
         <span className={style.textBalance}>
           {" "}
@@ -116,6 +115,7 @@ class Header extends React.Component {
           </Hidden>
           <div className={style.boxLogo}>
             <img src="../../images/logo.svg" className={style.logo} />
+            {!TESTNET || <span className={style.textGreen}>Testnet</span>}
           </div>
           {this.renderBalance()}
           {/* <Hidden xsDown>{this.renderNotifications()}</Hidden> */}

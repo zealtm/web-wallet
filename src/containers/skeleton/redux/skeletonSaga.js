@@ -38,9 +38,18 @@ export function* loadGeneralInfo(action) {
     yield put({
       type: "SET_USER_INFO",
       user: {
+        birthday: responseUser.data.data.birthday,
+        city: responseUser.data.data.city,
+        country: responseUser.data.data.country,
+        gdpr: responseUser.data.data.gdpr,
+        phone: responseUser.data.data.phone,
+        state: responseUser.data.data.state,
+        street: responseUser.data.data.street,
         profilePicture: pictureUser,
         name: responseUser.data.data.name,
         surname: responseUser.data.data.surname,
+        username: responseUser.data.data.username,
+        zipcode: responseUser.data.data.zipcode,
         email: responseUser.data.data.email
       }
     });
