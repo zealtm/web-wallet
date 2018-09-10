@@ -86,15 +86,20 @@ export const removeFavoritesCrypto = coin => {
 
 export const getFavoritesCrypto = () => {
   let favoritesCrypto = localStorage.getItem("favorites.crypto");
-  if (!favoritesCrypto) return;
+  if (!favoritesCrypto)
+    return;
+
   favoritesCrypto = favoritesCrypto.split(",");
+
   return favoritesCrypto;
 };
 
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
   let favoritesCrypto = getFavoritesCrypto();
-  if (!favoritesCrypto) favoritesCrypto = ["lunes"];
+  if (!favoritesCrypto)
+    favoritesCrypto = ["lunes"];
+
   return !userStorage || !userStorage.defaultCoin
     ? favoritesCrypto.includes("lunes")
       ? "lunes"

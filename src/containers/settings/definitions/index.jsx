@@ -15,8 +15,15 @@ import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Hidden from "@material-ui/core/Hidden";
 import style from "./style.css";
-import { setDefinitionMetadata, getDefinitionMetadata, setDefaultCrypto, setDefaultFiat, getDefaultCrypto, getDefaultFiat } from "../../../utils/localStorage";
 import { compose } from "recompose";
+import {
+  setDefinitionMetadata,
+  getDefinitionMetadata,
+  setDefaultCrypto,
+  setDefaultFiat,
+  getDefaultCrypto,
+  getDefaultFiat
+} from "../../../utils/localStorage";
 
 const materialStyle = theme => ({
   iOSSwitchBase: {
@@ -77,11 +84,15 @@ class Definitions extends React.Component {
       metadata = true
     }
 
-    if (currencyDefault === null) setDefaultFiat("usd");
+    if (currencyDefault === null)
+      setDefaultFiat("usd");
 
-    if (cryptoDefault === null) setDefaultCrypto("lunes");
+    if (cryptoDefault === null)
+      setDefaultCrypto("lunes");
 
     this.setState({ switchBoxA: metadata });
+    this.setState({ coinValue: cryptoDefault });
+    this.setState({ currencyValue: currencyDefault });
   }
 
   handleSwitchBoxA = () => {
@@ -107,7 +118,6 @@ class Definitions extends React.Component {
       </div>
     ))
   }
-
 
   renderSelectCurrency = () => {
     let currency = ["BRL", "USD", "EUR"];
