@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // REDUX
 import {connect} from "react-redux";
@@ -67,6 +68,10 @@ class SecurePayment extends React.Component {
       </div>
     );
   }
+}
+
+SecurePayment.propTypes = {
+  handleStep: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = store => ({

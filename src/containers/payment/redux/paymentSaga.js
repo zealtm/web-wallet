@@ -85,20 +85,35 @@ export function* setPaymentSaga(payload) {
 
 export function* getFeePaymentSaga(payload) {
   try {
-    // dados exemplo, tem que fazer chamada aqui
-    const data = {
-      low: 0.001,
-      medium: 0.001,
-      hight: 0.001
-    }
+      let response = yield call(
+        coinService.getFee,
+        payload.coin,
+        payload.fromAddress,
+        payload.toAddress,
+        payload.amount,
+        payload.decimalPoint
+      );
 
-    // retorno exemplo
-    yield put(
-      {
+      console.log(response);
+  
+      yield put({
         type: "GET_FEE_PAYMENT_REDUCER",
-        fee: data
-      }
-    )
+        fee: response
+      });
+    // // dados exemplo, tem que fazer chamada aqui
+    // const data = {
+    //   low: 0.001,
+    //   medium: 0.001,
+    //   hight: 0.001
+    // }
+
+    // // retorno exemplo
+    // yield put(
+    //   {
+    //     type: "GET_FEE_PAYMENT_REDUCER",
+    //     fee: data
+    //   }
+    // )
   } catch(error) {
     yield put(internalServerError());
   }
@@ -129,7 +144,7 @@ export function* getInvoiceSaga(payload) {
   }
 }
 
-export function* getUserGdprSaga() {;
+export function* getUserGdprSaga() {
   try {
     const token = yield call(getAuthToken);
     const response = yield call(userService.getUser, token);

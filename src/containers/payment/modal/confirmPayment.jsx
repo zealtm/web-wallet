@@ -44,6 +44,10 @@ class ConfirmPayment extends React.Component {
   }
 }
 
+ConfirmPayment.propTypes = {
+  handleStep: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading

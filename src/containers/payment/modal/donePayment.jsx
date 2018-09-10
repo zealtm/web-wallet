@@ -32,4 +32,8 @@ class DonePayment extends React.Component {
   }
 }
 
+DonePayment.propTypes = {
+  handleStep: PropTypes.func.isRequired,
+}
+
 export default DonePayment;

@@ -38,7 +38,12 @@ class FeePayment extends React.Component {
 
   componentDidMount = () => {
     const {getFeePayment, payment} = this.props;
-    getFeePayment(payment.coin.abbreviation, payment.amount);
+
+    // teste 
+    const fromAddress = payment.coin.address;
+    const toAddress = "asdasdasd"; // pegar de algum reducer da wallet
+    console.log(fromAddress);
+    getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
   }
 
   render() {
@@ -96,6 +101,10 @@ class FeePayment extends React.Component {
       </div>
     );
   }
+}
+
+FeePayment.propTypes = {
+  handleStep: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = store => ({

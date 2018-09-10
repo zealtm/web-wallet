@@ -7,10 +7,13 @@ export const setPayment = (pay) =>({
   pay
 });
 
-export const getFeePayment = (coin, amount) => ({
+export const getFeePayment = (coin, amount, fromAddress, toAddress, decimalPoint) => ({
   type: "GET_FEE_PAYMENT",
   coin,
-  amount
+  fromAddress,
+  toAddress,
+  amount,
+  decimalPoint
 });
 
 export const setFeePayment = (fee) => ({
