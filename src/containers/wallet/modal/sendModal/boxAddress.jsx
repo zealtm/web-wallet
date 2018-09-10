@@ -74,12 +74,10 @@ class BoxAddress extends React.Component {
                 src="/images/icons/qrcode/qrcode.png"
                 className={style.hoverShow}
               />
-              <div>Enviar Scaneando QrCode</div>
+              <div>{i18n.t("MODAL_SEND_QR_CODE")}</div>
             </div>
             <div className={style.textHelp}>
-              Para esse procedimento em deskop você precisa usar uma webcam para
-              <br />
-              visualizar o qrcode que deseja enviar.
+              {i18n.t("MODAL_SEND_QR_CODE_INSTRUCTIONS")}
             </div>
           </div>
         </Hidden>
@@ -90,7 +88,7 @@ class BoxAddress extends React.Component {
               src="/images/icons/modal-wallet/carteira.png"
               className={style.icon}
             />
-            <div>Inserir endereço da Wallet {coin.toUpperCase()}</div>
+            <div>{i18n.t("MODAL_SEND_QR_CODE_ADDRESS")} {coin.toUpperCase()}</div>
           </div>
 
           <input
@@ -98,7 +96,7 @@ class BoxAddress extends React.Component {
             name="txtaddress"
             value={address}
             onChange={event => this.changeAddress(event.target.value)}
-            placeholder="Ex: 37n724hxf4XnCFfJFnCzj4TbYryoizdfGCV"
+            placeholder={i18n.t("PLACEHOLDER_EX_ADDRESS")}
             className={style.inputClear}
           />
         </div>

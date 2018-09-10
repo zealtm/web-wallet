@@ -66,10 +66,41 @@ export const setDefaultCrypto = coin => {
   );
 };
 
+export const setFavoritesCrypto = coin => {
+  let favoritesCrypto = getFavoritesCrypto();
+  if (!favoritesCrypto) favoritesCrypto = [];
+  favoritesCrypto.push(coin);
+  favoritesCrypto = favoritesCrypto.filter((item, index, input) => {
+    return input.indexOf(item) == index;
+  });
+
+  return localStorage.setItem("favorites.crypto", favoritesCrypto);
+};
+
+export const removeFavoritesCrypto = coin => {
+  let favoritesCrypto = getFavoritesCrypto();
+  if (!favoritesCrypto) favoritesCrypto = [];
+  favoritesCrypto = favoritesCrypto.filter(item => item !== coin);
+
+  return localStorage.setItem("favorites.crypto", favoritesCrypto);
+};
+
+export const getFavoritesCrypto = () => {
+  let favoritesCrypto = localStorage.getItem("favorites.crypto");
+  if (!favoritesCrypto) return;
+  favoritesCrypto = favoritesCrypto.split(",");
+  return favoritesCrypto;
+};
+
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
-
+  let favoritesCrypto = getFavoritesCrypto();
+  if (!favoritesCrypto) favoritesCrypto = ["lunes"];
   return !userStorage || !userStorage.defaultCoin
-    ? "btc"
-    : !userStorage.defaultCoin;
+    ? favoritesCrypto.includes("lunes")
+      ? "lunes"
+      : favoritesCrypto[0]
+    : favoritesCrypto.includes(userStorage.defaultCoin)
+      ? userStorage.defaultCoin
+      : "lunes";
 };

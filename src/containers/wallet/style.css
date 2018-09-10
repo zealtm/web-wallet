@@ -252,13 +252,13 @@
   composes: styleCoinDefalt;
 }
 
-:local(.sendButton) {
-  composes: receiveSubmit from "../../components/bases/buttonBase.css";
+:local(.sentButton) {
+  composes: sentButton from "../../components/bases/buttonBase.css";
   composes: styleCoinDefalt;
 }
 
-:local(.sendButtonMobile) {
-  composes: sendButton;
+:local(.sentButtonMobile) {
+  composes: sentButton;
   padding: 0;
   height: 40px;
 }
@@ -352,9 +352,10 @@
 }
 
 /* 3.2 TEXTS */
-:local(.text) {
+:local(.historyTitle) {
   text-align: center;
   font-size: 16px;
+  padding-left: 25px;
 }
 
 :local(.titleBlockExplorer) {
@@ -393,6 +394,10 @@
   composes: clError from "../../components/bases/colorBase.css";
 }
 
+:local(.sentButton) {
+  composes: submitButton from "../../components/bases/buttonBase.css";
+  composes: styleCoinDefalt;
+}
 :local(.receivedHistory) {
   composes: clGreenLight from "../../components/bases/colorBase.css";
 }
@@ -402,6 +407,11 @@
   text-align: center;
 }
 
+:local(.sentButtonMobile) {
+  composes: submitButton from "../../components/bases/buttonBase.css";
+  composes: styleCoinDefalt;
+  height: 40px;
+}
 :local(.dateHistory) {
   font-size: 9px;
 }

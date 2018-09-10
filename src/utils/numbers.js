@@ -13,7 +13,7 @@ export const convertSmallerCoinUnit = (value, decimal) => {
   for (let i = 0; i < decimal; i++) {
     number = number + "0";
   }
-  return value * parseInt(number);
+  return parseInt(value * parseInt(number));
 };
 
 export const percentCalc = (first, last) => {
@@ -23,13 +23,13 @@ export const percentCalc = (first, last) => {
 };
 
 export const formatDate = (date, type = "DMY") => {
-  // TYPES -----------
-  // D - day,
-  // DM - day and month,
-  // DMY - day, month and year
-  // H - hour
-  // HM - hour and minute
-  // HMS - hour, minute and second
+  /* TYPES
+   D - day,
+   DM - day and month,
+   DMY - day, month and year
+   H - hour
+   HM - hour and minute
+   HMS - hour, minute and second */
 
   let monthNames = [
     i18n.t("JANUARY"),
@@ -48,12 +48,12 @@ export const formatDate = (date, type = "DMY") => {
 
   date = new Date(date);
 
-  let day = date.getDate();
+  let day = addZeroIfLessThan(date.getDate());
   let monthIndex = date.getMonth();
   let year = date.getFullYear();
   let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
+  let minutes = addZeroIfLessThan(date.getMinutes());
+  let seconds = addZeroIfLessThan(date.getSeconds());
 
   if (type === "D") {
     return day;
@@ -69,3 +69,7 @@ export const formatDate = (date, type = "DMY") => {
     return day + "/" + monthNames[monthIndex] + "/" + year;
   }
 };
+
+const addZeroIfLessThan = (value, number = 10) => {
+  return value < number ? "0" + value : value;
+}

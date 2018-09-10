@@ -50,6 +50,36 @@ let settings = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings")
 });
 
+let user = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/user")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/user")
+});
+
+let security = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/security")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
+});
+
+let walletSettings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/wallet")
+});
+
+let definitions = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/definitions")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/definitions")
+});
+
+let consent = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/consent")),
+  loading: Loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
+});
+
 let payment = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
   loading: Loading,
@@ -89,6 +119,11 @@ class App extends Component {
               <Route path="/coupons" component={coupons} />
               <Route path="/leasing" component={leasing} />
               <Route path="/settings" component={settings} />
+              <Route path="/user" component={user} />
+              <Route path="/security" component={security} />
+              <Route path="/wallet-settings" component={walletSettings} />
+              <Route path="/definitions" component={definitions} />
+              <Route path="/consent" component={consent} />
               <Route path="/payment" component={payment} />
 
               {/* ERRORS PAGE */}

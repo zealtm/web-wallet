@@ -7,8 +7,11 @@ import { bindActionCreators } from "redux";
 import {
   setWalletSendModalOpen,
   setWalletReceiveModalOpen,
-  setWalletModalStep
+  setWalletModalStep,
+  setWalletLoading
 } from "./redux/walletAction";
+
+import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
@@ -60,8 +63,11 @@ class CoinsInfo extends React.Component {
     let {
       setWalletSendModalOpen,
       setWalletReceiveModalOpen,
+      setWalletLoading,
+      loadWalletInfo,
       coins,
-      wallet
+      wallet,
+      user
     } = this.props;
     let step = wallet.modal.step;
     let selectedCoin = wallet.selectedCoin;
@@ -70,7 +76,6 @@ class CoinsInfo extends React.Component {
     let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
-
     return (
       <div>
         <Modal
@@ -85,12 +90,18 @@ class CoinsInfo extends React.Component {
           content={<SendModal />}
           show={wallet.modal.open}
           close={
-            step === 4 || step === 4 || step === 5
+            step === 4
               ? null
-              : () => setWalletSendModalOpen()
+              : step === 5 || step === 6
+                ? () => {
+                    setWalletSendModalOpen(),
+                      setWalletLoading(true),
+                      loadWalletInfo(user.password);
+                  }
+                : () => setWalletSendModalOpen()
           }
           back={
-            step === 0 || step === 4 || step === 5
+            step === 0 || step === 4 || step === 5 || step === 6
               ? null
               : () => this.previousStep()
           }
@@ -136,7 +147,7 @@ class CoinsInfo extends React.Component {
                   </button>
 
                   <button
-                    className={style.sendButton}
+                    className={style.sentButton}
                     onClick={() => setWalletSendModalOpen()}
                   >
                     {i18n.t("BTN_SEND")}
@@ -171,7 +182,7 @@ class CoinsInfo extends React.Component {
                 {i18n.t("BTN_RECEIVE")}
               </button>
               <button
-                className={style.sendButtonMobile}
+                className={style.sentButtonMobile}
                 onClick={() => setWalletSendModalOpen()}
               >
                 {i18n.t("BTN_SEND")}
@@ -185,14 +196,18 @@ class CoinsInfo extends React.Component {
 }
 
 CoinsInfo.propTypes = {
+  user: PropTypes.object.isRequired,
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  loadWalletInfo: PropTypes.func.isRequired,
+  setWalletLoading: PropTypes.func.isRequired,
   setWalletModalStep: PropTypes.func.isRequired,
   setWalletSendModalOpen: PropTypes.func.isRequired,
   setWalletReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
+  user: store.user.user,
   wallet: store.wallet,
   coins: store.skeleton.coins
 });
@@ -200,6 +215,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loadWalletInfo,
+      setWalletLoading,
       setWalletModalStep,
       setWalletSendModalOpen,
       setWalletReceiveModalOpen

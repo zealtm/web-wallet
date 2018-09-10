@@ -1,9 +1,9 @@
 import axios from "axios";
-import { BASE_URL, API_HEADER } from "../constants/apiBaseUrl";
+import { API_HEADER } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 class PaymentService {
-  async getCoins(token){
+  async getCoins(token) {
     try {
       API_HEADER.headers.Authorization = token;
 
@@ -12,13 +12,13 @@ class PaymentService {
         API_HEADER
       );
       return response.data;
-    }catch(error){
+    } catch (error) {
       internalServerError();
       return;
     }
   }
 
-  async getInvoice(token, number){
+  async getInvoice(token, number) {
     try {
       // API_HEADER.headers.Authorization = token;
 
@@ -38,20 +38,20 @@ class PaymentService {
       //teste
       const data = {
         number: number,
-        value: 45.90,
+        value: 45.9,
         assignor: "Banco Inter",
         description: "Titulo de Cobranca",
         dueDate: "24/09/2018"
-      }
+      };
 
       return data;
-    }catch(error){
+    } catch (error) {
       internalServerError();
       return;
     }
   }
 
-  async getCoinAmountPay(token, coin, value){
+  async getCoinAmountPay(token) {
     try {
       API_HEADER.headers.Authorization = token;
 
@@ -67,10 +67,10 @@ class PaymentService {
         data: {
           amount: 50000
         }
-      }
+      };
 
       return response.data;
-    }catch(error){
+    } catch (error) {
       internalServerError();
       return;
     }

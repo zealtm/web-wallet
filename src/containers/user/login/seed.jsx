@@ -48,7 +48,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: seed == undefined ? "" : seed.value,
-      placeholder: "Seed Words",
+      placeholder:i18n.t("PLACEHOLDER_SEED"),
       required: true
     };
 
@@ -74,7 +74,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: generateMnemonic(),
-      placeholder: "Seed Words",
+      placeholder:i18n.t("PLACEHOLDER_SEED"),
       required: true
     };
 
@@ -87,13 +87,19 @@ class Seed extends React.Component {
     });
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+
   render() {
     let { loading } = this.props.user;
     let { seed } = this.state.inputs;
     let { buttonEnable, errors } = this.state;
 
     return (
-      <div>
+      <div onKeyPress={this.handleKeyPress}>
         <img src="../../images/logo.svg" className={style.logo} />
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>

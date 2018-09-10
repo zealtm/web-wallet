@@ -1,7 +1,15 @@
 import { put, call } from "redux-saga/effects";
-import { setAuthToken, getAuthToken, setUserSeedWords, getUserSeedWords, getUsername, setUserData, clearAll } from "../../../utils/localStorage";
+import {
+  setAuthToken,
+  getAuthToken,
+  setUserSeedWords,
+  getUserSeedWords,
+  getUsername,
+  setUserData,
+  clearAll
+} from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
-import { HEADER_RESPONSE } from "../../../constants/headers";
+import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
@@ -37,6 +45,7 @@ export function* authenticateUser(action) {
       authService.hasTwoFactorAuth,
       response.data.data.token
     );
+
     let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
     let seed = yield call(getUserSeedWords);
 
@@ -49,6 +58,7 @@ export function* authenticateUser(action) {
         password: encryptHmacSha512Key(action.password),
         seed: twoFactor ? undefined : seed
       },
+      twoFactor: twoFactor,
       pages: { login: twoFactor ? 1 : 2 }
     });
 
@@ -71,7 +81,6 @@ export function* hasTwoFactorAuth() {
     let userToken = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
-
     if (response.error) {
       yield put(response.error);
       yield put({ type: changeLoadingState });
@@ -110,7 +119,12 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     let seed = yield call(getUserSeedWords);
-    const response = yield call(authService.verifyTwoFactoryAuth, action.token);
+    let userToken = yield call(getAuthToken);
+    const response = yield call(
+      authService.verifyTwoFactoryAuth,
+      action.token,
+      userToken
+    );
 
     if (response.error) {
       yield put(response.error);
