@@ -4,7 +4,7 @@ import NumberMask from "react-number-format";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getUserGdpr, setUserGdpr} from "../redux/paymentAction";
+import {setUserGdpr} from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -85,22 +85,17 @@ class DetailsPayment extends React.Component {
     setUserGdpr({gpdr: newStatus});
   }
 
-  componentWillMount() {
-    const {getUserGdpr} = this.props;
-    getUserGdpr();
-  }
-
   render() {
     const {loading, payment} = this.props;
     const {user, error, errorMsg} = this.state;
 
-    // const gdpr = payment.user.gdpr || user.gdpr;
+    console.log('user', user);
 
     return (
       <div className={style.modalBox}>
-        <div>
+        {/* <div>
           {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
-        </div>
+        </div> */}
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
         <div className={style.strongText} style={{ marginTop: 20 }}>
           <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>
@@ -153,12 +148,11 @@ class DetailsPayment extends React.Component {
 const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading,
-  user: store.payment.user,
+  user: store.user.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    getUserGdpr,
     setUserGdpr,
   },
   dispatch

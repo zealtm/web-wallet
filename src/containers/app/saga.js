@@ -44,7 +44,6 @@ import {
   getFeePaymentSaga,
   setFeePaymentSaga,
   getInvoiceSaga,
-  getUserGdprSaga,
   setUserGdprSaga,
   getHistoryPaySaga
 } from "../payment/redux/paymentSaga";
@@ -94,7 +93,6 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
-    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga),
     fork(takeLatest, "SET_USER_GDPR", setUserGdprSaga),
   ];
 }

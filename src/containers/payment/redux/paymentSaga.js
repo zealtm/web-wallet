@@ -120,24 +120,6 @@ export function* getInvoiceSaga(payload) {
   }
 }
 
-export function* getUserGdprSaga() {
-  try {
-    const token = yield call(getAuthToken);
-    const response = yield call(userService.getUser, token);
-
-    const user = response.data.data;
-
-    yield put({
-      type: "GET_USER_GDPR_REDUCER",
-      user: {
-        gdpr: user.gpdr
-      }
-    });
-  } catch (err) {
-    yield put(internalServerError());
-  }
-}
-
 export function* setUserGdprSaga(payload) {
   try {
     const token = yield call(getAuthToken);
