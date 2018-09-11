@@ -53,11 +53,17 @@ class ResetUser extends React.Component {
     }
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+
   render() {
     let { inputs, errors } = this.state;
 
     return (
-      <div>
+      <div onKeyPress={this.handleKeyPress}>
         <Link to="/login">
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"

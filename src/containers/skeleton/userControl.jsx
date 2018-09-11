@@ -37,7 +37,11 @@ class UserControl extends React.Component {
       return (
         <div className={style.menuUser}>
           <div className={style.arrowUp} />
-          <Link to="/settings" className={style.linkPopMenu}>
+          <Link
+            to="/settings"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
             <div className={style.boxIcon}>
               <img src="../../images/icons/settings/settings.png" />
             </div>
@@ -45,7 +49,11 @@ class UserControl extends React.Component {
           </Link>
 
           {/* <Link to="/" className={style.linkPopMenu}> */}
-          <a href="mailto:support@lunes.io" className={style.linkPopMenu}>
+          <a
+            href="mailto:support@lunes.io"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
             <div className={style.boxIcon}>
               <img src="../../images/icons/question/question.png" />
             </div>

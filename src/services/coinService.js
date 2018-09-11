@@ -4,7 +4,8 @@ import {
   BASE_URL,
   LUNESNODE_URL,
   API_HEADER,
-  HEADER_RESPONSE
+  HEADER_RESPONSE,
+  TESTNET
 } from "../constants/apiBaseUrl";
 import {
   modalError,
@@ -57,11 +58,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let defaultCrypto = await getDefaultCrypto();
-      let responseavailableCoins = await axios.get(
+      let responseAvailableCoins = await axios.get(
         BASE_URL + "/coin",
         API_HEADER
       );
-      let availableCoins = responseavailableCoins.data.data.coins;
+      let availableCoins = responseAvailableCoins.data.data.coins;
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
         if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
@@ -100,10 +101,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-            "/coin/" +
-            coin.abbreviation +
-            "/balance/" +
-            coin.address,
+              "/coin/" +
+              coin.abbreviation +
+              "/balance/" +
+              coin.address,
             API_HEADER
           );
 
@@ -175,21 +176,6 @@ class CoinService {
       internalServerError();
       return;
     }
-  }
-
-  async getCoinFee(coinType) {
-
-    if (coinType === "lunes") {
-      let feeValue = {
-        low: 0.001,
-        medium: 0.001,
-        high: 0.001,
-        selectedFee: 0.001
-      }
-
-      return feeValue
-    }
-
   }
 
   async getCoinPrice(coinType, fiat, token) {
@@ -288,19 +274,18 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-        "/coin/" +
-        coin +
-        "/transaction/history/" +
-        address +
-        "?size=100",
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          address +
+          "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn(response.data.data);
       return response.data.data;
     } catch (error) {
-      internalServerError();
-      return;
+      console.warn(error);
     }
   }
 
@@ -312,20 +297,26 @@ class CoinService {
 
       address = address.replace(coin + ":", "");
       if (coin === "lunes") {
-        let response = await axios.post(
+        let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
         );
 
-        if (!response.valid) {
+        if (!response.data.valid) {
           return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
         }
 
-        return response.valid;
+        return response.data.valid;
       }
 
-      let valid = await CAValidator.validate(address, coin.toUpperCase());
+      let valid = false;
+      console.warn(coin);
+      if (coin === "bch") {
+        valid = true;
+      } else {
+        valid = await CAValidator.validate(address, coin.toUpperCase());
+      }
 
-      if (!valid) {
+      if (!valid && !TESTNET) {
         return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
       }
 
@@ -353,24 +344,127 @@ class CoinService {
   async getFee(coinName, fromAddress, toAddress, amount, decimalPoint = 8) {
     try {
       let fee = {};
+      let feePerByte = {};
+      let feeLunes = {};
+
       amount = convertSmallerCoinUnit(amount, decimalPoint);
+
       let response = await axios.post(
         BASE_URL + "/coin/" + coinName + "/transaction/fee",
         { fromAddress, toAddress, amount },
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      let data = response.data.data;
+      let dataFee = response.data.data.fee;
+      let dataFeePerByte = response.data.data.feePerByte;
+      let dataFeeLunes = response.data.data.feeLunes;
 
       if (response.data.code === 200) {
-        Object.keys(data).map(value => {
-          fee[value] = convertBiggestCoinUnit(data[value], decimalPoint);
+        Object.keys(dataFee).map(value => {
+          fee[value] = convertBiggestCoinUnit(dataFee[value], decimalPoint);
+        });
+
+        Object.keys(dataFeePerByte).map(value => {
+          feePerByte[value] = dataFeePerByte[value];
+        });
+
+        Object.keys(dataFeeLunes).map(value => {
+          feeLunes[value] = dataFeeLunes[value];
         });
       }
 
+      fee = {
+        fee,
+        feePerByte,
+        feeLunes
+      };
       return fee;
     } catch (error) {
+      console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async saveTransaction(transaction, coin, price, describe) {
+    try {
+      let endpointUrl =
+        BASE_URL +
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        transaction.sender;
+      let transactionData = {
+        txID: transaction.id,
+        from: transaction.sender,
+        to: transaction.recipient,
+        amount: transaction.amount,
+        fee: transaction.fee,
+        describe: describe ? describe : null,
+        price: {
+          USD: price.USD.price,
+          EUR: price.EUR.price,
+          BRL: price.BRL.price
+        }
+      };
+
+      let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+
+      return response;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async getVoucherCoin(phone, voucher, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(
+        BASE_URL +
+          "/voucher/" +
+          voucher +
+          "?ddi=" +
+          55 +
+          "&ddd=" +
+          phone[0] +
+          "&phone=" +
+          phone[1],
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (!response.data.code || response.data.code !== 200) {
+        return;
+      }
+
+      return response.data.data.coin;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+    }
+  }
+
+  async voucherRescue(phone, address, voucher, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(
+        BASE_URL + "/voucher/rescue/" + voucher,
+        { ddi: 55, ddd: phone[0], phone: phone[1], address: address },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (!response.data.code || response.data.code !== 200) {
+        return;
+      }
+
+      return response;
+    } catch (error) {
+      console.warn(error);
       internalServerError();
     }
   }

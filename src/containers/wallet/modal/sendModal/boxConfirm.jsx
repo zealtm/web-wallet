@@ -12,6 +12,7 @@ import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS
 import { encryptHmacSha512Key } from "../../../../utils/cryptography";
+import i18n from "../../../../utils/i18n";
 
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
@@ -39,7 +40,7 @@ class BoxConfirm extends React.Component {
       setWalletModalStep(4);
       return;
     }
-    errorInput("Invalid Password");
+    errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
     return;
   };
 
@@ -55,12 +56,12 @@ class BoxConfirm extends React.Component {
         />
         <div>
           <span>
-            Para confirmar sua transação, informe sua senha e conclua o envio de{" "}
+            {i18n.t("MODAL_SEND_INFO_TRANSACTION")}{" "}
           </span>
           <span className={style.totalConfirm}>
-            {modal.sendAmount + " " + coin.toUpperCase()}
+            {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
-          <span> para o endereço </span>
+          <span>  {i18n.t("MODAL_SEND_TO_ADDRESS")}</span>
           <span className={style.addressConfirm}>{modal.address}</span>
         </div>
 

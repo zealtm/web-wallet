@@ -24,7 +24,7 @@ let inputUsername = {
   type: "email",
   name: "emailUsername",
   value: getUsername() ? getUsername() : "",
-  placeholder: "Username or Password",
+  placeholder: i18n.t("PLACEHOLDER_USER_PASSWORD"),
   required: true
 };
 
@@ -47,9 +47,10 @@ class Auth extends React.Component {
     this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : { value: "" } },
-      errors: undefined
+      errors: undefined,
     });
   };
+
 
   inputValidator = () => {
     let { inputs } = this.state;
@@ -70,13 +71,19 @@ class Auth extends React.Component {
     }
   };
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+  
   render() {
     // let userName = getUsername();
     let { user } = this.props;
     let { inputs, errors } = this.state;
 
     return (
-      <div>
+      <div onKeyPress={this.handleKeyPress} >
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
 

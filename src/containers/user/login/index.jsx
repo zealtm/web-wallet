@@ -19,8 +19,12 @@ class Login extends React.Component {
     if (login === 2) return <Seed />;
   };
 
+
+
   render() {
-    return <div className={style.contGeneral}>{this.renderContent()}</div>;
+    return <div className={style.contGeneral} >
+      {this.renderContent()}
+      </div>;
   }
 }
 

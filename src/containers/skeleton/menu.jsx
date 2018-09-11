@@ -80,14 +80,14 @@ class Menu extends React.Component {
           onClick={actionMenu}
         >
           <img src={item.icon} className={style.iconMenu} />
-          {item.label}
+          <div onClick={actionMenu}>{item.label}</div>
         </NavLink>
       );
     });
   };
 
   render() {
-    const { openMenu, user, actionLogout } = this.props;
+    const { openMenu, user, actionLogout, actionMenu } = this.props;
 
     return (
       <div
@@ -102,10 +102,14 @@ class Menu extends React.Component {
             <Grid item xs={8}>
               <span className={style.userName}>{user.name}</span>
               <br />
-              <Link to="/settings" className={style.link}>
+              <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
-              <a href="mailto:support@lunes.io" className={style.link}>
+              <a
+                href="mailto:support@lunes.io"
+                className={style.link}
+                onClick={actionMenu}
+              >
                 {i18n.t("MENU_SUPPORT")}
                 {/* <Link to="/help" className={style.link}></Link> */}
               </a>

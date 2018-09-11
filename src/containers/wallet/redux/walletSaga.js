@@ -2,12 +2,14 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // UTILS
-import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 
 // Services
 import CoinService from "../../../services/coinService";
-
+import TransactionService from "../../../services/transaction/transactionService";
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 export function* validateAddress(action) {
   try {
@@ -55,15 +57,20 @@ export function* getWalletSendModalFee(action) {
       action.decimalPoint
     );
 
-    yield put({
-      type: "GET_WALLET_MODAL_SEND_FEE",
-      fee: response
-    });
+    if (response) {
+      yield put({
+        type: "GET_WALLET_MODAL_SEND_FEE",
+        fee: response
+      });
 
-    yield put({
-      type: "SET_WALLET_MODAL_STEP",
-      step: 2
-    });
+      yield put({
+        type: "SET_WALLET_MODAL_STEP",
+        step: 2
+      });
+
+      return;
+    }
+    yield put(internalServerError());
 
     return;
   } catch (error) {
@@ -116,17 +123,63 @@ export function* getWalletCoinHistory(action) {
 
 export function* getCoinFee(action) {
   try {
-    let response = yield call(coinService.getCoinFee, action.coinType);
+    let response = yield call(coinService.getFee, action.coinType);
     yield put({
       type: "GET_COIN_FEE",
-      coinFee: {
-        low: response.low,
-        medium: response.medium,
-        high: response.high,
-        selectedFee: response.selectedFee
-      }
+      fee: response
     });
   } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put(internalServerError());
+  }
+}
+
+export function* setWalletTransaction(action) {
+  try {
+    let seed = yield call(getUserSeedWords);
+    let token = yield call(getAuthToken);
+
+    let lunesWallet = yield call(
+      transactionService.transactionService,
+      action.transaction.coin,
+      token
+    );
+
+    if (lunesWallet) {
+      let response = yield call(
+        transactionService.transaction,
+        action.transaction,
+        lunesWallet,
+        decryptAes(seed, action.password),
+        token
+      );
+
+      if (response) {
+        yield put({
+          type: "SET_WALLET_MODAL_STEP",
+          step: 5
+        });
+
+        yield put({
+          type: "SET_WALLET_TRANSACTION",
+          response: response
+        });
+
+        return;
+      }
+    }
+
+    yield put({
+      type: "SET_WALLET_MODAL_STEP",
+      step: 6
+    });
+
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put(internalServerError());
+
+    return;
+  } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }

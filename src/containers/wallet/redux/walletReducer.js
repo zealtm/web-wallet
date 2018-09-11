@@ -12,23 +12,31 @@ const initialState = {
     step: 0,
     address: undefined,
     sendAmount: undefined,
+    finalAmount: undefined,
     feeValue: {
-      low: 0.001,
-      medium: 0.001,
-      high: 0.001,
-      selectedFee: undefined
+      fee: {
+        low: 0.001,
+        medium: 0.001,
+        high: 0.001
+      },
+      feePerByte: {
+        low: 0,
+        medium: 0,
+        high: 0
+      },
+      feeLunes: {
+        low: 0,
+        medium: 0,
+        high: 0
+      },
+      selectedFee: undefined,
+      selectedFeePerByte: undefined,
+      selectedFeeLunes: undefined
     },
     loading: false
   },
   modalReceive: {
     open: false
-  },
-
-  coinFee: {
-    low: 0.001,
-    medium: 0.001,
-    high: 0.001,
-    selectedFee: undefined
   },
   loading: false,
   errors: false
@@ -57,10 +65,23 @@ const wallet = (state = initialState, action) => {
           address: undefined,
           sendAmount: undefined,
           feeValue: {
-            low: 0.001,
-            medium: 0.001,
-            high: 0.001,
-            selectedFee: undefined
+            fee: {
+              low: 0.001,
+              medium: 0.001,
+              high: 0.001
+            },
+            feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            selectedFee: undefined,
+            selectedFeePerByte: undefined
           },
           loading: false
         },
@@ -145,6 +166,15 @@ const wallet = (state = initialState, action) => {
         }
       };
 
+    case "SET_WALLET_MODAL_FINAL_AMOUNT":
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          finalAmount: action.amount
+        }
+      };
+
     case "SET_WALLET_MODAL_SEND_AMOUNT":
       return {
         ...state,
@@ -177,12 +207,59 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_TRANSACTION":
+    case "SET_WALLET_MODAL_SEND_SELECTED_FEEPERBYTE":
       return {
         ...state,
         modal: {
           ...state.modal,
-          feeValue: action.value,
+          feeValue: {
+            ...state.modal.feeValue,
+            selectedFeePerByte: action.fee
+          },
+          loading: false
+        }
+      };
+
+    case "SET_WALLET_MODAL_SEND_SELECTED_FEELUNES":
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          feeValue: {
+            ...state.modal.feeValue,
+            selectedFeeLunes: action.fee
+          },
+          loading: false
+        }
+      };
+
+    case "SET_WALLET_TRANSACTION":
+      return {
+        ...state,
+        modal: {
+          open: true,
+          step: state.modal.step,
+          address: undefined,
+          sendAmount: undefined,
+          feeValue: {
+            fee: {
+              low: 0.001,
+              medium: 0.001,
+              high: 0.001
+            },
+            feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            selectedFee: undefined,
+            selectedFeePerByte: undefined
+          },
           loading: false
         }
       };
@@ -196,13 +273,16 @@ const wallet = (state = initialState, action) => {
     case "GET_COIN_FEE": {
       return {
         ...state,
-        coinFee: {
-          low: action.coinFee.low,
-          medium: action.coinFee.medium,
-          high: action.coinFee.high,
-          selectedFee: action.coinFee.selectedFee,
+        modal: {
+          ...state.modal,
+          feeValue: {
+            ...state.modal.feeValue,
+            fee: action.fee.fee,
+            feePerByte: action.fee.feePerByte,
+            feeLunes: action.fee.feeLunes
+          }
         }
-      }
+      };
     }
 
     case "CLEAR_WALLET_STATE":
@@ -214,10 +294,23 @@ const wallet = (state = initialState, action) => {
           address: undefined,
           sendAmount: undefined,
           feeValue: {
-            low: 0.001,
-            medium: 0.001,
-            high: 0.001,
-            selectedFee: undefined
+            fee: {
+              low: 0.001,
+              medium: 0.001,
+              high: 0.001
+            },
+            feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            selectedFee: undefined,
+            selectedFeePerByte: undefined
           },
           loading: false
         },

@@ -18,6 +18,7 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { getDefaultFiat } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
@@ -56,12 +57,15 @@ class TransactionHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { skeleton, wallet } = this.props;
+    let defaultFiat = getDefaultFiat();
     let selectedCoin = wallet.selectedCoin;
     let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
     let history = wallet.coinHistory.history.txs;
 
     if (!history || wallet.coinHistory.history <= 0) {
-      return <div className={style.notFound}>Nothing Found</div>;
+      return (
+        <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
+      );
     }
 
     return Object.keys(history).map((val, index) => {
@@ -94,7 +98,7 @@ class TransactionHistory extends React.Component {
                 </div>
               </Grid>
               <Grid item xs={6} className={style.descriptionHistory}>
-                {transaction.description}
+                {transaction.describe}
               </Grid>
               <Grid item xs={4} className={style.valueHistory}>
                 <div
@@ -110,7 +114,7 @@ class TransactionHistory extends React.Component {
                     decimalPoint
                   ).toFixed(decimalPoint)}{" "}
                 </div>
-                <div> {/* transaction.price[defaultFiat] */} </div>
+                <div> {transaction.price[defaultFiat || "USD"]} </div>
               </Grid>
             </Grid>
 
@@ -126,7 +130,7 @@ class TransactionHistory extends React.Component {
                   </Grid>
                   <Grid item xs={6} sm={7}>
                     <div className={style.titleBlockExplorer}>
-                      {"Blockexplorer"}
+                      {i18n.t("TEXT_BLOCKEXPLORER")}
                     </div>
                   </Grid>
                   <Grid
@@ -144,7 +148,7 @@ class TransactionHistory extends React.Component {
                 <Grid item xs={12}>
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
-                      <div> {"ID:"} </div>
+                      <div> {i18n.t("TEXT_ID")} </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
                       <a
@@ -164,7 +168,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.fromTransactionHistory}>
-                        {"De:"}
+                        {i18n.t("TEXT_FROM")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -177,7 +181,7 @@ class TransactionHistory extends React.Component {
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
                       <div className={style.forTransactionHistory}>
-                        {"Para:"}
+                        {i18n.t("TEXT_TO")}
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
@@ -191,7 +195,7 @@ class TransactionHistory extends React.Component {
                     <Grid item xs={12} className={style.itemDataHistorico}>
                       <Grid item xs={2} className={style.typeItems}>
                         <div className={style.forTransactionHistory}>
-                          {"Cupom:"}
+                          {i18n.t("TEXT_PROMOTIONAL")}
                         </div>
                       </Grid>
                       <Grid item xs={10} className={style.descriptionHistory}>
@@ -228,7 +232,7 @@ class TransactionHistory extends React.Component {
                   src="images/icons/general/refresh@2x.png"
                 />
               </div>
-              <div className={style.text}>
+              <div className={style.historyTitle}>
                 {i18n.t("TRANSACTION_HISTORY_TITLE")}
               </div>
             </div>

@@ -71,6 +71,8 @@ class Invoice extends React.Component {
     super();
     this.state = {
       errors: [],
+      disableNumberInput: false,
+      invoiceLoading: false,
       invoice: {
         number: '',
         assignor: '',
@@ -90,7 +92,7 @@ class Invoice extends React.Component {
     this.coinSelected = this.coinSelected.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const {getCoinsEnabled} = this.props;
     getCoinsEnabled();
   }
@@ -112,30 +114,46 @@ class Invoice extends React.Component {
 
   handleInvoiceNumberChange = event => {
     const {getInvoice} = this.props;
-    const {invoice} = this.state;
+    const {invoice, disableNumberInput} = this.state;
+
+    const newValue = event.target.value.replace(/\D/, '')
 
     this.setState({
       ...this.state,
+      disableNumberInput: newValue.length === 48,
       invoice: {
         ...invoice,
-        number: event.target.value.replace(/\D/, '')
+        number: newValue
       }
     });
 
-    if (event.target.value.length === 48) {
-      getInvoice(event.target.value);
-      const {value, assignor, description, dueDate} = this.props.payment;
+    if (newValue.length === 48) {
+      if (disableNumberInput) {
+        return;
+      }
 
       this.setState({
-        ...this.state,
-        invoice: {
-          ...this.state.invoice,
-          value,
-          assignor,
-          description,
-          dueDate
-        }
+        invoiceLoading: true,
       });
+
+      getInvoice(newValue);
+
+      const {value, assignor, description, dueDate} = this.props.payment;
+
+      setTimeout(() => {
+        this.setState({
+          ...this.state,
+          invoiceLoading: false,
+          invoice: {
+            ...this.state.invoice,
+            value,
+            assignor,
+            description,
+            dueDate
+          }
+        });
+      }, 500);
+
     }
   }
 
@@ -205,7 +223,7 @@ class Invoice extends React.Component {
 
   render() {
     const {classes, loading, coinsRedux, payment} = this.props;
-    const {coin, invoice, errors} = this.state;
+    const {coin, invoice, errors, invoiceLoading} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -226,6 +244,13 @@ class Invoice extends React.Component {
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes('number')}
             />
+            <span style={{
+              display: 'block',
+              position: 'absolute',
+              visibility: invoiceLoading ? 'visible' : 'hidden'
+            }}>
+              <small><Loading color="lunes" /></small>
+            </span>
           </div>
 
           <Grid container>

@@ -41,7 +41,7 @@ class Code extends React.Component {
   }
 }
 
-Code.prototypes = {
+Code.propTypes = {
   values: PropTypes.array.isRequired,
   onHandleChange: PropTypes.func.isRequired,
 };
