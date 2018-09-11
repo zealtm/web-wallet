@@ -22,26 +22,17 @@ class PaymentService {
 
   async getInvoice(token, number) {
     try {
-      // API_HEADER.headers.Authorization = token;
+      API_HEADER.headers.Authorization = token;
 
-      // const response = await axios.get(`${BASE_URL}/bill/${number}`, API_HEADER);
+      const response = await axios.get(`${BASE_URL}/bill/${number}`, API_HEADER);
+      // TODO: enable setAuthToken when the header is in the api response
       // setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      // const data = {
-      //   number: response.data.LinhaDigitavel,
-      //   value: response.data.Valor,
-      //   assignor: response.data.Cedente,
-      //   description: response.data.TipoServico,
-      //   dueDate: response.data.DataVencimento
-      // }
-
-      //teste
       const data = {
-        number: number,
-        value: 49.90,
-        assignor: "Banco Inter",
-        description: "Titulo de Cobranca",
-        dueDate: "24/09/2018"
+        number,
+        value: response.data.data.value,
+        assignor: response.data.data.assignor || '',
+        dueDate: response.data.data.dueDate || ''
       }
 
       return data;

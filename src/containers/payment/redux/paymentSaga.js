@@ -75,6 +75,7 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
+    // console.error('setPaymentError', error);
     yield put(internalServerError());
   }
 }
@@ -109,8 +110,6 @@ export function* getInvoiceSaga(payload) {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
-
-    // console.log('get invoice', response);
 
     yield put({
       type: "GET_INVOICE_REDUCER",
