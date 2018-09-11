@@ -2,21 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
-
-// import Select from "../../../components/select";
+import compose from "recompose/compose";
+import { connect } from "react-redux";
 import { Grid, Avatar, Input } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
-
-// MATERIAL UI
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
-// import Select from "./select";
 
 const customStyle = {
   img: {
@@ -82,21 +78,31 @@ class User extends React.Component {
   constructor() {
     super();
     this.state = {
+      name: undefined,
+      surname: undefined,
       verified: undefined,
-      birth_day: undefined,
-      birth_month: undefined,
-      birth_year: undefined
+      birthDay: undefined,
+      birthMonth: undefined,
+      birthYear: undefined,
+      phone: undefined,
+      directDistanceDialing: undefined,
+      address: undefined,
+      city: undefined,
+      zipcode: undefined,
+      state: undefined
     };
-
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
-    this.handleBirthMonthChange = this.handleBirthMonthChange.bind(this);
-    this.handleBirthYearChange = this.handleBirthYearChange.bind(this);
   }
 
   changeAvatar = () => {
-    alert("Avatar changed!");
+    window.open("https://gravatar.com", "blank");
   };
+
+  componentDidMount() {
+    let { user } = this.props;
+
+    this.handleNameChange(user.name);
+    this.handleSurnameChange(user.surname);
+  }
 
   handleSelectChange = (name, value) => {
     this.setState({
@@ -105,14 +111,55 @@ class User extends React.Component {
     });
   };
 
-  handleBirthDayChange = value => this.handleSelectChange("birth_day", value);
-  handleBirthMonthChange = value =>
-    this.handleSelectChange("birth_month", value);
-  handleBirthYearChange = value => this.handleSelectChange("birth_year", value);
+  handleNameChange = name => this.handleSelectChange("name", name);
+  handleSurnameChange = surname => this.handleSelectChange("surname", surname);
+  handleBirthDayChange = birthDay => this.handleSelectChange("birthDay", birthDay);
+  handleBirthMonthChange = birthMonth => this.handleSelectChange("birthMonth", birthMonth);
+  handleBirthYearChange = birthYear => this.handleSelectChange("birthYear", birthYear);
+  handlePhoneChange = phone => this.handleSelectChange("phone", phone);
+  handleDirectDistanceDialingChange = ddd => this.handleSelectChange("directDistanceDialing", ddd);
+  handleAddressChange = address => this.handleSelectChange("address", address);
+  handleCityChange = city => this.handleSelectChange("city", city);
+  handleZipcodeChange = zipcode => this.handleSelectChange("zipcode", zipcode);
+  handleStateChange = state => this.handleSelectChange("state", state);
+
+
+  loadMounth = () => {
+    let monthNames = [
+      i18n.t("JANUARY"),
+      i18n.t("FEBRUARY"),
+      i18n.t("MARCH"),
+      i18n.t("APRIL"),
+      i18n.t("MAY"),
+      i18n.t("JUNE"),
+      i18n.t("JULY"),
+      i18n.t("AUGUST"),
+      i18n.t("SEPTEMBER"),
+      i18n.t("OCTOBER"),
+      i18n.t("NOVEMBER"),
+      i18n.t("DECEMBER")
+    ];
+
+    return monthNames.map((month, index) => (
+      <MenuItem key={index} value={index + 1}>{month}</MenuItem >
+    ));
+  };
 
   render() {
-    const { classes } = this.props;
-    const { verified, birth_day, birth_month, birth_year } = this.state;
+    const { classes, user } = this.props;
+    const {
+      verified,
+      birthDay,
+      birthMonth,
+      birthYear,
+      name,
+      surname,
+      city,
+      directDistanceDialing,
+      phone,
+      address,
+      zipcode,
+      state } = this.state;
 
     return (
       <div>
@@ -148,7 +195,7 @@ class User extends React.Component {
             <Grid item xs={12} className={style.row}>
               <div className={style.avatarAlign}>
                 <Avatar
-                  src="http://www.achieveaim.com/media/images/user/4.jpg"
+                  src={user.profilePicture}
                   alt={i18n.t("SETTINGS_USER_IMAGE")}
                   className={style.avatar}
                 />
@@ -168,7 +215,7 @@ class User extends React.Component {
             <Grid item xs={12} className={style.row}>
               <div className={style.content}>
                 <p className={style.whiteTitle}>
-                  {`${i18n.t("SETTINGS_USER_STATUS")}: `}
+                  {i18n.t("SETTINGS_USER_STATUS")}
                   <span
                     className={
                       verified ? style.successStatus : style.errorStatus
@@ -269,6 +316,8 @@ class User extends React.Component {
                         input: classes.inputCss
                       }}
                       inputProps={{ required: false }}
+                      value={name}
+                      onChange={event => this.handleNameChange(event.target.value)}
                     />
                   </div>
 
@@ -286,11 +335,11 @@ class User extends React.Component {
 
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
                             items={days}
-                            value={birth_day}
-                            action={this.handleBirthDayChange}
+                            value={birthDay}
+                            onChange={event => this.handleBirthDayChange(event.target.value)}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -314,15 +363,14 @@ class User extends React.Component {
                               selectMenu: classes.underlineItems,
                             }}
                             items={months}
-                            value={birth_month}
-                            action={this.handleBirthMonthChange}
+                            value={birthMonth}
+                            onChange={event => this.handleBirthMonthChange(event.target.value)}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={"jan"}>jan</MenuItem>
-                            <MenuItem value={"fev"}>fev</MenuItem>
-                            <MenuItem value={"mar"}>mar</MenuItem>
+                            {this.loadMounth()}
+
                           </Select>
                         </FormControl>
                       </Grid>
@@ -337,23 +385,19 @@ class User extends React.Component {
                               selectMenu: classes.underlineItems,
                             }}
                             items={years}
-                            value={birth_year}
-                            action={this.handleBirthMonthChange}
+                            value={birthYear}
+                            onChange={event => this.handleBirthYearChange(event.target.value)}
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={"2018"}>2018</MenuItem>
-                            <MenuItem value={"2017"}>2017</MenuItem>
-                            <MenuItem value={"2016"}>2016</MenuItem>
+                            <MenuItem value={2018}>2018</MenuItem>
+                            <MenuItem value={2017}>2017</MenuItem>
+                            <MenuItem value={2016}>2016</MenuItem>
 
                           </Select>
                         </FormControl>
                       </Grid>
-
-
-
-
                     </Grid>
                   </div>
                 </Grid>
@@ -369,6 +413,8 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
+                      onChange={event => this.handleSurnameChange(event.target.value)}
+                      value={surname}
                     />
                   </div>
 
@@ -387,6 +433,9 @@ class User extends React.Component {
                           input: classes.inputCss
                         }}
                         style={{ width: "30%", float: "left", marginTop: "15px" }}
+                        onChange={event => this.handleDirectDistanceDialingChange(event.target.value)}
+                        value={directDistanceDialing}
+
                       />
 
                     </div>
@@ -397,6 +446,8 @@ class User extends React.Component {
                         input: classes.inputCss
                       }}
                       style={{ width: "50%", float: "right", marginTop: "15px" }}
+                      onChange={event => this.handlePhoneChange(event.target.value)}
+                      value={phone}
                     />
                   </div>
                 </Grid>
@@ -416,6 +467,9 @@ class User extends React.Component {
                         input: classes.inputCss
                       }}
                       inputProps={{ required: false }}
+                      onChange={event => this.handleAddressChange(event.target.value)}
+                      value={address}
+
                     />
                   </div>
 
@@ -427,6 +481,8 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
+                      onChange={event => this.handleCityChange(event.target.value)}
+                      value={city}
                     />
                   </div>
                 </Grid>
@@ -439,6 +495,8 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
+                      onChange={event => this.handleZipcodeChange(event.target.value)}
+                      value={zipcode}
                     />
                   </div>
 
@@ -450,6 +508,8 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
+                      onChange={event => this.handleStateChange(event.target.value)}
+                      value={state}
                     />
                   </div>
                 </Grid>
@@ -472,7 +532,18 @@ class User extends React.Component {
 }
 
 User.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object,
+  user: PropTypes.object
 };
 
-export default withStyles(customStyle)(User);
+const mapStateToProps = store => ({
+  user: store.user.user
+})
+
+export default compose(
+  withStyles(customStyle),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(User);
