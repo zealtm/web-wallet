@@ -68,6 +68,7 @@
   "SETTINGS_USER_CODE": "Code",
   "SETTINGS_USER_NUMBER": "Phone",
   "SETTINGS_USER_ZIP_CODE": "Zip code",
+  "SETTINGS_USER_BIRTHDATE": "Birth date",
   "SETTINGS_USER_DAY": "Day",
   "SETTINGS_USER_MONTH": "Month",
   "SETTINGS_USER_YEAR": "Year",
