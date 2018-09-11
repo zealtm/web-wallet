@@ -18,7 +18,7 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getDefaultFiat } from "../../utils/localStorage";
+import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
@@ -56,8 +56,9 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { skeleton, wallet } = this.props;
+    let { skeleton, wallet, coins } = this.props;
     let defaultFiat = getDefaultFiat();
+    let defaultCoin = getDefaultCrypto();
     let selectedCoin = wallet.selectedCoin;
     let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
     let history = wallet.coinHistory.history.txs;
@@ -114,7 +115,10 @@ class TransactionHistory extends React.Component {
                     decimalPoint
                   ).toFixed(decimalPoint)}{" "}
                 </div>
-                <div> {transaction.price[defaultFiat || "USD"]} </div>
+                <div>
+                  {(coins[defaultCoin].price[defaultFiat].symbol || "$") +
+                    transaction.price[defaultFiat]}
+                </div>
               </Grid>
             </Grid>
 

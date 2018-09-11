@@ -80,6 +80,9 @@ class CoinService {
             API_HEADER
           );
           availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.BRL.symbol = "R$";
+          availableCoins[index].price.USD.symbol = "$";
+          availableCoins[index].price.EUR.symbol = "€";
           availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           // CREATE ADDRESS
@@ -142,6 +145,7 @@ class CoinService {
       });
       setAuthToken(availableCoins.token);
       coins.token = availableCoins.token;
+      console.warn(coins);
       return coins;
     } catch (error) {
       internalServerError();

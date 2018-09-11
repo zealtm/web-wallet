@@ -118,11 +118,11 @@ class Security extends React.Component {
                 <Grid container className={style.containerItemsWeb}>
                   <Grid item xs={3} className={style.item}>
                     <Grid>
-                      <a to="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
+                      <a href="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
                         <img src="images/apple@1x.png" />
                       </a>
                       <br />
-                      <a to="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
+                      <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
                         <img src="images/google-play@1x.png" />
                       </a>
                     </Grid>
