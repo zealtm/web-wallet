@@ -44,8 +44,8 @@ export const createUser = (name, surname, email, password) => ({
 
 export const setUserSeed = (seed, password) => ({
   type: "SET_USER_SEED_API",
-    seed,
-    password
+  seed,
+  password
 });
 
 export const resetUser = () => ({
@@ -54,4 +54,9 @@ export const resetUser = () => ({
 
 export const loading = () => ({
   type: "CHANGE_LOADING_STATE"
+});
+
+export const editUserData = (data) => ({
+  type: "EDIT_USER_DATA_API",
+  data
 });

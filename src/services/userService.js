@@ -63,6 +63,24 @@ class UserService {
       return defaultImg;
     }
   }
+
+  async editUser(token, data) {
+
+    let userData = {
+      name: data.name,
+      surname: data.surname,
+      birthday: data.birthday,
+      phone: data.phone,
+      street: data.street,
+      city: data.city,
+      state: data.state,
+      zipcode: data.zipcode
+    }
+
+    API_HEADER.headers.Authorization = token;
+    let response = await axios.patch(BASE_URL + "/user", userData, API_HEADER);
+    setAuthToken(response.headers[HEADER_RESPONSE]);
+  }
 }
 
 export default UserService;
