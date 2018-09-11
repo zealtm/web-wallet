@@ -123,7 +123,7 @@ class User extends React.Component {
                 <h3>{i18n.t("SETTINGS_USER")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item sm={2} />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -142,7 +142,7 @@ class User extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container className={style.container}>
+        <Grid item xs={12} className={style.container}>
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -254,7 +254,7 @@ class User extends React.Component {
           </Grid>
 
           {/* USER INFO */}
-          <Grid item xs={12} sm={6} md={7}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12} className={style.row}>
               <Grid container>
                 <Grid item xs={12} md={6}>

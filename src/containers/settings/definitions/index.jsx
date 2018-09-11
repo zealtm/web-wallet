@@ -72,7 +72,7 @@ class Definitions extends React.Component {
                 <h3>{i18n.t("DEFINITIONS_TITLE")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item sm={2} />
 
             <Grid item xs={6} sm={2} >
               <Link to="settings">
@@ -91,7 +91,7 @@ class Definitions extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={11} sm={10}> 
+        <Grid item xs={11} sm={8}> 
         <div className={style.box}>
 
             <h2>{i18n.t("SET_DEFINITIONS_TITLE1")}</h2>

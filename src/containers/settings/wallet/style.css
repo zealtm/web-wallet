@@ -24,6 +24,7 @@
 }
 
 :local(.headerSettingsDefault p) {
+  padding-left: 22px;
   color: #68f285;
   font-size: 12px;
   font-weight: bold;
@@ -48,6 +49,10 @@
   display: flex;
 }
 
+:local(.alignContentTab) {
+  padding: 0 35px;
+} 
+
 @media screen and (max-width: 599px) {
   :local(.headerSettingsDefault p) {
     float: left;
@@ -59,6 +64,9 @@
   }
   :local(.headerSettingsDefault) { 
     display: block;
+  }
+  :local(.alignContentTab) {
+  padding: 0;
   }
 }
 

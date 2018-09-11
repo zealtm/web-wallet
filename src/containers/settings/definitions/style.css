@@ -26,6 +26,7 @@
 }
 
 :local(.headerSettingsDefault p) {
+  padding-left: 20px;
   color: #68f285;
   font-size: 12px;
   font-weight: bold;
