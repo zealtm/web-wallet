@@ -1,6 +1,7 @@
 import axios from "axios";
-import { API_HEADER } from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
+import { setAuthToken } from  '../utils/localStorage';
 
 class PaymentService {
   async getCoins(token) {
@@ -8,13 +9,14 @@ class PaymentService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        "https://a.lunes.io/wallet/staging/service/pagamento",
+        `${BASE_URL}/service/pagamento`,
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response.data;
-    } catch (error) {
-      internalServerError();
-      return;
+    } catch(error) {
+      return internalServerError();
     }
   }
 
@@ -22,10 +24,8 @@ class PaymentService {
     try {
       // API_HEADER.headers.Authorization = token;
 
-      // let response = await axios.get(
-      //   `https://a.lunes.io/wallet/staging/bill/${number}`
-      //   //API_HEADER
-      // );
+      // const response = await axios.get(`${BASE_URL}/bill/${number}`, API_HEADER);
+      // setAuthToken(response.headers[HEADER_RESPONSE]);
 
       // const data = {
       //   number: response.data.LinhaDigitavel,
@@ -38,29 +38,28 @@ class PaymentService {
       //teste
       const data = {
         number: number,
-        value: 45.9,
+        value: 49.90,
         assignor: "Banco Inter",
         description: "Titulo de Cobranca",
         dueDate: "24/09/2018"
-      };
+      }
 
       return data;
-    } catch (error) {
-      internalServerError();
-      return;
+    } catch(error) {
+      return internalServerError();
     }
   }
 
-  async getCoinAmountPay(token) {
+  async getCoinAmountPay(token, coin, value) {
     try {
-      API_HEADER.headers.Authorization = token;
-
+      // API_HEADER.headers.Authorization = token;
       // let response = await axios.get(
       //   "url",
       //   API_HEADER,
       //   coin,
       //   value
       // );
+      // setAuthToken(response.headers[HEADER_RESPONSE]);
 
       //teste
       const response = {
@@ -70,9 +69,8 @@ class PaymentService {
       };
 
       return response.data;
-    } catch (error) {
-      internalServerError();
-      return;
+    } catch(error) {
+      return internalServerError();
     }
   }
 }

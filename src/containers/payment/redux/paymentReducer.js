@@ -1,5 +1,5 @@
 const initialState = {
-  coins: [ ],
+  coins: [],
   payment: {
     fee: "",
     number: "",

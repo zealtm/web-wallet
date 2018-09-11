@@ -110,6 +110,8 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    // console.log('get invoice', response);
+
     yield put({
       type: "GET_INVOICE_REDUCER",
       payment: response
@@ -140,7 +142,7 @@ export function* getUserGdprSaga() {
 export function* setUserGdprSaga(payload) {
   try {
     const token = yield call(getAuthToken);
-    yield call(userService.updateUser, payload.user, token);
+   yield call(userService.updateUser, payload.user, token);
 
     yield put({
       type: "GET_USER_GDPR_REDUCER",
