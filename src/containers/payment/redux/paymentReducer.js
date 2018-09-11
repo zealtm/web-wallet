@@ -17,19 +17,34 @@ const initialState = {
     description: "",
   },
   fee: {
-    low: 0,
-    medium: 0,
-    hight: 0
+    fee: {
+      low: 0,
+      medium: 0,
+      high: 0
+    }
   },
   history: [],
   loading: false,
   user: {
     gdpr: 'unread'
   },
+  modalStep: 1
 };
 
 const payment = (state=initialState, action) => {
   switch(action.type){
+    case "SET_MODAL_PAY_STEP_REDUCER":
+      return {
+        ...state,
+        modalStep: action.step
+      };
+      
+    case "SET_LOADING_REDUCER":
+      return {
+        ...state,
+        loading: action.payload
+      };
+
     case "GET_COINS_REDUCER":
       return {
         ...state,
@@ -45,13 +60,15 @@ const payment = (state=initialState, action) => {
     case "SET_PAYMENT_REDUCER":
       return {
         ...state,
-        payment: action.payload
+        payment: action.payload, 
+        loading: false
       }
 
     case "GET_FEE_PAYMENT_REDUCER":
       return {
         ...state,
-        fee: action.fee
+        fee: action.fee,
+        loading: false
       }
 
     case "SET_FEE_PAYMENT_REDUCER":

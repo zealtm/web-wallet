@@ -4,7 +4,7 @@ import NumberMask from "react-number-format";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getUserGdpr, setUserGdpr} from "../redux/paymentAction";
+import {getUserGdpr, setUserGdpr,setModalStep} from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -21,6 +21,8 @@ import Grid from "@material-ui/core/Grid";
 import CustomSwitch from "./component/customSwitch";
 import ButtonContinue from "./component/buttonContinue";
 import ModalBar from "../../../components/modalBar";
+import Loading from "../../../components/loading";
+
 /* eslint-disable */
 class DetailsPayment extends React.Component {
   constructor(props) {
@@ -50,7 +52,7 @@ class DetailsPayment extends React.Component {
   }
 
   validateForm = () => {
-    const {handleStep, payment} = this.props;
+    const {setModalStep, payment} = this.props;
     const {user, error} = this.state;
 
     if (user.gdpr === 'unread') {
@@ -66,7 +68,7 @@ class DetailsPayment extends React.Component {
     // atualizar reducer com o proximo modal
     // Atualizar GDPR no estado e no banco (???)
 
-    handleStep("next"); // aqui tem que ser chamado redux
+    setModalStep(2);
   }
 
   toogleSwitch = () => {
@@ -95,58 +97,65 @@ class DetailsPayment extends React.Component {
     const {user, error, errorMsg} = this.state;
 
     // const gdpr = payment.user.gdpr || user.gdpr;
-
-    return (
-      <div className={style.modalBox}>
-        <div>
-          {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+    if(loading){
+      return (
+        <div className={style.modalBox}>
+          <Loading color="lunes" />
         </div>
-        {i18n.t("PAYMENT_DETAILS_TEXT_1")}
-        <div className={style.strongText} style={{ marginTop: 20 }}>
-          <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>
-          {i18n.t("PAYMENT_DETAILS_TEXT_2")}
-          <span className={style.textGreen}>R$ {payment.value}</span>
-          {i18n.t("PAYMENT_DETAILS_TEXT_3")}
-        </div>
-        <Grid container className={style.inlineInfo}>
-          <Grid item xs={6} md={3}>
-            <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_BANK")}</label>
-            {payment.assignor}
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_NAME")}</label>
-            {payment.name}
-          </Grid>
-          <Grid item xs={6} md={2}>
-            <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
-            {payment.dueDate}
-          </Grid>
-          <Grid item xs={6} md={2} style={{padding: '0'}}>
-            <label className={style.inlineInfoLabel} style={{padding: '10px'}}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
-            <p style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.cpfCnpj)}</p>
-          </Grid>
-          <Hidden smDown>
-            <Grid item xs={6} md={2}>
-              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_VALUE")}</label>
-              R$ {payment.value}
+      )
+    }else{
+      return (
+        <div className={style.modalBox}>
+          <div>
+            {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+          </div>
+          {i18n.t("PAYMENT_DETAILS_TEXT_1")}
+          <div className={style.strongText} style={{ marginTop: 20 }}>
+            <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>
+            {i18n.t("PAYMENT_DETAILS_TEXT_2")}
+            <span className={style.textGreen}>R$ {payment.value}</span>
+            {i18n.t("PAYMENT_DETAILS_TEXT_3")}
+          </div>
+          <Grid container className={style.inlineInfo}>
+            <Grid item xs={6} md={3}>
+              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_BANK")}</label>
+              {payment.assignor}
             </Grid>
-          </Hidden>
-        </Grid>
-        <CustomSwitch
-          title={i18n.t("GDPR_TITLE")}
-          description={i18n.t("GDPR_DESC")}
-          action={this.toogleSwitch}
-          checked={user.gdpr === 'read'}
-          value="gdprSwitch"
-        />
+            <Grid item xs={6} md={3}>
+              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_NAME")}</label>
+              {payment.name}
+            </Grid>
+            <Grid item xs={6} md={2}>
+              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
+              {payment.dueDate}
+            </Grid>
+            <Grid item xs={6} md={2} style={{padding: '0'}}>
+              <label className={style.inlineInfoLabel} style={{padding: '10px'}}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
+              <p style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.cpfCnpj)}</p>
+            </Grid>
+            <Hidden smDown>
+              <Grid item xs={6} md={2}>
+                <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_VALUE")}</label>
+                R$ {payment.value}
+              </Grid>
+            </Hidden>
+          </Grid>
+          <CustomSwitch
+            title={i18n.t("GDPR_TITLE")}
+            description={i18n.t("GDPR_DESC")}
+            action={this.toogleSwitch}
+            checked={user.gdpr === 'read'}
+            value="gdprSwitch"
+          />
 
-        <ButtonContinue
-          label={i18n.t("BTN_CONFIRM")}
-          action={()=>this.validateForm()}
-          loading={loading}
-        />
-      </div>
-    );
+          <ButtonContinue
+            label={i18n.t("BTN_CONFIRM")}
+            action={()=>this.validateForm()}
+            loading={loading}
+          />
+        </div>
+      );
+    }
   }
 }
 
@@ -158,6 +167,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
+    setModalStep,
     getUserGdpr,
     setUserGdpr,
   },

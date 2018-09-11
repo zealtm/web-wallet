@@ -31,13 +31,13 @@ class PaymentService {
         `https://a.lunes.io/wallet/staging/bill/${number}`
         //API_HEADER
       );
-
+      console.log("response", response);
       const data = {
-        number: response.data.data.LinhaDigitavel,
-        value: response.data.data.Valor,
-        assignor: response.data.data.Cedente,
-        description: response.data.data.TipoServico,
-        dueDate: response.data.data.DataVencimento
+        number: response.data.data.barCode,
+        value: response.data.data.value,
+        assignor: response.data.data.assignor,
+        //description: response.data.data.TipoServico,
+        dueDate: response.data.data.dueDate
       }
 
       return data;

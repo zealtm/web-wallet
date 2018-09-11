@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import {confirmPay} from "../redux/paymentAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
+import { encryptHmacSha512Key } from "../../../utils/cryptography";
 import i18n from "../../../utils/i18n";
 
 // STYLE
@@ -24,15 +27,20 @@ class SecurePayment extends React.Component {
   };
 
   confirmPassword = () => {
-    //let { password } = this.state;
-
-    // if de validacao e proximo passo aqui
+    let { password } = this.state;
+    let { user, payment, confirmPay, errorInput } = this.props;
+    console.log("user",user);
+    if (user.password === encryptHmacSha512Key(password)) {
+      confirmPay(payment);
+      return;
+    }
+    errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
     return;
   };
 
   render() {
     let { password } = this.state;
-    let { handleStep, payment } = this.props;
+    let { payment } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -62,7 +70,7 @@ class SecurePayment extends React.Component {
           />
         </div>
 
-        <button className={style.btContinue} onClick={() => handleStep("next")}>
+        <button className={style.btContinue} onClick={() => this.confirmPassword()}>
           {i18n.t("BTN_CONFIRM")}
         </button>
       </div>
@@ -71,16 +79,17 @@ class SecurePayment extends React.Component {
 }
 
 SecurePayment.propTypes = {
-  handleStep: PropTypes.func.isRequired,
+  // handleStep: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = store => ({
   payment: store.payment.payment,
-  loading: store.payment.loading
+  loading: store.payment.loading, 
+  user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(
-  { },
+  {confirmPay,errorInput},
   dispatch
 );
 

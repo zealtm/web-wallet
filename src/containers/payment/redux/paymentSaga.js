@@ -14,6 +14,15 @@ const paymentService = new PaymentService();
 const userService = new UserService();
 const coinService = new CoinService();
 
+export function* setModalStepSaga(payload){
+  yield put(
+    {
+      type: "SET_MODAL_PAY_STEP_REDUCER",
+      step: payload.step
+    }
+  );
+}
+
 export function* getCoinsEnabledSaga() {
   try {
     let token = yield call(getAuthToken);
@@ -43,20 +52,35 @@ export function* getCoinsEnabledSaga() {
 
 export function* setPaymentSaga(payload) {
   try {
+    // abrir loading 
+    yield put(
+      {
+        type: "SET_LOADING_REDUCER",
+        payload: true
+      }
+    )
+    
     // chamar a quantidade de moedas necessarias
     let token = yield call(getAuthToken);
     let response = yield call(coinService.getCoinPrice, payload.pay.coin.abbreviation, 'brl', token);
+    
+    //console.log("response pay", response);
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       payload.pay.coin.abbreviation,
       payload.pay.coin.address,
       token
     );
+    
+    //console.log("response balance", balanceResponse);
 
     const balance = balanceResponse.data.data.available;
     const value = parseFloat(payload.pay.value);
     const amount = parseFloat(value / response.data.data.price);
-
+    
+    //console.log("value", payload.pay);
+    //console.log("amount", response.data.data.price);
+    
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
@@ -69,7 +93,9 @@ export function* setPaymentSaga(payload) {
       description: payload.pay.description,
       cpfCnpj: payload.pay.cpfCnpj
     }
-  
+    
+    //console.log("response data", data);
+    
     yield put(
       {
         type: "SET_PAYMENT_REDUCER",
@@ -81,22 +107,30 @@ export function* setPaymentSaga(payload) {
   }
 }
 
-export function* getFeePaymentSaga() {
+export function* getFeePaymentSaga(payload) {
   try {
-      let response = yield call(
-        coinService.getFee,
-        payload.coin,
-        payload.fromAddress,
-        payload.toAddress,
-        payload.amount,
-        payload.decimalPoint
-      );
-  
-      yield put({
-        type: "GET_FEE_PAYMENT_REDUCER",
-        fee: response
-      });
-  
+    // abrir loading 
+    yield put(
+      {
+        type: "SET_LOADING_REDUCER",
+        payload: true
+      }
+    );
+
+    let response = yield call(
+      coinService.getFee,
+      payload.coin,
+      payload.fromAddress,
+      payload.toAddress,
+      payload.amount,
+      payload.decimalPoint
+    );
+
+    yield put({
+      type: "GET_FEE_PAYMENT_REDUCER",
+      fee: response
+    });
+
   } catch(error) {
     yield put(internalServerError());
   }
@@ -190,15 +224,38 @@ export function* getHistoryPaySaga(){
   }
 }
 
-// export function* calcCoinPaymentSaga(value){
-//   let token = yield call(getAuthToken);
-//   // AQUI UM ENDPOINT PRA RETORNAR O QTDE DE MOEDAS NECESSARIAS
-//   // let response = yield call(paymentService.getInvoice, token, payload.number);
+export function* confirmPaySaga(payment){
+  try {
+    // ligar o loading 
+    yield put(
+      {
+        type: "SET_LOADING_REDUCER",
+        payload: true
+      }
+    );
 
-//   yield put(
-//     {
-//       type: "GET_INVOICE_REDUCER",
-//       payment: response
-//     }
-//   )
-// }
+    // validar a carga recebida, formatar se preciso 
+    console.log("CONFIRMAR", payment);
+
+    // pegar a senha pra liberar a chave 
+
+    // enviar transacao 
+
+    // caso sucesso, chamar api (EM DEV)
+
+    // chamar modal de confirmacao 
+    yield put(
+      {
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 5
+      }
+    );
+
+    // libearar loading 
+
+    // limpar reducer 
+
+  }catch(error){
+    yield put(internalServerError());
+  }
+}

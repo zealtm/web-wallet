@@ -1,3 +1,8 @@
+export const setModalStep = (step) => ({
+  type: "SET_MODAL_PAY_STEP",
+  step
+});
+
 export const getCoinsEnabled =()=>({
   type: "GET_API_COINS"
 });
@@ -38,6 +43,11 @@ export const setUserGdpr = (user) => ({
 export const getHistoryPay = () => ({
   type: "GET_HISTORY_PAY"
 });
+
+export const confirmPay = (payment) => ({
+  type: "CONFIRM_PAY", 
+  payment
+})
 
 
 // export const calcCoinPayment = (value) => ({

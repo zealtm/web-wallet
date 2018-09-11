@@ -13,7 +13,7 @@ class DonePayment extends React.Component {
   }
 
   render() {
-    const { handleStep } = this.props;
+    // const { handleStep } = this.props;
     return (
       <div className={style.modalBox}>
         <img src="/images/icons/confirm/confirm.png" className={style.imageResult} />
@@ -33,7 +33,7 @@ class DonePayment extends React.Component {
 }
 
 DonePayment.propTypes = {
-  handleStep: PropTypes.func.isRequired,
+  //handleStep: PropTypes.func.isRequired,
 }
 
 export default DonePayment;
