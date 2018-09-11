@@ -101,10 +101,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -274,11 +274,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -286,6 +286,7 @@ class CoinService {
       return response.data.data;
     } catch (error) {
       console.warn(error);
+      return;
     }
   }
 
@@ -410,6 +411,7 @@ class CoinService {
       };
 
       let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -423,14 +425,14 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/voucher/" +
-          voucher +
-          "?ddi=" +
-          55 +
-          "&ddd=" +
-          phone[0] +
-          "&phone=" +
-          phone[1],
+        "/voucher/" +
+        voucher +
+        "?ddi=" +
+        55 +
+        "&ddd=" +
+        phone[0] +
+        "&phone=" +
+        phone[1],
         API_HEADER
       );
 

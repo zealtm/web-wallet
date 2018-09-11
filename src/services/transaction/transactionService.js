@@ -29,6 +29,7 @@ class TransactionService {
         API_HEADER
       );
       const utxos = [];
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       response.data.data.utxos.forEach(utxo => {
         utxos.push({
@@ -52,7 +53,8 @@ class TransactionService {
         BASE_URL + "/coin/" + coin + "/transaction/broadcast",
         { txHex: txhex },
         API_HEADER
-      );
+        );
+        setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
