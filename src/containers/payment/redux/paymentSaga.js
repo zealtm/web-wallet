@@ -71,7 +71,7 @@ export function* setPaymentSaga(payload) {
       description: payload.pay.description,
       cpfCnpj: payload.pay.cpfCnpj
     }
-
+  
     yield put(
       {
         type: "SET_PAYMENT_REDUCER",

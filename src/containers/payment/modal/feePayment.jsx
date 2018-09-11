@@ -8,6 +8,7 @@ import {getFeePayment,setFeePayment} from "../redux/paymentAction";
 
 // COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
+import ModalBar from "../../../components/modalBar";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -19,8 +20,26 @@ class FeePayment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feeSelect: 0
+      feeSelect: 0,
+      error: undefined,
+      errorMsg: '',
     }
+  }
+
+  openError = (message) => {
+    this.setState({
+      ...this.state,
+      error: true,
+      errorMsg: message
+    });
+
+    setTimeout(() => {
+      this.setState({
+        ...this.state,
+        error: false,
+        errorMsg: ''
+      });
+    }, 4100);
   }
 
   calcFee(value) {
@@ -32,26 +51,35 @@ class FeePayment extends React.Component {
 
   validateForm = () => {
     const { handleStep } = this.props;
-
-    handleStep("next"); // validar a selecao de fee aqui
+    const { feeSelect } = this.state;
+    
+    if(feeSelect > 0){
+      handleStep("next"); // validar a selecao de fee aqui
+    }else{
+      this.openError("SELECIONE UMA TAXA DE FEE");
+      return;
+    }
   }
 
   componentDidMount = () => {
     const {getFeePayment, payment} = this.props;
 
     // teste 
-    const fromAddress = payment.coin.address;
-    const toAddress = "asdasdasd"; // pegar de algum reducer da wallet
-    console.log(fromAddress);
+    const fromAddress = "";// pegar de algum reducer da wallet
+    const toAddress = payment.coin.address; 
+    
     getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
   }
 
   render() {
     const { loading, payment, fee } = this.props;
-    const { feeSelect } = this.state;
+    const { feeSelect, error, errorMsg } = this.state;
 
     return (
       <div className={style.modalBox}>
+        <div>
+          {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+        </div>
         <img
           src={`/images/icons/coins/${payment.coin.abbreviation}.png`}
           className={style.modalIconCoin}

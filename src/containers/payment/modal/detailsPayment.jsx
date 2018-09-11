@@ -21,7 +21,7 @@ import Grid from "@material-ui/core/Grid";
 import CustomSwitch from "./component/customSwitch";
 import ButtonContinue from "./component/buttonContinue";
 import ModalBar from "../../../components/modalBar";
-
+/* eslint-disable */
 class DetailsPayment extends React.Component {
   constructor(props) {
     super(props);
