@@ -31,10 +31,6 @@ export const getInvoice = (number) => ({
   number
 });
 
-export const getUserGdpr = () => ({
-  type: "GET_USER_GDPR"
-});
-
 export const setUserGdpr = (user) => ({
   type: "SET_USER_GDPR",
   user

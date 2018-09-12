@@ -44,7 +44,6 @@ import {
   getFeePaymentSaga,
   setFeePaymentSaga,
   getInvoiceSaga,
-  getUserGdprSaga,
   setUserGdprSaga,
   getHistoryPaySaga, 
   confirmPaySaga, 
@@ -96,7 +95,6 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
-    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga),
     fork(takeLatest, "SET_USER_GDPR", setUserGdprSaga),
     fork(takeLatest, "CONFIRM_PAY", confirmPaySaga), 
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga)

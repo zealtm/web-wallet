@@ -138,19 +138,9 @@ class Invoice extends React.Component {
 
       getInvoice(newValue);
 
-      const {value, assignor, description, dueDate} = this.props.payment;
-
       setTimeout(() => {
         this.setState({
-          ...this.state,
           invoiceLoading: false,
-          invoice: {
-            ...this.state.invoice,
-            value,
-            assignor,
-            description,
-            dueDate
-          }
         });
       }, 500);
 
@@ -172,24 +162,31 @@ class Invoice extends React.Component {
     openModal();
   }
 
-  setPayment = () => {
+  setPayment = (data) => {
     const {setPayment} = this.props;
-    setPayment(this.state.invoice);
+    setPayment(data);
   }
 
   inputValidator = () => {
-    const {invoice, coin} = this.state;
     const {payment} = this.props;
+    const {invoice, coin} = this.state;
+
+    const invoiceData = {
+      ...invoice,
+      assignor: payment.assignor || invoice.assignor,
+      dueDate: payment.dueDate || invoice.dueDate,
+      value: payment.value || invoice.value,
+    }
 
     const invoiceInputs = {};
 
-    for (const key in invoice) {
-      if (invoice.hasOwnProperty(key)) {
+    for (const key in invoiceData) {
+      if (invoiceData.hasOwnProperty(key)) {
         invoiceInputs[key] = {
           type: 'text',
           name: key,
           placeholder: key,
-          value: payment[key] || invoice[key],
+          value: invoiceData[key],
           required: true,
         };
       }
@@ -203,7 +200,7 @@ class Invoice extends React.Component {
       type: 'text',
       name: 'coin',
       placeholder: 'coin',
-      value: payment.coin.abbreviation || coin.value || '',
+      value: invoiceData.coin.abbreviation || coin.value.abbreviation || '',
       required: true,
     };
 
@@ -217,8 +214,8 @@ class Invoice extends React.Component {
       return;
     }
 
+    this.setPayment(invoiceData);
     this.openModal();
-    this.setPayment();
   }
 
   render() {

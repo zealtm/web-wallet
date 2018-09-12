@@ -87,11 +87,6 @@ class DetailsPayment extends React.Component {
     setUserGdpr({gpdr: newStatus});
   }
 
-  componentWillMount() {
-    const {getUserGdpr} = this.props;
-    getUserGdpr();
-  }
-
   render() {
     const {loading, payment} = this.props;
     const {user, error, errorMsg} = this.state;
@@ -162,7 +157,7 @@ class DetailsPayment extends React.Component {
 const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading,
-  user: store.payment.user,
+  user: store.user.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
