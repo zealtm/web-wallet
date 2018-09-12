@@ -21,12 +21,12 @@ export function* validateAddress(action) {
 
     if (!response.error) {
       yield put({
-        type: "SET_WALLET_MODAL_ADDRESS",
+        type: "SET_ASSET_MODAL_ADDRESS",
         address: action.address
       });
 
       yield put({
-        type: "SET_WALLET_MODAL_STEP",
+        type: "SET_ASSET_MODAL_STEP",
         step: 1
       });
 
@@ -36,12 +36,12 @@ export function* validateAddress(action) {
     yield put(response.error);
 
     yield put({
-      type: "SET_WALLET_MODAL_LOADING"
+      type: "SET_ASSET_MODAL_LOADING"
     });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -59,12 +59,12 @@ export function* getWalletSendModalFee(action) {
 
     if (response) {
       yield put({
-        type: "GET_WALLET_MODAL_SEND_FEE",
+        type: "GET_ASSET_MODAL_SEND_FEE",
         fee: response
       });
 
       yield put({
-        type: "SET_WALLET_MODAL_STEP",
+        type: "SET_ASSET_MODAL_STEP",
         step: 2
       });
 
@@ -98,25 +98,25 @@ export function* getWalletCoinHistory(action) {
 
     if (!response.error) {
       yield put({
-        type: "SET_WALLET_HISTORY",
+        type: "SET_ASSET_HISTORY",
         history: response
       });
 
       yield put({
-        type: "SET_WALLET_HISTORY_LOADING"
+        type: "SET_ASSET_HISTORY_LOADING"
       });
 
       return;
     }
 
     yield put({
-      type: "SET_WALLET_HISTORY_LOADING",
+      type: "SET_ASSET_HISTORY_LOADING",
       state: true
     });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -129,7 +129,7 @@ export function* getCoinFee(action) {
       fee: response
     });
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -156,12 +156,12 @@ export function* setWalletTransaction(action) {
 
       if (response) {
         yield put({
-          type: "SET_WALLET_MODAL_STEP",
+          type: "SET_ASSET_MODAL_STEP",
           step: 5
         });
 
         yield put({
-          type: "SET_WALLET_TRANSACTION",
+          type: "SET_ASSET_TRANSACTION",
           response: response
         });
 
@@ -170,16 +170,16 @@ export function* setWalletTransaction(action) {
     }
 
     yield put({
-      type: "SET_WALLET_MODAL_STEP",
+      type: "SET_ASSET_MODAL_STEP",
       step: 6
     });
 
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }

@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import {
   setWalletModalStep,
   setWalletSendModalLoading
-} from "../../redux/walletAction";
+} from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS

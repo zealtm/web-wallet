@@ -9,7 +9,7 @@ import {
   setSelectedCoin,
   getWalletCoinHistory,
   setWalletCoinHistoryLoading
-} from "./redux/walletAction";
+} from "./redux/assetsAction";
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS

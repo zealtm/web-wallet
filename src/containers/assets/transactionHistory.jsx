@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletLoading, getWalletCoinHistory } from "./redux/walletAction";
+import { setAssetLoading, getAssetCoinHistory } from "./redux/assetsAction";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
@@ -36,9 +36,9 @@ class TransactionHistory extends React.Component {
   }
 
   componentDidMount() {
-    let { wallet, coins, getWalletCoinHistory } = this.props;
+    let { wallet, coins, getAssetCoinHistory } = this.props;
     let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
-    getWalletCoinHistory(wallet.selectedCoin, address);
+    getAssetCoinHistory(wallet.selectedCoin, address);
   }
 
   stateDataHistory = key => {
@@ -49,8 +49,8 @@ class TransactionHistory extends React.Component {
   };
 
   reloadWallet = () => {
-    let { setWalletLoading, loadWalletInfo, user } = this.props;
-    setWalletLoading(true);
+    let { setAssetLoading, loadWalletInfo, user } = this.props;
+    setAssetLoading(true);
     loadWalletInfo(user.password);
   };
 
@@ -260,8 +260,8 @@ TransactionHistory.propTypes = {
   coins: PropTypes.array.isRequired,
   skeleton: PropTypes.object.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
-  setWalletLoading: PropTypes.func.isRequired,
-  getWalletCoinHistory: PropTypes.func.isRequired
+  setAssetLoading: PropTypes.func.isRequired,
+  getAssetCoinHistory: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -275,8 +275,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadWalletInfo,
-      setWalletLoading,
-      getWalletCoinHistory
+      setAssetLoading,
+      getAssetCoinHistory
     },
     dispatch
   );

@@ -8,7 +8,7 @@ import { bindActionCreators } from "redux";
 import {
   getValidateAddress,
   setWalletSendModalLoading
-} from "../../redux/walletAction";
+} from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 class BoxQrReader extends Component {

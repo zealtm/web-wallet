@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
-import { setWalletLoading } from "./redux/walletAction";
+import { setAssetLoading } from "./redux/assetsAction";
 
 // COMPONENTS
 import CoinsBar from "./coinsBar";
@@ -13,10 +13,10 @@ import CoinsInfo from "./coinsInfo";
 import TransactionHistory from "./transactionHistory";
 import Loading from "../../components/loading";
 
-class Wallet extends React.Component {
+class Assets extends React.Component {
   componentDidMount() {
-    let { setWalletLoading, loadWalletInfo, user } = this.props;
-    setWalletLoading(true);
+    let { setAssetLoading, loadWalletInfo, user } = this.props;
+    setAssetLoading(true);
     loadWalletInfo(user.password);
   }
 
@@ -46,11 +46,11 @@ class Wallet extends React.Component {
   }
 }
 
-Wallet.propTypes = {
+Assets.propTypes = {
   user: PropTypes.object,
   wallet: PropTypes.object,
   loadWalletInfo: PropTypes.func,
-  setWalletLoading: PropTypes.func
+  setAssetLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -62,7 +62,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadWalletInfo,
-      setWalletLoading
+      setAssetLoading
     },
     dispatch
   );
@@ -70,4 +70,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapSateToProps,
   mapDispatchToProps
-)(Wallet);
+)(Assets);

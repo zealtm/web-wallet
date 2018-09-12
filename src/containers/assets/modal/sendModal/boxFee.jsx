@@ -11,7 +11,7 @@ import {
   setWalletSendModalSelectedFee,
   setWalletSendModalSelectedFeeLunes,
   setWalletSendModalSelectedFeePerByte
-} from "../../redux/walletAction";
+} from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS

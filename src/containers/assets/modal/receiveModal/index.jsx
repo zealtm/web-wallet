@@ -6,7 +6,7 @@ import QrCode from "qrcode.react";
 import PropTypes from "prop-types";
 import i18n from "../../../../utils/i18n";
 import Hidden from "@material-ui/core/Hidden";
-import { shareCoinAddress } from "../../redux/walletAction"
+import { shareCoinAddress } from "../../redux/assetsAction"
 
 class Receive extends React.Component {
 
@@ -21,7 +21,7 @@ class Receive extends React.Component {
         successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
     }
 
-    sendCoinAddressEmail = (coinName, address) => {        
+    sendCoinAddressEmail = (coinName, address) => {
         return window.location.href = "mailto:" + "?body=" + coinName + ":" + address;
     }
 
@@ -100,4 +100,3 @@ const mapDispatchToProps = dispatch =>
     bindActionCreators({ successRequest, shareCoinAddress }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Receive);
-

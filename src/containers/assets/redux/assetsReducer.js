@@ -42,7 +42,7 @@ const initialState = {
   errors: false
 };
 
-const wallet = (state = initialState, action) => {
+const asset = (state = initialState, action) => {
   switch (action.type) {
     case "SET_SELECTED_COIN":
       return {
@@ -51,7 +51,7 @@ const wallet = (state = initialState, action) => {
         loading: false
       };
 
-    case "SET_WALLET_LOADING":
+    case "SET_ASSET_LOADING":
       return {
         selectedCoin: getDefaultCrypto(),
         coinHistory: {
@@ -98,7 +98,7 @@ const wallet = (state = initialState, action) => {
         errors: false
       };
 
-    case "SET_WALLET_HISTORY_LOADING":
+    case "SET_ASSET_HISTORY_LOADING":
       return {
         ...state,
         coinHistory: {
@@ -107,7 +107,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_HISTORY":
+    case "SET_ASSET_HISTORY":
       return {
         ...state,
         coinHistory: {
@@ -117,7 +117,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_OPEN":
+    case "SET_ASSET_MODAL_OPEN":
       return {
         ...state,
         modal: {
@@ -127,7 +127,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_RECEIVE_OPEN":
+    case "SET_ASSET_MODAL_RECEIVE_OPEN":
       return {
         ...state,
         modalReceive: {
@@ -137,7 +137,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_STEP":
+    case "SET_ASSET_MODAL_STEP":
       return {
         ...state,
         modal: {
@@ -147,7 +147,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_LOADING":
+    case "SET_ASSET_MODAL_LOADING":
       return {
         ...state,
         modal: {
@@ -156,7 +156,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_ADDRESS":
+    case "SET_ASSET_MODAL_ADDRESS":
       return {
         ...state,
         modal: {
@@ -166,7 +166,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_FINAL_AMOUNT":
+    case "SET_ASSET_MODAL_FINAL_AMOUNT":
       return {
         ...state,
         modal: {
@@ -175,7 +175,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_AMOUNT":
+    case "SET_ASSET_MODAL_SEND_AMOUNT":
       return {
         ...state,
         modal: {
@@ -184,7 +184,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "GET_WALLET_MODAL_SEND_FEE":
+    case "GET_ASSET_MODAL_SEND_FEE":
       return {
         ...state,
         modal: {
@@ -194,7 +194,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_SELECTED_FEE":
+    case "SET_ASSET_MODAL_SEND_SELECTED_FEE":
       return {
         ...state,
         modal: {
@@ -207,7 +207,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_SELECTED_FEEPERBYTE":
+    case "SET_ASSET_MODAL_SEND_SELECTED_FEEPERBYTE":
       return {
         ...state,
         modal: {
@@ -220,7 +220,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_MODAL_SEND_SELECTED_FEELUNES":
+    case "SET_ASSET_MODAL_SEND_SELECTED_FEELUNES":
       return {
         ...state,
         modal: {
@@ -233,7 +233,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "SET_WALLET_TRANSACTION":
+    case "SET_ASSET_TRANSACTION":
       return {
         ...state,
         modal: {
@@ -264,7 +264,7 @@ const wallet = (state = initialState, action) => {
         }
       };
 
-    case "CHANGE_WALLET_ERROR_STATE":
+    case "CHANGE_ASSET_ERROR_STATE":
       return {
         ...state,
         error: action.state
@@ -285,7 +285,7 @@ const wallet = (state = initialState, action) => {
       };
     }
 
-    case "CLEAR_WALLET_STATE":
+    case "CLEAR_ASSET_STATE":
       return {
         selectedCoin: "lunes",
         modal: {
@@ -326,4 +326,4 @@ const wallet = (state = initialState, action) => {
   }
 };
 
-export default wallet;
+export default asset;

@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setWalletSendModalOpen,
-  setWalletReceiveModalOpen,
-  setWalletModalStep,
-  setWalletLoading
-} from "./redux/walletAction";
+  setAssetSendModalOpen,
+  setAssetReceiveModalOpen,
+  setAssetModalStep,
+  setAssetLoading
+} from "./redux/assetsAction";
 
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
@@ -42,9 +42,9 @@ class CoinsInfo extends React.Component {
 
   previousStep = () => {
     let { step } = this.props.wallet.modal;
-    let { setWalletModalStep } = this.props;
+    let { setAssetModalStep } = this.props;
     if (step >= 0) {
-      setWalletModalStep(step - 1);
+      setAssetModalStep(step - 1);
     }
 
     return;
@@ -61,9 +61,9 @@ class CoinsInfo extends React.Component {
   render() {
     let defaultCoin = getDefaultFiat();
     let {
-      setWalletSendModalOpen,
-      setWalletReceiveModalOpen,
-      setWalletLoading,
+      setAssetSendModalOpen,
+      setAssetReceiveModalOpen,
+      setAssetLoading,
       loadWalletInfo,
       coins,
       wallet,
@@ -82,7 +82,7 @@ class CoinsInfo extends React.Component {
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
           content={<ReceiveModal coin={coin} />}
           show={wallet.modalReceive.open}
-          close={() => setWalletReceiveModalOpen()}
+          close={() => setAssetReceiveModalOpen()}
         />
 
         <Modal
@@ -94,11 +94,11 @@ class CoinsInfo extends React.Component {
               ? null
               : step === 5 || step === 6
                 ? () => {
-                    setWalletSendModalOpen(),
-                      setWalletLoading(true),
-                      loadWalletInfo(user.password);
-                  }
-                : () => setWalletSendModalOpen()
+                  setAssetSendModalOpen(),
+                  setAssetLoading(true),
+                  loadWalletInfo(user.password);
+                }
+                : () => setAssetSendModalOpen()
           }
           back={
             step === 0 || step === 4 || step === 5 || step === 6
@@ -141,14 +141,14 @@ class CoinsInfo extends React.Component {
                 <Grid item className={style.alignButtons}>
                   <button
                     className={style.receiveButton}
-                    onClick={() => setWalletReceiveModalOpen()}
+                    onClick={() => setAssetReceiveModalOpen()}
                   >
                     {i18n.t("BTN_RECEIVE")}
                   </button>
 
                   <button
                     className={style.sentButton}
-                    onClick={() => setWalletSendModalOpen()}
+                    onClick={() => setAssetSendModalOpen()}
                   >
                     {i18n.t("BTN_SEND")}
                   </button>
@@ -177,13 +177,13 @@ class CoinsInfo extends React.Component {
             <Grid item xs={11} className={style.alignButtons}>
               <button
                 className={style.receiveButtonMobile}
-                onClick={() => setWalletReceiveModalOpen()}
+                onClick={() => setAssetReceiveModalOpen()}
               >
                 {i18n.t("BTN_RECEIVE")}
               </button>
               <button
                 className={style.sentButtonMobile}
-                onClick={() => setWalletSendModalOpen()}
+                onClick={() => setAssetSendModalOpen()}
               >
                 {i18n.t("BTN_SEND")}
               </button>
@@ -200,10 +200,10 @@ CoinsInfo.propTypes = {
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
-  setWalletLoading: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalOpen: PropTypes.func.isRequired,
-  setWalletReceiveModalOpen: PropTypes.func
+  setAssetLoading: PropTypes.func.isRequired,
+  setAssetModalStep: PropTypes.func.isRequired,
+  setAssetSendModalOpen: PropTypes.func.isRequired,
+  setAssetReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -216,10 +216,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadWalletInfo,
-      setWalletLoading,
-      setWalletModalStep,
-      setWalletSendModalOpen,
-      setWalletReceiveModalOpen
+      setAssetLoading,
+      setAssetModalStep,
+      setAssetSendModalOpen,
+      setAssetReceiveModalOpen
     },
     dispatch
   );

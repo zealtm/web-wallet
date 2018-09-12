@@ -8,7 +8,7 @@ import {
   setWalletSendModalAmount,
   getWalletSendModalFee,
   setWalletSendModalLoading
-} from "../../redux/walletAction";
+} from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS

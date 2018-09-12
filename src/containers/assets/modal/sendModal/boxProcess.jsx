@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletTransaction } from "../../redux/walletAction";
+import { setWalletTransaction } from "../../redux/assetsAction";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
