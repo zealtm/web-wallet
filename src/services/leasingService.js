@@ -26,6 +26,7 @@ class LeasingService {
         "?size=100";
       let urlBalance =
         BASE_URL + "/coin/" + coin + "/leasing/balance/" + address;
+
       setAuthToken(urlBalance.headers[HEADER_RESPONSE]);
 
       let responseHistory = await axios.get(urlHistory, API_HEADER);
@@ -52,7 +53,9 @@ class LeasingService {
   async saveLeaseTransaction(data, coinName, token) {
     let endpointUrl =
       BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
-      setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
+
+    setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
+
     let transactionData = {
       txID: data.id,
       from: data.sender,
