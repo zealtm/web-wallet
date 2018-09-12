@@ -111,6 +111,7 @@
   "PAGE_ERROR_500_REDIRECT": "Redirecting in",
 
   "LEASING_SELECT_NODE_DEFAULT": "Nodes Profissionais",
+  "LEASING_NOT_INFORMED_FIELD": "Campo não informado",  
   "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
   "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
   "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",
