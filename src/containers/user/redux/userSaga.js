@@ -18,7 +18,7 @@ import {
   HEADER_RESPONSE
 } from "../../../constants/apiBaseUrl";
 import {
-  internalServerError
+  internalServerError, modalSuccess
 } from "../../../containers/errors/statusCodeMessage";
 
 // Services
@@ -260,8 +260,12 @@ export function* editUserData(action) {
   try {
     console.warn("saga ", action)
     let token = yield call(getAuthToken);
-    let res = yield(userService.editUser, token, action.payload)
-    console.warn("response", res);
+    let response = yield call(userService.editUser, token, action.data)
+    console.warn("response", response);
+    if (response.data.code === 200) {
+      yield put(modalSuccess("Successfully changed data"));
+    }
+
   } catch (error) {
     yield put(internalServerError());
   }
