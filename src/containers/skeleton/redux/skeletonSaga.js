@@ -41,7 +41,7 @@ export function* loadGeneralInfo(action) {
         birthday: responseUser.data.data.birthday,
         city: responseUser.data.data.city,
         country: responseUser.data.data.country,
-        gdpr: responseUser.data.data.gdpr,
+        gdpr: responseUser.data.data.gpdr, // TODO: change to gdpr after fix on api return
         phone: responseUser.data.data.phone,
         state: responseUser.data.data.state,
         street: responseUser.data.data.street,

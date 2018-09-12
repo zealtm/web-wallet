@@ -55,3 +55,8 @@ export const resetUser = () => ({
 export const loading = () => ({
   type: "CHANGE_LOADING_STATE"
 });
+
+export const updateUserConsents = consents => ({
+  type: "UPDATE_USER_CONSENTS_API",
+  consents
+});
