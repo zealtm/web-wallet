@@ -1,18 +1,20 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { editUserData } from "../../user/redux/userAction";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
 import compose from "recompose/compose";
-import { connect } from "react-redux";
+import colors from "../../../components/bases/colors";
+import style from "./style.css";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import { Grid, Avatar, Input } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
-import style from "./style.css";
-import colors from "../../../components/bases/colors";
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 const customStyle = {
   img: {
@@ -54,20 +56,20 @@ const customStyle = {
   },
   underlineItems: {
     selected: {
-      backgroundColor: 'red !important',
+      backgroundColor: "red !important"
     },
-    borderBottom: '1px solid ',
+    borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
     "&:hover": {
-      borderBottom: '2px solid',
+      borderBottom: "2px solid"
     },
     "&:before, &:after": {
-      borderBottom: '5px solid',
-    },
+      borderBottom: "5px solid"
+    }
   },
   disabled: {},
   error: {},
-  focused: {},
+  focused: {}
 };
 
 const days = [...Array(31).keys()].map(day => day + 1);
@@ -78,18 +80,18 @@ class User extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: undefined,
-      surname: undefined,
-      verified: undefined,
-      birthDay: undefined,
-      birthMonth: undefined,
-      birthYear: undefined,
-      phone: undefined,
-      directDistanceDialing: undefined,
-      address: undefined,
-      city: undefined,
-      zipcode: undefined,
-      state: undefined
+      name: "",
+      surname: "",
+      verified: "",
+      birthDay: "",
+      birthMonth: "",
+      birthYear: "",
+      phone: "",
+      directDistanceDialing: "",
+      address: "",
+      city: "",
+      zipcode: "",
+      state: ""
     };
   }
 
@@ -100,29 +102,69 @@ class User extends React.Component {
   componentDidMount() {
     let { user } = this.props;
 
-    this.handleNameChange(user.name);
-    this.handleSurnameChange(user.surname);
+    this.setState({
+      name: !user.name ? "" : user.name,
+      surname: !user.surname ? "" : user.surname,
+      phone: !user.phone ? "" : user.phone,
+      address: !user.street ? "" : user.street,
+      city: !user.city ? "" : user.city,
+      zipcode: !user.zipcode ? "" : user.zipcode,
+      state: !user.state ? "" : user.state
+    });
   }
 
-  handleSelectChange = (name, value) => {
+  handleSelectChange = (property, value) => {
     this.setState({
       ...this.state,
-      [name]: value
+      [property]: value
     });
   };
 
-  handleNameChange = name => this.handleSelectChange("name", name);
+  handleNameChange = value => this.handleSelectChange("name", value);
   handleSurnameChange = surname => this.handleSelectChange("surname", surname);
-  handleBirthDayChange = birthDay => this.handleSelectChange("birthDay", birthDay);
-  handleBirthMonthChange = birthMonth => this.handleSelectChange("birthMonth", birthMonth);
-  handleBirthYearChange = birthYear => this.handleSelectChange("birthYear", birthYear);
+  handleBirthDayChange = birthDay =>
+    this.handleSelectChange("birthDay", birthDay);
+  handleBirthMonthChange = birthMonth =>
+    this.handleSelectChange("birthMonth", birthMonth);
+  handleBirthYearChange = birthYear =>
+    this.handleSelectChange("birthYear", birthYear);
   handlePhoneChange = phone => this.handleSelectChange("phone", phone);
-  handleDirectDistanceDialingChange = ddd => this.handleSelectChange("directDistanceDialing", ddd);
+  handleDirectDistanceDialingChange = ddd =>
+    this.handleSelectChange("directDistanceDialing", ddd);
   handleAddressChange = address => this.handleSelectChange("address", address);
   handleCityChange = city => this.handleSelectChange("city", city);
   handleZipcodeChange = zipcode => this.handleSelectChange("zipcode", zipcode);
   handleStateChange = state => this.handleSelectChange("state", state);
 
+  updateData = () => {
+    let { editUserData } = this.props;
+    let {
+      name,
+      surname,
+      phone,
+      directDistanceDialing,
+      address,
+      city,
+      zipcode,
+      state,
+      birthDay,
+      birthMonth,
+      birthYear
+    } = this.state;
+
+    let userData = {
+      name,
+      surname,
+      birthday: `${birthDay}/${birthMonth}/${birthYear}`,
+      phone: `${directDistanceDialing}${phone}`,
+      street: address,
+      city,
+      state,
+      zipcode
+    };
+
+    editUserData(userData);
+  };
 
   loadMounth = () => {
     let monthNames = [
@@ -141,7 +183,9 @@ class User extends React.Component {
     ];
 
     return monthNames.map((month, index) => (
-      <MenuItem key={index} value={index + 1}>{month}</MenuItem >
+      <MenuItem key={index} value={index + 1}>
+        {month}
+      </MenuItem>
     ));
   };
 
@@ -159,7 +203,8 @@ class User extends React.Component {
       phone,
       address,
       zipcode,
-      state } = this.state;
+      state
+    } = this.state;
 
     return (
       <div>
@@ -233,8 +278,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                      <Close className={style.errorDefault} />
-                    )}
+                    <Close className={style.errorDefault} />
+                  )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
                   </span>
@@ -243,8 +288,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                      <Close className={style.errorDefault} />
-                    )}
+                    <Close className={style.errorDefault} />
+                  )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
                   </span>
@@ -315,9 +360,10 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      inputProps={{ required: false }}
+                      onChange={event =>
+                        this.handleNameChange(event.target.value)
+                      }
                       value={name}
-                      onChange={event => this.handleNameChange(event.target.value)}
                     />
                   </div>
 
@@ -326,20 +372,20 @@ class User extends React.Component {
                       {i18n.t("SETTINGS_USER_BIRTHDATE")}
                     </p>
                     <Grid container>
-
                       <Grid item xs={4} className={style.selectItem}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_DAY")}
                         </div>
                         <FormControl className={classes.formControl}>
-
                           <Select
                             classes={{
                               selectMenu: classes.underlineItems
                             }}
                             items={days}
                             value={birthDay}
-                            onChange={event => this.handleBirthDayChange(event.target.value)}
+                            onChange={event =>
+                              this.handleBirthDayChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -351,26 +397,25 @@ class User extends React.Component {
                         </FormControl>
                       </Grid>
 
-
                       <Grid item xs={4} className={style.selectItem}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_MONTH")}
                         </div>
                         <FormControl className={classes.formControl}>
-
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
                             items={months}
                             value={birthMonth}
-                            onChange={event => this.handleBirthMonthChange(event.target.value)}
+                            onChange={event =>
+                              this.handleBirthMonthChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
                             {this.loadMounth()}
-
                           </Select>
                         </FormControl>
                       </Grid>
@@ -382,11 +427,13 @@ class User extends React.Component {
 
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
                             items={years}
                             value={birthYear}
-                            onChange={event => this.handleBirthYearChange(event.target.value)}
+                            onChange={event =>
+                              this.handleBirthYearChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
@@ -394,7 +441,6 @@ class User extends React.Component {
                             <MenuItem value={2018}>2018</MenuItem>
                             <MenuItem value={2017}>2017</MenuItem>
                             <MenuItem value={2016}>2016</MenuItem>
-
                           </Select>
                         </FormControl>
                       </Grid>
@@ -413,7 +459,9 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      onChange={event => this.handleSurnameChange(event.target.value)}
+                      onChange={event =>
+                        this.handleSurnameChange(event.target.value)
+                      }
                       value={surname}
                     />
                   </div>
@@ -422,9 +470,7 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_CONTACT")}
                     </p>
-                    <div
-                      style={{ float: "left", width: "40%" }}
-                    >
+                    <div style={{ float: "left", width: "40%" }}>
                       <Input
                         type="number"
                         classes={{
@@ -432,12 +478,18 @@ class User extends React.Component {
                           underline: classes.inputCssUnderline,
                           input: classes.inputCss
                         }}
-                        style={{ width: "30%", float: "left", marginTop: "15px" }}
-                        onChange={event => this.handleDirectDistanceDialingChange(event.target.value)}
+                        style={{
+                          width: "30%",
+                          float: "left",
+                          marginTop: "15px"
+                        }}
+                        onChange={event =>
+                          this.handleDirectDistanceDialingChange(
+                            event.target.value
+                          )
+                        }
                         value={directDistanceDialing}
-
                       />
-
                     </div>
                     <Input
                       classes={{
@@ -445,8 +497,14 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      style={{ width: "50%", float: "right", marginTop: "15px" }}
-                      onChange={event => this.handlePhoneChange(event.target.value)}
+                      style={{
+                        width: "50%",
+                        float: "right",
+                        marginTop: "15px"
+                      }}
+                      onChange={event =>
+                        this.handlePhoneChange(event.target.value)
+                      }
                       value={phone}
                     />
                   </div>
@@ -455,7 +513,7 @@ class User extends React.Component {
             </Grid>
 
             {/* ADDRESS */}
-            <Grid item xs={12} >
+            <Grid item xs={12}>
               <Grid item xs={12} className={style.rowAdress}>
                 <Grid item xs={12}>
                   <div className={style.content}>
@@ -467,9 +525,10 @@ class User extends React.Component {
                         input: classes.inputCss
                       }}
                       inputProps={{ required: false }}
-                      onChange={event => this.handleAddressChange(event.target.value)}
+                      onChange={event =>
+                        this.handleAddressChange(event.target.value)
+                      }
                       value={address}
-
                     />
                   </div>
 
@@ -481,7 +540,9 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      onChange={event => this.handleCityChange(event.target.value)}
+                      onChange={event =>
+                        this.handleCityChange(event.target.value)
+                      }
                       value={city}
                     />
                   </div>
@@ -495,7 +556,9 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      onChange={event => this.handleZipcodeChange(event.target.value)}
+                      onChange={event =>
+                        this.handleZipcodeChange(event.target.value)
+                      }
                       value={zipcode}
                     />
                   </div>
@@ -508,7 +571,9 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      onChange={event => this.handleStateChange(event.target.value)}
+                      onChange={event =>
+                        this.handleStateChange(event.target.value)
+                      }
                       value={state}
                     />
                   </div>
@@ -518,7 +583,7 @@ class User extends React.Component {
               <Grid item xs={12} className={style.buttonContainer}>
                 <button
                   className={style.buttonEnable}
-                  onClick={() => alert("Data stored!")}
+                  onClick={() => this.updateData()}
                 >
                   {i18n.t("SETTINGS_USER_SAVE_DATA")}
                 </button>
@@ -526,24 +591,33 @@ class User extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-      </div >
+      </div>
     );
   }
 }
 
 User.propTypes = {
   classes: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  editUserData: PropTypes.func
 };
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      editUserData
+    },
+    dispatch
+  );
 
 const mapStateToProps = store => ({
   user: store.user.user
-})
+});
 
 export default compose(
   withStyles(customStyle),
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )
 )(User);

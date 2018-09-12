@@ -56,7 +56,7 @@ export const loading = () => ({
   type: "CHANGE_LOADING_STATE"
 });
 
-export const editUserData = (data) => ({
+export const editUserData = (data) => (console.warn("action", data), {
   type: "EDIT_USER_DATA_API",
-  data
+  payload: data
 });
