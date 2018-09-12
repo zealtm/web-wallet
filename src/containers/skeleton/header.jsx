@@ -75,23 +75,30 @@ class Header extends React.Component {
     let coinName = coins[coinSelected]
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
+
     let coinBalance = coins[coinSelected]
       ? coins[coinSelected].balance.available
       : 0;
+
     let coinFiat = coins[coinSelected]
       ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
       : 0;
 
+    let coinFiatSymbol = coins[coinSelected]
+      ? coins[coinSelected].price[fiatSelected].symbol
+      : "USD";
+
     return (
       <div className={style.boxBalance}>
         <Hidden xsDown>
-          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")}</span>
+          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")} </span>
         </Hidden>
         <span className={style.textBalance}>
-          {" "}
-          {coinBalance} {coinName}
+          {coinBalance + " " + coinName}
         </span>
-        <span className={style.textBalanceFiat}>${coinFiat}</span>
+        <span className={style.textBalanceFiat}>
+          {coinFiatSymbol + coinFiat}
+        </span>
       </div>
     );
   };

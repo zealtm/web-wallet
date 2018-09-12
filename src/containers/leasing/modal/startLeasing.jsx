@@ -104,6 +104,18 @@ class StartLeasing extends React.Component {
     getLeasingInfo(leasingData.coinName, coinAddress, decimalPoint);
   };
 
+  renderSelect = () => {
+    let { coins } = this.props;
+    return Object.keys(coins).map((coin, index) => (
+      coin = coins[coin],
+      <div key={index} onClick={this.selectItem}>
+        <div>
+          <img src={"images/icons/coins/" + coin.abbreviation + ".png"} />
+          {coin.abbreviation}
+        </div>
+      </div>
+    ))
+  }
   render() {
     let { amountValue, toAddress } = this.state;
     let { balance, feeValue, addressIsValid } = this.props;

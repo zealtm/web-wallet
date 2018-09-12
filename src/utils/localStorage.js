@@ -2,8 +2,7 @@ import { encryptAes } from "./cryptography";
 const authToken = "auth.token";
 const userObj = "user.object";
 
-export const setAuthToken = token =>
-  localStorage.setItem(authToken, JSON.stringify(token));
+export const setAuthToken = token => localStorage.setItem(authToken, JSON.stringify(token));
 
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
@@ -87,15 +86,20 @@ export const removeFavoritesCrypto = coin => {
 
 export const getFavoritesCrypto = () => {
   let favoritesCrypto = localStorage.getItem("favorites.crypto");
-  if (!favoritesCrypto) return;
+  if (!favoritesCrypto)
+    return;
+
   favoritesCrypto = favoritesCrypto.split(",");
+
   return favoritesCrypto;
 };
 
 export const getDefaultCrypto = () => {
   let userStorage = getUserData();
   let favoritesCrypto = getFavoritesCrypto();
-  if (!favoritesCrypto) favoritesCrypto = ["lunes"];
+  if (!favoritesCrypto)
+    favoritesCrypto = ["lunes"];
+
   return !userStorage || !userStorage.defaultCoin
     ? favoritesCrypto.includes("lunes")
       ? "lunes"
@@ -104,3 +108,19 @@ export const getDefaultCrypto = () => {
       ? userStorage.defaultCoin
       : "lunes";
 };
+
+export const setDefinitionMetadata = (value) => {
+  if (value === null) {
+    value = true;
+  }
+  localStorage.setItem("definition.delete", value)
+};
+
+export const getDefinitionMetadata = () => {
+  let isDelete = JSON.parse(localStorage.getItem("definition.delete"));
+
+  if (isDelete == null)
+    return true
+
+  return isDelete;
+} 

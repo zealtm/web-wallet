@@ -5,9 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setLeasingLoading,
-  cancelLeasing,
-  getLeasingInfo
+  setLeasingLoading, cancelLeasing, getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import Grid from "@material-ui/core/Grid";
 import { formatDate } from "../../utils/numbers";

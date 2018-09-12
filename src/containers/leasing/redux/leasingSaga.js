@@ -108,12 +108,17 @@ export function* cancelLeasing(action) {
     };
 
     let response = yield call(transactionService.cancelLeasing, leaseData);
-    let transaction = yield call(
-      leasingService.saveLeaseTransaction,
-      response,
-      action.data.coinName,
-      token
-    );
+
+    let dataResponse = {
+      id: response.leaseId,
+      sender: response.sender,
+      recipient: null,
+      amount: null,
+      fee: response.fee,
+      describe: null
+    }
+
+    let transaction = yield call(leasingService.saveLeaseTransaction, dataResponse, action.data.coinName, token);
 
     if (transaction.data.code === 200) {
       yield put(successRequest(i18next.t("MODAL_LEASING_CANCEL_SUCCESS")));
