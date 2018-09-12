@@ -3,6 +3,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 
 import { getAuthToken } from "../../../utils/localStorage";
 import {convertBiggestCoinUnit} from "../../../utils/numbers";
+import {convertToLocaleDate} from "../../../utils/strings";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
@@ -111,9 +112,16 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    const data = {
+      number: payload.number,
+      value: response.value,
+      assignor: response.assignor,
+      dueDate: convertToLocaleDate(response.dueDate) || ''
+    }
+
     yield put({
       type: "GET_INVOICE_REDUCER",
-      payment: response
+      payment: data
     });
   } catch (error) {
     yield put(internalServerError());

@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import NumberMask from "react-number-format";
+
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
@@ -51,7 +50,7 @@ class DetailsPayment extends React.Component {
 
   validateForm = () => {
     const {handleStep, payment} = this.props;
-    const {user, error} = this.state;
+    const {user} = this.state;
 
     if (user.gdpr === 'unread') {
       this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
@@ -93,9 +92,9 @@ class DetailsPayment extends React.Component {
 
     return (
       <div className={style.modalBox}>
-        {/* <div>
+        <div>
           {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
-        </div> */}
+        </div>
         {i18n.t("PAYMENT_DETAILS_TEXT_1")}
         <div className={style.strongText} style={{ marginTop: 20 }}>
           <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>

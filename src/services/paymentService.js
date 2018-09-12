@@ -28,11 +28,13 @@ class PaymentService {
       // TODO: enable setAuthToken when the header is in the api response
       // setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      const date = response.data.data.dueDate;
+
       const data = {
         number,
         value: response.data.data.value,
         assignor: response.data.data.assignor || '',
-        dueDate: response.data.data.dueDate || ''
+        dueDate: date ? date.toISOString() : ''
       }
 
       return data;

@@ -142,7 +142,7 @@ class Invoice extends React.Component {
         this.setState({
           invoiceLoading: false,
         });
-      }, 500);
+      }, 1000);
 
     }
   }
@@ -183,7 +183,7 @@ class Invoice extends React.Component {
     for (const key in invoiceData) {
       if (invoiceData.hasOwnProperty(key)) {
         invoiceInputs[key] = {
-          type: 'text',
+          type: key === 'dueDate' ? 'date' : 'text',
           name: key,
           placeholder: key,
           value: invoiceData[key],
