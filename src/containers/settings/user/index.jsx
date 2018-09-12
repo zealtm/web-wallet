@@ -142,7 +142,7 @@ class User extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container className={style.container}>
+        <Grid container className={style.container} >
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -385,7 +385,7 @@ class User extends React.Component {
                           underline: classes.inputCssUnderline,
                           input: classes.inputCss
                         }}
-                        style={{ width: "50%" }}
+                        style={{ width: "50%", marginTop: "2px" }}
                       />
 
                     </div>

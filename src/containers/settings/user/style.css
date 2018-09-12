@@ -69,8 +69,8 @@
   margin: 0;
   display: flex;
   justify-content: center;
-  width: auto;
   padding-bottom: 40px;
+  width: auto !important;
 }
 
 @media screen and (min-width: 599px) {
