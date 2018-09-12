@@ -57,7 +57,7 @@ class FeePayment extends React.Component {
     if(feeSelect > 0){
       setModalStep(3);
     }else{
-      this.openError("SELECIONE UMA TAXA DE FEE");
+      this.openError(i18n.t("MESSAGE_SELECT_FEE"));
       return;
     }
   }
@@ -141,14 +141,20 @@ class FeePayment extends React.Component {
 }
 
 FeePayment.propTypes = {
-  //handleStep: PropTypes.func.isRequired,
+  fee:              PropTypes.object.isRequired,
+  payment:          PropTypes.object.isRequired,
+  loading:          PropTypes.bool.isRequired,
+  wallet:           PropTypes.object.isRequired, 
+  setModalStep:     PropTypes.func,
+  getFeePayment:    PropTypes.func,
+  setFeePayment:    PropTypes.func
 }
 
 const mapStateToProps = store => ({
-  fee: store.payment.fee.fee,
-  payment: store.payment.payment,
-  loading: store.payment.loading, 
-  wallet: store.skeleton
+  fee:        store.payment.fee.fee,
+  payment:    store.payment.payment,
+  loading:    store.payment.loading, 
+  wallet:     store.skeleton
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 // REDUX
 import {connect} from "react-redux";
@@ -65,8 +66,13 @@ class Payment extends React.Component {
   }
 }
 
+Payment.propTypes = {
+  modalStep: PropTypes.number.isRequired,
+  setModalStep: PropTypes.func.isRequired
+}
+
 const mapStateToProps = store => ({
-  modalStep: store.payment.modalStep
+  modalStep: store.payment.modalStep, 
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(

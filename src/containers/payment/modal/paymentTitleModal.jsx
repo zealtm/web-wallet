@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setModalStep} from "../redux/paymentAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep } from "../redux/paymentAction";
 
 // COMPONENTS
 import DetailsPayment from "./detailsPayment";
@@ -19,40 +19,43 @@ class PaymentTitleModal extends React.Component {
   }
 
   render() {
-    const {modalStep} = this.props;
+    const { modalStep } = this.props;
 
-    switch(modalStep){
+    switch (modalStep) {
       case 1:
-        return <DetailsPayment />
+        return <DetailsPayment />;
       case 2:
-        return <FeePayment />
-      case 3: 
-        return <ConfirmPayment />
+        return <FeePayment />;
+      case 3:
+        return <ConfirmPayment />;
       case 4:
-        return <SecurePayment />
-      case 5: 
-        return <DonePayment />
+        return <SecurePayment />;
+      case 5:
+        return <DonePayment />;
     }
   }
 }
 
 PaymentTitleModal.propTypes = {
-  modalStep: PropTypes.number.isRequired, 
-  loading: PropTypes.bool.isRequired
-}
+  modalStep:    PropTypes.number.isRequired,
+  loading:      PropTypes.bool.isRequired,
+  setModalStep: PropTypes.func.isRequired
+};
 
 const mapStateToProps = store => ({
-  modalStep: store.payment.modalStep,
-  loading: store.payment.loading
+  modalStep:  store.payment.modalStep,
+  loading:    store.payment.loading
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    setModalStep
-  }, dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(PaymentTitleModal);
-

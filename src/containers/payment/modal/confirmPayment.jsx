@@ -52,7 +52,9 @@ class ConfirmPayment extends React.Component {
 }
 
 ConfirmPayment.propTypes = {
-  // handleStep: PropTypes.func.isRequired,
+  setModalStep:     PropTypes.func.isRequired,
+  payment:          PropTypes.object.isRequired,
+  loading:          PropTypes.bool.isRequired
 }
 
 const mapStateToProps = store => ({

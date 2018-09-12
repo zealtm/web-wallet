@@ -22,9 +22,9 @@ class PaymentService {
 
   async getInvoice(token, number) {
     try {
-      API_HEADER.headers.Authorization = token;
+      //API_HEADER.headers.Authorization = token;
 
-      const response = await axios.get(`${BASE_URL}/bill/${number}`, API_HEADER);
+      const response = await axios.get(`${BASE_URL}/bill/${number}`/*, API_HEADER*/);
       // TODO: enable setAuthToken when the header is in the api response
       // setAuthToken(response.headers[HEADER_RESPONSE]);
 

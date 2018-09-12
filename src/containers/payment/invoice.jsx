@@ -371,14 +371,20 @@ class Invoice extends React.Component {
 }
 
 Invoice.propTypes = {
-  classes: PropTypes.object,
-  openModal: PropTypes.func
+  classes:          PropTypes.object,
+  openModal:        PropTypes.func, 
+  coinsRedux:       PropTypes.object.isRequired,
+  payment:          PropTypes.object.isRequired,
+  loading:          PropTypes.bool.isRequired, 
+  getInvoice:       PropTypes.func.isRequired,
+  getCoinsEnabled:  PropTypes.func.isRequired,
+  setPayment:       PropTypes.func.isRequired
 }
 
 const mapStateToProps = store => ({
-  coinsRedux: store.payment.coins,
-  payment: store.payment.payment,
-  loading: store.payment.loading
+  coinsRedux:     store.payment.coins,
+  payment:        store.payment.payment,
+  loading:        store.payment.loading
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -23,7 +23,6 @@ import ButtonContinue from "./component/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
 
-/* eslint-disable */
 class DetailsPayment extends React.Component {
   constructor(props) {
     super(props);
@@ -154,10 +153,19 @@ class DetailsPayment extends React.Component {
   }
 }
 
+DetailsPayment.propTypes = {
+  payment:        PropTypes.object.isRequired,
+  loading:        PropTypes.bool.isRequired,
+  user:           PropTypes.object.isRequired,
+  setModalStep:   PropTypes.func.isRequired,
+  getUserGdpr:    PropTypes.func.isRequired,
+  setUserGdpr:    PropTypes.func.isRequired
+}
+
 const mapStateToProps = store => ({
-  payment: store.payment.payment,
-  loading: store.payment.loading,
-  user: store.user.user,
+  payment:  store.payment.payment,
+  loading:  store.payment.loading,
+  user:     store.user.user,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
