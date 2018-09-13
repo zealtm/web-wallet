@@ -68,22 +68,21 @@ class UserService {
   }
 
   async editUser(token, data) {
-    console.warn("service");
+
     let userData = {
       name: data.name,
       surname: data.surname,
-      birthday: data.birthday,
+      birthday: new Date(data.birthday),
       phone: data.phone,
       street: data.street,
       city: data.city,
       state: data.state,
       zipcode: data.zipcode
     }
-
     API_HEADER.headers.Authorization = token;
     let response = await axios.patch(BASE_URL + "/user", userData, API_HEADER);
-    console.warn("service", response);
     setAuthToken(response.headers[HEADER_RESPONSE]);
+
     return response;
   }
 }

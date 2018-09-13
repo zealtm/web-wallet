@@ -125,7 +125,7 @@ Menu.propTypes = {
   user: PropTypes.object
 };
 
-const mapSateToProps = store => (console.warn(store), {
+const mapSateToProps = store => ({
   user: store.user.user
 });
 

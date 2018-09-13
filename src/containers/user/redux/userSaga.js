@@ -258,11 +258,11 @@ export function* setUserSeed(action) {
 
 export function* editUserData(action) {
   try {
-    console.warn("saga ", action)
     let token = yield call(getAuthToken);
     let response = yield call(userService.editUser, token, action.data)
-    console.warn("response", response);
+    
     if (response.data.code === 200) {
+      yield put({ type: "EDIT_USER_DATA", data: action.data })
       yield put(modalSuccess("Successfully changed data"));
     }
 

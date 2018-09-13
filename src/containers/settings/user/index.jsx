@@ -82,7 +82,8 @@ class User extends React.Component {
     this.state = {
       name: "",
       surname: "",
-      verified: "",
+      emailVerified: true,
+      verified: false,
       birthDay: "",
       birthMonth: "",
       birthYear: "",
@@ -95,21 +96,27 @@ class User extends React.Component {
     };
   }
 
-  changeAvatar = () => {
-    window.open("https://gravatar.com", "blank");
-  };
 
   componentDidMount() {
     let { user } = this.props;
 
+    let date = !user.birthday ? "" : new Date(user.birthday).toISOString().substring(10, 0);
+    let day = date.substring(10, 8);
+    let month = date.substring(7, 5);
+    let year = date.substring(0, 4);
+
     this.setState({
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
-      phone: !user.phone ? "" : user.phone,
+      phone: !user.phone ? "" : user.phone.toString().substring(2),
+      directDistanceDialing: !user.phone ? "" : user.phone.toString().substring(2, 0),
       address: !user.street ? "" : user.street,
       city: !user.city ? "" : user.city,
       zipcode: !user.zipcode ? "" : user.zipcode,
-      state: !user.state ? "" : user.state
+      state: !user.state ? "" : user.state,
+      birthDay: !date ? "" : parseInt(day < 10 ? day.replace(0, "") : day),
+      birthMonth: !date ? "" : parseInt(month < 10 ? month.replace(0, "") : month),
+      birthYear: !date ? "" : parseInt(year)
     });
   }
 
@@ -118,6 +125,10 @@ class User extends React.Component {
       ...this.state,
       [property]: value
     });
+  };
+
+  changeAvatar = () => {
+    window.open("https://gravatar.com", "blank");
   };
 
   handleNameChange = value => this.handleSelectChange("name", value);
@@ -155,7 +166,7 @@ class User extends React.Component {
     let userData = {
       name,
       surname,
-      birthday: `${birthDay}/${birthMonth}/${birthYear}`,
+      birthday: `${birthMonth}/${birthDay}/${birthYear}`,
       phone: `${directDistanceDialing}${phone}`,
       street: address,
       city,
@@ -165,6 +176,17 @@ class User extends React.Component {
 
     editUserData(userData);
   };
+
+  loadDays = () => {
+    const days = [...Array(31).keys()];
+
+    return days.map((day, index) => (
+
+      <MenuItem key={index} value={day + 1}>
+        {day + 1}
+      </MenuItem>
+    ));
+  }
 
   loadMounth = () => {
     let monthNames = [
@@ -192,6 +214,7 @@ class User extends React.Component {
   render() {
     const { classes, user } = this.props;
     const {
+      emailVerified,
       verified,
       birthDay,
       birthMonth,
@@ -275,11 +298,11 @@ class User extends React.Component {
                   className={style.textDefault}
                   style={{ margin: "1rem 0 0 0" }}
                 >
-                  {verified ? (
+                  {emailVerified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
                   </span>
@@ -288,8 +311,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
                   </span>
@@ -379,6 +402,7 @@ class User extends React.Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             classes={{
+                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
                             items={days}
@@ -390,9 +414,7 @@ class User extends React.Component {
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
+                            {this.loadDays()}
                           </Select>
                         </FormControl>
                       </Grid>
@@ -404,6 +426,7 @@ class User extends React.Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             classes={{
+                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
                             items={months}
@@ -427,6 +450,7 @@ class User extends React.Component {
 
                           <Select
                             classes={{
+                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
                             items={years}
