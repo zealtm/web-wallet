@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
 
 // import Select from "../../../components/select";
-import { Grid, Avatar, Input } from "@material-ui/core";
+import { Grid, Avatar, input } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
@@ -23,51 +23,9 @@ const customStyle = {
     width: "60%",
     height: "auto"
   },
-  inputRoot: {
-    color: colors.messages.info,
-    marginBottom: "1rem",
-    padding: "5px",
-    width: "calc(100% - 20px)",
-    "&:hover:before": {
-      borderBottomColor: colors.purple.dark
-    }
-  },
-  inputCss: {
-    fontFamily: "Noto Sans, sans-serif",
-    fontSize: "14px"
-  },
-  inputCssUnderline: {
-    "&:before, &:after": {
-      borderBottomColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderBottomColor: `${colors.purple.dark} !important`
-    }
-  },
-  selectRoot: {
-    color: colors.messages.info,
-    "&:before": {
-      marginBottom: "1rem"
-    },
-    "&:before, &:after": {
-      borderColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderColor: `${colors.purple.dark} !important`
-    }
-  },
   underlineItems: {
-    selected: {
-      backgroundColor: 'red !important',
-    },
     borderBottom: '1px solid ',
     borderBottomColor: `${colors.purple.dark} !important`,
-    "&:hover": {
-      borderBottom: '2px solid',
-    },
-    "&:before, &:after": {
-      borderBottom: '5px solid',
-    },
   },
   disabled: {},
   error: {},
@@ -211,32 +169,20 @@ class User extends React.Component {
                 <p className={style.whiteTitle}>
                   {i18n.t("SETTINGS_USER_PASSWORD")}
                 </p>
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CURRENT_PASSWORD")}
                   inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
                   inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
                   inputProps={{ required: false }}
@@ -262,12 +208,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_FIRST_NAME")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                       inputProps={{ required: false }}
                     />
                   </div>
@@ -359,12 +301,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_SURNAME")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
 
@@ -378,27 +316,20 @@ class User extends React.Component {
                       <div className={style.selectLabel}>
                         {i18n.t("SETTINGS_USER_CODE")}
                       </div>
-                      <Input
-                        type="number"
-                        classes={{
-                          root: classes.inputRoot,
-                          underline: classes.inputCssUnderline,
-                          input: classes.inputCss
-                        }}
-                        style={{ width: "50%", marginTop: "2px" }}
+                      <input
+                        className={style.inputTextDefault}
+                        maxLength="2"
+                        style={{ width: "60%", marginTop: "2px" }}
                       />
 
                     </div>
                     <div className={style.selectLabel}>
                       {i18n.t("SETTINGS_USER_NUMBER")}
                     </div>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      style={{ width: "75%" }}
+                    <input
+                      className={style.inputTextDefault}
+                      maxLength="9"
+                      style={{ width: "69%" }}
                     />
                   </div>
                 </Grid>
@@ -413,12 +344,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ADDRESS")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                       inputProps={{ required: false }}
                     />
                   </div>
@@ -427,12 +354,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_CITY")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
                 </Grid>
@@ -441,12 +364,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ZIP_CODE")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
 
@@ -454,12 +373,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_STATE")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
                 </Grid>
