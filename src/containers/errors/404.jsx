@@ -12,14 +12,13 @@ class NotFoundError extends React.Component {
   render() {
     return (
       <Grid item xs={12}>
-
         <Grid className={style.alignMainError}>
           <Grid className={style.mainError}>
             <Grid item xs={11} className={style.contentError}>
-              <h1 > {"4"} </h1>
-              <h1 > {"0"} </h1>
-              <h1 > {"4"} </h1>
-              <img src="./images/lunio-error@1x.gif" />
+              <h1> {"4"} </h1>
+              <h1> {"0"} </h1>
+              <h1> {"4"} </h1>
+              <img src="./images/lunio/lunio-error@1x.gif" />
             </Grid>
           </Grid>
         </Grid>

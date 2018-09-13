@@ -50,7 +50,7 @@ class UserService {
   }
 
   async getUserPicture(email) {
-    const defaultImg = "images/icons/lunio/lunio-user@100x100.jpg";
+    const defaultImg = "images/lunio/lunio-user@100x100.jpg";
     try {
       let crypto = encryptMd5(email);
       let response = await axios.get(

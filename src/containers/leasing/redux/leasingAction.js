@@ -26,6 +26,11 @@ export const setLeasingLoading = isLoading => ({
   isLoading
 });
 
+export const setLeasingModalLoading = state => ({
+  type: "SET_LEASING_MODAL_LOADING",
+  state
+});
+
 export const clearState = () => ({
   type: "CLEAR_LEASING_STATE"
 });

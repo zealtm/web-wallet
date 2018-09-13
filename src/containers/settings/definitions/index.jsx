@@ -128,7 +128,7 @@ class Definitions extends React.Component {
 
     return currency.map((value, index) => (
       <div key={index}>
-        <img src={"images/lang/BRL.png"} />
+        <img src={"images/lang/" + value + ".png"} />
         <div onClick={() => this.selectCurrency(value)}>{value}</div>
       </div>
     ));

@@ -1,7 +1,11 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalError
+} from "../../../containers/errors/statusCodeMessage";
 
 // UTILS
+import i18n from "../../../utils/i18n";
 import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 
@@ -19,7 +23,7 @@ export function* validateAddress(action) {
       action.address
     );
 
-    if (!response.error) {
+    if (!response.error || response !== "error") {
       yield put({
         type: "SET_WALLET_MODAL_ADDRESS",
         address: action.address
@@ -33,7 +37,7 @@ export function* validateAddress(action) {
       return;
     }
 
-    yield put(response.error);
+    yield put(modalError(i18n.t("MESSAGE_INVALID_ADDRESS")));
 
     yield put({
       type: "SET_WALLET_MODAL_LOADING"
