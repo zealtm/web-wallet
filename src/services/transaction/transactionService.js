@@ -17,7 +17,6 @@ import {
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
 import CoinService from "../../services/coinService";
-import LeasingService from "../../services/leasingService";
 
 // UTILS
 import i18n from "../../utils/i18n";
