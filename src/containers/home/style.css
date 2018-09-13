@@ -25,7 +25,7 @@
 :local(.cardHome) {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   width: 275px;
-  padding: 7% 1%;
+  padding: 20px 5px 8px 5px;
   border-radius: 10px;
   text-align: center;
   margin: 10px;
