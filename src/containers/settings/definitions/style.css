@@ -44,7 +44,7 @@
   width: 100%;
   border-bottom: 2px dotted #654fa4;
   size: 15px;
-  height: 2px;
+  height: 4px;
 }
 
 #hr {
@@ -62,6 +62,9 @@
   }
   :local(.headerSettingsDefault) { 
     display: block;
+  }
+  #hr hr {
+    height: 0.4px;
   }
 }
 
