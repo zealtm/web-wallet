@@ -88,8 +88,6 @@ class DetailsPayment extends React.Component {
     const {loading, payment} = this.props;
     const {user, error, errorMsg} = this.state;
 
-    console.log('user', user);
-
     return (
       <div className={style.modalBox}>
         <div>
