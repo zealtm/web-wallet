@@ -220,6 +220,13 @@
   composes: bt;
 }
 
+:local(.btContinueDisabled) {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  composes: bt;
+  cursor: not-allowed;
+  background-color: #cacaca;
+}
+
 :local(.btError) {
   composes: buttonGeneral from "../../components/bases/buttonBase.css";
   composes: bgError from "../../components/bases/colorBase.css";

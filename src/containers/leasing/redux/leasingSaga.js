@@ -5,10 +5,6 @@ import {
 } from "../../errors/statusCodeMessage";
 import { successRequest, errorInput } from "../../errors/redux/errorAction";
 
-// CONSTANTS
-import { TESTNET } from "../../../constants/apiBaseUrl";
-import { networks } from "../../../constants/network";
-
 // UTILS
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import i18n from "../../../utils/i18n";
@@ -66,7 +62,7 @@ export function* createLeasing(action) {
     let token = yield call(getAuthToken);
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
-    console.warn(token, "token");
+
     let responseAddress = yield call(
       coinService.validateAddress,
       action.data.coinName,
@@ -95,6 +91,10 @@ export function* createLeasing(action) {
         state: true
       });
 
+      yield put({
+        type: "SET_LEASING_MODAL_LOADING"
+      });
+
       yield put(successRequest(i18n.t("MODAL_LEASING_MESSAGE_SUCCESS")));
 
       return;
@@ -119,32 +119,15 @@ export function* cancelLeasing(action) {
     let seed = yield call(decryptAes, userSeed, action.data.password);
     let token = yield call(getAuthToken);
 
-    let leaseData = {
-      fee: action.data.coinFee,
-      transactionId: action.data.txid,
+    let response = yield call(
+      transactionService.cancelLeasing,
+      action.data.txId,
+      action.data.coinFee,
       seed,
-      network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
-    };
-
-    let response = yield call(transactionService.cancelLeasing, leaseData);
-
-    let dataResponse = {
-      id: response.leaseId,
-      sender: response.sender,
-      recipient: null,
-      amount: null,
-      fee: response.fee,
-      describe: null
-    };
-
-    let transaction = yield call(
-      leasingService.saveLeaseTransaction,
-      dataResponse,
-      action.data.coinName,
       token
     );
 
-    if (transaction.data.code === 200) {
+    if (response.signature) {
       yield put(successRequest(i18n.t("MODAL_LEASING_CANCEL_SUCCESS")));
 
       return;

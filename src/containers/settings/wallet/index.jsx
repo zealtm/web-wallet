@@ -42,7 +42,7 @@ class WalletSettings extends React.Component {
                 <h3>{i18n.t("SETTING_WALLETS_TITLE")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item sm={2} />
 
             <Grid item xs={6} sm={2} >
               <Link to="settings">
@@ -55,13 +55,13 @@ class WalletSettings extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>
         </Grid>
         <Grid container display="flex" justify="center">
-          <Grid item xs={12} sm={10}>
+          <Grid item xs={12} sm={9} className={style.alignContentTab}>
             <Tabs tabTitles={titles} tabContents={contents} justify="center"  />
           </Grid>
         </Grid>

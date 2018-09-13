@@ -17,7 +17,6 @@ import {
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
 import CoinService from "../../services/coinService";
-import LeasingService from "../../services/leasingService";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -34,6 +33,7 @@ class TransactionService {
         API_HEADER
       );
       const utxos = [];
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       response.data.data.utxos.forEach(utxo => {
@@ -68,10 +68,8 @@ class TransactionService {
     }
   }
 
-  /* eslint-disable */
   async transaction(transaction, lunesWallet, seed, token) {
     try {
-      let responde = undefined;
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -83,7 +81,8 @@ class TransactionService {
         price,
         amount,
         coin,
-        decimalPoint
+        decimalPoint,
+        serviceId
       } = transaction;
       if (
         !lunesWallet ||
@@ -185,7 +184,7 @@ class TransactionService {
   async createLeasing(amount, fee, address, seed, token) {
     let lunes = new LunesTransaction();
     let coinService = new CoinService();
-    console.warn(token);
+
     let response = await lunes.createLeasing({
       amount: amount,
       fee: fee,
@@ -213,11 +212,39 @@ class TransactionService {
     return response;
   }
 
-  async cancelLeasing(data) {
-    let lunes = new LunesTransaction();
-    let response = await lunes.cancelLeasing(data);
+  async cancelLeasing(txId, fee, seed, token) {
+    try {
+      let lunes = new LunesTransaction();
+      let coinService = new CoinService();
 
-    return response;
+      let response = await lunes.cancelLeasing({
+        fee: convertSmallerCoinUnit(fee, 8),
+        transactionId: txId,
+        seed: seed,
+        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+      });
+
+      await coinService.saveTransaction(
+        4,
+        0,
+        {
+          id: txId,
+          sender: response.sender,
+          recipient: response.recipient,
+          amount: response.amount,
+          fee: response.fee
+        },
+        "lunes",
+        undefined,
+        "Cancel Leasing",
+        token
+      );
+
+      return response;
+    } catch (error) {
+      console.warn(error);
+      return error;
+    }
   }
 
   async transactionService(coin = undefined, token) {
@@ -229,11 +256,13 @@ class TransactionService {
         API_HEADER
       );
 
-      let lunesCoin = await response.data.data.services.map((value, index) => {
+      let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
 
+      /* eslint-disable */
       await Promise.all(lunesCoin);
+      /* eslint-enabled */
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return coin ? coins[coin] : coins;

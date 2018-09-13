@@ -86,7 +86,7 @@ class Consent extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>

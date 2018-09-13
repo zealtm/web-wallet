@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
 
 // import Select from "../../../components/select";
-import { Grid, Avatar, Input } from "@material-ui/core";
+import { Grid, Avatar, input } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
@@ -23,51 +23,9 @@ const customStyle = {
     width: "60%",
     height: "auto"
   },
-  inputRoot: {
-    color: colors.messages.info,
-    marginBottom: "1rem",
-    padding: "5px",
-    width: "calc(100% - 20px)",
-    "&:hover:before": {
-      borderBottomColor: colors.purple.dark
-    }
-  },
-  inputCss: {
-    fontFamily: "Noto Sans, sans-serif",
-    fontSize: "14px"
-  },
-  inputCssUnderline: {
-    "&:before, &:after": {
-      borderBottomColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderBottomColor: `${colors.purple.dark} !important`
-    }
-  },
-  selectRoot: {
-    color: colors.messages.info,
-    "&:before": {
-      marginBottom: "1rem"
-    },
-    "&:before, &:after": {
-      borderColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderColor: `${colors.purple.dark} !important`
-    }
-  },
   underlineItems: {
-    selected: {
-      backgroundColor: 'red !important',
-    },
     borderBottom: '1px solid ',
     borderBottomColor: `${colors.purple.dark} !important`,
-    "&:hover": {
-      borderBottom: '2px solid',
-    },
-    "&:before, &:after": {
-      borderBottom: '5px solid',
-    },
   },
   disabled: {},
   error: {},
@@ -123,7 +81,7 @@ class User extends React.Component {
                 <h3>{i18n.t("SETTINGS_USER")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item xs={2}  />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -136,13 +94,13 @@ class User extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid container className={style.container}>
+        <Grid container className={style.container} >
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -211,32 +169,20 @@ class User extends React.Component {
                 <p className={style.whiteTitle}>
                   {i18n.t("SETTINGS_USER_PASSWORD")}
                 </p>
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CURRENT_PASSWORD")}
                   inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
                   inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
                   inputProps={{ required: false }}
@@ -254,7 +200,7 @@ class User extends React.Component {
           </Grid>
 
           {/* USER INFO */}
-          <Grid item xs={12} sm={6} md={7}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12} className={style.row}>
               <Grid container>
                 <Grid item xs={12} md={6}>
@@ -262,12 +208,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_FIRST_NAME")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                       inputProps={{ required: false }}
                     />
                   </div>
@@ -350,10 +292,6 @@ class User extends React.Component {
                           </Select>
                         </FormControl>
                       </Grid>
-
-
-
-
                     </Grid>
                   </div>
                 </Grid>
@@ -363,12 +301,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_SURNAME")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
 
@@ -377,26 +311,25 @@ class User extends React.Component {
                       {i18n.t("SETTINGS_USER_CONTACT")}
                     </p>
                     <div
-                      style={{ float: "left", width: "40%" }}
+                      style={{ float: "left", width: "20%" }}
                     >
-                      <Input
-                        type="number"
-                        classes={{
-                          root: classes.inputRoot,
-                          underline: classes.inputCssUnderline,
-                          input: classes.inputCss
-                        }}
-                        style={{ width: "30%", float: "left", marginTop: "15px" }}
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_CODE")}
+                      </div>
+                      <input
+                        className={style.inputTextDefault}
+                        maxLength="2"
+                        style={{ width: "60%", marginTop: "2px" }}
                       />
 
                     </div>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      style={{ width: "50%", float: "right", marginTop: "15px" }}
+                    <div className={style.selectLabel}>
+                      {i18n.t("SETTINGS_USER_NUMBER")}
+                    </div>
+                    <input
+                      className={style.inputTextDefault}
+                      maxLength="9"
+                      style={{ width: "69%" }}
                     />
                   </div>
                 </Grid>
@@ -406,50 +339,42 @@ class User extends React.Component {
             {/* ADDRESS */}
             <Grid item xs={12} >
               <Grid item xs={12} className={style.rowAdress}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_ADDRESS")}
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_ADDRESS")}
+                    </p>
+                    <input
+                      className={style.inputTextDefault}
                       inputProps={{ required: false }}
                     />
                   </div>
 
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_CITY")}
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_CITY")}
+                    </p>
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_ZIP_CODE")}
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_ZIP_CODE")}
+                    </p>
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
 
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_STATE")}
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_STATE")}
+                    </p>
+                    <input
+                      className={style.inputTextDefault}
                     />
                   </div>
                 </Grid>

@@ -169,7 +169,7 @@ class Definitions extends React.Component {
                 <h3>{i18n.t("DEFINITIONS_TITLE")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item sm={2} />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -182,13 +182,13 @@ class Definitions extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid item xs={11} sm={10}>
+        <Grid item xs={11} sm={8}>
           <div className={style.box}>
             <h2>{i18n.t("SET_DEFINITIONS_TITLE1")}</h2>
             <div className={style.description}>
@@ -253,12 +253,9 @@ Definitions.propTypes = {
   coins: PropTypes.array
 };
 
-const mapSateToProps = store => (
-  console.warn(store),
-  {
-    coins: store.skeleton.coins
-  }
-);
+const mapSateToProps = store => ({
+  coins: store.skeleton.coins
+});
 
 export default compose(
   withStyles(materialStyle),
