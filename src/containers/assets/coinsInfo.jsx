@@ -139,19 +139,19 @@ class CoinsInfo extends React.Component {
                 </Grid>
 
                 <Grid item className={style.alignButtons}>
-                  <button
+                  {/* <button
                     className={style.receiveButton}
                     onClick={() => setAssetReceiveModalOpen()}
-                  >
+                    >
                     {i18n.t("BTN_RECEIVE")}
-                  </button>
+                  </button> */}
 
-                  <button
+                  {/* <button
                     className={style.sentButton}
                     onClick={() => setAssetSendModalOpen()}
-                  >
+                    >
                     {i18n.t("BTN_SEND")}
-                  </button>
+                  </button> */}
                 </Grid>
               </Grid>
             </Hidden>
