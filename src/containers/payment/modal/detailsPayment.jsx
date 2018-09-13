@@ -3,7 +3,7 @@ import React from "react";
 // REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {setUserGdpr} from "../redux/paymentAction";
+import {updateUserConsents} from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -70,7 +70,7 @@ class DetailsPayment extends React.Component {
 
   toogleSwitch = () => {
     const {user} = this.state;
-    const {setUserGdpr} = this.props;
+    const {updateUserConsents} = this.props;
     const newStatus = user.gdpr === 'read' ? 'unread' : 'read';
 
     this.setState({
@@ -81,7 +81,7 @@ class DetailsPayment extends React.Component {
       }
     });
 
-    setUserGdpr({gpdr: newStatus});
+    updateUserConsents({gdpr: newStatus});
   }
 
   render() {
@@ -152,7 +152,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    setUserGdpr,
+    updateUserConsents,
   },
   dispatch
 );

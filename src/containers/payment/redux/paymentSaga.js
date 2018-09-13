@@ -7,12 +7,10 @@ import {convertToLocaleDate} from "../../../utils/strings";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
-import UserService from "../../../services/userService";
 import CoinService from "../../../services/coinService";
 
 // iniciar servico
 const paymentService = new PaymentService();
-const userService = new UserService();
 const coinService = new CoinService();
 
 export function* getCoinsEnabledSaga() {
@@ -123,20 +121,6 @@ export function* getInvoiceSaga(payload) {
       type: "GET_INVOICE_REDUCER",
       payment: data
     });
-  } catch (error) {
-    yield put(internalServerError());
-  }
-}
-
-export function* setUserGdprSaga(payload) {
-  try {
-    const token = yield call(getAuthToken);
-   yield call(userService.updateUser, payload.user, token);
-
-    yield put({
-      type: "GET_USER_GDPR_REDUCER",
-      user: payload.user
-    })
   } catch (error) {
     yield put(internalServerError());
   }
