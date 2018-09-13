@@ -51,23 +51,27 @@ class LeasingService {
   }
 
   async saveLeaseTransaction(data, coinName, token) {
-    let endpointUrl =
-      BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
+    try {
+      let endpointUrl = BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
 
-    setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
+      setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
 
-    let transactionData = {
-      txID: data.id,
-      from: data.sender,
-      to: data.recipient,
-      amount: data.amount,
-      fee: data.fee,
-      describe: null
-    };
+      let transactionData = {
+        txID: data.id,
+        from: data.sender,
+        to: data.recipient,
+        amount: data.amount,
+        fee: data.fee,
+        describe: null
+      };
 
-    API_HEADER.headers.Authorization = token;
-    let response = await axios.post(endpointUrl, transactionData, API_HEADER);
-    return response;
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
   }
 }
 
