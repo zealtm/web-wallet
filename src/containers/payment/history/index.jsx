@@ -2,7 +2,7 @@ import React from "react";
 import i18n from "../../../utils/i18n";
 import PropTypes from "prop-types";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getHistoryPay} from "../redux/paymentAction";
@@ -67,7 +67,6 @@ class History extends React.Component {
 
   handleFilter = () => {
     const {search} = this.state;
-    console.log('Filter results: ', search);
   }
 
   handleMouseDownPassword = event => {
