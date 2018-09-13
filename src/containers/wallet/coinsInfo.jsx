@@ -120,7 +120,7 @@ class CoinsInfo extends React.Component {
                   {this.renderArrowPercent(coinPercent)}
                   {coinPercent}
                 </div>
-                <h2>{"$" + coinPrice}</h2>
+                <h2>{coin.price[defaultCoin].symbol + coinPrice}</h2>
               </Grid>
             </Grid>
 
@@ -130,7 +130,7 @@ class CoinsInfo extends React.Component {
                   <h2>{i18n.t("WALLET_BALANCE")}</h2>
                   <p>{balance} </p>
                   <div className={style.alignValues}>
-                    {"$" + fiatBalance}
+                    {coin.price[defaultCoin].symbol + fiatBalance}
                     <div className={style.coinBalanceGreen}>
                       {" "}
                       {defaultCoin}{" "}
@@ -162,7 +162,7 @@ class CoinsInfo extends React.Component {
                   <h2>{i18n.t("WALLET_BALANCE")}</h2>
                   <p>{balance} </p>
                   <div className={style.alignValues}>
-                    {"$" + fiatBalance}
+                    {coin.price[defaultCoin].symbol + fiatBalance}
                     <div className={style.coinBalanceGreen}>
                       {" "}
                       {defaultCoin}{" "}

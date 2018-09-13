@@ -1,6 +1,7 @@
 import axios from "axios";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
-import { API_HEADER, BASE_URL } from "../constants/apiBaseUrl";
+import { API_HEADER, BASE_URL, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+import { setAuthToken } from "../utils/localStorage";
 class LeasingService {
   async getProfessionalNodes() {
     try {
@@ -16,18 +17,20 @@ class LeasingService {
   async getLeasingHistory(coin, address, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let urlHistory =
+      let responseHistory = await axios.get(
         BASE_URL +
-        "/coin/" +
-        coin +
-        "/leasing/history/" +
-        address +
-        "?size=100";
-      let urlBalance =
-        BASE_URL + "/coin/" + coin + "/leasing/balance/" + address;
+          "/coin/" +
+          coin +
+          "/leasing/history/" +
+          address +
+          "?size=100",
+        API_HEADER
+      );
+      let responseBalance = await axios.get(
+        BASE_URL + "/coin/" + coin + "/leasing/balance/" + address
+      );
 
-      let responseHistory = await axios.get(urlHistory, API_HEADER);
-      let responseBalance = await axios.get(urlBalance);
+      setAuthToken(responseBalance.headers[HEADER_RESPONSE]);
 
       if (
         responseHistory.data.code === 200 &&
@@ -45,24 +48,6 @@ class LeasingService {
       internalServerError();
       return;
     }
-  }
-
-  async saveLeaseTransaction(data, coinName, token) {
-    let endpointUrl =
-      BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
-
-    let transactionData = {
-      txID: data.id,
-      from: data.sender,
-      to: data.recipient,
-      amount: data.amount,
-      fee: data.fee,
-      describe: null
-    };
-
-    API_HEADER.headers.Authorization = token;
-    let response = await axios.post(endpointUrl, transactionData, API_HEADER);
-    return response;
   }
 }
 

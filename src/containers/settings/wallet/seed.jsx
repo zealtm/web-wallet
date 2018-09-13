@@ -73,6 +73,7 @@ class SeedWordsPage extends React.Component {
 
   render() {
     let { seed } = this.state.inputs;
+    let { errors } = this.state;
 
     return (
       <div className={style.box}>
@@ -81,7 +82,7 @@ class SeedWordsPage extends React.Component {
             <span className={style.boldHead}>{i18n.t("SET_SEED_TITLE")}</span>
 
             <div className={style.boxSeed}>
-              {i18n.t("SET_SEED_WORDS")}
+              <strong>{i18n.t("SEED_INSERT_SEED")}</strong>
               <textarea
                 type="textarea"
                 name="seed"
@@ -91,7 +92,7 @@ class SeedWordsPage extends React.Component {
                 value={!seed ? undefined : seed.value}
                 required
                 onChange={event => this.getInput(event.target)}
-                className={style.textArea}
+                className={errors ? style.inputTextAreaError : style.inputTextArea}
               />
             </div>
 

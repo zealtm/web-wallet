@@ -113,25 +113,25 @@ class CoinsBar extends React.Component {
             <Hidden smDown>
               {coinStatus ? (
                 <div className={style.boxLabelCoin}>
-                  {"$" + coinFiatBalance} <br />
+                  {coin.price[defaultFiat].symbol + coinFiatBalance} <br />
                   <div className={style.labelPercent}>
                     {this.renderArrowPercent(coinPercent)}
                     {coinPercent}
                   </div>
                 </div>
               ) : (
-                  <div className={style.boxLabelCoinDisabled}>
-                    {i18n.t("TEXT_UNAVAILABLE")}
-                  </div>
-                )}
+                <div className={style.boxLabelCoinDisabled}>
+                  {i18n.t("TEXT_UNAVAILABLE")}
+                </div>
+              )}
             </Hidden>
             <Hidden mdUp>
               <div className={style.boxArrowPercent}>
                 {coinStatus ? (
                   this.renderArrowPercent(coinPercent)
                 ) : (
-                    <Close className={style.arrowPercentDisabled} />
-                  )}
+                  <Close className={style.arrowPercentDisabled} />
+                )}
               </div>
             </Hidden>
           </div>

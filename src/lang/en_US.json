@@ -87,6 +87,7 @@
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "DEFINITIONS_TITLE": "Definitions",
   "CONSENT_TITLE": "Consent",
+  "SETTINGS_CONSENTS_GDPR_DESCRIPTION": "Accept the GDPR terms?",
 
   "SECURITY_LINK_RETURN": "Back to the settings",
   "SET_ALIAS_DESCRIPTION": "Voce pode customizar um nome para sua carteira Lunes, se preferir. Caso faça essa mudança, o valor a ser descontado de seu saldo é de 5 LUNES.",
@@ -111,6 +112,7 @@
   "PAGE_ERROR_500_REDIRECT": "Redirecting in",
 
   "LEASING_SELECT_NODE_DEFAULT": "Nodes Profissionais",
+  "LEASING_NOT_INFORMED_FIELD": "Campo não informado",
   "MODAL_LEASING_CONFIRM": "Deseja realmente cancelar?",
   "MODAL_LEASING_MESSAGE_FAILURE": "Não foi possível iniciar o leasing",
   "MODAL_LEASING_CANCEL_SUCCESS": "Cancelado com sucesso!",

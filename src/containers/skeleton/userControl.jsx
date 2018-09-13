@@ -17,7 +17,7 @@ class UserControl extends React.Component {
     super(props);
     this.state = {
       openBox: false,
-      avatar: "images/icons/lunio/lunio-user@100x100.jpg"
+      avatar: "images/lunio/lunio-user@100x100.jpg"
     };
   }
 

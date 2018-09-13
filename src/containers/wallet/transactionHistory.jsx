@@ -18,7 +18,7 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getDefaultFiat } from "../../utils/localStorage";
+import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
@@ -56,11 +56,13 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { skeleton, wallet } = this.props;
+    let { wallet, coins } = this.props;
     let defaultFiat = getDefaultFiat();
+    let defaultCoin = getDefaultCrypto();
     let selectedCoin = wallet.selectedCoin;
-    let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
+    let decimalPoint = coins[selectedCoin].decimalPoint;
     let history = wallet.coinHistory.history.txs;
+    let address = coins[selectedCoin].address;
 
     if (!history || wallet.coinHistory.history <= 0) {
       return (
@@ -87,8 +89,8 @@ class TransactionHistory extends React.Component {
                 <div>
                   <img
                     src={
-                      "./images/icons/walletHistory/" +
-                      transaction.type.toLowerCase() +
+                      "/images/wallet/" +
+                      (transaction.from === address ? "sent" : "received") +
                       ".png"
                     }
                   />
@@ -103,18 +105,21 @@ class TransactionHistory extends React.Component {
               <Grid item xs={4} className={style.valueHistory}>
                 <div
                   className={
-                    transaction.type === "RECEIVED"
-                      ? style.receivedHistory
-                      : style.sentHistory
+                    transaction.from === address
+                      ? style.sentHistory
+                      : style.receivedHistory
                   }
                 >
-                  {transaction.type === "RECEIVED" || "-"}
+                  {transaction.from !== address || "-"}
                   {convertBiggestCoinUnit(
                     transaction.amount,
                     decimalPoint
-                  ).toFixed(decimalPoint)}{" "}
+                  ).toFixed(decimalPoint)}
                 </div>
-                <div> {transaction.price[defaultFiat || "USD"]} </div>
+                <div>
+                  {(coins[defaultCoin].price[defaultFiat].symbol || "$") +
+                    transaction.price[defaultFiat]}
+                </div>
               </Grid>
             </Grid>
 
@@ -254,7 +259,6 @@ TransactionHistory.propTypes = {
   user: PropTypes.object.isRequired,
   wallet: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
-  skeleton: PropTypes.object.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
   setWalletLoading: PropTypes.func.isRequired,
   getWalletCoinHistory: PropTypes.func.isRequired
@@ -263,8 +267,7 @@ TransactionHistory.propTypes = {
 const mapSateToProps = store => ({
   user: store.user.user,
   wallet: store.wallet,
-  coins: store.skeleton.coins,
-  skeleton: store.skeleton
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

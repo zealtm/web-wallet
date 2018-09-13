@@ -114,13 +114,7 @@ class History extends React.Component {
                   placeholder={i18n.t("PAYMENT_FIND_NAME")}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Search"
-                        onClick={this.handleFilter}
-                        onMouseDown={this.handleMouseDownPassword}
-                      >
-                        <Search classes={{root: classes.iconRoot}}/>
-                      </IconButton>
+                      <Search classes={{root: classes.iconRoot}}/>
                     </InputAdornment>
                   }
                 />

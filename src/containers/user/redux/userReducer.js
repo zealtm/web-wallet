@@ -156,7 +156,17 @@ const user = (state = initialState, action) => {
           profilePicture: action.user.profilePicture,
           name: action.user.name,
           email: action.user.email,
-          surname: action.user.surname
+          surname: action.user.surname,
+          gdpr: action.user.gdpr
+        }
+      };
+
+    case "PATCH_SETTINGS_CONSENTS_API_REDUCER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.consents
         }
       };
 

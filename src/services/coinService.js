@@ -7,13 +7,9 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
-import {
-  modalError,
-  internalServerError
-} from "../containers/errors/statusCodeMessage";
+import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 // UTILS
-import i18n from "../utils/i18n";
 import {
   getDefaultCrypto,
   setDefaultCrypto,
@@ -80,6 +76,9 @@ class CoinService {
             API_HEADER
           );
           availableCoins[index].price = responsePrice.data.data;
+          availableCoins[index].price.BRL.symbol = "R$";
+          availableCoins[index].price.USD.symbol = "$";
+          availableCoins[index].price.EUR.symbol = "€";
           availableCoins[index].price.percent = percentCalc(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           // CREATE ADDRESS
@@ -142,6 +141,7 @@ class CoinService {
       });
       setAuthToken(availableCoins.token);
       coins.token = availableCoins.token;
+      console.warn(coins);
       return coins;
     } catch (error) {
       internalServerError();
@@ -286,42 +286,51 @@ class CoinService {
       return response.data.data;
     } catch (error) {
       console.warn(error);
+      return;
     }
   }
 
   async validateAddress(coin, address) {
     try {
+      let valid = false;
+
       if (!coin || !address || address.length < 10) {
-        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+        return "error";
       }
 
       address = address.replace(coin + ":", "");
+
       if (coin === "lunes") {
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
         );
 
         if (!response.data.valid) {
-          return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+          return "error";
         }
 
         return response.data.valid;
       }
 
-      let valid = false;
-      console.warn(coin);
       if (coin === "bch") {
         valid = true;
       } else {
-        valid = await CAValidator.validate(address, coin.toUpperCase());
+        TESTNET
+          ? (valid = await CAValidator.validate(
+              address,
+              coin.toUpperCase(),
+              "testnet"
+            ))
+          : (valid = await CAValidator.validate(address, coin.toUpperCase()));
       }
 
-      if (!valid && !TESTNET) {
-        return modalError(i18n.t("MESSAGE_INVALID_ADDRESS"));
+      if (!valid) {
+        return "error";
       }
 
       return valid;
     } catch (er) {
+      console.warn("error", er);
       let error = { error: internalServerError(), er: er };
       return error;
     }
@@ -387,15 +396,29 @@ class CoinService {
     }
   }
 
-  async saveTransaction(transaction, coin, price, describe) {
+  async saveTransaction(
+    serviceId,
+    feeLunes,
+    transaction,
+    coin,
+    price,
+    describe,
+    token
+  ) {
     try {
-      let endpointUrl =
-        BASE_URL +
-        "/coin/" +
-        coin +
-        "/transaction/history/" +
-        transaction.sender;
+      API_HEADER.headers.Authorization = token;
+      console.warn(
+        serviceId,
+        feeLunes,
+        transaction,
+        coin,
+        price,
+        describe,
+        token
+      );
       let transactionData = {
+        serviceId: serviceId,
+        feeLunes: feeLunes,
         txID: transaction.id,
         from: transaction.sender,
         to: transaction.recipient,
@@ -403,17 +426,26 @@ class CoinService {
         fee: transaction.fee,
         describe: describe ? describe : null,
         price: {
-          USD: price.USD.price,
-          EUR: price.EUR.price,
-          BRL: price.BRL.price
+          USD: price ? price.USD.price : undefined,
+          EUR: price ? price.EUR.price : undefined,
+          BRL: price ? price.BRL.price : undefined
         }
       };
 
-      let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+      let response = await axios.post(
+        BASE_URL +
+          "/coin/" +
+          coin +
+          "/transaction/history/" +
+          transaction.sender,
+        transactionData,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
-      console.warn(error);
+      console.warn(error, error.response);
       internalServerError();
     }
   }

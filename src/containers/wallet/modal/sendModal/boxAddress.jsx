@@ -88,7 +88,9 @@ class BoxAddress extends React.Component {
               src="/images/icons/modal-wallet/carteira.png"
               className={style.icon}
             />
-            <div>{i18n.t("MODAL_SEND_QR_CODE_ADDRESS")} {coin.toUpperCase()}</div>
+            <div>
+              {i18n.t("MODAL_SEND_QR_CODE_ADDRESS")} {coin.toUpperCase()}
+            </div>
           </div>
 
           <input
