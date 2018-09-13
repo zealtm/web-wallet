@@ -72,9 +72,9 @@ const customStyle = {
   focused: {}
 };
 
-const days = [...Array(31).keys()].map(day => day + 1);
-const months = [...Array(12).keys()].map(month => month + 1);
-const years = [...Array(70).keys()].map(year => year + 1949);
+// const days = [...Array(31).keys()].map(day => day + 1);
+// const months = [...Array(12).keys()].map(month => month + 1);
+// const years = [...Array(70).keys()].map(year => year + 1949);
 
 class User extends React.Component {
   constructor() {
@@ -419,7 +419,6 @@ class User extends React.Component {
                               root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
-                            items={days}
                             value={birthDay}
                             onChange={event =>
                               this.handleBirthDayChange(event.target.value)
@@ -443,7 +442,6 @@ class User extends React.Component {
                               root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
-                            items={months}
                             value={birthMonth}
                             onChange={event =>
                               this.handleBirthMonthChange(event.target.value)
@@ -467,7 +465,6 @@ class User extends React.Component {
                               root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
-                            items={years}
                             value={birthYear}
                             onChange={event =>
                               this.handleBirthYearChange(event.target.value)
