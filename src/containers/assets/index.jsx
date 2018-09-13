@@ -21,7 +21,7 @@ class Assets extends React.Component {
   }
 
   renderContent = () => {
-    let { loading } = this.props.wallet;
+    let { loading } = this.props.assets;
     if (loading) {
       return (
         <div>
@@ -48,14 +48,14 @@ class Assets extends React.Component {
 
 Assets.propTypes = {
   user: PropTypes.object,
-  wallet: PropTypes.object,
+  assets: PropTypes.object,
   loadWalletInfo: PropTypes.func,
   setAssetLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  wallet: store.wallet
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>

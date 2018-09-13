@@ -46,7 +46,7 @@ export function* validateAddress(action) {
   }
 }
 
-export function* getWalletSendModalFee(action) {
+export function* getAssetSendModalFee(action) {
   try {
     let response = yield call(
       coinService.getFee,
@@ -86,7 +86,7 @@ export function* shareCoinAddress(action) {
   }
 }
 
-export function* getWalletCoinHistory(action) {
+export function* getAssetCoinHistory(action) {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(
@@ -134,7 +134,7 @@ export function* getCoinFee(action) {
   }
 }
 
-export function* setWalletTransaction(action) {
+export function* setAssetTransaction(action) {
   try {
     let seed = yield call(getUserSeedWords);
     let token = yield call(getAuthToken);

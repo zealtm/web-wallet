@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setWalletModalStep,
-  setWalletSendModalFinalAmount,
-  setWalletSendModalLoading,
-  setWalletSendModalSelectedFee,
-  setWalletSendModalSelectedFeeLunes,
-  setWalletSendModalSelectedFeePerByte
+  setAssetModalStep,
+  setAssetSendModalFinalAmount,
+  setAssetSendModalLoading,
+  setAssetSendModalSelectedFee,
+  setAssetSendModalSelectedFeeLunes,
+  setAssetSendModalSelectedFeePerByte
 } from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -33,9 +33,9 @@ class BoxFee extends React.Component {
 
   calcFee = type => {
     let {
-      setWalletSendModalSelectedFee,
-      setWalletSendModalSelectedFeeLunes,
-      setWalletSendModalSelectedFeePerByte,
+      setAssetSendModalSelectedFee,
+      setAssetSendModalSelectedFeeLunes,
+      setAssetSendModalSelectedFeePerByte,
       errorInput,
       modal,
       coin,
@@ -49,9 +49,9 @@ class BoxFee extends React.Component {
       return;
     }
 
-    setWalletSendModalSelectedFee(modal.feeValue.fee[type]);
-    setWalletSendModalSelectedFeeLunes(modal.feeValue.feeLunes[type]);
-    setWalletSendModalSelectedFeePerByte(modal.feeValue.feePerByte[type]);
+    setAssetSendModalSelectedFee(modal.feeValue.fee[type]);
+    setAssetSendModalSelectedFeeLunes(modal.feeValue.feeLunes[type]);
+    setAssetSendModalSelectedFeePerByte(modal.feeValue.feePerByte[type]);
     return;
   };
 
@@ -59,17 +59,17 @@ class BoxFee extends React.Component {
     let {
       modal,
       errorInput,
-      setWalletModalStep,
-      setWalletSendModalLoading,
-      setWalletSendModalFinalAmount
+      setAssetModalStep,
+      setAssetSendModalLoading,
+      setAssetSendModalFinalAmount
     } = this.props;
     let feeAmount = modal.feeValue.selectedFee;
     let amount = modal.sendAmount + (feeAmount ? feeAmount : 0);
 
     if (feeAmount) {
-      setWalletSendModalLoading();
-      setWalletSendModalFinalAmount(amount.toFixed(8));
-      setWalletModalStep(3);
+      setAssetSendModalLoading();
+      setAssetSendModalFinalAmount(amount.toFixed(8));
+      setAssetModalStep(3);
 
       return;
     }
@@ -148,28 +148,28 @@ BoxFee.propTypes = {
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalFinalAmount: PropTypes.func.isRequired,
-  setWalletSendModalLoading: PropTypes.func.isRequired,
-  setWalletSendModalSelectedFee: PropTypes.func.isRequired,
-  setWalletSendModalSelectedFeeLunes: PropTypes.func.isRequired,
-  setWalletSendModalSelectedFeePerByte: PropTypes.func.isRequired
+  setAssetModalStep: PropTypes.func.isRequired,
+  setAssetSendModalFinalAmount: PropTypes.func.isRequired,
+  setAssetSendModalLoading: PropTypes.func.isRequired,
+  setAssetSendModalSelectedFee: PropTypes.func.isRequired,
+  setAssetSendModalSelectedFeeLunes: PropTypes.func.isRequired,
+  setAssetSendModalSelectedFeePerByte: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal,
+  modal: store.assets.modal,
   coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep,
-      setWalletSendModalFinalAmount,
-      setWalletSendModalLoading,
-      setWalletSendModalSelectedFee,
-      setWalletSendModalSelectedFeeLunes,
-      setWalletSendModalSelectedFeePerByte,
+      setAssetModalStep,
+      setAssetSendModalFinalAmount,
+      setAssetSendModalLoading,
+      setAssetSendModalSelectedFee,
+      setAssetSendModalSelectedFeeLunes,
+      setAssetSendModalSelectedFeePerByte,
       errorInput
     },
     dispatch

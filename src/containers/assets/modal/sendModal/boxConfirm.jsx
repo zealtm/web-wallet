@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setWalletModalStep,
-  setWalletSendModalLoading
+  setAssetModalStep,
+  setAssetSendModalLoading
 } from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -34,10 +34,10 @@ class BoxConfirm extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput, setWalletModalStep } = this.props;
+    let { user, errorInput, setAssetModalStep } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      setWalletModalStep(4);
+      setAssetModalStep(4);
       return;
     }
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
@@ -90,20 +90,20 @@ BoxConfirm.propTypes = {
   user: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalLoading: PropTypes.func.isRequired
+  setAssetModalStep: PropTypes.func.isRequired,
+  setAssetSendModalLoading: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal,
+  modal: store.assets.modal,
   user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep,
-      setWalletSendModalLoading,
+      setAssetModalStep,
+      setAssetSendModalLoading,
       errorInput
     },
     dispatch

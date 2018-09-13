@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletModalStep } from "../../redux/assetsAction";
+import { setAssetModalStep } from "../../redux/assetsAction";
 
 // COMPONENTS
 import BoxAddress from "./boxAddress";
@@ -27,14 +27,14 @@ class SendModal extends React.Component {
   }
 
   renderContent = () => {
-    let { modal, wallet } = this.props;
-    if (modal.step === 0) return <BoxAddress coin={wallet.selectedCoin} />;
-    if (modal.step === 1) return <BoxAmount coin={wallet.selectedCoin} />;
-    if (modal.step === 2) return <BoxFee coin={wallet.selectedCoin} />;
-    if (modal.step === 3) return <BoxConfirm coin={wallet.selectedCoin} />;
-    if (modal.step === 4) return <BoxProcess coin={wallet.selectedCoin} />;
-    if (modal.step === 5) return <BoxResult coin={wallet.selectedCoin} />;
-    if (modal.step === 6) return <BoxResultError coin={wallet.selectedCoin} />;
+    let { modal, assets } = this.props;
+    if (modal.step === 0) return <BoxAddress coin={assets.selectedCoin} />;
+    if (modal.step === 1) return <BoxAmount coin={assets.selectedCoin} />;
+    if (modal.step === 2) return <BoxFee coin={assets.selectedCoin} />;
+    if (modal.step === 3) return <BoxConfirm coin={assets.selectedCoin} />;
+    if (modal.step === 4) return <BoxProcess coin={assets.selectedCoin} />;
+    if (modal.step === 5) return <BoxResult coin={assets.selectedCoin} />;
+    if (modal.step === 6) return <BoxResultError coin={assets.selectedCoin} />;
   };
 
   render() {
@@ -44,21 +44,21 @@ class SendModal extends React.Component {
 
 SendModal.propTypes = {
   modal: PropTypes.object.isRequired,
-  wallet: PropTypes.object.isRequired,
+  assets: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  setWalletModalStep: PropTypes.func.isRequired
+  setAssetModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  wallet: store.wallet,
-  modal: store.wallet.modal,
+  assets: store.assets,
+  modal: store.assets.modal,
   coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep
+      setAssetModalStep
     },
     dispatch
   );

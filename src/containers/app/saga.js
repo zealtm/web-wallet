@@ -48,6 +48,13 @@ import {
   getUserGdprSaga,
   getHistoryPaySaga
 } from "../payment/redux/paymentSaga";
+import {
+  getAssetCoinHistory,
+  getAssetSendModalFee,
+  setAssetTransaction,
+  validateAddress as validateAssetAddress,
+  shareCoinAddress as shareAssetAddress,
+} from "../assets/redux/assetsSaga";
 
 export default function* rootSaga() {
   yield [
@@ -95,6 +102,13 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
-    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga)
+    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga),
+
+    //assets
+    fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
+    fork(takeLatest, "GET_ASSET_COIN_HISTORY_API", getAssetCoinHistory),
+    fork(takeLatest, "GET_ASSET_MODAL_SEND_FEE_API", getAssetSendModalFee),
+    fork(takeLatest, "SHARE_COIN_ADRESS_API", shareAssetAddress),
+    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
   ];
 }

@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setWalletSendModalAmount,
-  getWalletSendModalFee,
-  setWalletSendModalLoading
+  setAssetSendModalAmount,
+  getAssetSendModalFee,
+  setAssetSendModalLoading
 } from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -52,15 +52,15 @@ class BoxAmount extends React.Component {
       coins,
       coin,
       errorInput,
-      setWalletSendModalLoading,
-      getWalletSendModalFee,
-      setWalletSendModalAmount
+      setAssetSendModalLoading,
+      getAssetSendModalFee,
+      setAssetSendModalAmount
     } = this.props;
     let coinBalance = coins[coin].balance.available;
     if (parseFloat(amount) <= coinBalance) {
-      setWalletSendModalLoading();
-      setWalletSendModalAmount(parseFloat(amount));
-      getWalletSendModalFee(
+      setAssetSendModalLoading();
+      setAssetSendModalAmount(parseFloat(amount));
+      getAssetSendModalFee(
         coin,
         coins[coin].address,
         modal.address,
@@ -122,22 +122,22 @@ BoxAmount.propTypes = {
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
-  getWalletSendModalFee: PropTypes.func.isRequired,
-  setWalletSendModalAmount: PropTypes.func.isRequired,
-  setWalletSendModalLoading: PropTypes.func.isRequired
+  getAssetSendModalFee: PropTypes.func.isRequired,
+  setAssetSendModalAmount: PropTypes.func.isRequired,
+  setAssetSendModalLoading: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal,
+  modal: store.assets.modal,
   coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getWalletSendModalFee,
-      setWalletSendModalAmount,
-      setWalletSendModalLoading,
+      getAssetSendModalFee,
+      setAssetSendModalAmount,
+      setAssetSendModalLoading,
       errorInput
     },
     dispatch

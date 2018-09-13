@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getValidateAddress,
-  setWalletSendModalLoading
+  setAssetSendModalLoading
 } from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -38,9 +38,9 @@ class BoxAddress extends React.Component {
 
   validateAddress = () => {
     let { address } = this.state;
-    let { coin, getValidateAddress, setWalletSendModalLoading } = this.props;
+    let { coin, getValidateAddress, setAssetSendModalLoading } = this.props;
 
-    setWalletSendModalLoading();
+    setAssetSendModalLoading();
     getValidateAddress(coin, address);
 
     return;
@@ -119,17 +119,17 @@ BoxAddress.propTypes = {
   modal: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
   getValidateAddress: PropTypes.func.isRequired,
-  setWalletSendModalLoading: PropTypes.func.isRequired
+  setAssetSendModalLoading: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal
+  modal: store.assets.modal
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletSendModalLoading,
+      setAssetSendModalLoading,
       getValidateAddress,
       errorInput
     },
