@@ -123,7 +123,7 @@ class User extends React.Component {
                 <h3>{i18n.t("SETTINGS_USER")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item xs={2}  />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -136,13 +136,13 @@ class User extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid container className={style.container}>
+        <Grid container className={style.container} >
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
@@ -254,7 +254,7 @@ class User extends React.Component {
           </Grid>
 
           {/* USER INFO */}
-          <Grid item xs={12} sm={6} md={7}>
+          <Grid item xs={12} sm={6}>
             <Grid item xs={12} className={style.row}>
               <Grid container>
                 <Grid item xs={12} md={6}>
@@ -350,10 +350,6 @@ class User extends React.Component {
                           </Select>
                         </FormControl>
                       </Grid>
-
-
-
-
                     </Grid>
                   </div>
                 </Grid>
@@ -377,8 +373,11 @@ class User extends React.Component {
                       {i18n.t("SETTINGS_USER_CONTACT")}
                     </p>
                     <div
-                      style={{ float: "left", width: "40%" }}
+                      style={{ float: "left", width: "20%" }}
                     >
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_CODE")}
+                      </div>
                       <Input
                         type="number"
                         classes={{
@@ -386,9 +385,12 @@ class User extends React.Component {
                           underline: classes.inputCssUnderline,
                           input: classes.inputCss
                         }}
-                        style={{ width: "30%", float: "left", marginTop: "15px" }}
+                        style={{ width: "50%", marginTop: "2px" }}
                       />
 
+                    </div>
+                    <div className={style.selectLabel}>
+                      {i18n.t("SETTINGS_USER_NUMBER")}
                     </div>
                     <Input
                       classes={{
@@ -396,7 +398,7 @@ class User extends React.Component {
                         underline: classes.inputCssUnderline,
                         input: classes.inputCss
                       }}
-                      style={{ width: "50%", float: "right", marginTop: "15px" }}
+                      style={{ width: "75%" }}
                     />
                   </div>
                 </Grid>
@@ -406,9 +408,11 @@ class User extends React.Component {
             {/* ADDRESS */}
             <Grid item xs={12} >
               <Grid item xs={12} className={style.rowAdress}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_ADDRESS")}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_ADDRESS")}
+                    </p>
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -420,7 +424,9 @@ class User extends React.Component {
                   </div>
 
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_CITY")}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_CITY")}
+                    </p>
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -430,9 +436,11 @@ class User extends React.Component {
                     />
                   </div>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_ZIP_CODE")}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_ZIP_CODE")}
+                    </p>
                     <Input
                       classes={{
                         root: classes.inputRoot,
@@ -443,7 +451,9 @@ class User extends React.Component {
                   </div>
 
                   <div className={style.content}>
-                    {i18n.t("SETTINGS_USER_STATE")}
+                    <p className={style.textDefault}>
+                      {i18n.t("SETTINGS_USER_STATE")}
+                    </p>
                     <Input
                       classes={{
                         root: classes.inputRoot,
