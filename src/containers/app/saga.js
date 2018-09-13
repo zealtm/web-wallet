@@ -8,7 +8,8 @@ import {
   resetUser,
   hasTwoFactorAuth,
   setUserSeed,
-  updateUserConsentsSaga
+  updateUserConsentsSaga,
+  editUserData
 } from "../user/redux/userSaga";
 
 import {
@@ -60,6 +61,8 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
     fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
+    fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
+
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
     fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
@@ -72,14 +75,11 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
     fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction),
-
     // Leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
-
     // Coupons
     fork(takeLatest, "GET_VOUCHER_API", getVoucher),
-
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),
     fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings),
@@ -87,7 +87,6 @@ export default function* rootSaga() {
     fork(takeLatest, "START_LEASING_API", createLeasing),
     fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
-
     //payment-saga
     fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
     fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
