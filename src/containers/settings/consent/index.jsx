@@ -1,5 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+
+// REDUX
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {updateUserConsents} from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -16,25 +21,31 @@ import style from "./style.css";
 
 const configs = [
   {
-    title: "Definicoes padroes por regiao",
-    description: "O idioma selecionado sera automaticamente exibido",
-    name: "check1"
+    title: "GDPR",
+    description: i18n.t("SETTINGS_CONSENTS_GDPR_DESCRIPTION"),
+    name: "gdpr"
   },
-  {
-    title: "Alerta de Criptomoedas",
-    description: "Lorem ipsum asdasdasd as asd s dsdsds ds ds dsdsds d sds.",
-    name: "check2"
-  }
 ];
 
 class Consent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      gdpr: props.user.gdpr || 'unread',
+    };
   }
 
   handleSwitch = name => event => {
-    this.setState({ [name]: event.target.checked });
+    const {updateUserConsents} = this.props;
+    const newStatus = event.target.checked ? 'read' : 'unread';
+
+    this.setState({
+      [name]: newStatus
+    });
+
+    updateUserConsents({
+      [name]: newStatus
+    });
   };
 
   renderSwitch = () => {
@@ -46,6 +57,7 @@ class Consent extends React.Component {
           description={val.description}
           action={this.handleSwitch(val.name)}
           checked={this.state[val.name]}
+          value={val.name}
         />
       );
     });
@@ -88,4 +100,15 @@ class Consent extends React.Component {
   }
 }
 
-export default Consent;
+const mapStateToProps = store => ({
+  user: store.user.user
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateUserConsents
+}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Consent);
