@@ -41,7 +41,7 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.props.wallet.modal;
+    let { step } = this.props.assets.modal;
     let { setAssetModalStep } = this.props;
     if (step >= 0) {
       setAssetModalStep(step - 1);
@@ -66,12 +66,12 @@ class CoinsInfo extends React.Component {
       setAssetLoading,
       loadWalletInfo,
       coins,
-      wallet,
+      assets,
       user
     } = this.props;
-    let step = wallet.modal.step;
-    let selectedCoin = wallet.selectedCoin;
-    let coin = coins[wallet.selectedCoin];
+    let step = assets.modal.step;
+    let selectedCoin = assets.selectedCoin;
+    let coin = coins[assets.selectedCoin];
     let coinPrice = coins[selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
@@ -81,14 +81,14 @@ class CoinsInfo extends React.Component {
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
           content={<ReceiveModal coin={coin} />}
-          show={wallet.modalReceive.open}
+          show={assets.modalReceive.open}
           close={() => setAssetReceiveModalOpen()}
         />
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          show={wallet.modal.open}
+          show={assets.modal.open}
           close={
             step === 4
               ? null
@@ -197,7 +197,7 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
-  wallet: PropTypes.object.isRequired,
+  assets: PropTypes.object.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
   setAssetLoading: PropTypes.func.isRequired,
@@ -208,7 +208,7 @@ CoinsInfo.propTypes = {
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  wallet: store.wallet,
+  assets: store.assets,
   coins: store.skeleton.coins
 });
 
