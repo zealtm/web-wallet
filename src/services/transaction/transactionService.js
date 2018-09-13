@@ -68,7 +68,7 @@ class TransactionService {
     }
   }
 
-  async transaction(transaction, lunesWallet, seed, token) {
+  async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
       let network = undefined;
       let coinService = new CoinService();
