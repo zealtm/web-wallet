@@ -188,6 +188,20 @@ class User extends React.Component {
     ));
   }
 
+  loadYears = () => {
+    let date = new Date();
+    let lastEighteenYears = date.getFullYear() - 18;
+    let lastOneHundredYears = lastEighteenYears - 100;
+    let yearsToGo = [...Array(lastEighteenYears - lastOneHundredYears).keys()];
+
+    return yearsToGo.map((year, index) => (
+
+      <MenuItem key={index} value={lastEighteenYears - year}>
+        {lastEighteenYears - year}
+      </MenuItem>
+    ));
+  }
+
   loadMounth = () => {
     let monthNames = [
       i18n.t("JANUARY"),
@@ -462,9 +476,7 @@ class User extends React.Component {
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={2018}>2018</MenuItem>
-                            <MenuItem value={2017}>2017</MenuItem>
-                            <MenuItem value={2016}>2016</MenuItem>
+                            {this.loadYears()}
                           </Select>
                         </FormControl>
                       </Grid>
