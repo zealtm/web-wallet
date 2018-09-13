@@ -179,7 +179,8 @@ const user = (state = initialState, action) => {
           zipcode: action.data.zipcode,
           name: action.data.name,
           surname: action.data.surname
-        }
+        },
+        loading: false
       };
 
 

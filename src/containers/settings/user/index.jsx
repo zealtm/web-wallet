@@ -1,13 +1,14 @@
 import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { editUserData } from "../../user/redux/userAction";
+import { editUserData, loading } from "../../user/redux/userAction";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
 import compose from "recompose/compose";
 import colors from "../../../components/bases/colors";
 import style from "./style.css";
+import Loading from "../../../components/loading";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -144,7 +145,7 @@ class User extends React.Component {
   handleStateChange = state => this.handleSelectChange("state", state);
 
   updateData = () => {
-    let { editUserData } = this.props;
+    let { editUserData, loading } = this.props;
     let {
       name,
       surname,
@@ -170,6 +171,7 @@ class User extends React.Component {
       zipcode
     };
 
+    loading();
     editUserData(userData);
   };
 
@@ -216,13 +218,13 @@ class User extends React.Component {
 
     return monthNames.map((month, index) => (
       <MenuItem key={index} value={index + 1}>
-        {month}
+        {month.substring(0, 3)}
       </MenuItem>
     ));
   };
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, isLoading } = this.props;
     const {
       emailVerified,
       verified,
@@ -614,7 +616,7 @@ class User extends React.Component {
                   className={style.buttonEnable}
                   onClick={() => this.updateData()}
                 >
-                  {i18n.t("SETTINGS_USER_SAVE_DATA")}
+                  {isLoading ? <Loading /> : i18n.t("SETTINGS_USER_SAVE_DATA")}
                 </button>
               </Grid>
             </Grid>
@@ -628,19 +630,23 @@ class User extends React.Component {
 User.propTypes = {
   classes: PropTypes.object,
   user: PropTypes.object,
-  editUserData: PropTypes.func
+  editUserData: PropTypes.func,
+  loading: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      editUserData
+      editUserData,
+      loading
     },
     dispatch
   );
 
 const mapStateToProps = store => ({
-  user: store.user.user
+  user: store.user.user,
+  isLoading: store.user.loading
 });
 
 export default compose(

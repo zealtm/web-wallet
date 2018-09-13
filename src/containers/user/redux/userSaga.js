@@ -260,13 +260,16 @@ export function* editUserData(action) {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(userService.editUser, token, action.data)
-    
+
     if (response.data.code === 200) {
       yield put({ type: "EDIT_USER_DATA", data: action.data })
       yield put(modalSuccess("Successfully changed data"));
+ 
+      return;
     }
 
   } catch (error) {
+    yield put({ type: changeLoadingState });
     yield put(internalServerError());
   }
 }
