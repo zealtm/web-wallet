@@ -34,6 +34,6 @@ export const modalError = message => ({
 });
 
 export const modalSuccess = message => ({
-  typeSuccess,
+  type: typeSuccess,
   message
 });
