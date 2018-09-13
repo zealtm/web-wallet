@@ -38,6 +38,7 @@
   composes: textDefault from "../../components/bases/textBase.css";
   padding: 1vh 2vh;
   max-width: 100%;
+  min-height: 140px;
 }
 
 :local(.cardIcon){
