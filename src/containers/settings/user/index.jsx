@@ -72,10 +72,6 @@ const customStyle = {
   focused: {}
 };
 
-// const days = [...Array(31).keys()].map(day => day + 1);
-// const months = [...Array(12).keys()].map(month => month + 1);
-// const years = [...Array(70).keys()].map(year => year + 1949);
-
 class User extends React.Component {
   constructor() {
     super();
