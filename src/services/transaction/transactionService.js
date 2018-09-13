@@ -1,18 +1,23 @@
 import axios from "axios";
+
+// CONTANTS
 import {
   BASE_URL,
   API_HEADER,
   TESTNET,
   HEADER_RESPONSE
 } from "../../constants/apiBaseUrl";
+import { networks } from "../../constants/network";
+
 import {
   internalServerError,
   modalError
 } from "../../containers/errors/statusCodeMessage";
-import { networks } from "../../constants/network";
+
 // COINS
 import { BtcTransaction, LunesTransaction } from "./coins";
 import CoinService from "../../services/coinService";
+import LeasingService from "../../services/leasingService";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -53,8 +58,8 @@ class TransactionService {
         BASE_URL + "/coin/" + coin + "/transaction/broadcast",
         { txHex: txhex },
         API_HEADER
-        );
-        setAuthToken(response.headers[HEADER_RESPONSE]);
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -139,7 +144,8 @@ class TransactionService {
           },
           coin,
           transaction.price,
-          "P2P"
+          "P2P",
+          token
         );
         return responseSaveBtc;
       } else if (coin === "lunes") {
@@ -158,10 +164,13 @@ class TransactionService {
         }
 
         let responseSaveLunes = await coinService.saveTransaction(
+          serviceId,
+          feeLunes,
           respondeLunes,
           coin,
           transaction.price,
-          "P2P"
+          "P2P",
+          token
         );
         return responseSaveLunes;
       }
@@ -173,9 +182,34 @@ class TransactionService {
     }
   }
 
-  async createLeasing(data) {
+  async createLeasing(amount, fee, address, seed, token) {
     let lunes = new LunesTransaction();
-    let response = await lunes.createLeasing(data);
+    let coinService = new CoinService();
+    console.warn(token);
+    let response = await lunes.createLeasing({
+      amount: amount,
+      fee: fee,
+      recipient: address,
+      seed: seed,
+      network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+    });
+
+    await coinService.saveTransaction(
+      4,
+      0,
+      {
+        id: response.id,
+        sender: response.sender,
+        recipient: response.recipient,
+        amount: response.amount,
+        fee: response.fee
+      },
+      "lunes",
+      undefined,
+      "Leasing",
+      token
+    );
+
     return response;
   }
 

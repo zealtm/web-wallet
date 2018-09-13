@@ -41,7 +41,7 @@ class InternalError extends React.Component {
               <h1> {"5"} </h1>
               <h1> {"0"} </h1>
               <h1> {"0"} </h1>
-              <img src="./images/lunio-error@1x.gif" />
+              <img src="./images/lunio/lunio-error@1x.gif" />
             </Grid>
           </Grid>
         </Grid>

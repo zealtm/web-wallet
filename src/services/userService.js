@@ -49,8 +49,25 @@ class UserService {
     }
   }
 
+  async updateUser(userInfo, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.patch(
+        BASE_URL + "/user",
+        userInfo,
+        API_HEADER
+      );
+      // setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
   async getUserPicture(email) {
-    const defaultImg = "images/icons/lunio/lunio-user@100x100.jpg";
+    const defaultImg = "images/lunio/lunio-user@100x100.jpg";
     try {
       let crypto = encryptMd5(email);
       let response = await axios.get(

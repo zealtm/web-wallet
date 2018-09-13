@@ -5,7 +5,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setLeasingLoading, cancelLeasing, getLeasingInfo
+  setLeasingLoading,
+  cancelLeasing,
+  getLeasingInfo
 } from "../leasing/redux/leasingAction";
 import Grid from "@material-ui/core/Grid";
 import { formatDate } from "../../utils/numbers";
@@ -15,6 +17,8 @@ import style from "./style.css";
 
 // UTILS
 import i18n from "../../utils/i18n";
+
+const blockexplorer = "https://blockexplorer.lunes.io/tx/";
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -26,6 +30,7 @@ class LeasingHistory extends React.Component {
 
   componentDidMount() {
     let { getLeasingInfo, coins } = this.props;
+
     getLeasingInfo(
       coins.lunes.abbreviation,
       coins.lunes.address,
@@ -43,7 +48,7 @@ class LeasingHistory extends React.Component {
 
   handleClass = (index, type) => {
     let { toggleHistory } = this.state;
-    if (type === "ACTIVE") {
+    if (type) {
       return toggleHistory !== undefined && toggleHistory !== index
         ? style.opacityItem
         : style.itemHistorico;
@@ -54,25 +59,26 @@ class LeasingHistory extends React.Component {
 
   renderBtCancel = (status, txid, type) => {
     let { coinFee, decimalPoint, cancelLeasing, user, coins } = this.props;
+
     if (status === 1) {
       return (
-        <div
-          className={style.iconLeasing}
-          onClick={() => {
-            if (type === "ACTIVE") {
-              confirm(i18n.t("MODAL_LEASING_CONFIRM"))
-                ? cancelLeasing({
-                  txid,
-                  coinFee,
-                  decimalPoint,
-                  password: user.password,
-                  coinName: coins.lunes.abbreviation
-                })
-                : null;
-            }
-          }}
-        >
-          <img src="images/icons/general/leasing@1x.png" />
+        <div className={style.iconLeasing}>
+          <img
+            src="images/icons/general/leasing@1x.png"
+            onClick={() => {
+              if (type) {
+                confirm(i18n.t("MODAL_LEASING_CONFIRM"))
+                  ? cancelLeasing({
+                      txid,
+                      coinFee,
+                      decimalPoint,
+                      password: user.password,
+                      coinName: coins.lunes.abbreviation
+                    })
+                  : null;
+              }
+            }}
+          />
           {i18n.t("LEASING_BT_CANCEL")}
         </div>
       );
@@ -84,13 +90,13 @@ class LeasingHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { history } = this.props;
-    const blockexplorer = "https://blockexplorer.lunes.io/tx/";
+
     if (history === undefined) {
-      return <div className={style.notFound}>
-        <center>
-          {i18n.t("MESSAGE_NOTHING_FOUND")}
-        </center>
-      </div>;
+      return (
+        <div className={style.notFound}>
+          <center>{i18n.t("MESSAGE_NOTHING_FOUND")}</center>
+        </div>
+      );
     }
 
     return history.txs.map((value, index) => (
@@ -99,7 +105,7 @@ class LeasingHistory extends React.Component {
           <Grid
             item
             xs={12}
-            className={this.handleClass(index, value.type)}
+            className={this.handleClass(index, value.to)}
             onClick={() => this.stateDataHistory(index)}
           >
             <Grid item xs={4}>
@@ -110,7 +116,7 @@ class LeasingHistory extends React.Component {
               <span className={style.textGreen}>{value.amount}</span>
             </Grid>
             <Grid item xs={4}>
-              {this.renderBtCancel(1, value.txID, value.type)}
+              {this.renderBtCancel(1, value.txID, value.to)}
             </Grid>
           </Grid>
 

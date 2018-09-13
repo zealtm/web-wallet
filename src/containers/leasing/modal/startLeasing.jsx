@@ -1,19 +1,28 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
-import CustomSelect from "./customSelect";
-import i18n from "../../../utils/i18n";
-import style from "../style.css";
 import {
   validateLeasingAddress,
   clearState,
   startNewLeasing,
-  setLeasingLoading,
+  setLeasingModalLoading,
   getLeasingInfo
 } from "../redux/leasingAction";
 import { errorInput } from "../../errors/redux/errorAction";
+
+// COMPONENTS
+import CustomSelect from "./customSelect";
+import Loading from "../../../components/loading";
+
+// UTILS
+import i18n from "../../../utils/i18n";
 import { convertSmallerCoinUnit } from "../../../utils/numbers";
+
+// STYLE
+import style from "../style.css";
 
 class StartLeasing extends React.Component {
   constructor(props) {
@@ -42,16 +51,31 @@ class StartLeasing extends React.Component {
     this.handleAmountValue(result.toFixed(decimalPoint));
   };
 
-  handleStartLeasing = () => {
+  createLeasing = () => {
+    let { toAddress, amountValue } = this.state;
     let {
-      validateLeasingAddress,
-      coins,
-      feeValue,
+      clearState,
+      errorInput,
+      setLeasingModalLoading,
+      startNewLeasing,
+      leasing,
+      user,
+      coinAddress,
+      decimalPoint,
       balance,
-      errorInput
+      coins
     } = this.props;
-    let { amountValue, toAddress } = this.state;
-    let isGreatherThenBalance = amountValue + feeValue.low <= balance;
+
+    let leasingData = {
+      toAddress: toAddress,
+      amount: convertSmallerCoinUnit(amountValue, decimalPoint),
+      feeValue: convertSmallerCoinUnit(leasing.coinFee, decimalPoint),
+      password: user.password,
+      coinName: coins.lunes.abbreviation,
+      coinAddress: coinAddress
+    };
+
+    let validateBalance = amountValue + leasing.coinFee.low <= balance;
 
     if (!amountValue || amountValue === 0) {
       errorInput(i18n.t("LEASING_NOT_INFORMED_FIELD"));
@@ -63,76 +87,40 @@ class StartLeasing extends React.Component {
       return;
     }
 
-    if (!isGreatherThenBalance) {
+    if (!validateBalance) {
       errorInput(i18n.t("BALANCE_ERROR_AMOUNT"));
       return;
     }
 
-    validateLeasingAddress(coins.lunes.abbreviation, toAddress);
-
-    return;
-  };
-
-  createLeasing = () => {
-    let { toAddress, amountValue } = this.state;
-    let {
-      clearState,
-      startNewLeasing,
-      feeValue,
-      user,
-      coinAddress,
-      decimalPoint,
-      close,
-      coins,
-      setLeasingLoading,
-      getLeasingInfo
-    } = this.props;
-
-    let leasingData = {
-      toAddress,
-      amount: convertSmallerCoinUnit(amountValue, decimalPoint),
-      feeValue: convertSmallerCoinUnit(feeValue, decimalPoint),
-      password: user.password,
-      coinName: coins.lunes.abbreviation,
-      coinAddress
-    };
-
     clearState();
+    setLeasingModalLoading(true);
     startNewLeasing(leasingData);
-    close();
-    setLeasingLoading(true);
-    getLeasingInfo(leasingData.coinName, coinAddress, decimalPoint);
   };
 
   renderSelect = () => {
     let { coins } = this.props;
-    return Object.keys(coins).map((coin, index) => (
-      coin = coins[coin],
-      <div key={index} onClick={this.selectItem}>
-        <div>
-          <img src={"images/icons/coins/" + coin.abbreviation + ".png"} />
-          {coin.abbreviation}
-        </div>
-      </div>
-    ))
-  }
+    return Object.keys(coins).map(
+      (coin, index) => (
+        (coin = coins[coin]),
+        (
+          <div key={index} onClick={this.selectItem}>
+            <div>
+              <img src={"images/icons/coins/" + coin.abbreviation + ".png"} />
+              {coin.abbreviation}
+            </div>
+          </div>
+        )
+      )
+    );
+  };
   render() {
     let { amountValue, toAddress } = this.state;
-    let { balance, feeValue, addressIsValid } = this.props;
-    {
-      addressIsValid ? this.createLeasing() : null;
-    }
+    let { balance, coins, leasing, getLeasingInfo } = this.props;
+
+    !leasing.reload || getLeasingInfo("lunes", coins["lunes"].address, 8);
 
     return (
-      <div
-        className={style.baseStep}
-        style={{
-          textAlign: "right",
-          alignSelf: "flex-end",
-          padding: 16,
-          color: "#fff"
-        }}
-      >
+      <div className={style.baseStep}>
         <div className={style.boxLine}>
           <div>{i18n.t("LEASING_BALANCE")}</div>
           <div style={{ fontSize: "26px" }}>{balance}</div>
@@ -189,14 +177,14 @@ class StartLeasing extends React.Component {
         />
 
         <div className={style.titleFee}>{i18n.t("LEASING_FEE")}</div>
-        <div className={style.feeVal}>{feeValue.low}</div>
+        <div className={style.feeVal}>{leasing.coinFee.low}</div>
 
         <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
         <button
           className={style.btContinue}
-          onClick={() => this.handleStartLeasing()}
+          onClick={() => this.createLeasing()}
         >
-          {i18n.t("LEASING_BT_START")}
+          {leasing.modalLoading ? <Loading /> : i18n.t("LEASING_BT_START")}
         </button>
       </div>
     );
@@ -205,27 +193,25 @@ class StartLeasing extends React.Component {
 
 StartLeasing.propTypes = {
   coins: PropTypes.array.isRequired,
-  feeValue: PropTypes.object,
+  leasing: PropTypes.object,
   balance: PropTypes.number,
   decimalPoint: PropTypes.number,
   errorInput: PropTypes.func,
   validateLeasingAddress: PropTypes.func,
-  addressIsValid: PropTypes.bool,
   clearState: PropTypes.func,
   startNewLeasing: PropTypes.func,
   user: PropTypes.object,
   coinAddress: PropTypes.string,
   close: PropTypes.func,
   getLeasingInfo: PropTypes.func,
-  setLeasingLoading: PropTypes.func
+  setLeasingModalLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   coins: store.skeleton.coins,
-  feeValue: store.leasing.coinFee,
+  leasing: store.leasing,
   balance: store.skeleton.coins.lunes.balance.available,
   decimalPoint: store.skeleton.coins.lunes.decimalPoint,
-  addressIsValid: store.leasing.addressIsValid,
   user: store.user.user,
   coinAddress: store.skeleton.coins.lunes.address
 });
@@ -238,7 +224,7 @@ const mapDispatchToProps = dispatch =>
       clearState,
       startNewLeasing,
       getLeasingInfo,
-      setLeasingLoading
+      setLeasingModalLoading
     },
     dispatch
   );

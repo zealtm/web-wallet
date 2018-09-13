@@ -91,7 +91,7 @@ class Security extends React.Component {
               <Grid item xs={12} className={style.containerItems}>
                 <Hidden smUp>
                   <Grid item xs={6} className={style.columItemsMobile}>
-                    <img src="images/QRCode.png" />
+                    <img src="images/settings/QRCode.png" />
                   </Grid>
                 </Hidden>
 
@@ -119,11 +119,11 @@ class Security extends React.Component {
                   <Grid item xs={3} className={style.item}>
                     <Grid>
                       <a href="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
-                        <img src="images/apple@1x.png" />
+                        <img src="images/settings/apple@1x.png" />
                       </a>
                       <br />
                       <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
-                        <img src="images/google-play@1x.png" />
+                        <img src="images/settings/google-play@1x.png" />
                       </a>
                     </Grid>
                   </Grid>
@@ -136,10 +136,10 @@ class Security extends React.Component {
                   <InputSecurity />
                   <Grid item xs={12} className={style.alignLaunchMobile}>
                     <Link to="#">
-                      <img src="images/apple@1x.png" />
+                      <img src="images/settings/apple@1x.png" />
                     </Link>
                     <Link to="#">
-                      <img src="images/google-play@1x.png" />
+                      <img src="images/settings/google-play@1x.png" />
                     </Link>
                   </Grid>
                 </Grid>

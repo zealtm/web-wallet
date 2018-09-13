@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 
-// MATERIAL 
+// MATERIAL
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
@@ -58,11 +58,11 @@ class Consent extends React.Component {
   }
 
   render() {
-    const { title, description, action, checked, classes } = this.props;
+    const { title, description, action, checked, classes, value } = this.props;
+
     return (
       <Grid container justify="center">
         <Grid item xs={11}>
-          
           <div className={style.box}>
             <h3>{title}</h3>
             <div className={style.formSwitch}>
@@ -76,13 +76,12 @@ class Consent extends React.Component {
                   checked: classes.iOSChecked,
                 }}
                 disableRipple
-                value={true}
-                checked={checked}
+                value={value}
+                checked={checked === 'read'}
                 onChange={action}
               />
             </div>
           </div>
-
         </Grid>
       </Grid>
     )
@@ -92,9 +91,10 @@ class Consent extends React.Component {
 Consent.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
-  checked: PropTypes.bool || false,
+  checked: PropTypes.string || 'unread',
 };
 
 export default withStyles(materialStyle)(Consent);
