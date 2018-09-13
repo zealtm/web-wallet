@@ -23,7 +23,14 @@ class Leasing extends React.Component {
   componentDidMount() {
     let { getLeasingInfo, coins, setLeasingLoading } = this.props;
     setLeasingLoading(true);
-    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address, coins.lunes.decimalPoint);
+    setTimeout(() => {
+      console.warn("foi");
+      getLeasingInfo(
+        coins.lunes.abbreviation,
+        coins.lunes.address,
+        coins.lunes.decimalPoint
+      );
+    }, 4000);
   }
 
   handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });
@@ -35,21 +42,20 @@ class Leasing extends React.Component {
       <div>
         <Loading color="wallet" height="80vh" width="100px" />
       </div>
-    ) :
-      (
+    ) : (
+      <div>
         <div>
-          <div>
-            <LeasingHistory openModal={this.handleModalLeasing} />
-          </div>
-          <Modal
-            title={i18n.t("MODAL_TITLE_START_LEASING")}
-            content={<StartLeasing close={() => this.handleModalLeasing()} />}
-            show={isOpen}
-            close={() => this.handleModalLeasing()}
-          />
+          <LeasingHistory openModal={this.handleModalLeasing} />
         </div>
-      );
-  }
+        <Modal
+          title={i18n.t("MODAL_TITLE_START_LEASING")}
+          content={<StartLeasing close={() => this.handleModalLeasing()} />}
+          show={isOpen}
+          close={() => this.handleModalLeasing()}
+        />
+      </div>
+    );
+  };
   render() {
     return this.renderContent();
   }
@@ -59,13 +65,13 @@ Leasing.propTypes = {
   isLoading: PropTypes.bool,
   getLeasingInfo: PropTypes.func,
   setLeasingLoading: PropTypes.func,
-  coins: PropTypes.array.isRequired,
-}
+  coins: PropTypes.array.isRequired
+};
 
 const mapStateToProps = store => ({
   balance: store.skeleton.coins.lunes.balance.available,
   isLoading: store.leasing.isLoading,
-  coins: store.skeleton.coins,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

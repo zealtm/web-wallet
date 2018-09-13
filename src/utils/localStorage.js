@@ -2,13 +2,16 @@ import { encryptAes } from "./cryptography";
 const authToken = "auth.token";
 const userObj = "user.object";
 
-export const setAuthToken = token =>
-  localStorage.setItem(authToken, JSON.stringify(token));
+export const setAuthToken = token => {
+  if (!token) return;
+  return localStorage.setItem(authToken, JSON.stringify(token));
+};
 
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
 export const setUserSeedWords = (seed, password) => {
   setUserData({ secretWord: encryptAes(seed, password) });
+  return;
 };
 
 export const getUserSeedWords = () => {

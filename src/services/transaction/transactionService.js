@@ -61,10 +61,8 @@ class TransactionService {
     }
   }
 
-  /* eslint-disable */
   async transaction(transaction, lunesWallet, seed, token) {
     try {
-      let responde = undefined;
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -193,11 +191,13 @@ class TransactionService {
         API_HEADER
       );
 
-      let lunesCoin = await response.data.data.services.map((value, index) => {
+      let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
 
+      /* eslint-disable */
       await Promise.all(lunesCoin);
+      /* eslint-enabled */
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return coin ? coins[coin] : coins;

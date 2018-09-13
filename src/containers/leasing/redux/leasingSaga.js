@@ -155,6 +155,7 @@ export function* getLeasingInfo(action) {
     }
 
     setAuthToken(lease.history.headers[HEADER_RESPONSE]);
+
     lease.history.data.data.txs.map(history => {
       if (history.amount) {
         history.amount = convertBiggestCoinUnit(
