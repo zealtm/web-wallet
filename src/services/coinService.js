@@ -282,7 +282,6 @@ class CoinService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.warn(response.data.data);
       return response.data.data;
     } catch (error) {
       console.warn(error);

@@ -26,7 +26,6 @@ class Skeleton extends React.Component {
 
   logout = () => {
     let deleteMeta = JSON.parse(getDefinitionMetadata());
-    console.warn("this is logout", deleteMeta);
 
     if (deleteMeta === true || deleteMeta == null) {
       clearAll();
