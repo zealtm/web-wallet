@@ -83,7 +83,7 @@ class CoinsBar extends React.Component {
           : false;
       let coinBalance = coinStatus ? coin.balance.available : 0;
       let coinFiatBalance = coinStatus
-        ? (coinBalance * coin.price[defaultFiat].price).toFixed(2)
+        ? (coinBalance * coin.price[defaultFiat].price).toFixed(0)
         : 0;
       let coinPercent = coinStatus ? coin.price.percent : 0;
 

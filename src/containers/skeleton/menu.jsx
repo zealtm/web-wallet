@@ -23,11 +23,7 @@ const menuItens = [
     label: i18n.t("MENU_HOME"),
     icon: "../../images/icons/general/home@2x.png"
   },
-  // {
-  //   link: "/portfolio",
-  //   label: i18n.t("MENU_PORTFOLIO"),
-  //   icon: "../../images/icons/general/portfolio@1x.png"
-  // },
+
   {
     link: "/wallet",
     label: i18n.t("MENU_WALLET"),

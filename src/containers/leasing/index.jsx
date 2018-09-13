@@ -23,49 +23,71 @@ class Leasing extends React.Component {
   componentDidMount() {
     let { getLeasingInfo, coins, setLeasingLoading } = this.props;
     setLeasingLoading(true);
-    getLeasingInfo(coins.lunes.abbreviation, coins.lunes.address, coins.lunes.decimalPoint);
+    setTimeout(() => {
+      getLeasingInfo(
+        coins.lunes.abbreviation,
+        coins.lunes.address,
+        coins.lunes.decimalPoint
+      );
+    }, 4000);
   }
 
-  handleModalLeasing = () => this.setState({ isOpen: !this.state.isOpen });
+  handleModalLeasing = () => {
+    let { isOpen } = this.state;
+    let { getLeasingInfo, coins, setLeasingLoading, leasing } = this.props;
+
+    if (isOpen && leasing.reload) {
+      setLeasingLoading(true);
+      setTimeout(() => {
+        getLeasingInfo(
+          coins.lunes.abbreviation,
+          coins.lunes.address,
+          coins.lunes.decimalPoint
+        );
+      }, 4000);
+    }
+
+    this.setState({ isOpen: !this.state.isOpen });
+  };
 
   renderContent = () => {
     let { isOpen } = this.state;
-    let { isLoading } = this.props;
-    return isLoading ? (
+    let { leasing } = this.props;
+
+    return leasing.isLoading ? (
       <div>
         <Loading color="wallet" height="80vh" width="100px" />
       </div>
-    ) :
-      (
+    ) : (
+      <div>
         <div>
-          <div>
-            <LeasingHistory openModal={this.handleModalLeasing} />
-          </div>
-          <Modal
-            title={i18n.t("MODAL_TITLE_START_LEASING")}
-            content={<StartLeasing close={() => this.handleModalLeasing()} />}
-            show={isOpen}
-            close={() => this.handleModalLeasing()}
-          />
+          <LeasingHistory openModal={this.handleModalLeasing} />
         </div>
-      );
-  }
+        <Modal
+          title={i18n.t("MODAL_TITLE_START_LEASING")}
+          content={<StartLeasing close={() => this.handleModalLeasing()} />}
+          show={isOpen}
+          close={() => this.handleModalLeasing()}
+        />
+      </div>
+    );
+  };
   render() {
     return this.renderContent();
   }
 }
 
 Leasing.propTypes = {
-  isLoading: PropTypes.bool,
+  leasing: PropTypes.object,
   getLeasingInfo: PropTypes.func,
   setLeasingLoading: PropTypes.func,
-  coins: PropTypes.array.isRequired,
-}
+  coins: PropTypes.array.isRequired
+};
 
 const mapStateToProps = store => ({
   balance: store.skeleton.coins.lunes.balance.available,
-  isLoading: store.leasing.isLoading,
-  coins: store.skeleton.coins,
+  leasing: store.leasing,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

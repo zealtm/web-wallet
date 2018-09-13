@@ -27,7 +27,8 @@ class LeasingService {
         API_HEADER
       );
       let responseBalance = await axios.get(
-        BASE_URL + "/coin/" + coin + "/leasing/balance/" + address
+        BASE_URL + "/coin/" + coin + "/leasing/balance/" + address,
+        API_HEADER
       );
 
       setAuthToken(responseBalance.headers[HEADER_RESPONSE]);

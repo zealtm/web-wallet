@@ -47,7 +47,7 @@ class Security extends React.Component {
         </Grid>
 
         <Grid item xs={3} className={style.item}>
-          <Grid className={(style.contentItem, style.marginLeft)}>
+          <Grid className={style.contentItem}>
             <Grid item>
               <InputSecurity />
             </Grid>
@@ -67,7 +67,7 @@ class Security extends React.Component {
                 <h3>{i18n.t("SECURITY_TITLE")} </h3>
               </Grid>
             </Hidden>
-            <Grid item sm={1} />
+            <Grid item sm={2} />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -80,14 +80,14 @@ class Security extends React.Component {
               </Grid>
             </Hidden>
 
-            <Grid item xs={8} sm={6} id={"hr"}>
+            <Grid item xs={10} sm={6} id={"hr"}>
               <hr />
             </Grid>
           </Grid>
         </Grid>
 
         <div className={style.containerSecurity}>
-          <Grid item xs={11}>
+          <Grid item xs={8}>
             <Grid container className={style.allSecurity}>
               <Grid item xs={12} className={style.containerItems}>
                 <Hidden smUp>

@@ -106,7 +106,7 @@
 
 :local(.containerItemsWeb) {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 :local(.item) {
@@ -115,7 +115,7 @@
 
 :local(.counterItems) {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 :local(.containerItems) {
@@ -139,6 +139,7 @@
 }
 
 :local(.headerSecurity p) {
+  padding-left: 22px;
   color: #68f285;
   font-size: 12px;
   font-weight: bold;
@@ -286,6 +287,7 @@
 }
 
 :local(.headerSettingsDefault p) {
+  padding-left: 22px;
   color: #68f285;
   font-size: 12px;
   font-weight: bold;
@@ -303,7 +305,7 @@
   width: 100%;
   border-bottom: 2px dotted #654fa4;
   size: 15px;
-  height: 2px;
+  height: 4px;
 }
 
 #hr {
@@ -312,10 +314,6 @@
 
 :local(.twoFactorQr) {
   display: contents;
-}
-
-:local(.marginLeft) {
-    margin-left: 20px;
 }
 
 @media screen and (max-width: 599px) {
@@ -329,6 +327,9 @@
   }
   :local(.headerSettingsDefault) {
     display: block;
+  }
+  #hr hr {
+    height: 0.4px;
   }
 }
 

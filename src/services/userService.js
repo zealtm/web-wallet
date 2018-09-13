@@ -9,15 +9,18 @@ import {
   badRequest,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-import { setAuthToken } from "../utils/localStorage";
-import { encryptMd5 } from "../utils/cryptography";
+import {
+  setAuthToken
+} from "../utils/localStorage";
+import {
+  encryptMd5
+} from "../utils/cryptography";
 
 class UserService {
   async createUser(userInfo) {
     try {
       let response = await axios.post(
-        BASE_URL + "/user",
-        {
+        BASE_URL + "/user", {
           name: userInfo.name,
           surname: userInfo.surname,
           email: userInfo.email,
@@ -67,7 +70,7 @@ class UserService {
   }
 
   async getUserPicture(email) {
-    const defaultImg = "images/lunio/lunio-user@100x100.jpg";
+    const defaultImg = "images/lunio/lunio-user@300x300.jpg";
     try {
       let crypto = encryptMd5(email);
       let response = await axios.get(
@@ -79,6 +82,25 @@ class UserService {
     } catch (error) {
       return defaultImg;
     }
+  }
+
+  async editUser(token, data) {
+
+    let userData = {
+      name: data.name,
+      surname: data.surname,
+      birthday: new Date(data.birthday),
+      phone: data.phone,
+      street: data.street,
+      city: data.city,
+      state: data.state,
+      zipcode: data.zipcode
+    }
+    API_HEADER.headers.Authorization = token;
+    let response = await axios.patch(BASE_URL + "/user", userData, API_HEADER);
+    setAuthToken(response.headers[HEADER_RESPONSE]);
+
+    return response;
   }
 }
 
