@@ -28,16 +28,6 @@ class LeasingHistory extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let { getLeasingInfo, coins } = this.props;
-
-    getLeasingInfo(
-      coins.lunes.abbreviation,
-      coins.lunes.address,
-      coins.lunes.decimalPoint
-    );
-  }
-
   stateDataHistory = key => {
     let { toggleHistory } = this.state;
 
@@ -57,9 +47,39 @@ class LeasingHistory extends React.Component {
     return style.opacityItem;
   };
 
-  renderBtCancel = (status, txid, type) => {
-    let { coinFee, decimalPoint, cancelLeasing, user, coins } = this.props;
+  cancelLeasing(txId) {
+    let {
+      coinFee,
+      decimalPoint,
+      cancelLeasing,
+      user,
+      coins,
+      getLeasingInfo,
+      setLeasingLoading
+    } = this.props;
 
+    cancelLeasing({
+      txId,
+      coinFee,
+      decimalPoint,
+      password: user.password,
+      coinName: coins.lunes.abbreviation
+    });
+
+    setLeasingLoading(true);
+
+    setTimeout(() => {
+      getLeasingInfo(
+        coins.lunes.abbreviation,
+        coins.lunes.address,
+        coins.lunes.decimalPoint
+      );
+    }, 5000);
+
+    return;
+  }
+
+  renderBtCancel = (status, txId, type) => {
     if (status === 1) {
       return (
         <div className={style.iconLeasing}>
@@ -68,13 +88,7 @@ class LeasingHistory extends React.Component {
             onClick={() => {
               if (type) {
                 confirm(i18n.t("MODAL_LEASING_CONFIRM"))
-                  ? cancelLeasing({
-                      txid,
-                      coinFee,
-                      decimalPoint,
-                      password: user.password,
-                      coinName: coins.lunes.abbreviation
-                    })
+                  ? this.cancelLeasing(txId)
                   : null;
               }
             }}

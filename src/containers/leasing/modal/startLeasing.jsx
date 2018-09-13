@@ -99,6 +99,7 @@ class StartLeasing extends React.Component {
 
   renderSelect = () => {
     let { coins } = this.props;
+
     return Object.keys(coins).map(
       (coin, index) => (
         (coin = coins[coin]),
@@ -113,11 +114,10 @@ class StartLeasing extends React.Component {
       )
     );
   };
+
   render() {
     let { amountValue, toAddress } = this.state;
-    let { balance, coins, leasing, getLeasingInfo } = this.props;
-
-    !leasing.reload || getLeasingInfo("lunes", coins["lunes"].address, 8);
+    let { balance, leasing } = this.props;
 
     return (
       <div className={style.baseStep}>
@@ -181,10 +181,19 @@ class StartLeasing extends React.Component {
 
         <div className={style.labelHelp}>{i18n.t("LEASING_HELP_TEXT")}</div>
         <button
-          className={style.btContinue}
+          className={
+            leasing.reload ? style.btContinueDisabled : style.btContinue
+          }
           onClick={() => this.createLeasing()}
+          disabled={leasing.reload ? true : false}
         >
-          {leasing.modalLoading ? <Loading /> : i18n.t("LEASING_BT_START")}
+          {leasing.modalLoading ? (
+            <Loading />
+          ) : leasing.reload ? (
+            i18n.t("MODAL_LEASING_MESSAGE_SUCCESS")
+          ) : (
+            i18n.t("LEASING_BT_START")
+          )}
         </button>
       </div>
     );
