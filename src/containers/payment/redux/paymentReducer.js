@@ -23,12 +23,9 @@ const initialState = {
   },
   history: [],
   loading: false,
-  user: {
-    terms: 'unread'
-  },
 };
 
-const payment = (state=initialState, action) => {
+const payment = (state = initialState, action) => {
   switch(action.type){
     case "GET_COINS_REDUCER":
       return {
@@ -76,6 +73,14 @@ const payment = (state=initialState, action) => {
       return {
         ...state,
         history: action.history
+      }
+
+    case "CLEAR_PAYMENT":
+      return {
+        ...state,
+        payment: {
+          ...initialState.payment
+        }
       }
 
     default: {

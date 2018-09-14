@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, setPayment, getInvoice } from "./redux/paymentAction";
+import { getCoinsEnabled, setPayment, getInvoice, clearPayment } from "./redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -81,7 +81,10 @@ class Invoice extends React.Component {
         dueDate: "",
         cpfCnpj: "",
         value: "",
-        coin: ""
+        coin: {
+          abbreviation: "",
+          address: ""
+        }
       },
       coin: {
         name: undefined,
@@ -116,7 +119,7 @@ class Invoice extends React.Component {
   };
 
   handleInvoiceNumberChange = event => {
-    const { getInvoice } = this.props;
+    const { getInvoice, clearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
 
     const newValue = event.target.value.replace(/\D/, "");
@@ -130,7 +133,33 @@ class Invoice extends React.Component {
       }
     });
 
-    if (newValue.length === 47) {
+    if (newValue.length == 0) {
+      const emptyValue = {
+        number: "",
+        assignor: "",
+        name: "",
+        description: "",
+        dueDate: "",
+        cpfCnpj: "",
+        value: "",
+        coin: {
+          abbreviation: "",
+          address: ""
+        }
+      }
+
+      this.setState({
+        ...this.state,
+        invoice: emptyValue,
+        coin: {
+          name: undefined,
+          value: undefined,
+          img: undefined
+        }
+      })
+
+      clearPayment();
+    } else if (newValue.length === 47) {
       if (disableNumberInput) {
         return;
       }
@@ -393,7 +422,8 @@ const mapDispatchToProps = dispatch =>
     {
       getInvoice,
       getCoinsEnabled,
-      setPayment
+      setPayment,
+      clearPayment
     },
     dispatch
   );
