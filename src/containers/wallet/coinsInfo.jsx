@@ -120,7 +120,7 @@ class CoinsInfo extends React.Component {
                   {this.renderArrowPercent(coinPercent)}
                   {coinPercent}
                 </div>
-                <h2>{coin.price[defaultCoin].symbol + coinPrice}</h2>
+                <h2>{coin.price[defaultCoin].symbol + coinPrice.toFixed(3)}</h2>
               </Grid>
             </Grid>
 

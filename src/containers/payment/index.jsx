@@ -18,7 +18,7 @@ class Payment extends React.Component {
     super();
     this.state = {
       isOpen: false
-    }
+    };
   }
   handleModal = () => this.setState({ isOpen: !this.state.isOpen });
 
@@ -26,7 +26,10 @@ class Payment extends React.Component {
     let { isOpen } = this.state;
 
     const titles = [i18n.t("PAYMENT_INVOICE"), i18n.t("PAYMENT_HISTORY")];
-    const contents = [<Invoice openModal={this.handleModal} />, <History />]
+    const contents = [
+      <Invoice openModal={this.handleModal} key="1" />,
+      <History key="2" />
+    ];
 
     return (
       <div>
@@ -41,7 +44,7 @@ class Payment extends React.Component {
           content={<PaymentTitleModal />}
           show={isOpen}
           // close={() => this.handleModal()}
-          back={()=>this.handleModal()}
+          back={() => this.handleModal()}
         />
       </div>
     );
