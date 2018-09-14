@@ -81,8 +81,7 @@ class TransactionService {
         price,
         amount,
         coin,
-        decimalPoint,
-        serviceId
+        decimalPoint
       } = transaction;
       if (
         !lunesWallet ||
@@ -93,6 +92,7 @@ class TransactionService {
         !price ||
         !feePerByte ||
         !amount ||
+        !serviceId ||
         !token ||
         !coin ||
         !decimalPoint
@@ -100,6 +100,8 @@ class TransactionService {
         modalError(i18n.t("MESSAGE_TRANSACTION_FAILED"));
         return;
       }
+
+      console.warn(4);
 
       if (coin === "btc")
         network = TESTNET ? networks.BTCTESTNET : networks.BTC;
@@ -265,6 +267,7 @@ class TransactionService {
       /* eslint-enabled */
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return coin ? coins[coin] : coins;
     } catch (error) {
       console.warn(error);
