@@ -29,7 +29,16 @@ const menuItens = [
     label: i18n.t("MENU_WALLET"),
     icon: "../../images/icons/general/wallet@1x.png"
   },
-
+  {
+    link: "/assets",
+    label: i18n.t("MENU_ASSETS"),
+    icon: "../../images/icons/general/wallet@1x.png"
+  },
+  // {
+  //   link: "/recharge",
+  //   label: i18n.t("MENU_RECHARGE"),
+  //   icon: "../../images/icons/general/recharge@1x.png"
+  // },
   {
     link: "/payment",
     label: i18n.t("MENU_PAY"),
@@ -44,7 +53,7 @@ const menuItens = [
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
     icon: "../../images/icons/general/cupon@1x.png"
-  }
+  },
 ];
 
 class Menu extends React.Component {

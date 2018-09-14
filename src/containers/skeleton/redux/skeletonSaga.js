@@ -95,6 +95,9 @@ export function* loadWalletInfo(action) {
     yield put({
       type: "SET_WALLET_LOADING"
     });
+    yield put({
+      type: "SET_ASSET_LOADING"
+    })
 
     return;
   } catch (error) {

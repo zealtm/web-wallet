@@ -97,6 +97,12 @@ let errorInternal = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
 });
+
+let assets = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../assets")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, '../../assets')
+})
 /* eslint-enable */
 
 class App extends Component {
@@ -125,6 +131,7 @@ class App extends Component {
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
               <Route path="/payment" component={payment} />
+              <Route path="/assets" component={assets} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />
