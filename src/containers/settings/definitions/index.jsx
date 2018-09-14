@@ -203,7 +203,7 @@ class Definitions extends React.Component {
                 <CustomSelectImage
                   type={"fiat"}
                   action={this.renderSelectCurrency}
-                  image={"images/lang/BRL.png"}
+                  image={"images/lang/" + currencyValue + ".png"}
                   value={currencyValue}
                 />
               </Grid>
