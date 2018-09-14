@@ -34,8 +34,9 @@ class UserService {
       if (error.response.data.code === 500) {
         return badRequest("You are already registered");
       }
-
-      return internalServerError();
+      //return internalServerError();
+      internalServerError();
+      return;
     }
   }
 
