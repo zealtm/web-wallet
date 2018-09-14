@@ -1,8 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import {connect} from "react-redux";
+
 import style from "./style.css";
 import { Grid } from "@material-ui/core";
+
+import { convertBiggestCoinUnit,formatDate } from "../../../utils/numbers";
 
 class HistoryItem extends React.Component {
   constructor() {
@@ -10,20 +15,22 @@ class HistoryItem extends React.Component {
   }
 
   render() {
-    const {item} = this.props;
-
+    const {item, skeleton} = this.props;
+    let decimalPoint = skeleton.coins[item.coin.toLowerCase()].decimalPoint;
+    let date = formatDate(item.date, "DM") + " " + formatDate(item.date, "HMS");
+    
     return (
       <Grid container>
         <Grid item xs={12} className={style.row}>
           <div className={style.itemLeft}>
-            <p className={style.description}>{item.name}</p>
-            <p className={style.defaultText}>{item.date}</p>
+            <p className={style.description}>{item.describe}</p>
+            <p className={style.defaultText}>{date}</p>
             <p className={style.statusConfirmed}>{item.status}</p>
           </div>
           <div className={style.itemRight}>
             <p className={style.icon}><img src={`/images/icons/coins/${item.coin}.png`} alt={item.coin}/> {item.coin}</p>
-            <p className={style.coinValue}>{item.amount}</p>
-            <p>R$ {item.value}</p>
+            <p className={style.coinValue}>{convertBiggestCoinUnit(item.amountCripto, decimalPoint).toFixed(decimalPoint)}</p>
+            <p>R$ {parseFloat(item.amountFiat).toFixed(2)}</p>
           </div>
         </Grid>
         <div className={style.line}></div>
@@ -33,7 +40,14 @@ class HistoryItem extends React.Component {
 }
 
 HistoryItem.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
+  skeleton: PropTypes.object,
 }
 
-export default HistoryItem;
+const mapSateToProps = store => ({
+  skeleton: store.skeleton
+});
+
+export default connect(
+  mapSateToProps
+)(HistoryItem);

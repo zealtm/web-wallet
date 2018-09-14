@@ -42,6 +42,22 @@ class PaymentService {
     }
   }
 
+  async getHistory(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/bill/history`,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+        
+      return response.data.data;
+    } catch(error) {
+      return internalServerError();
+    }
+  }
+
 }
 
 export default PaymentService;

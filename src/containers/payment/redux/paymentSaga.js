@@ -169,31 +169,23 @@ export function* setUserGdprSaga(payload) {
 
 export function* getHistoryPaySaga() {
   try {
-    // let token = yield call(getAuthToken);
-    //let response = yield call(paymentService.getHistory, token);
 
-    const response = [
-      {
-        name: "Energia",
-        date: "04/09/2018 17:00",
-        status: "confirmado",
-        coin: "lunes",
-        amount: "50000",
-        value: "45.90"
-      },
-      {
-        name: "Plano Saude",
-        date: "04/09/2018 17:00",
-        status: "confirmado",
-        coin: "lunes",
-        amount: "1000",
-        value: "205.00"
-      }
-    ];
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+    
+    let token = yield call(getAuthToken);
+    let response = yield call(paymentService.getHistory, token);
+   
+    let data = [];
+    if(response.payments){
+      data = response.payments;
+    }
 
     yield put({
       type: "GET_HISTORY_PAY_REDUCER",
-      history: response
+      history: data
     });
   } catch (error) {
     yield put(internalServerError());

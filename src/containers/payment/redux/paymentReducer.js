@@ -104,7 +104,8 @@ const payment = (state = initialState, action) => {
     case "GET_HISTORY_PAY_REDUCER":
       return {
         ...state,
-        history: action.history
+        history: action.history,
+        loading: false
       };
 
     case "SET_CLEAR_PAYMENT_REDUCER":
