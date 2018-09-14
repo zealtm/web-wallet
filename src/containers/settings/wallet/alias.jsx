@@ -41,7 +41,7 @@ class AliasPage extends React.Component {
               <Grid container>
                 <Grid item xs={4} md={12}>
                   <img
-                    src={`images/icons/coins/LUNES.png`}
+                    src={`images/icons/coins/lunes.png`}
                     className={style.coinIconAlias}
                   />
                 </Grid>
@@ -76,7 +76,9 @@ class AliasPage extends React.Component {
                   <Grid item xs={12} md={4}>
                     <button
                       className={style.buttonGreen}
-                      onClick={() => errorInput(i18n.t("MESSAGE_NOT_SERVICE_YET"))}
+                      onClick={() =>
+                        errorInput(i18n.t("MESSAGE_NOT_SERVICE_YET"))
+                      }
                     >
                       {i18n.t("SET_ALIAS_SAVE_NAME")}
                     </button>
