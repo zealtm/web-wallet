@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import style from "./style.css";
 
 //UTILS
-import { clearAll } from "../../utils/localStorage";
+import { clearAll, getDefinitionMetadata } from "../../utils/localStorage";
 
 class Skeleton extends React.Component {
   constructor(props) {
@@ -25,8 +25,13 @@ class Skeleton extends React.Component {
   };
 
   logout = () => {
-    clearAll();
-    window.location.reload();
+    let deleteMeta = JSON.parse(getDefinitionMetadata());
+
+    if (deleteMeta === true || deleteMeta == null) {
+      clearAll();
+    }
+
+    window.location.reload(true);
   };
 
   render() {

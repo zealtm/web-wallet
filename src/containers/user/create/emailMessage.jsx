@@ -29,15 +29,12 @@ class EmailMessage extends React.Component {
           </div>
 
           <div className={style.arrowToLoginAlign}>
-              <div className={style.arrowCircle}>
-
-                <Link to="/login">
-                  <img src="../../../../images/icons/arrow/arrow-green-right@1x.png"/>
-                </Link>
-
+            <div className={style.arrowCircle}>
+              <Link to="/">
+                <img src="../../../../images/icons/arrow/arrow-green-right@1x.png" />
+              </Link>
             </div>
           </div>
-
         </div>
       </div>
     );

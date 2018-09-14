@@ -136,12 +136,18 @@ class Password extends React.Component {
     backUserInfo();    
   }
 
+  handleKeyPress = (target) => {
+    if (target.charCode == 13) {
+      this.inputValidator()
+    }
+  }
+  
   render() {
     let { inputs, passwordHint, errors } = this.state;
     let { password } = this.props.user.user;
 
     return (
-      <div className={style.formLogin}>
+      <div className={style.formLogin} onKeyPress={this.handleKeyPress}>
 
         <Link to="#" onClick={() => this.backLink()}>
           <img

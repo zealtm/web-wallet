@@ -1,11 +1,13 @@
 import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+
+// UTILS
 import {
   setAuthToken,
   getAuthToken,
   getUserSeedWords
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // Services
 import CoinService from "../../../services/coinService";
@@ -29,15 +31,25 @@ export function* loadGeneralInfo(action) {
       userService.getUserPicture,
       responseUser.data.data.email
     );
+
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
     yield put({
       type: "SET_USER_INFO",
       user: {
+        birthday: responseUser.data.data.birthday,
+        city: responseUser.data.data.city,
+        country: responseUser.data.data.country,
+        gdpr: responseUser.data.data.gpdr, // TODO: change to gdpr after fix on api return
+        phone: responseUser.data.data.phone,
+        state: responseUser.data.data.state,
+        street: responseUser.data.data.street,
         profilePicture: pictureUser,
         name: responseUser.data.data.name,
         surname: responseUser.data.data.surname,
+        username: responseUser.data.data.username,
+        zipcode: responseUser.data.data.zipcode,
         email: responseUser.data.data.email
       }
     });
@@ -51,10 +63,6 @@ export function* loadGeneralInfo(action) {
       type: "CHANGE_LOADING_GENERAL_STATE"
     });
 
-    yield put({
-      type: "SET_WALLET_LOADING"
-    });
-
     return;
   } catch (error) {
     yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
@@ -66,7 +74,6 @@ export function* loadWalletInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
-
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -88,6 +95,9 @@ export function* loadWalletInfo(action) {
     yield put({
       type: "SET_WALLET_LOADING"
     });
+    yield put({
+      type: "SET_ASSET_LOADING"
+    })
 
     return;
   } catch (error) {
@@ -113,10 +123,9 @@ export function* availableCoins() {
   }
 }
 
-export function* balanceCoins(action) {
+export function* balanceCoins() {
   try {
     let response = yield call();
-    console.warn(action);
     yield put({
       type: "GET_BALANCE_COINS",
       coins: response
@@ -129,10 +138,9 @@ export function* balanceCoins(action) {
   }
 }
 
-export function* createCoinsAddress(action) {
+export function* createCoinsAddress() {
   try {
     let response = yield call();
-    console.warn(response, action);
     yield put({
       type: "POST_CREATE_COINS_ADDRESS",
       coins: response.data.data.coins

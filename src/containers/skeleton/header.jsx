@@ -19,7 +19,9 @@ import style from "./style.css";
 import UserControl from "./userControl.jsx";
 
 //UTILS
+import { TESTNET } from "../../constants/apiBaseUrl";
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
+import i18n from "../../utils/i18n";
 
 class Header extends React.Component {
   constructor(props) {
@@ -73,23 +75,30 @@ class Header extends React.Component {
     let coinName = coins[coinSelected]
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
+
     let coinBalance = coins[coinSelected]
       ? coins[coinSelected].balance.available
       : 0;
+
     let coinFiat = coins[coinSelected]
       ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
       : 0;
 
+    let coinFiatSymbol = coins[coinSelected]
+      ? coins[coinSelected].price[fiatSelected].symbol
+      : "USD";
+
     return (
       <div className={style.boxBalance}>
         <Hidden xsDown>
-          <span className={style.textGreen}>Balance </span>
+          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")} </span>
         </Hidden>
         <span className={style.textBalance}>
-          {" "}
-          {coinBalance} {coinName}
+          {coinBalance + " " + coinName}
         </span>
-        <span className={style.textBalanceFiat}>${coinFiat}</span>
+        <span className={style.textBalanceFiat}>
+          {coinFiatSymbol + coinFiat}
+        </span>
       </div>
     );
   };
@@ -113,9 +122,10 @@ class Header extends React.Component {
           </Hidden>
           <div className={style.boxLogo}>
             <img src="../../images/logo.svg" className={style.logo} />
+            {!TESTNET || <span className={style.textGreen}>Testnet</span>}
           </div>
           {this.renderBalance()}
-          <Hidden xsDown>{this.renderNotifications()}</Hidden>
+          {/* <Hidden xsDown>{this.renderNotifications()}</Hidden> */}
 
           <Hidden mdDown>
             <UserControl actionLogout={actionLogout} />

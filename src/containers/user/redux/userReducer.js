@@ -1,6 +1,14 @@
 const initialState = {
   user: {
     profilePicture: undefined,
+    birthday: undefined,
+    city: undefined,
+    country: undefined,
+    gdpr: undefined,
+    phone: undefined,
+    state: undefined,
+    street: undefined,
+    zipcode: undefined,
     name: undefined,
     surname: undefined,
     username: undefined,
@@ -8,6 +16,7 @@ const initialState = {
     password: undefined,
     seed: undefined
   },
+  twoFactor: false,
   pages: {
     login: 0,
     create: 0,
@@ -28,6 +37,7 @@ const user = (state = initialState, action) => {
           seed: action.user.seed,
           password: action.user.password
         },
+        twoFactor: action.twoFactor,
         pages: {
           login: action.pages.login,
           create: 0,
@@ -39,6 +49,7 @@ const user = (state = initialState, action) => {
     case "GET_USER_2FA":
       return {
         ...state,
+        twoFactor: action.state,
         loading: false
       };
 
@@ -142,11 +153,44 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          profilePicture: action.user.profilePicture,
+          birthday: action.user.birthday,
+          city: action.user.city,
+          phone: action.user.phone,
+          state: action.user.state,
+          street: action.user.street,
           name: action.user.name,
+          profilePicture: action.user.profilePicture,
+          surname: action.user.surname,
+          zipcode: action.user.zipcode,
           email: action.user.email,
-          surname: action.user.surname
+          gdpr: action.user.gdpr
         }
+      };
+
+    case "PATCH_SETTINGS_CONSENTS_API_REDUCER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.consents
+        }
+      };
+
+    case "EDIT_USER_DATA":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          birthday: action.data.birthday,
+          city: action.data.city,
+          phone: action.data.phone,
+          state: action.data.state,
+          street: action.data.street,
+          zipcode: action.data.zipcode,
+          name: action.data.name,
+          surname: action.data.surname
+        },
+        loading: false
       };
 
     case "CLEAR_USER_ERROR":

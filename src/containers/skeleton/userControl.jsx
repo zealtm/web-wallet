@@ -17,7 +17,7 @@ class UserControl extends React.Component {
     super(props);
     this.state = {
       openBox: false,
-      avatar: "images/icons/lunio/lunio-user@100x100.jpg"
+      avatar: "images/lunio/lunio-user@100x100.jpg"
     };
   }
 
@@ -37,18 +37,29 @@ class UserControl extends React.Component {
       return (
         <div className={style.menuUser}>
           <div className={style.arrowUp} />
-          <Link to="/" className={style.linkPopMenu}>
+          <Link
+            to="/settings"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
             <div className={style.boxIcon}>
               <img src="../../images/icons/settings/settings.png" />
             </div>
-            {i18n.t("MENU_CONFIGURATION")}
+            {i18n.t("MENU_SETTING")}
           </Link>
-          <Link to="/" className={style.linkPopMenu}>
+
+          {/* <Link to="/" className={style.linkPopMenu}> */}
+          <a
+            href="mailto:support@lunes.io"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
             <div className={style.boxIcon}>
               <img src="../../images/icons/question/question.png" />
             </div>
             {i18n.t("MENU_SUPPORT")}
-          </Link>
+          </a>
+          {/* </Link> */}
           <Link to="/" onClick={actionLogout} className={style.linkPopMenu}>
             <div className={style.boxIcon}>
               <img src="../../images/icons/exit/exit.png" />
@@ -68,7 +79,7 @@ class UserControl extends React.Component {
           alt="Avatar"
           src={user.profilePicture}
           className={style.avatarHeader}
-          onClick={() => this.handleClick}
+          onClick={() => this.handleClick()}
         />
 
         {this.renderPopup()}

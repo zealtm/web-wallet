@@ -1,29 +1,14 @@
-import React from 'react';
-import Tabs from '../../components/tabs';
-
-const titles = [
-  'Voucher',
-  'Lunes Gift',
-  'Cupom',
-];
-
-const contents  = [
-  <h1>Voucher</h1>,
-  <h1>Lunes Gift</h1>,
-  <h1>Cupom</h1>,
-];
+import React from 'react'
 
 class Recharge extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
 
   render() {
     return (
-      <div>
-        <Tabs tabTitles={titles} tabContents={contents}/>
-      </div>
-    )
+      <h1>Recharge</h1>
+    );
   }
 }
 

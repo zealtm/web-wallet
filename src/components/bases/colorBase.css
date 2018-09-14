@@ -39,8 +39,11 @@
 :local(.clPurpleDefault) {
   color: #473088;
 }
+:local(.clPurpleClear) {
+  color: #654fa4;
+}
 :local(.clPurpleLight) {
-  color: #473088;
+  color: #654fa4;
 }
 :local(.clPurpleDark) {
   color: #42227d;
@@ -130,4 +133,8 @@
 }
 :local(.clInfo) {
   color: #ffffff;
+}
+
+:local(.clWarning) {
+  color: #ffcf49;
 }

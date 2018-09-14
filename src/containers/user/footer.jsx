@@ -9,9 +9,9 @@ class Footer extends React.Component {
   render() {
     return (
       <div className={style.footer}>
-        <Link to="#" className={style.footerLink}>
+        <a href="mailto:support@lunes.io" className={style.footerLink}>
           {i18n.t("LOGIN_FOOTER_SUPPORT")}
-        </Link>
+        </a>
         <span className={style.footerSpace}>|</span>
         <Link to="#" className={style.footerLink}>
           {i18n.t("LOGIN_FOOTER_LANG")}

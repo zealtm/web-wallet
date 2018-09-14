@@ -13,7 +13,6 @@ export const verifyTwoFactorAuth = token => ({
   token
 });
 
-
 export const getCreateUserInfo = (name, surname, email) => ({
   type: "CHANGE_USER_PERSONAL_INFO",
   user: {
@@ -27,7 +26,7 @@ export const backUserInfo = () => ({
   type: "BACK_USER_PERSONAL_INFO"
 });
 
-export const getCreateUserInfoPassword = (password) => ({
+export const getCreateUserInfoPassword = password => ({
   type: "CHANGE_USER_PERSONAL_INFO_PASSWORD",
   password
 });
@@ -44,8 +43,8 @@ export const createUser = (name, surname, email, password) => ({
 
 export const setUserSeed = (seed, password) => ({
   type: "SET_USER_SEED_API",
-    seed,
-    password
+  seed,
+  password
 });
 
 export const resetUser = () => ({
@@ -54,4 +53,14 @@ export const resetUser = () => ({
 
 export const loading = () => ({
   type: "CHANGE_LOADING_STATE"
+});
+
+export const updateUserConsents = consents => ({
+  type: "UPDATE_USER_CONSENTS_API",
+  consents
+});
+
+export const editUserData = data => ({
+  type: "EDIT_USER_DATA_API",
+  data
 });

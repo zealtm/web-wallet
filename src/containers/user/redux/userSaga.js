@@ -1,8 +1,19 @@
 import { put, call } from "redux-saga/effects";
-import { setAuthToken, getAuthToken, setUserSeedWords, getUserSeedWords, getUsername, setUserData, clearAll } from "../../../utils/localStorage";
+import {
+  setAuthToken,
+  getAuthToken,
+  setUserSeedWords,
+  getUserSeedWords,
+  getUsername,
+  setUserData,
+  clearAll
+} from "../../../utils/localStorage";
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
-import { HEADER_RESPONSE } from "../../../constants/headers";
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
+import {
+  internalServerError,
+  modalSuccess
+} from "../../../containers/errors/statusCodeMessage";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -23,7 +34,9 @@ export function* authenticateUser(action) {
 
     if (response.error) {
       yield put(response.error);
-      yield put({ type: changeLoadingState });
+      yield put({
+        type: changeLoadingState
+      });
       return;
     }
 
@@ -31,12 +44,15 @@ export function* authenticateUser(action) {
       yield call(clearAll);
     }
 
-    setUserData({ username: action.username });
+    setUserData({
+      username: action.username
+    });
 
     let twoFactorResponse = yield call(
       authService.hasTwoFactorAuth,
       response.data.data.token
     );
+
     let twoFactor = twoFactorResponse.data.code === 200 ? true : false;
     let seed = yield call(getUserSeedWords);
 
@@ -49,7 +65,10 @@ export function* authenticateUser(action) {
         password: encryptHmacSha512Key(action.password),
         seed: twoFactor ? undefined : seed
       },
-      pages: { login: twoFactor ? 1 : 2 }
+      twoFactor: twoFactor,
+      pages: {
+        login: twoFactor ? 1 : 2
+      }
     });
 
     if (!twoFactor && seed) {
@@ -61,7 +80,9 @@ export function* authenticateUser(action) {
 
     return;
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
@@ -71,10 +92,11 @@ export function* hasTwoFactorAuth() {
     let userToken = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
     const response = yield call(authService.hasTwoFactorAuth, userToken);
-
     if (response.error) {
       yield put(response.error);
-      yield put({ type: changeLoadingState });
+      yield put({
+        type: changeLoadingState
+      });
       return;
     }
 
@@ -85,11 +107,18 @@ export function* hasTwoFactorAuth() {
       });
     }
 
-    yield put({ type: "GET_USER_2FA", response });
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: "GET_USER_2FA",
+      response
+    });
+    yield put({
+      type: changeLoadingState
+    });
     return;
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
@@ -98,11 +127,18 @@ export function* createTwoFactorAuth() {
   try {
     const response = yield call(authService.createTwoFactorAuth);
 
-    yield put({ type: "POST_USER_CREATE_2FA", response });
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: "POST_USER_CREATE_2FA",
+      response
+    });
+    yield put({
+      type: changeLoadingState
+    });
     return;
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
@@ -110,11 +146,18 @@ export function* createTwoFactorAuth() {
 export function* verifyTwoFactorAuth(action) {
   try {
     let seed = yield call(getUserSeedWords);
-    const response = yield call(authService.verifyTwoFactoryAuth, action.token);
+    let userToken = yield call(getAuthToken);
+    const response = yield call(
+      authService.verifyTwoFactoryAuth,
+      action.token,
+      userToken
+    );
 
     if (response.error) {
       yield put(response.error);
-      yield put({ type: changeLoadingState });
+      yield put({
+        type: changeLoadingState
+      });
       return;
     }
 
@@ -132,12 +175,16 @@ export function* verifyTwoFactorAuth(action) {
     yield put({
       type: "POST_USER_VERIFY_2FA",
       response,
-      pages: { login: 2 }
+      pages: {
+        login: 2
+      }
     });
 
     return;
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
@@ -148,23 +195,35 @@ export function* createUser(action) {
 
     if (response.error) {
       yield put(response.error);
-      yield put({ type: changeLoadingState });
+      yield put({
+        type: changeLoadingState
+      });
 
       return;
     }
 
-    return yield put({ type: "POST_USER_CREATE_USER", page: 3 });
+    return yield put({
+      type: "POST_USER_CREATE_USER",
+      page: 3
+    });
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
 
 export function* resetUser() {
   try {
-    yield put({ type: "POST_USER_RESET_USER", page: 1 });
+    yield put({
+      type: "POST_USER_RESET_USER",
+      page: 1
+    });
   } catch (error) {
-    yield put({ type: changeLoadingState });
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }
@@ -183,6 +242,44 @@ export function* setUserSeed(action) {
       type: "SET_USER_SEED",
       seed: seed
     });
+  } catch (error) {
+    yield put({
+      type: changeLoadingState
+    });
+    yield put(internalServerError());
+  }
+}
+
+export function* updateUserConsentsSaga(payload) {
+  try {
+    // TODO: remove after fix api parameter from gpdr to gdpr
+    const data = {
+      gpdr: payload.consents.gdpr || "unread"
+    };
+
+    const token = yield call(getAuthToken);
+    yield call(userService.updateUser, data, token);
+
+    yield put({
+      type: "PATCH_SETTINGS_CONSENTS_API_REDUCER",
+      consents: payload.consents
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* editUserData(action) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(userService.editUser, token, action.data);
+
+    if (response.data.code === 200) {
+      yield put({ type: "EDIT_USER_DATA", data: action.data });
+      yield put(modalSuccess("Successfully changed data"));
+
+      return;
+    }
   } catch (error) {
     yield put({ type: changeLoadingState });
     yield put(internalServerError());

@@ -6,13 +6,16 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setWalletSendModalAmount,
-  setWalletModalStep,
+  getWalletSendModalFee,
   setWalletSendModalLoading
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS
 import ButtonContinue from "./buttonContinue.jsx";
+
+// UTILS
+import i18n from "../../../../utils/i18n";
 
 // STYLE
 import style from "../../style.css";
@@ -45,21 +48,29 @@ class BoxAmount extends React.Component {
   confirmAmount = () => {
     let { amount } = this.state;
     let {
+      modal,
       coins,
       coin,
       errorInput,
-      setWalletSendModalAmount,
-      setWalletModalStep
+      setWalletSendModalLoading,
+      getWalletSendModalFee,
+      setWalletSendModalAmount
     } = this.props;
     let coinBalance = coins[coin].balance.available;
     if (parseFloat(amount) <= coinBalance) {
       setWalletSendModalLoading();
       setWalletSendModalAmount(parseFloat(amount));
-      setWalletModalStep(2);
+      getWalletSendModalFee(
+        coin,
+        coins[coin].address,
+        modal.address,
+        parseFloat(amount),
+        coins[coin].decimalPoint
+      );
       return;
     }
 
-    return errorInput("Invalid Amount");
+    return errorInput(i18n.t("MESSAGE_INVALID_AMOUNT"));
   };
 
   render() {
@@ -72,7 +83,7 @@ class BoxAmount extends React.Component {
           src={"/images/icons/coins/" + coin + ".png"}
           className={style.modalIconCoin}
         />
-        <div>Informe a quantidade que deseja enviar</div>
+        <div>{i18n.t("MODAL_SEND_QR_CODE_ADDRESS")}</div>
         <input
           className={style.txtamount}
           type="text"
@@ -90,7 +101,7 @@ class BoxAmount extends React.Component {
         </div>
 
         <div className={style.textHelp}>
-          Você também pode enviar uma parte de todos os seus ativos.
+          {i18n.t("MODAL_SEND_AMOUNT_INSTRUCTIONS")}
         </div>
 
         <span className={style.addressConfirm}>{modal.address}</span>
@@ -111,7 +122,7 @@ BoxAmount.propTypes = {
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setWalletModalStep: PropTypes.func.isRequired,
+  getWalletSendModalFee: PropTypes.func.isRequired,
   setWalletSendModalAmount: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired
 };
@@ -124,7 +135,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletModalStep,
+      getWalletSendModalFee,
       setWalletSendModalAmount,
       setWalletSendModalLoading,
       errorInput

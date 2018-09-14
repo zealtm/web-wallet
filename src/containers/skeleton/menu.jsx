@@ -23,45 +23,36 @@ const menuItens = [
     label: i18n.t("MENU_HOME"),
     icon: "../../images/icons/general/home@2x.png"
   },
-  // {
-  //   link: "/portfolio",
-  //   label: i18n.t("MENU_PORTFOLIO"),
-  //   icon: "../../images/icons/general/portfolio@1x.png"
-  // },
+
   {
     link: "/wallet",
     label: i18n.t("MENU_WALLET"),
     icon: "../../images/icons/general/wallet@1x.png"
   },
   // {
+  //   link: "/assets",
+  //   label: i18n.t("MENU_ASSETS"),
+  //   icon: "../../images/icons/general/wallet@1x.png"
+  // },
+  // {
   //   link: "/recharge",
   //   label: i18n.t("MENU_RECHARGE"),
   //   icon: "../../images/icons/general/recharge@1x.png"
   // },
-  // {
-  //   link: "/pay",
-  //   label: i18n.t("MENU_PAY"),
-  //   icon: "../../images/icons/general/pay@1x.png"
-  // },
+  {
+    link: "/payment",
+    label: i18n.t("MENU_PAY"),
+    icon: "../../images/icons/general/pay@1x.png"
+  },
   {
     link: "/leasing",
     label: i18n.t("MENU_LEASING"),
     icon: "../../images/icons/general/leasing@1x.png"
   },
   {
-    link: "/cupons",
-    label: i18n.t("MENU_CUPONS"),
-    icon: "../../images/icons/general/pay@1x.png"
-  },
-  {
-    link: "/privacy",
-    label: i18n.t("MENU_PRIVACY"),
-    icon: "../../images/icons/general/privacy@1x.png"
-  },
-  {
-    link: "/configuration",
-    label: i18n.t("MENU_CONFIGURATION"),
-    icon: "../../images/icons/general/configuration@1x.png"
+    link: "/coupons",
+    label: i18n.t("MENU_COUPONS"),
+    icon: "../../images/icons/general/cupon@1x.png"
   }
 ];
 
@@ -90,14 +81,14 @@ class Menu extends React.Component {
           onClick={actionMenu}
         >
           <img src={item.icon} className={style.iconMenu} />
-          {item.label}
+          <div onClick={actionMenu}>{item.label}</div>
         </NavLink>
       );
     });
   };
 
   render() {
-    const { openMenu, user, actionLogout } = this.props;
+    const { openMenu, user, actionLogout, actionMenu } = this.props;
 
     return (
       <div
@@ -112,12 +103,17 @@ class Menu extends React.Component {
             <Grid item xs={8}>
               <span className={style.userName}>{user.name}</span>
               <br />
-              <Link to="/config" className={style.link}>
-                {i18n.t("MENU_CONFIGURATION")}
+              <Link to="/settings" className={style.link} onClick={actionMenu}>
+                {i18n.t("MENU_SETTING")}
               </Link>
-              <Link to="/help" className={style.link}>
+              <a
+                href="mailto:support@lunes.io"
+                className={style.link}
+                onClick={actionMenu}
+              >
                 {i18n.t("MENU_SUPPORT")}
-              </Link>
+                {/* <Link to="/help" className={style.link}></Link> */}
+              </a>
               <Link to="/" onClick={actionLogout} className={style.link}>
                 {i18n.t("MENU_LOGOUT")}
               </Link>

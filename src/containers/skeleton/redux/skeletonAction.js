@@ -1,4 +1,4 @@
-export const loadingGeneral = (state) => ({
+export const loadingGeneral = state => ({
   type: "CHANGE_LOADING_GENERAL_STATE",
   state
 });

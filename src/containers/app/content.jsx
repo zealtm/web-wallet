@@ -42,7 +42,7 @@ class Content extends Component {
         this.changeContent(<InternalError />, "error");
         setTimeout(() => {
           window.location.reload();
-        }, 3000);
+        }, 9000);
       }
 
       return;
@@ -74,7 +74,6 @@ class Content extends Component {
         return this.changeContent(<Login />, "login");
       }
     } catch (error) {
-      console.warn(error);
       clearAll();
       return this.changeContent(<Login />, "login");
     }

@@ -10,6 +10,7 @@ import { setWalletLoading } from "./redux/walletAction";
 // COMPONENTS
 import CoinsBar from "./coinsBar";
 import CoinsInfo from "./coinsInfo";
+import TransactionHistory from "./transactionHistory";
 import Loading from "../../components/loading";
 
 class Wallet extends React.Component {
@@ -24,7 +25,7 @@ class Wallet extends React.Component {
     if (loading) {
       return (
         <div>
-          <Loading color="lunes" />
+          <Loading color="wallet" height="80vh" width="100px" />
         </div>
       );
     }
@@ -32,7 +33,10 @@ class Wallet extends React.Component {
     return (
       <div>
         <CoinsBar />
-        <CoinsInfo />
+        <div>
+          <CoinsInfo />
+          <TransactionHistory />
+        </div>
       </div>
     );
   };
