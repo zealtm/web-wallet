@@ -296,9 +296,7 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return "error";
       }
-
-      address = address.replace(coin + ":", "");
-
+      
       if (coin === "lunes") {
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
@@ -340,7 +338,7 @@ class CoinService {
       if (navigator.share) {
         navigator.share({
           title: document.title,
-          text: coinName + ": " + coinAddress,
+          text: coinName + ":" + coinAddress,
           url: window.location.href
         });
       }
