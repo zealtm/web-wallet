@@ -24,8 +24,9 @@ import Loading from "../../../components/loading";
 
 class Security extends React.Component {
   componentDidMount() {
-    let { getTwoFactorAuth } = this.props;
-    getTwoFactorAuth();
+    let { getTwoFactorAuth, settings, twoFactor } = this.props;
+    if (!twoFactor && !settings.security.urlImage)
+      getTwoFactorAuth();
   }
 
   renderTwoFactor = () => {
@@ -38,10 +39,10 @@ class Security extends React.Component {
       <Grid item xs={8} className={style.twoFactorQr}>
         <Grid item xs={3} className={style.item}>
           <Grid className={style.contentItem}>
-            <img
-              width="200px"
-              src={settings.security.urlImage || <Loading />}
-            />
+            {
+              settings.security.urlImage ? <img width="200px"
+                src={settings.security.urlImage}/> : <Loading/>
+            }
           </Grid>
         </Grid>
 
@@ -161,7 +162,7 @@ Security.propTypes = {
   settings: PropTypes.object
 };
 
-const mapSateToProps = store => ({
+const mapStateToProps = store => ({
   twoFactor: store.user.twoFactor,
   settings: store.settings
 });
@@ -176,6 +177,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  mapSateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(Security);
