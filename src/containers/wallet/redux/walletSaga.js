@@ -19,7 +19,6 @@ export function* validateAddress(action) {
   try {
     
     let address = action.address.replace(action.coin + ":", "").split("?")[0];
-    console.warn("ADDRESS", address);
     let response = yield call(
       coinService.validateAddress,
       action.coin,
