@@ -48,25 +48,21 @@ export function* getCoinsEnabledSaga() {
 
 export function* setPaymentSaga(payload) {
   try {
-    // chamar a quantidade de moedas necessarias
-    let token = yield call(getAuthToken);
-    let response = yield call(coinService.getCoinPrice, payload.pay.coin.abbreviation, 'brl', token);
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      payload.pay.coin.abbreviation,
-      payload.pay.coin.address,
-      token
-    );
+    const value = parseFloat(payload.pay.value);
+    const {abbreviation, address} = payload.pay.coin;
+
+    const token = yield call(getAuthToken);
+    const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
+    const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
 
     const balance = balanceResponse.data.data.available;
-    const value = parseFloat(payload.pay.value);
-    const amount = parseFloat(value / response.data.data.price);
+    const amount = amountResponse.data.data.value;
 
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
-      amount: parseFloat(amount.toFixed(8)),
+      amount: convertBiggestCoinUnit(amount, 8),
       value: value.toFixed(2).replace('.', ','),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
@@ -80,7 +76,7 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
-    // console.error('setPaymentError', error);
+    console.error('setPaymentError', error);
     yield put(internalServerError());
   }
 }

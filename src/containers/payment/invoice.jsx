@@ -80,7 +80,8 @@ class Invoice extends React.Component {
         description: "",
         dueDate: "",
         cpfCnpj: "",
-        value: ""
+        value: "",
+        coin: ""
       },
       coin: {
         name: undefined,
@@ -191,7 +192,7 @@ class Invoice extends React.Component {
       type: "text",
       name: "coin",
       placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
+      value: invoiceData.coin.abbreviation || coin.name || "",
       required: true
     };
 
