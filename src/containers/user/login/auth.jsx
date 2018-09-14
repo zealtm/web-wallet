@@ -76,7 +76,7 @@ class Auth extends React.Component {
       this.inputValidator()
     }
   }
-  
+
   render() {
     // let userName = getUsername();
     let { user } = this.props;
@@ -86,36 +86,40 @@ class Auth extends React.Component {
       <div onKeyPress={this.handleKeyPress} >
         <img src="../../images/logo.svg" className={style.logo} />
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
+        <form autoComplete={"on"}>
+          <input
+            type="email"
+            name="emailUsername"
+            autoComplete={"off"}
+            required
+            value={inputs.emailUsername.value}
+            placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("emailUsername")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
+          <input
+            type="password"
+            name="password"
+            required
+            autoComplete={"off"}
+            placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+            className={
+              errors && errors.includes("password")
+                ? style.inputTextError
+                : style.inputTextDefault
+            }
+          />
 
-        <input
-          type="email"
-          name="emailUsername"
-          required
-          value={inputs.emailUsername.value}
-          placeholder={i18n.t("PLACEHOLDER_USERNAME_EMAIL")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("emailUsername")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
-        <input
-          type="password"
-          name="password"
-          required
-          placeholder={i18n.t("PLACEHOLDER_PASSWORD")}
-          onChange={event => {
-            this.getInput(event.target);
-          }}
-          className={
-            errors && errors.includes("password")
-              ? style.inputTextError
-              : style.inputTextDefault
-          }
-        />
+        </form>
 
         <Link className={style.textForgetPass} to="/reset">
           {i18n.t("LOGIN_FORGET_PASSWORD_LINK")}
