@@ -88,7 +88,7 @@
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "DEFINITIONS_TITLE": "Definitions",
   "CONSENT_TITLE": "Consent",
-  "SETTINGS_CONSENTS_GDPR_DESCRIPTION": "Accept the GDPR terms?",
+  "SETTINGS_CONSENTS_TERMS_DESCRIPTION": "Accept the GDPR terms?",
 
   "SECURITY_LINK_RETURN": "Back to the settings",
   "SET_ALIAS_DESCRIPTION": "Voce pode customizar um nome para sua carteira Lunes, se preferir. Caso faça essa mudança, o valor a ser descontado de seu saldo é de 5 LUNES.",
@@ -278,8 +278,8 @@
   "PAYMENT_CONFIRM_3": "O tempo médio de confirmação do pagamento é de até 30 minutos. Somente conclua o pagamento se estiver de acordo.",
   "PAYMENT_BTN_PAY": "Pagar agora",
 
-  "GDPR_TITLE": "Termo GDPR",
-  "GDPR_DESC": "Lorem ipsum asd asdsd sdsdsjks",
+  "PAYMENT_TERMS_TITLE": "Termo GDPR",
+  "PAYMENT_TERMS_DESC": "Lorem ipsum asd asdsd sdsdsjks",
 
   "FEE_LOW": "Baixo",
   "FEE_MEDIUM": "Medio",
@@ -300,7 +300,7 @@
   "PAYMENT_PAY_NOW": "Pay now",
   "PAYMENT_FIND_NAME": "Find by name",
   "PAYMENT_TITLE": "Invoices",
-  "PAYMENT_GDPR_ERROR": "You must accept the GDPR terms to continue",
+  "PAYMENT_TERMS_ERROR": "You must accept the GDPR terms to continue",
   "PAYMENT_AMOUNT_ERROR": "Your balance is insufficient to make this payment",
 
   "MODAL_TITLE_INSTRUCIONS": "Instructions",

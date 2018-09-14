@@ -252,13 +252,8 @@ export function* setUserSeed(action) {
 
 export function* updateUserConsentsSaga(payload) {
   try {
-    // TODO: remove after fix api parameter from gpdr to gdpr
-    const data = {
-      gpdr: payload.consents.gdpr || "unread"
-    };
-
     const token = yield call(getAuthToken);
-    yield call(userService.updateUser, data, token);
+    yield call(userService.updateUser, payload.consents, token);
 
     yield put({
       type: "PATCH_SETTINGS_CONSENTS_API_REDUCER",

@@ -52,8 +52,8 @@ class DetailsPayment extends React.Component {
     const {handleStep, payment} = this.props;
     const {user} = this.state;
 
-    if (user.gdpr === 'unread') {
-      this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
+    if (user.terms === 'unread') {
+      this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
 
@@ -62,26 +62,23 @@ class DetailsPayment extends React.Component {
       return;
     }
 
-    // atualizar reducer com o proximo modal
-    // Atualizar GDPR no estado e no banco (???)
-
-    handleStep("next"); // aqui tem que ser chamado redux
+    handleStep("next");
   }
 
   toogleSwitch = () => {
     const {user} = this.state;
     const {updateUserConsents} = this.props;
-    const newStatus = user.gdpr === 'read' ? 'unread' : 'read';
+    const newStatus = user.terms === 'read' ? 'unread' : 'read';
 
     this.setState({
       ...this.state,
       user: {
         ...user,
-        gdpr: newStatus
+        terms: newStatus
       }
     });
 
-    updateUserConsents({gdpr: newStatus});
+    updateUserConsents({terms: newStatus});
   }
 
   render() {
@@ -125,11 +122,11 @@ class DetailsPayment extends React.Component {
           </Hidden>
         </Grid>
         <CustomSwitch
-          title={i18n.t("GDPR_TITLE")}
-          description={i18n.t("GDPR_DESC")}
+          title={i18n.t("PAYMENT_TERMS_TITLE")}
+          description={i18n.t("PAYMENT_TERMS_DESC")}
           action={this.toogleSwitch}
-          checked={user.gdpr === 'read'}
-          value="gdprSwitch"
+          checked={user.terms === 'read'}
+          value="termsSwitch"
         />
 
         <ButtonContinue

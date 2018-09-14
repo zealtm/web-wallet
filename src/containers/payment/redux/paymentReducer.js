@@ -24,7 +24,7 @@ const initialState = {
   history: [],
   loading: false,
   user: {
-    gdpr: 'unread'
+    terms: 'unread'
   },
 };
 
