@@ -46,43 +46,43 @@ let coupons = Loadable({
 
 let settings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings")
 });
 
 let user = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/user")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/user")
 });
 
 let security = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/security")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
 });
 
 let walletSettings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/wallet")
 });
 
 let definitions = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/definitions")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/definitions")
 });
 
 let consent = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/consent")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
 let payment = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../payment")
 });
 
@@ -101,8 +101,8 @@ let errorInternal = Loadable({
 let assets = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../assets")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, '../../assets')
-})
+  serverSideRequirePath: path.resolve(__dirname, "../../assets")
+});
 /* eslint-enable */
 
 class App extends Component {

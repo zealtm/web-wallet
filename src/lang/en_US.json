@@ -5,6 +5,7 @@
   "MESSAGE_INVALID_PASSWORD": "Invalid Password",
   "MESSAGE_SELECT_FEE": "Select a Fee",
   "MESSAGE_NOT_SERVICE": "Service not available",
+  "MESSAGE_NOTHING_FOUND": "Service not available",
   "MESSAGE_NOT_SERVICE_YET": "Service not available yet.",
 
   "TEXT_IS": "is",
