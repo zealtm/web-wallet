@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-//COMPONENTS 
+//COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
 
 // UTILS
@@ -26,17 +26,17 @@ class ConfirmPayment extends React.Component {
         <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
         <div>
           <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
-          <span className={style.totalConfirmBlock}>{payment.amount+payment.fee} {payment.coin}</span>
+          <span className={style.totalConfirmBlock}>{payment.amount + payment.fee} {payment.coin.abbreviation}</span>
         </div>
 
         <div className={style.smallDescription}>
           {i18n.t("PAYMENT_CONFIRM_3")}
         </div>
 
-        <ButtonContinue 
+        <ButtonContinue
           label={i18n.t("PAYMENT_BTN_PAY")}
           action={()=>handleStep("next")}
-          loading={loading} 
+          loading={loading}
         />
 
       </div>
@@ -50,11 +50,11 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(
-  { }, 
+  { },
   dispatch
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(ConfirmPayment);

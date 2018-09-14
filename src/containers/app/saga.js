@@ -46,7 +46,6 @@ import {
   getFeePaymentSaga,
   setFeePaymentSaga,
   getInvoiceSaga,
-  getUserGdprSaga,
   getHistoryPaySaga
 } from "../payment/redux/paymentSaga";
 import {
@@ -54,7 +53,7 @@ import {
   getAssetSendModalFee,
   setAssetTransaction,
   validateAddress as validateAssetAddress,
-  shareCoinAddress as shareAssetAddress,
+  shareCoinAddress as shareAssetAddress
 } from "../assets/redux/assetsSaga";
 
 export default function* rootSaga() {
@@ -76,17 +75,21 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+
     // Wallet-Saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
     fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
     fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction),
+
     // Leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
     fork(takeLatest, "GET_COIN_FEE_API", getCoinFee),
+
     // Coupons
     fork(takeLatest, "GET_VOUCHER_API", getVoucher),
+
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),
     fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings),
@@ -94,6 +97,7 @@ export default function* rootSaga() {
     fork(takeLatest, "START_LEASING_API", createLeasing),
     fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+
     //payment-saga
     fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
     fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
@@ -101,13 +105,12 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
-    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga),
 
     //assets
     fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
     fork(takeLatest, "GET_ASSET_COIN_HISTORY_API", getAssetCoinHistory),
     fork(takeLatest, "GET_ASSET_MODAL_SEND_FEE_API", getAssetSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareAssetAddress),
-    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
+    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction)
   ];
 }

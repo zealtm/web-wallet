@@ -25,7 +25,7 @@ class Payment extends React.Component {
   render() {
     let { isOpen } = this.state;
 
-    const titles = [i18n.t("PAYMENT_BANK_SLIP"), i18n.t("PAYMENT_HISTORY")];
+    const titles = [i18n.t("PAYMENT_INVOICE"), i18n.t("PAYMENT_HISTORY")];
     const contents = [<Invoice openModal={this.handleModal} />, <History />]
 
     return (

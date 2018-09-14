@@ -1,6 +1,6 @@
 import React from "react";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
@@ -44,7 +44,7 @@ class SecurePayment extends React.Component {
             {i18n.t("PAYMENT_PASS_CONFIRMATION")}
           </span>
           <span className={style.totalConfirm}>
-            {payment.amount+payment.fee} {payment.coin}
+            {payment.amount+payment.fee} {payment.coin.abbreviation}
           </span>
           <span> {i18n.t("PAYMENT_PASS_TO")} </span>
           <span className={style.addressConfirm}>{i18n.t("PAYMENT_MODAL_TITLE")}</span>
@@ -75,11 +75,11 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(
-  { }, 
+  { },
   dispatch
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(SecurePayment);

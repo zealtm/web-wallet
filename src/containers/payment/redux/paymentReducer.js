@@ -1,17 +1,20 @@
 const initialState = {
-  coins: [ ],
+  coins: [],
   payment: {
     fee: "",
     number: "",
-    coin: "",
+    coin: {
+      abbreviation: "",
+      address: ""
+    },
+    balance: "",
     amount: "",
     value: "",
-    assignor: '', //bank: "",
+    assignor: "", //bank: "",
     name: "",
     dueDate: "", // dateend: "",
-    cpfCnpj: '',
+    cpfCnpj: "",
     description: "",
-    doc: "",
   },
   fee: {
     low: 0,
@@ -21,7 +24,7 @@ const initialState = {
   history: [],
   loading: false,
   user: {
-    gpdr: 'unread'
+    gdpr: 'unread'
   },
 };
 

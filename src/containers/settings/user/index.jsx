@@ -23,6 +23,7 @@ const customStyle = {
     height: "auto"
   },
   underlineItems: {
+    color: "#fff",
     borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
   },

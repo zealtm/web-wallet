@@ -286,7 +286,7 @@
 
   "PAYMENT_HEADER_TITLE": "Online Payment",
   "PAYMENT_HEADER_SUBTITLE": "Do your payments online with cryptocoins",
-  "PAYMENT_BANK_SLIP": "Pay Bank Slip",
+  "PAYMENT_INVOICE": "Pay Invoice",
   "PAYMENT_HISTORY": "Histories",
   "PAYMENT_ASSIGNOR": "Assignor",
   "PAYMENT_NAME": "Name",
@@ -298,7 +298,9 @@
   "PAYMENT_DECIMAL_SEPARATOR": ",",
   "PAYMENT_PAY_NOW": "Pay now",
   "PAYMENT_FIND_NAME": "Find by name",
-  "MESSAGE_NOTHING_FOUND": "Nothing Found",
+  "PAYMENT_TITLE": "Invoices",
+  "PAYMENT_GDPR_ERROR": "You must accept the GDPR terms to continue",
+  "PAYMENT_AMOUNT_ERROR": "Your balance is insufficient to make this payment",
 
   "MODAL_TITLE_INSTRUCIONS": "Instructions",
   "MODAL_TITLE_START_LEASING": "Start Leasing",

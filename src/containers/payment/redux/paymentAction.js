@@ -23,10 +23,6 @@ export const getInvoice = (number) => ({
   number
 });
 
-export const getUserGdpr = () => ({
-  type: "GET_USER_GDPR"
-});
-
 export const getHistoryPay = () => ({
   type: "GET_HISTORY_PAY"
 });

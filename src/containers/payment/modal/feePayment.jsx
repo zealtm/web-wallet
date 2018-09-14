@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {getFeePayment,setFeePayment} from "../redux/paymentAction";
@@ -38,7 +38,7 @@ class FeePayment extends React.Component {
 
   componentDidMount = () => {
     const {getFeePayment, payment} = this.props;
-    getFeePayment(payment.coin, payment.amount);
+    getFeePayment(payment.coin.abbreviation, payment.amount);
   }
 
   render() {
@@ -48,12 +48,12 @@ class FeePayment extends React.Component {
     return (
       <div className={style.modalBox}>
         <img
-          src={"/images/icons/coins/LUNES.png"}
+          src={`/images/icons/coins/${payment.coin.abbreviation}.png`}
           className={style.modalIconCoin}
         />
         <div>
           <span>{i18n.t("PAYMENT_FEE_TEXT_1")}</span>
-          <span className={style.totalConfirm}>{payment.amount} {payment.coin}</span>
+          <span className={style.totalConfirm}>{payment.amount} {payment.coin.abbreviation}</span>
         </div>
         <div>
           <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>
@@ -62,7 +62,7 @@ class FeePayment extends React.Component {
 
         <div className={style.confirmFee}>
           <div>
-            {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {payment.coin} </span> é
+            {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {payment.coin.abbreviation} </span> é
           </div>
           <div className={style.txtamount}>{feeSelect}</div>
         </div>
@@ -88,10 +88,10 @@ class FeePayment extends React.Component {
           </span>
         </div>
 
-        <ButtonContinue 
+        <ButtonContinue
           label={i18n.t("BTN_CONTINUE")}
           action={()=>this.validateForm()}
-          loading={loading} 
+          loading={loading}
         />
       </div>
     );
@@ -108,11 +108,11 @@ const mapDispatchToProps = dispatch =>bindActionCreators(
   {
     getFeePayment,
     setFeePayment
-  }, 
+  },
   dispatch
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(FeePayment);

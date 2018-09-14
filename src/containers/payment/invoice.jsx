@@ -12,7 +12,7 @@ import Select from "../../components/select";
 import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import {DateMask, CpfMask, CnpjMask, MoneyBrlMask} from "../../components/inputMask";
+import {DateMask, MoneyBrlMask} from "../../components/inputMask";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -71,6 +71,8 @@ class Invoice extends React.Component {
     super();
     this.state = {
       errors: [],
+      disableNumberInput: false,
+      invoiceLoading: false,
       invoice: {
         number: '',
         assignor: '',
@@ -90,7 +92,7 @@ class Invoice extends React.Component {
     this.coinSelected = this.coinSelected.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const {getCoinsEnabled} = this.props;
     getCoinsEnabled();
   }
@@ -112,30 +114,36 @@ class Invoice extends React.Component {
 
   handleInvoiceNumberChange = event => {
     const {getInvoice} = this.props;
-    const {invoice} = this.state;
+    const {invoice, disableNumberInput} = this.state;
+
+    const newValue = event.target.value.replace(/\D/, '')
 
     this.setState({
       ...this.state,
+      disableNumberInput: newValue.length === 48,
       invoice: {
         ...invoice,
-        number: event.target.value.replace(/\D/, '')
+        number: newValue
       }
     });
 
-    if (event.target.value.length === 48) {
-      getInvoice(event.target.value);
-      const {value, assignor, description, dueDate} = this.props.payment;
+    if (newValue.length === 48) {
+      if (disableNumberInput) {
+        return;
+      }
 
       this.setState({
-        ...this.state,
-        invoice: {
-          ...this.state.invoice,
-          value,
-          assignor,
-          description,
-          dueDate
-        }
+        invoiceLoading: true,
       });
+
+      getInvoice(newValue);
+
+      setTimeout(() => {
+        this.setState({
+          invoiceLoading: false,
+        });
+      }, 1000);
+
     }
   }
 
@@ -154,24 +162,31 @@ class Invoice extends React.Component {
     openModal();
   }
 
-  setPayment = () => {
+  setPayment = (data) => {
     const {setPayment} = this.props;
-    setPayment(this.state.invoice);
+    setPayment(data);
   }
 
   inputValidator = () => {
-    const {invoice, coin} = this.state;
     const {payment} = this.props;
+    const {invoice, coin} = this.state;
+
+    const invoiceData = {
+      ...invoice,
+      assignor: payment.assignor || invoice.assignor,
+      dueDate: payment.dueDate || invoice.dueDate,
+      value: payment.value || invoice.value,
+    }
 
     const invoiceInputs = {};
 
-    for (const key in invoice) {
-      if (invoice.hasOwnProperty(key)) {
+    for (const key in invoiceData) {
+      if (invoiceData.hasOwnProperty(key)) {
         invoiceInputs[key] = {
-          type: 'text',
+          type: key === 'dueDate' ? 'date' : 'text',
           name: key,
           placeholder: key,
-          value: payment[key] || invoice[key],
+          value: invoiceData[key],
           required: true,
         };
       }
@@ -185,29 +200,27 @@ class Invoice extends React.Component {
       type: 'text',
       name: 'coin',
       placeholder: 'coin',
-      value: payment.coin || coin.value || '',
+      value: invoiceData.coin.abbreviation || coin.value.abbreviation || '',
       required: true,
     };
 
     const { errors } = inputValidator({...invoiceInputs, coin: coinInput});
 
-    // if (errors.length > 0) {
-    //   this.setState({
-    //     ...this.state,
-    //     errors
-    //   });
-    //   return;
-    // }
+    if (errors.length > 0) {
+      this.setState({
+        ...this.state,
+        errors
+      });
+      return;
+    }
 
-    this.openModal(); // abrind modal sem validacao para testar
-    this.setPayment(); // setar os dados no redux, para teste sem validacao
-    // tem que fazer a funcao pra pegar a quantidade de moedas necessarias para esta transacao e
-    // liberar o botao apos o resultado
+    this.setPayment(invoiceData);
+    this.openModal();
   }
 
   render() {
     const {classes, loading, coinsRedux, payment} = this.props;
-    const {coin, invoice, errors} = this.state;
+    const {coin, invoice, errors, invoiceLoading} = this.state;
 
     const title = coin.name || 'Select a coin..';
     const img = coin.img || '';
@@ -228,6 +241,13 @@ class Invoice extends React.Component {
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes('number')}
             />
+            <span style={{
+              display: 'block',
+              position: 'absolute',
+              visibility: invoiceLoading ? 'visible' : 'hidden'
+            }}>
+              <small><Loading color="lunes" /></small>
+            </span>
           </div>
 
           <Grid container>
@@ -278,6 +298,7 @@ class Invoice extends React.Component {
                 value={payment.dueDate || invoice.dueDate}
                 onChange={this.handleInvoiceDefaultChange('dueDate')}
                 error={errors.includes('dueDate')}
+                inputComponent={DateMask}
               />
               <Input
                 classes={{
