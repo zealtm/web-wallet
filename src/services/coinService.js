@@ -406,15 +406,6 @@ class CoinService {
   ) {
     try {
       API_HEADER.headers.Authorization = token;
-      console.warn(
-        serviceId,
-        feeLunes,
-        transaction,
-        coin,
-        price,
-        describe,
-        token
-      );
       let transactionData = {
         serviceId: serviceId,
         feeLunes: feeLunes,

@@ -70,6 +70,7 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
+      console.warn(transaction);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -100,8 +101,6 @@ class TransactionService {
         modalError(i18n.t("MESSAGE_TRANSACTION_FAILED"));
         return;
       }
-
-      console.warn(4);
 
       if (coin === "btc")
         network = TESTNET ? networks.BTCTESTNET : networks.BTC;
