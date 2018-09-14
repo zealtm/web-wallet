@@ -12,7 +12,7 @@ import Loading from "../../../components/loading";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Grid, Avatar, Input } from "@material-ui/core";
+import { Grid, Avatar } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
@@ -23,17 +23,8 @@ const customStyle = {
     height: "auto"
   },
   underlineItems: {
-    selected: {
-      backgroundColor: "red !important"
-    },
     borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
-    "&:hover": {
-      borderBottom: "2px solid"
-    },
-    "&:before, &:after": {
-      borderBottom: "5px solid"
-    }
   },
   disabled: {},
   error: {},
@@ -283,8 +274,8 @@ class User extends React.Component {
                   {emailVerified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
                   </span>
@@ -293,8 +284,8 @@ class User extends React.Component {
                   {verified ? (
                     <Done className={style.successDefault} />
                   ) : (
-                    <Close className={style.errorDefault} />
-                  )}
+                      <Close className={style.errorDefault} />
+                    )}
                   <span className={style.statusItem}>
                     {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
                   </span>
@@ -346,18 +337,46 @@ class User extends React.Component {
                     </p>
                     <input
                       className={style.inputTextDefault}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
                       onChange={event =>
                         this.handleNameChange(event.target.value)
                       }
                       value={name}
                     />
                   </div>
+                  <Hidden mdUp>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_SURNAME")}
+                      </p>
+                      <input
+                        className={style.inputTextDefault}
+                        onChange={event =>
+                          this.handleSurnameChange(event.target.value)
+                        }
+                        value={surname}
+                      />
+                    </div>
+                  </Hidden>
 
+                </Grid>
+                <Grid item xs={6}>
+                  <Hidden smDown>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_SURNAME")}
+                      </p>
+                      <input
+                        className={style.inputTextDefault}
+                        onChange={event =>
+                          this.handleSurnameChange(event.target.value)
+                        }
+                        value={surname}
+                      />
+                    </div>
+                  </Hidden>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_BIRTHDATE")}
@@ -411,7 +430,7 @@ class User extends React.Component {
                       <Grid item xs={4} className={style.selectItem}>
                         <FormControl className={classes.formControl}>
                           <div className={style.selectLabel}>
-                            {i18n.t("SETTINGS_USER_YEAR")}
+                            {i18n.t("SETTINGS_USER_YEAR")} 
                           </div>
 
                           <Select
@@ -434,72 +453,89 @@ class User extends React.Component {
                     </Grid>
                   </div>
                 </Grid>
+                  <Hidden smDown>
+                    <Grid item xs={6}>
+                      <div className={style.content}>
+                        <p className={style.textDefault}>
+                          {i18n.t("SETTINGS_USER_CONTACT")}
+                      </p>
+                        <div style={{ float: "left", width: "25%" }}>
+                          <div className={style.selectLabel}>
+                            {i18n.t("SETTINGS_USER_CODE")}
+                          </div>
+                          <input
+                            type="number"
+                            maxLength="2"
+                            className={style.inputTextDefault}
+                            style={{ width: "60%"}}
 
-                <Grid item xs={12} md={6}>
-                  <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_SURNAME")}
-                    </p>
-                    <input
-                      className={style.inputTextDefault}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      onChange={event =>
-                        this.handleSurnameChange(event.target.value)
-                      }
-                      value={surname}
-                    />
-                  </div>
-
-                  <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_CONTACT")}
-                    </p>
-                    <div style={{ float: "left", width: "40%" }}>
-                      <div className={style.selectLabel}>
-                        {i18n.t("SETTINGS_USER_CODE")}
+                            onChange={event =>
+                              this.handleDirectDistanceDialingChange(
+                                event.target.value
+                              )
+                            }
+                            value={directDistanceDialing}
+                          />
+                        </div>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_NUMBER")}
+                        </div>
+                        <input
+                          className={style.inputTextDefault}
+                          type="number"
+                          maxLength="9"
+                          style={{ width: "63%" }}
+                          onChange={event =>
+                            this.handlePhoneChange(event.target.value)
+                          }
+                          value={phone}
+                        />
                       </div>
-                      <Input
-                        type="number"
+                    </Grid>
+                  </Hidden>
+                <Hidden mdUp>
+                  <Grid item xs={12}>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_CONTACT")}
+                    </p>
+                      <div style={{ float: "left", width: "25%" }}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_CODE")}
+                        </div>
+                        <input
+                          type="number"
+                          maxLength="2"
+                          className={style.inputTextDefault}
+                          style={{ width: "60%" }}
+
+                          onChange={event =>
+                            this.handleDirectDistanceDialingChange(
+                              event.target.value
+                            )
+                          }
+                          value={directDistanceDialing}
+                        />
+
+                      </div>
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      </div>
+                      <input
                         className={style.inputTextDefault}
-                        maxLength="2"
-                        style={{ width: "60%", marginTop: "2px" }}
-                        classes={{
-                          root: classes.inputRoot,
-                          underline: classes.inputCssUnderline,
-                          input: classes.inputCss
-                        }}
+                        type="number"
+                        maxLength="9"
+                        style={{ width: "63%" }}
                         onChange={event =>
-                          this.handleDirectDistanceDialingChange(
-                            event.target.value
-                          )
+                          this.handlePhoneChange(event.target.value)
                         }
-                        value={directDistanceDialing}
+                        value={phone}
                       />
                     </div>
-                    <div className={style.selectLabel}>
-                      {i18n.t("SETTINGS_USER_NUMBER")}
-                    </div>
-                    <Input
-                      className={style.inputTextDefault}
-                      maxLength="9"
-                      style={{ width: "69%" }}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      onChange={event =>
-                        this.handlePhoneChange(event.target.value)
-                      }
-                      value={phone}
-                    />
-                  </div>
-                </Grid>
+                  </Grid>
+                </Hidden>
               </Grid>
+
             </Grid>
 
             {/* ADDRESS */}
@@ -523,13 +559,8 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_CITY")}
                     </p>
-                    <Input
+                    <input
                       className={style.inputTextDefault}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
                       onChange={event =>
                         this.handleCityChange(event.target.value)
                       }
@@ -542,31 +573,24 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ZIP_CODE")}
                     </p>
-                    <Input
+                    <input
+                      maxLength="8"
+                      type="number"
                       className={style.inputTextDefault}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
                       onChange={event =>
                         this.handleZipcodeChange(event.target.value)
                       }
                       value={zipcode}
                     />
+
                   </div>
 
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_STATE")}
                     </p>
-                    <Input
+                    <input
                       className={style.inputTextDefault}
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
                       onChange={event =>
                         this.handleStateChange(event.target.value)
                       }

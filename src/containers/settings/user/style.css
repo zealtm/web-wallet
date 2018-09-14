@@ -8,6 +8,10 @@
 
 
 /* ------------------------------------------------------------------------- */
+:local(body) {
+  color: white;
+}
+
 /* 1. HEADER SETTINGS */
 :local(a) {
   text-decoration: none;
@@ -255,6 +259,7 @@ input::-webkit-inner-spin-button {
   border-radius: 0;
   border-bottom: 1px solid #3b1878;
   height: 30px;
+  color: white;
 }
 
 :local(.inputTextDefault::placeholder) {
