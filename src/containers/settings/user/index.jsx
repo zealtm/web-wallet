@@ -39,7 +39,6 @@ class User extends React.Component {
       name: "",
       surname: "",
       emailVerified: true,
-      verified: false,
       birthDay: "",
       birthMonth: "",
       birthYear: "",
@@ -187,9 +186,9 @@ class User extends React.Component {
 
   render() {
     const { classes, user, isLoading } = this.props;
+    const { twoFactor } = user;
     const {
       emailVerified,
-      verified,
       birthDay,
       birthMonth,
       birthYear,
@@ -260,10 +259,11 @@ class User extends React.Component {
                   {i18n.t("SETTINGS_USER_STATUS")}
                   <span
                     className={
-                      verified ? style.successStatus : style.errorStatus
+                      emailVerified && twoFactor ? style.successStatus
+                      : style.errorStatus
                     }
                   >
-                    {verified
+                    {emailVerified && twoFactor
                       ? i18n.t("SETTINGS_USER_ACCOUNT_VERIFIED")
                       : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
@@ -273,23 +273,37 @@ class User extends React.Component {
                   style={{ margin: "1rem 0 0 0" }}
                 >
                   {emailVerified ? (
-                    <Done className={style.successDefault} />
+                    <React.Fragment>
+                      <Done className={style.successDefault} />
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
+                      </span>
+                    </React.Fragment>
                   ) : (
+                    <React.Fragment>
                       <Close className={style.errorDefault} />
-                    )}
-                  <span className={style.statusItem}>
-                    {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
-                  </span>
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_EMAIL_NOT_VERIFIED")}
+                      </span>
+                    </React.Fragment>
+                  )}
                 </p>
                 <p className={style.textDefault} style={{ marginTop: "0" }}>
-                  {verified ? (
-                    <Done className={style.successDefault} />
+                  {twoFactor ? (
+                    <React.Fragment>
+                      <Done className={style.successDefault} />
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
+                      </span>
+                    </React.Fragment>
                   ) : (
+                    <React.Fragment>
                       <Close className={style.errorDefault} />
-                    )}
-                  <span className={style.statusItem}>
-                    {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
-                  </span>
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_2FA_NOT_VERIFIED")}
+                      </span>
+                    </React.Fragment>
+                  )}
                 </p>
               </div>
             </Grid>
@@ -431,7 +445,7 @@ class User extends React.Component {
                       <Grid item xs={4} className={style.selectItem}>
                         <FormControl className={classes.formControl}>
                           <div className={style.selectLabel}>
-                            {i18n.t("SETTINGS_USER_YEAR")} 
+                            {i18n.t("SETTINGS_USER_YEAR")}
                           </div>
 
                           <Select
