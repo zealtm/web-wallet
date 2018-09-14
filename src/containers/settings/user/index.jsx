@@ -23,12 +23,29 @@ const customStyle = {
     height: "auto"
   },
   underlineItems: {
+    color: "white",
     borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
+    fontSize: "16px !important",
+  },
+  menuItemRoot: {
+    color: colors.messages.info,    
   },
   disabled: {},
   error: {},
   focused: {}
+};
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      color: "#fff",
+      maxHeight: 40 * 4.5,
+      marginTop: "45px",
+      backgroundColor: "#473088",
+      width: "68px",
+    },
+  },
 };
 
 class User extends React.Component {
@@ -91,21 +108,21 @@ class User extends React.Component {
     window.open("https://gravatar.com", "blank");
   };
 
-  handleNameChange = value => this.handleSelectChange("name", value);
-  handleSurnameChange = surname => this.handleSelectChange("surname", surname);
+  handleNameChange = value => this.handleSelectChange("name", value.replace(/([\d\\/-])/g, ''));
+  handleSurnameChange = surname => this.handleSelectChange("surname", surname.replace(/([\d\\/-])/g, ''));
   handleBirthDayChange = birthDay =>
     this.handleSelectChange("birthDay", birthDay);
   handleBirthMonthChange = birthMonth =>
     this.handleSelectChange("birthMonth", birthMonth);
   handleBirthYearChange = birthYear =>
     this.handleSelectChange("birthYear", birthYear);
-  handlePhoneChange = phone => this.handleSelectChange("phone", phone);
+  handlePhoneChange = phone => this.handleSelectChange("phone", phone.replace(/([^\d/])/g, ''));
   handleDirectDistanceDialingChange = ddd =>
-    this.handleSelectChange("directDistanceDialing", ddd);
+    this.handleSelectChange("directDistanceDialing", ddd.replace(/([^\d/])/g, ''));
   handleAddressChange = address => this.handleSelectChange("address", address);
-  handleCityChange = city => this.handleSelectChange("city", city);
-  handleZipcodeChange = zipcode => this.handleSelectChange("zipcode", zipcode);
-  handleStateChange = state => this.handleSelectChange("state", state);
+  handleCityChange = city => this.handleSelectChange("city", city.replace(/([\d\\/])/g, ''));
+  handleZipcodeChange = zipcode => this.handleSelectChange("zipcode", zipcode.replace(/([^\d/])/g, ''));
+  handleStateChange = state => this.handleSelectChange("state", state.replace(/([\d\\/])/g, ''));
 
   updateData = () => {
     let { editUserData, loading } = this.props;
@@ -139,29 +156,40 @@ class User extends React.Component {
   };
 
   loadDays = () => {
+    const { classes } = this.props;
     const days = [...Array(31).keys()];
 
     return days.map((day, index) => (
-      <MenuItem key={index} value={day + 1}>
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index} value={day + 1}>
         {day + 1}
       </MenuItem>
     ));
   };
 
   loadYears = () => {
+    const { classes } = this.props;
     let date = new Date();
     let lastEighteenYears = date.getFullYear() - 18;
     let lastOneHundredYears = lastEighteenYears - 100;
     let yearsToGo = [...Array(lastEighteenYears - lastOneHundredYears).keys()];
 
     return yearsToGo.map((year, index) => (
-      <MenuItem key={index} value={lastEighteenYears - year}>
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index} value={lastEighteenYears - year}>
         {lastEighteenYears - year}
       </MenuItem>
     ));
   };
 
   loadMounth = () => {
+    const { classes } = this.props;
     let monthNames = [
       i18n.t("JANUARY"),
       i18n.t("FEBRUARY"),
@@ -178,7 +206,11 @@ class User extends React.Component {
     ];
 
     return monthNames.map((month, index) => (
-      <MenuItem key={index} value={index + 1}>
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index} value={index + 1}>
         {month.substring(0, 3)}
       </MenuItem>
     ));
@@ -341,6 +373,7 @@ class User extends React.Component {
                         this.handleNameChange(event.target.value)
                       }
                       value={name}
+                      pattern="[0-9]+$"
                     />
                   </div>
                   <Hidden mdUp>
@@ -389,9 +422,9 @@ class User extends React.Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             classes={{
-                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
+                            MenuProps={MenuProps}
                             value={birthDay}
                             onChange={event =>
                               this.handleBirthDayChange(event.target.value)
@@ -412,9 +445,9 @@ class User extends React.Component {
                         <FormControl className={classes.formControl}>
                           <Select
                             classes={{
-                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
+                            MenuProps={MenuProps}
                             value={birthMonth}
                             onChange={event =>
                               this.handleBirthMonthChange(event.target.value)
@@ -428,16 +461,15 @@ class User extends React.Component {
                         </FormControl>
                       </Grid>
                       <Grid item xs={4} className={style.selectItem}>
-                        <FormControl className={classes.formControl}>
-                          <div className={style.selectLabel}>
-                            {i18n.t("SETTINGS_USER_YEAR")} 
-                          </div>
-
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_YEAR")}
+                        </div>
+                        <FormControl className={style.selectItem}>
                           <Select
                             classes={{
-                              root: classes.selectRoot,
                               selectMenu: classes.underlineItems
                             }}
+                            MenuProps={MenuProps}
                             value={birthYear}
                             onChange={event =>
                               this.handleBirthYearChange(event.target.value)
@@ -453,58 +485,55 @@ class User extends React.Component {
                     </Grid>
                   </div>
                 </Grid>
-                  <Hidden smDown>
-                    <Grid item xs={6}>
-                      <div className={style.content}>
-                        <p className={style.textDefault}>
-                          {i18n.t("SETTINGS_USER_CONTACT")}
-                      </p>
-                        <div style={{ float: "left", width: "25%" }}>
-                          <div className={style.selectLabel}>
-                            {i18n.t("SETTINGS_USER_CODE")}
-                          </div>
-                          <input
-                            type="number"
-                            maxLength="2"
-                            className={style.inputTextDefault}
-                            style={{ width: "60%"}}
-
-                            onChange={event =>
-                              this.handleDirectDistanceDialingChange(
-                                event.target.value
-                              )
-                            }
-                            value={directDistanceDialing}
-                          />
-                        </div>
-                        <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_NUMBER")}
-                        </div>
-                        <input
-                          className={style.inputTextDefault}
-                          type="number"
-                          maxLength="9"
-                          style={{ width: "63%" }}
-                          onChange={event =>
-                            this.handlePhoneChange(event.target.value)
-                          }
-                          value={phone}
-                        />
-                      </div>
-                    </Grid>
-                  </Hidden>
-                <Hidden mdUp>
-                  <Grid item xs={12}>
+                <Hidden smDown>
+                  <Grid item xs={6}>
                     <div className={style.content}>
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
-                    </p>
+                      </p>
                       <div style={{ float: "left", width: "25%" }}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
-                          type="number"
+                          maxLength="2"
+                          className={style.inputTextDefault}
+                          style={{ width: "60%" }}
+
+                          onChange={event =>
+                            this.handleDirectDistanceDialingChange(
+                              event.target.value
+                            )
+                          }
+                          value={directDistanceDialing}
+                        />
+                      </div>
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      </div>
+                      <input
+                        className={style.inputTextDefault}
+                        maxLength="9"
+                        style={{ width: "63%" }}
+                        onChange={event =>
+                          this.handlePhoneChange(event.target.value)
+                        }
+                        value={phone}
+                      />
+                    </div>
+                  </Grid>
+                </Hidden>
+                <Hidden mdUp>
+                  <Grid item xs={12}>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_CONTACT")}
+                      </p>
+                      <div style={{ float: "left", width: "25%" }}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_CODE")}
+                        </div>
+                        <input
                           maxLength="2"
                           className={style.inputTextDefault}
                           style={{ width: "60%" }}
@@ -523,7 +552,6 @@ class User extends React.Component {
                       </div>
                       <input
                         className={style.inputTextDefault}
-                        type="number"
                         maxLength="9"
                         style={{ width: "63%" }}
                         onChange={event =>
@@ -575,7 +603,6 @@ class User extends React.Component {
                     </p>
                     <input
                       maxLength="8"
-                      type="number"
                       className={style.inputTextDefault}
                       onChange={event =>
                         this.handleZipcodeChange(event.target.value)
