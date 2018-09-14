@@ -120,14 +120,14 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length === 48,
+      disableNumberInput: newValue.length === 47,
       invoice: {
         ...invoice,
         number: newValue
       }
     });
 
-    if (newValue.length === 48) {
+    if (newValue.length === 47) {
       if (disableNumberInput) {
         return;
       }
@@ -192,7 +192,7 @@ class Invoice extends React.Component {
       }
 
       if (key === 'number') {
-        invoiceInputs[key]["minLength"] = 48;
+        invoiceInputs[key]["minLength"] = 47;
       }
     }
 

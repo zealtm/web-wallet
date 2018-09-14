@@ -22,11 +22,11 @@ class PaymentService {
 
   async getInvoice(token, number) {
     try {
-      //API_HEADER.headers.Authorization = token;
+      API_HEADER.headers.Authorization = token;
 
-      const response = await axios.get(`${BASE_URL}/bill/${number}`/*, API_HEADER*/);
+      const response = await axios.get(`${BASE_URL}/bill/${number}`, API_HEADER);
       // TODO: enable setAuthToken when the header is in the api response
-      // setAuthToken(response.headers[HEADER_RESPONSE]);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       const data = {
         number,
@@ -42,6 +42,37 @@ class PaymentService {
     }
   }
 
+  async getHistory(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/bill/history`,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+        
+      return response.data.data;
+    } catch(error) {
+      return internalServerError();
+    }
+  }
+
+  async sendPay(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(`${BASE_URL}/bill/pay/${payload.barCode}`, payload, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      console.log("CONFIRMA", response);
+
+      return response;
+    }catch(error){
+      internalServerError();
+      return;
+    }
+  }
 }
 
 export default PaymentService;

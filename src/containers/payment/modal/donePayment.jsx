@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import {connect} from "react-redux";
+
 // UTILS
 import i18n from "../../../utils/i18n";
 
@@ -13,6 +16,7 @@ class DonePayment extends React.Component {
   }
 
   render() {
+    const {payment} = this.props;
     return (
       <div className={style.modalBox}>
         <img
@@ -22,7 +26,7 @@ class DonePayment extends React.Component {
         {/* <img src="/images/icons/error/error.png" /> */}
         <div>
           {i18n.t("PAYMENT_SUCCESS_1")}
-          <span className={style.textGreen}>R$30,00</span>
+          <span className={style.textGreen}>R$ {payment.value}</span>
           {i18n.t("PAYMENT_SUCCESS_2")}
         </div>
 
@@ -35,7 +39,13 @@ class DonePayment extends React.Component {
 }
 
 DonePayment.propTypes = {
-  //handleStep: PropTypes.func.isRequired,
-};
+  payment: PropTypes.object.isRequired
+}
 
-export default DonePayment;
+const mapStateToProps = store => ({
+  payment: store.payment.payment
+});
+
+export default connect(
+  mapStateToProps
+)(DonePayment);

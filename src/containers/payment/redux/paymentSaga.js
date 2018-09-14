@@ -200,7 +200,7 @@ export function* getHistoryPaySaga() {
   }
 }
 
-export function* confirmPaySaga(payment) {
+export function* confirmPaySaga(payload) {
   try {
     // ligar o loading
     yield put({
@@ -208,14 +208,27 @@ export function* confirmPaySaga(payment) {
       payload: true
     });
 
-    // validar a carga recebida, formatar se preciso
-    console.log("CONFIRMAR", payment);
-
+    // validar a carga recebida
+    console.log("CONFIRMA_CARGA", payload);
+   
+    const data = {
+      "barCode":    payload.payment.number,
+      "dueDate":    payload.payment.dueDate,
+      "amount":     parseFloat(payload.payment.value).toFixed(2),
+      "name":       payload.payment.name,
+      "document":   payload.payment.cpfCnpj,
+      "txID":       "d07915a94737ba970a43537afeb9e70ace557a5aa9e41378f668f22fd4d586a33",
+      "describe":   payload.payment.description,
+      "serviceId":  2 // este numero é de acordo com o service de coins
+    };
+    console.log(data);
     // pegar a senha pra liberar a chave
 
     // enviar transacao
 
-    // caso sucesso, chamar api (EM DEV)
+    // caso sucesso, chamar api
+    //let token = yield call(getAuthToken);
+    //let response = yield call(paymentService.sendPay, token, data);
 
     // chamar modal de confirmacao
 
