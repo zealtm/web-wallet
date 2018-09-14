@@ -60,8 +60,11 @@ class UserService {
         BASE_URL + "/user",
         userInfo,
         API_HEADER
-      );
-      // setAuthToken(response.headers[HEADER_RESPONSE]);
+      ).catch(error => {
+        return error.response;
+      });
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {

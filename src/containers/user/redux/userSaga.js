@@ -258,7 +258,12 @@ export function* updateUserConsentsSaga(payload) {
     };
 
     const token = yield call(getAuthToken);
-    yield call(userService.updateUser, data, token);
+    let response = yield call(userService.updateUser, data, token);
+
+    if(response.status == 403){
+      yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+      yield put(internalServerError());
+    }
 
     yield put({
       type: "PATCH_SETTINGS_CONSENTS_API_REDUCER",
