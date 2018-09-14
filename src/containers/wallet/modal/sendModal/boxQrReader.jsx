@@ -59,7 +59,7 @@ BoxQrReader.propTypes = {
   errorInput: PropTypes.func
 };
 
-const mapStateToProps = store => ({
+const mapStateToProps = store => (console.warn(store), {
   coins: store.skeleton.coins
 });
 

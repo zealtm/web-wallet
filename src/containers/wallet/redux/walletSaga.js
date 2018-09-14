@@ -6,16 +6,19 @@ const coinService = new CoinService();
 
 export function* validateAddress(action) {
   try {
+    
+    let address = action.address.replace(action.coin + ":", "").split("?")[0];
+    console.warn("ADDRESS", address);
     let response = yield call(
       coinService.validateAddress,
       action.coin,
-      action.address
+      address
     );
 
     if (!response.error) {
       yield put({
         type: "SET_WALLET_MODAL_ADDRESS",
-        address: action.address
+        address: address
       });
 
       yield put({
