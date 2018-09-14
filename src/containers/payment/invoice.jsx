@@ -98,6 +98,8 @@ class Invoice extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
+    const {invoice} = this.state;
+
     this.setState({
       ...this.state,
       coin: {
@@ -106,7 +108,7 @@ class Invoice extends React.Component {
         img
       },
       invoice: {
-        ...this.state.invoice,
+        ...invoice,
         coin: value
       }
     });
@@ -132,17 +134,7 @@ class Invoice extends React.Component {
         return;
       }
 
-      this.setState({
-        invoiceLoading: true
-      });
-
       getInvoice(newValue);
-
-      setTimeout(() => {
-        this.setState({
-          invoiceLoading: false
-        });
-      }, 1000);
     }
   };
 
