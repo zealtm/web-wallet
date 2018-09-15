@@ -1,4 +1,7 @@
-import { put, call } from "redux-saga/effects";
+import {
+  put,
+  call
+} from "redux-saga/effects";
 import {
   setAuthToken,
   getAuthToken,
@@ -8,8 +11,12 @@ import {
   setUserData,
   clearAll
 } from "../../../utils/localStorage";
-import { encryptHmacSha512Key } from "../../../utils/cryptography";
-import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
+import {
+  encryptHmacSha512Key
+} from "../../../utils/cryptography";
+import {
+  HEADER_RESPONSE
+} from "../../../constants/apiBaseUrl";
 import {
   internalServerError,
   modalSuccess
@@ -260,8 +267,11 @@ export function* updateUserConsentsSaga(payload) {
     const token = yield call(getAuthToken);
     let response = yield call(userService.updateUser, data, token);
 
-    if(response.status == 403){
-      yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    if (response.status == 403) {
+      yield put({
+        type: "CHANGE_SKELETON_ERROR_STATE",
+        state: true
+      });
       yield put(internalServerError());
     }
 
@@ -280,13 +290,21 @@ export function* editUserData(action) {
     let response = yield call(userService.editUser, token, action.data);
 
     if (response.data.code === 200) {
-      yield put({ type: "EDIT_USER_DATA", data: action.data });
+      yield put({
+        type: "EDIT_USER_DATA",
+        data: action.data
+      });
       yield put(modalSuccess("Successfully changed data"));
 
       return;
     }
   } catch (error) {
-    yield put({ type: changeLoadingState });
+     
+      yield put({
+        type: "CHANGE_SKELETON_ERROR_STATE",
+        state: true
+      });
+ 
     yield put(internalServerError());
   }
 }

@@ -1,9 +1,20 @@
-import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  put,
+  call
+} from "redux-saga/effects";
+import {
+  internalServerError
+} from "../../errors/statusCodeMessage";
 
-import { getAuthToken } from "../../../utils/localStorage";
-import {convertBiggestCoinUnit} from "../../../utils/numbers";
-import {convertToLocaleDate} from "../../../utils/strings";
+import {
+  getAuthToken
+} from "../../../utils/localStorage";
+import {
+  convertBiggestCoinUnit
+} from "../../../utils/numbers";
+import {
+  convertToLocaleDate
+} from "../../../utils/strings";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
@@ -74,8 +85,13 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
-    // console.error('setPaymentError', error);
     yield put(internalServerError());
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
+
+    return;
   }
 }
 
@@ -126,13 +142,12 @@ export function* getInvoiceSaga(payload) {
   }
 }
 
-export function* getHistoryPaySaga(){
+export function* getHistoryPaySaga() {
   try {
     // let token = yield call(getAuthToken);
     //let response = yield call(paymentService.getHistory, token);
 
-    const response = [
-      {
+    const response = [{
         name: "Energia",
         date: "04/09/2018 17:00",
         status: "confirmado",
@@ -158,16 +173,3 @@ export function* getHistoryPaySaga(){
     yield put(internalServerError());
   }
 }
-
-// export function* calcCoinPaymentSaga(value){
-//   let token = yield call(getAuthToken);
-//   // AQUI UM ENDPOINT PRA RETORNAR O QTDE DE MOEDAS NECESSARIAS
-//   // let response = yield call(paymentService.getInvoice, token, payload.number);
-
-//   yield put(
-//     {
-//       type: "GET_INVOICE_REDUCER",
-//       payment: response
-//     }
-//   )
-// }
