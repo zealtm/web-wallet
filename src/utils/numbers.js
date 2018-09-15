@@ -22,7 +22,7 @@ export const percentCalc = (first, last) => {
   return result.toFixed(2);
 };
 
-export const formatDate = (date, type = "DMY") => {
+export const formatDate = (date, type = "DMY", monthNumber = false) => {
   /* TYPES
    D - day,
    DM - day and month,
@@ -50,6 +50,7 @@ export const formatDate = (date, type = "DMY") => {
 
   let day = addZeroIfLessThan(date.getDate());
   let monthIndex = date.getMonth();
+  let month = monthNumber ? monthIndex : monthNames[monthIndex];
   let year = date.getFullYear();
   let hours = date.getHours();
   let minutes = addZeroIfLessThan(date.getMinutes());
@@ -58,7 +59,7 @@ export const formatDate = (date, type = "DMY") => {
   if (type === "D") {
     return day;
   } else if (type === "DM") {
-    return day + "/" + monthNames[monthIndex];
+    return day + "/" + month;
   } else if (type === "H") {
     return hours;
   } else if (type === "HM") {
@@ -66,10 +67,10 @@ export const formatDate = (date, type = "DMY") => {
   } else if (type === "HMS") {
     return hours + ":" + minutes + ":" + seconds;
   } else {
-    return day + "/" + monthNames[monthIndex] + "/" + year;
+    return day + "/" + month + "/" + year;
   }
 };
 
 const addZeroIfLessThan = (value, number = 10) => {
   return value < number ? "0" + value : value;
-}
+};
