@@ -18,7 +18,6 @@ import i18n from "../../../../utils/i18n";
 class BoxProcess extends React.Component {
   doTransaction = () => {
     let { coin, user, modal, coins, setAssetTransaction } = this.props;
-    console.warn("coins", coins[coin]);
     setAssetTransaction(
       {
         coin: coin,

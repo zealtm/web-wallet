@@ -17,16 +17,18 @@ const transactionService = new TransactionService();
 
 export function* validateAddress(action) {
   try {
+    
+    let address = action.address.replace(action.coin + ":", "").split("?")[0];
     let response = yield call(
       coinService.validateAddress,
       action.coin,
-      action.address
+      address
     );
 
     if (!response.error || response !== "error") {
       yield put({
         type: "SET_WALLET_MODAL_ADDRESS",
-        address: action.address
+        address: address
       });
 
       yield put({
@@ -149,9 +151,16 @@ export function* setWalletTransaction(action) {
       token
     );
 
-    if (lunesWallet) {
+    let responseService = yield call(
+      transactionService.transactionService,
+      action.transaction.coin,
+      token
+    );
+
+    if (lunesWallet && responseService) {
       let response = yield call(
         transactionService.transaction,
+        responseService.id,
         action.transaction,
         lunesWallet,
         decryptAes(seed, action.password),
