@@ -106,7 +106,7 @@ class CoinService {
               coin.address,
             API_HEADER
           );
-
+          console.warn(responseBalance);
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
@@ -144,6 +144,7 @@ class CoinService {
       console.warn(coins);
       return coins;
     } catch (error) {
+      console.warn(error, error.response);
       internalServerError();
       return;
     }
@@ -296,7 +297,7 @@ class CoinService {
       if (!coin || !address || address.length < 10) {
         return "error";
       }
-      
+
       if (coin === "lunes") {
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address

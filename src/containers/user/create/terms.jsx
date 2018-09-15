@@ -72,23 +72,26 @@ class CreateUserTerms extends React.Component {
     } else {
       loading();
       clearMessage();
-      createUser(user.user.name, user.user.surname, user.user.email, user.user.password);
+      createUser(
+        user.user.name,
+        user.user.surname,
+        user.user.email,
+        user.user.password
+      );
     }
   };
 
   backLink = () => {
     let { backUserInfo } = this.props;
     backUserInfo();
-  }
+  };
 
   render() {
     let { user } = this.props;
     let { inputs, checkDownload } = this.state;
 
-
     return (
       <div>
-
         <Link to="#" onClick={() => this.backLink()}>
           <img
             src="../../images/icons/arrow/arrow-white-left@2x.png"
@@ -150,8 +153,7 @@ CreateUserTerms.propTypes = {
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object,
-  backUserInfo: PropTypes.object,
-
+  backUserInfo: PropTypes.function
 };
 
 const mapSateToProps = store => ({

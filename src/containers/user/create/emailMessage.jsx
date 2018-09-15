@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 //REDUX
 import { connect } from "react-redux";
@@ -19,10 +19,10 @@ class EmailMessage extends React.Component {
       <div className={style.contNewAccount}>
         <img src="../../images/logo.svg" className={style.logo} />
         <div>
-          <img
+          {/* <img
             src="../../../../images/icons/email/email@2x.png"
             className={style.iconEmailCreateAccount}
-          />
+          /> */}
 
           <div className={style.messageConfirmationRegister}>
             {i18n.t("NEW_ACCOUNT_MESSAGE_SENDED")}
@@ -30,9 +30,9 @@ class EmailMessage extends React.Component {
 
           <div className={style.arrowToLoginAlign}>
             <div className={style.arrowCircle}>
-              <Link to="/">
+              <a href="/">
                 <img src="../../../../images/icons/arrow/arrow-green-right@1x.png" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

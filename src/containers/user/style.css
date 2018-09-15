@@ -260,7 +260,7 @@
   font-size: 23px;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 80px;
+  margin: 70px 0;
 }
 
 :local(.alignInfoDownloadTerms) {
