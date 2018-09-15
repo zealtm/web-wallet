@@ -24,7 +24,8 @@ class CreateUserTerms extends React.Component {
     super();
     this.state = {
       inputs: {
-        checkboxTerms: undefined
+        checkboxTerms: undefined,
+        checkboxAge: undefined
       },
       checkDownload: false,
       errors: undefined
@@ -64,7 +65,7 @@ class CreateUserTerms extends React.Component {
       !user.user.password ||
       !checkDownload
     ) {
-      errorInput(messageError ? messageError : "Baixe os termos");
+      errorInput(messageError ? messageError : i18n.t("MESSAGE_TERMS"));
       this.setState({
         ...this.state,
         errors
@@ -92,22 +93,13 @@ class CreateUserTerms extends React.Component {
 
     return (
       <div>
-        <Link to="#" onClick={() => this.backLink()}>
-          <img
-            src="../../images/icons/arrow/arrow-white-left@2x.png"
-            className={style.iconArrowBack}
-          />
-        </Link>
-
-        <img src="../../images/logo.svg" className={style.logo} />
-
         <div className={style.alignInfoDownloadTerms}>
           <img src="../../images/login/gdpr-compliant@1x.png" />
 
           <div className={style.infoDownloadTerms}>
             <Link
               className={style.linkDownloadTerms}
-              to="#"
+              to="documents/termos-pt_BR.pdf"
               target="_blank"
               onClick={() => this.checkDownload()}
             >
@@ -132,9 +124,25 @@ class CreateUserTerms extends React.Component {
           </div>
         </div>
 
+        <div className={style.alignInfoTermsOfServices}>
+          <CustomCheckbox
+            type="checkbox"
+            name="checkboxAge"
+            label={i18n.t("NEW_ACCOUNT_ACCEPT_AGE")}
+            required
+            onChange={event => {
+              this.getInput(event.target);
+            }}
+          />
+
+          <div className={style.acceptTermsOfServices}>
+            {i18n.t("NEW_ACCOUNT_ACCEPT_AGE")}
+          </div>
+        </div>
+
         <button
           className={
-            inputs.checkboxTerms && checkDownload
+            inputs.checkboxTerms && inputs.checkboxAge && checkDownload
               ? style.buttonEnable
               : style.buttonBorderGreen
           }

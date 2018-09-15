@@ -7,6 +7,8 @@
   "MESSAGE_NOT_SERVICE": "Service not available",
   "MESSAGE_NOTHING_FOUND": "Service not available",
   "MESSAGE_NOT_SERVICE_YET": "Service not available yet.",
+  "MESSAGE_TERMS": "You have to agree and download the terms.",
+  "MESSAGE_AGE": "You must be over 18 years old",
 
   "TEXT_IS": "is",
   "TEXT_LOW": "Low",
@@ -199,6 +201,7 @@
   "LOGIN_FOOTER": "2018 lunes.io All Rights Reserved",
   "PIN_ENTER": "ENTER your PIN",
   "NEW_ACCOUNT_ACCEPT_TERMS": "I agree with Terms of Services",
+  "NEW_ACCOUNT_ACCEPT_AGE": "I confirm that I am over 18 years old",
   "NEW_ACCOUNT_MESSAGE_SENDED": "Account created successfully.",
   "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address",
   "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click here to download and finish the registration",
