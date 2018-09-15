@@ -169,17 +169,16 @@ export function* setUserGdprSaga(payload) {
 
 export function* getHistoryPaySaga() {
   try {
-
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
     });
-    
+
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getHistory, token);
-   
+
     let data = [];
-    if(response.payments){
+    if (response.payments) {
       data = response.payments;
     }
 
@@ -192,24 +191,13 @@ export function* getHistoryPaySaga() {
   }
 }
 
-export function* confirmPaySaga(payment) {
+export function* confirmPaySaga() {
   try {
     // ligar o loading
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
     });
-
-    // validar a carga recebida, formatar se preciso
-    console.log("CONFIRMAR", payment);
-
-    // pegar a senha pra liberar a chave
-
-    // enviar transacao
-
-    // caso sucesso, chamar api (EM DEV)
-
-    // chamar modal de confirmacao
 
     yield put({
       type: "SET_CLEAR_PAYMENT_REDUCER"

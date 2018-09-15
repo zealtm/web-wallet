@@ -50,7 +50,7 @@ export const formatDate = (date, type = "DMY", monthNumber = false) => {
 
   let day = addZeroIfLessThan(date.getDate());
   let monthIndex = date.getMonth();
-  let month = monthNumber ? monthIndex : monthIndex[monthIndex];
+  let month = monthNumber ? monthIndex : monthNames[monthIndex];
   let year = date.getFullYear();
   let hours = date.getHours();
   let minutes = addZeroIfLessThan(date.getMinutes());
