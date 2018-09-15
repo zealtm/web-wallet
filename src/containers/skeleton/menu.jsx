@@ -45,6 +45,11 @@ const menuItens = [
     icon: "../../images/icons/general/pay@1x.png"
   },
   {
+    link: "/recharge",
+    label: i18n.t("MENU_RECHARGE"),
+    icon: "../../images/icons/general/pay@1x.png"
+  },
+  {
     link: "/leasing",
     label: i18n.t("MENU_LEASING"),
     icon: "../../images/icons/general/leasing@1x.png"
