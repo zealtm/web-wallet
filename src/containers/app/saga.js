@@ -46,7 +46,10 @@ import {
   getFeePaymentSaga,
   setFeePaymentSaga,
   getInvoiceSaga,
-  getHistoryPaySaga
+  setUserGdprSaga,
+  getHistoryPaySaga,
+  confirmPaySaga,
+  setModalStepSaga
 } from "../payment/redux/paymentSaga";
 import {
   getAssetCoinHistory,
@@ -111,6 +114,9 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_COIN_HISTORY_API", getAssetCoinHistory),
     fork(takeLatest, "GET_ASSET_MODAL_SEND_FEE_API", getAssetSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareAssetAddress),
-    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction)
+    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
+    fork(takeLatest, "SET_USER_GDPR", setUserGdprSaga),
+    fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
+    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga)
   ];
 }
