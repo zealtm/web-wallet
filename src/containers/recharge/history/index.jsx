@@ -146,7 +146,7 @@ History.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  history: store.payment.history
+  history: store.recharge.history
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

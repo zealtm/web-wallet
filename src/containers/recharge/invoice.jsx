@@ -9,10 +9,9 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Select from "../../components/select";
-import Instructions from "../../components/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import { DateMask, MoneyBrlMask } from "../../components/inputMask";
+import Instructions from "../../components/instructions";
 
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
@@ -21,11 +20,9 @@ import { withStyles } from "@material-ui/core/styles";
 // STYLES
 import style from "./style.css";
 
-// UTILS
-import { inputValidator } from "../../utils/inputValidator";
-
 const customStyle = {
   inputRoot: {
+    fontSize:'22px',
     color: colors.messages.info,
     margin: "0.5rem 0",
     padding: "5px",
@@ -37,7 +34,7 @@ const customStyle = {
   inputCss: {
     color: colors.messages.info,
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "14px",
+    fontSize: "22px",
     letterSpacing: "0.5px",
     textAlign: "left",
     paddingLeft: "10px"
@@ -73,15 +70,6 @@ class Invoice extends React.Component {
       errors: [],
       disableNumberInput: false,
       invoiceLoading: false,
-      invoice: {
-        number: "",
-        assignor: "",
-        name: "",
-        description: "",
-        dueDate: "",
-        cpfCnpj: "",
-        value: ""
-      },
       coin: {
         name: undefined,
         value: undefined,
@@ -167,181 +155,114 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { payment } = this.props;
-    const { invoice, coin } = this.state;
+    // const { payment } = this.props;
+    // const { invoice, coin } = this.state;
 
-    const invoiceData = {
-      ...invoice,
-      assignor: payment.assignor || invoice.assignor,
-      dueDate: payment.dueDate || invoice.dueDate,
-      value: payment.value || invoice.value
-    };
+    // const invoiceData = {
+    //   ...invoice,
+    //   assignor: payment.assignor || invoice.assignor,
+    //   dueDate: payment.dueDate || invoice.dueDate,
+    //   value: payment.value || invoice.value
+    // };
 
-    const invoiceInputs = {};
+    // const invoiceInputs = {};
 
-    for (const key in invoiceData) {
-      if (invoiceData.hasOwnProperty(key)) {
-        invoiceInputs[key] = {
-          type: key === "dueDate" ? "date" : "text",
-          name: key,
-          placeholder: key,
-          value: invoiceData[key],
-          required: true
-        };
-      }
+    // for (const key in invoiceData) {
+    //   if (invoiceData.hasOwnProperty(key)) {
+    //     invoiceInputs[key] = {
+    //       type: key === "dueDate" ? "date" : "text",
+    //       name: key,
+    //       placeholder: key,
+    //       value: invoiceData[key],
+    //       required: true
+    //     };
+    //   }
 
-      if (key === "number") {
-        invoiceInputs[key]["minLength"] = 47;
-      }
-    }
+    //   if (key === "number") {
+    //     invoiceInputs[key]["minLength"] = 47;
+    //   }
+    // }
 
-    const coinInput = {
-      type: "text",
-      name: "coin",
-      placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
-      required: true
-    };
+    // const coinInput = {
+    //   type: "text",
+    //   name: "coin",
+    //   placeholder: "coin",
+    //   value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
+    //   required: true
+    // };
 
-    const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+    // const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
-    if (errors.length > 0) {
-      this.setState({
-        ...this.state,
-        errors
-      });
-      return;
-    }
+    // if (errors.length > 0) {
+    //   this.setState({
+    //     ...this.state,
+    //     errors
+    //   });
+    //   return;
+    // }
 
-    this.setPayment(invoiceData);
+    // this.setPayment(invoiceData);
     this.openModal();
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment } = this.props;
-    const { coin, invoice, errors, invoiceLoading } = this.state;
+    const { classes, loading, coinsRedux } = this.props;
+    const { coin, errors} = this.state;
 
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
 
     return (
       <Grid container direction="row" justify="center">
-        <Grid item xs={12} className={style.box}>
-          <div className={style.row}>
-            <Input
-              classes={{
-                root: classes.inputRoot,
-                underline: classes.inputCssUnderline,
-                input: classes.inputCssCenter
-              }}
-              placeholder="237933802350009031431630033330944400000001000000"
-              inputProps={{ maxLength: 47, required: true }}
-              value={invoice.number}
-              onChange={this.handleInvoiceNumberChange}
-              error={errors.includes("number")}
+
+      <Grid container className={style.box}>
+          <Grid item xs={12} md={6}>
+            <Select
+              list={[{value:"vivo",title:"VIVO"},{value:"vivo",title:"VIVO"},]}
+              title={"Operadora"}
+              selectItem={()=>alert(1)}
             />
-            <span
-              style={{
-                display: "block",
-                position: "absolute",
-                visibility: invoiceLoading ? "visible" : "hidden"
-              }}
-            >
-              <small>
-                <Loading color="lunes" />
-              </small>
-            </span>
-          </div>
-
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={payment.assignor || invoice.assignor}
-                onChange={this.handleInvoiceDefaultChange("assignor")}
-                error={errors.includes("assignor")}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_NAME")}
-                value={payment.name || invoice.name}
-                onChange={this.handleInvoiceDefaultChange("name")}
-                error={errors.includes("name")}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={payment.description || invoice.description}
-                onChange={this.handleInvoiceDefaultChange("description")}
-                error={errors.includes("description")}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={payment.dueDate || invoice.dueDate}
-                onChange={this.handleInvoiceDefaultChange("dueDate")}
-                error={errors.includes("dueDate")}
-                inputComponent={DateMask}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
-                value={invoice.cpfCnpj}
-                onChange={this.handleInvoiceDefaultChange("cpfCnpj")}
-                error={errors.includes("cpfCnpj")}
-                inputProps={{ maxLength: 14 }}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_VALUE")}
-                startAdornment={
-                  <InputAdornment
-                    position="start"
-                    disableTypography
-                    classes={{ root: classes.inputCss }}
-                  >
-                    R$
-                  </InputAdornment>
-                }
-                value={payment.value || invoice.value}
-                onChange={this.handleInvoiceDefaultChange("value")}
-                error={errors.includes("value")}
-                inputComponent={MoneyBrlMask}
-              />
-            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6}>
+          <Select
+              list={[{value:"15",title:"R$15,00"},{value:"15",title:"R$15,00"},]}
+              title={"Valor"}
+              selectItem={()=>alert(1)}
+            />
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container>
+        <Grid item xs={12} className={style.box} style={{marginTop: "10px",padding: 5}}>
+
+          <Grid container direction="row">
+            <Grid item xs={8}>
+              <Input
+                classes={{
+                  root: classes.inputRoot,
+                  underline: classes.inputCssUnderlineDisabled,
+                  input: classes.inputCss
+                }}
+                placeholder={"(00)9999-9999"}
+                value={""}
+                onChange={()=>alert(1)}
+                error={""}
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <button
+                className={style.buttonPurple}
+                onClick={()=>alert(1)}
+              >
+                {loading ? <Loading /> : "FAVORITAR"}
+              </button>
+            </Grid>
+          </Grid>
+          
+        </Grid>
+
+        <Grid item xs={12} className={style.box} style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}>
+          <Grid container justify={"center"}>
             <Grid item xs={12} sm={6}>
               <Select
                 list={coinsRedux}
@@ -349,6 +270,7 @@ class Invoice extends React.Component {
                 titleImg={img}
                 selectItem={this.coinSelected}
                 error={errors.includes("coin")}
+                width={"100%"}
               />
             </Grid>
           </Grid>
@@ -364,7 +286,7 @@ class Invoice extends React.Component {
             className={style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
-            {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
+            {loading ? <Loading /> : "EFETUAR RECARGA"}
           </button>
         </Grid>
 
@@ -372,12 +294,13 @@ class Invoice extends React.Component {
           item
           xs={12}
           className={style.transparentBox}
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "60px", textAlign: "center"}}
         >
-          <Instructions>
-            {/* TODO: set the modal content */}
-            <p>Conteúdo</p>
-          </Instructions>
+        <Instructions>
+          ATENÇÃO<br />
+          Tempo médio de pagamento temporariamente, está para até  30minutos, somente crie o pedido, se estiver de acordo. 
+        </Instructions>
+          
         </Grid>
       </Grid>
     );
@@ -391,8 +314,7 @@ Invoice.propTypes = {
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
-  payment: store.payment.payment,
-  loading: store.payment.loading
+  loading: store.recharge.loading
 });
 
 const mapDispatchToProps = dispatch =>

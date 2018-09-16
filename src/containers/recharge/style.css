@@ -67,6 +67,10 @@
   background-color: transparent;
 }
 
+:local .buttonPurple {
+  composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
+}
+
 
 /* 4. SCROLLBAR */
 ::-webkit-scrollbar              {

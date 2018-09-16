@@ -55,6 +55,9 @@ import {
   validateAddress as validateAssetAddress,
   shareCoinAddress as shareAssetAddress
 } from "../assets/redux/assetsSaga";
+import {
+  setModalStepSaga as setModalStepRechargeSaga
+} from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
   yield [
@@ -105,6 +108,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
+
+    // recharge-saga
+    fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
 
     //assets
     fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
