@@ -304,3 +304,18 @@ export function* editUserData(action) {
     yield put(internalServerError());
   }
 }
+
+
+export function* updateUserPasswordSaga(action) {
+  try {
+    const token = yield call(getAuthToken);
+    yield call(userService.resetUserPassword(token, action.newPassword, action.oldPassword));
+
+    yield put({
+      type: "UPDATE_USER_PASSWORD_REDUCER",
+      pasword: action.newPassword
+    })
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

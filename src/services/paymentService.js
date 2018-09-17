@@ -28,7 +28,6 @@ class PaymentService {
         `${BASE_URL}/bill/${number}`,
         API_HEADER
       );
-      // TODO: enable setAuthToken when the header is in the api response
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       const data = {

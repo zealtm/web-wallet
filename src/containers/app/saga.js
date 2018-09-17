@@ -9,7 +9,8 @@ import {
   hasTwoFactorAuth,
   setUserSeed,
   updateUserConsentsSaga,
-  editUserData
+  editUserData,
+  updateUserPasswordSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -70,6 +71,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
     fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
+    fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),

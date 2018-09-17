@@ -79,13 +79,8 @@ export function* setPaymentSaga(payload) {
     const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
     const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
 
-    //console.log("response balance", balanceResponse);
-
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
-
-    //console.log("value", payload.pay);
-    //console.log("amount", response.data.data.price);
 
     const data = {
       number: payload.pay.number,
@@ -99,8 +94,6 @@ export function* setPaymentSaga(payload) {
       description: payload.pay.description,
       cpfCnpj: payload.pay.cpfCnpj
     };
-
-    //console.log("response data", data);
 
     yield put({
       type: "SET_PAYMENT_REDUCER",

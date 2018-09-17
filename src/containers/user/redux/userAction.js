@@ -64,3 +64,9 @@ export const editUserData = data => ({
   type: "EDIT_USER_DATA_API",
   data
 });
+
+export const updateUserPassword = (newPassword, oldPassword) => ({
+  type: "UPDATE_USER_PASSWORD_API",
+  newPassword,
+  oldPassword
+});

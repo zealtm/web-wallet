@@ -12,7 +12,11 @@ import {
 
 // Services
 import AuthService from "../../../services/authService";
+import UserService from "../../../services/userService";
+import { userInfo } from "os";
 const authService = new AuthService();
+const userService = new UserService();
+
 
 export function* getTwoFactorAuth() {
   try {
