@@ -96,16 +96,17 @@ const payment = (state = initialState, action) => {
 
     case "SET_CLEAR_PAYMENT_REDUCER":
       return {
-        ...initialState
-      };
-
-    case "CLEAR_PAYMENT":
-      return {
         ...state,
         payment: {
           ...initialState.payment
-        }
-      }
+        },
+        fee: {
+          ...initialState.fee
+        },
+        history: [],
+        loading: false,
+        modalStep: 1
+      };
 
     default: {
       return {

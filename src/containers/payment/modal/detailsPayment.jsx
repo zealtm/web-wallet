@@ -65,7 +65,7 @@ class DetailsPayment extends React.Component {
       return;
     }
 
-    handleStep(2);
+    setModalStep(2);
   }
 
   toogleSwitch = () => {

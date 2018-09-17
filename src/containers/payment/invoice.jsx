@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, setPayment, getInvoice, clearPayment } from "./redux/paymentAction";
+import { getCoinsEnabled, setPayment, getInvoice, setClearPayment } from "./redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -118,8 +118,34 @@ class Invoice extends React.Component {
     });
   };
 
+  setDefaultState = () => {
+    const emptyValue = {
+      number: "",
+      assignor: "",
+      name: "",
+      description: "",
+      dueDate: "",
+      cpfCnpj: "",
+      value: "",
+      coin: {
+        abbreviation: "",
+        address: ""
+      }
+    }
+
+    this.setState({
+      ...this.state,
+      invoice: emptyValue,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }
+    })
+  }
+
   handleInvoiceNumberChange = event => {
-    const { getInvoice, clearPayment } = this.props;
+    const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
 
     const newValue = event.target.value.replace(/\D/, "");
@@ -134,31 +160,8 @@ class Invoice extends React.Component {
     });
 
     if (newValue.length == 0) {
-      const emptyValue = {
-        number: "",
-        assignor: "",
-        name: "",
-        description: "",
-        dueDate: "",
-        cpfCnpj: "",
-        value: "",
-        coin: {
-          abbreviation: "",
-          address: ""
-        }
-      }
-
-      this.setState({
-        ...this.state,
-        invoice: emptyValue,
-        coin: {
-          name: undefined,
-          value: undefined,
-          img: undefined
-        }
-      })
-
-      clearPayment();
+      this.setDefaultState();
+      setClearPayment();
     } else if (newValue.length === 47) {
       if (disableNumberInput) {
         return;
@@ -237,6 +240,7 @@ class Invoice extends React.Component {
 
     this.setPayment(invoiceData);
     this.openModal();
+    this.setDefaultState();
   };
 
   render() {
@@ -429,7 +433,7 @@ const mapDispatchToProps = dispatch =>
       getInvoice,
       getCoinsEnabled,
       setPayment,
-      clearPayment
+      setClearPayment
     },
     dispatch
   );

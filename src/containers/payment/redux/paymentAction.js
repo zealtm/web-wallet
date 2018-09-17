@@ -41,8 +41,8 @@ export const getHistoryPay = () => ({
   type: "GET_HISTORY_PAY"
 });
 
-export const clearPayment = () => ({
-  type: "CLEAR_PAYMENT"
+export const setClearPayment = () => ({
+  type: "SET_CLEAR_PAYMENT_REDUCER"
 });
 
 export const confirmPay = payment => ({
