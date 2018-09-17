@@ -78,7 +78,7 @@ class Invoice extends React.Component {
         name: undefined,
         value: undefined,
         img: undefined
-      }, 
+      },
       invoice: {
         phone: null,
         operadora: {
@@ -212,7 +212,7 @@ class Invoice extends React.Component {
 
   render() {
     const { classes, loading, coinsRedux } = this.props;
-    const { coin, errors, invoice} = this.state;
+    const { coin, errors, invoice } = this.state;
 
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
@@ -220,17 +220,17 @@ class Invoice extends React.Component {
     return (
       <Grid container direction="row" justify="center">
 
-      <Grid container className={style.box}>
-          <Grid item xs={12} md={6}>
+        <Grid container className={style.box}>
+          <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
             <Select
-              list={[{value:"vivo",title:"VIVO"},{value:"vivo",title:"VIVO"},]}
+              list={[{ value: "vivo", title: "VIVO" }, { value: "vivo", title: "VIVO" },]}
               title={invoice.operadora.title}
               error={errors.includes("operadora")}
               selectItem={this.handleOperadora}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-          <Select
+          <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+            <Select
               list={[{value:"15",title:"R$15,00"},{value:"15",title:"R$15,00"},]}
               title={invoice.valor.title}
               error={errors.includes("valor")}
@@ -266,7 +266,7 @@ class Invoice extends React.Component {
               </button>
             </Grid> */}
           </Grid>
-          
+
         </Grid>
 
         <Grid item xs={12} className={style.box} style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}>
@@ -304,12 +304,12 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "60px", textAlign: "center"}}
         >
-        <Instructions>
-          ATENÇÃO<br />
-          Tempo médio de pagamento temporariamente, está para até  30minutos, somente crie o pedido, se estiver de acordo. 
-        </Instructions>
+          <Instructions>
+          {i18n.t("TEXT_ATTENTION")}<br />
+            {i18n.t("PAYMENT_CONFIRM_3")}
+          </Instructions>
           
-        </Grid>
+        </Grid>        
       </Grid>
     );
   }

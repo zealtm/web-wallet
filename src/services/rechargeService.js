@@ -1,11 +1,9 @@
-import axios from "axios";
-import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
 import { internalServerError } from "../containers/errors/statusCodeMessage";
-import { setAuthToken } from "../utils/localStorage";
 
 class RechargeService {
 
-  async getOperadoras(token) {
+  async getOperadoras() {
     try {
       // API_HEADER.headers.Authorization = token;
 
@@ -38,7 +36,7 @@ class RechargeService {
     }
   }
 
-  async getValoresRecarga(token) {
+  async getValoresRecarga() {
     try {
       // API_HEADER.headers.Authorization = token;
 
