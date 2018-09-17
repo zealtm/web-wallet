@@ -1,20 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {getFeePayment,setFeePayment,setModalStep} from "../redux/rechargeAction";
-
-// COMPONENTS
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {setModalStep} from "../redux/rechargeAction";
 import ButtonContinue from "./component/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
-
-// UTILS
 import i18n from "../../../utils/i18n";
-
-// STYLES
 import style from "./style.css";
 
 class FeeRecharge extends React.Component {
@@ -23,11 +15,11 @@ class FeeRecharge extends React.Component {
     this.state = {
       feeSelect: 0,
       error: undefined,
-      errorMsg: '',
-    }
+      errorMsg: ""
+    };
   }
 
-  openError = (message) => {
+  openError = message => {
     this.setState({
       ...this.state,
       error: true,
@@ -38,53 +30,30 @@ class FeeRecharge extends React.Component {
       this.setState({
         ...this.state,
         error: false,
-        errorMsg: ''
+        errorMsg: ""
       });
     }, 4100);
-  }
+  };
 
-  calcFee(value) {
-    // this.setState({feeSelect:value});
-
-    // const {setFeePayment} = this.props;
-    // setFeePayment(value);
-  }
+  calcFee(value) {}
 
   validateForm = () => {
     const { setModalStep } = this.props;
-    // const { feeSelect } = this.state;
-    
-    // if(feeSelect > 0){
-    //   setModalStep(3);
-    // }else{
-    //   this.openError(i18n.t("MESSAGE_SELECT_FEE"));
-    //   return;
-    // }
 
     setModalStep(3);
-  }
-
-  componentDidMount = () => {
-    // const {getFeePayment, payment, wallet} = this.props;
-    
-    // // teste 
-    // const fromAddress = wallet.coins[payment.coin.abbreviation].address;
-    // const toAddress = payment.coin.address; 
-  
-    // getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
-  }
+  };
 
   render() {
     const { loading } = this.props;
     const { error, errorMsg } = this.state;
 
-    if(loading){
+    if (loading) {
       return (
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
-      )
-    }else{
+      );
+    } else {
       return (
         <div className={style.modalBox}>
           <div>
@@ -100,12 +69,15 @@ class FeeRecharge extends React.Component {
           </div>
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>
-            <span className={style.addressConfirm}>{i18n.t("PAYMENT_MODAL_TITLE")}</span>
+            <span className={style.addressConfirm}>
+              {i18n.t("PAYMENT_MODAL_TITLE")}
+            </span>
           </div>
 
           <div className={style.confirmFee}>
             <div>
-              {i18n.t("PAYMENT_FEE_AMOUNT")}<span> lunes </span> é
+              {i18n.t("PAYMENT_FEE_AMOUNT")}
+              <span> lunes </span> é
             </div>
             <div className={style.txtamount}>0.001</div>
           </div>
@@ -133,7 +105,7 @@ class FeeRecharge extends React.Component {
 
           <ButtonContinue
             label={i18n.t("BTN_CONTINUE")}
-            action={()=>this.validateForm()}
+            action={() => this.validateForm()}
             loading={loading}
           />
         </div>
@@ -143,24 +115,25 @@ class FeeRecharge extends React.Component {
 }
 
 FeeRecharge.propTypes = {
-  loading:          PropTypes.bool.isRequired,
-  wallet:           PropTypes.object.isRequired, 
-  setModalStep:     PropTypes.func,
-  getFeePayment:    PropTypes.func,
-  setFeePayment:    PropTypes.func
-}
+  loading: PropTypes.bool.isRequired,
+  wallet: PropTypes.object.isRequired,
+  setModalStep: PropTypes.func,
+  getFeePayment: PropTypes.func,
+  setFeePayment: PropTypes.func
+};
 
 const mapStateToProps = store => ({
-  loading:    store.recharge.loading, 
-  wallet:     store.skeleton
+  loading: store.recharge.loading,
+  wallet: store.skeleton
 });
 
-const mapDispatchToProps = dispatch =>bindActionCreators(
-  {
-    setModalStep,
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

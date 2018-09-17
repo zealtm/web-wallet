@@ -26,7 +26,7 @@ import style from "./style.css";
 
 const customStyle = {
   inputRoot: {
-    fontSize:'22px',
+    fontSize: '22px',
     color: colors.messages.info,
     margin: "0.5rem 0",
     padding: "5px",
@@ -231,7 +231,7 @@ class Invoice extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
             <Select
-              list={[{value:"15",title:"R$15,00"},{value:"15",title:"R$15,00"},]}
+              list={[{ value: "15", title: "R$15,00" }, { value: "15", title: "R$15,00" },]}
               title={invoice.valor.title}
               error={errors.includes("valor")}
               selectItem={this.handleValor}
@@ -239,7 +239,7 @@ class Invoice extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={style.box} style={{marginTop: "10px",padding: 5}}>
+        <Grid item xs={12} className={style.box} style={{ marginTop: "10px", padding: 5 }}>
 
           <Grid container direction="row" justify="center">
             <Grid item xs={8}>
@@ -302,14 +302,13 @@ class Invoice extends React.Component {
           item
           xs={12}
           className={style.transparentBox}
-          style={{ marginTop: "60px", textAlign: "center"}}
+          style={{ marginTop: "60px", textAlign: "center" }}
         >
           <Instructions>
-          {i18n.t("TEXT_ATTENTION")}<br />
+            {i18n.t("TEXT_ATTENTION")}<br />
             {i18n.t("PAYMENT_CONFIRM_3")}
-          </Instructions>
-          
-        </Grid>        
+            </Instructions>
+        </Grid>
       </Grid>
     );
   }
@@ -324,7 +323,7 @@ const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
   loading: store.recharge.loading
 });
-
+      
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -334,8 +333,9 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-
+    
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(customStyle)(Invoice));
+                                          
