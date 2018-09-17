@@ -1,10 +1,20 @@
-import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  put,
+  call
+} from "redux-saga/effects";
+import {
+  internalServerError
+} from "../../errors/statusCodeMessage";
 
-// UTILS
-import { getAuthToken } from "../../../utils/localStorage";
-import { convertToLocaleDate } from "../../../utils/strings";
-import { convertBiggestCoinUnit } from "../../../utils/numbers";
+import {
+  getAuthToken
+} from "../../../utils/localStorage";
+import {
+  convertBiggestCoinUnit
+} from "../../../utils/numbers";
+import {
+  convertToLocaleDate
+} from "../../../utils/strings";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
@@ -105,6 +115,12 @@ export function* setPaymentSaga(payload) {
     });
   } catch (error) {
     yield put(internalServerError());
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
+
+    return;
   }
 }
 
