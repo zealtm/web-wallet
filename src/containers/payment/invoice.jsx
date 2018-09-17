@@ -408,7 +408,13 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   classes: PropTypes.object,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  coinsRedux: PropTypes.array.isRequired,
+  payment: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  getInvoice: PropTypes.func.isRequired,
+  getCoinsEnabled: PropTypes.func.isRequired,
+  setPayment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({

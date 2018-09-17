@@ -106,7 +106,6 @@ class CoinService {
               coin.address,
             API_HEADER
           );
-
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
@@ -144,6 +143,7 @@ class CoinService {
       console.warn(coins);
       return coins;
     } catch (error) {
+      console.warn(error, error.response);
       internalServerError();
       return;
     }
@@ -297,8 +297,6 @@ class CoinService {
         return "error";
       }
 
-      address = address.replace(coin + ":", "");
-
       if (coin === "lunes") {
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
@@ -340,7 +338,7 @@ class CoinService {
       if (navigator.share) {
         navigator.share({
           title: document.title,
-          text: coinName + ": " + coinAddress,
+          text: coinName + ":" + coinAddress,
           url: window.location.href
         });
       }
@@ -354,6 +352,8 @@ class CoinService {
       let fee = {};
       let feePerByte = {};
       let feeLunes = {};
+
+      //API_HEADER.headers.Authorization = token;
 
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
@@ -406,15 +406,6 @@ class CoinService {
   ) {
     try {
       API_HEADER.headers.Authorization = token;
-      console.warn(
-        serviceId,
-        feeLunes,
-        transaction,
-        coin,
-        price,
-        describe,
-        token
-      );
       let transactionData = {
         serviceId: serviceId,
         feeLunes: feeLunes,

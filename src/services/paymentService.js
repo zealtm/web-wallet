@@ -29,15 +29,13 @@ class PaymentService {
         API_HEADER
       );
       // TODO: enable setAuthToken when the header is in the api response
-      // setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      const date = response.data.data.dueDate;
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       const data = {
         number,
         value: response.data.data.value,
         assignor: response.data.data.assignor || "",
-        dueDate: date || ""
+        dueDate: response.data.data.dueDate || ""
       };
 
       return data;
@@ -57,6 +55,19 @@ class PaymentService {
 
       return response;
     } catch(error) {
+      return internalServerError();
+    }
+  }
+
+  async getHistory(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data.data;
+    } catch (error) {
       return internalServerError();
     }
   }
