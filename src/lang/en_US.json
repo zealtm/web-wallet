@@ -309,6 +309,9 @@
   "PAYMENT_GDPR_ERROR": "You must accept the GDPR terms to continue",
   "PAYMENT_AMOUNT_ERROR": "Your balance is insufficient to make this payment",
 
+  "PAYMENT_TED_TITLE_1": "TED",
+
+
   "MODAL_TITLE_INSTRUCIONS": "Instructions",
   "MODAL_TITLE_START_LEASING": "Start Leasing",
   "MODAL_SEND_QR_CODE": "Enviar Scaneando QrCode",

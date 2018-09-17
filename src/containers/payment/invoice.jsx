@@ -1,6 +1,7 @@
 import React from "react";
 import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -169,6 +170,7 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment } = this.props;
     const { invoice, coin } = this.state;
+
 
     const invoiceData = {
       ...invoice,
@@ -360,12 +362,14 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <button
-            className={style.buttonBorderGreen}
-            onClick={this.inputValidator}
-          >
-            {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
-          </button>
+          <Link to="/TED">
+            <button
+              className={style.buttonBorderGreen}
+              onClick={this.inputValidator}
+            >
+              {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
+            </button>
+          </Link>
         </Grid>
 
         <Grid
