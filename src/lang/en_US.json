@@ -256,7 +256,7 @@
   "PAYMENT_PASS_CONFIRMATION": "Para confirmar sua transação, informe sua senha e conclua o envio de ",
   "PAYMENT_PASS_TO": " para o endereço ",
   "PAYMENT_TEXT_HISTORY": "Você pode visualizar a transação em sua seção \"Históricos\"",
-  "PAYMENT_SUCCESS_1": "Você acabou de debitar um boleto no valor de ",
+  "PAYMENT_SUCCESS_1": "Você acabou de debitar um boleto",
   "PAYMENT_SUCCESS_2": " em sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você esta enviando ",
   "PAYMENT_FEE_TEXT_2": " para o endereco ",

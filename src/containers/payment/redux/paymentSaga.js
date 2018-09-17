@@ -147,6 +147,11 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    if(response.data.errorMessage){
+      yield put(internalServerError());
+      return;
+    }
+
     yield put({
       type: "GET_INVOICE_REDUCER",
       payment: response
@@ -247,8 +252,9 @@ export function* confirmPaySaga(payload) {
           decryptAes(seed, payload.payment.user),
           token
         );
-  
-        console.log("transacao_response", response);
+        
+        const transacao_obj = JSON.parse(response.config.data);
+        //console.log("transacao_response", transacao_obj);
 
         if (response) {
          
@@ -258,17 +264,30 @@ export function* confirmPaySaga(payload) {
             "amount":     parseFloat(payload.payment.payment.value),
             "name":       payload.payment.payment.name,
             "document":   payload.payment.payment.cpfCnpj,
-            "txID":       response.config.data.txID,
+            "txID":       transacao_obj.txID,
             "describe":   payload.payment.payment.description,
             "serviceId":  lunesWallet.id
           };
           
-          console.log("elastic", payload_elastic);
+          //console.log("elastic", payload_elastic);
 
           // chamar api pra salvar a transacao
           let response_elastic = yield call(paymentService.sendPay, token, payload_elastic);
 
           console.log("elastic_response", response_elastic);
+
+          if(response_elastic.data.errorMessage){
+            yield put({
+              type: "SET_MODAL_PAY_STEP_REDUCER",
+              step: 6
+            });
+            yield put(internalServerError());
+          }else{
+            yield put({
+              type: "SET_MODAL_PAY_STEP_REDUCER",
+              step: 5
+            });
+          }
 
           yield put({
             type: "SET_LOADING_REDUCER",
@@ -287,6 +306,11 @@ export function* confirmPaySaga(payload) {
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+
+      yield put({
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 6
+      });
   
       // yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
       yield put(internalServerError());
@@ -298,6 +322,10 @@ export function* confirmPaySaga(payload) {
         payload: false
       });
 
+      yield put({
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 6
+      });
 
       //yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
       yield put(internalServerError());
