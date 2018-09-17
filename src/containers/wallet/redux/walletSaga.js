@@ -160,6 +160,8 @@ export function* setWalletTransaction(action) {
         decryptAes(seed, action.password),
         token
       );
+      
+        console.log("transcao", response);
 
       if (response) {
         yield put({
