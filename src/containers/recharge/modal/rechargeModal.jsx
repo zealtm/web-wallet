@@ -1,12 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../redux/rechargeAction";
-
-// COMPONENTS
 import DetailsRecharge from "./detailsRecharge";
 import FeeRecharge from "./feeRecharge";
 import ConfirmRecharge from "./confirmRecharge";
@@ -20,30 +16,30 @@ class RechargeModal extends React.Component {
   render() {
     const { modalStep } = this.props;
 
-    switch(modalStep){
+    switch (modalStep) {
       case 1:
-        return <DetailsRecharge handleStep={this.handleStep} />
+        return <DetailsRecharge handleStep={this.handleStep} />;
       case 2:
-        return <FeeRecharge handleStep={this.handleStep} />
-      case 3: 
-        return <ConfirmRecharge handleStep={this.handleStep} />
+        return <FeeRecharge handleStep={this.handleStep} />;
+      case 3:
+        return <ConfirmRecharge handleStep={this.handleStep} />;
       case 4:
-        return <SecureRecharge handleStep={this.handleStep} />
-      case 5: 
-        return <DoneRecharge handleStep={this.handleStep} />
+        return <SecureRecharge handleStep={this.handleStep} />;
+      case 5:
+        return <DoneRecharge handleStep={this.handleStep} />;
     }
   }
 }
 
 RechargeModal.propTypes = {
-  modalStep:    PropTypes.number.isRequired,
-  loading:      PropTypes.bool.isRequired,
+  modalStep: PropTypes.number.isRequired,
+  loading: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
-  modalStep:  store.recharge.modalStep,
-  loading:    store.recharge.loading
+  modalStep: store.recharge.modalStep,
+  loading: store.recharge.loading
 });
 
 const mapDispatchToProps = dispatch =>

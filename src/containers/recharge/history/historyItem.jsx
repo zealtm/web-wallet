@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import style from "./style.css";
 import { Grid } from "@material-ui/core";
 
@@ -10,7 +9,7 @@ class HistoryItem extends React.Component {
   }
 
   render() {
-    const {item} = this.props;
+    const { item } = this.props;
 
     return (
       <Grid container>
@@ -21,12 +20,18 @@ class HistoryItem extends React.Component {
             <p className={style.statusConfirmed}>{item.status}</p>
           </div>
           <div className={style.itemRight}>
-            <p className={style.icon}><img src={`/images/icons/coins/${item.coin}.png`} alt={item.coin}/> {item.coin}</p>
+            <p className={style.icon}>
+              <img
+                src={`/images/icons/coins/${item.coin}.png`}
+                alt={item.coin}
+              />{" "}
+              {item.coin}
+            </p>
             <p className={style.coinValue}>{item.amount}</p>
             <p>R$ {item.value}</p>
           </div>
         </Grid>
-        <div className={style.line}></div>
+        <div className={style.line} />
       </Grid>
     );
   }
@@ -34,6 +39,6 @@ class HistoryItem extends React.Component {
 
 HistoryItem.propTypes = {
   item: PropTypes.object
-}
+};
 
 export default HistoryItem;

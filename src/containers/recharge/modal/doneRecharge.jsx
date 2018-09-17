@@ -1,13 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-
-// REDUX
-import {connect} from "react-redux";
-
-// UTILS
+import { connect } from "react-redux";
 import i18n from "../../../utils/i18n";
-
-// STYLES
 import style from "./style.css";
 
 class DoneRecharge extends React.Component {
@@ -16,14 +9,12 @@ class DoneRecharge extends React.Component {
   }
 
   render() {
-    
     return (
       <div className={style.modalBox}>
         <img
           src="/images/icons/confirm/confirm.png"
           className={style.imageResult}
         />
-        {/* <img src="/images/icons/error/error.png" /> */}
         <div>
           {i18n.t("RECHARGE_SUCCESS_1")}
           <span className={style.textGreen}>R$ 30,00</span>
@@ -37,14 +28,6 @@ class DoneRecharge extends React.Component {
   }
 }
 
-DoneRecharge.propTypes = {
-  //payment: PropTypes.object.isRequired
-}
+const mapStateToProps = store => ({});
 
-const mapStateToProps = store => ({
-  //payment: store.payment.payment
-});
-
-export default connect(
-  mapStateToProps
-)(DoneRecharge);
+export default connect(mapStateToProps)(DoneRecharge);

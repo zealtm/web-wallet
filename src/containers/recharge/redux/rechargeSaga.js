@@ -1,14 +1,6 @@
-import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
-
-import { getAuthToken } from "../../../utils/localStorage";
-import { convertBiggestCoinUnit } from "../../../utils/numbers";
-
-// importar servico
-import RechargeService from "../../../services/rechargeService";
-
-// iniciar servico
-const rechargeService = new RechargeService();
+import {
+  put
+} from "redux-saga/effects";
 
 export function* setModalStepSaga(payload) {
   yield put({
