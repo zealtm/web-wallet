@@ -3,6 +3,30 @@ const initialState = {
   history: [],
   loading: false,
   modalStep: 1,
+  payment: {
+    fee: "",
+    number: "",
+    coin: {
+      abbreviation: "",
+      address: ""
+    },
+    balance: "",
+    amount: "",
+    value: "",
+    assignor: "", //bank: "",
+    name: "",
+    dueDate: "", // dateend: "",
+    cpfCnpj: "",
+    description: "",
+  },
+  fee: {
+    low: 0,
+    medium: 0,
+    hight: 0
+  },
+  user: {
+    gdpr: 'unread'
+  },
 };
 
 const recharge = (state=initialState, action) => {

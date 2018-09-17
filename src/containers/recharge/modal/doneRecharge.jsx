@@ -16,7 +16,7 @@ class DoneRecharge extends React.Component {
   }
 
   render() {
-    const {payment} = this.props;
+    
     return (
       <div className={style.modalBox}>
         <img
@@ -25,13 +25,12 @@ class DoneRecharge extends React.Component {
         />
         {/* <img src="/images/icons/error/error.png" /> */}
         <div>
-          {i18n.t("PAYMENT_SUCCESS_1")}
-          <span className={style.textGreen}>R$ {payment.value}</span>
-          {i18n.t("PAYMENT_SUCCESS_2")}
+          {i18n.t("RECHARGE_SUCCESS_1")}
+          <span className={style.textGreen}>R$ 30,00</span>
         </div>
 
         <div className={style.smallDescription}>
-          {i18n.t("PAYMENT_TEXT_HISTORY")}
+          {i18n.t("RECHARGE_SUCCESS_2")}
         </div>
       </div>
     );
@@ -39,11 +38,11 @@ class DoneRecharge extends React.Component {
 }
 
 DoneRecharge.propTypes = {
-  payment: PropTypes.object.isRequired
+  //payment: PropTypes.object.isRequired
 }
 
 const mapStateToProps = store => ({
-  payment: store.payment.payment
+  //payment: store.payment.payment
 });
 
 export default connect(

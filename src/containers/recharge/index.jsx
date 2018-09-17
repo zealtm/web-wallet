@@ -52,14 +52,14 @@ class Recharge extends React.Component {
     return (
       <div>
         <div className={style.header}>
-          <h1>Lunes Recarga Online</h1>
-          <p>Recarregue qualquer número e pague com criptomoedas</p>
+          <h1>{i18n.t("RECHARGE_TITLE_INVOICE")}</h1>
+          <p>{i18n.t("RECHARGE_DESCRIPTION")}</p>
         </div>
 
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
 
         <Modal
-          title={"Recarga de Celular"}
+          title={i18n.t("RECHARGE_TITLE")}
           content={<RechargeModal />}
           show={isOpen}
           close={

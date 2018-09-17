@@ -44,37 +44,39 @@ class FeeRecharge extends React.Component {
   }
 
   calcFee(value) {
-    this.setState({feeSelect:value});
+    // this.setState({feeSelect:value});
 
-    const {setFeePayment} = this.props;
-    setFeePayment(value);
+    // const {setFeePayment} = this.props;
+    // setFeePayment(value);
   }
 
   validateForm = () => {
     const { setModalStep } = this.props;
-    const { feeSelect } = this.state;
+    // const { feeSelect } = this.state;
     
-    if(feeSelect > 0){
-      setModalStep(3);
-    }else{
-      this.openError(i18n.t("MESSAGE_SELECT_FEE"));
-      return;
-    }
+    // if(feeSelect > 0){
+    //   setModalStep(3);
+    // }else{
+    //   this.openError(i18n.t("MESSAGE_SELECT_FEE"));
+    //   return;
+    // }
+
+    setModalStep(3);
   }
 
   componentDidMount = () => {
-    const {getFeePayment, payment, wallet} = this.props;
+    // const {getFeePayment, payment, wallet} = this.props;
     
-    // teste 
-    const fromAddress = wallet.coins[payment.coin.abbreviation].address;
-    const toAddress = payment.coin.address; 
+    // // teste 
+    // const fromAddress = wallet.coins[payment.coin.abbreviation].address;
+    // const toAddress = payment.coin.address; 
   
-    getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
+    // getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
   }
 
   render() {
-    const { loading, payment, fee } = this.props;
-    const { feeSelect, error, errorMsg } = this.state;
+    const { loading } = this.props;
+    const { error, errorMsg } = this.state;
 
     if(loading){
       return (
@@ -89,12 +91,12 @@ class FeeRecharge extends React.Component {
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
           </div>
           <img
-            src={`/images/icons/coins/${payment.coin.abbreviation}.png`}
+            src={`/images/icons/coins/lunes.png`}
             className={style.modalIconCoin}
           />
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_1")}</span>
-            <span className={style.totalConfirm}>{payment.amount} {payment.coin.abbreviation}</span>
+            <span className={style.totalConfirm}>5000 LUNES</span>
           </div>
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>
@@ -103,29 +105,29 @@ class FeeRecharge extends React.Component {
 
           <div className={style.confirmFee}>
             <div>
-              {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {payment.coin.abbreviation} </span> é
+              {i18n.t("PAYMENT_FEE_AMOUNT")}<span> lunes </span> é
             </div>
-            <div className={style.txtamount}>{feeSelect}</div>
+            <div className={style.txtamount}>0.001</div>
           </div>
 
           <div className={style.boxFee}>
             <span
               className={style.greenLabelFee}
-              onClick={() => this.calcFee(fee.low)}
+              onClick={() => this.calcFee(0.001)}
             >
-              {i18n.t("FEE_LOW")} {fee.low}
+              {i18n.t("FEE_LOW")} 0.001
             </span>
             <span
               className={style.yellowLabelFee}
-              onClick={() => this.calcFee(fee.medium)}
+              onClick={() => this.calcFee(0.001)}
             >
-              {i18n.t("FEE_MEDIUM")} {fee.medium}
+              {i18n.t("FEE_MEDIUM")} 0.001
             </span>
             <span
               className={style.redLabelFee}
-              onClick={() => this.calcFee(fee.high)}
+              onClick={() => this.calcFee(0.001)}
             >
-              {i18n.t("FEE_HIGHT")} {fee.high}
+              {i18n.t("FEE_HIGHT")} 0.001
             </span>
           </div>
 
@@ -141,8 +143,6 @@ class FeeRecharge extends React.Component {
 }
 
 FeeRecharge.propTypes = {
-  fee:              PropTypes.object.isRequired,
-  payment:          PropTypes.object.isRequired,
   loading:          PropTypes.bool.isRequired,
   wallet:           PropTypes.object.isRequired, 
   setModalStep:     PropTypes.func,
@@ -151,8 +151,6 @@ FeeRecharge.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  fee:        store.recharge.fee.fee,
-  payment:    store.payment.payment,
   loading:    store.recharge.loading, 
   wallet:     store.skeleton
 });
@@ -160,8 +158,6 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>bindActionCreators(
   {
     setModalStep,
-    getFeePayment,
-    setFeePayment
   },
   dispatch
 );

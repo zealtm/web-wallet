@@ -5,17 +5,21 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//import { getCoinsEnabled, setPayment, getInvoice } from "./redux/paymentAction";
+import { getCoinsEnabled } from "./redux/rechargeAction";
 
 // COMPONENTS
 import Select from "../../components/select";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
 import Instructions from "../../components/instructions";
+import { PhoneMask } from "../../components/inputMask";
 
 // MATERIAL
-import { Grid, Input, InputAdornment } from "@material-ui/core";
+import { Grid, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+
+// UTILS
+import { inputValidator } from "../../utils/inputValidator";
 
 // STYLES
 import style from "./style.css";
@@ -36,7 +40,7 @@ const customStyle = {
     fontFamily: "Noto Sans, sans-serif",
     fontSize: "22px",
     letterSpacing: "0.5px",
-    textAlign: "left",
+    textAlign: "center",
     paddingLeft: "10px"
   },
   inputCssCenter: {
@@ -74,15 +78,28 @@ class Invoice extends React.Component {
         name: undefined,
         value: undefined,
         img: undefined
+      }, 
+      invoice: {
+        phone: null,
+        operadora: {
+          value: null,
+          title: "Operadora"
+        },
+        valor: {
+          value: null,
+          title: "Valor"
+        }
       }
     };
 
     this.coinSelected = this.coinSelected.bind(this);
+    this.handleOperadora = this.handleOperadora.bind(this);
+    this.handleValor = this.handleValor.bind(this);
   }
 
   componentDidMount() {
-    // const { getCoinsEnabled } = this.props;
-    // getCoinsEnabled();
+    const { getCoinsEnabled } = this.props;
+    getCoinsEnabled();
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -100,41 +117,37 @@ class Invoice extends React.Component {
     });
   };
 
-  handleInvoiceNumberChange = event => {
-    //const { getInvoice } = this.props;
-    const { invoice, disableNumberInput } = this.state;
-
-    const newValue = event.target.value.replace(/\D/, "");
-
+  handleOperadora = (value, title) => {
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length === 47,
       invoice: {
-        ...invoice,
-        number: newValue
+        ...this.state.invoice,
+        operadora: {
+          value: value,
+          title: title
+        }
       }
     });
 
-    if (newValue.length === 47) {
-      if (disableNumberInput) {
-        return;
+    console.log(this.state);
+  }
+
+  handleValor = (value, title) => {
+    this.setState({
+      ...this.state,
+      invoice: {
+        ...this.state.invoice,
+        valor: {
+          value: value,
+          title: title
+        }
       }
+    });
 
-      this.setState({
-        invoiceLoading: true
-      });
+    console.log(this.state);
+  }
 
-     // getInvoice(newValue);
-
-      setTimeout(() => {
-        this.setState({
-          invoiceLoading: false
-        });
-      }, 1000);
-    }
-  };
-
-  handleInvoiceDefaultChange = name => event => {
+  handleField = name => event => {
     this.setState({
       ...this.state,
       invoice: {
@@ -155,59 +168,51 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    // const { payment } = this.props;
-    // const { invoice, coin } = this.state;
 
-    // const invoiceData = {
-    //   ...invoice,
-    //   assignor: payment.assignor || invoice.assignor,
-    //   dueDate: payment.dueDate || invoice.dueDate,
-    //   value: payment.value || invoice.value
-    // };
+    const { invoice, coin } = this.state;
 
-    // const invoiceInputs = {};
+    const invoiceData = {
+      ...invoice
+    };
 
-    // for (const key in invoiceData) {
-    //   if (invoiceData.hasOwnProperty(key)) {
-    //     invoiceInputs[key] = {
-    //       type: key === "dueDate" ? "date" : "text",
-    //       name: key,
-    //       placeholder: key,
-    //       value: invoiceData[key],
-    //       required: true
-    //     };
-    //   }
+    const invoiceInputs = {};
 
-    //   if (key === "number") {
-    //     invoiceInputs[key]["minLength"] = 47;
-    //   }
-    // }
+    for (const key in invoiceData) {
+      if (invoiceData.hasOwnProperty(key)) {
+        invoiceInputs[key] = {
+          type: "text",
+          name: key,
+          placeholder: key,
+          value: invoiceData[key],
+          required: true
+        };
+      }
+    }
 
-    // const coinInput = {
-    //   type: "text",
-    //   name: "coin",
-    //   placeholder: "coin",
-    //   value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
-    //   required: true
-    // };
+    const coinInput = {
+      type: "text",
+      name: "coin",
+      placeholder: "coin",
+      value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
+      required: true
+    };
 
-    // const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+    const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
-    // if (errors.length > 0) {
-    //   this.setState({
-    //     ...this.state,
-    //     errors
-    //   });
-    //   return;
-    // }
+    if (errors.length > 0) {
+      this.setState({
+        ...this.state,
+        errors
+      });
+      return;
+    }
 
-    // this.setPayment(invoiceData);
     this.openModal();
   };
 
   render() {
     const { classes, loading, coinsRedux } = this.props;
-    const { coin, errors} = this.state;
+    const { coin, errors, invoice} = this.state;
 
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
@@ -219,22 +224,24 @@ class Invoice extends React.Component {
           <Grid item xs={12} md={6}>
             <Select
               list={[{value:"vivo",title:"VIVO"},{value:"vivo",title:"VIVO"},]}
-              title={"Operadora"}
-              selectItem={()=>alert(1)}
+              title={invoice.operadora.title}
+              error={errors.includes("operadora")}
+              selectItem={this.handleOperadora}
             />
           </Grid>
           <Grid item xs={12} md={6}>
           <Select
               list={[{value:"15",title:"R$15,00"},{value:"15",title:"R$15,00"},]}
-              title={"Valor"}
-              selectItem={()=>alert(1)}
+              title={invoice.valor.title}
+              error={errors.includes("valor")}
+              selectItem={this.handleValor}
             />
           </Grid>
         </Grid>
 
         <Grid item xs={12} className={style.box} style={{marginTop: "10px",padding: 5}}>
 
-          <Grid container direction="row">
+          <Grid container direction="row" justify="center">
             <Grid item xs={8}>
               <Input
                 classes={{
@@ -243,20 +250,21 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={"(00)9999-9999"}
-                value={""}
-                onChange={()=>alert(1)}
-                error={""}
+                value={this.state.invoice.phone}
+                onChange={this.handleField("phone")}
+                error={errors.includes("phone")}
+                inputComponent={PhoneMask}
               />
             </Grid>
 
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <button
                 className={style.buttonPurple}
                 onClick={()=>alert(1)}
               >
                 {loading ? <Loading /> : "FAVORITAR"}
               </button>
-            </Grid>
+            </Grid> */}
           </Grid>
           
         </Grid>
@@ -321,7 +329,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       // getInvoice,
-      // getCoinsEnabled,
+      getCoinsEnabled,
       // setPayment
     },
     dispatch

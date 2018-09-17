@@ -27,17 +27,17 @@ class ConfirmRecharge extends React.Component {
   }
 
   render() {
-    const {loading, payment } = this.props;
+    const {loading } = this.props;
     return (
       <div className={style.modalBox}>
         <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
         <div>
           <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
-          <span className={style.totalConfirmBlock}>{payment.amount + payment.fee} {payment.coin.abbreviation}</span>
+          <span className={style.totalConfirmBlock}>5000.001 LUNES</span>
         </div>
 
         <div className={style.smallDescription}>
-          {i18n.t("PAYMENT_CONFIRM_3")}
+          {i18n.t("RECHARGE_TITLE")}
         </div>
 
         <ButtonContinue
@@ -53,12 +53,10 @@ class ConfirmRecharge extends React.Component {
 
 ConfirmRecharge.propTypes = {
   setModalStep:     PropTypes.func.isRequired,
-  payment:          PropTypes.object.isRequired,
   loading:          PropTypes.bool.isRequired
 }
 
 const mapStateToProps = store => ({
-  payment: store.payment.payment,
   loading: store.recharge.loading
 });
 

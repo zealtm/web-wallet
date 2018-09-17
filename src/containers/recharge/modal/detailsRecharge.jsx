@@ -51,18 +51,18 @@ class DetailsRecharge extends React.Component {
   }
 
   validateForm = () => {
-    const {setModalStep, payment} = this.props;
-    const {user, error} = this.state;
+    const {setModalStep} = this.props;
+    // const {user, error} = this.state;
 
-    if (user.gdpr === 'unread') {
-      this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
-      return;
-    }
+    // if (user.gdpr === 'unread') {
+    //   this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
+    //   return;
+    // }
 
-    if (!payment.amount || parseFloat(payment.amount) > payment.balance) {
-      this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
-      return;
-    }
+    // if (!payment.amount || parseFloat(payment.amount) > payment.balance) {
+    //   this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
+    //   return;
+    // }
 
     // atualizar reducer com o proximo modal
     // Atualizar GDPR no estado e no banco (???)
@@ -71,26 +71,25 @@ class DetailsRecharge extends React.Component {
   }
 
   toogleSwitch = () => {
-    const {user} = this.state;
-    const {setUserGdpr} = this.props;
-    const newStatus = user.gdpr === 'read' ? 'unread' : 'read';
+    // const {user} = this.state;
+    // const {setUserGdpr} = this.props;
+    // const newStatus = user.gdpr === 'read' ? 'unread' : 'read';
 
-    this.setState({
-      ...this.state,
-      user: {
-        ...user,
-        gdpr: newStatus
-      }
-    });
+    // this.setState({
+    //   ...this.state,
+    //   user: {
+    //     ...user,
+    //     gdpr: newStatus
+    //   }
+    // });
 
-    setUserGdpr({gpdr: newStatus});
+    // setUserGdpr({gpdr: newStatus});
   }
 
   render() {
-    const {loading, payment} = this.props;
+    const {loading} = this.props;
     const {user, error, errorMsg} = this.state;
 
-    // const gdpr = payment.user.gdpr || user.gdpr;
     if(loading){
       return (
         <div className={style.modalBox}>
@@ -103,37 +102,18 @@ class DetailsRecharge extends React.Component {
           <div>
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
           </div>
-          {i18n.t("PAYMENT_DETAILS_TEXT_1")}
+          {i18n.t("RECHARGE_DETAILS_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span>
-            {i18n.t("PAYMENT_DETAILS_TEXT_2")}
-            <span className={style.textGreen}>R$ {payment.value}</span>
-            {i18n.t("PAYMENT_DETAILS_TEXT_3")}
+            {/* <span className={style.textGreen}>{payment.amount} {payment.coin.abbreviation}</span> */}
+            <span className={style.textGreen}>5000 LUNES</span>
+            {i18n.t("RECHARGE_DETAILS_2")}
+            <span className={style.textGreen}>R$ 30,00</span>
+
+            {i18n.t("RECHARGE_DETAILS_3")}
           </div>
-          <Grid container className={style.inlineInfo}>
-            <Grid item xs={6} md={3}>
-              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_BANK")}</label>
-              {payment.assignor}
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_NAME")}</label>
-              {payment.name}
-            </Grid>
-            <Grid item xs={6} md={2}>
-              <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_DATE")}</label>
-              {payment.dueDate}
-            </Grid>
-            <Grid item xs={6} md={2} style={{padding: '0'}}>
-              <label className={style.inlineInfoLabel} style={{padding: '10px'}}>{i18n.t("PAYMENT_TITLE_DOC")}</label>
-              <p style={{marginTop: '-10px'}}>{formatCpfCnpj(payment.cpfCnpj)}</p>
-            </Grid>
-            <Hidden smDown>
-              <Grid item xs={6} md={2}>
-                <label className={style.inlineInfoLabel}>{i18n.t("PAYMENT_TITLE_VALUE")}</label>
-                R$ {payment.value}
-              </Grid>
-            </Hidden>
-          </Grid>
+
+          <div style={{fontSize:"24px", textAlign:"center", marginTop:30,marginBottom:30}}>(19) 99990-9999</div>
+          
           <CustomSwitch
             title={i18n.t("GDPR_TITLE")}
             description={i18n.t("GDPR_DESC")}
@@ -154,16 +134,13 @@ class DetailsRecharge extends React.Component {
 }
 
 DetailsRecharge.propTypes = {
-  payment:        PropTypes.object.isRequired,
   loading:        PropTypes.bool.isRequired,
-  user:           PropTypes.object.isRequired,
   setModalStep:   PropTypes.func.isRequired,
   getUserGdpr:    PropTypes.func.isRequired,
   setUserGdpr:    PropTypes.func.isRequired
 }
 
 const mapStateToProps = store => ({
-  payment:  store.payment.payment,
   loading:  store.recharge.loading,
   user:     store.user.user,
 });
