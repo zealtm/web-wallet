@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, setPayment, getInvoice } from "./redux/paymentAction";
+import { getCoinsEnabled, setPayment, getInvoice, setClearPayment } from "./redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -80,7 +80,11 @@ class Invoice extends React.Component {
         description: "",
         dueDate: "",
         cpfCnpj: "",
-        value: ""
+        value: "",
+        coin: {
+          abbreviation: "",
+          address: ""
+        }
       },
       coin: {
         name: undefined,
@@ -98,6 +102,8 @@ class Invoice extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
+    const {invoice} = this.state;
+
     this.setState({
       ...this.state,
       coin: {
@@ -106,14 +112,40 @@ class Invoice extends React.Component {
         img
       },
       invoice: {
-        ...this.state.invoice,
+        ...invoice,
         coin: value
       }
     });
   };
 
+  setDefaultState = () => {
+    const emptyValue = {
+      number: "",
+      assignor: "",
+      name: "",
+      description: "",
+      dueDate: "",
+      cpfCnpj: "",
+      value: "",
+      coin: {
+        abbreviation: "",
+        address: ""
+      }
+    }
+
+    this.setState({
+      ...this.state,
+      invoice: emptyValue,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }
+    })
+  }
+
   handleInvoiceNumberChange = event => {
-    const { getInvoice } = this.props;
+    const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
 
     const newValue = event.target.value.replace(/\D/, "");
@@ -127,22 +159,15 @@ class Invoice extends React.Component {
       }
     });
 
-    if (newValue.length === 47) {
+    if (newValue.length == 0) {
+      this.setDefaultState();
+      setClearPayment();
+    } else if (newValue.length === 47) {
       if (disableNumberInput) {
         return;
       }
 
-      this.setState({
-        invoiceLoading: true
-      });
-
       getInvoice(newValue);
-
-      setTimeout(() => {
-        this.setState({
-          invoiceLoading: false
-        });
-      }, 1000);
     }
   };
 
@@ -199,7 +224,7 @@ class Invoice extends React.Component {
       type: "text",
       name: "coin",
       placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.value.abbreviation || "",
+      value: invoiceData.coin.abbreviation || coin.name || "",
       required: true
     };
 
@@ -215,6 +240,7 @@ class Invoice extends React.Component {
 
     this.setPayment(invoiceData);
     this.openModal();
+    this.setDefaultState();
   };
 
   render() {
@@ -386,7 +412,13 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   classes: PropTypes.object,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  coinsRedux: PropTypes.array.isRequired,
+  payment: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  getInvoice: PropTypes.func.isRequired,
+  getCoinsEnabled: PropTypes.func.isRequired,
+  setPayment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -400,7 +432,8 @@ const mapDispatchToProps = dispatch =>
     {
       getInvoice,
       getCoinsEnabled,
-      setPayment
+      setPayment,
+      setClearPayment
     },
     dispatch
   );

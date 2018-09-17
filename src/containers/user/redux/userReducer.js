@@ -4,7 +4,7 @@ const initialState = {
     birthday: undefined,
     city: undefined,
     country: undefined,
-    gdpr: undefined,
+    terms: undefined,
     phone: undefined,
     state: undefined,
     street: undefined,
@@ -163,7 +163,7 @@ const user = (state = initialState, action) => {
           surname: action.user.surname,
           zipcode: action.user.zipcode,
           email: action.user.email,
-          gdpr: action.user.gdpr
+          terms: action.user.terms
         }
       };
 
