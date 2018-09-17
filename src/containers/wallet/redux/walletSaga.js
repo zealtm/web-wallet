@@ -151,16 +151,10 @@ export function* setWalletTransaction(action) {
       token
     );
 
-    let responseService = yield call(
-      transactionService.transactionService,
-      action.transaction.coin,
-      token
-    );
-
-    if (lunesWallet && responseService) {
+    if (lunesWallet) {
       let response = yield call(
         transactionService.transaction,
-        responseService.id,
+        lunesWallet.id,
         action.transaction,
         lunesWallet,
         decryptAes(seed, action.password),

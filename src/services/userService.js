@@ -34,8 +34,9 @@ class UserService {
       if (error.response.data.code === 500) {
         return badRequest("You are already registered");
       }
-
-      return internalServerError();
+      //return internalServerError();
+      internalServerError();
+      return;
     }
   }
 
@@ -60,8 +61,11 @@ class UserService {
         BASE_URL + "/user",
         userInfo,
         API_HEADER
-      );
-      // setAuthToken(response.headers[HEADER_RESPONSE]);
+      ).catch(error => {
+        return error.response;
+      });
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {

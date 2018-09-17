@@ -285,6 +285,8 @@ class CoinService {
       return response.data.data;
     } catch (error) {
       console.warn(error);
+      // return;
+      internalServerError();
       return;
     }
   }
@@ -390,8 +392,8 @@ class CoinService {
       };
       return fee;
     } catch (error) {
-      console.warn(error);
       internalServerError();
+      return;
     }
   }
 
