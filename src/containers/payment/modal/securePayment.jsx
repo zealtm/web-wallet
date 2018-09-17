@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { confirmPay } from "../redux/paymentAction";
+import { setModalStep, confirmPay } from "../redux/paymentAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -28,10 +28,10 @@ class SecurePayment extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, payment, confirmPay, errorInput } = this.props;
+    let { user, setModalStep, errorInput } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      confirmPay(payment);
+      setModalStep(5);
       return;
     }
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
@@ -51,7 +51,7 @@ class SecurePayment extends React.Component {
         <div>
           <span>{i18n.t("PAYMENT_PASS_CONFIRMATION")}</span>
           <span className={style.totalConfirm}>
-            {payment.amount + payment.fee} {payment.coin.abbreviation}
+            {payment.amount + payment.fee.fee.fee} {payment.coin.abbreviation}
           </span>
           <span> {i18n.t("PAYMENT_PASS_TO")} </span>
           <span className={style.addressConfirm}>
@@ -85,8 +85,8 @@ SecurePayment.propTypes = {
   payment:      PropTypes.object.isRequired,
   loading:      PropTypes.bool.isRequired,
   user:         PropTypes.object.isRequired,
-  confirmPay:   PropTypes.func.isRequired,
-  errorInput:   PropTypes.func.isRequired
+  errorInput:   PropTypes.func.isRequired, 
+  setModalStep: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -97,7 +97,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   { 
-    confirmPay, 
+    setModalStep, 
     errorInput 
   }, 
   dispatch

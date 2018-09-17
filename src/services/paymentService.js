@@ -65,8 +65,6 @@ class PaymentService {
       const response = await axios.post(`${BASE_URL}/bill/pay/${payload.barCode}`, payload, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      console.log("CONFIRMA", response);
-
       return response;
     }catch(error){
       internalServerError();

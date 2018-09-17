@@ -1,18 +1,21 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
-import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken,getUserSeedWords } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
+import { decryptAes } from "../../../utils/cryptography";
 
 // importar servico
 import PaymentService from "../../../services/paymentService";
 import UserService from "../../../services/userService";
 import CoinService from "../../../services/coinService";
+import TransactionService from "../../../services/transaction/transactionService";
 
 // iniciar servico
 const paymentService = new PaymentService();
 const userService = new UserService();
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 export function* setModalStepSaga(payload) {
   yield put({
@@ -135,7 +138,7 @@ export function* getFeePaymentSaga(payload) {
 export function* setFeePaymentSaga(payload) {
   yield put({
     type: "SET_FEE_PAYMENT_REDUCER",
-    fee: payload.fee
+    fee: payload
   });
 }
 
@@ -207,43 +210,99 @@ export function* confirmPaySaga(payload) {
       type: "SET_LOADING_REDUCER",
       payload: true
     });
+    
+    const payload_transaction = {
+      coin:           payload.payment.coin,
+      fromAddress:    payload.payment.fromAddress,
+      toAddress:      payload.payment.toAddress,
+      amount:         payload.payment.amount,
+      fee:            payload.payment.fee,
+      feePerByte:     payload.payment.feePerByte,
+      feeLunes:       payload.payment.feeLunes,
+      price:          payload.payment.price,
+      decimalPoint:   payload.payment.decimalPoint
+    }
 
-    // validar a carga recebida
-    console.log("CONFIRMA_CARGA", payload);
-   
-    const data = {
-      "barCode":    payload.payment.number,
-      "dueDate":    payload.payment.dueDate,
-      "amount":     parseFloat(payload.payment.value).toFixed(2),
-      "name":       payload.payment.name,
-      "document":   payload.payment.cpfCnpj,
-      "txID":       "d07915a94737ba970a43537afeb9e70ace557a5aa9e41378f668f22fd4d586a33",
-      "describe":   payload.payment.description,
-      "serviceId":  2 // este numero é de acordo com o service de coins
-    };
-    console.log(data);
-    // pegar a senha pra liberar a chave
+    //console.log("transacao_payload", payload);
 
-    // enviar transacao
+    // transacao 
+    try {
+      let seed      = yield call(getUserSeedWords);
+      let token     = yield call(getAuthToken);
+  
+      // pega o servico disponivel
+      let lunesWallet = yield call(
+        transactionService.transactionService,
+        payload_transaction.coin,
+        token
+      );
+      
+      if (lunesWallet) {
+        
+        // transaciona
+        let response = yield call(
+          transactionService.transaction,
+          payload_transaction,
+          lunesWallet,
+          decryptAes(seed, payload.payment.user),
+          token
+        );
+  
+        console.log("transacao_response", response);
 
-    // caso sucesso, chamar api
-    //let token = yield call(getAuthToken);
-    //let response = yield call(paymentService.sendPay, token, data);
+        if (response) {
+         
+          const payload_elastic = {
+            "barCode":    payload.payment.payment.number,
+            "dueDate":    payload.payment.payment.dueDate,
+            "amount":     parseFloat(payload.payment.payment.value),
+            "name":       payload.payment.payment.name,
+            "document":   payload.payment.payment.cpfCnpj,
+            "txID":       response.config.data.txID,
+            "describe":   payload.payment.payment.description,
+            "serviceId":  lunesWallet.id
+          };
+          
+          console.log("elastic", payload_elastic);
 
-    // chamar modal de confirmacao
+          // chamar api pra salvar a transacao
+          let response_elastic = yield call(paymentService.sendPay, token, payload_elastic);
 
-    yield put({
-      type: "SET_CLEAR_PAYMENT_REDUCER"
-    });
+          console.log("elastic_response", response_elastic);
 
-    yield put({
-      type: "SET_MODAL_PAY_STEP_REDUCER",
-      step: 5
-    });
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            payload: false
+          });
 
-    // libearar loading
+          yield put({
+            type: "SET_CLEAR_PAYMENT_REDUCER"
+          });
 
-    // limpar reducer
+          return;
+        }
+      }
+
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+  
+      // yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+      yield put(internalServerError());
+  
+      return;
+    } catch (error) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+
+
+      //yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+      yield put(internalServerError());
+    }
+
   } catch (error) {
     yield put(internalServerError());
   }
