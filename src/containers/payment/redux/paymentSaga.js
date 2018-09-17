@@ -19,12 +19,10 @@ import {
 // importar servico
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
-import UserService from "../../../services/userService";
 
 // iniciar servico
 const paymentService = new PaymentService();
 const coinService = new CoinService();
-const userService = new UserService();
 
 export function* setModalStepSaga(payload) {
   yield put({
@@ -40,16 +38,22 @@ export function* getCoinsEnabledSaga() {
 
     const services = response.data.services;
 
-    const coins = services.map(coin => {
-      return {
-        title: coin.name,
-        value: {
-          abbreviation: coin.abbreviation,
-          address: coin.address
-        },
-        img: `/images/icons/coins/${coin.abbreviation}.png`
-      };
-    });
+    const coins = services.reduce((availableCoins, coin) => {
+      if (coin.status === 'active') {
+        const active = {
+          title: coin.abbreviation.toUpperCase(),
+          value: {
+            abbreviation: coin.abbreviation,
+            address: coin.address
+          },
+          img: `/images/icons/coins/${coin.abbreviation}.png`
+        }
+
+        availableCoins.push(active);
+      }
+
+      return availableCoins;
+    }, []);
 
     yield put({
       type: "GET_COINS_REDUCER",
@@ -68,28 +72,17 @@ export function* setPaymentSaga(payload) {
       payload: true
     });
 
-    // chamar a quantidade de moedas necessarias
-    let token = yield call(getAuthToken);
-    let response = yield call(
-      coinService.getCoinPrice,
-      payload.pay.coin.abbreviation,
-      "brl",
-      token
-    );
+    const value = parseFloat(payload.pay.value);
+    const {abbreviation, address} = payload.pay.coin;
 
-    //console.log("response pay", response);
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      payload.pay.coin.abbreviation,
-      payload.pay.coin.address,
-      token
-    );
+    const token = yield call(getAuthToken);
+    const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
+    const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
 
     //console.log("response balance", balanceResponse);
 
     const balance = balanceResponse.data.data.available;
-    const value = parseFloat(payload.pay.value);
-    const amount = parseFloat(value / response.data.data.price);
+    const amount = amountResponse.data.data.value;
 
     //console.log("value", payload.pay);
     //console.log("amount", response.data.data.price);
@@ -98,8 +91,8 @@ export function* setPaymentSaga(payload) {
       number: payload.pay.number,
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
-      amount: parseFloat(amount.toFixed(8)),
-      value: value.toFixed(2).replace(".", ","),
+      amount: convertBiggestCoinUnit(amount, 8),
+      value: value.toFixed(2).replace('.', ','),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
@@ -159,6 +152,11 @@ export function* setFeePaymentSaga(payload) {
 
 export function* getInvoiceSaga(payload) {
   try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
@@ -172,20 +170,6 @@ export function* getInvoiceSaga(payload) {
     yield put({
       type: "GET_INVOICE_REDUCER",
       payment: data
-    });
-  } catch (error) {
-    yield put(internalServerError());
-  }
-}
-
-export function* setUserGdprSaga(payload) {
-  try {
-    const token = yield call(getAuthToken);
-    yield call(userService.updateUser, payload.user, token);
-
-    yield put({
-      type: "GET_USER_GDPR_REDUCER",
-      user: payload.user
     });
   } catch (error) {
     yield put(internalServerError());

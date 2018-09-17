@@ -94,7 +94,7 @@ class CreateUserTerms extends React.Component {
     return (
       <div>
         <div className={style.alignInfoDownloadTerms}>
-          <img src="../../images/login/gdpr-compliant@1x.png" />
+          <img src="../../images/login/terms-compliant@1x.png" />
 
           <div className={style.infoDownloadTerms}>
             <Link

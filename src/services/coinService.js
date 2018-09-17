@@ -106,7 +106,6 @@ class CoinService {
               coin.address,
             API_HEADER
           );
-          console.warn(responseBalance);
           availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
           availableCoins[index].balance = responseBalance.data.data;
 
@@ -357,7 +356,7 @@ class CoinService {
       let feeLunes = {};
 
       //API_HEADER.headers.Authorization = token;
-      
+
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
       let response = await axios.post(

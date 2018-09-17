@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserConsents } from "../../user/redux/userAction";
-import { getUserGdpr, setUserGdpr, setModalStep } from "../redux/paymentAction";
+import { setModalStep } from "../redux/paymentAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -55,8 +55,8 @@ class DetailsPayment extends React.Component {
     const { setModalStep, payment } = this.props;
     const { user } = this.state;
 
-    if (user.gdpr === "unread") {
-      this.openError(i18n.t("PAYMENT_GDPR_ERROR"));
+    if (user.terms === 'unread') {
+      this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
 
@@ -65,27 +65,24 @@ class DetailsPayment extends React.Component {
       return;
     }
 
-    // atualizar reducer com o proximo modal
-    // Atualizar GDPR no estado e no banco (???)
-
     setModalStep(2);
-  };
+  }
 
   toogleSwitch = () => {
-    const { user } = this.state;
-    const { updateUserConsents } = this.props;
-    const newStatus = user.gdpr === "read" ? "unread" : "read";
+    const {user} = this.state;
+    const {updateUserConsents} = this.props;
+    const newStatus = user.terms === 'read' ? 'unread' : 'read';
 
     this.setState({
       ...this.state,
       user: {
         ...user,
-        gdpr: newStatus
+        terms: newStatus
       }
     });
 
-    updateUserConsents({ gdpr: newStatus });
-  };
+    updateUserConsents({terms: newStatus});
+  }
 
   render() {
     const { loading, payment } = this.props;
@@ -152,11 +149,11 @@ class DetailsPayment extends React.Component {
             </Hidden>
           </Grid>
           <CustomSwitch
-            title={i18n.t("GDPR_TITLE")}
-            description={i18n.t("GDPR_DESC")}
+            title={i18n.t("PAYMENT_TERMS_TITLE")}
+            description={i18n.t("PAYMENT_TERMS_DESC")}
             action={this.toogleSwitch}
-            checked={user.gdpr === "read"}
-            value="gdprSwitch"
+            checked={user.terms === 'read'}
+            value="termsSwitch"
           />
 
           <ButtonContinue
@@ -175,8 +172,6 @@ DetailsPayment.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   setModalStep: PropTypes.func.isRequired,
-  getUserGdpr: PropTypes.func.isRequired,
-  setUserGdpr: PropTypes.func.isRequired,
   updateUserConsents: PropTypes.func.isRequired
 };
 
@@ -191,8 +186,6 @@ const mapDispatchToProps = dispatch =>
     {
       updateUserConsents,
       setModalStep,
-      getUserGdpr,
-      setUserGdpr
     },
     dispatch
   );

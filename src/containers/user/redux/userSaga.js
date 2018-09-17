@@ -259,13 +259,8 @@ export function* setUserSeed(action) {
 
 export function* updateUserConsentsSaga(payload) {
   try {
-    // TODO: remove after fix api parameter from gpdr to gdpr
-    const data = {
-      gpdr: payload.consents.gdpr || "unread"
-    };
-
     const token = yield call(getAuthToken);
-    let response = yield call(userService.updateUser, data, token);
+    let response = yield call(userService.updateUser, payload.consents, token);
 
     if (response.status == 403) {
       yield put({
@@ -273,6 +268,7 @@ export function* updateUserConsentsSaga(payload) {
         state: true
       });
       yield put(internalServerError());
+      return;
     }
 
     yield put({
@@ -299,12 +295,12 @@ export function* editUserData(action) {
       return;
     }
   } catch (error) {
-     
-      yield put({
-        type: "CHANGE_SKELETON_ERROR_STATE",
-        state: true
-      });
- 
+
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
+
     yield put(internalServerError());
   }
 }
