@@ -65,9 +65,10 @@ export const editUserData = data => ({
   data
 });
 
-export const updateUserPassword = (oldPassword, newPassword, confirmNewPassword) => ({
+export const updateUserPassword = (oldPassword, confirmOldPassword, newPassword, confirmNewPassword) => ({
   type: "UPDATE_USER_PASSWORD_API",
   oldPassword,
+  confirmOldPassword,
   newPassword,
   confirmNewPassword
 });

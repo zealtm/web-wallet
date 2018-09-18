@@ -179,10 +179,10 @@ class User extends React.Component {
   };
 
   changeUserPassword = () => {
-    const {updateUserPassword} = this.props;
+    const {updateUserPassword, user} = this.props;
     const {password, newPassword, confirmNewPassword} = this.state;
 
-    updateUserPassword(password, newPassword, confirmNewPassword);
+    updateUserPassword(user.password, password, newPassword, confirmNewPassword);
   }
 
   loadDays = () => {

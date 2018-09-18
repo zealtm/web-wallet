@@ -9,7 +9,6 @@ import {
   getUserSeedWords,
   getUsername,
   setUserData,
-  getUserData,
   clearAll
 } from "../../../utils/localStorage";
 import {
@@ -311,11 +310,13 @@ export function* editUserData(action) {
 
 export function* updateUserPasswordSaga(action) {
   try {
-    const {oldPassword, newPassword, confirmNewPassword} = action;
-    const rules = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g);
+    const {oldPassword, confirmOldPassword, newPassword, confirmNewPassword} = action;
 
-    // TODO: Validar se o password informado é o do usuário
-    if (!oldPassword) {
+    /* eslint-disable */
+    const rules = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g);
+    /* eslint-enable */
+
+    if (!confirmOldPassword || oldPassword !== encryptHmacSha512Key(confirmOldPassword)) {
       yield put(modalError(i18n.t("MESSAGE_INVALID_PASSWORD")));
       return;
     }
@@ -331,11 +332,13 @@ export function* updateUserPasswordSaga(action) {
     }
 
     const token = yield call(getAuthToken);
-    yield call(userService.resetUserPassword(token, newPassword, oldPassword));
+    yield call(userService.resetUserPassword(token, newPassword, confirmOldPassword));
+
+    yield put(modalSuccess("Successfully changed password"));
 
     yield put({
       type: "UPDATE_USER_PASSWORD_REDUCER",
-      pasword: action.newPassword
+      pasword: encryptHmacSha512Key(action.newPassword)
     })
   } catch (error) {
     yield put(internalServerError());
