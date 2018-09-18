@@ -80,6 +80,7 @@ export function* getWalletSendModalFee(action) {
 
     return;
   } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }
@@ -160,8 +161,6 @@ export function* setWalletTransaction(action) {
         decryptAes(seed, action.password),
         token
       );
-      
-        console.log("transcao", response);
 
       if (response) {
         yield put({
