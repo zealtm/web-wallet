@@ -183,6 +183,12 @@ class User extends React.Component {
     const {password, newPassword, confirmNewPassword} = this.state;
 
     updateUserPassword(user.password, password, newPassword, confirmNewPassword);
+
+    setTimeout(() => {
+      if (user.password !== this.props.user.password) {
+        window.location.reload();
+      }
+    }, 2500);
   }
 
   loadDays = () => {

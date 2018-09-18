@@ -332,14 +332,17 @@ export function* updateUserPasswordSaga(action) {
     }
 
     const token = yield call(getAuthToken);
-    yield call(userService.resetUserPassword(token, newPassword, confirmOldPassword));
+    yield call(userService.resetUserPassword, token, newPassword, confirmOldPassword);
 
-    yield put(modalSuccess("Successfully changed password"));
+    yield put(modalSuccess(i18n.t("SETTINGS_CHANGE_PASSWORD_SUCCESS")));
+
+    yield call(clearAll);
 
     yield put({
       type: "UPDATE_USER_PASSWORD_REDUCER",
       pasword: encryptHmacSha512Key(action.newPassword)
     })
+
   } catch (error) {
     yield put(internalServerError());
   }
