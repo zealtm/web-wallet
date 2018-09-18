@@ -85,6 +85,8 @@
   "SETTINGS_USER_SAVE_DATA": "Save data",
   "SETTING_WALLETS_TITLE": "Wallets",
   "SETTINGS_ALIAS_WALLET_LUNES": "Wallet Lunes",
+  "SETTINGS_NEW_PASSWORD_ERROR": "The new password is invalid",
+  "SETTINGS_CONFIRM_NEW_PASSWORD_ERROR": "New password and confirm password are not the same",
   "SECURITY_ITEM_1": "Install: Google Authenticator on your Smartphone",
   "SECURITY_ITEM_2": "Open Google Authenticator, Enter the code manually or Scan the QR code below",
   "SECURITY_ITEM_3": "Insira o Número de Autheticação para ativar o 2FA em sua conta.",

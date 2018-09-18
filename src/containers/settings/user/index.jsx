@@ -181,25 +181,8 @@ class User extends React.Component {
   changeUserPassword = () => {
     const {updateUserPassword} = this.props;
     const {password, newPassword, confirmNewPassword} = this.state;
-    const rules = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g);
 
-    if (!password) {
-      alert("Senha incorreta");
-      return;
-    }
-
-    console.log('verify', newPassword.match(rules));
-    if (!newPassword || !newPassword.match(rules)) {
-      alert("O novo password informado não é válido");
-      return;
-    }
-
-    if (newPassword !== confirmNewPassword) {
-      alert("Novo password não confere");
-      return;
-    }
-
-    updateUserPassword(newPassword, password);
+    updateUserPassword(password, newPassword, confirmNewPassword);
   }
 
   loadDays = () => {

@@ -119,7 +119,6 @@ class UserService {
 
       return response;
     } catch (error) {
-      console.log('reset', error);
       return internalServerError();
     }
   }

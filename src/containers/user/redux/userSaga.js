@@ -9,6 +9,7 @@ import {
   getUserSeedWords,
   getUsername,
   setUserData,
+  getUserData,
   clearAll
 } from "../../../utils/localStorage";
 import {
@@ -19,8 +20,10 @@ import {
 } from "../../../constants/apiBaseUrl";
 import {
   internalServerError,
-  modalSuccess
+  modalSuccess,
+  modalError
 } from "../../../containers/errors/statusCodeMessage";
+import i18n from "../../../utils/i18n";
 
 // Services
 import AuthService from "../../../services/authService";
@@ -308,8 +311,27 @@ export function* editUserData(action) {
 
 export function* updateUserPasswordSaga(action) {
   try {
+    const {oldPassword, newPassword, confirmNewPassword} = action;
+    const rules = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g);
+
+    // TODO: Validar se o password informado é o do usuário
+    if (!oldPassword) {
+      yield put(modalError(i18n.t("MESSAGE_INVALID_PASSWORD")));
+      return;
+    }
+
+    if (!newPassword || !newPassword.match(rules)) {
+      yield put(modalError(i18n.t("SETTINGS_NEW_PASSWORD_ERROR")));
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      yield put(modalError(i18n.t("SETTINGS_CONFIRM_NEW_PASSWORD_ERROR")));
+      return;
+    }
+
     const token = yield call(getAuthToken);
-    yield call(userService.resetUserPassword(token, action.newPassword, action.oldPassword));
+    yield call(userService.resetUserPassword(token, newPassword, oldPassword));
 
     yield put({
       type: "UPDATE_USER_PASSWORD_REDUCER",
