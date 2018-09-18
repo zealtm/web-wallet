@@ -16,11 +16,9 @@ import {
   convertToLocaleDate
 } from "../../../utils/strings";
 
-// importar servico
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
 
-// iniciar servico
 const paymentService = new PaymentService();
 const coinService = new CoinService();
 
@@ -66,26 +64,22 @@ export function* getCoinsEnabledSaga() {
 
 export function* setPaymentSaga(payload) {
   try {
-    // abrir loading
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
     });
 
     const value = parseFloat(payload.pay.value);
-    const {abbreviation, address} = payload.pay.coin;
+    const {
+      abbreviation,
+      address
+    } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
     const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
     const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
-
-    //console.log("response balance", balanceResponse);
-
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
-
-    //console.log("value", payload.pay);
-    //console.log("amount", response.data.data.price);
 
     const data = {
       number: payload.pay.number,
@@ -99,8 +93,6 @@ export function* setPaymentSaga(payload) {
       description: payload.pay.description,
       cpfCnpj: payload.pay.cpfCnpj
     };
-
-    //console.log("response data", data);
 
     yield put({
       type: "SET_PAYMENT_REDUCER",
@@ -119,7 +111,6 @@ export function* setPaymentSaga(payload) {
 
 export function* getFeePaymentSaga(payload) {
   try {
-    // abrir loading
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
@@ -202,7 +193,6 @@ export function* getHistoryPaySaga() {
 
 export function* confirmPaySaga() {
   try {
-    // ligar o loading
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
@@ -216,10 +206,6 @@ export function* confirmPaySaga() {
       type: "SET_MODAL_PAY_STEP_REDUCER",
       step: 5
     });
-
-    // libearar loading
-
-    // limpar reducer
   } catch (error) {
     yield put(internalServerError());
   }
