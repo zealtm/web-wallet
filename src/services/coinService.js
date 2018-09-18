@@ -93,15 +93,29 @@ class CoinService {
             },
             API_HEADER
           );
-          availableCoins[index].address =
-            responseCreateAddress.data.data.address;
+
+          if (
+            responseCreateAddress.data.data &&
+            responseCreateAddress.data.data.address
+          ) {
+            availableCoins[index].address =
+              responseCreateAddress.data.data.address;
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].address = undefined;
+          }
 
           // GET PRICE
           let priceHistory = await getPriceHistory(coin.abbreviation, token);
 
-          availableCoins[index].price = responsePrice.data.data;
-          availableCoins[index].price.percent =
-            percentCalc(priceHistory.initial, priceHistory.last) + "%";
+          if (responsePrice.data.data) {
+            availableCoins[index].price = responsePrice.data.data;
+            availableCoins[index].price.percent =
+              percentCalc(priceHistory.initial, priceHistory.last) + "%";
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].price = undefined;
+          }
 
           // GET BALANCE
           let responseBalance = await axios.get(
@@ -112,25 +126,31 @@ class CoinService {
             coin.address,
             API_HEADER
           );
-          availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
-          availableCoins[index].balance = responseBalance.data.data;
 
-          // BALANCE CONVERTER
-          availableCoins[index].balance.available = convertBiggestCoinUnit(
-            availableCoins[index].balance.available,
-            coin.decimalPoint
-          );
+          if (responseBalance.data.data) {
+            availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
+            availableCoins[index].balance = responseBalance.data.data;
 
-          availableCoins[index].balance.total = convertBiggestCoinUnit(
-            availableCoins[index].balance.total,
-            coin.decimalPoint
-          );
+            // BALANCE CONVERTER
+            availableCoins[index].balance.available = convertBiggestCoinUnit(
+              availableCoins[index].balance.available,
+              coin.decimalPoint
+            );
 
-          Object.keys(availableCoins[index].price).map(fiat => {
-            let fiatPrice = availableCoins[index].price[fiat];
-            availableCoins[index].balance[fiat] =
-              fiatPrice.price * availableCoins[index].balance.available;
-          });
+            availableCoins[index].balance.total = convertBiggestCoinUnit(
+              availableCoins[index].balance.total,
+              coin.decimalPoint
+            );
+
+            Object.keys(availableCoins[index].price).map(fiat => {
+              let fiatPrice = availableCoins[index].price[fiat];
+              availableCoins[index].balance[fiat] =
+                fiatPrice.price * availableCoins[index].balance.available;
+            });
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].balance = undefined;
+          }
         } else {
           availableCoins[index].address = undefined;
           availableCoins[index].balance = undefined;

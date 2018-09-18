@@ -55,7 +55,7 @@ class TransactionHistory extends React.Component {
   };
 
   hasDefaultPrice = price => {
-    return price ? price : "";
+    return price ? price.toFixed(3) : "";
   };
 
   defineSymbol = (symbol, price) => {
@@ -125,11 +125,11 @@ class TransactionHistory extends React.Component {
                   ).toFixed(decimalPoint)}
                 </div>
                 <div>
-                  {this.hasDefaultPrice(transaction.price[defaultFiat])}
                   {this.defineSymbol(
                     coins[defaultCoin].price[defaultFiat].symbol || "$",
                     transaction.price[defaultFiat]
                   )}
+                  {this.hasDefaultPrice(transaction.price[defaultFiat])}
                 </div>
               </Grid>
             </Grid>
