@@ -24,8 +24,6 @@ class BtcTransaction {
         data.token
       );
 
-      console.warn(data, utxos);
-
       const targets = [
         {
           address: data.lunesWallet.address,
@@ -40,7 +38,6 @@ class BtcTransaction {
       let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
 
       let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
-      console.warn("inputs, outputs", inputs, outputs);
       outputs.forEach(output => {
         if (!output.address) {
           output.address = data.fromAddress;
