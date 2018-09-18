@@ -1,23 +1,29 @@
-import { put, call } from "redux-saga/effects";
+import {
+  put,
+  call
+} from "redux-saga/effects";
 import {
   internalServerError,
   modalError
 } from "../../../containers/errors/statusCodeMessage";
 
-// UTILS
 import i18n from "../../../utils/i18n";
-import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
-import { decryptAes } from "../../../utils/cryptography";
-
-// Services
+import {
+  getAuthToken,
+  getUserSeedWords
+} from "../../../utils/localStorage";
+import {
+  decryptAes
+} from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
+
 const coinService = new CoinService();
 const transactionService = new TransactionService();
 
 export function* validateAddress(action) {
   try {
-    
+
     let address = action.address.replace(action.coin + ":", "").split("?")[0];
     let response = yield call(
       coinService.validateAddress,
@@ -47,7 +53,10 @@ export function* validateAddress(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -122,7 +131,10 @@ export function* getWalletCoinHistory(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -135,7 +147,10 @@ export function* getCoinFee(action) {
       fee: response
     });
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -181,12 +196,18 @@ export function* setWalletTransaction(action) {
       step: 6
     });
 
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
