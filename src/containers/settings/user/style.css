@@ -8,6 +8,10 @@
 
 
 /* ------------------------------------------------------------------------- */
+:local(body) {
+  color: white;
+}
+
 /* 1. HEADER SETTINGS */
 :local(a) {
   text-decoration: none;
@@ -245,6 +249,20 @@
   color: #654ea6;
 }
 
-:local(.selectItem .selectLabel) {
-  margin-bottom: 14px;
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+:local(.inputTextDefault) {
+  composes: inputTextDefault from "../../../components/bases/inputBase.css";
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  border-bottom: 1px solid #3b1878;
+  height: 30px;
+  color: white;
+}
+
+:local(.inputTextDefault::placeholder) {
+  font-size: 10px;
 }

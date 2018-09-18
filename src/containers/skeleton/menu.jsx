@@ -23,16 +23,22 @@ const menuItens = [
     label: i18n.t("MENU_HOME"),
     icon: "../../images/icons/general/home@2x.png"
   },
-  // {
-  //   link: "/portfolio",
-  //   label: i18n.t("MENU_PORTFOLIO"),
-  //   icon: "../../images/icons/general/portfolio@1x.png"
-  // },
+
   {
     link: "/wallet",
     label: i18n.t("MENU_WALLET"),
     icon: "../../images/icons/general/wallet@1x.png"
   },
+  {
+    link: "/leasing",
+    label: i18n.t("MENU_LEASING"),
+    icon: "../../images/icons/general/leasing@1x.png"
+  },
+  // {
+  //   link: "/assets",
+  //   label: i18n.t("MENU_ASSETS"),
+  //   icon: "../../images/icons/general/wallet@1x.png"
+  // },
   // {
   //   link: "/recharge",
   //   label: i18n.t("MENU_RECHARGE"),
@@ -44,9 +50,9 @@ const menuItens = [
     icon: "../../images/icons/general/pay@1x.png"
   },
   {
-    link: "/leasing",
-    label: i18n.t("MENU_LEASING"),
-    icon: "../../images/icons/general/leasing@1x.png"
+    link: "/recharge",
+    label: i18n.t("MENU_RECHARGE"),
+    icon: "../../images/icons/general/pay@1x.png"
   },
   {
     link: "/coupons",

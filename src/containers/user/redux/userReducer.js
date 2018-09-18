@@ -4,7 +4,7 @@ const initialState = {
     birthday: undefined,
     city: undefined,
     country: undefined,
-    gdpr: undefined,
+    terms: undefined,
     phone: undefined,
     state: undefined,
     street: undefined,
@@ -153,11 +153,17 @@ const user = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          profilePicture: action.user.profilePicture,
+          birthday: action.user.birthday,
+          city: action.user.city,
+          phone: action.user.phone,
+          state: action.user.state,
+          street: action.user.street,
           name: action.user.name,
-          email: action.user.email,
+          profilePicture: action.user.profilePicture,
           surname: action.user.surname,
-          gdpr: action.user.gdpr
+          zipcode: action.user.zipcode,
+          email: action.user.email,
+          terms: action.user.terms
         }
       };
 
@@ -168,6 +174,23 @@ const user = (state = initialState, action) => {
           ...state.user,
           ...action.consents
         }
+      };
+
+    case "EDIT_USER_DATA":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          birthday: action.data.birthday,
+          city: action.data.city,
+          phone: action.data.phone,
+          state: action.data.state,
+          street: action.data.street,
+          zipcode: action.data.zipcode,
+          name: action.data.name,
+          surname: action.data.surname
+        },
+        loading: false
       };
 
     case "CLEAR_USER_ERROR":

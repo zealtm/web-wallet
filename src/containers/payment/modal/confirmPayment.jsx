@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX 
+// REDUX
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
+import {setModalStep} from "../redux/paymentAction";
 
-//COMPONENTS 
+//COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
 
 // UTILS
@@ -19,29 +20,41 @@ class ConfirmPayment extends React.Component {
     super(props);
   }
 
+  confirmPay = () => {
+    const {setModalStep} = this.props;
+
+    setModalStep(4);
+  }
+
   render() {
-    const { handleStep, loading, payment } = this.props;
+    const {loading, payment } = this.props;
     return (
       <div className={style.modalBox}>
         <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
         <div>
           <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
-          <span className={style.totalConfirmBlock}>{payment.amount+payment.fee} {payment.coin}</span>
+          <span className={style.totalConfirmBlock}>{payment.amount + payment.fee} {payment.coin.abbreviation}</span>
         </div>
 
         <div className={style.smallDescription}>
           {i18n.t("PAYMENT_CONFIRM_3")}
         </div>
 
-        <ButtonContinue 
+        <ButtonContinue
           label={i18n.t("PAYMENT_BTN_PAY")}
-          action={()=>handleStep("next")}
-          loading={loading} 
+          action={()=>this.confirmPay()}
+          loading={loading}
         />
 
       </div>
     );
   }
+}
+
+ConfirmPayment.propTypes = {
+  setModalStep:     PropTypes.func.isRequired,
+  payment:          PropTypes.object.isRequired,
+  loading:          PropTypes.bool.isRequired
 }
 
 const mapStateToProps = store => ({
@@ -50,11 +63,11 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>bindActionCreators(
-  { }, 
+  {setModalStep},
   dispatch
 );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(ConfirmPayment);

@@ -9,6 +9,8 @@ import coupons from "../coupons/redux/couponsReducer";
 import settings from "../settings/redux/settingsReducer";
 import error from "../errors/redux/errorReducer";
 import payment from "../payment/redux/paymentReducer";
+import assets from "../assets/redux/assetsReducer";
+import recharge from "../recharge/redux/rechargeReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 
@@ -21,7 +23,9 @@ const Store = createStore(
     coupons,
     settings,
     payment,
-    error
+    error,
+    assets,
+    recharge
   }),
 
   applyMiddleware(sagaMiddleware)

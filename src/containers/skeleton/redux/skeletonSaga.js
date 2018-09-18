@@ -41,7 +41,7 @@ export function* loadGeneralInfo(action) {
         birthday: responseUser.data.data.birthday,
         city: responseUser.data.data.city,
         country: responseUser.data.data.country,
-        gdpr: responseUser.data.data.gpdr, // TODO: change to gdpr after fix on api return
+        terms: responseUser.data.data.terms,
         phone: responseUser.data.data.phone,
         state: responseUser.data.data.state,
         street: responseUser.data.data.street,
@@ -95,6 +95,9 @@ export function* loadWalletInfo(action) {
     yield put({
       type: "SET_WALLET_LOADING"
     });
+    yield put({
+      type: "SET_ASSET_LOADING"
+    })
 
     return;
   } catch (error) {

@@ -8,7 +8,8 @@ import {
   resetUser,
   hasTwoFactorAuth,
   setUserSeed,
-  updateUserConsentsSaga
+  updateUserConsentsSaga,
+  editUserData
 } from "../user/redux/userSaga";
 
 import {
@@ -45,9 +46,20 @@ import {
   getFeePaymentSaga,
   setFeePaymentSaga,
   getInvoiceSaga,
-  getUserGdprSaga,
-  getHistoryPaySaga
+  getHistoryPaySaga,
+  confirmPaySaga,
+  setModalStepSaga
 } from "../payment/redux/paymentSaga";
+import {
+  getAssetCoinHistory,
+  getAssetSendModalFee,
+  setAssetTransaction,
+  validateAddress as validateAssetAddress,
+  shareCoinAddress as shareAssetAddress
+} from "../assets/redux/assetsSaga";
+import {
+  setModalStepSaga as setModalStepRechargeSaga
+} from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
   yield [
@@ -60,12 +72,15 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
     fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
+    fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
+
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
     fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+
     // Wallet-Saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
     fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
@@ -95,6 +110,17 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
-    fork(takeLatest, "GET_USER_GDPR", getUserGdprSaga)
+
+    // recharge-saga
+    fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
+
+    //assets
+    fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
+    fork(takeLatest, "GET_ASSET_COIN_HISTORY_API", getAssetCoinHistory),
+    fork(takeLatest, "GET_ASSET_MODAL_SEND_FEE_API", getAssetSendModalFee),
+    fork(takeLatest, "SHARE_COIN_ADRESS_API", shareAssetAddress),
+    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
+    fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
+    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga)
   ];
 }

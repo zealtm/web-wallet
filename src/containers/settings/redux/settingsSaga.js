@@ -1,5 +1,10 @@
-import { put, call } from "redux-saga/effects";
-import { getAuthToken } from "../../../utils/localStorage";
+import {
+  put,
+  call
+} from "redux-saga/effects";
+import {
+  getAuthToken
+} from "../../../utils/localStorage";
 import {
   internalServerError,
   modalSuccess
@@ -14,11 +19,18 @@ export function* getTwoFactorAuth() {
     let token = yield call(getAuthToken);
     let response = yield call(authService.createTwoFactorAuth, token);
 
-    yield put({ type: "POST_SETTINGS_CREATE_2FA", url: response.qrcode });
-    yield put({ type: "CHANGE_LOADING_SETTINGS" });
+    yield put({
+      type: "POST_SETTINGS_CREATE_2FA",
+      url: response.qrcode
+    });
+    yield put({
+      type: "CHANGE_LOADING_SETTINGS"
+    });
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_LOADING_SETTINGS" });
+    yield put({
+      type: "CHANGE_LOADING_SETTINGS"
+    });
     yield put(internalServerError());
   }
 }
@@ -34,16 +46,24 @@ export function* verifyTwoFactorAuthSettings(action) {
 
     if (response.error || response.messageError) {
       yield put(response.error);
-      yield put({ type: "CHANGE_LOADING_SETTINGS" });
+      yield put({
+        type: "CHANGE_LOADING_SETTINGS"
+      });
       return;
     }
 
     yield put(modalSuccess("Successfully Activated"));
-    yield put({ type: "CHANGE_LOADING_SETTINGS" });
+    yield put({
+      type: "CHANGE_LOADING_SETTINGS"
+    });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_LOADING_SETTINGS" });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
+
     yield put(internalServerError());
   }
 }

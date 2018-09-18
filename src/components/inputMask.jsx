@@ -1,6 +1,5 @@
 import React from "react";
 import NumberFormat from "react-number-format";
-import i18n from "../utils/i18n";
 
 export const DateMask = (props) => {
   const { inputRef, onChange, ...other } = props;
@@ -12,11 +11,12 @@ export const DateMask = (props) => {
       onValueChange={values => {
         onChange({
           target: {
-            value: values.value,
+            value: values.formattedValue,
           },
         });
       }}
       format="##/##/####"
+      mask={['d', 'd', 'm', 'm', 'y', 'y', 'y', 'y']}
     />
   );
 }
@@ -69,7 +69,7 @@ export const MoneyBrlMask = (props) => {
       onValueChange={values => {
         onChange({
           target: {
-            value: values.value,
+            value: parseFloat(values.value),
           },
         });
       }}
@@ -79,6 +79,25 @@ export const MoneyBrlMask = (props) => {
       decimalScale={2}
       fixedDecimalScale
       allowNegative={false}
+    />
+  );
+}
+
+export const PhoneMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="(##) ##### ####"
     />
   );
 }

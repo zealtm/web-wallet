@@ -1,118 +1,252 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { editUserData, loading } from "../../user/redux/userAction";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import i18n from "../../../utils/i18n";
-
-// import Select from "../../../components/select";
-import { Grid, Avatar, Input } from "@material-ui/core";
+import compose from "recompose/compose";
+import colors from "../../../components/bases/colors";
+import style from "./style.css";
+import Loading from "../../../components/loading";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { Grid, Avatar } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
-import style from "./style.css";
-import colors from "../../../components/bases/colors";
-
-// MATERIAL UI
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
-// import Select from "./select";
 
 const customStyle = {
   img: {
     width: "60%",
     height: "auto"
   },
-  inputRoot: {
-    color: colors.messages.info,
-    marginBottom: "1rem",
-    padding: "5px",
-    width: "calc(100% - 20px)",
-    "&:hover:before": {
-      borderBottomColor: colors.purple.dark
-    }
-  },
-  inputCss: {
-    fontFamily: "Noto Sans, sans-serif",
-    fontSize: "14px"
-  },
-  inputCssUnderline: {
-    "&:before, &:after": {
-      borderBottomColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderBottomColor: `${colors.purple.dark} !important`
-    }
-  },
-  selectRoot: {
-    color: colors.messages.info,
-    "&:before": {
-      marginBottom: "1rem"
-    },
-    "&:before, &:after": {
-      borderColor: colors.purple.dark
-    },
-    "&:hover:not($disabled):not($error):not($focused):before": {
-      borderColor: `${colors.purple.dark} !important`
-    }
-  },
   underlineItems: {
-    selected: {
-      backgroundColor: 'red !important',
-    },
-    borderBottom: '1px solid ',
+    color: "white",
+    borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
-    "&:hover": {
-      borderBottom: '2px solid',
-    },
-    "&:before, &:after": {
-      borderBottom: '5px solid',
-    },
+    fontSize: "16px !important"
+  },
+  menuItemRoot: {
+    color: colors.messages.info
   },
   disabled: {},
   error: {},
-  focused: {},
+  focused: {}
 };
 
-const days = [...Array(31).keys()].map(day => day + 1);
-const months = [...Array(12).keys()].map(month => month + 1);
-const years = [...Array(70).keys()].map(year => year + 1949);
+const MenuProps = {
+  PaperProps: {
+    style: {
+      color: "#fff",
+      maxHeight: 40 * 4.5,
+      marginTop: "45px",
+      backgroundColor: "#473088",
+      width: "68px"
+    }
+  }
+};
 
 class User extends React.Component {
   constructor() {
     super();
     this.state = {
-      verified: undefined,
-      birth_day: undefined,
-      birth_month: undefined,
-      birth_year: undefined
+      name: "",
+      surname: "",
+      emailVerified: true,
+      birthDay: "",
+      birthMonth: "",
+      birthYear: "",
+      phone: "",
+      directDistanceDialing: "",
+      address: "",
+      city: "",
+      zipcode: "",
+      state: ""
     };
-
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleBirthDayChange = this.handleBirthDayChange.bind(this);
-    this.handleBirthMonthChange = this.handleBirthMonthChange.bind(this);
-    this.handleBirthYearChange = this.handleBirthYearChange.bind(this);
   }
 
-  changeAvatar = () => {
-    alert("Avatar changed!");
-  };
+  componentDidMount() {
+    let { user } = this.props;
 
-  handleSelectChange = (name, value) => {
+    let date = !user.birthday
+      ? ""
+      : new Date(user.birthday).toISOString().substring(10, 0);
+    let day = date.substring(10, 8);
+    let month = date.substring(7, 5);
+    let year = date.substring(0, 4);
+
+    this.setState({
+      name: !user.name ? "" : user.name,
+      surname: !user.surname ? "" : user.surname,
+      phone: !user.phone ? "" : user.phone.toString().substring(2),
+      directDistanceDialing: !user.phone
+        ? ""
+        : user.phone.toString().substring(2, 0),
+      address: !user.street ? "" : user.street,
+      city: !user.city ? "" : user.city,
+      zipcode: !user.zipcode ? "" : user.zipcode,
+      state: !user.state ? "" : user.state,
+      birthDay: !date ? "" : parseInt(day < 10 ? day.replace(0, "") : day),
+      birthMonth: !date
+        ? ""
+        : parseInt(month < 10 ? month.replace(0, "") : month),
+      birthYear: !date ? "" : parseInt(year)
+    });
+  }
+
+  handleSelectChange = (property, value) => {
     this.setState({
       ...this.state,
-      [name]: value
+      [property]: value
     });
   };
 
-  handleBirthDayChange = value => this.handleSelectChange("birth_day", value);
-  handleBirthMonthChange = value =>
-    this.handleSelectChange("birth_month", value);
-  handleBirthYearChange = value => this.handleSelectChange("birth_year", value);
+  changeAvatar = () => {
+    window.open("https://gravatar.com", "blank");
+  };
+
+  handleNameChange = value =>
+    this.handleSelectChange("name", value.replace(/([\d\\/-])/g, ""));
+  handleSurnameChange = surname =>
+    this.handleSelectChange("surname", surname.replace(/([\d\\/-])/g, ""));
+  handleBirthDayChange = birthDay =>
+    this.handleSelectChange("birthDay", birthDay);
+  handleBirthMonthChange = birthMonth =>
+    this.handleSelectChange("birthMonth", birthMonth);
+  handleBirthYearChange = birthYear =>
+    this.handleSelectChange("birthYear", birthYear);
+  handlePhoneChange = phone =>
+    this.handleSelectChange("phone", phone.replace(/([^\d/])/g, ""));
+  handleDirectDistanceDialingChange = ddd =>
+    this.handleSelectChange(
+      "directDistanceDialing",
+      ddd.replace(/([^\d/])/g, "")
+    );
+  handleAddressChange = address => this.handleSelectChange("address", address);
+  handleCityChange = city =>
+    this.handleSelectChange("city", city.replace(/([\d\\/])/g, ""));
+  handleZipcodeChange = zipcode =>
+    this.handleSelectChange("zipcode", zipcode.replace(/([^\d/])/g, ""));
+  handleStateChange = state =>
+    this.handleSelectChange("state", state.replace(/([\d\\/])/g, ""));
+
+  updateData = () => {
+    let { editUserData, loading } = this.props;
+    let {
+      name,
+      surname,
+      phone,
+      directDistanceDialing,
+      address,
+      city,
+      zipcode,
+      state,
+      birthDay,
+      birthMonth,
+      birthYear
+    } = this.state;
+
+    let userData = {
+      name,
+      surname,
+      birthday: `${birthMonth}/${birthDay}/${birthYear}`,
+      phone: `${directDistanceDialing}${phone}`,
+      street: address,
+      city,
+      state,
+      zipcode
+    };
+
+    loading();
+    editUserData(userData);
+  };
+
+  loadDays = () => {
+    const { classes } = this.props;
+    const days = [...Array(31).keys()];
+
+    return days.map((day, index) => (
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index}
+        value={day + 1}
+      >
+        {day + 1}
+      </MenuItem>
+    ));
+  };
+
+  loadYears = () => {
+    const { classes } = this.props;
+    let date = new Date();
+    let lastEighteenYears = date.getFullYear() - 18;
+    let lastOneHundredYears = lastEighteenYears - 100;
+    let yearsToGo = [...Array(lastEighteenYears - lastOneHundredYears).keys()];
+
+    return yearsToGo.map((year, index) => (
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index}
+        value={lastEighteenYears - year}
+      >
+        {lastEighteenYears - year}
+      </MenuItem>
+    ));
+  };
+
+  loadMounth = () => {
+    const { classes } = this.props;
+    let monthNames = [
+      i18n.t("JANUARY"),
+      i18n.t("FEBRUARY"),
+      i18n.t("MARCH"),
+      i18n.t("APRIL"),
+      i18n.t("MAY"),
+      i18n.t("JUNE"),
+      i18n.t("JULY"),
+      i18n.t("AUGUST"),
+      i18n.t("SEPTEMBER"),
+      i18n.t("OCTOBER"),
+      i18n.t("NOVEMBER"),
+      i18n.t("DECEMBER")
+    ];
+
+    return monthNames.map((month, index) => (
+      <MenuItem
+        classes={{
+          root: classes.menuItemRoot
+        }}
+        key={index}
+        value={index + 1}
+      >
+        {month.substring(0, 3)}
+      </MenuItem>
+    ));
+  };
 
   render() {
-    const { classes } = this.props;
-    const { verified, birth_day, birth_month, birth_year } = this.state;
+    const { classes, user, isLoading } = this.props;
+    const { twoFactor } = user;
+    const {
+      emailVerified,
+      birthDay,
+      birthMonth,
+      birthYear,
+      name,
+      surname,
+      city,
+      directDistanceDialing,
+      phone,
+      address,
+      zipcode,
+      state
+    } = this.state;
 
     return (
       <div>
@@ -123,7 +257,7 @@ class User extends React.Component {
                 <h3>{i18n.t("SETTINGS_USER")} </h3>
               </Grid>
             </Hidden>
-            <Grid item xs={2}  />
+            <Grid item xs={2} />
 
             <Grid item xs={6} sm={2}>
               <Link to="settings">
@@ -142,13 +276,13 @@ class User extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container className={style.container} >
+        <Grid container className={style.container}>
           <Grid item xs={12} sm={4} md={3}>
             {/* AVATAR */}
             <Grid item xs={12} className={style.row}>
               <div className={style.avatarAlign}>
                 <Avatar
-                  src="http://www.achieveaim.com/media/images/user/4.jpg"
+                  src={user.profilePicture}
                   alt={i18n.t("SETTINGS_USER_IMAGE")}
                   className={style.avatar}
                 />
@@ -168,13 +302,15 @@ class User extends React.Component {
             <Grid item xs={12} className={style.row}>
               <div className={style.content}>
                 <p className={style.whiteTitle}>
-                  {`${i18n.t("SETTINGS_USER_STATUS")}: `}
+                  {i18n.t("SETTINGS_USER_STATUS")}
                   <span
                     className={
-                      verified ? style.successStatus : style.errorStatus
+                      emailVerified && twoFactor
+                        ? style.successStatus
+                        : style.errorStatus
                     }
                   >
-                    {verified
+                    {emailVerified && twoFactor
                       ? i18n.t("SETTINGS_USER_ACCOUNT_VERIFIED")
                       : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
@@ -183,24 +319,38 @@ class User extends React.Component {
                   className={style.textDefault}
                   style={{ margin: "1rem 0 0 0" }}
                 >
-                  {verified ? (
-                    <Done className={style.successDefault} />
+                  {emailVerified ? (
+                    <React.Fragment>
+                      <Done className={style.successDefault} />
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
+                      </span>
+                    </React.Fragment>
                   ) : (
+                    <React.Fragment>
                       <Close className={style.errorDefault} />
-                    )}
-                  <span className={style.statusItem}>
-                    {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
-                  </span>
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_EMAIL_NOT_VERIFIED")}
+                      </span>
+                    </React.Fragment>
+                  )}
                 </p>
                 <p className={style.textDefault} style={{ marginTop: "0" }}>
-                  {verified ? (
-                    <Done className={style.successDefault} />
+                  {twoFactor ? (
+                    <React.Fragment>
+                      <Done className={style.successDefault} />
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
+                      </span>
+                    </React.Fragment>
                   ) : (
+                    <React.Fragment>
                       <Close className={style.errorDefault} />
-                    )}
-                  <span className={style.statusItem}>
-                    {i18n.t("SETTINGS_USER_2FA_VERIFIED")}
-                  </span>
+                      <span className={style.statusItem}>
+                        {i18n.t("SETTINGS_USER_2FA_NOT_VERIFIED")}
+                      </span>
+                    </React.Fragment>
+                  )}
                 </p>
               </div>
             </Grid>
@@ -211,35 +361,20 @@ class User extends React.Component {
                 <p className={style.whiteTitle}>
                   {i18n.t("SETTINGS_USER_PASSWORD")}
                 </p>
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CURRENT_PASSWORD")}
-                  inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
-                  inputProps={{ required: false }}
                 />
-                <Input
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderline,
-                    input: classes.inputCss
-                  }}
+                <input
+                  className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
-                  inputProps={{ required: false }}
                 />
               </div>
             </Grid>
@@ -262,164 +397,214 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_FIRST_NAME")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      inputProps={{ required: false }}
+                    <input
+                      className={style.inputTextDefault}
+                      onChange={event =>
+                        this.handleNameChange(event.target.value)
+                      }
+                      value={name}
+                      pattern="[0-9]+$"
                     />
                   </div>
+                  <Hidden mdUp>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_SURNAME")}
+                      </p>
+                      <input
+                        className={style.inputTextDefault}
+                        onChange={event =>
+                          this.handleSurnameChange(event.target.value)
+                        }
+                        value={surname}
+                      />
+                    </div>
+                  </Hidden>
+                </Grid>
+                <Grid item xs={6}>
+                  <Hidden smDown>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_SURNAME")}
+                      </p>
+                      <input
+                        className={style.inputTextDefault}
+                        onChange={event =>
+                          this.handleSurnameChange(event.target.value)
+                        }
+                        value={surname}
+                      />
+                    </div>
+                  </Hidden>
+                </Grid>
 
+                <Grid item xs={12} md={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_BIRTHDATE")}
                     </p>
                     <Grid container>
-
                       <Grid item xs={4} className={style.selectItem}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_DAY")}
                         </div>
                         <FormControl className={classes.formControl}>
-
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
-                            items={days}
-                            value={birth_day}
-                            action={this.handleBirthDayChange}
+                            MenuProps={MenuProps}
+                            value={birthDay}
+                            onChange={event =>
+                              this.handleBirthDayChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={1}>1</MenuItem>
-                            <MenuItem value={2}>2</MenuItem>
-                            <MenuItem value={3}>3</MenuItem>
+                            {this.loadDays()}
                           </Select>
                         </FormControl>
                       </Grid>
-
 
                       <Grid item xs={4} className={style.selectItem}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_MONTH")}
                         </div>
                         <FormControl className={classes.formControl}>
-
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
-                            items={months}
-                            value={birth_month}
-                            action={this.handleBirthMonthChange}
+                            MenuProps={MenuProps}
+                            value={birthMonth}
+                            onChange={event =>
+                              this.handleBirthMonthChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={"jan"}>jan</MenuItem>
-                            <MenuItem value={"fev"}>fev</MenuItem>
-                            <MenuItem value={"mar"}>mar</MenuItem>
+                            {this.loadMounth()}
                           </Select>
                         </FormControl>
                       </Grid>
                       <Grid item xs={4} className={style.selectItem}>
-                        <FormControl className={classes.formControl}>
-                          <div className={style.selectLabel}>
-                            {i18n.t("SETTINGS_USER_YEAR")}
-                          </div>
-
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_YEAR")}
+                        </div>
+                        <FormControl className={style.selectItem}>
                           <Select
                             classes={{
-                              selectMenu: classes.underlineItems,
+                              selectMenu: classes.underlineItems
                             }}
-                            items={years}
-                            value={birth_year}
-                            action={this.handleBirthMonthChange}
+                            MenuProps={MenuProps}
+                            value={birthYear}
+                            onChange={event =>
+                              this.handleBirthYearChange(event.target.value)
+                            }
                             displayEmpty
                             name="age"
                             disableUnderline={true}
                           >
-                            <MenuItem value={"2018"}>2018</MenuItem>
-                            <MenuItem value={"2017"}>2017</MenuItem>
-                            <MenuItem value={"2016"}>2016</MenuItem>
-
+                            {this.loadYears()}
                           </Select>
                         </FormControl>
                       </Grid>
                     </Grid>
                   </div>
                 </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_SURNAME")}
-                    </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                    />
-                  </div>
-
-                  <div className={style.content}>
-                    <p className={style.textDefault}>
-                      {i18n.t("SETTINGS_USER_CONTACT")}
-                    </p>
-                    <div
-                      style={{ float: "left", width: "20%" }}
-                    >
-                      <div className={style.selectLabel}>
-                        {i18n.t("SETTINGS_USER_CODE")}
+                <Hidden smDown>
+                  <Grid item xs={6}>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_CONTACT")}
+                      </p>
+                      <div style={{ float: "left", width: "25%" }}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_CODE")}
+                        </div>
+                        <input
+                          maxLength="2"
+                          className={style.inputTextDefault}
+                          style={{ width: "60%" }}
+                          onChange={event =>
+                            this.handleDirectDistanceDialingChange(
+                              event.target.value
+                            )
+                          }
+                          value={directDistanceDialing}
+                        />
                       </div>
-                      <Input
-                        type="number"
-                        classes={{
-                          root: classes.inputRoot,
-                          underline: classes.inputCssUnderline,
-                          input: classes.inputCss
-                        }}
-                        style={{ width: "50%", marginTop: "2px" }}
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      </div>
+                      <input
+                        className={style.inputTextDefault}
+                        maxLength="9"
+                        style={{ width: "63%" }}
+                        onChange={event =>
+                          this.handlePhoneChange(event.target.value)
+                        }
+                        value={phone}
                       />
-
                     </div>
-                    <div className={style.selectLabel}>
-                      {i18n.t("SETTINGS_USER_NUMBER")}
+                  </Grid>
+                </Hidden>
+                <Hidden mdUp>
+                  <Grid item xs={12}>
+                    <div className={style.content}>
+                      <p className={style.textDefault}>
+                        {i18n.t("SETTINGS_USER_CONTACT")}
+                      </p>
+                      <div style={{ float: "left", width: "25%" }}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_CODE")}
+                        </div>
+                        <input
+                          maxLength="2"
+                          className={style.inputTextDefault}
+                          style={{ width: "60%" }}
+                          onChange={event =>
+                            this.handleDirectDistanceDialingChange(
+                              event.target.value
+                            )
+                          }
+                          value={directDistanceDialing}
+                        />
+                      </div>
+                      <div className={style.selectLabel}>
+                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      </div>
+                      <input
+                        className={style.inputTextDefault}
+                        maxLength="9"
+                        style={{ width: "63%" }}
+                        onChange={event =>
+                          this.handlePhoneChange(event.target.value)
+                        }
+                        value={phone}
+                      />
                     </div>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      style={{ width: "75%" }}
-                    />
-                  </div>
-                </Grid>
+                  </Grid>
+                </Hidden>
               </Grid>
             </Grid>
 
             {/* ADDRESS */}
-            <Grid item xs={12} >
+            <Grid item xs={12}>
               <Grid item xs={12} className={style.rowAdress}>
                 <Grid item xs={12} sm={6}>
                   <div className={style.content}>
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ADDRESS")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
-                      inputProps={{ required: false }}
+                    <input
+                      className={style.inputTextDefault}
+                      onChange={event =>
+                        this.handleAddressChange(event.target.value)
+                      }
+                      value={address}
                     />
                   </div>
 
@@ -427,12 +612,12 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_CITY")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
+                      onChange={event =>
+                        this.handleCityChange(event.target.value)
+                      }
+                      value={city}
                     />
                   </div>
                 </Grid>
@@ -441,12 +626,13 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_ZIP_CODE")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      maxLength="8"
+                      className={style.inputTextDefault}
+                      onChange={event =>
+                        this.handleZipcodeChange(event.target.value)
+                      }
+                      value={zipcode}
                     />
                   </div>
 
@@ -454,12 +640,12 @@ class User extends React.Component {
                     <p className={style.textDefault}>
                       {i18n.t("SETTINGS_USER_STATE")}
                     </p>
-                    <Input
-                      classes={{
-                        root: classes.inputRoot,
-                        underline: classes.inputCssUnderline,
-                        input: classes.inputCss
-                      }}
+                    <input
+                      className={style.inputTextDefault}
+                      onChange={event =>
+                        this.handleStateChange(event.target.value)
+                      }
+                      value={state}
                     />
                   </div>
                 </Grid>
@@ -468,21 +654,45 @@ class User extends React.Component {
               <Grid item xs={12} className={style.buttonContainer}>
                 <button
                   className={style.buttonEnable}
-                  onClick={() => alert("Data stored!")}
+                  onClick={() => this.updateData()}
                 >
-                  {i18n.t("SETTINGS_USER_SAVE_DATA")}
+                  {isLoading ? <Loading /> : i18n.t("SETTINGS_USER_SAVE_DATA")}
                 </button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </div >
+      </div>
     );
   }
 }
 
 User.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object,
+  user: PropTypes.object,
+  editUserData: PropTypes.func,
+  loading: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
-export default withStyles(customStyle)(User);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      editUserData,
+      loading
+    },
+    dispatch
+  );
+
+const mapStateToProps = store => ({
+  user: store.user.user,
+  isLoading: store.user.loading
+});
+
+export default compose(
+  withStyles(customStyle),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(User);

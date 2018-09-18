@@ -46,44 +46,50 @@ let coupons = Loadable({
 
 let settings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings")
 });
 
 let user = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/user")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/user")
 });
 
 let security = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/security")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
 });
 
 let walletSettings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/wallet")
 });
 
 let definitions = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/definitions")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/definitions")
 });
 
 let consent = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/consent")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
 let payment = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
-  loading: Loading,
+  loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../payment")
+});
+
+let recharge = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../recharge")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
 
 let errorNotFound = Loadable({
@@ -96,6 +102,12 @@ let errorInternal = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/500")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../errors/500")
+});
+
+let assets = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../assets")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
 /* eslint-enable */
 
@@ -125,6 +137,8 @@ class App extends Component {
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
               <Route path="/payment" component={payment} />
+              <Route path="/recharge" component={recharge} />
+              <Route path="/assets" component={assets} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

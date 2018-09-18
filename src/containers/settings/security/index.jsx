@@ -24,8 +24,8 @@ import Loading from "../../../components/loading";
 
 class Security extends React.Component {
   componentDidMount() {
-    let { getTwoFactorAuth } = this.props;
-    getTwoFactorAuth();
+    let { getTwoFactorAuth, settings, twoFactor } = this.props;
+    if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
   }
 
   renderTwoFactor = () => {
@@ -38,10 +38,11 @@ class Security extends React.Component {
       <Grid item xs={8} className={style.twoFactorQr}>
         <Grid item xs={3} className={style.item}>
           <Grid className={style.contentItem}>
-            <img
-              width="200px"
-              src={settings.security.urlImage || <Loading />}
-            />
+            {settings.security.urlImage ? (
+              <img width="200px" src={settings.security.urlImage} />
+            ) : (
+              <Loading />
+            )}
           </Grid>
         </Grid>
 
@@ -135,12 +136,12 @@ class Security extends React.Component {
                 <Grid container className={style.columItemsMobile}>
                   <InputSecurity />
                   <Grid item xs={12} className={style.alignLaunchMobile}>
-                    <Link to="#">
+                    <a href="https://itunes.apple.com/br/app/google-authenticator/id388497605?mt=8">
                       <img src="images/settings/apple@1x.png" />
-                    </Link>
-                    <Link to="#">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=pt_BR">
                       <img src="images/settings/google-play@1x.png" />
-                    </Link>
+                    </a>
                   </Grid>
                 </Grid>
               </Hidden>
@@ -161,7 +162,7 @@ Security.propTypes = {
   settings: PropTypes.object
 };
 
-const mapSateToProps = store => ({
+const mapStateToProps = store => ({
   twoFactor: store.user.twoFactor,
   settings: store.settings
 });
@@ -176,6 +177,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  mapSateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(Security);

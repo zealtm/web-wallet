@@ -11,7 +11,7 @@ import style from "./style.css";
 class Home extends React.Component {
   render() {
     return (
-      <div>
+      <div className={style.boxContainer}>
         <Grid container className={style.homeContainer}>
           <Grid item>
             <div className={style.cardHome}>

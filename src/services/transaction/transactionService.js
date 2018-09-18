@@ -68,8 +68,9 @@ class TransactionService {
     }
   }
 
-  async transaction(transaction, lunesWallet, seed, token) {
+  async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
+      console.warn(transaction);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -92,6 +93,7 @@ class TransactionService {
         !price ||
         !feePerByte ||
         !amount ||
+        !serviceId ||
         !token ||
         !coin ||
         !decimalPoint
@@ -264,6 +266,7 @@ class TransactionService {
       /* eslint-enabled */
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return coin ? coins[coin] : coins;
     } catch (error) {
       console.warn(error);

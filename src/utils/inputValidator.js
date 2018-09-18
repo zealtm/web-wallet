@@ -55,6 +55,16 @@ export const inputValidator = inputs => {
           messageError = i18n.t("MESSAGE_TERMS_OF_SERVICE");
           errors.push(label);
         }
+      } else if (inputs[input].type === "date") {
+        // Check if is a valid date in format dd/mm/yyyy
+        let regex = new RegExp(/(0[1-9]|[1-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])(\/|-)(19|20)([0-9]{2})/g);
+
+        const {name, placeholder,value} = inputs[input];
+
+        if (!regex.test(trim(value.toString()))) {
+          inputName.push(placeholder);
+          errors.push(name);
+        }
       } else {
         let {
           name,
