@@ -70,7 +70,6 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
-      //console.warn(transaction);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -130,12 +129,12 @@ class TransactionService {
           network: network
         });
 
-        if (responseBtc === "error") {
+        if (responseBtc === "error" || !responseBtc) {
           return;
         }
 
         let responseSaveBtc = await coinService.saveTransaction(
-          serviceId, 
+          serviceId,
           feeLunes,
           {
             id: responseBtc,
@@ -161,7 +160,7 @@ class TransactionService {
           fee: convertSmallerCoinUnit(fee, decimalPoint)
         });
 
-        if (respondeLunes === "error") {
+        if (respondeLunes === "error" || !respondeLunes) {
           return;
         }
 

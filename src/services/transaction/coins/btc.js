@@ -24,7 +24,7 @@ class BtcTransaction {
         data.token
       );
 
-      //console.warn(data, utxos);
+      console.warn(data, utxos);
 
       const targets = [
         {
@@ -40,7 +40,7 @@ class BtcTransaction {
       let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
 
       let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
-      //console.warn("inputs, outputs", inputs, outputs);
+      console.warn("inputs, outputs", inputs, outputs);
       outputs.forEach(output => {
         if (!output.address) {
           output.address = data.fromAddress;
@@ -56,8 +56,8 @@ class BtcTransaction {
       let keyPair = this.getKeyPair(data.seed, data.network);
 
       tx = this.sign(tx, keyPair);
-
       const txHex = tx.build().toHex();
+      console.warn(txHex, "txHex");
       // return;
       const broadcastResult = await transService.broadcast(
         txHex,
@@ -65,7 +65,7 @@ class BtcTransaction {
         data.token
       );
 
-      //console.warn("broadcastResult", broadcastResult);
+      console.warn("broadcastResult", broadcastResult);
 
       return broadcastResult.data.data.txId;
     } catch (error) {
