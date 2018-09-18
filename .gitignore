@@ -27,3 +27,6 @@ yarn.lock
 package-lock.json
 .eslintcache
 .eslintcache
+
+# testnet
+src/constants/
