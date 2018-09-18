@@ -75,15 +75,15 @@ const carouselSteps = [
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
-    imgPath: imagePath + "/slider-ted.png"
+    imgPath: imagePath + "slider-ted.png"
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
-    imgPath: imagePath + "/slider-recarga.png"
+    imgPath: imagePath + "slider-recarga.png"
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_4"),
-    imgPath: imagePath + "/slider-wallet.png"
+    imgPath: imagePath + "slider-wallet.png"
   }
 ];
 
@@ -157,4 +157,3 @@ const mapSateToProps = store => ({
 });
 
 export default connect(mapSateToProps)(Login);
-
