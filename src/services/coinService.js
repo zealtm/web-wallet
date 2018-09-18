@@ -422,7 +422,7 @@ class CoinService {
           EUR: price ? price.EUR.price : undefined,
           BRL: price ? price.BRL.price : undefined
         }
-      };
+      }; 
 
       let response = await axios.post(
         BASE_URL +
@@ -437,7 +437,7 @@ class CoinService {
 
       return response;
     } catch (error) {
-      console.warn(error, error.response);
+      //console.warn(error, error.response);
       internalServerError();
     }
   }

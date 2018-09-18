@@ -70,7 +70,7 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
-      console.warn(transaction);
+      //console.warn(transaction);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -135,6 +135,8 @@ class TransactionService {
         }
 
         let responseSaveBtc = await coinService.saveTransaction(
+          serviceId, 
+          feeLunes,
           {
             id: responseBtc,
             sender: fromAddress,
