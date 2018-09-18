@@ -208,7 +208,7 @@
   "NEW_ACCOUNT_ACCEPT_AGE": "I confirm that I am over 18 years old",
   "NEW_ACCOUNT_MESSAGE_SENDED": "Account created successfully.",
   "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address",
-  "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click here to download and finish the registration",
+  "NEW_ACCOUNT_TERMS_DOWNLOAD": "CLICK HERE to download and finish the registration",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
   "WALLET_MODAL_RECEIVE_TITLE": "Receive",
