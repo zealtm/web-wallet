@@ -1,7 +1,6 @@
 import React from "react";
 import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -362,14 +361,12 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <Link to="/TED">
             <button
               className={style.buttonBorderGreen}
               onClick={this.inputValidator}
             >
               {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
             </button>
-          </Link>
         </Grid>
 
         <Grid
@@ -391,7 +388,7 @@ class Invoice extends React.Component {
 Invoice.propTypes = {
   classes: PropTypes.object,
   openModal: PropTypes.func,
-  coinsRedux: PropTypes.object.isRequired,
+  coinsRedux: PropTypes.array.isRequired,
   payment: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   getInvoice: PropTypes.func.isRequired,

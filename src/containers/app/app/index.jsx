@@ -87,9 +87,9 @@ let payment = Loadable({
 });
 
 let ted = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../payment/ted")),
+  loader: () => fakeDelay(0).then(() => import("../../ted")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../payment/ted")
+  serverSideRequirePath: path.resolve(__dirname, "../../ted")
 });
 
 let errorNotFound = Loadable({

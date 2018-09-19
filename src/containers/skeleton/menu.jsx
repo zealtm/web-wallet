@@ -53,6 +53,11 @@ const menuItens = [
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
     icon: "../../images/icons/general/cupon@1x.png"
+  },
+  {
+    link: "/ted",
+    label: i18n.t("MENU_TED"),
+    icon: "../../images/icons/general/ted.png"
   }
 ];
 

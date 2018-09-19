@@ -197,7 +197,7 @@
   "LEASING_BALANCE_LABEL": "Your balance",
   "LOGIN_FOOTER_HOME": "Main",
   "MENU_HOME": "Home",
-  "MENU_ASSETS":"Assets",
+  "MENU_ASSETS": "Assets",
   "LOGIN_FOOTER_SUPPORT": "Support",
   "MENU_SUPPORT": "Support",
   "LOGIN_FOOTER_LANG": "English",
@@ -236,6 +236,7 @@
   "MENU_SETTING": "Settings",
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
+  "MENU_TED": "Ted",
   "WALLET_MY_AMOUNT": "Balance",
   "LEASING_TITLE_AMOUNT": "Leased",
   "MODAL_RECEIVE_MESSAGE": "Copied Address",
@@ -309,8 +310,13 @@
   "PAYMENT_GDPR_ERROR": "You must accept the GDPR terms to continue",
   "PAYMENT_AMOUNT_ERROR": "Your balance is insufficient to make this payment",
 
-  "PAYMENT_TED_TITLE_1": "TED",
-
+  "PAYMENT_TED_TITLE_ABA_1": "TED",
+  "PAYMENT_TED_TITLE_ABA_2": "History",
+  "PAYMENT_TED_TITLE_1": "TED - Transferência Eletrônica",
+  "PAYMENT_TED_TITLE_2": "TED - Transferência Online",
+  "PAYMENT_TED_INSTRUCTION_1": "Aperte o botão ‘fazer Transferência’ ",
+  "PAYMENT_TED_INSTRUCTION_2": "Selecione as opções abaixo",
+  "PAYMENT_TED_INSTRUCTION_3": "Faça TED online com suas criptmoedas",
 
   "MODAL_TITLE_INSTRUCIONS": "Instructions",
   "MODAL_TITLE_START_LEASING": "Start Leasing",
