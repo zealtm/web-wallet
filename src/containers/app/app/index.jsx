@@ -92,6 +92,12 @@ let ted = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../ted")
 });
 
+let recharge = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../recharge")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../recharge")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -137,6 +143,7 @@ class App extends Component {
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
               <Route path="/payment" component={payment} />
+              <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
               <Route path="/ted" component={ted} />
 

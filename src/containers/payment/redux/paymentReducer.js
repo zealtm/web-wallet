@@ -25,9 +25,6 @@ const initialState = {
   },
   history: [],
   loading: false,
-  user: {
-    gdpr: "unread"
-  },
   modalStep: 1
 };
 
@@ -86,19 +83,8 @@ const payment = (state = initialState, action) => {
         payment: {
           ...state.payment,
           ...action.payment
-        }
-      };
-
-    case "GET_USER_GDPR_REDUCER":
-      return {
-        ...state,
-        user: action.user
-      };
-
-    case "SET_USER_GDPR_REDUCER":
-      return {
-        ...state,
-        user: action.user
+        },
+        loading: false
       };
 
     case "GET_HISTORY_PAY_REDUCER":
@@ -110,7 +96,16 @@ const payment = (state = initialState, action) => {
 
     case "SET_CLEAR_PAYMENT_REDUCER":
       return {
-        ...initialState
+        ...state,
+        payment: {
+          ...initialState.payment
+        },
+        fee: {
+          ...initialState.fee
+        },
+        history: [],
+        loading: false,
+        modalStep: 1
       };
 
     default: {

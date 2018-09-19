@@ -36,11 +36,11 @@ class Select extends React.Component {
 
     return (
       <ul className={style.list} style={listStyle}>
-        <li className={style.listItem}
+        {/* <li className={style.listItem}
           onClick={() => this.selectListItem()}
         >
           Select a coin..
-        </li>
+        </li> */}
         {
           list.map((item, id) => (
             <li className={style.listItem}

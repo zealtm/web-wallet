@@ -7,7 +7,9 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+import {
+  internalServerError
+} from "../containers/errors/statusCodeMessage";
 
 // UTILS
 import {
@@ -24,7 +26,10 @@ import {
 let getPriceHistory = async (coiName, token) => {
   try {
     let coinService = new CoinService();
-    let prices = { initial: 0.01, last: 0.01 };
+    let prices = {
+      initial: 0.01,
+      last: 0.01
+    };
     let priceHistories = await coinService.getCoinPriceHistory(
       coiName,
       "usd",
@@ -62,9 +67,9 @@ class CoinService {
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
         if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
-          let coin = availableCoins[index + 1]
-            ? availableCoins[index + 1].abbreviation
-            : availableCoins[index - 1].abbreviation;
+          let coin = availableCoins[index + 1] ?
+            availableCoins[index + 1].abbreviation :
+            availableCoins[index - 1].abbreviation;
           setDefaultCrypto(coin);
         }
 
@@ -83,49 +88,69 @@ class CoinService {
 
           // CREATE ADDRESS
           let responseCreateAddress = await axios.post(
-            BASE_URL + "/coin/" + coin.abbreviation + "/address",
-            { seed },
+            BASE_URL + "/coin/" + coin.abbreviation + "/address", {
+              seed
+            },
             API_HEADER
           );
-          availableCoins[index].address =
-            responseCreateAddress.data.data.address;
+
+          if (
+            responseCreateAddress.data.data &&
+            responseCreateAddress.data.data.address
+          ) {
+            availableCoins[index].address =
+              responseCreateAddress.data.data.address;
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].address = undefined;
+          }
 
           // GET PRICE
           let priceHistory = await getPriceHistory(coin.abbreviation, token);
 
-          availableCoins[index].price = responsePrice.data.data;
-          availableCoins[index].price.percent =
-            percentCalc(priceHistory.initial, priceHistory.last) + "%";
+          if (responsePrice.data.data) {
+            availableCoins[index].price = responsePrice.data.data;
+            availableCoins[index].price.percent =
+              percentCalc(priceHistory.initial, priceHistory.last) + "%";
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].price = undefined;
+          }
 
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
-          console.warn(responseBalance);
-          availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
-          availableCoins[index].balance = responseBalance.data.data;
 
-          // BALANCE CONVERTER
-          availableCoins[index].balance.available = convertBiggestCoinUnit(
-            availableCoins[index].balance.available,
-            coin.decimalPoint
-          );
+          if (responseBalance.data.data) {
+            availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
+            availableCoins[index].balance = responseBalance.data.data;
 
-          availableCoins[index].balance.total = convertBiggestCoinUnit(
-            availableCoins[index].balance.total,
-            coin.decimalPoint
-          );
+            // BALANCE CONVERTER
+            availableCoins[index].balance.available = convertBiggestCoinUnit(
+              availableCoins[index].balance.available,
+              coin.decimalPoint
+            );
 
-          Object.keys(availableCoins[index].price).map(fiat => {
-            let fiatPrice = availableCoins[index].price[fiat];
-            availableCoins[index].balance[fiat] =
-              fiatPrice.price * availableCoins[index].balance.available;
-          });
+            availableCoins[index].balance.total = convertBiggestCoinUnit(
+              availableCoins[index].balance.total,
+              coin.decimalPoint
+            );
+
+            Object.keys(availableCoins[index].price).map(fiat => {
+              let fiatPrice = availableCoins[index].price[fiat];
+              availableCoins[index].balance[fiat] =
+                fiatPrice.price * availableCoins[index].balance.available;
+            });
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].balance = undefined;
+          }
         } else {
           availableCoins[index].address = undefined;
           availableCoins[index].balance = undefined;
@@ -141,10 +166,8 @@ class CoinService {
       });
       setAuthToken(availableCoins.token);
       coins.token = availableCoins.token;
-      console.warn(coins);
       return coins;
     } catch (error) {
-      console.warn(error, error.response);
       internalServerError();
       return;
     }
@@ -256,8 +279,9 @@ class CoinService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/coin/" + coinType + "/address",
-        { seed },
+        BASE_URL + "/coin/" + coinType + "/address", {
+          seed
+        },
         API_HEADER
       );
 
@@ -275,17 +299,17 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response.data.data;
     } catch (error) {
-      console.warn(error);
+      internalServerError();
       return;
     }
   }
@@ -314,12 +338,13 @@ class CoinService {
         valid = true;
       } else {
         TESTNET
-          ? (valid = await CAValidator.validate(
-              address,
-              coin.toUpperCase(),
-              "testnet"
-            ))
-          : (valid = await CAValidator.validate(address, coin.toUpperCase()));
+          ?
+          (valid = await CAValidator.validate(
+            address,
+            coin.toUpperCase(),
+            "testnet"
+          )) :
+          (valid = await CAValidator.validate(address, coin.toUpperCase()));
       }
 
       if (!valid) {
@@ -328,8 +353,10 @@ class CoinService {
 
       return valid;
     } catch (er) {
-      console.warn("error", er);
-      let error = { error: internalServerError(), er: er };
+      let error = {
+        error: internalServerError(),
+        er: er
+      };
       return error;
     }
   }
@@ -355,12 +382,15 @@ class CoinService {
       let feeLunes = {};
 
       //API_HEADER.headers.Authorization = token;
-      
+
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
       let response = await axios.post(
-        BASE_URL + "/coin/" + coinName + "/transaction/fee",
-        { fromAddress, toAddress, amount },
+        BASE_URL + "/coin/" + coinName + "/transaction/fee", {
+          fromAddress,
+          toAddress,
+          amount
+        },
         API_HEADER
       );
 
@@ -391,8 +421,8 @@ class CoinService {
       };
       return fee;
     } catch (error) {
-      console.warn(error);
       internalServerError();
+      return;
     }
   }
 
@@ -425,10 +455,10 @@ class CoinService {
 
       let response = await axios.post(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          transaction.sender,
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        transaction.sender,
         transactionData,
         API_HEADER
       );
@@ -436,7 +466,6 @@ class CoinService {
 
       return response;
     } catch (error) {
-      console.warn(error, error.response);
       internalServerError();
     }
   }
@@ -446,14 +475,14 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/voucher/" +
-          voucher +
-          "?ddi=" +
-          55 +
-          "&ddd=" +
-          phone[0] +
-          "&phone=" +
-          phone[1],
+        "/voucher/" +
+        voucher +
+        "?ddi=" +
+        55 +
+        "&ddd=" +
+        phone[0] +
+        "&phone=" +
+        phone[1],
         API_HEADER
       );
 
@@ -465,7 +494,6 @@ class CoinService {
 
       return response.data.data.coin;
     } catch (error) {
-      console.warn(error);
       internalServerError();
     }
   }
@@ -474,8 +502,12 @@ class CoinService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/voucher/rescue/" + voucher,
-        { ddi: 55, ddd: phone[0], phone: phone[1], address: address },
+        BASE_URL + "/voucher/rescue/" + voucher, {
+          ddi: 55,
+          ddd: phone[0],
+          phone: phone[1],
+          address: address
+        },
         API_HEADER
       );
 
@@ -487,7 +519,6 @@ class CoinService {
 
       return response;
     } catch (error) {
-      console.warn(error);
       internalServerError();
     }
   }

@@ -35,7 +35,8 @@ class UserService {
         return badRequest("You are already registered");
       }
 
-      return internalServerError();
+      internalServerError();
+      return;
     }
   }
 
@@ -60,8 +61,11 @@ class UserService {
         BASE_URL + "/user",
         userInfo,
         API_HEADER
-      );
-      // setAuthToken(response.headers[HEADER_RESPONSE]);
+      ).catch(error => {
+        return error.response;
+      });
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
@@ -72,9 +76,9 @@ class UserService {
   async getUserPicture(email) {
     const defaultImg = "images/lunio/lunio-user@300x300.jpg";
     try {
-      let crypto = encryptMd5(email);
+      let emailEncrypt = encryptMd5(email);
       let response = await axios.get(
-        "https://en.gravatar.com/" + crypto + ".json",
+        "https://en.gravatar.com/" + emailEncrypt + ".json",
         HEADER_REQUEST
       );
 
