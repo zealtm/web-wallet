@@ -1,4 +1,6 @@
 const initialState = {
+  operadoras: [],
+  valores: [],
   coins: [],
   history: [],
   loading: false,
@@ -42,12 +44,34 @@ const recharge = (state=initialState, action) => {
           ...state,
           loading: action.payload
         };
+      
+      case "SET_LOADING_VAL_REDUCER":
+        return {
+          ...state,
+          loadingValores: action.payload
+        };
   
       case "GET_COINS_REDUCER":
         return {
           ...state,
           coins: action.coins
         };
+
+      case "GET_OPERADORAS_REDUCER":
+        return {
+          ...state,
+          operadoras: action.operadoras,
+          loadingValores: false
+        };
+
+      case "GET_VALORES_REDUCER":
+        return {
+          ...state,
+          valores: action.valores,
+          loadingValores: false
+        }
+
+
   
       case "GET_PAYMENT_DATA_REDUCER":
         return {

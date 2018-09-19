@@ -7,6 +7,22 @@ export const getCoinsEnabled = () => ({
   type: "GET_API_COINS"
 });
 
+export const getOperators = ddd => ({
+  type: "GET_OPERADORAS",
+  ddd
+});
+
+export const getValoresRecarga = (operadora, ddd) => ({
+  type: "GET_VALORES_RECARGA",
+  operadora, 
+  ddd
+});
+
+
+
+
+
+
 export const setPayment = pay => ({
   type: "SET_PAYMENT",
   pay
