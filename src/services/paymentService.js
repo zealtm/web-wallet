@@ -28,7 +28,12 @@ class PaymentService {
         `${BASE_URL}/bill/${number}`,
         API_HEADER
       );
+      
       setAuthToken(response.headers[HEADER_RESPONSE]);
+     
+      if(response.data.code!==200){
+        return 'ERRO';
+      }
 
       const data = {
         number,
@@ -51,11 +56,10 @@ class PaymentService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+  
       return response;
     } catch (error) {
-      console.warn(error);
-      return;
+      return internalServerError();
     }
   }
 
@@ -65,6 +69,10 @@ class PaymentService {
 
       let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if(response.data.code!==200){
+        return 'ERRO';
+      }
 
       return response.data.data;
     } catch (error) {
