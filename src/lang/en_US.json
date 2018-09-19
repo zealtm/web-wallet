@@ -263,7 +263,7 @@
   "LEASING_BALANCE_ACTIVE": "Leasing",
   "LEASING_TITLE_NEW": "New Leasing",
   "LEASING_TITLE_NODE": "Node",
-  "LEASING_TITLE_STATUS": "Status",
+  "LEASING_TITLE_STATUS": "Status ",
   "INSTRUCTION_MODAL_CUPON": "Enter the 4-digit code of your coupon",
   "INSTRUCTION_MODAL_CUPON_plural": "",
   "VOUCHER_NUMBER": "Number",
@@ -359,4 +359,5 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + 5% of the service charge.",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolution:",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address."
+
 }
