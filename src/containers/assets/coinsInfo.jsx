@@ -18,7 +18,7 @@ import style from "./style.css";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
+// import Hidden from "@material-ui/core/Hidden";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
@@ -29,7 +29,7 @@ import ReceiveModal from "./modal/receiveModal/";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getDefaultFiat } from "../../utils/localStorage";
+// import { getDefaultFiat } from "../../utils/localStorage";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -59,7 +59,7 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    let defaultCoin = getDefaultFiat();
+    // let defaultCoin = getDefaultFiat();
     let {
       setAssetSendModalOpen,
       setAssetReceiveModalOpen,
@@ -74,7 +74,7 @@ class CoinsInfo extends React.Component {
     let coin = coins[assets.selectedCoin];
     let coinPrice = 0; /*coins[selectedCoin].price[defaultCoin].price;*/ //eslint-disable-line
     let coinPercent = 0; /*coins[selectedCoin].price.percent;*/ // eslint-disable-line
-    let fiatBalance = coin.balance[defaultCoin] ? coin.balance[defaultCoin].toFixed(2) : 0;
+    // let fiatBalance = coin.balance[defaultCoin] ? coin.balance[defaultCoin].toFixed(2) : 0;
     let balance = coin.balance.available;
     return (
       <div>
@@ -119,48 +119,13 @@ class CoinsInfo extends React.Component {
               </Grid>
             </Grid>
 
-            <Hidden xsDown>
-              <Grid item xs={8} className={style.floatRight}>
-                <Grid item className={style.balanceItem}>
-                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                  <p>{balance}</p>
-                </Grid>
+            <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
+              <Grid item>
+                <h2>{i18n.t("WALLET_BALANCE")}</h2>
+                <p>{balance}</p>
               </Grid>
-            </Hidden>
-
-            <Hidden smUp>
-              <Grid item xs={8} className={style.floatRight}>
-                <Grid item className={style.balanceItemMobile}>
-                  <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                  <p>{balance} </p>
-                  <div className={style.alignValues}>
-                    {coin.price[defaultCoin].symbol + fiatBalance}
-                    <div className={style.coinBalanceGreen}>
-                      {" "}
-                      {defaultCoin}{" "}
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-            </Hidden>
-          </Grid>
-
-          <Hidden smUp>
-            <Grid item xs={11} className={style.alignButtons}>
-              <button
-                className={style.receiveButtonMobile}
-                onClick={() => setAssetReceiveModalOpen()}
-              >
-                {i18n.t("BTN_RECEIVE")}
-              </button>
-              <button
-                className={style.sentButtonMobile}
-                onClick={() => setAssetSendModalOpen()}
-              >
-                {i18n.t("BTN_SEND")}
-              </button>
             </Grid>
-          </Hidden>
+          </Grid>
         </Grid>
       </div>
     );
