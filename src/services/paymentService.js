@@ -53,8 +53,9 @@ class PaymentService {
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
-    } catch(error) {
-      return internalServerError();
+    } catch (error) {
+      console.warn(error);
+      return;
     }
   }
 
@@ -68,6 +69,24 @@ class PaymentService {
       return response.data.data;
     } catch (error) {
       return internalServerError();
+    }
+  }
+
+  async sendPay(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/bill/pay/${payload.barCode}`,
+        payload,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
     }
   }
 }

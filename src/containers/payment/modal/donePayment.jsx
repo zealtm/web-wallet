@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import {connect} from "react-redux";
+
 // UTILS
 import i18n from "../../../utils/i18n";
+
+// COMPONENTS 
+import Loading from "../../../components/loading";
 
 // STYLES
 import style from "./style.css";
@@ -13,29 +19,42 @@ class DonePayment extends React.Component {
   }
 
   render() {
-    return (
-      <div className={style.modalBox}>
-        <img
-          src="/images/icons/confirm/confirm.png"
-          className={style.imageResult}
-        />
-        {/* <img src="/images/icons/error/error.png" /> */}
-        <div>
-          {i18n.t("PAYMENT_SUCCESS_1")}
-          <span className={style.textGreen}>R$30,00</span>
-          {i18n.t("PAYMENT_SUCCESS_2")}
+    const {loading} = this.props;
+    if(loading){
+      return (
+        <div className={style.modalBox}>
+          <Loading color="lunes" />
         </div>
+      )
+    }else{
+      return (
+        <div className={style.modalBox}>
+          <img
+            src="/images/icons/confirm/confirm.png"
+            className={style.imageResult}
+          />
+          <div>
+            {i18n.t("PAYMENT_SUCCESS_1")}
+            {i18n.t("PAYMENT_SUCCESS_2")}
+          </div>
 
-        <div className={style.smallDescription}>
-          {i18n.t("PAYMENT_TEXT_HISTORY")}
+          <div className={style.smallDescription}>
+            {i18n.t("PAYMENT_TEXT_HISTORY")}
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
 DonePayment.propTypes = {
-  //handleStep: PropTypes.func.isRequired,
-};
+  loading: PropTypes.bool.isRequired
+}
 
-export default DonePayment;
+const mapStateToProps = store => ({
+  loading: store.payment.loading,
+});
+
+export default connect(
+  mapStateToProps
+)(DonePayment);

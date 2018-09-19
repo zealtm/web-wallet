@@ -1,4 +1,4 @@
-import { takeLatest } from "redux-saga";
+import { takeLatest, takeEvery } from "redux-saga";
 import { fork } from "redux-saga/effects";
 import {
   authenticateUser,
@@ -26,7 +26,8 @@ import {
   shareCoinAddress,
   getWalletSendModalFee,
   getCoinFee,
-  setWalletTransaction
+  setWalletTransaction,
+  setUtxos
 } from "../wallet/redux/walletSaga";
 import { getVoucher } from "../coupons/redux/couponsSaga";
 import {
@@ -58,6 +59,9 @@ import {
   validateAddress as validateAssetAddress,
   shareCoinAddress as shareAssetAddress
 } from "../assets/redux/assetsSaga";
+import {
+  setModalStepSaga as setModalStepRechargeSaga
+} from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
   yield [
@@ -86,6 +90,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
     fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction),
+    fork(takeEvery, "SET_WALLET_UTXOS_API", setUtxos),
 
     // Leasing
     fork(takeLatest, "GET_PROFESSIONAL_NODE_API", getProfessionalNode),
@@ -109,6 +114,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
+
+    // recharge-saga
+    fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
 
     //assets
     fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),

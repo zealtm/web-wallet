@@ -5,7 +5,7 @@
   "MESSAGE_INVALID_PASSWORD": "Invalid Password",
   "MESSAGE_SELECT_FEE": "Select a Fee",
   "MESSAGE_NOT_SERVICE": "Service not available",
-  "MESSAGE_NOTHING_FOUND": "Service not available",
+  "MESSAGE_NOTHING_FOUND": "Nothing Found",
   "MESSAGE_NOT_SERVICE_YET": "Service not available yet.",
   "MESSAGE_TERMS": "You have to agree and download the terms.",
   "MESSAGE_AGE": "You must be over 18 years old",
@@ -21,6 +21,7 @@
   "TEXT_PROMOTIONAL": "Promo:",
   "TEXT_ID": "ID:",
   "TEXT_BLOCKEXPLORER": "Blockexplorer:",
+  "TEXT_ATTENTION": "ATTENTION",
 
   "BTN_GO": "Ir",
   "BTN_COMMING_SOON": "Soon",
@@ -158,6 +159,8 @@
   "PLACEHOLDER_PASSWORD_REPEAT": "Repeat password",
   "BTN_SUBMIT": "Submit",
   "BTN_SEND": "Send",
+  "BTN_SEND_LOADING": "Loading...",
+  "BTN_SEND_ERROR": "Unavaliable",
   "BTN_RECEIVE": "Receive",
   "BTN_CREATE": "Create",
   "PIN_CREATE": "CREATE your PIN",
@@ -211,7 +214,7 @@
   "NEW_ACCOUNT_ACCEPT_AGE": "I confirm that I am over 18 years old",
   "NEW_ACCOUNT_MESSAGE_SENDED": "Account created successfully.",
   "RESET_EMAIL_SENDED": "A message with a password reset link has been sent to your email address",
-  "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click here to download and finish the registration",
+  "NEW_ACCOUNT_TERMS_DOWNLOAD": "Click Here to download and finish the registration",
   "2FA_INSTRUCTIONS_TITLE": "Device verification",
   "WALLET_MODAL_SEND_TITLE": "Transaction",
   "WALLET_MODAL_RECEIVE_TITLE": "Receive",
@@ -241,6 +244,9 @@
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
   "WALLET_MY_AMOUNT": "Balance",
+  "WALLET_UTXOS_EMPTY_1": "There's a problem: no UTXOS, code 1",
+  "WALLET_UTXOS_EMPTY_2": "There's a problem: no UTXOS, code 2",
+  "WALLET_UTXOS_UNKNOWN_ERROR": "There's a unknown problem with UTXOS",
   "LEASING_TITLE_AMOUNT": "Leased",
   "MODAL_RECEIVE_MESSAGE": "Copied Address",
   "BTN_RECEIVE_COPY": "Copy",
@@ -270,7 +276,7 @@
   "PAYMENT_PASS_CONFIRMATION": "Para confirmar sua transação, informe sua senha e conclua o envio de ",
   "PAYMENT_PASS_TO": " para o endereço ",
   "PAYMENT_TEXT_HISTORY": "Você pode visualizar a transação em sua seção \"Históricos\"",
-  "PAYMENT_SUCCESS_1": "Você acabou de debitar um boleto no valor de ",
+  "PAYMENT_SUCCESS_1": "Você acabou de debitar um boleto",
   "PAYMENT_SUCCESS_2": " em sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você esta enviando ",
   "PAYMENT_FEE_TEXT_2": " para o endereco ",
@@ -289,7 +295,7 @@
   "PAYMENT_BTN_PAY": "Pagar agora",
 
   "PAYMENT_TERMS_TITLE": "Termo GDPR",
-  "PAYMENT_TERMS_DESC": "Lorem ipsum asd asdsd sdsdsjks",
+  "PAYMENT_TERMS_DESC": "Do you accept the terms?",
 
   "FEE_LOW": "Baixo",
   "FEE_MEDIUM": "Medio",
@@ -325,5 +331,14 @@
   "MODAL_SEND_FEE_TRANSACTION": "Sua taxa de transação na rede",
   "MODAL_SEND_INFO_BLOCKCHAIN": "Sua transação esta sendo processada dentro do Blockchain",
   "MODAL_SEND_INFO_SUCCESS": "O envio foi feito com sucesso",
-  "MODAL_SEND_INFO_ERROR": "Falha no procedimento de envio"
+  "MODAL_SEND_INFO_ERROR": "Falha no procedimento de envio",
+
+  "RECHARGE_TITLE_INVOICE": "Lunes Recarga Online",
+  "RECHARGE_DESCRIPTION": "Recarregue qualquer número e pague com criptomoedas",
+  "RECHARGE_TITLE": "Recarga de Celular",
+  "RECHARGE_DETAILS_1": "Atenção: Confira abaixo os dados do seu pedido para que não haja erros. Se a informação estiver incorreta, recomece",
+  "RECHARGE_DETAILS_2": " e será adicionado ",
+  "RECHARGE_DETAILS_3": " em créditos para recarga do número abaixo: ",
+  "RECHARGE_SUCCESS_1": "Você efetuou uma recarga no valor de ",
+  "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na aba Históricos"
 }
