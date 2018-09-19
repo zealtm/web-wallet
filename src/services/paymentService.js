@@ -1,7 +1,8 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
 import { setAuthToken } from "../utils/localStorage";
+import i18n from "../utils/i18n";
 
 class PaymentService {
   async getCoins(token) {
@@ -32,6 +33,10 @@ class PaymentService {
 
       return response.data;
     } catch (error) {
+      if (error.response.data.code === 500) {
+        return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
+      }
+
       return internalServerError();
     }
   }

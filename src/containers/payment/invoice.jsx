@@ -141,6 +141,7 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
+      disableNumberInput: false,
       invoice: emptyValue,
       coin: {
         name: undefined,
@@ -172,6 +173,17 @@ class Invoice extends React.Component {
       if (disableNumberInput) {
         return;
       }
+
+      this.setState({
+        invoice: {
+          ...invoice,
+          number: newValue,
+          assignor: "",
+          dueDate: "",
+          value: "",
+          description: "",
+        }
+      })
 
       getInvoice(newValue);
     }
@@ -216,7 +228,8 @@ class Invoice extends React.Component {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
-      value: payment.value || invoice.value
+      value: payment.value || invoice.value,
+      description: payment.description || invoice.description
     };
 
     const invoiceInputs = {};
@@ -305,7 +318,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={payment.assignor || invoice.assignor}
+                value={invoice.assignor || payment.assignor}
                 onChange={this.handleInvoiceDefaultChange("assignor")}
                 error={errors.includes("assignor")}
               />
@@ -316,7 +329,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_NAME")}
-                value={payment.name || invoice.name}
+                value={invoice.name}
                 onChange={this.handleInvoiceDefaultChange("name")}
                 error={errors.includes("name")}
               />
@@ -327,7 +340,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={payment.description || invoice.description}
+                value={invoice.description || payment.description}
                 onChange={this.handleInvoiceDefaultChange("description")}
                 error={errors.includes("description")}
               />
@@ -341,7 +354,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={payment.dueDate || invoice.dueDate}
+                value={invoice.dueDate || payment.dueDate}
                 onChange={this.handleInvoiceDefaultChange("dueDate")}
                 error={errors.includes("dueDate")}
                 inputComponent={DateMask}
@@ -374,7 +387,7 @@ class Invoice extends React.Component {
                     R$
                   </InputAdornment>
                 }
-                value={payment.value || invoice.value}
+                value={invoice.value || payment.value}
                 onChange={this.handleInvoiceDefaultChange("value")}
                 error={errors.includes("value")}
                 inputComponent={MoneyBrlMask}
