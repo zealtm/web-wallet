@@ -283,11 +283,13 @@ export function* confirmPaySaga(payload) {
         //console.log("transacao", response);
         
         const transacao_obj = JSON.parse(response.config.data);
+        const dueDate = payload.payment.payment.dueDate.split("/");
+        const dueDateFormat = dueDate[2]+"-"+dueDate[1]+"-"+dueDate[0];
 
         if (response) {
           const payload_elastic = {
             barCode: payload.payment.payment.number,
-            dueDate: payload.payment.payment.dueDate,
+            dueDate: dueDateFormat,
             amount: parseFloat(payload.payment.payment.value),
             name: payload.payment.payment.name,
             document: payload.payment.payment.cpfCnpj,
