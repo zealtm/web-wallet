@@ -249,7 +249,7 @@ export function* confirmPaySaga(payload) {
         token
       );
 
-      console.log("servico", lunesWallet);
+      //console.log("servico", lunesWallet);
 
       if (lunesWallet) {
         // transaciona
@@ -262,7 +262,7 @@ export function* confirmPaySaga(payload) {
           token
         );
 
-        console.log("transacao", response);
+        //console.log("transacao", response);
         
         const transacao_obj = JSON.parse(response.config.data);
 
@@ -285,7 +285,12 @@ export function* confirmPaySaga(payload) {
             payload_elastic
           );
 
-          console.log("elastic", response_elastic);
+          //console.log("payload", payload_elastic);
+          //console.log("elastic", response_elastic);
+
+          yield put({
+            type: "SET_CLEAR_PAYMENT_REDUCER"
+          });
 
           if (response_elastic.data.errorMessage) {
             yield put({
@@ -299,15 +304,6 @@ export function* confirmPaySaga(payload) {
               step: 5
             });
           }
-
-          yield put({
-            type: "SET_LOADING_REDUCER",
-            payload: false
-          });
-
-          yield put({
-            type: "SET_CLEAR_PAYMENT_REDUCER"
-          });
 
           return;
         }
