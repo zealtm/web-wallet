@@ -70,6 +70,7 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
+      console.warn(serviceId, transaction, lunesWallet, seed, token);
       let network = undefined;
       let coinService = new CoinService();
       let {
