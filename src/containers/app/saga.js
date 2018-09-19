@@ -1,5 +1,10 @@
-import { takeLatest, takeEvery } from "redux-saga";
-import { fork } from "redux-saga/effects";
+import {
+  takeLatest,
+  takeEvery
+} from "redux-saga";
+import {
+  fork
+} from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -28,10 +33,14 @@ import {
   setWalletTransaction,
   setUtxos
 } from "../wallet/redux/walletSaga";
-import { getVoucher } from "../coupons/redux/couponsSaga";
+import {
+  getVoucher
+} from "../coupons/redux/couponsSaga";
 import {
   getTwoFactorAuth,
-  verifyTwoFactorAuthSettings
+  verifyTwoFactorAuthSettings,
+  getAliases,
+  createAlias
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -112,6 +121,8 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
+    fork(takeLatest, "CREATE_ALIAS_ADDRESS_API", createAlias),
+    fork(takeLatest, "GET_ALIAS_ADDRESS_API", getAliases),
 
     // recharge-saga
     fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),

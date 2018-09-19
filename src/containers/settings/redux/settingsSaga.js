@@ -7,12 +7,16 @@ import {
 } from "../../../utils/localStorage";
 import {
   internalServerError,
-  modalSuccess
+  modalSuccess,
+  modalError
 } from "../../../containers/errors/statusCodeMessage";
-
-// Services
+import i18n from "../../../utils/i18n";
 import AuthService from "../../../services/authService";
+import TransactionService from "../../../services/transaction/transactionService";
+import CoinService from "../../../services/coinService";
 const authService = new AuthService();
+const transactionService = new TransactionService();
+const coinService = new CoinService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -64,6 +68,65 @@ export function* verifyTwoFactorAuthSettings(action) {
       state: true
     });
 
+    yield put(internalServerError());
+  }
+}
+
+export function* createAlias(action) {
+  try {
+
+    let responseAddress = yield call(
+      coinService.validateAddress,
+      action.data.coinName,
+      action.data.toAddress
+    );
+
+    if (!responseAddress || responseAddress === "error") {
+      yield put({
+        type: "SET_LEASING_MODAL_LOADING"
+      });
+      return yield put(modalError(i18n.t("MESSAGE_INVALID_ADDRESS")));
+    }
+
+    let response = yield call(
+      transactionService.createAlias,
+      action.data.alias,
+      action.data.fee
+    );
+    console.warn("alias", response);
+    yield put({
+      type: "SET_SKELETON_ALIAS_ADDRESS",
+      alias: "leonardinho"
+    })
+    return response;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getAliases(action) {
+  try {
+
+    let responseAddress = yield call(
+      coinService.validateAddress,
+      action.data.coinName,
+      action.data.toAddress
+    );
+
+    if (!responseAddress || responseAddress === "error") {
+      yield put({
+        type: "SET_LEASING_MODAL_LOADING"
+      });
+      return yield put(modalError(i18n.t("MESSAGE_INVALID_ADDRESS")));
+    }
+
+    let response = yield call(
+      transactionService.getAliases,
+      action.data.address
+    );
+
+    return response;
+  } catch (error) {
     yield put(internalServerError());
   }
 }

@@ -14,3 +14,21 @@ export const verifyTwoFactorAuthSettings = token => ({
   type: "GET_SETTINGS_2FA_API",
   token
 });
+
+export const createAlias = (coin, address, alias, fee) => ({
+  type: "CREATE_ALIAS_ADDRESS_API",
+  data: {
+    coin,
+    address,
+    alias,
+    fee
+  }
+});
+
+export const getAliases = (coin, address) => ({
+  type: "GET_ALIAS_ADDRESS_API",
+  data: {
+    coin,
+    address
+  }
+});
