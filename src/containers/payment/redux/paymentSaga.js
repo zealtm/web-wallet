@@ -81,11 +81,12 @@ export function* setPaymentSaga(payload) {
       address,
       token
     );
+
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
-    
-    // if(balanceResponse.data.code!==200 || amountResponse.data.code!==200){
+
+    // if (balanceResponse.data.code !== 200 || amountResponse.data.code !== 200) {
     //   yield put({
     //     type: "SET_LOADING_REDUCER",
     //     payload: false
@@ -169,7 +170,7 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
-    if(response.data.code !== 200){
+    if (response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -178,9 +179,9 @@ export function* getInvoiceSaga(payload) {
 
     const data = {
       number: payload.number,
-      value: response.value,
-      assignor: response.assignor,
-      dueDate: convertToLocaleDate(response.dueDate) || ""
+      value: response.data.value,
+      assignor: response.data.assignor,
+      dueDate: response.data.dueDate ? convertToLocaleDate(response.data.dueDate) : ''
     };
 
     yield put({
@@ -188,6 +189,10 @@ export function* getInvoiceSaga(payload) {
       payment: data
     });
   } catch (error) {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
     yield put(internalServerError());
   }
 }

@@ -4,6 +4,8 @@ import isLength from "validator/lib/isLength";
 import isEmail from "validator/lib/isEmail";
 import i18n from "./i18n";
 import { validateMnemonic } from "./mnemonicSeed";
+import { isValid as isValidCpf } from "@fnando/cpf";
+import { isValid as isValidCnpj } from "@fnando/cnpj";
 
 /*
 DOCUMENTATION:
@@ -181,6 +183,14 @@ export const inputValidator = inputs => {
               value.trim().split(/\s+/g).length != 18) ||
             !isSeed
           ) {
+            errors.push(name);
+          }
+        }
+
+        if (['cpf', 'cnpj', 'cpfCnpj'].includes(name)) {
+          const isValidCpfCnpj = value.length === 11 ? isValidCpf(value) : isValidCnpj(value);
+
+          if (!isValidCpfCnpj) {
             errors.push(name);
           }
         }
