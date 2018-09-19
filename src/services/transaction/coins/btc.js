@@ -56,9 +56,8 @@ class BtcTransaction {
       let keyPair = this.getKeyPair(data.seed, data.network);
 
       tx = this.sign(tx, keyPair);
-
       const txHex = tx.build().toHex();
-      console.warn(txHex);
+      console.warn(txHex, "txHex");
       // return;
       const broadcastResult = await transService.broadcast(
         txHex,
