@@ -183,12 +183,6 @@ class User extends React.Component {
     const {password, newPassword, confirmNewPassword} = this.state;
 
     updateUserPassword(user.password, password, newPassword, confirmNewPassword);
-
-    setTimeout(() => {
-      if (user.password !== this.props.user.password) {
-        window.location.reload();
-      }
-    }, 2500);
   }
 
   loadDays = () => {
@@ -420,7 +414,7 @@ class User extends React.Component {
                 className={style.buttonEnable}
                 onClick={this.changeUserPassword}
               >
-                {i18n.t("SETTINGS_USER_CHANGE_PASSWORD")}
+                {isLoading ? <Loading /> : i18n.t("SETTINGS_USER_CHANGE_PASSWORD")}
               </button>
             </Grid>
           </Grid>

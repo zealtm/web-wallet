@@ -331,19 +331,28 @@ export function* updateUserPasswordSaga(action) {
       return;
     }
 
+    yield put({
+      type: changeLoadingState
+    });
+
     const token = yield call(getAuthToken);
     yield call(userService.resetUserPassword, token, newPassword, confirmOldPassword);
 
-    yield put(modalSuccess(i18n.t("SETTINGS_CHANGE_PASSWORD_SUCCESS")));
 
-    yield call(clearAll);
+    yield call(setUserData, {secretWord: ''});
 
     yield put({
       type: "UPDATE_USER_PASSWORD_REDUCER",
-      pasword: encryptHmacSha512Key(action.newPassword)
     })
 
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+    yield put(modalSuccess(i18n.t("SETTINGS_CHANGE_PASSWORD_SUCCESS")));
   } catch (error) {
+    yield put({
+      type: changeLoadingState
+    });
     yield put(internalServerError());
   }
 }

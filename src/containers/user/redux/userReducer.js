@@ -202,9 +202,11 @@ const user = (state = initialState, action) => {
     case "UPDATE_USER_PASSWORD_REDUCER":
       return {
         ...state,
-        user: {
-          ...state.user,
-          password: action.password
+        loading: false,
+        pages: {
+          login: 0,
+          create: 0,
+          reset: 0
         }
       };
 
