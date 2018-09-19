@@ -343,14 +343,20 @@
   "RECHARGE_SUCCESS_1": "Você efetuou uma recarga no valor de ",
   "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na aba Históricos",
 
-  "INSTRUCTION_MODAL_INFO_1": "Taxa de mineração da rede (Valor varia conforme a rede da moeda + 20% da taxa Lunes) + (A), (B) ou (C) da taxa de serviço.",
-  "INSTRUCTION_MODAL_INFO_2_TITTLE": "Limite:",
-  "INSTRUCTION_MODAL_INFO_2": " Varia de acordo com a concessionária.",
-  "INSTRUCTION_MODAL_INFO_3_TITTLE": "Horário de funcionamento:",
-  "INSTRUCTION_MODAL_INFO_3": " 7 às 20 horas.",
-  "INSTRUCTION_MODAL_INFO_4_TITTLE": "Devolução:",
-  "INSTRUCTION_MODAL_INFO_4": " Em caso de problemas na efetivação do pedido, as moedas enviadas serão estornadas automaticamente para o endereço Lunes da moeda.",
+  "INSTRUCTION_MODAL_PAY_INFO_1_TITTLE": "Tarifas Boleto:",
+  "INSTRUCTION_MODAL_PAY_INFO_1": " Taxa de mineração da rede (Valor varia conforme a rede da moeda + 20% da taxa Lunes) + (A), (B) ou (C) da taxa de serviço.",
+  "INSTRUCTION_MODAL_PAY_INFO_2_TITTLE": "Limite:",
+  "INSTRUCTION_MODAL_PAY_INFO_2": " Varia de acordo com a concessionária.",
+  "INSTRUCTION_MODAL_PAY_INFO_3_TITTLE": "Horário de funcionamento:",
+  "INSTRUCTION_MODAL_PAY_INFO_3": " 7 às 20 horas.",
+  "INSTRUCTION_MODAL_PAY_INFO_4_TITTLE": "Devolução:",
+  "INSTRUCTION_MODAL_PAY_INFO_4": " Em caso de problemas na efetivação do pedido, as moedas enviadas serão estornadas automaticamente para o endereço Lunes da moeda.",
   "INSTRUCTION_MODAL_PAY_1": "6% até 1000 reais.",
   "INSTRUCTION_MODAL_PAY_2": "5% entre 1001 e 3000 reais.",
-  "INSTRUCTION_MODAL_PAY_3": "4.5% acima de 3001 reais."
+  "INSTRUCTION_MODAL_PAY_3": "4.5% acima de 3001 reais.",
+
+  "INSTRUCTION_MODAL_RECHARGE_INFO_1_TITTLE": "Tarifas Recarga:",
+  "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Taxa de mineração da rede (Valor varia conforme a rede da moeda + 20% da taxa Lunes) + 5% da taxa de serviço.",
+  "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolução:",
+  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " Em caso de problemas na efetivação do pedido, as moedas enviadas serão estornadas automaticamente para o endereço Lunes da moeda."
 }

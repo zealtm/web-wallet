@@ -19,7 +19,6 @@
 
 /* MODAL*/
 :local(.alignInstructions, ol) {
-  /* background-color: violet; */
   list-style-type: decimal;
   display: grid;
   font-size: 19.2px;

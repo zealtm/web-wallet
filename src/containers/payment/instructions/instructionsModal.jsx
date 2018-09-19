@@ -11,7 +11,10 @@ class InstructionsModal extends React.Component {
     return (
       <div className={style.alignInstructions}>
         <div className={style.infoModal}>
-          <p>{i18n.t("INSTRUCTION_MODAL_INFO_1")}</p>
+          <p>
+            <strong>{i18n.t("INSTRUCTION_MODAL_PAY_INFO_1_TITTLE")}</strong>
+            {i18n.t("INSTRUCTION_MODAL_PAY_INFO_1")}
+          </p>
         </div>
         <ol>
           <li>
@@ -26,16 +29,16 @@ class InstructionsModal extends React.Component {
         </ol>
         <div className={style.infoModal}>
           <p>
-            <strong>{i18n.t("INSTRUCTION_MODAL_INFO_2_TITTLE")}</strong>
-            {i18n.t("INSTRUCTION_MODAL_INFO_2")}
+            <strong>{i18n.t("INSTRUCTION_MODAL_PAY_INFO_2_TITTLE")}</strong>
+            {i18n.t("INSTRUCTION_MODAL_PAY_INFO_2")}
           </p>
           <p>
-            <strong>{i18n.t("INSTRUCTION_MODAL_INFO_3_TITTLE")}</strong>
-            {i18n.t("INSTRUCTION_MODAL_INFO_3")}
+            <strong>{i18n.t("INSTRUCTION_MODAL_PAY_INFO_3_TITTLE")}</strong>
+            {i18n.t("INSTRUCTION_MODAL_PAY_INFO_3")}
           </p>
           <p>
-            <strong>{i18n.t("INSTRUCTION_MODAL_INFO_4_TITTLE")}</strong>
-            {i18n.t("INSTRUCTION_MODAL_INFO_4")}
+            <strong>{i18n.t("INSTRUCTION_MODAL_PAY_INFO_4_TITTLE")}</strong>
+            {i18n.t("INSTRUCTION_MODAL_PAY_INFO_4")}
           </p>
         </div>
       </div>
