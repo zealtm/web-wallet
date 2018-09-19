@@ -195,6 +195,7 @@
   text-align: right;
   border-radius: 8px;
   padding: 5px 10px;
+  margin-left: 10px!important;
 }
 
 :local(.balanceItemMobile) {
@@ -215,6 +216,7 @@
 :local(.balanceItem p) {
   font-weight: normal;
   font-size: 24px;
+  margin: 0;
 }
 
 @media only screen and (max-width: 599px) {
@@ -254,7 +256,7 @@
   margin: 0;
 }
 :local(.balanceItem h2) {
-  margin: 0 0 15px 0;
+  margin: 0;
 }
 
 /* 2.3 BUTTONS */
