@@ -84,14 +84,6 @@ export function* setPaymentSaga(payload) {
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
-    
-    // if(balanceResponse.data.code!==200 || amountResponse.data.code!==200){
-    //   yield put({
-    //     type: "SET_LOADING_REDUCER",
-    //     payload: false
-    //   });
-    // }
-
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
@@ -135,12 +127,17 @@ export function* getFeePaymentSaga(payload) {
       payload.amount,
       payload.decimalPoint
     );
-
-    if(response.data.code !== 200){
+    
+    if(!response.fee){
+      // yield put({
+      //   type: "CHANGE_SKELETON_ERROR_STATE",
+      //   state: true
+      // });
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+      yield put(internalServerError());
     }
 
     yield put({
@@ -168,12 +165,17 @@ export function* getInvoiceSaga(payload) {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
-
-    if(response.data.code !== 200){
+    
+    if(response === "ERRO"){
+      // yield put({
+      //   type: "CHANGE_SKELETON_ERROR_STATE",
+      //   state: true
+      // });
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+      yield put(internalServerError());
     }
 
     const data = {
@@ -201,12 +203,13 @@ export function* getHistoryPaySaga() {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getHistory, token);
-
-    if(response.data.code !== 200){
+    
+    if(response === "ERRO"){
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+      yield put(internalServerError());
     }
 
     let data = [];
@@ -243,6 +246,7 @@ export function* confirmPaySaga(payload) {
     };
 
     // transacao
+    
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -254,16 +258,21 @@ export function* confirmPaySaga(payload) {
         token
       );
 
+      console.log("servico", lunesWallet);
+
       if (lunesWallet) {
         // transaciona
         let response = yield call(
           transactionService.transaction,
+          lunesWallet.id,
           payload_transaction,
           lunesWallet,
           decryptAes(seed, payload.payment.user),
           token
         );
 
+        console.log("transacao", response);
+        
         const transacao_obj = JSON.parse(response.config.data);
 
         if (response) {
@@ -284,6 +293,8 @@ export function* confirmPaySaga(payload) {
             token,
             payload_elastic
           );
+
+          console.log("elastic", response_elastic);
 
           if (response_elastic.data.errorMessage) {
             yield put({
@@ -346,6 +357,7 @@ export function* confirmPaySaga(payload) {
 
       yield put(internalServerError());
     }
+    
   } catch (error) {
     yield put(internalServerError());
   }

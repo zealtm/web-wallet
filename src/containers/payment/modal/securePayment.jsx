@@ -14,6 +14,9 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
+// COMPONENTS 
+import ButtonContinue from "./component/buttonContinue";
+
 class SecurePayment extends React.Component {
   constructor() {
     super();
@@ -58,7 +61,7 @@ class SecurePayment extends React.Component {
 
   render() {
     let { password } = this.state;
-    let { payment } = this.props;
+    let { payment, loading } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -88,12 +91,11 @@ class SecurePayment extends React.Component {
           />
         </div>
 
-        <button
-          className={style.btContinue}
-          onClick={() => this.confirmPassword()}
-        >
-          {i18n.t("BTN_CONFIRM")}
-        </button>
+        <ButtonContinue
+          label={i18n.t("BTN_CONFIRM")}
+          action={()=>this.confirmPassword()}
+          loading={loading}
+        />
       </div>
     );
   }

@@ -28,11 +28,11 @@ class PaymentService {
         `${BASE_URL}/bill/${number}`,
         API_HEADER
       );
-      // TODO: enable setAuthToken when the header is in the api response
+      
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+     
       if(response.data.code!==200){
-        return internalServerError();
+        return 'ERRO';
       }
 
       const data = {
@@ -69,6 +69,10 @@ class PaymentService {
 
       let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if(response.data.code!==200){
+        return 'ERRO';
+      }
 
       return response.data.data;
     } catch (error) {
