@@ -75,7 +75,6 @@ class Ted extends React.Component {
                 name: undefined,
             }
         };
-
         this.coinSelected = this.coinSelected.bind(this);
     }
 
