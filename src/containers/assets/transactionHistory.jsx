@@ -89,7 +89,7 @@ class TransactionHistory extends React.Component {
                 <div>
                   <img
                     src={
-                      "./images/icons/walletHistory/" +
+                      "./images/wallet/" +
                       type.toLowerCase() +
                       ".png"
                     }
