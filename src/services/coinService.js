@@ -336,6 +336,8 @@ class CoinService {
 
       if (coin === "bch") {
         valid = true;
+      } else if (coin === "dash") {
+        valid = true;
       } else {
         TESTNET
           ? (valid = await CAValidator.validate(
