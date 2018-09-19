@@ -69,18 +69,9 @@ export function* setPaymentSaga(payload) {
     const { abbreviation, address } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
-    const amountResponse = yield call(
-      paymentService.getCoinAmountPay,
-      token,
-      abbreviation,
-      value
-    );
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      abbreviation,
-      address,
-      token
-    );
+    const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
+    const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
+
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
