@@ -297,7 +297,7 @@
   "PAYMENT_TITLE_BANK": "Bank / Institution",
   "PAYMENT_TITLE_NAME": "Name",
   "PAYMENT_TITLE_DATE": "Maturity",
-  "PAYMENT_TITLE_DOC": "CPF",
+  "PAYMENT_TITLE_DOC": "CPF/CNPJ",
   "PAYMENT_TITLE_VALUE": "Value",
   "PAYMENT_CONFIRM_1": "Confirm your data to complete your payment",
   "PAYMENT_CONFIRM_2": "You will be charged from your wallet ",
