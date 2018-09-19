@@ -1,26 +1,22 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
-import {
-  internalServerError
-} from "../../errors/statusCodeMessage";
+import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../errors/statusCodeMessage";
 
-import {
-  getAuthToken
-} from "../../../utils/localStorage";
-import {
-  convertBiggestCoinUnit
-} from "../../../utils/numbers";
-import {
-  convertToLocaleDate
-} from "../../../utils/strings";
+import { getAuthToken } from "../../../utils/localStorage";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
+import { convertToLocaleDate } from "../../../utils/strings";
 
+// UTILS
+import { getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
+
+// SERVICES
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
+import TransactionService from "../../../services/transaction/transactionService";
 
 const paymentService = new PaymentService();
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 export function* setModalStepSaga(payload) {
   yield put({
@@ -37,7 +33,7 @@ export function* getCoinsEnabledSaga() {
     const services = response.data.services;
 
     const coins = services.reduce((availableCoins, coin) => {
-      if (coin.status === 'active') {
+      if (coin.status === "active") {
         const active = {
           title: coin.abbreviation.toUpperCase(),
           value: {
@@ -45,7 +41,7 @@ export function* getCoinsEnabledSaga() {
             address: coin.address
           },
           img: `/images/icons/coins/${coin.abbreviation}.png`
-        }
+        };
 
         availableCoins.push(active);
       }
@@ -70,14 +66,21 @@ export function* setPaymentSaga(payload) {
     });
 
     const value = parseFloat(payload.pay.value);
-    const {
-      abbreviation,
-      address
-    } = payload.pay.coin;
+    const { abbreviation, address } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
-    const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
-    const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
+    const amountResponse = yield call(
+      paymentService.getCoinAmountPay,
+      token,
+      abbreviation,
+      value
+    );
+    const balanceResponse = yield call(
+      coinService.getCoinBalance,
+      abbreviation,
+      address,
+      token
+    );
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
@@ -86,7 +89,7 @@ export function* setPaymentSaga(payload) {
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
-      value: value.toFixed(2).replace('.', ','),
+      value: value.toFixed(2).replace(".", ","),
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
@@ -137,7 +140,7 @@ export function* getFeePaymentSaga(payload) {
 export function* setFeePaymentSaga(payload) {
   yield put({
     type: "SET_FEE_PAYMENT_REDUCER",
-    fee: payload.fee
+    fee: payload
   });
 }
 
@@ -191,21 +194,129 @@ export function* getHistoryPaySaga() {
   }
 }
 
-export function* confirmPaySaga() {
+export function* confirmPaySaga(payload) {
   try {
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
     });
 
-    yield put({
-      type: "SET_CLEAR_PAYMENT_REDUCER"
-    });
+    const payload_transaction = {
+      coin: payload.payment.coin,
+      fromAddress: payload.payment.fromAddress,
+      toAddress: payload.payment.toAddress,
+      amount: payload.payment.amount,
+      fee: payload.payment.fee,
+      feePerByte: payload.payment.feePerByte,
+      feeLunes: payload.payment.feeLunes,
+      price: payload.payment.price,
+      decimalPoint: payload.payment.decimalPoint
+    };
 
-    yield put({
-      type: "SET_MODAL_PAY_STEP_REDUCER",
-      step: 5
-    });
+    // transacao
+    try {
+      let seed = yield call(getUserSeedWords);
+      let token = yield call(getAuthToken);
+
+      // pega o servico disponivel
+      let lunesWallet = yield call(
+        transactionService.transactionService,
+        payload_transaction.coin,
+        token
+      );
+
+      if (lunesWallet) {
+        // transaciona
+        let response = yield call(
+          transactionService.transaction,
+          payload_transaction,
+          lunesWallet,
+          decryptAes(seed, payload.payment.user),
+          token
+        );
+
+        const transacao_obj = JSON.parse(response.config.data);
+
+        if (response) {
+          const payload_elastic = {
+            barCode: payload.payment.payment.number,
+            dueDate: payload.payment.payment.dueDate,
+            amount: parseFloat(payload.payment.payment.value),
+            name: payload.payment.payment.name,
+            document: payload.payment.payment.cpfCnpj,
+            txID: transacao_obj.txID,
+            describe: payload.payment.payment.description,
+            serviceId: lunesWallet.id
+          };
+
+          // chamar api pra salvar a transacao
+          let response_elastic = yield call(
+            paymentService.sendPay,
+            token,
+            payload_elastic
+          );
+
+          if (response_elastic.data.errorMessage) {
+            yield put({
+              type: "SET_MODAL_PAY_STEP_REDUCER",
+              step: 6
+            });
+            yield put(internalServerError());
+          } else {
+            yield put({
+              type: "SET_MODAL_PAY_STEP_REDUCER",
+              step: 5
+            });
+          }
+
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            payload: false
+          });
+
+          yield put({
+            type: "SET_CLEAR_PAYMENT_REDUCER"
+          });
+
+          return;
+        }
+      }
+
+      yield put({
+        type: "SET_CLEAR_PAYMENT_REDUCER"
+      });
+
+      yield put({
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 5
+      });
+
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+
+      yield put({
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 6
+      });
+
+      yield put(internalServerError());
+
+      return;
+    } catch (error) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+
+      yield put({
+        type: "SET_MODAL_PAY_STEP_REDUCER",
+        step: 6
+      });
+
+      yield put(internalServerError());
+    }
   } catch (error) {
     yield put(internalServerError());
   }
