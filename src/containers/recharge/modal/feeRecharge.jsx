@@ -99,7 +99,7 @@ class FeeRecharge extends React.Component {
               className={style.redLabelFee}
               onClick={() => this.calcFee(0.001)}
             >
-              {i18n.t("FEE_HIGHT")} 0.001
+              {i18n.t("FEE_HIGH")} 0.001
             </span>
           </div>
 
