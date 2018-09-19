@@ -31,6 +31,10 @@ class PaymentService {
       // TODO: enable setAuthToken when the header is in the api response
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      if(response.data.code!==200){
+        return internalServerError();
+      }
+
       const data = {
         number,
         value: response.data.data.value,
@@ -52,11 +56,10 @@ class PaymentService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+  
       return response;
     } catch (error) {
-      console.warn(error);
-      return;
+      return internalServerError();
     }
   }
 

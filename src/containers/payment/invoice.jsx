@@ -102,7 +102,8 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled } = this.props;
+    const { getCoinsEnabled, setClearPayment } = this.props;
+    setClearPayment();
     getCoinsEnabled();
   }
 

@@ -84,6 +84,14 @@ export function* setPaymentSaga(payload) {
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
+    
+    // if(balanceResponse.data.code!==200 || amountResponse.data.code!==200){
+    //   yield put({
+    //     type: "SET_LOADING_REDUCER",
+    //     payload: false
+    //   });
+    // }
+
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
@@ -128,6 +136,13 @@ export function* getFeePaymentSaga(payload) {
       payload.decimalPoint
     );
 
+    if(response.data.code !== 200){
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+    }
+
     yield put({
       type: "GET_FEE_PAYMENT_REDUCER",
       fee: response
@@ -154,6 +169,13 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    if(response.data.code !== 200){
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+    }
+
     const data = {
       number: payload.number,
       value: response.value,
@@ -179,6 +201,13 @@ export function* getHistoryPaySaga() {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getHistory, token);
+
+    if(response.data.code !== 200){
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+    }
 
     let data = [];
     if (response.payments) {
