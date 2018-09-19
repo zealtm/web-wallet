@@ -49,7 +49,7 @@ class ResetUser extends React.Component {
       });
     } else {
       clearMessage();
-      resetUser();
+      resetUser(this.state.inputs.emailUsername.value);
     }
   };
 

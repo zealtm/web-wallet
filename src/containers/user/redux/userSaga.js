@@ -221,12 +221,24 @@ export function* createUser(action) {
   }
 }
 
-export function* resetUser() {
+export function* resetUser(action) {
   try {
-    yield put({
-      type: "POST_USER_RESET_USER",
-      page: 1
-    });
+    //let token = yield call(getAuthToken);
+    let response = yield call(userService.resetPass, {login: action.login});
+
+    if (response.data.code === 200) {
+      console.log("reset", "send_mail");
+      yield put({
+        type: "POST_USER_RESET_USER",
+        page: 1
+      });
+    }else{
+      yield put({
+        type: changeLoadingState
+      });
+      yield put(internalServerError());
+    }
+
   } catch (error) {
     yield put({
       type: changeLoadingState
