@@ -10,7 +10,8 @@
     "build:production": "rm -rf ./public/scripts/* && webpack --config webpack.config.prod.js",
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock && npm install",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
-    "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
+    "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
+    "marcelo":"webpack --config marcelo.webpack.js --watch --hot --progress"
   },
   "repository": {
     "type": "git",
