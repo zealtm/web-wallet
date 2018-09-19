@@ -71,6 +71,7 @@ class TransactionHistory extends React.Component {
 
     return Object.keys(history).map((val, index) => {
       let transaction = history[index];
+      let type = transaction.type ? transaction.type : '';
       return (
         <div key={index}>
           <div>
@@ -89,7 +90,7 @@ class TransactionHistory extends React.Component {
                   <img
                     src={
                       "./images/icons/walletHistory/" +
-                      transaction.type.toLowerCase() +
+                      type.toLowerCase() +
                       ".png"
                     }
                   />
@@ -104,12 +105,12 @@ class TransactionHistory extends React.Component {
               <Grid item xs={4} className={style.valueHistory}>
                 <div
                   className={
-                    transaction.type === "RECEIVED"
+                    type === "RECEIVED"
                       ? style.receivedHistory
                       : style.sentHistory
                   }
                 >
-                  {transaction.type === "RECEIVED" || "-"}
+                  {type === "RECEIVED" || "-"}
                   {convertBiggestCoinUnit(
                     transaction.amount,
                     decimalPoint
