@@ -82,3 +82,22 @@ export const MoneyBrlMask = (props) => {
     />
   );
 }
+
+export const PhoneMask = (props) => {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="(##) ##### ####"
+    />
+  );
+}

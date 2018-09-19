@@ -71,19 +71,19 @@ const imagePath = "/images/carousel/";
 const carouselSteps = [
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_1"),
-    imgPath: imagePath + "Slider-Boleto.png"
+    imgPath: imagePath + "slider-boleto.png"
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_2"),
-    imgPath: imagePath + "/Slider-TED.png"
+    imgPath: imagePath + "slider-ted.png"
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_3"),
-    imgPath: imagePath + "/Slider-Recarga.png"
+    imgPath: imagePath + "slider-recarga.png"
   },
   {
     label: i18n.t("LOGIN_SLIDE_DESCRIPTION_4"),
-    imgPath: imagePath + "/Slider-Wallet.png"
+    imgPath: imagePath + "slider-wallet.png"
   }
 ];
 
@@ -157,4 +157,3 @@ const mapSateToProps = store => ({
 });
 
 export default connect(mapSateToProps)(Login);
-

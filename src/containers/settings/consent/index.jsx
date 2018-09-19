@@ -21,9 +21,9 @@ import style from "./style.css";
 
 const configs = [
   {
-    title: "GDPR",
-    description: i18n.t("SETTINGS_CONSENTS_GDPR_DESCRIPTION"),
-    name: "gdpr"
+    title: "TERMS",
+    description: i18n.t("SETTINGS_CONSENTS_TERMS_DESCRIPTION"),
+    name: "terms"
   },
 ];
 
@@ -31,7 +31,7 @@ class Consent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gdpr: props.user.gdpr || 'unread',
+      terms: props.user.terms || 'unread',
     };
   }
 
