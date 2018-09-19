@@ -102,7 +102,8 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled } = this.props;
+    const { getCoinsEnabled, setClearPayment } = this.props;
+    setClearPayment();
     getCoinsEnabled();
   }
 
@@ -175,6 +176,17 @@ class Invoice extends React.Component {
       getInvoice(newValue);
     }
   };
+
+  handleCpfCnpjChange = event => {
+    const {invoice} = this.state;
+
+    this.setState({
+      invoice: {
+        ...invoice,
+        cpfCnpj: event.target.value.replace(/\D/, '')
+      }
+    });
+  }
 
   handleInvoiceDefaultChange = name => event => {
     this.setState({
@@ -342,7 +354,7 @@ class Invoice extends React.Component {
                 }}
                 placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
                 value={invoice.cpfCnpj}
-                onChange={this.handleInvoiceDefaultChange("cpfCnpj")}
+                onChange={this.handleCpfCnpjChange}
                 error={errors.includes("cpfCnpj")}
                 inputProps={{ maxLength: 14 }}
               />
@@ -372,7 +384,7 @@ class Invoice extends React.Component {
         </Grid>
 
         <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container>
+          <Grid container justify={"center"}>
             <Grid item xs={12} sm={6}>
               <Select
                 list={coinsRedux}
@@ -380,6 +392,7 @@ class Invoice extends React.Component {
                 titleImg={img}
                 selectItem={this.coinSelected}
                 error={errors.includes("coin")}
+                width={"100%"}
               />
             </Grid>
           </Grid>
@@ -420,7 +433,8 @@ Invoice.propTypes = {
   loading: PropTypes.bool.isRequired,
   getInvoice: PropTypes.func.isRequired,
   getCoinsEnabled: PropTypes.func.isRequired,
-  setPayment: PropTypes.func.isRequired
+  setPayment: PropTypes.func.isRequired, 
+  setClearPayment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({

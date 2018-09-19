@@ -58,7 +58,7 @@ class Payment extends React.Component {
           content={<PaymentTitleModal />}
           show={isOpen}
           close={
-            modalStep === 5 || modalStep === 1 ? () => this.closeModal() : null
+            modalStep === 5 || modalStep === 1 || modalStep === 6 ? () => this.closeModal() : null
           }
           back={
             modalStep === 2 || modalStep === 3 || modalStep === 4
