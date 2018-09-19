@@ -213,6 +213,7 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  margin-bottom: -26.5%;
 }
 
 :local(.btContinue) {
