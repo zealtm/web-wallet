@@ -80,6 +80,7 @@ export function* getWalletSendModalFee(action) {
 
     return;
   } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }

@@ -137,11 +137,16 @@ export function* getFeePaymentSaga(payload) {
       payload.decimalPoint
     );
 
-    if(response.data.code !== 200){
+    if(!response.fee){
+      // yield put({
+      //   type: "CHANGE_SKELETON_ERROR_STATE",
+      //   state: true
+      // });
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+      yield put(internalServerError());
     }
 
     yield put({
@@ -173,6 +178,8 @@ export function* getInvoiceSaga(payload) {
     if (response.error) {
       yield put(response.error);
       yield put({type: "SET_CLEAR_PAYMENT_REDUCER"});
+    } else if (!response.data) {
+      yield put(internalServerError());
     }
 
     if (response.code !== 200) {
@@ -213,11 +220,12 @@ export function* getHistoryPaySaga() {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getHistory, token);
 
-    if(response.data.code !== 200){
+    if(response === "ERRO"){
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+      yield put(internalServerError());
     }
 
     let data = [];
@@ -254,6 +262,7 @@ export function* confirmPaySaga(payload) {
     };
 
     // transacao
+
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -265,22 +274,29 @@ export function* confirmPaySaga(payload) {
         token
       );
 
+      //console.log("servico", lunesWallet);
+
       if (lunesWallet) {
         // transaciona
         let response = yield call(
           transactionService.transaction,
+          lunesWallet.id,
           payload_transaction,
           lunesWallet,
           decryptAes(seed, payload.payment.user),
           token
         );
 
+        //console.log("transacao", response);
+
         const transacao_obj = JSON.parse(response.config.data);
+        const dueDate = payload.payment.payment.dueDate.split("/");
+        const dueDateFormat = dueDate[2]+"-"+dueDate[1]+"-"+dueDate[0];
 
         if (response) {
           const payload_elastic = {
             barCode: payload.payment.payment.number,
-            dueDate: payload.payment.payment.dueDate,
+            dueDate: dueDateFormat,
             amount: parseFloat(payload.payment.payment.value),
             name: payload.payment.payment.name,
             document: payload.payment.payment.cpfCnpj,
@@ -296,6 +312,13 @@ export function* confirmPaySaga(payload) {
             payload_elastic
           );
 
+          //console.log("payload", payload_elastic);
+          //console.log("elastic", response_elastic);
+
+          yield put({
+            type: "SET_CLEAR_PAYMENT_REDUCER"
+          });
+
           if (response_elastic.data.errorMessage) {
             yield put({
               type: "SET_MODAL_PAY_STEP_REDUCER",
@@ -308,15 +331,6 @@ export function* confirmPaySaga(payload) {
               step: 5
             });
           }
-
-          yield put({
-            type: "SET_LOADING_REDUCER",
-            payload: false
-          });
-
-          yield put({
-            type: "SET_CLEAR_PAYMENT_REDUCER"
-          });
 
           return;
         }
@@ -357,6 +371,7 @@ export function* confirmPaySaga(payload) {
 
       yield put(internalServerError());
     }
+
   } catch (error) {
     yield put(internalServerError());
   }
