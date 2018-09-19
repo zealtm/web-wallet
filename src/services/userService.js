@@ -89,7 +89,6 @@ class UserService {
   }
 
   async editUser(token, data) {
-
     let userData = {
       name: data.name,
       surname: data.surname,
@@ -105,6 +104,23 @@ class UserService {
     setAuthToken(response.headers[HEADER_RESPONSE]);
 
     return response;
+  }
+
+  async resetUserPassword(token, newPassword, oldPassword) {
+    try {
+      const user = {
+        newPassword: encryptMd5(newPassword),
+        oldPassword: encryptMd5(oldPassword)
+      }
+
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.patch(`${BASE_URL}/user`, user, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      return internalServerError();
+    }
   }
 }
 
