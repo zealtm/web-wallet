@@ -70,11 +70,11 @@ class CoinsInfo extends React.Component {
       user
     } = this.props;
     let step = assets.modal.step;
-    let selectedCoin = assets.selectedCoin;
+    let selectedCoin = assets.selectedCoin; // eslint-disable-line
     let coin = coins[assets.selectedCoin];
-    let coinPrice = coins[selectedCoin].price[defaultCoin].price;
-    let coinPercent = coins[selectedCoin].price.percent;
-    let fiatBalance = coin.balance[defaultCoin].toFixed(2);
+    let coinPrice = 0; /*coins[selectedCoin].price[defaultCoin].price;*/ //eslint-disable-line
+    let coinPercent = 0; /*coins[selectedCoin].price.percent;*/ // eslint-disable-line
+    let fiatBalance = coin.balance[defaultCoin] ? coin.balance[defaultCoin].toFixed(2) : 0;
     let balance = coin.balance.available;
     return (
       <div>
@@ -116,11 +116,6 @@ class CoinsInfo extends React.Component {
                   src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
                 />
-                <div className={style.percentageCoinSelected}>
-                  {this.renderArrowPercent(coinPercent)}
-                  {coinPercent}
-                </div>
-                <h2>{coin.price[defaultCoin].symbol + coinPrice}</h2>
               </Grid>
             </Grid>
 
@@ -128,30 +123,7 @@ class CoinsInfo extends React.Component {
               <Grid item xs={8} className={style.floatRight}>
                 <Grid item className={style.balanceItem}>
                   <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                  <p>{balance} </p>
-                  <div className={style.alignValues}>
-                    {coin.price[defaultCoin].symbol + fiatBalance}
-                    <div className={style.coinBalanceGreen}>
-                      {" "}
-                      {defaultCoin}{" "}
-                    </div>
-                  </div>
-                </Grid>
-
-                <Grid item className={style.alignButtons}>
-                  {/* <button
-                    className={style.receiveButton}
-                    onClick={() => setAssetReceiveModalOpen()}
-                    >
-                    {i18n.t("BTN_RECEIVE")}
-                  </button> */}
-
-                  {/* <button
-                    className={style.sentButton}
-                    onClick={() => setAssetSendModalOpen()}
-                    >
-                    {i18n.t("BTN_SEND")}
-                  </button> */}
+                  <p>{balance}</p>
                 </Grid>
               </Grid>
             </Hidden>
