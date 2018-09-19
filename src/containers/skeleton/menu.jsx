@@ -34,12 +34,11 @@ const menuItens = [
     label: i18n.t("MENU_LEASING"),
     icon: "../../images/icons/general/leasing@1x.png"
   },
-  {
-    link: "/assets",
-    label: i18n.t("MENU_ASSETS"),
-    icon: "../../images/icons/general/assets@1x.png"
-  },
-
+  // {
+  //   link: "/assets",
+  //   label: i18n.t("MENU_ASSETS"),
+  //   icon: "../../images/icons/general/assets@1x.png"
+  // },
   {
     link: "/payment",
     label: i18n.t("MENU_PAY"),
@@ -98,7 +97,7 @@ class Menu extends React.Component {
       >
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
-            <Grid item xs={4} align="center">
+            <Grid item xs={4} align="justify">
               <Avatar alt="Avatar" src={user.profilePicture} />
             </Grid>
             <Grid item xs={8}>
