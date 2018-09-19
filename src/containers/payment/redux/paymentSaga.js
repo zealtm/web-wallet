@@ -69,11 +69,29 @@ export function* setPaymentSaga(payload) {
     const { abbreviation, address } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
-    const amountResponse = yield call(paymentService.getCoinAmountPay, token, abbreviation, value);
-    const balanceResponse = yield call(coinService.getCoinBalance, abbreviation, address, token);
+    const amountResponse = yield call(
+      paymentService.getCoinAmountPay,
+      token,
+      abbreviation,
+      value
+    );
+    const balanceResponse = yield call(
+      coinService.getCoinBalance,
+      abbreviation,
+      address,
+      token
+    );
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
+
+
+    // if (balanceResponse.data.code !== 200 || amountResponse.data.code !== 200) {
+    //   yield put({
+    //     type: "SET_LOADING_REDUCER",
+    //     payload: false
+    //   });
+    // }
 
     const data = {
       number: payload.pay.number,
@@ -156,12 +174,8 @@ export function* getInvoiceSaga(payload) {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
-    
-    if(response === "ERRO"){
-      // yield put({
-      //   type: "CHANGE_SKELETON_ERROR_STATE",
-      //   state: true
-      // });
+
+    if (response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -171,9 +185,9 @@ export function* getInvoiceSaga(payload) {
 
     const data = {
       number: payload.number,
-      value: response.value,
-      assignor: response.assignor,
-      dueDate: convertToLocaleDate(response.dueDate) || ""
+      value: response.data.value,
+      assignor: response.data.assignor,
+      dueDate: response.data.dueDate ? convertToLocaleDate(response.data.dueDate) : ''
     };
 
     yield put({
@@ -181,6 +195,10 @@ export function* getInvoiceSaga(payload) {
       payment: data
     });
   } catch (error) {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
     yield put(internalServerError());
   }
 }

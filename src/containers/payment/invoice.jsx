@@ -177,6 +177,17 @@ class Invoice extends React.Component {
     }
   };
 
+  handleCpfCnpjChange = event => {
+    const {invoice} = this.state;
+
+    this.setState({
+      invoice: {
+        ...invoice,
+        cpfCnpj: event.target.value.replace(/\D/, '')
+      }
+    });
+  }
+
   handleInvoiceDefaultChange = name => event => {
     this.setState({
       ...this.state,
@@ -343,7 +354,7 @@ class Invoice extends React.Component {
                 }}
                 placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
                 value={invoice.cpfCnpj}
-                onChange={this.handleInvoiceDefaultChange("cpfCnpj")}
+                onChange={this.handleCpfCnpjChange}
                 error={errors.includes("cpfCnpj")}
                 inputProps={{ maxLength: 14 }}
               />

@@ -56,7 +56,7 @@ class PaymentService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-  
+
       return response;
     } catch (error) {
       return internalServerError();
