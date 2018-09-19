@@ -60,7 +60,7 @@ class Cupom extends React.Component {
   handleKeyDown = (event) => {
     let { code } = this.state;
     let key = event.keyCode;
-    let index = code.search(/([0-9]{4})(?!-)/g);
+    let index = code.search(/([0-9a-z]{4})(?!-)/ig);
     if (key !== 8 && index !== -1) {
       let hyphens = code.match(/(-+)/g);
       if (hyphens === null || hyphens.length !== 3)
