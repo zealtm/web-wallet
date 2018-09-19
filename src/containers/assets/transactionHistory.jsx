@@ -116,10 +116,6 @@ class TransactionHistory extends React.Component {
                     decimalPoint
                   ).toFixed(decimalPoint)}{" "}
                 </div>
-                <div>
-                  {(coins[defaultCoin].price[defaultFiat].symbol || "$") +
-                    transaction.price[defaultFiat]}
-                </div>
               </Grid>
             </Grid>
 
