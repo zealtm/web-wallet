@@ -51,7 +51,7 @@ class Cupom extends React.Component {
   }
   handleChange = event => {
     let val = event.target.value;
-    if (val.search(/[^0-9-]/g) !== -1) return;
+    if (val.search(/[^0-9a-z-]/gi) !== -1) return;
     this.setState({
       ...this.state,
       code: val
