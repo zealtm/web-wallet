@@ -28,7 +28,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/utxo`,
+        BASE_URL + "/coin/" + coin + "/transaction/utxo",
         { fromAddress: address },
         API_HEADER
       );
