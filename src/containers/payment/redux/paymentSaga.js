@@ -1,5 +1,5 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import { internalServerError,modalError } from "../../errors/statusCodeMessage";
 
 import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
@@ -174,8 +174,8 @@ export function* getInvoiceSaga(payload) {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
-
-    if (response.code !== 200) {
+    
+    if(response==="ERRO"){
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -183,11 +183,19 @@ export function* getInvoiceSaga(payload) {
       yield put(internalServerError());
     }
 
+    if(response==="PAID"){
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+      yield put(modalError("TÍTULO INDISPONÍVEL OU QUITADO"));
+    }
+
     const data = {
       number: payload.number,
-      value: response.data.value,
-      assignor: response.data.assignor,
-      dueDate: response.data.dueDate ? convertToLocaleDate(response.data.dueDate) : ''
+      value: response.value,
+      assignor: response.assignor,
+      dueDate: response.dueDate ? convertToLocaleDate(response.dueDate) : ''
     };
 
     yield put({

@@ -30,15 +30,18 @@ class PaymentService {
       );
       
       setAuthToken(response.headers[HEADER_RESPONSE]);
-     
+    
       if(response.data.code!==200){
+        if(response.data.code===500){
+          return "PAID";
+        }
         return 'ERRO';
       }
 
       const data = {
         number,
-        value: response.data.data.value,
-        assignor: response.data.data.assignor || "",
+        value: response.data.data.value || "",
+        assignor: response.data.data.assignor, // obrigatorio
         dueDate: response.data.data.dueDate || ""
       };
 
