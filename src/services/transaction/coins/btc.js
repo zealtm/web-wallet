@@ -27,10 +27,10 @@ class BtcTransaction {
       console.warn(data, utxos);
 
       const targets = [
-        // {
-        //   address: data.lunesWallet.address,
-        //   value: data.feeLunes
-        // },
+        {
+          address: data.lunesWallet.address,
+          value: data.feeLunes
+        },
         {
           address: data.toAddress,
           value: data.amount
