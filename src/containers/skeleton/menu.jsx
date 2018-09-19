@@ -37,7 +37,7 @@ const menuItens = [
   {
     link: "/assets",
     label: i18n.t("MENU_ASSETS"),
-    icon: "../../images/icons/general/wallet@1x.png"
+    icon: "../../images/icons/general/assets@1x.png"
   },
 
   {
@@ -45,11 +45,11 @@ const menuItens = [
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png"
   },
-  {
-    link: "/recharge",
-    label: i18n.t("MENU_RECHARGE"),
-    icon: "../../images/icons/general/pay@1x.png"
-  },
+  // {
+  //   link: "/recharge",
+  //   label: i18n.t("MENU_RECHARGE"),
+  //   icon: "../../images/icons/general/pay@1x.png"
+  // },
   {
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
