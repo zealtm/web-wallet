@@ -4,11 +4,8 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  getUserGdpr,
-  setUserGdpr,
-  setModalStep
-} from "../redux/rechargeAction";
+import {setModalStep} from "../redux/rechargeAction";
+import {updateUserConsents} from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -55,7 +52,19 @@ class DetailsRecharge extends React.Component {
   };
 
   toogleSwitch = () => {
-    //TODO
+    const { user } = this.state;
+    const { updateUserConsents } = this.props;
+    const newStatus = user.terms === "read" ? "unread" : "read";
+
+    this.setState({
+      ...this.state,
+      user: {
+        ...user,
+        terms: newStatus
+      }
+    });
+
+    updateUserConsents({ terms: newStatus });
   };
 
   renderNumber = () => {
@@ -128,7 +137,8 @@ DetailsRecharge.propTypes = {
   setModalStep: PropTypes.func,
   getUserGdpr: PropTypes.func,
   setUserGdpr: PropTypes.func, 
-  recharge: PropTypes.object.isRequired
+  recharge: PropTypes.object.isRequired, 
+  updateUserConsents: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -141,8 +151,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setModalStep,
-      getUserGdpr,
-      setUserGdpr
+      updateUserConsents,
     },
     dispatch
   );
