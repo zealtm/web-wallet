@@ -318,7 +318,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={invoice.assignor || payment.assignor}
+                value={payment.assignor || invoice.assignor}
                 onChange={this.handleInvoiceDefaultChange("assignor")}
                 error={errors.includes("assignor")}
               />
@@ -340,7 +340,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={invoice.description || payment.description}
+                value={payment.description || invoice.description}
                 onChange={this.handleInvoiceDefaultChange("description")}
                 error={errors.includes("description")}
               />
@@ -354,7 +354,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={invoice.dueDate || payment.dueDate}
+                value={payment.dueDate || invoice.dueDate}
                 onChange={this.handleInvoiceDefaultChange("dueDate")}
                 error={errors.includes("dueDate")}
                 inputComponent={DateMask}
@@ -387,7 +387,7 @@ class Invoice extends React.Component {
                     R$
                   </InputAdornment>
                 }
-                value={invoice.value || payment.value}
+                value={payment.value || invoice.value}
                 onChange={this.handleInvoiceDefaultChange("value")}
                 error={errors.includes("value")}
                 inputComponent={MoneyBrlMask}
