@@ -32,7 +32,7 @@ class ConfirmRecharge extends React.Component {
         <div>{i18n.t("RECHARGE_CONFIRM_1")}</div>
         <div>
           <span>{i18n.t("RECHARGE_CONFIRM_2")}</span>
-          <span className={style.totalConfirmBlock}>{recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation}</span>
+          <span className={style.totalConfirmBlock}>{recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}</span>
         </div>
 
         <div className={style.smallDescription}>

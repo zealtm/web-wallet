@@ -67,7 +67,7 @@ class FeeRecharge extends React.Component {
       feePerByte: feePerByte, 
       feeLunes: feeLunes
     }
-    //console.log("fee", payload);
+
     setFeeRecharge(payload);
   }
 

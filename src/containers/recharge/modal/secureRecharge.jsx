@@ -14,6 +14,9 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
+// COMPONENTS 
+import ButtonContinue from "./component/buttonContinue";
+
 class SecureRecharge extends React.Component {
   constructor() {
     super();
@@ -56,7 +59,7 @@ class SecureRecharge extends React.Component {
 
   render() {
     let { password } = this.state;
-    let { recharge } = this.props;
+    let { recharge, loading } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -65,11 +68,11 @@ class SecureRecharge extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>{i18n.t("PAYMENT_PASS_CONFIRMATION")}</span>
+          <span>{i18n.t("RECHARGE_PASS_CONFIRMATION")}</span>
           <span className={style.totalConfirm}>
             {recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}
           </span>
-          <span> {i18n.t("RECHARGE_FEE_TEXT_2")} </span>
+          <span> {i18n.t("RECHARGE_PASS_TO")} </span>
           <span className={style.addressConfirm}>
             {i18n.t("RECHARGE_TITLE")}
           </span>
@@ -86,12 +89,11 @@ class SecureRecharge extends React.Component {
           />
         </div>
 
-        <button
-          className={style.btContinue}
-          onClick={() => this.confirmPassword()}
-        >
-          {i18n.t("BTN_CONFIRM")}
-        </button>
+        <ButtonContinue
+          label={i18n.t("BTN_CONFIRM")}
+          action={()=>this.confirmPassword()}
+          loading={loading}
+        />
       </div>
     );
   }
@@ -102,8 +104,7 @@ SecureRecharge.propTypes = {
   loading:      PropTypes.bool.isRequired,
   user:         PropTypes.object.isRequired,
   errorInput:   PropTypes.func.isRequired, 
-  confirmRecharge:   PropTypes.func.isRequired, 
-  coins:        PropTypes.array.isRequired,
+  confirmRecharge:   PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({

@@ -7,9 +7,15 @@ import { getAuthToken } from "../../../utils/localStorage";
 import RechargeService from "../../../services/rechargeService";
 import CoinService from "../../../services/coinService";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
+import TransactionService from "../../../services/transaction/transactionService";
+
+// UTILS
+import { getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 
 const rechargeService = new RechargeService();
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 export function* setModalStepSaga(payload) {
   yield put({
@@ -98,7 +104,10 @@ export function* setRechargeSaga(payload){
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
       value: value.toFixed(2).replace(".", ","),
-      operator: payload.recharge.operator
+      operator: {
+        id: payload.recharge.operator.operatorId,
+        name: payload.recharge.operator.operatorName
+      }
     };
 
     yield put({
@@ -156,8 +165,6 @@ export function* setFeeRechargeSaga(payload) {
 }
 
 export function* confirmRechargeSaga(payload) {
-  yield put(console.log("recharge", payload));
-  /*
   try {
     yield put({
       type: "SET_LOADING_REDUCER",
@@ -165,19 +172,17 @@ export function* confirmRechargeSaga(payload) {
     });
 
     const payload_transaction = {
-      coin: payload.payment.coin,
-      fromAddress: payload.payment.fromAddress,
-      toAddress: payload.payment.toAddress,
-      amount: payload.payment.amount,
-      fee: payload.payment.fee,
-      feePerByte: payload.payment.feePerByte,
-      feeLunes: payload.payment.feeLunes,
-      price: payload.payment.price,
-      decimalPoint: payload.payment.decimalPoint
+      coin: payload.recharge.coin,
+      fromAddress: payload.recharge.fromAddress,
+      toAddress: payload.recharge.toAddress,
+      amount: payload.recharge.amount,
+      fee: payload.recharge.fee,
+      feePerByte: payload.recharge.feePerByte,
+      feeLunes: payload.recharge.feeLunes,
+      price: payload.recharge.price,
+      decimalPoint: payload.recharge.decimalPoint
     };
 
-    // transacao
-    
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -189,10 +194,9 @@ export function* confirmRechargeSaga(payload) {
         token
       );
 
-      //console.log("servico", lunesWallet);
+      console.log("servico", lunesWallet);
 
       if (lunesWallet) {
-        // transaciona
         let response = yield call(
           transactionService.transaction,
           lunesWallet.id,
@@ -202,47 +206,47 @@ export function* confirmRechargeSaga(payload) {
           token
         );
 
-        //console.log("transacao", response);
+        console.log("transacao", response);
         
         const transacao_obj = JSON.parse(response.config.data);
-        const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate[2]+"-"+dueDate[1]+"-"+dueDate[0];
+        const ddd           = payload.recharge.recharge.number.substring(0,2);
+        const totalnumero   = payload.recharge.recharge.number.length;
+        const numero        = payload.recharge.recharge.number.substring(2,totalnumero);
 
         if (response) {
           const payload_elastic = {
-            barCode: payload.payment.payment.number,
-            dueDate: dueDateFormat,
-            amount: parseFloat(payload.payment.payment.value),
-            name: payload.payment.payment.name,
-            document: payload.payment.payment.cpfCnpj,
+            ddd: ddd,
+            operatorId: payload.recharge.recharge.operator.operatorId,
+            operatorName: payload.recharge.recharge.operator.operatorName,
+            phone: numero,
+            value: parseFloat(payload.recharge.recharge.value),
             txID: transacao_obj.txID,
-            describe: payload.payment.payment.description,
+            describe: "Recarga",
             serviceId: lunesWallet.id
           };
 
-          // chamar api pra salvar a transacao
           let response_elastic = yield call(
-            paymentService.sendPay,
+            rechargeService.sendRecharge,
             token,
             payload_elastic
           );
 
-          //console.log("payload", payload_elastic);
-          //console.log("elastic", response_elastic);
+          console.log("payload", payload_elastic);
+          console.log("elastic", response_elastic);
 
           yield put({
-            type: "SET_CLEAR_PAYMENT_REDUCER"
+            type: "SET_CLEAR_RECHARGE_REDUCER"
           });
 
           if (response_elastic.data.errorMessage) {
             yield put({
-              type: "SET_MODAL_PAY_STEP_REDUCER",
+              type: "SET_MODAL_RECHARGE_STEP_REDUCER",
               step: 6
             });
             yield put(internalServerError());
           } else {
             yield put({
-              type: "SET_MODAL_PAY_STEP_REDUCER",
+              type: "SET_MODAL_RECHARGE_STEP_REDUCER",
               step: 5
             });
           }
@@ -252,11 +256,11 @@ export function* confirmRechargeSaga(payload) {
       }
 
       yield put({
-        type: "SET_CLEAR_PAYMENT_REDUCER"
+        type: "SET_CLEAR_RECHARGE_REDUCER"
       });
 
       yield put({
-        type: "SET_MODAL_PAY_STEP_REDUCER",
+        type: "SET_MODAL_RECHARGE_STEP_REDUCER",
         step: 5
       });
 
@@ -266,7 +270,7 @@ export function* confirmRechargeSaga(payload) {
       });
 
       yield put({
-        type: "SET_MODAL_PAY_STEP_REDUCER",
+        type: "SET_MODAL_RECHARGE_STEP_REDUCER",
         step: 6
       });
 
@@ -280,7 +284,7 @@ export function* confirmRechargeSaga(payload) {
       });
 
       yield put({
-        type: "SET_MODAL_PAY_STEP_REDUCER",
+        type: "SET_MODAL_RECHARGE_STEP_REDUCER",
         step: 6
       });
 
@@ -290,5 +294,4 @@ export function* confirmRechargeSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
-  */
 }

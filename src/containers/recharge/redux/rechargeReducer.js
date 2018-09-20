@@ -91,33 +91,24 @@ const recharge = (state=initialState, action) => {
           }
         };
 
-
-
-
-  
-      case "GET_PAYMENT_DATA_REDUCER":
+      case "SET_CLEAR_RECHARGE_REDUCER":
         return {
-          ...state,
-          number: action.number
+          ...initialState
         };
-  
-      case "SET_PAYMENT_REDUCER":
-        return {
-          ...state,
-          payment: action.payload,
-          loading: false
-        };
+
+
+
   
       
   
-      case "GET_INVOICE_REDUCER":
-        return {
-          ...state,
-          payment: {
-            ...state.payment,
-            ...action.payment
-          }
-        };
+      // case "GET_INVOICE_REDUCER":
+      //   return {
+      //     ...state,
+      //     payment: {
+      //       ...state.payment,
+      //       ...action.payment
+      //     }
+      //   };
   
       case "GET_USER_GDPR_REDUCER":
         return {
@@ -131,16 +122,13 @@ const recharge = (state=initialState, action) => {
           user: action.user
         };
   
-      case "GET_HISTORY_PAY_REDUCER":
-        return {
-          ...state,
-          history: action.history
-        };
+      // case "GET_HISTORY_PAY_REDUCER":
+      //   return {
+      //     ...state,
+      //     history: action.history
+      //   };
   
-      case "SET_CLEAR_PAYMENT_REDUCER":
-        return {
-          ...initialState
-        };
+      
 
     default: {
       return {

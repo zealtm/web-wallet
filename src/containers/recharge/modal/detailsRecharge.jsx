@@ -58,6 +58,16 @@ class DetailsRecharge extends React.Component {
     //TODO
   };
 
+  renderNumber = () => {
+    const {recharge} = this.props;
+
+    const ddd           = recharge.number.substring(0,2);
+    const totalnumero   = recharge.number.length;
+    const numero        = recharge.number.substring(2,totalnumero);
+
+    return `(${ddd}) ${numero}`;
+  }
+
   render() {
     const { loading, recharge } = this.props;
     const { user, error, errorMsg } = this.state;
@@ -91,7 +101,7 @@ class DetailsRecharge extends React.Component {
               marginBottom: 30
             }}
           >
-            {recharge.number}
+            {this.renderNumber}
           </div>
 
           <CustomSwitch

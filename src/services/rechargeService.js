@@ -77,7 +77,7 @@ class RechargeService {
       API_HEADER.headers.Authorization = token;
 
       const response = await axios.post(
-        `${BASE_URL}/bill/recharge`,
+        `${BASE_URL}/recharge/pay`,
         payload,
         API_HEADER
       );

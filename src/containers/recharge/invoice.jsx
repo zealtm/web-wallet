@@ -214,7 +214,8 @@ class Invoice extends React.Component {
       value: invoice.valor.value,
       number: invoice.phone, 
       coin: invoice.coin,
-      operator: invoice.operadora.value,
+      operatorId: invoice.operadora.value,
+      operatorName: invoice.operadora.title
     };
 
     const invoiceInputs = {};
