@@ -122,8 +122,8 @@ class UserService {
     try {
       const response = await axios
         .post(
-          BASE_URL + "/resetPassword",
-          data, // {login: email}
+          BASE_URL + "/user/forgotPassword",
+          data, // {email: email}
           API_HEADER
         )
         .catch(error => {

@@ -12,6 +12,9 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 import i18n from "../../../utils/i18n";
 import { inputValidator } from "../../../utils/inputValidator";
 
+// COMPONENTS
+import Loading from "../../../components/loading";
+
 // STYLE
 import style from "../style.css";
 
@@ -61,6 +64,7 @@ class ResetUser extends React.Component {
 
   render() {
     let { inputs, errors } = this.state;
+    const {loading} = this.props;
 
     return (
       <div onKeyPress={this.handleKeyPress}>
@@ -107,7 +111,7 @@ class ResetUser extends React.Component {
           }
           onClick={() => this.inputValidator()}
         >
-          {i18n.t("BTN_RESET")}
+          {loading ? <Loading /> : i18n.t("BTN_RESET")}
         </button>
       </div>
     );
@@ -117,8 +121,13 @@ class ResetUser extends React.Component {
 ResetUser.propTypes = {
   resetUser: PropTypes.func,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  user: PropTypes.object
 };
+
+const mapSateToProps = store => ({
+  loading: store.user.loading
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -131,6 +140,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapSateToProps,
   mapDispatchToProps
 )(ResetUser);

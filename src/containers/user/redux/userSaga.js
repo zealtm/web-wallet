@@ -218,8 +218,11 @@ export function* createUser(action) {
 
 export function* resetUser(action) {
   try {
-    //let token = yield call(getAuthToken);
-    let response = yield call(userService.resetPass, { login: action.login });
+    yield put({
+      type: changeLoadingState
+    });
+
+    let response = yield call(userService.resetPass, { email: action.login });
 
     if (response.data.code === 200) {
       yield put({
