@@ -206,6 +206,7 @@
   "LOGIN_FOOTER_HOME": "Main",
   "MENU_HOME": "Home",
   "MENU_ASSETS":"Assets",
+  "ASSETS_SELECT_A_TOKEN_ABOVE": "Select a token above",
   "ASSETS_BAD_REQUEST": "Error on request for asset's history",
   "ASSETS_SERVER_ERROR": "Error in our server, try again later on",
   "ASSETS_EMPTY_RESPONSE": "There's a problem in our server, got an empty response, try again later on",
