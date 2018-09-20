@@ -141,6 +141,7 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
+      disableNumberInput: false,
       invoice: emptyValue,
       coin: {
         name: undefined,
@@ -172,6 +173,17 @@ class Invoice extends React.Component {
       if (disableNumberInput) {
         return;
       }
+
+      this.setState({
+        invoice: {
+          ...invoice,
+          number: newValue,
+          assignor: "",
+          dueDate: "",
+          value: "",
+          description: "",
+        }
+      })
 
       getInvoice(newValue);
     }
@@ -216,7 +228,8 @@ class Invoice extends React.Component {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
-      value: payment.value || invoice.value
+      value: payment.value || invoice.value,
+      description: payment.description || invoice.description
     };
 
     const invoiceInputs = {};
@@ -246,6 +259,10 @@ class Invoice extends React.Component {
     };
 
     const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+
+    if (payment.error) {
+      errors.push("number");
+    }
 
     if (errors.length > 0) {
       this.setState({
@@ -316,7 +333,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_NAME")}
-                value={payment.name || invoice.name}
+                value={invoice.name}
                 onChange={this.handleInvoiceDefaultChange("name")}
                 error={errors.includes("name")}
               />
@@ -433,7 +450,7 @@ Invoice.propTypes = {
   loading: PropTypes.bool.isRequired,
   getInvoice: PropTypes.func.isRequired,
   getCoinsEnabled: PropTypes.func.isRequired,
-  setPayment: PropTypes.func.isRequired, 
+  setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired
 };
 

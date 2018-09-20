@@ -174,15 +174,27 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    if (response.error) {
+      yield put(response.error);
+      yield put({type: "SET_CLEAR_PAYMENT_REDUCER"});
+    } else if (!response.data) {
+      yield put(internalServerError());
+    }
+
     if (response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
-      yield put(internalServerError());
+
+      yield put({
+        type: "SET_PAYMENT_INVOICE_ERROR"
+      })
+      return;
     }
 
     const data = {
+      error: false,
       number: payload.number,
       value: response.data.value,
       assignor: response.data.assignor,
