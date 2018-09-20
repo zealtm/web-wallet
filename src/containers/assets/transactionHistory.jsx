@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAssetLoading, getAssetCoinHistory } from "./redux/assetsAction";
+import {
+  setAssetLoading,
+  getAssetHistory,
+  getAssetGeneralInfo,
+  reloadAsset
+} from "./redux/assetsAction";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
@@ -18,6 +23,7 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { getAssetInfo } from "../../utils/assets";
 // import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
@@ -35,11 +41,7 @@ class TransactionHistory extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let { wallet, coins, getAssetCoinHistory } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
-    getAssetCoinHistory(wallet.selectedCoin, address);
-  }
+  componentDidMount() {}
 
   stateDataHistory = key => {
     let { toggleHistory } = this.state;
@@ -49,39 +51,39 @@ class TransactionHistory extends React.Component {
   };
 
   reloadWallet = () => {
-    let { setAssetLoading, loadWalletInfo, user } = this.props;
-    setAssetLoading(true);
-    loadWalletInfo(user.password);
+    let { skeleton, assets, reloadAsset } = this.props;
+    let { selectedCoin } = assets;
+    let address = skeleton.coins.lunes.address;
+    reloadAsset(selectedCoin, address)
   };
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { wallet, assets: assetsRoute } = this.props;
-    let { assets, selectedCoin } = assetsRoute;
-    // let history = wallet.coinHistory.history.txs;
+    let { assets: assetsRoute, skeleton } = this.props;
+    let { assets, selectedCoin, history } = assetsRoute;
+
     let currentAsset = assets.find(asset => asset.assetId === selectedCoin ? true : false)
-    if (!currentAsset)
-      return null;
 
-    let history = currentAsset.history;
+    if (!currentAsset) return null;
 
-    if (!history || assets.length <= 0) {
+    currentAsset = {
+      ...currentAsset,
+      ...getAssetInfo(selectedCoin)
+    }
+
+    if (!history.assets || history.assets.length < 1) {
       return (
         <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
       );
     }
 
-    history = history.assets;
+    let lunesAddress = skeleton.coins.lunes.address;
 
-    if (!history || assets.length <= 0) {
-      return (
-        <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
-      );
-    }
+    console.warn('history',history)
 
-    return history.map((val, index) => {
-      let transaction = history[index];
-      let type = transaction.type ? transaction.type : '';
+    return history.assets.map((val, index) => {
+      let transaction = history.assets[index];
+      let type = lunesAddress === transaction.toAddress ? "SENT" : "RECEIVED";
       let decimalPoint = 8;
       return (
         <div key={index}>
@@ -227,7 +229,11 @@ class TransactionHistory extends React.Component {
   };
 
   render() {
-    let { loading } = this.props.wallet.coinHistory;
+    let { isTxHistoryLoading } = this.props.assets;
+    let { selectedCoin } = this.props.assets;
+
+    if (selectedCoin === 'lunes' || !selectedCoin)
+      return null;
 
     return (
       <div>
@@ -249,7 +255,7 @@ class TransactionHistory extends React.Component {
               </div>
             </div>
             <div className={style.contentTransactions}>
-              {loading ? (
+              {isTxHistoryLoading ? (
                 <Loading margin={"5% 0 0 0"} color="lunes" />
               ) : (
                 this.renderHistory()
@@ -269,8 +275,10 @@ TransactionHistory.propTypes = {
   skeleton: PropTypes.object.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
   setAssetLoading: PropTypes.func.isRequired,
-  getAssetCoinHistory: PropTypes.func.isRequired,
-  assets: PropTypes.object.isRequired
+  getAssetHistory: PropTypes.func.isRequired,
+  assets: PropTypes.object.isRequired,
+  getAssetGeneralInfo: PropTypes.func.isRequired,
+  reloadAsset: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -286,7 +294,9 @@ const mapDispatchToProps = dispatch =>
     {
       loadWalletInfo,
       setAssetLoading,
-      getAssetCoinHistory
+      getAssetHistory,
+      getAssetGeneralInfo,
+      reloadAsset
     },
     dispatch
   );

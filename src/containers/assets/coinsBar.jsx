@@ -12,8 +12,9 @@ import {
 } from "./redux/assetsAction";
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
-// UTILS
-import { getFavoritesAssets } from "../../utils/localStorage";
+
+// COMPONENTS
+import Loading from "../../components/loading.jsx";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -29,6 +30,7 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { getAssetInfo } from "../../utils/assets";
 
 // STYLE
 import style from "./style.css";
@@ -47,15 +49,9 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
-  setCoin = (assetId, address) => {
-    let { setSelectedCoin, getAssetHistory } = this.props;
-    // let {
-    //   setSelectedCoin,
-    //   getAssetHistory,
-    //   setAssetCoinHistoryLoading
-    // } = this.props;
-    // setAssetCoinHistoryLoading(true);
-    getAssetHistory(assetId, address);
+  setCoin = (assetId) => {
+    let { setSelectedCoin } = this.props;
+    // getAssetHistory(assetId, address);
     setSelectedCoin(assetId);
   };
 
@@ -68,49 +64,56 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    let { wallet } = this.props;
-    let { assets, selectedCoin } = this.props.assets;
-    // let favoritesCoins = getFavoritesCrypto();
-    // favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
-    let favoritesAssets = getFavoritesAssets();
+    let { assets, selectedCoin, isBalanceLoading } = this.props.assets;
 
-    return Object.keys(favoritesAssets).map((assetId, index) => {
-      let coin = assets.find((asset) => asset.assetId === assetId ? true : false);
-      if (!coin) return;
-      // let coinBalanceStatus = coin.balance ? true : false;
-      // let coinAddressStatus = coin.address ? true : false;
-      let coinStatus = true;
-      // let coinPercent = coinStatus ? coin.price.percent : 0;
-      coin.abbreviation = assets[assetId];
+    if (isBalanceLoading)
+      return <div className={style.infoBarLoading}><Loading/></div>
+
+    if (!assets) return null;
+
+    return assets.map((asset, index) => {
+      asset = assets[index];
+      asset = {
+        ...asset,
+        ...getAssetInfo(asset.assetId)
+      }
+
+      if (!asset) return null;
+
+      let coin = assets.find(a => a.assetId === asset.assetId ? true : false);
+
+      if (!coin) return null;
+
+
+      asset = {
+        ...asset,
+        ...coin
+      }
+
+      let coinStatus = asset.assetId === selectedCoin ? true : false;
+
       return (
         <div
           className={coinStatus ? null : style.boxCoinDisabled}
           key={index}
-          onClick={ () => this.setCoin(assetId) }
+          onClick={ () => this.setCoin(asset.assetId) }
         >
           <div
             className={
-              selectedCoin === coin.abbreviation
-                ? style.boxCoinActive
-                : style.boxCoin
+              coinStatus ? style.boxCoinActive : style.boxCoin
             }
           >
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/icons/coins/${coin.abbreviation}.png`}
+                src={`images/icons/coins/${asset.icon}`}
               />
             </div>
             <Hidden smDown>
               <div className={style.boxHiddenContent}>
-                { coin.abbreviation ? coin.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
+                { asset.abbreviation ? asset.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
               </div>
             </Hidden>
-            {/* <Hidden mdUp>
-              <div className={style.boxHiddenContentMobile}>
-                { coin.abbreviation ? coin.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
-              </div>
-            </Hidden> */}
           </div>
         </div>
       );

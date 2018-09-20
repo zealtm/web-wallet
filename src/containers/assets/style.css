@@ -16,12 +16,20 @@
   3.3 ICONS
 
 3. MODAL
+4. DEFAULT INFO
 */
 
 /* ------------------------------------------------------------------------- */
 /* 1. BOX COIN*/
 
 /* 1.1 BASES */
+:local .infoBarLoading {
+  height: 74px;
+  width: 100px!important;
+  display: flex!important;
+  justify-content: center;
+  align-items: center;
+}
 :local .boxCoin {
   margin-top: 7px;
   margin-bottom: 7px;
@@ -744,4 +752,13 @@
   background: transparent;
   color: #fff;
   font-size: 9.7pt;
+}
+
+
+/*4 DEFAULT INFO*/
+:local .defaultInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

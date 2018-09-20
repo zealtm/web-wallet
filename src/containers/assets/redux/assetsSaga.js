@@ -171,10 +171,10 @@ export function* getAssetGeneralInfo(action) {
 
 
     // TODO uncomment below
-    // let state = window.store.getState();
-    // let lunesAddress = state.skeleton.coins.lunes.address;
+    let state = window.store.getState();
+    let lunesAddress = state.skeleton.coins.lunes.address;
     // TODO substitute from below
-    let lunesAddress = "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr";
+    // let lunesAddress = "37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr";
     // let assetId      = "Bome8qGJtJucpHdE8mSMBDWMJ5TCiopRPVb6cJG3Ueym";
     // let assetId      = "1";
 
@@ -196,7 +196,7 @@ export function* getAssetGeneralInfo(action) {
 export function* getAssetHistory(action) {
   try {
     yield put({
-      type: "SET_ASSET_DATA",
+      type: "SET_ASSET_HISTORY",
       isTxHistoryLoading: true
     })
 
@@ -221,19 +221,19 @@ export function* getAssetHistory(action) {
 
     let history = response.data;
 
-    let state = window.store.getState();
-    let { assets } = state.assets;
-
-    assets = assets.map(asset => {
-      if (asset.assetId === assetId)
-        asset.history = history;
-      return asset;
-    })
+    // let state = window.store.getState();
+    // let { assets } = state.assets;
+    //
+    // assets = assets.map(asset => {
+    //   if (asset.assetId === assetId)
+    //     asset.history = history;
+    //   return asset;
+    // })
 
     yield put({
-      type: "SET_ASSET_DATA",
+      type: "SET_ASSET_HISTORY",
       isTxHistoryLoading: false,
-      assets: assets
+      history: history
     });
 
     return;
@@ -241,4 +241,16 @@ export function* getAssetHistory(action) {
     yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
+}
+
+export function* reloadAsset(action) {
+  let { assetId, address } = action;
+
+  yield put({ type: "GET_ASSET_GENERAL_INFO_API" })
+
+  yield put({
+    type: "GET_ASSET_HISTORY_API",
+    assetId,
+    address
+  })
 }

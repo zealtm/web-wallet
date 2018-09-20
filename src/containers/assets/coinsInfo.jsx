@@ -26,10 +26,12 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
 import ReceiveModal from "./modal/receiveModal/";
+import DefaultInfo from "./defaultInfo";
 
 // UTILS
 import i18n from "../../utils/i18n";
 // import { getDefaultFiat } from "../../utils/localStorage";
+import { getAssetInfo } from "../../utils/assets";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -59,7 +61,6 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    // let defaultCoin = getDefaultFiat();
     let {
       setAssetSendModalOpen,
       setAssetReceiveModalOpen,
@@ -70,15 +71,29 @@ class CoinsInfo extends React.Component {
     } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let step = assetsRoute.modal.step;
+
+    if (selectedCoin === 'lunes' || !selectedCoin) {
+      return <DefaultInfo/>
+    }
+
+    let asset = getAssetInfo(selectedCoin)
+
+    if (!asset) return null;
+
     let coin = assets.find(asset => asset.assetId === selectedCoin ? true : false);
 
     if (!coin) return null;
+
+    asset = {
+      ...asset,
+      ...coin
+    }
 
     return (
       <div>
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
-          content={<ReceiveModal coin={coin} />}
+          content={<ReceiveModal coin={asset} />}
           show={assetsRoute.modalReceive.open}
           close={() => setAssetReceiveModalOpen()}
         />
@@ -109,9 +124,9 @@ class CoinsInfo extends React.Component {
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{coin.tokenName.toUpperCase()}</h3>
+                <h3>{asset.name.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
+                  src={"./images/icons/coins/" + asset.icon}
                   className={style.iconCoinSelected}
                 />
               </Grid>
@@ -120,7 +135,7 @@ class CoinsInfo extends React.Component {
             <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{coin.balance}</p>
+                <p>{asset.balance}</p>
               </Grid>
             </Grid>
           </Grid>

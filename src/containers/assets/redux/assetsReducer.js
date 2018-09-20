@@ -13,6 +13,9 @@ const initialState = {
       ]
     }
   ],
+  history: [
+    { assetId: '123', txId: '123', toAddress: '123'}
+  ],
   coinBalances: {
     loading: false,
     balances: []
@@ -63,15 +66,14 @@ const asset = (state = initialState, action) => {
       return {
         ...state,
         isBalanceLoading: action.isBalanceLoading,
+        isTxHistoryLoading: action.isTxHistoryLoading,
         assets: action.assets ? action.assets : state.assets
       }
-    case "SET_ASSET_TX_HISTORY":
+    case "SET_ASSET_HISTORY":
       return {
         ...state,
-        isTxHistoryLoading: action.loading,
-        assets: [
-          ...state.assets,
-        ]
+        isTxHistoryLoading: action.isTxHistoryLoading,
+        history: action.history ? action.history : []
       }
     case "SET_SELECTED_COIN":
       return {
@@ -136,15 +138,6 @@ const asset = (state = initialState, action) => {
         }
       };
 
-    case "SET_ASSET_HISTORY":
-      return {
-        ...state,
-        coinHistory: {
-          ...state.coinHistory,
-          history: action.history,
-          loading: false
-        }
-      };
 
     case "SET_ASSET_MODAL_OPEN":
       return {

@@ -111,3 +111,8 @@ export const setSelectedCoin = assetId => ({
   type: "SET_SELECTED_COIN",
   assetId
 });
+export const reloadAsset = (assetId, address) => ({
+  type: "RELOAD_ASSET_API",
+  assetId,
+  address
+})
