@@ -15,7 +15,7 @@ import {
 } from "../../containers/errors/statusCodeMessage";
 
 // COINS
-import { BtcTransaction, LunesTransaction } from "./coins";
+import { BtcTransaction, LunesTransaction, EthTransaction } from "./coins";
 import CoinService from "../../services/coinService";
 
 // UTILS
@@ -28,7 +28,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/utxo`,
+        BASE_URL + "/coin/" + coin + "/transaction/utxo",
         { fromAddress: address },
         API_HEADER
       );
@@ -113,7 +113,16 @@ class TransactionService {
       if (coin === "lunes")
         network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
 
-      if (coin === "btc" || coin === "ltc" || coin === "bch") {
+      if (coin === "dash") network = TESTNET ? undefined : networks.DASH;
+
+      if (coin === "eth") network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
+      if (
+        coin === "btc" ||
+        coin === "ltc" ||
+        coin === "bch" ||
+        coin === "dash"
+      ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({
           fromAddress: fromAddress,
@@ -129,13 +138,51 @@ class TransactionService {
           network: network
         });
 
-        if (responseBtc === "error") {
+        if (responseBtc === "error" || !responseBtc) {
           return;
         }
 
         let responseSaveBtc = await coinService.saveTransaction(
+          serviceId,
+          feeLunes,
           {
             id: responseBtc,
+            sender: fromAddress,
+            recipient: toAddress,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            fee: convertSmallerCoinUnit(fee, decimalPoint)
+          },
+          coin,
+          transaction.price,
+          "P2P",
+          token
+        );
+        return responseSaveBtc;
+      } else if (coin === "eth") {
+        let transactionEth = new EthTransaction();
+        let responseEth = await transactionEth.createTransaction({
+          fromAddress: fromAddress,
+          toAddress: toAddress,
+          seed: seed,
+          lunesWallet: lunesWallet,
+          fee: convertSmallerCoinUnit(fee, decimalPoint),
+          feePerByte: feePerByte,
+          feeLunes: feeLunes,
+          amount: convertSmallerCoinUnit(amount, decimalPoint),
+          coin: coin,
+          token: token,
+          network: network
+        });
+
+        if (responseEth === "error" || !responseEth) {
+          return;
+        }
+
+        let responseSaveBtc = await coinService.saveTransaction(
+          serviceId,
+          feeLunes,
+          {
+            id: responseEth,
             sender: fromAddress,
             recipient: toAddress,
             amount: convertSmallerCoinUnit(amount, decimalPoint),
@@ -158,7 +205,7 @@ class TransactionService {
           fee: convertSmallerCoinUnit(fee, decimalPoint)
         });
 
-        if (respondeLunes === "error") {
+        if (respondeLunes === "error" || !respondeLunes) {
           return;
         }
 

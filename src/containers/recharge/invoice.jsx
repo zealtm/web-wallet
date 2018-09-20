@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
 
 // REDUX
@@ -11,7 +10,7 @@ import { getCoinsEnabled, getOperators,getValoresRecarga, setRecharge } from "./
 import Select from "../../components/select";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import Instructions from "../../components/instructions";
+import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
 
 // MATERIAL
@@ -20,13 +19,14 @@ import { withStyles } from "@material-ui/core/styles";
 
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
+import i18n from "../../utils/i18n";
 
 // STYLES
 import style from "./style.css";
 
 const customStyle = {
   inputRoot: {
-    fontSize: '22px',
+    fontSize: "22px",
     color: colors.messages.info,
     margin: "0.5rem 0",
     padding: "5px",
@@ -283,16 +283,7 @@ class Invoice extends React.Component {
               />
             </Grid>
 
-            {/* <Grid item xs={4}>
-              <button
-                className={style.buttonPurple}
-                onClick={()=>alert(1)}
-              >
-                {loading ? <Loading /> : "FAVORITAR"}
-              </button>
-            </Grid> */}
           </Grid>
-
         </Grid>
 
         <Grid container className={style.box} style={{marginTop: "10px"}}>
@@ -351,10 +342,7 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "60px", textAlign: "center" }}
         >
-          <Instructions>
-            {i18n.t("TEXT_ATTENTION")}<br />
-            {i18n.t("PAYMENT_CONFIRM_3")}
-            </Instructions>
+          <Instructions />
         </Grid>
       </Grid>
     );
@@ -370,6 +358,9 @@ Invoice.propTypes = {
   loadingValores: PropTypes.bool.isRequired,
   operadoras: PropTypes.array.isRequired,
   valores: PropTypes.array.isRequired,
+  getCoinsEnabled: PropTypes.func.isRequired,
+  getValoresRecarga: PropTypes.func.isRequired,
+  getOperators: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -379,7 +370,7 @@ const mapStateToProps = store => ({
   operadoras: store.recharge.operadoras,
   valores: store.recharge.valores
 });
-      
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -390,9 +381,8 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-    
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(customStyle)(Invoice));
-                                          

@@ -18,14 +18,8 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
-
-const blockexplorer = {
-  lunes: "https://blockexplorer.lunes.io/tx/",
-  btc: "https://live.blockcypher.com/btc/tx/"
-};
 
 class TransactionHistory extends React.Component {
   constructor() {
@@ -56,9 +50,7 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { skeleton, wallet, coins } = this.props;
-    let defaultFiat = getDefaultFiat();
-    let defaultCoin = getDefaultCrypto();
+    let { skeleton, wallet } = this.props;
     let selectedCoin = wallet.selectedCoin;
     let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
     let history = wallet.coinHistory.history.txs;
@@ -71,6 +63,7 @@ class TransactionHistory extends React.Component {
 
     return Object.keys(history).map((val, index) => {
       let transaction = history[index];
+      let type = transaction.type ? transaction.type : "";
       return (
         <div key={index}>
           <div>
@@ -89,7 +82,7 @@ class TransactionHistory extends React.Component {
                   <img
                     src={
                       "./images/icons/walletHistory/" +
-                      transaction.type.toLowerCase() +
+                      type.toLowerCase() +
                       ".png"
                     }
                   />
@@ -104,20 +97,16 @@ class TransactionHistory extends React.Component {
               <Grid item xs={4} className={style.valueHistory}>
                 <div
                   className={
-                    transaction.type === "RECEIVED"
+                    type === "RECEIVED"
                       ? style.receivedHistory
                       : style.sentHistory
                   }
                 >
-                  {transaction.type === "RECEIVED" || "-"}
+                  {type === "RECEIVED" || "-"}
                   {convertBiggestCoinUnit(
                     transaction.amount,
                     decimalPoint
                   ).toFixed(decimalPoint)}{" "}
-                </div>
-                <div>
-                  {(coins[defaultCoin].price[defaultFiat].symbol || "$") +
-                    transaction.price[defaultFiat]}
                 </div>
               </Grid>
             </Grid>
@@ -155,17 +144,7 @@ class TransactionHistory extends React.Component {
                       <div> {i18n.t("TEXT_ID")} </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <a
-                        className={style.idTransactionHistory}
-                        target="blanck"
-                        href={
-                          blockexplorer[selectedCoin]
-                            ? blockexplorer[selectedCoin] + transaction.txID
-                            : ""
-                        }
-                      >
-                        {transaction.txID.substring(0, 33) + "..." || "-"}
-                      </a>
+                      {transaction.txID.substring(0, 33) + "..." || "-"}
                     </Grid>
                   </Grid>
 

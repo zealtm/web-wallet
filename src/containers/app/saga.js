@@ -9,7 +9,8 @@ import {
   hasTwoFactorAuth,
   setUserSeed,
   updateUserConsentsSaga,
-  editUserData
+  editUserData,
+  updateUserPasswordSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -28,7 +29,7 @@ import {
   setWalletTransaction,
   setUtxos
 } from "../wallet/redux/walletSaga";
-import { getVoucher } from "../coupons/redux/couponsSaga";
+import { getVoucher, verifyCoupon } from "../coupons/redux/couponsSaga";
 import {
   getTwoFactorAuth,
   verifyTwoFactorAuthSettings
@@ -81,6 +82,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
     fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
+    fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
@@ -103,6 +105,7 @@ export default function* rootSaga() {
 
     // Coupons
     fork(takeLatest, "GET_VOUCHER_API", getVoucher),
+    fork(takeLatest, "VERIFY_COUPON_API", verifyCoupon),
 
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),

@@ -83,7 +83,7 @@ class BoxAmount extends React.Component {
           src={"/images/icons/coins/" + coin + ".png"}
           className={style.modalIconCoin}
         />
-        <div>{i18n.t("MODAL_SEND_QR_CODE_ADDRESS")}</div>
+        <div>{i18n.t("MODAL_SEND_AMOUNT")}</div>
         <input
           className={style.txtamount}
           type="text"
