@@ -199,6 +199,12 @@ class Invoice extends React.Component {
     this.openModal();
   };
 
+  checkAllInputs = () => {
+    const {invoice, coin} = this.state;
+
+    return invoice.phone && invoice.operadora.value && invoice.valor.value && coin.value;
+  }
+
   render() {
     const { classes, loading, coinsRedux } = this.props;
     const { coin, errors, invoice } = this.state;
@@ -293,7 +299,7 @@ class Invoice extends React.Component {
           style={{ marginTop: "10px" }}
         >
           <button
-            className={style.buttonBorderGreen}
+            className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
             {loading ? <Loading /> : "EFETUAR RECARGA"}
