@@ -111,6 +111,7 @@
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
     "validator": "^10.4.0",
-    "web3": "^0.20.7"
+    "web3": "^1.0.0-beta.34",
+    "web3-provider-engine": "^13.6.5"
   }
 }

@@ -330,7 +330,7 @@ export const networks = {
     gasPrice: 10000000000,
     gasLimit: 21000,
     chainID: 1,
-    apiUrl: "https://api.myetherapi.com/eth"
+    apiUrl: "https://api.myetherwallet.com/eth"
   },
   ROPSTEN: {
     coinSymbol: "ETH",
@@ -340,6 +340,6 @@ export const networks = {
     gasPrice: 10000000000,
     gasLimit: 21000,
     chainID: 3,
-    apiUrl: "https://api.myetherapi.com/rop"
+    apiUrl: "https://api.myetherwallet.com/rop"
   }
 };
