@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { errorInput } from "../../errors/redux/errorAction";
+import { createAlias, getAliases } from "../redux/settingsAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -15,10 +16,35 @@ import Hidden from "@material-ui/core/Hidden";
 
 // STYLES
 import style from "./style.css";
+import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
 class AliasPage extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      fieldAlias: ""
+    };
+  }
+
+  handleAliasValue = value => {
+    this.setState({ fieldAlias: value });
+  };
+
+  createNewAlias = () => {
+    let { createAlias, coins, settings, user } = this.props;
+    let { fieldAlias } = this.state;
+    let coinName = coins.lunes.abbreviation;
+    let coinAddress = coins.lunes.address;
+    let decimalPoint = coins.lunes.decimalPoint;
+    let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
+    let password = user.password;
+    createAlias(coinName, coinAddress, fieldAlias, fee, password);
+  };
+
   render() {
-    let { coins, errorInput } = this.props;
+    let { coins } = this.props;
+    let { fieldAlias } = this.state;
 
     return (
       <div>
@@ -69,16 +95,16 @@ class AliasPage extends React.Component {
                     <input
                       type="text"
                       className={style.inputClear}
-                      disabled
-                      value={i18n.t("MESSAGE_NOT_SERVICE")}
+                      onChange={event =>
+                        this.handleAliasValue(event.target.value)
+                      }
+                      value={fieldAlias}
                     />
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <button
                       className={style.buttonGreen}
-                      onClick={() =>
-                        errorInput(i18n.t("MESSAGE_NOT_SERVICE_YET"))
-                      }
+                      onClick={() => this.createNewAlias()}
                     >
                       {i18n.t("SET_ALIAS_SAVE_NAME")}
                     </button>
@@ -95,15 +121,31 @@ class AliasPage extends React.Component {
 
 AliasPage.propTypes = {
   coins: PropTypes.array,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  createAlias: PropTypes.func,
+  getAliases: PropTypes.func,
+  settings: PropTypes.object,
+  user: PropTypes.object
 };
 
-const mapSateToProps = store => ({
-  coins: store.skeleton.coins
-});
+const mapSateToProps = store => (
+  console.warn(store),
+  {
+    coins: store.skeleton.coins,
+    settings: store.settings,
+    user: store.user.user
+  }
+);
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ errorInput }, dispatch);
+  bindActionCreators(
+    {
+      createAlias,
+      getAliases,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
   mapSateToProps,

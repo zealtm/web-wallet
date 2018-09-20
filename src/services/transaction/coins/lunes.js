@@ -74,14 +74,15 @@ class LunesTransaction {
 
     let lunes = await create(value.network.APICONFIG);
     let seed = await lunes.Seed.fromExistingPhrase(value.seed);
-    let transaction = lunes.API.Node.v1.leasing.createAlias(data, seed.keyPair)
+    console.warn("seed.keypair", seed);
+    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair)
 
     return transaction;
   }
 
   async getAliases(value) {
     let lunes = await create(value.network.APICONFIG);
-    let transaction = lunes.API.Node.v1.leasing.byAddress(value.address)
+    let transaction = lunes.API.Node.v1.aliases.byAddress(value.address)
 
     return transaction;
   }

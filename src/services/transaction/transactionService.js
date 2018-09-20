@@ -280,16 +280,18 @@ class TransactionService {
     }
   }
 
-  async createAlias(alias, fee) {
+  async createAlias(alias, fee, seed) {
     try {
+      console.warn("transaction", alias, fee, seed);
       let transaction = new LunesTransaction();
 
       let response = await transaction.createAlias({
         alias,
-        fee: convertSmallerCoinUnit(fee, 8),
-        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+        fee,
+        seed,
+        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES        
       });
-
+      
       return response;
     } catch (error) {
       return error;
