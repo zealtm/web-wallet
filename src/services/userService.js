@@ -109,17 +109,13 @@ class UserService {
 
   async resetPass(data){
     try {
-      //API_HEADER.headers.Authorization = token;
-      console.log("reset", "try");
       const response = await axios.post(
-        BASE_URL + "/resetPassword",
-        data // {login: email}
-        //API_HEADER
+        BASE_URL + "/user/forgotPassword",
+        data, // {email: email}
+        API_HEADER
       ).catch(error => {
         return error.response;
       });
-
-      //setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
     } catch (error) {
