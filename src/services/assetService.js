@@ -57,7 +57,7 @@ class AssetService {
   }
   responseValidation(response) {
     if (!response)
-      return {type: 'error',message:i18n.t("ASSETS_EMPTY_RESPONSE")}
+      throw {type: 'error',message:i18n.t("ASSETS_EMPTY_RESPONSE")}
 
     if (response.errorMessage) {
       let errorMessage = JSON.parse(response.errorMessage);
@@ -72,14 +72,14 @@ class AssetService {
 
     if (code !== '200') {
       if (code.startsWith('4'))
-        return { type: 'error', message: i18n.t("ASSETS_BAD_REQUEST"),
-        serverMessage };
+        throw ({ type: 'error', message: i18n.t("ASSETS_BAD_REQUEST"),
+        serverMessage })
       else if (code.startsWith('5'))
-        return { type: 'error', message: i18n.t("ASSETS_SERVER_ERROR"),
-        serverMessage };
+        throw ({ type: 'error', message: i18n.t("ASSETS_SERVER_ERROR"),
+        serverMessage })
       else
-        return { type: 'error', message: i18n.t("ASSETS_UNKNOWN_ERROR"),
-        serverMessage };
+        throw ({ type: 'error', message: i18n.t("ASSETS_UNKNOWN_ERROR"),
+        serverMessage })
     }
     return { type: 'success' }
   }
@@ -91,9 +91,7 @@ class AssetService {
       let { data } = result;
       let { balances } = data ? data : {};
 
-      let validationResult = this.responseValidation({...result, axiosStatus: status});
-      if (validationResult.type === 'error')
-        return validationResult
+      this.responseValidation({...result, axiosStatus: status});
 
       return { type: 'success', data: data };
     } catch (error) {
@@ -109,14 +107,14 @@ class AssetService {
       let { data, type, message } = result ? result : {};
       let { assets } = data ? data : {};
 
-      let validationResult = this.responseValidation({...result, axiosStatus: status});
-      if (validationResult.type === 'error')
-        return validationResult
+      this.responseValidation({...result, axiosStatus: status});
 
-      if (assets && assets.constructor.name !== 'Array')
+      if (!assets)
         return { type: 'error', message: i18n.t("ASSETS_NO_TX_HISTORY_1") }
-      if (assets.length < 1)
+      if (assets.constructor.name !== 'Array')
         return { type: 'error', message: i18n.t("ASSETS_NO_TX_HISTORY_2") }
+      if (assets.length < 1)
+        return { type: 'error', message: i18n.t("ASSETS_NO_TX_HISTORY_3") }
 
       return { type: 'success', data };
     } catch(error) {

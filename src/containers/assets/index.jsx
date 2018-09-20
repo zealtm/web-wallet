@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
-import { setAssetLoading } from "./redux/assetsAction";
+import { setAssetLoading, getAssetGeneralInfo } from "./redux/assetsAction";
 
 // COMPONENTS
 import CoinsBar from "./coinsBar";
@@ -15,9 +15,9 @@ import Loading from "../../components/loading";
 
 class Assets extends React.Component {
   componentDidMount() {
-    let { setAssetLoading, loadWalletInfo, user } = this.props;
-    setAssetLoading(true);
-    loadWalletInfo(user.password);
+    let { getAssetGeneralInfo } = this.props;
+    // setAssetLoading(true);
+    getAssetGeneralInfo();
   }
 
   renderContent = () => {
@@ -50,7 +50,8 @@ Assets.propTypes = {
   user: PropTypes.object,
   assets: PropTypes.object,
   loadWalletInfo: PropTypes.func,
-  setAssetLoading: PropTypes.func
+  setAssetLoading: PropTypes.func,
+  getAssetGeneralInfo: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -62,7 +63,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       loadWalletInfo,
-      setAssetLoading
+      setAssetLoading,
+      getAssetGeneralInfo
     },
     dispatch
   );

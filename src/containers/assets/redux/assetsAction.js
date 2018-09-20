@@ -102,3 +102,10 @@ export const getCoinFeeValue = coinType => ({
   type: "GET_COIN_FEE_API",
   coinType
 });
+
+export const getAssetGeneralInfo = () => ({
+  type: "GET_ASSET_GENERAL_INFO_API"
+})
+export const getAssetHistory = () => ({
+  type: "GET_ASSET_HISTORY_API"
+})

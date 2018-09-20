@@ -2,6 +2,21 @@ import { getDefaultCrypto } from "../../../utils/localStorage";
 
 const initialState = {
   selectedCoin: getDefaultCrypto(),
+  isBalanceLoading: false,
+  isTxHistoryLoading: false,
+  assets: [
+    {
+      assetId:'123',
+      tokenName: 'tmp',
+      history: [
+        // { txID: '321', fromAddress: '123', toAddress: '123'}
+      ]
+    }
+  ],
+  coinBalances: {
+    loading: false,
+    balances: []
+  },
   coinHistory: {
     loaded: false,
     loading: false,
@@ -44,6 +59,20 @@ const initialState = {
 
 const asset = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_ASSET_DATA":
+      return {
+        ...state,
+        isBalanceLoading: action.isBalanceLoading,
+        assets: action.assets ? action.assets : state.assets
+      }
+    case "SET_ASSET_TX_HISTORY":
+      return {
+        ...state,
+        isTxHistoryLoading: action.loading,
+        assets: [
+          ...state.assets,
+        ]
+      }
     case "SET_SELECTED_COIN":
       return {
         ...state,

@@ -214,6 +214,7 @@
   "ASSETS_UNKNOWN_ERROR_2": "Unknown error, code 1",
   "ASSETS_NO_TX_HISTORY_1": "No transactions returned for this asset, code 1",
   "ASSETS_NO_TX_HISTORY_2": "No transactions returned for this asset, code 2",
+  "ASSETS_NO_TX_HISTORY_3": "No transactions returned for this asset, code 3",
   "UNKNOWN": "Unknown",
   "LOGIN_FOOTER_SUPPORT": "Support",
   "MENU_SUPPORT": "Support",
