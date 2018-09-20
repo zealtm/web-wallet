@@ -320,8 +320,6 @@ class CoinService {
       let valid = false;
       coin = coin.toUpperCase();
 
-      console.warn(coin, address);
-
       if (!coin || !address || address.length < 10) {
         return "error";
       }
@@ -341,8 +339,6 @@ class CoinService {
           ? (valid = await CAValidator.validate(address, coin, "testnet"))
           : (valid = await CAValidator.validate(address, coin));
       }
-
-      console.warn(valid);
 
       if (!valid) {
         return "error";
