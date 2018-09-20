@@ -202,6 +202,11 @@ export function* getAssetHistory(action) {
 
     let token = yield call(getAuthToken);
     let { assetId, address } = action;
+
+    if (!address) {
+      address = window.store.getState().skeleton.coins.lunes.address;
+    }
+
     let response = yield call(
       [assetService, assetService.getTxHistory],
       address,
@@ -222,7 +227,7 @@ export function* getAssetHistory(action) {
     assets = assets.map(asset => {
       if (asset.assetId === assetId)
         asset.history = history;
-      return history;
+      return asset;
     })
 
     yield put({
@@ -237,5 +242,3 @@ export function* getAssetHistory(action) {
     yield put(internalServerError());
   }
 }
-window.getAssetHistory = getAssetHistory
-window.getAssetsGeneralInfo = getAssetGeneralInfo

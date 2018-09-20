@@ -65,30 +65,28 @@ class CoinsInfo extends React.Component {
       setAssetReceiveModalOpen,
       setAssetLoading,
       loadWalletInfo,
-      coins,
-      assets,
+      assets: assetsRoute,
       user
     } = this.props;
-    let step = assets.modal.step;
-    let selectedCoin = assets.selectedCoin; // eslint-disable-line
-    let coin = coins[assets.selectedCoin];
-    let coinPrice = 0; /*coins[selectedCoin].price[defaultCoin].price;*/ //eslint-disable-line
-    let coinPercent = 0; /*coins[selectedCoin].price.percent;*/ // eslint-disable-line
-    // let fiatBalance = coin.balance[defaultCoin] ? coin.balance[defaultCoin].toFixed(2) : 0;
-    let balance = coin.balance.available;
+    let { assets, selectedCoin } = assetsRoute;
+    let step = assetsRoute.modal.step;
+    let coin = assets.find(asset => asset.assetId === selectedCoin ? true : false);
+
+    if (!coin) return null;
+
     return (
       <div>
         <Modal
           title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
           content={<ReceiveModal coin={coin} />}
-          show={assets.modalReceive.open}
+          show={assetsRoute.modalReceive.open}
           close={() => setAssetReceiveModalOpen()}
         />
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          show={assets.modal.open}
+          show={assetsRoute.modal.open}
           close={
             step === 4
               ? null
@@ -111,7 +109,7 @@ class CoinsInfo extends React.Component {
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{coin.name.toUpperCase()}</h3>
+                <h3>{coin.tokenName.toUpperCase()}</h3>
                 <img
                   src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
@@ -122,7 +120,7 @@ class CoinsInfo extends React.Component {
             <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{balance}</p>
+                <p>{coin.balance}</p>
               </Grid>
             </Grid>
           </Grid>

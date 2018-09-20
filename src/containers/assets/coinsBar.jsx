@@ -7,13 +7,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setSelectedCoin,
-  getAssetCoinHistory,
+  getAssetHistory,
   setAssetCoinHistoryLoading
 } from "./redux/assetsAction";
 import { clearMessage, errorInput } from "../errors/redux/errorAction";
 
 // UTILS
-import { getFavoritesCrypto } from "../../utils/localStorage";
+import { getFavoritesAssets } from "../../utils/localStorage";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -47,15 +47,16 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
-  setCoin = (coin, address) => {
-    let {
-      setSelectedCoin,
-      getAssetCoinHistory,
-      setAssetCoinHistoryLoading
-    } = this.props;
-    setAssetCoinHistoryLoading(true);
-    getAssetCoinHistory(coin, address);
-    setSelectedCoin(coin);
+  setCoin = (assetId, address) => {
+    let { setSelectedCoin, getAssetHistory } = this.props;
+    // let {
+    //   setSelectedCoin,
+    //   getAssetHistory,
+    //   setAssetCoinHistoryLoading
+    // } = this.props;
+    // setAssetCoinHistoryLoading(true);
+    getAssetHistory(assetId, address);
+    setSelectedCoin(assetId);
   };
 
   renderArrowPercent = val => {
@@ -68,33 +69,28 @@ class CoinsBar extends React.Component {
 
   renderCoins = () => {
     let { wallet } = this.props;
-    let { coins } = this.props.skeleton;
-    let favoritesCoins = getFavoritesCrypto();
-    favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
+    let { assets, selectedCoin } = this.props.assets;
+    // let favoritesCoins = getFavoritesCrypto();
+    // favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
+    let favoritesAssets = getFavoritesAssets();
 
-    return favoritesCoins.map((val, index) => {
-      let coin = coins[val];
-      let coinBalanceStatus = coin.balance ? true : false;
-      let coinAddressStatus = coin.address ? true : false;
-      let coinStatus =
-        coin.status === "active" && coinBalanceStatus && coinAddressStatus
-          ? true
-          : false;
-      let coinPercent = coinStatus ? coin.price.percent : 0;
-
+    return Object.keys(favoritesAssets).map((assetId, index) => {
+      let coin = assets.find((asset) => asset.assetId === assetId ? true : false);
+      if (!coin) return;
+      // let coinBalanceStatus = coin.balance ? true : false;
+      // let coinAddressStatus = coin.address ? true : false;
+      let coinStatus = true;
+      // let coinPercent = coinStatus ? coin.price.percent : 0;
+      coin.abbreviation = assets[assetId];
       return (
         <div
           className={coinStatus ? null : style.boxCoinDisabled}
           key={index}
-          onClick={
-            coinPercent
-              ? () => this.setCoin(coin.abbreviation, coin.address)
-              : null
-          }
+          onClick={ () => this.setCoin(assetId) }
         >
           <div
             className={
-              wallet.selectedCoin === coin.abbreviation
+              selectedCoin === coin.abbreviation
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -192,22 +188,22 @@ class CoinsBar extends React.Component {
 
 CoinsBar.propTypes = {
   wallet: PropTypes.object,
-  skeleton: PropTypes.object,
+  assets: PropTypes.object,
   setSelectedCoin: PropTypes.func,
-  getAssetCoinHistory: PropTypes.func,
+  getAssetHistory: PropTypes.func,
   setAssetCoinHistoryLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   wallet: store.wallet,
-  skeleton: store.skeleton
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setAssetCoinHistoryLoading,
-      getAssetCoinHistory,
+      getAssetHistory,
       setSelectedCoin,
       clearMessage,
       errorInput

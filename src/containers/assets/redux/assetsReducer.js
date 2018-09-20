@@ -76,7 +76,7 @@ const asset = (state = initialState, action) => {
     case "SET_SELECTED_COIN":
       return {
         ...state,
-        selectedCoin: action.coin,
+        selectedCoin: action.assetId,
         loading: false
       };
 

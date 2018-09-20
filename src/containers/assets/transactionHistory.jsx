@@ -56,22 +56,33 @@ class TransactionHistory extends React.Component {
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
-    let { skeleton, wallet } = this.props;
-    // let defaultFiat = getDefaultFiat();
-    // let defaultCoin = getDefaultCrypto();
-    let selectedCoin = wallet.selectedCoin;
-    let decimalPoint = skeleton.coins[selectedCoin].decimalPoint;
-    let history = wallet.coinHistory.history.txs;
+    let { wallet, assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    // let history = wallet.coinHistory.history.txs;
+    let currentAsset = assets.find(asset => asset.assetId === selectedCoin ? true : false)
+    if (!currentAsset)
+      return null;
 
-    if (!history || wallet.coinHistory.history <= 0) {
+    let history = currentAsset.history;
+
+    if (!history || assets.length <= 0) {
       return (
         <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
       );
     }
 
-    return Object.keys(history).map((val, index) => {
+    history = history.assets;
+
+    if (!history || assets.length <= 0) {
+      return (
+        <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
+      );
+    }
+
+    return history.map((val, index) => {
       let transaction = history[index];
       let type = transaction.type ? transaction.type : '';
+      let decimalPoint = 8;
       return (
         <div key={index}>
           <div>
@@ -258,14 +269,16 @@ TransactionHistory.propTypes = {
   skeleton: PropTypes.object.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
   setAssetLoading: PropTypes.func.isRequired,
-  getAssetCoinHistory: PropTypes.func.isRequired
+  getAssetCoinHistory: PropTypes.func.isRequired,
+  assets: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   wallet: store.wallet,
   coins: store.skeleton.coins,
-  skeleton: store.skeleton
+  skeleton: store.skeleton,
+  assets: store.assets,
 });
 
 const mapDispatchToProps = dispatch =>

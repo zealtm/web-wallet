@@ -1,7 +1,3 @@
-export const setSelectedCoin = coin => ({
-  type: "SET_SELECTED_COIN",
-  coin
-});
 
 export const setAssetSendModalOpen = () => ({
   type: "SET_ASSET_MODAL_OPEN"
@@ -106,6 +102,12 @@ export const getCoinFeeValue = coinType => ({
 export const getAssetGeneralInfo = () => ({
   type: "GET_ASSET_GENERAL_INFO_API"
 })
-export const getAssetHistory = () => ({
-  type: "GET_ASSET_HISTORY_API"
+export const getAssetHistory = (assetId, address) => ({
+  type: "GET_ASSET_HISTORY_API",
+  assetId,
+  address
 })
+export const setSelectedCoin = assetId => ({
+  type: "SET_SELECTED_COIN",
+  assetId
+});
