@@ -1,7 +1,4 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import {
   setAuthToken,
   getAuthToken,
@@ -11,12 +8,8 @@ import {
   setUserData,
   clearAll
 } from "../../../utils/localStorage";
-import {
-  encryptHmacSha512Key
-} from "../../../utils/cryptography";
-import {
-  HEADER_RESPONSE
-} from "../../../constants/apiBaseUrl";
+import { encryptHmacSha512Key } from "../../../utils/cryptography";
+import { HEADER_RESPONSE } from "../../../constants/apiBaseUrl";
 import {
   internalServerError,
   modalSuccess,
@@ -223,12 +216,25 @@ export function* createUser(action) {
   }
 }
 
-export function* resetUser() {
+export function* resetUser(action) {
   try {
     yield put({
-      type: "POST_USER_RESET_USER",
-      page: 1
+      type: changeLoadingState
     });
+
+    let response = yield call(userService.resetPass, { email: action.login });
+
+    if (response.data.code === 200) {
+      yield put({
+        type: "POST_USER_RESET_USER",
+        page: 1
+      });
+    } else {
+      yield put({
+        type: changeLoadingState
+      });
+      yield put(internalServerError());
+    }
   } catch (error) {
     yield put({
       type: changeLoadingState
@@ -297,7 +303,6 @@ export function* editUserData(action) {
       return;
     }
   } catch (error) {
-
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
       state: true
@@ -307,16 +312,25 @@ export function* editUserData(action) {
   }
 }
 
-
 export function* updateUserPasswordSaga(action) {
   try {
-    const {oldPassword, confirmOldPassword, newPassword, confirmNewPassword} = action;
+    const {
+      oldPassword,
+      confirmOldPassword,
+      newPassword,
+      confirmNewPassword
+    } = action;
 
     /* eslint-disable */
-    const rules = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g);
+    const rules = new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/g
+    );
     /* eslint-enable */
 
-    if (!confirmOldPassword || oldPassword !== encryptHmacSha512Key(confirmOldPassword)) {
+    if (
+      !confirmOldPassword ||
+      oldPassword !== encryptHmacSha512Key(confirmOldPassword)
+    ) {
       yield put(modalError(i18n.t("MESSAGE_INVALID_PASSWORD")));
       return;
     }
@@ -336,14 +350,18 @@ export function* updateUserPasswordSaga(action) {
     });
 
     const token = yield call(getAuthToken);
-    yield call(userService.resetUserPassword, token, newPassword, confirmOldPassword);
+    yield call(
+      userService.resetUserPassword,
+      token,
+      newPassword,
+      confirmOldPassword
+    );
 
-
-    yield call(setUserData, {secretWord: ''});
+    yield call(setUserData, { secretWord: "" });
 
     yield put({
-      type: "UPDATE_USER_PASSWORD_REDUCER",
-    })
+      type: "UPDATE_USER_PASSWORD_REDUCER"
+    });
 
     setTimeout(() => {
       window.location.reload();

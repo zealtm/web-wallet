@@ -70,6 +70,7 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
+      console.warn(serviceId, transaction, lunesWallet, seed, token);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -113,7 +114,14 @@ class TransactionService {
       if (coin === "lunes")
         network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
 
-      if (coin === "btc" || coin === "ltc" || coin === "bch") {
+      if (coin === "dash") network = TESTNET ? undefined : networks.DASH;
+
+      if (
+        coin === "btc" ||
+        coin === "ltc" ||
+        coin === "bch" ||
+        coin === "dash"
+      ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({
           fromAddress: fromAddress,

@@ -14,7 +14,7 @@ import {
 
 // COMPONENTS
 import Select from "../../components/select";
-import Instructions from "../../components/instructions";
+import Instructions from "../payment/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
 import { DateMask, MoneyBrlMask } from "../../components/inputMask";
@@ -435,10 +435,7 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <Instructions>
-            {/* TODO: set the modal content */}
-            <p>Conteúdo</p>
-          </Instructions>
+          <Instructions/>
         </Grid>
       </Grid>
     );
