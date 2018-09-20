@@ -88,7 +88,6 @@ class DetailsRecharge extends React.Component {
     const totalnumero   = recharge.number.length;
     const numero        = recharge.number.substring(2,totalnumero);
     
-    console.log("numero", `(${ddd}) ${numero}`);
     return `(${ddd}) ${numero}`;
   }
 

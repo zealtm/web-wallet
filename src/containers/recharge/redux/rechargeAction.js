@@ -48,29 +48,6 @@ export const confirmRecharge = recharge => ({
   recharge
 });
 
-
-
-
-
-
-// export const setPayment = pay => ({
-//   type: "SET_PAYMENT",
-//   pay
-// });
-
-// export const getInvoice = number => ({
-//   type: "GET_INVOICE",
-//   number
-// });
-
-// CONFIRMAR ESTAS ACOES 
-
-// export const setUserGdpr = user => ({
-//   type: "SET_USER_GDPR",
-//   user
-// });
-
 export const getHistoryRecharge = () => ({
   type: "GET_HISTORY_RECHARGE"
 });
-

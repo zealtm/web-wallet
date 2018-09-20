@@ -96,6 +96,13 @@ const recharge = (state=initialState, action) => {
           ...initialState
         };
 
+      case "GET_HISTORY_RECHARGE_REDUCER":
+        return {
+          ...state,
+          history: action.history,
+          loading: false
+        };
+
 
 
   

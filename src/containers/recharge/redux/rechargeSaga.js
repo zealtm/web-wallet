@@ -290,3 +290,27 @@ export function* confirmRechargeSaga(payload) {
     yield put(internalServerError());
   }
 }
+
+export function* getHistoryRechargeSaga() {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(rechargeService.getHistory, token);
+
+    let data = [];
+    if (response.recharges) {
+      data = response.recharges;
+    }
+
+    yield put({
+      type: "GET_HISTORY_RECHARGE_REDUCER",
+      history: data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

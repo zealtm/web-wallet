@@ -344,5 +344,6 @@
   "RECHARGE_PASS_CONFIRMATION": "Informe sua senha e conclua o envio de",
   "RECHARGE_PASS_TO": " para ",
   "RECHARGE_SUCCESS_1": "Você efetuou uma recarga no valor de ",
-  "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na aba Históricos"
+  "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na aba Históricos",
+  "RECHARGE_FIND": "Buscar pelo número"
 }
