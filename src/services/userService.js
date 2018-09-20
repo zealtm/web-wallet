@@ -120,44 +120,19 @@ class UserService {
 
   async resetPass(data) {
     try {
-      //API_HEADER.headers.Authorization = token;
       const response = await axios
         .post(
           BASE_URL + "/resetPassword",
-          data // {login: email}
-          //API_HEADER
-        )
-        .catch(error => {
-          return error.response;
-        });
-
-      //setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      return response;
-    } catch (error) {
-      console.warn(error);
-      return internalServerError();
-    }
-  }
-
-  async resetPassNew(token, data) {
-    try {
-      API_HEADER.headers.Authorization = token;
-
-      const response = await axios
-        .post(
-          BASE_URL + "/resetPassword/" + data.hash,
-          data, // {password:string}
+          data, // {login: email}
           API_HEADER
         )
         .catch(error => {
           return error.response;
         });
 
-      setAuthToken(response.headers[HEADER_RESPONSE]);
-
       return response;
     } catch (error) {
+      console.warn(error);
       return internalServerError();
     }
   }

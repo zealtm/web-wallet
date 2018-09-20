@@ -127,8 +127,6 @@ class Invoice extends React.Component {
         }
       }
     });
-
-    // console.log(this.state);
   };
 
   handleValor = (value, title) => {
@@ -142,8 +140,6 @@ class Invoice extends React.Component {
         }
       }
     });
-
-    // console.log(this.state);
   };
 
   handleField = name => event => {
@@ -159,11 +155,6 @@ class Invoice extends React.Component {
   openModal = () => {
     const { openModal } = this.props;
     openModal();
-  };
-
-  setPayment = data => {
-    // const { setPayment } = this.props;
-    // setPayment(data);
   };
 
   inputValidator = () => {
