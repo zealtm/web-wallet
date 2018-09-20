@@ -24,7 +24,11 @@ import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 const blockexplorer = {
   lunes: "https://blockexplorer.lunes.io/tx/",
-  btc: "https://live.blockcypher.com/btc/tx/"
+  btc: "https://live.blockcypher.com/btc/tx/",
+  ltc: "https://live.blockcypher.com/ltc/tx/",
+  bch: "https://live.blockcypher.com/bch/tx/",
+  dash: "https://explorer.bitcoin.com/bch/tx/",
+  eth: "https://etherscan.io/tx/"
 };
 
 class TransactionHistory extends React.Component {

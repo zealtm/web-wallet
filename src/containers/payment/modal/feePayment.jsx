@@ -154,7 +154,7 @@ class FeePayment extends React.Component {
               className={style.redLabelFee}
               onClick={() => this.calcFee("high")}
             >
-              {i18n.t("FEE_HIGHT")} {fee.fee.high}
+              {i18n.t("FEE_HIGH")} {fee.fee.high}
             </span>
           </div>
 

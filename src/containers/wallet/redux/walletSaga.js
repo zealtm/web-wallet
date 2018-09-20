@@ -22,7 +22,7 @@ export function* validateAddress(action) {
       address
     );
 
-    if (!response.error || response !== "error") {
+    if (response !== "error" && !response.error) {
       yield put({
         type: "SET_WALLET_MODAL_ADDRESS",
         address: address
@@ -80,6 +80,7 @@ export function* getWalletSendModalFee(action) {
 
     return;
   } catch (error) {
+    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
     yield put(internalServerError());
   }
 }

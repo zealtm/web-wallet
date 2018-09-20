@@ -28,7 +28,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        `${BASE_URL}/coin/${coin}/transaction/utxo`,
+        BASE_URL + "/coin/" + coin + "/transaction/utxo",
         { fromAddress: address },
         API_HEADER
       );
@@ -70,6 +70,7 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
+      console.warn(serviceId, transaction, lunesWallet, seed, token);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -113,7 +114,14 @@ class TransactionService {
       if (coin === "lunes")
         network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
 
-      if (coin === "btc" || coin === "ltc" || coin === "bch") {
+      if (coin === "dash") network = TESTNET ? undefined : networks.DASH;
+
+      if (
+        coin === "btc" ||
+        coin === "ltc" ||
+        coin === "bch" ||
+        coin === "dash"
+      ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({
           fromAddress: fromAddress,
@@ -129,11 +137,13 @@ class TransactionService {
           network: network
         });
 
-        if (responseBtc === "error") {
+        if (responseBtc === "error" || !responseBtc) {
           return;
         }
 
         let responseSaveBtc = await coinService.saveTransaction(
+          serviceId,
+          feeLunes,
           {
             id: responseBtc,
             sender: fromAddress,
@@ -158,7 +168,7 @@ class TransactionService {
           fee: convertSmallerCoinUnit(fee, decimalPoint)
         });
 
-        if (respondeLunes === "error") {
+        if (respondeLunes === "error" || !respondeLunes) {
           return;
         }
 
