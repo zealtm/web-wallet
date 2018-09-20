@@ -43,7 +43,7 @@
   "RESET_NEW_PASSWORD_ERROR_2": "Passwords are not the same",
   "MODAL_LEASING_MESSAGE_SUCCESS": "Leasing iniciado!",
   "INSTRUCTION_MODAL_CUPON_1": "Choose which option you have",
-  "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier",
+  "INSTRUCTION_MODAL_CUPON_2": "Enter your mobile phone number with DDD and carrier (Only voucher)",
   "INSTRUCTION_MODAL_CUPON_3": "Enter the 4-digit code of the your coupon",
   "INSTRUCTION_MODAL_CUPON_4": "Rescue",
   "COUPON_TITLE_1": "Voucher",
