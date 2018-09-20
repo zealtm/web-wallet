@@ -39,9 +39,7 @@ class Seed extends React.Component {
       inputs: { [name]: value ? input : undefined },
       errors: undefined,
       buttonEnable:
-        value.split(" ").length === 12 ||
-        value.split(" ").length === 14 ||
-        value.split(" ").length === 18
+        value.split(" ").length === 12 || value.split(" ").length === 18
           ? true
           : false
     });
