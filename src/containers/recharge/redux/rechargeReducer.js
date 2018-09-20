@@ -5,26 +5,23 @@ const initialState = {
   history: [],
   loading: false,
   modalStep: 1,
-  payment: {
-    fee: "",
-    number: "",
+  recharge: {
+    value: 0,
+    number: null, 
     coin: {
-      abbreviation: "",
-      address: ""
-    },
-    balance: "",
-    amount: "",
-    value: "",
-    assignor: "", //bank: "",
-    name: "",
-    dueDate: "", // dateend: "",
-    cpfCnpj: "",
-    description: "",
+      address: null, 
+      abbreviation: null,
+    }, 
+    balance: null, 
+    amount: null, 
+    operator: null,
   },
   fee: {
-    low: 0,
-    medium: 0,
-    hight: 0
+    fee: {
+      low: 0,
+      medium: 0,
+      high: 0
+    }
   },
   user: {
     gdpr: 'unread'
@@ -71,6 +68,31 @@ const recharge = (state=initialState, action) => {
           loadingValores: false
         }
 
+      case "SET_RECHARGE_REDUCER": 
+        return {
+          ...state, 
+          recharge: action.payload, 
+          loading: false
+        }
+
+      case "GET_FEE_RECHARGE_REDUCER":
+        return {
+          ...state,
+          fee: action.fee,
+          loading: false
+        };
+  
+      case "SET_FEE_RECHARGE_REDUCER":
+        return {
+          ...state,
+          recharge: {
+            ...state.payment,
+            fee: action.fee
+          }
+        };
+
+
+
 
   
       case "GET_PAYMENT_DATA_REDUCER":
@@ -86,21 +108,7 @@ const recharge = (state=initialState, action) => {
           loading: false
         };
   
-      case "GET_FEE_PAYMENT_REDUCER":
-        return {
-          ...state,
-          fee: action.fee,
-          loading: false
-        };
-  
-      case "SET_FEE_PAYMENT_REDUCER":
-        return {
-          ...state,
-          payment: {
-            ...state.payment,
-            fee: action.fee
-          }
-        };
+      
   
       case "GET_INVOICE_REDUCER":
         return {

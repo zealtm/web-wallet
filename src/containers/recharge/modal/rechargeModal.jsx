@@ -8,25 +8,29 @@ import FeeRecharge from "./feeRecharge";
 import ConfirmRecharge from "./confirmRecharge";
 import SecureRecharge from "./secureRecharge";
 import DoneRecharge from "./doneRecharge";
+import ErrorRecharge from "./errorRecharge";
 
 class RechargeModal extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     const { modalStep } = this.props;
 
     switch (modalStep) {
       case 1:
-        return <DetailsRecharge handleStep={this.handleStep} />;
+        return <DetailsRecharge />;
       case 2:
-        return <FeeRecharge handleStep={this.handleStep} />;
+        return <FeeRecharge />;
       case 3:
-        return <ConfirmRecharge handleStep={this.handleStep} />;
+        return <ConfirmRecharge />;
       case 4:
-        return <SecureRecharge handleStep={this.handleStep} />;
+        return <SecureRecharge />;
       case 5:
-        return <DoneRecharge handleStep={this.handleStep} />;
+        return <DoneRecharge />;
+      case 6:
+        return <ErrorRecharge />;
     }
   }
 }

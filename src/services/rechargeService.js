@@ -57,6 +57,38 @@ class RechargeService {
     }
   }
 
+  async getCoinAmountPay(token, coin, value) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.get(
+        `${BASE_URL}/bill/amount/${coin}?value=${value}`,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async sendRecharge(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/bill/recharge`,
+        payload,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
 }
 
 

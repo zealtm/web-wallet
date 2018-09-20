@@ -59,7 +59,7 @@ class DetailsRecharge extends React.Component {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, recharge } = this.props;
     const { user, error, errorMsg } = this.state;
 
     if (loading) {
@@ -76,9 +76,9 @@ class DetailsRecharge extends React.Component {
           </div>
           {i18n.t("RECHARGE_DETAILS_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>5000 LUNES</span>
+            <span className={style.textGreen}>{recharge.amount} {recharge.coin.abbreviation.toUpperCase()}</span>
             {i18n.t("RECHARGE_DETAILS_2")}
-            <span className={style.textGreen}>R$ 30,00</span>
+            <span className={style.textGreen}>R$ {recharge.value}</span>
 
             {i18n.t("RECHARGE_DETAILS_3")}
           </div>
@@ -91,7 +91,7 @@ class DetailsRecharge extends React.Component {
               marginBottom: 30
             }}
           >
-            (19) 99990-9999
+            {recharge.number}
           </div>
 
           <CustomSwitch
@@ -117,12 +117,14 @@ DetailsRecharge.propTypes = {
   loading: PropTypes.bool,
   setModalStep: PropTypes.func,
   getUserGdpr: PropTypes.func,
-  setUserGdpr: PropTypes.func
+  setUserGdpr: PropTypes.func, 
+  recharge: PropTypes.object.isRequired
 };
 
 const mapStateToProps = store => ({
   loading: store.recharge.loading,
-  user: store.user.user
+  user: store.user.user, 
+  recharge: store.recharge.recharge
 });
 
 const mapDispatchToProps = dispatch =>

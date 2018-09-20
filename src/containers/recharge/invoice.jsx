@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, getOperators,getValoresRecarga } from "./redux/rechargeAction";
+import { getCoinsEnabled, getOperators,getValoresRecarga, setRecharge } from "./redux/rechargeAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -80,6 +80,7 @@ class Invoice extends React.Component {
         img: undefined
       },
       invoice: {
+        coin: null,
         phone: "",
         operadora: {
           value: null,
@@ -178,22 +179,42 @@ class Invoice extends React.Component {
     }
   };
 
-  openModal = () => {
-    const { openModal } = this.props;
-    openModal();
-  };
-
-  setPayment = data => {
-    // const { setPayment } = this.props;
-    // setPayment(data);
-  };
+  setDefaultState = () => {
+    const emptyValue = {
+      errors: [],
+      disableNumberInput: false,
+      invoiceLoading: false,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      },
+      invoice: {
+        coin: null,
+        phone: "",
+        operadora: {
+          value: null,
+          title: "Operadora"
+        },
+        valor: {
+          value: null,
+          title: "Valor"
+        }
+      }
+    };
+  
+    this.setState(emptyValue);
+  }
 
   inputValidator = () => {
-
+    const { openModal, setRecharge } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
-      ...invoice
+      value: invoice.valor.value,
+      number: invoice.phone, 
+      coin: invoice.coin,
+      operator: invoice.operadora.value,
     };
 
     const invoiceInputs = {};
@@ -228,7 +249,9 @@ class Invoice extends React.Component {
       return;
     }
 
-    this.openModal();
+    openModal();
+    setRecharge(invoiceData);
+    this.setDefaultState();
   };
 
   render() {
@@ -317,7 +340,7 @@ class Invoice extends React.Component {
             className={style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
-            {loading ? <Loading /> : "EFETUAR RECARGA"}
+            {loading ? <Loading /> : i18n.t("RECHARGE_BT_INIT")}
           </button>
         </Grid>
 
@@ -339,7 +362,13 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   classes: PropTypes.object,
-  openModal: PropTypes.func
+  openModal: PropTypes.func.isRequired, 
+  setRecharge: PropTypes.func.isRequired, 
+  coinsRedux: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadingValores: PropTypes.bool.isRequired,
+  operadoras: PropTypes.array.isRequired,
+  valores: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -356,7 +385,7 @@ const mapDispatchToProps = dispatch =>
       getOperators,
       getValoresRecarga,
       getCoinsEnabled,
-      // setPayment
+      setRecharge,
     },
     dispatch
   );
