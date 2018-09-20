@@ -312,7 +312,7 @@
   "FEE_HIGH": "High",
 
   "PAYMENT_HEADER_TITLE": "Online Payment",
-  "PAYMENT_HEADER_SUBTITLE": "Do your payments online with cryptocoins",
+  "PAYMENT_HEADER_SUBTITLE": "Make your payments online with cryptocurrencies",
   "PAYMENT_INVOICE": "Pay Invoice",
   "PAYMENT_HISTORY": "History",
   "PAYMENT_ASSIGNOR": "Assignor",
@@ -360,7 +360,7 @@
   "INSTRUCTION_MODAL_PAY_INFO_2_TITTLE": "Limit:",
   "INSTRUCTION_MODAL_PAY_INFO_2": " It varies according to the concessionaire.",
   "INSTRUCTION_MODAL_PAY_INFO_3_TITTLE": "Opening Hours:",
-  "INSTRUCTION_MODAL_PAY_INFO_3": " 7 to 20 hours.",
+  "INSTRUCTION_MODAL_PAY_INFO_3": " 7am to 8pm GMT -3.",
   "INSTRUCTION_MODAL_PAY_INFO_4_TITTLE": "Devolution:",
   "INSTRUCTION_MODAL_PAY_INFO_4": "In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
   "INSTRUCTION_MODAL_PAY_1": "6% up to R$ 1000 reais.",
