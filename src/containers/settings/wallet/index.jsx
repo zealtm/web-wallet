@@ -19,7 +19,8 @@ import Hidden from "@material-ui/core/Hidden";
 // STYLES
 import style from "./style.css";
 
-const titles = ["Favoritos", "Alias", "SeedWords"];
+// const titles = ["Favoritos", "Alias", "SeedWords"];
+const titles = ["Favoritos", "SeedWords"];
 
 const contents = [
   <FavoritePage key="1" />,
