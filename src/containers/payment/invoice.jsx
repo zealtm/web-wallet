@@ -77,7 +77,6 @@ class Invoice extends React.Component {
     this.state = {
       errors: [],
       disableNumberInput: false,
-      invoiceLoading: false,
       invoice: {
         number: "",
         assignor: "",
@@ -277,9 +276,18 @@ class Invoice extends React.Component {
     this.setDefaultState();
   };
 
+  checkAllInputs = () => {
+    const {invoice, coin} = this.state;
+    const {payment} = this.props;
+
+    return invoice.number && invoice.name && invoice.cpfCnpj && (payment.assignor || invoice.assignor) &&
+      (payment.description || invoice.description) && (payment.dueDate || invoice.dueDate) &&
+      (payment.value || invoice.value) && coin.value;
+  }
+
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
-    const { coin, invoice, errors, invoiceLoading } = this.state;
+    const { coin, invoice, errors } = this.state;
 
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
@@ -300,17 +308,6 @@ class Invoice extends React.Component {
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes("number")}
             />
-            <span
-              style={{
-                display: "block",
-                position: "absolute",
-                visibility: invoiceLoading ? "visible" : "hidden"
-              }}
-            >
-              <small>
-                <Loading color="lunes" />
-              </small>
-            </span>
           </div>
 
           <Grid container>
@@ -422,7 +419,7 @@ class Invoice extends React.Component {
           style={{ marginTop: "10px" }}
         >
           <button
-            className={style.buttonBorderGreen}
+            className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
             {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
