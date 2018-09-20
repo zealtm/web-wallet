@@ -65,10 +65,10 @@ export const confirmRecharge = recharge => ({
 
 // CONFIRMAR ESTAS ACOES 
 
-export const setUserGdpr = user => ({
-  type: "SET_USER_GDPR",
-  user
-});
+// export const setUserGdpr = user => ({
+//   type: "SET_USER_GDPR",
+//   user
+// });
 
 export const getHistoryRecharge = () => ({
   type: "GET_HISTORY_RECHARGE"

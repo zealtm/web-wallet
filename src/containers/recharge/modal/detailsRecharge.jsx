@@ -47,7 +47,19 @@ class DetailsRecharge extends React.Component {
   };
 
   validateForm = () => {
-    const { setModalStep } = this.props;
+    const { setModalStep, recharge } = this.props;
+    const { user } = this.state;
+
+    if (user.terms === "unread") {
+      this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
+      return;
+    }
+
+    if (!recharge.amount || parseFloat(recharge.amount) > recharge.balance) {
+      this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
+      return;
+    }
+
     setModalStep(2);
   };
 
@@ -114,11 +126,11 @@ class DetailsRecharge extends React.Component {
           </div>
 
           <CustomSwitch
-            title={i18n.t("GDPR_TITLE")}
-            description={i18n.t("GDPR_DESC")}
+            title={i18n.t("PAYMENT_TERMS_TITLE")}
+            description={i18n.t("PAYMENT_TERMS_DESC")}
             action={this.toogleSwitch}
-            checked={user.gdpr === "read"}
-            value="gdprSwitch"
+            checked={user.terms === "read"}
+            value="termsSwitch"
           />
 
           <ButtonContinue
@@ -134,9 +146,8 @@ class DetailsRecharge extends React.Component {
 
 DetailsRecharge.propTypes = {
   loading: PropTypes.bool,
+  user: PropTypes.object.isRequired,
   setModalStep: PropTypes.func,
-  getUserGdpr: PropTypes.func,
-  setUserGdpr: PropTypes.func, 
   recharge: PropTypes.object.isRequired, 
   updateUserConsents: PropTypes.func.isRequired
 };
