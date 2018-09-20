@@ -44,11 +44,11 @@ const menuItens = [
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png"
   },
-  // {
-  //   link: "/recharge",
-  //   label: i18n.t("MENU_RECHARGE"),
-  //   icon: "../../images/icons/general/pay@1x.png"
-  // },
+  {
+    link: "/recharge",
+    label: i18n.t("MENU_RECHARGE"),
+    icon: "../../images/icons/general/pay@1x.png"
+  },
   {
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),

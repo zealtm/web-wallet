@@ -11,7 +11,6 @@ const bs = require("biggystring");
 class EthTransaction {
   async createTransaction(data) {
     try {
-      console.warn(data);
       let wallet = await this.mnemonicToWallet(
         data.network.derivePath,
         data.seed
@@ -26,34 +25,22 @@ class EthTransaction {
           EthereumUtil.addHexPrefix(wallet.getAddress().toString("hex"))
         )
       );
-      console.warn(
-        this.toHex(data.network.gasLimit),
-        this.toHex(data.fee),
-        this.toHex(data.amount)
-      );
+
       let txData = {
         nonce: nonce,
         to: data.toAddress,
         gasLimit: this.toHex(data.network.gasLimit),
-        gasPrice: this.toHex(data.fee),
+        gasPrice: this.toHex(data.feePerByte),
         value: this.toHex(data.amount),
         data: ""
       };
 
       let tx = new EthereumTx(txData);
-      console.warn("tx1", tx);
 
       await tx.sign(wallet.getPrivateKey());
-      console.warn("tx2", tx);
       let signedTx = tx;
-
       signedTx = signedTx.serialize();
-      console.warn("signedTx 1", signedTx);
-
       signedTx = EthereumUtil.bufferToHex(signedTx);
-
-      console.warn("signedTx 2", signedTx);
-
       let sendResult = await web3.eth.sendSignedTransaction(signedTx);
 
       return { txID: sendResult };
