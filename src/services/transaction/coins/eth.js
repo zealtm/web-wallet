@@ -12,7 +12,7 @@ class EthTransaction {
   async createTransaction(data) {
     try {
       let amount = this.toHex(data.amount);
-      let wallet = await this.mnemonicToWallet(data.path, data.seed);
+      let wallet = await this.mnemonicToWallet(data.seed);
 
       let web3 = await new Web3(
         new Web3.providers.HttpProvider(data.network.apiUrl)
@@ -65,7 +65,8 @@ class EthTransaction {
     return web3.eth.sendSignedTransaction(signedTx);
   }
 
-  mnemonicToWallet(path, mnemonic) {
+  mnemonicToWallet(mnemonic) {
+    const path = "m/44'/60'/0'/0/0";
     const ethKey = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
     const wallet = ethKey.derivePath(path).getWallet();
     return wallet;

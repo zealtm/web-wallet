@@ -171,8 +171,7 @@ class TransactionService {
           amount: convertSmallerCoinUnit(amount, decimalPoint),
           coin: coin,
           token: token,
-          network: network,
-          path: (network = TESTNET ? "m/44'/60'/0'/0/0" : "m/44'/0'/0'/0")
+          network: network
         });
 
         if (responseEth === "error" || !responseEth) {
