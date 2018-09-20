@@ -15,7 +15,7 @@ import {
 } from "../../containers/errors/statusCodeMessage";
 
 // COINS
-import { BtcTransaction, LunesTransaction } from "./coins";
+import { BtcTransaction, LunesTransaction, EthTransaction } from "./coins";
 import CoinService from "../../services/coinService";
 
 // UTILS
@@ -70,7 +70,6 @@ class TransactionService {
 
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
-      console.warn(serviceId, transaction, lunesWallet, seed, token);
       let network = undefined;
       let coinService = new CoinService();
       let {
@@ -116,6 +115,8 @@ class TransactionService {
 
       if (coin === "dash") network = TESTNET ? undefined : networks.DASH;
 
+      if (coin === "eth") network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
       if (
         coin === "btc" ||
         coin === "ltc" ||
@@ -146,6 +147,42 @@ class TransactionService {
           feeLunes,
           {
             id: responseBtc,
+            sender: fromAddress,
+            recipient: toAddress,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            fee: convertSmallerCoinUnit(fee, decimalPoint)
+          },
+          coin,
+          transaction.price,
+          "P2P",
+          token
+        );
+        return responseSaveBtc;
+      } else if (coin === "eth") {
+        let transactionEth = new EthTransaction();
+        let responseEth = await transactionEth.createTransaction({
+          fromAddress: fromAddress,
+          toAddress: toAddress,
+          seed: seed,
+          lunesWallet: lunesWallet,
+          fee: convertSmallerCoinUnit(fee, decimalPoint),
+          feePerByte: feePerByte,
+          feeLunes: feeLunes,
+          amount: convertSmallerCoinUnit(amount, decimalPoint),
+          coin: coin,
+          token: token,
+          network: network
+        });
+
+        if (responseEth === "error" || !responseEth) {
+          return;
+        }
+
+        let responseSaveBtc = await coinService.saveTransaction(
+          serviceId,
+          feeLunes,
+          {
+            id: responseEth,
             sender: fromAddress,
             recipient: toAddress,
             amount: convertSmallerCoinUnit(amount, decimalPoint),

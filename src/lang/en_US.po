@@ -1032,7 +1032,7 @@ msgstr "Você pode visualizar a transação em sua seção \"Históricos\""
 
 msgctxt "HISTORY"
 msgid "PAYMENT"
-msgstr "Histories"
+msgstr "History"
 
 msgctxt "BANK"
 msgid "PAYMENT_TITLE"

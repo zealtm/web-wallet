@@ -207,7 +207,7 @@ export function* setWalletTransaction(action) {
 export function* setUtxos(action) {
   try {
     const { address, coin } = action;
-    if (coin.search(/lunes/i) !== -1) {
+    if (coin.search(/lunes/i) !== -1 || coin.search(/eth/i) !== -1) {
       yield put({
         type: "SET_WALLET_UTXOS",
         status: "success",
@@ -216,14 +216,17 @@ export function* setUtxos(action) {
       });
       return;
     }
+
     yield put({
       type: "SET_WALLET_UTXOS",
       status: "loading",
       data: [],
       message: ""
     });
+
     const token = yield call(getAuthToken);
     const utxos = yield call(transactionService.utxo, address, coin, token);
+
     let userMessage = "";
     if (!utxos) {
       userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
