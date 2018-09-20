@@ -70,7 +70,7 @@ class SecureRecharge extends React.Component {
         <div>
           <span>{i18n.t("RECHARGE_PASS_CONFIRMATION")}</span>
           <span className={style.totalConfirm}>
-            {recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}
+            {' '} {recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}
           </span>
           <span> {i18n.t("RECHARGE_PASS_TO")} </span>
           <span className={style.addressConfirm}>

@@ -70,7 +70,6 @@ export function* getValuesCreditSaga(payload){
 
 export function* setRechargeSaga(payload){
   try {
-
     yield put({
       type: "SET_LOADING_REDUCER",
       payload: true
@@ -105,8 +104,8 @@ export function* setRechargeSaga(payload){
       amount: convertBiggestCoinUnit(amount, 8),
       value: value.toFixed(2).replace(".", ","),
       operator: {
-        id: payload.recharge.operator.operatorId,
-        name: payload.recharge.operator.operatorName
+        id: payload.recharge.operatorId,
+        name: payload.recharge.operatorName
       }
     };
 
@@ -117,10 +116,6 @@ export function* setRechargeSaga(payload){
 
   }catch(error){
     yield put(internalServerError());
-    // yield put({
-    //   type: "CHANGE_SKELETON_ERROR_STATE",
-    //   state: true
-    // });
   }
 }
 

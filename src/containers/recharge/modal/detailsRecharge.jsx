@@ -28,6 +28,8 @@ class DetailsRecharge extends React.Component {
       errorMsg: "",
       user: props.user
     };
+
+    this.renderNumber = this.renderNumber.bind(this);
   }
 
   openError = message => {
@@ -79,13 +81,14 @@ class DetailsRecharge extends React.Component {
     updateUserConsents({ terms: newStatus });
   };
 
-  renderNumber = () => {
+  renderNumber(){
     const {recharge} = this.props;
 
     const ddd           = recharge.number.substring(0,2);
     const totalnumero   = recharge.number.length;
     const numero        = recharge.number.substring(2,totalnumero);
-
+    
+    console.log("numero", `(${ddd}) ${numero}`);
     return `(${ddd}) ${numero}`;
   }
 
@@ -122,7 +125,7 @@ class DetailsRecharge extends React.Component {
               marginBottom: 30
             }}
           >
-            {this.renderNumber}
+            {this.renderNumber()}
           </div>
 
           <CustomSwitch
