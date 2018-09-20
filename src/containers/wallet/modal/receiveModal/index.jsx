@@ -66,7 +66,7 @@ class Receive extends React.Component {
                                 onClick={() => shareCoinAddress(coinName, coinAddress)}>
                                 <img src="/images/icons/modal-receive/ic_shared@1x.png" />
                                 <p>
-                                    <span className={style.spanShared}>{i18n.t("BTN_RECEIVE_SHARED")}</span>
+                                    <span className={style.spanShared}>{i18n.t("BTN_RECEIVE_SHARE")}</span>
                                 </p>
                             </div>
                         </Hidden>
