@@ -51,7 +51,7 @@ class Home extends React.Component {
             </div>
           </Grid>
 
-          <Grid item>
+          {/* <Grid item>
             <div className={style.cardHome}>
               <img
                 src="/images/icons/general/recharge@2x.png"
@@ -70,7 +70,7 @@ class Home extends React.Component {
                 </button>
               </Link>
             </div>
-          </Grid>
+          </Grid> */}
 
           <Grid item>
             <div className={style.cardHome}>

@@ -19,7 +19,7 @@ class BtcTransaction {
     try {
       const transService = new TransactionService();
       const utxos = await transService.utxo(
-        data.toAddress,
+        data.fromAddress,
         data.coin,
         data.token
       );
@@ -27,10 +27,10 @@ class BtcTransaction {
       console.warn(data, utxos);
 
       const targets = [
-        // {
-        //   address: data.lunesWallet.address,
-        //   value: data.feeLunes
-        // },
+        {
+          address: data.lunesWallet.address,
+          value: data.feeLunes
+        },
         {
           address: data.toAddress,
           value: data.amount
@@ -56,8 +56,9 @@ class BtcTransaction {
       let keyPair = this.getKeyPair(data.seed, data.network);
 
       tx = this.sign(tx, keyPair);
+
       const txHex = tx.build().toHex();
-      console.warn(txHex, "txHex");
+      console.warn(txHex);
       // return;
       const broadcastResult = await transService.broadcast(
         txHex,

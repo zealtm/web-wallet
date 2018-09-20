@@ -159,7 +159,7 @@
   display: block;
   font-size: 14px;
   padding-bottom: 14px;
-  padding-top: 14px;
+  padding-top: 10px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   color: #fff;
@@ -246,6 +246,7 @@
   float: left;
   justify-content: center;
   text-align: center;
+  padding: 2px;
 
 }
 
