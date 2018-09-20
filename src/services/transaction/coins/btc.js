@@ -24,23 +24,24 @@ class BtcTransaction {
         data.token
       );
 
-      console.warn(data, utxos);
-
       const targets = [
-        {
-          address: data.lunesWallet.address,
-          value: data.feeLunes
-        },
         {
           address: data.toAddress,
           value: data.amount
         }
       ];
 
+      if (data.lunesWallet.address && data.feeLunes) {
+        targets.push({
+          address: data.lunesWallet.address,
+          value: data.feeLunes
+        });
+      }
+
       let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
 
       let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
-      console.warn("inputs, outputs", inputs, outputs);
+
       outputs.forEach(output => {
         if (!output.address) {
           output.address = data.fromAddress;
@@ -58,15 +59,12 @@ class BtcTransaction {
       tx = this.sign(tx, keyPair);
 
       const txHex = tx.build().toHex();
-      console.warn(txHex);
-      // return;
+
       const broadcastResult = await transService.broadcast(
         txHex,
         data.coin,
         data.token
       );
-
-      console.warn("broadcastResult", broadcastResult);
 
       return broadcastResult.data.data.txId;
     } catch (error) {

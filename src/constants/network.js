@@ -180,7 +180,8 @@ export const networks = {
       },
       pubKeyHash: 0x4c,
       scriptHash: 0x10,
-      wif: 0xcc
+      wif: 0xcc,
+      dustThreshold: 5460
     },
     electrumx: {
       networkName: "Dash",
