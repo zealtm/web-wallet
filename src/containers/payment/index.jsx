@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep } from "./redux/paymentAction";
+import { setModalStep, setClearPayment } from "./redux/paymentAction";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -29,8 +29,9 @@ class Payment extends React.Component {
   handleModal = () => this.setState({ isOpen: !this.state.isOpen });
 
   closeModal() {
-    const { setModalStep } = this.props;
+    const { setModalStep, setClearPayment } = this.props;
     this.handleModal();
+    setClearPayment();
     setModalStep(1);
   }
 
@@ -83,7 +84,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalStep
+      setModalStep,
+      setClearPayment
     },
     dispatch
   );

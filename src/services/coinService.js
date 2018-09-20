@@ -1,5 +1,5 @@
 import axios from "axios";
-import CAValidator from "crypto-address-validator";
+import CAValidator from "cryptocurrency-address-validator";
 import {
   BASE_URL,
   LUNESNODE_URL,
@@ -318,6 +318,7 @@ class CoinService {
   async validateAddress(coin, address) {
     try {
       let valid = false;
+      coin = coin.toUpperCase();
 
       if (!coin || !address || address.length < 10) {
         return "error";
@@ -333,20 +334,10 @@ class CoinService {
         }
 
         return response.data.valid;
-      }
-
-      if (coin === "bch") {
-        valid = true;
-      } else if (coin === "dash") {
-        valid = true;
       } else {
         TESTNET
-          ? (valid = await CAValidator.validate(
-              address,
-              coin.toUpperCase(),
-              "testnet"
-            ))
-          : (valid = await CAValidator.validate(address, coin.toUpperCase()));
+          ? (valid = await CAValidator.validate(address, coin, "testnet"))
+          : (valid = await CAValidator.validate(address, coin));
       }
 
       if (!valid) {
@@ -535,8 +526,8 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       API_HEADER.validateStatus = function() {
         return true;
-      }
-      let { data, headers } = await axios.post(endpoint, {}, API_HEADER)
+      };
+      let { data, headers } = await axios.post(endpoint, {}, API_HEADER);
 
       let errorMessage = {};
       if (data.errorMessage) {
@@ -544,28 +535,34 @@ class CoinService {
       }
       let status = parseInt(headers.status);
       let code = parseInt(errorMessage.code) || parseInt(data.code);
-      if ((status != 200) && (code != 200)) {
+      if (status != 200 && code != 200) {
         let message;
-        if ((status === 403) || (code === 403))
+        if (status === 403 || code === 403)
           message = i18n.t("COUPON_USER_NOT_AUTHORIZED");
-        else if ((status == 401) || (code == 401))
+        else if (status == 401 || code == 401)
           message = i18n.t("COUPON_INVALID");
-        else if ( (status && status.toString().startsWith('5'))
-        || (code && code.toString().startsWith('5')) )
+        else if (
+          (status && status.toString().startsWith("5")) ||
+          (code && code.toString().startsWith("5"))
+        )
           message = i18n.t("COUPON_SERVER_ERROR");
-        else
-          message = i18n.t("COUPON_UNKNOWN_ERROR_1");
-        return { type: 'error', data: { message: message } };
+        else message = i18n.t("COUPON_UNKNOWN_ERROR_1");
+        return { type: "error", data: { message: message } };
       }
 
-      return { type: 'success', data: { message: data.message } }
-    } catch(error) {
-      console.warn(error)
+      return { type: "success", data: { message: data.message } };
+    } catch (error) {
+      console.warn(error);
       internalServerError();
-      return { type: 'error', data: {
-        message: typeof error === 'string' ? error
-        : error.message || i18n.t("COUPON_UNKNOWN_ERROR_2") }
-      }
+      return {
+        type: "error",
+        data: {
+          message:
+            typeof error === "string"
+              ? error
+              : error.message || i18n.t("COUPON_UNKNOWN_ERROR_2")
+        }
+      };
     }
   }
 }

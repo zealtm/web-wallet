@@ -4,7 +4,7 @@
 
 2. TEXT
 
-3. IMAGES/UI 
+3. IMAGES/UI
 
 
 */
@@ -28,7 +28,7 @@
   overflow: auto;
   padding-top: 30px;
   transition: 0.5s;
-  z-index:999;
+  z-index: 999;
 }
 
 :local(.header) {
@@ -72,6 +72,7 @@
     position: absolute;
     width: 200px;
     padding-top: 0;
+    overflow-y: auto;
   }
 }
 
@@ -170,13 +171,13 @@
 
 :local .linkPopMenu:hover {
   opacity: 1;
-  
+
 }
 
 :local .linkPopMenu:hover img{
   opacity: 1;
   color: #ffffff
-  
+
 }
 
 
@@ -251,9 +252,9 @@
 }
 
 :local .linkPopMenu .boxIcon img {
-  
+
   height: 90%;
-   
+
 }
 
 

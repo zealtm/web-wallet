@@ -1,7 +1,8 @@
 import axios from "axios";
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
 import { setAuthToken } from "../utils/localStorage";
+import i18n from "../utils/i18n";
 
 class PaymentService {
   async getCoins(token) {
@@ -28,22 +29,15 @@ class PaymentService {
         `${BASE_URL}/bill/${number}`,
         API_HEADER
       );
-      
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
-     
-      if(response.data.code!==200){
-        return 'ERRO';
+
+      return response.data;
+    } catch (error) {
+      if (error.response.data.code === 500) {
+        return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
       }
 
-      const data = {
-        number,
-        value: response.data.data.value,
-        assignor: response.data.data.assignor || "",
-        dueDate: response.data.data.dueDate || ""
-      };
-
-      return data;
-    } catch (error) {
       return internalServerError();
     }
   }
@@ -70,7 +64,13 @@ class PaymentService {
       let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if(response.data.code!==200){
+      if (response.data.code === 404) {
+        return {
+          payments: []
+        };
+      }
+
+      if (response.data.code !== 200 ) {
         return 'ERRO';
       }
 

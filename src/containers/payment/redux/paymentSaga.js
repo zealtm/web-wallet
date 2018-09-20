@@ -85,7 +85,6 @@ export function* setPaymentSaga(payload) {
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
 
-
     // if (balanceResponse.data.code !== 200 || amountResponse.data.code !== 200) {
     //   yield put({
     //     type: "SET_LOADING_REDUCER",
@@ -136,12 +135,8 @@ export function* getFeePaymentSaga(payload) {
       payload.amount,
       payload.decimalPoint
     );
-    
-    if(!response.fee){
-      // yield put({
-      //   type: "CHANGE_SKELETON_ERROR_STATE",
-      //   state: true
-      // });
+
+    if (!response.fee) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -175,19 +170,33 @@ export function* getInvoiceSaga(payload) {
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getInvoice, token, payload.number);
 
+    if (response.error) {
+      yield put(response.error);
+      yield put({ type: "SET_CLEAR_PAYMENT_REDUCER" });
+    } else if (!response.data) {
+      yield put(internalServerError());
+    }
+
     if (response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
       });
-      yield put(internalServerError());
+
+      yield put({
+        type: "SET_PAYMENT_INVOICE_ERROR"
+      });
+      return;
     }
 
     const data = {
+      error: false,
       number: payload.number,
       value: response.data.value,
       assignor: response.data.assignor,
-      dueDate: response.data.dueDate ? convertToLocaleDate(response.data.dueDate) : ''
+      dueDate: response.data.dueDate
+        ? convertToLocaleDate(response.data.dueDate)
+        : ""
     };
 
     yield put({
@@ -212,8 +221,8 @@ export function* getHistoryPaySaga() {
 
     let token = yield call(getAuthToken);
     let response = yield call(paymentService.getHistory, token);
-    
-    if(response === "ERRO"){
+
+    if (response === "ERRO") {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -255,7 +264,7 @@ export function* confirmPaySaga(payload) {
     };
 
     // transacao
-    
+
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -266,8 +275,6 @@ export function* confirmPaySaga(payload) {
         payload_transaction.coin,
         token
       );
-
-      //console.log("servico", lunesWallet);
 
       if (lunesWallet) {
         // transaciona
@@ -280,11 +287,9 @@ export function* confirmPaySaga(payload) {
           token
         );
 
-        //console.log("transacao", response);
-        
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate[2]+"-"+dueDate[1]+"-"+dueDate[0];
+        const dueDateFormat = dueDate[2] + "-" + dueDate[1] + "-" + dueDate[0];
 
         if (response) {
           const payload_elastic = {
@@ -304,9 +309,6 @@ export function* confirmPaySaga(payload) {
             token,
             payload_elastic
           );
-
-          //console.log("payload", payload_elastic);
-          //console.log("elastic", response_elastic);
 
           yield put({
             type: "SET_CLEAR_PAYMENT_REDUCER"
@@ -364,7 +366,6 @@ export function* confirmPaySaga(payload) {
 
       yield put(internalServerError());
     }
-    
   } catch (error) {
     yield put(internalServerError());
   }
