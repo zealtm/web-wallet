@@ -260,6 +260,10 @@ class Invoice extends React.Component {
 
     const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
+    if (payment.error) {
+      errors.push("number");
+    }
+
     if (errors.length > 0) {
       this.setState({
         ...this.state,

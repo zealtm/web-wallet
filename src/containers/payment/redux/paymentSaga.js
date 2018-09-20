@@ -187,10 +187,15 @@ export function* getInvoiceSaga(payload) {
         type: "SET_LOADING_REDUCER",
         payload: false
       });
+
+      yield put({
+        type: "SET_PAYMENT_INVOICE_ERROR"
+      })
       return;
     }
 
     const data = {
+      error: false,
       number: payload.number,
       value: response.data.value,
       assignor: response.data.assignor,
