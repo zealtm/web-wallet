@@ -61,7 +61,7 @@ class RechargeService {
     try {
       API_HEADER.headers.Authorization = token;
       const response = await axios.get(
-        `${BASE_URL}/bill/amount/${coin}?value=${value}`,
+        `${BASE_URL}/recharge/amount/${coin}?value=${value}`,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);

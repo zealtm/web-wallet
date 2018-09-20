@@ -29,14 +29,14 @@ class ConfirmRecharge extends React.Component {
     const {loading, recharge } = this.props;
     return (
       <div className={style.modalBox}>
-        <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
+        <div>{i18n.t("RECHARGE_CONFIRM_1")}</div>
         <div>
-          <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
+          <span>{i18n.t("RECHARGE_CONFIRM_2")}</span>
           <span className={style.totalConfirmBlock}>{recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation}</span>
         </div>
 
         <div className={style.smallDescription}>
-          {i18n.t("PAYMENT_CONFIRM_3")}
+          {i18n.t("RECHARGE_CONFIRM_3")}
         </div>
 
         <ButtonContinue

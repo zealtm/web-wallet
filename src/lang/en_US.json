@@ -338,6 +338,9 @@
   "RECHARGE_DETAILS_1": "Atenção: Confira abaixo os dados do seu pedido para que não haja erros. Se a informação estiver incorreta, recomece",
   "RECHARGE_DETAILS_2": " e será adicionado ",
   "RECHARGE_DETAILS_3": " em créditos para recarga do número abaixo: ",
+  "RECHARGE_CONFIRM_1": "Confirme os dados para concluir sua recarga",
+  "RECHARGE_CONFIRM_2": "Será debitado da sua carteira ",
+  "RECHARGE_CONFIRM_3": "O tempo médio de confirmação da recarga é de até 30 minutos. Somente conclua a recarga se estiver de acordo.",
   "RECHARGE_SUCCESS_1": "Você efetuou uma recarga no valor de ",
   "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na aba Históricos"
 }

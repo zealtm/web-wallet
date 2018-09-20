@@ -86,7 +86,7 @@ const recharge = (state=initialState, action) => {
         return {
           ...state,
           recharge: {
-            ...state.payment,
+            ...state.recharge,
             fee: action.fee
           }
         };
