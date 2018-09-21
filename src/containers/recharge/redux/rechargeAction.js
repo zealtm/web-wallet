@@ -7,19 +7,30 @@ export const getCoinsEnabled = () => ({
   type: "GET_API_COINS"
 });
 
-export const setPayment = pay => ({
-  type: "SET_PAYMENT",
-  pay
+export const getOperators = ddd => ({
+  type: "GET_OPERADORAS",
+  ddd
 });
 
-export const getFeePayment = (
+export const getValoresRecarga = (operadora, ddd) => ({
+  type: "GET_VALORES_RECARGA",
+  operadora, 
+  ddd
+});
+
+export const setRecharge = payload => ({
+  type: "SET_RECHARGE",
+  recharge: payload
+});
+
+export const getFeeRecharge = (
   coin,
   amount,
   fromAddress,
   toAddress,
   decimalPoint
 ) => ({
-  type: "GET_FEE_PAYMENT",
+  type: "GET_FEE_RECHARGE",
   coin,
   fromAddress,
   toAddress,
@@ -27,26 +38,16 @@ export const getFeePayment = (
   decimalPoint
 });
 
-export const setFeePayment = fee => ({
-  type: "SET_FEE_PAYMENT",
+export const setFeeRecharge = fee => ({
+  type: "SET_FEE_RECHARGE",
   fee
 });
 
-export const getInvoice = number => ({
-  type: "GET_INVOICE",
-  number
+export const confirmRecharge = recharge => ({
+  type: "CONFIRM_RECHARGE",
+  recharge
 });
 
-export const setUserGdpr = user => ({
-  type: "SET_USER_GDPR",
-  user
-});
-
-export const getHistoryPay = () => ({
-  type: "GET_HISTORY_PAY"
-});
-
-export const confirmPay = payment => ({
-  type: "CONFIRM_PAY",
-  payment
+export const getHistoryRecharge = () => ({
+  type: "GET_HISTORY_RECHARGE"
 });

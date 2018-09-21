@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setModalStep } from "../redux/rechargeAction";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {setModalStep} from "../redux/rechargeAction";
 
 //COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
@@ -21,44 +21,50 @@ class ConfirmRecharge extends React.Component {
   }
 
   confirmPay = () => {
-    const { setModalStep } = this.props;
-
+    const {setModalStep} = this.props;
     setModalStep(4);
-  };
+  }
 
   render() {
-    const { loading } = this.props;
+    const {loading, recharge } = this.props;
     return (
       <div className={style.modalBox}>
-        <div>{i18n.t("PAYMENT_CONFIRM_1")}</div>
+        <div>{i18n.t("RECHARGE_CONFIRM_1")}</div>
         <div>
-          <span>{i18n.t("PAYMENT_CONFIRM_2")}</span>
-          <span className={style.totalConfirmBlock}>5000.001 LUNES</span>
+          <span>{i18n.t("RECHARGE_CONFIRM_2")}</span>
+          <span className={style.totalConfirmBlock}>{recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}</span>
         </div>
 
-        <div className={style.smallDescription}>{i18n.t("RECHARGE_TITLE")}</div>
+        <div className={style.smallDescription}>
+          {i18n.t("RECHARGE_CONFIRM_3")}
+        </div>
 
         <ButtonContinue
           label={i18n.t("PAYMENT_BTN_PAY")}
-          action={() => this.confirmPay()}
+          action={()=>this.confirmPay()}
           loading={loading}
         />
+
       </div>
     );
   }
 }
 
 ConfirmRecharge.propTypes = {
-  setModalStep: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
-};
+  setModalStep:     PropTypes.func.isRequired,
+  recharge:         PropTypes.object.isRequired,
+  loading:          PropTypes.bool.isRequired
+}
 
 const mapStateToProps = store => ({
-  loading: store.recharge.loading
+  recharge:   store.recharge.recharge,
+  loading:    store.recharge.loading
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setModalStep }, dispatch);
+const mapDispatchToProps = dispatch =>bindActionCreators(
+  {setModalStep},
+  dispatch
+);
 
 export default connect(
   mapStateToProps,

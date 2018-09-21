@@ -370,6 +370,15 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_1_TITTLE": "Recharge rates:",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + 5% of the service charge.",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolution:",
-  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address."
+  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
 
+  "RECHARGE_BT_INIT": "EFETUAR RECARGA",
+  "RECHARGE_FEE_TEXT_1": "Você está enviando ",
+  "RECHARGE_FEE_TEXT_2": " para ",
+  "RECHARGE_CONFIRM_1": "Confirme os dados para concluir sua recarga",
+  "RECHARGE_CONFIRM_2": "Será debitado da sua carteira ",
+  "RECHARGE_CONFIRM_3": "O tempo médio de confirmação da recarga é de até 30 minutos. Somente conclua a recarga se estiver de acordo.",
+  "RECHARGE_PASS_CONFIRMATION": "Informe sua senha e conclua o envio de",
+  "RECHARGE_PASS_TO": " para ",
+  "RECHARGE_FIND": "Buscar pelo número"
 }
