@@ -109,6 +109,7 @@ const user = (state = initialState, action) => {
       };
 
     case "POST_USER_CREATE_USER":
+      console.warn("reducer");
       return {
         ...state,
         pages: {

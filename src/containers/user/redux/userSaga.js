@@ -203,7 +203,6 @@ export function* createUser(action) {
 
       return;
     }
-
     return yield put({
       type: "POST_USER_CREATE_USER",
       page: 3
@@ -213,6 +212,8 @@ export function* createUser(action) {
       type: changeLoadingState
     });
     yield put(internalServerError());
+
+    return;
   }
 }
 
