@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {setModalStep} from "../redux/rechargeAction";
-import {updateUserConsents} from "../../user/redux/userAction";
+import { setModalStep } from "../redux/rechargeAction";
+import { updateUserConsents } from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -76,12 +76,12 @@ class DetailsRecharge extends React.Component {
     updateUserConsents({ terms: newStatus });
   };
 
-  renderNumber(){
-    const {recharge} = this.props;
+  renderNumber() {
+    const { recharge } = this.props;
 
-    const ddd           = recharge.number.substring(0,2);
-    const totalnumero   = recharge.number.length;
-    const numero        = recharge.number.substring(2,totalnumero);
+    const ddd = recharge.number.substring(0, 2);
+    const totalnumero = recharge.number.length;
+    const numero = recharge.number.substring(2, totalnumero);
 
     return `(${ddd}) ${numero}`;
   }

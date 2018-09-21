@@ -4,7 +4,7 @@ export const setModalStep = step => ({
 });
 
 export const getCoinsEnabled = () => ({
-  type: "GET_API_COINS"
+  type: "GET_RECHARGE_COINS_ENABLED"
 });
 
 export const getOperators = ddd => ({

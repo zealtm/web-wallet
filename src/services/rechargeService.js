@@ -4,6 +4,22 @@ import { internalServerError } from "../containers/errors/statusCodeMessage";
 import { setAuthToken } from "../utils/localStorage";
 
 class RechargeService {
+  async getCoins(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/service/recarga`,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
   async getOperadoras(token, ddd) {
     try {
       API_HEADER.headers.Authorization = token;

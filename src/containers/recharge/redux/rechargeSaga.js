@@ -24,6 +24,39 @@ export function* setModalStepSaga(payload) {
   });
 }
 
+export function* getRechargeCoinsEnabledSaga() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(rechargeService.getCoins, token);
+
+    const services = response.data.services;
+
+    const coins = services.reduce((availableCoins, coin) => {
+      if (coin.status === "active") {
+        const active = {
+          title: coin.abbreviation.toUpperCase(),
+          value: {
+            abbreviation: coin.abbreviation,
+            address: coin.address
+          },
+          img: `/images/icons/coins/${coin.abbreviation}.png`
+        };
+
+        availableCoins.push(active);
+      }
+
+      return availableCoins;
+    }, []);
+
+    yield put({
+      type: "GET_COINS_REDUCER",
+      coins: coins
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getOperatorsSaga(payload) {
   try {
     yield put({
