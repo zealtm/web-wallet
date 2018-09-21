@@ -144,7 +144,23 @@ const user = (state = initialState, action) => {
           create: 0,
           reset: action.page
         },
-        user: action.user,
+        user: {
+          profilePicture: undefined,
+          birthday: undefined,
+          city: undefined,
+          country: undefined,
+          terms: undefined,
+          phone: undefined,
+          state: undefined,
+          street: undefined,
+          zipcode: undefined,
+          name: undefined,
+          surname: undefined,
+          username: undefined,
+          email: undefined,
+          password: undefined,
+          seed: undefined
+        },
         loading: false
       };
 
