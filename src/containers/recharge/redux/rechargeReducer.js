@@ -4,16 +4,17 @@ const initialState = {
   coins: [],
   history: [],
   loading: false,
+  loadingValores: false,
   modalStep: 1,
   recharge: {
     value: 0,
-    number: null, 
+    number: null,
     coin: {
-      address: null, 
+      address: null,
       abbreviation: null,
-    }, 
-    balance: null, 
-    amount: null, 
+    },
+    balance: null,
+    amount: null,
     operator: null,
   },
   fee: {
@@ -35,19 +36,19 @@ const recharge = (state=initialState, action) => {
           ...state,
           modalStep: action.step
         };
-  
+
       case "SET_LOADING_REDUCER":
         return {
           ...state,
           loading: action.payload
         };
-      
+
       case "SET_LOADING_VAL_REDUCER":
         return {
           ...state,
           loadingValores: action.payload
         };
-  
+
       case "GET_COINS_REDUCER":
         return {
           ...state,
@@ -68,10 +69,10 @@ const recharge = (state=initialState, action) => {
           loadingValores: false
         }
 
-      case "SET_RECHARGE_REDUCER": 
+      case "SET_RECHARGE_REDUCER":
         return {
-          ...state, 
-          recharge: action.payload, 
+          ...state,
+          recharge: action.payload,
           loading: false
         }
 
@@ -81,7 +82,7 @@ const recharge = (state=initialState, action) => {
           fee: action.fee,
           loading: false
         };
-  
+
       case "SET_FEE_RECHARGE_REDUCER":
         return {
           ...state,
@@ -105,9 +106,9 @@ const recharge = (state=initialState, action) => {
 
 
 
-  
-      
-  
+
+
+
       // case "GET_INVOICE_REDUCER":
       //   return {
       //     ...state,
@@ -116,26 +117,26 @@ const recharge = (state=initialState, action) => {
       //       ...action.payment
       //     }
       //   };
-  
+
       // case "GET_USER_GDPR_REDUCER":
       //   return {
       //     ...state,
       //     user: action.user
       //   };
-  
+
       // case "SET_USER_GDPR_REDUCER":
       //   return {
       //     ...state,
       //     user: action.user
       //   };
-  
+
       // case "GET_HISTORY_PAY_REDUCER":
       //   return {
       //     ...state,
       //     history: action.history
       //   };
-  
-      
+
+
 
     default: {
       return {

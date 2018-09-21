@@ -30,7 +30,7 @@ export function* getOperatorsSaga(payload){
       type: "SET_LOADING_VAL_REDUCER",
       payload: true
     });
-  
+
     let token       = yield call(getAuthToken);
     let response    = yield call(rechargeService.getOperadoras, token, payload.ddd);
 
@@ -52,10 +52,10 @@ export function* getValuesCreditSaga(payload){
       type: "SET_LOADING_VAL_REDUCER",
       payload: true
     });
-   
+
     let token       = yield call(getAuthToken);
     let response    = yield call(rechargeService.getValoresRecarga, token, payload);
-   
+
     yield put({
       type: "GET_VALORES_REDUCER",
       valores: response
@@ -77,20 +77,20 @@ export function* setRechargeSaga(payload){
 
     const value = parseFloat(payload.recharge.value);
     const {abbreviation, address} = payload.recharge.coin;
-    
+
     const token = yield call(getAuthToken);
 
     const amountResponse = yield call(
-      rechargeService.getCoinAmountPay, 
-      token, 
-      abbreviation, 
+      rechargeService.getCoinAmountPay,
+      token,
+      abbreviation,
       value
     );
 
     const balanceResponse = yield call(
-      coinService.getCoinBalance, 
-      abbreviation, 
-      address, 
+      coinService.getCoinBalance,
+      abbreviation,
+      address,
       token
     );
 
@@ -98,8 +98,8 @@ export function* setRechargeSaga(payload){
     const amount = amountResponse.data.data.value;
 
     const data = {
-      number: payload.recharge.number, 
-      coin: payload.recharge.coin, 
+      number: payload.recharge.number,
+      coin: payload.recharge.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
       value: value.toFixed(2).replace(".", ","),
@@ -110,7 +110,7 @@ export function* setRechargeSaga(payload){
     };
 
     yield put({
-      type: "SET_RECHARGE_REDUCER", 
+      type: "SET_RECHARGE_REDUCER",
       payload: data
     });
 
@@ -134,7 +134,7 @@ export function* getFeeRechargeSaga(payload) {
       payload.amount,
       payload.decimalPoint
     );
-    
+
     if(!response.fee){
       yield put({
         type: "SET_LOADING_REDUCER",
@@ -178,6 +178,8 @@ export function* confirmRechargeSaga(payload) {
       decimalPoint: payload.recharge.decimalPoint
     };
 
+    console.log('payload', payload);
+
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -197,12 +199,12 @@ export function* confirmRechargeSaga(payload) {
           lunesWallet.id,
           payload_transaction,
           lunesWallet,
-          decryptAes(seed, payload.payment.user),
+          decryptAes(seed, payload.recharge.user),
           token
         );
 
         console.log("transacao", response);
-        
+
         const transacao_obj = JSON.parse(response.config.data);
         const ddd           = payload.recharge.recharge.number.substring(0,2);
         const totalnumero   = payload.recharge.recharge.number.length;
@@ -273,6 +275,7 @@ export function* confirmRechargeSaga(payload) {
 
       return;
     } catch (error) {
+      console.log('recharge error', error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -285,7 +288,7 @@ export function* confirmRechargeSaga(payload) {
 
       yield put(internalServerError());
     }
-    
+
   } catch (error) {
     yield put(internalServerError());
   }
