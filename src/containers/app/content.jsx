@@ -65,19 +65,6 @@ class Content extends Component {
       let { username, seed, password } = this.props.user.user;
       let usernameStorage = getUsername();
 
-      console.warn(
-        type,
-        "type",
-        username,
-        "username",
-        seed,
-        "seed",
-        password,
-        "password",
-        usernameStorage,
-        "usernameStorage"
-      );
-
       if (seed && password && type !== "app" && usernameStorage === username) {
         return this.changeContent(<App />, "app");
       }
