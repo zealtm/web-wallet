@@ -11,7 +11,6 @@ const bs = require("biggystring");
 class EthTransaction {
   async createTransaction(data) {
     try {
-      console.warn(data);
       let wallet = await this.mnemonicToWallet(
         data.network.derivePath,
         data.seed
@@ -37,16 +36,12 @@ class EthTransaction {
       };
 
       let tx = new EthereumTx(txData);
-      console.warn(tx, "tx");
       await tx.sign(wallet.getPrivateKey());
       let signedTx = tx;
       signedTx = signedTx.serialize();
-      console.warn(signedTx, "signedTx");
       signedTx = EthereumUtil.bufferToHex(signedTx);
-      console.warn(signedTx, "signedTx");
       let sendResult = await web3.eth.sendSignedTransaction(signedTx);
-      console.warn(sendResult, "sendResult");
-      return { txID: sendResult };
+      return { txID: sendResult.blockHash };
     } catch (error) {
       console.warn(error);
       return "error";
