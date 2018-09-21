@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { connect } from "react-redux";
 import i18n from "../../../utils/i18n";
 import style from "./style.css";
