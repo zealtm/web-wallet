@@ -8,9 +8,8 @@ import { bindActionCreators } from "redux";
 import {
   setSelectedCoin,
   getAssetHistory,
-  setAssetCoinHistoryLoading
 } from "./redux/assetsAction";
-import { clearMessage, errorInput } from "../errors/redux/errorAction";
+import { errorInput } from "../errors/redux/errorAction";
 
 
 // COMPONENTS
@@ -26,7 +25,6 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
-// import Close from "@material-ui/icons/Close";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -51,7 +49,6 @@ class CoinsBar extends React.Component {
 
   setCoin = (assetId) => {
     let { setSelectedCoin } = this.props;
-    // getAssetHistory(assetId, address);
     setSelectedCoin(assetId);
   };
 
@@ -66,10 +63,13 @@ class CoinsBar extends React.Component {
   renderCoins = () => {
     let { assets, selectedCoin, isBalanceLoading } = this.props.assets;
 
+
     if (isBalanceLoading)
       return <div className={style.infoBarLoading}><Loading/></div>
 
-    if (!assets) return null;
+    if (!assets) {
+      return null;
+    }
 
     return assets.map((asset, index) => {
       asset = assets[index];
@@ -114,11 +114,6 @@ class CoinsBar extends React.Component {
                 { asset.abbreviation ? asset.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
               </div>
             </Hidden>
-            {/* <Hidden mdUp>
-              <div className={style.boxHiddenContentMobile}>
-                { coin.abbreviation ? coin.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
-              </div>
-            </Hidden> */}
           </div>
         </div>
       );
@@ -199,7 +194,6 @@ CoinsBar.propTypes = {
   assets: PropTypes.object,
   setSelectedCoin: PropTypes.func,
   getAssetHistory: PropTypes.func,
-  setAssetCoinHistoryLoading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -210,10 +204,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setAssetCoinHistoryLoading,
       getAssetHistory,
       setSelectedCoin,
-      clearMessage,
       errorInput
     },
     dispatch

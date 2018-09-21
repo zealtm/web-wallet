@@ -4,34 +4,23 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setAssetSendModalOpen,
-  setAssetReceiveModalOpen,
-  setAssetModalStep,
-  setAssetLoading
-} from "./redux/assetsAction";
 
-import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-// import Hidden from "@material-ui/core/Hidden";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 //COMPONENTS
-import Modal from "../../components/modal";
-import SendModal from "./modal/sendModal/";
-import ReceiveModal from "./modal/receiveModal/";
 import DefaultInfo from "./defaultInfo";
 
 // UTILS
 import i18n from "../../utils/i18n";
-// import { getDefaultFiat } from "../../utils/localStorage";
 import { getAssetInfo } from "../../utils/assets";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -43,12 +32,6 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.props.assets.modal;
-    let { setAssetModalStep } = this.props;
-    if (step >= 0) {
-      setAssetModalStep(step - 1);
-    }
-
     return;
   };
 
@@ -61,16 +44,8 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    let {
-      setAssetSendModalOpen,
-      setAssetReceiveModalOpen,
-      setAssetLoading,
-      loadWalletInfo,
-      assets: assetsRoute,
-      user
-    } = this.props;
+    let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
-    let step = assetsRoute.modal.step;
 
     if (selectedCoin === 'lunes' || !selectedCoin) {
       return <DefaultInfo/>
@@ -91,35 +66,6 @@ class CoinsInfo extends React.Component {
 
     return (
       <div>
-        <Modal
-          title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
-          content={<ReceiveModal coin={asset} />}
-          show={assetsRoute.modalReceive.open}
-          close={() => setAssetReceiveModalOpen()}
-        />
-
-        <Modal
-          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
-          content={<SendModal />}
-          show={assetsRoute.modal.open}
-          close={
-            step === 4
-              ? null
-              : step === 5 || step === 6
-                ? () => {
-                  setAssetSendModalOpen(),
-                  setAssetLoading(true),
-                  loadWalletInfo(user.password);
-                }
-                : () => setAssetSendModalOpen()
-          }
-          back={
-            step === 0 || step === 4 || step === 5 || step === 6
-              ? null
-              : () => this.previousStep()
-          }
-        />
-
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
@@ -135,7 +81,7 @@ class CoinsInfo extends React.Component {
             <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{asset.balance}</p>
+                <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
               </Grid>
             </Grid>
           </Grid>
@@ -148,29 +94,16 @@ class CoinsInfo extends React.Component {
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
-  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  loadWalletInfo: PropTypes.func.isRequired,
-  setAssetLoading: PropTypes.func.isRequired,
-  setAssetModalStep: PropTypes.func.isRequired,
-  setAssetSendModalOpen: PropTypes.func.isRequired,
-  setAssetReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
-  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    {
-      loadWalletInfo,
-      setAssetLoading,
-      setAssetModalStep,
-      setAssetSendModalOpen,
-      setAssetReceiveModalOpen
-    },
+    {},
     dispatch
   );
 

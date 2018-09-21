@@ -1,31 +1,10 @@
-//TODO remove it
-/* eslint-disable */
-//TODO
-const colors = require('colors');
 import axios from "axios";
 import {
   BASE_URL,
-  LUNESNODE_URL,
   API_HEADER,
-  HEADER_RESPONSE,
-  TESTNET
 } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
-
-// SERVICES
-// import AuthService from "./authService.js";
 
 // UTILS
-import {
-  getDefaultCrypto,
-  setDefaultCrypto,
-  setAuthToken
-} from "../utils/localStorage";
-import {
-  convertBiggestCoinUnit,
-  percentCalc,
-  convertSmallerCoinUnit
-} from "../utils/numbers";
 import i18n from "../utils/i18n.js";
 
 
@@ -33,14 +12,6 @@ const PATHS = {
   GET_BALANCE: (address) => `coin/lunes/asset/balance/${address}`,
   GET_TX_HISTORY: (address, assetId) => `coin/lunes/asset/history/${address}/${assetId}`
 }
-//TODO maybe remove it
-const getHeaders = (additional) => {
-  return {
-    ...API_HEADER.headers,
-    ...additional
-  }
-}
-// API_HEADER.headers.Authorization = token;
 const Axios = axios.create({
   baseURL: BASE_URL,
   headers: API_HEADER.headers,
@@ -51,10 +22,6 @@ const Axios = axios.create({
 });
 
 class AssetService {
-  //TODO MAYBE REMOVE THIS TOKEN
-  constructor(token) {
-    this.token = token;
-  }
   responseValidation(response) {
     if (!response)
       throw {type: 'error',message:i18n.t("ASSETS_EMPTY_RESPONSE")}
@@ -89,22 +56,20 @@ class AssetService {
         headers: { Authorization: token }
       });
       let { data } = result;
-      let { balances } = data ? data : {};
 
       this.responseValidation({...result, axiosStatus: status});
 
       return { type: 'success', data: data };
     } catch (error) {
       console.warn(error);
-      internalServerError();
       return {type: 'error', message: error.message || i18n.t("ASSETS_UNKNOWN_ERROR_1")}
     }
   }
   async getTxHistory(address, assetId, token) {
     try {
-      let { data: result, status, headers } = await Axios.get(PATHS.GET_TX_HISTORY(
+      let { data: result, status } = await Axios.get(PATHS.GET_TX_HISTORY(
         address, assetId), { headers: { Authorization: token } });
-      let { data, type, message } = result ? result : {};
+      let { data, } = result ? result : {};
       let { assets } = data ? data : {};
 
       this.responseValidation({...result, axiosStatus: status});
@@ -119,7 +84,6 @@ class AssetService {
       return { type: 'success', data };
     } catch(error) {
       console.warn(error);
-      internalServerError();
       return {type: 'error', message: error.message || i18n.t("ASSETS_UNKNOWN_ERROR_1")}
     }
   }

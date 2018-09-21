@@ -5,12 +5,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setAssetLoading,
   getAssetHistory,
   getAssetGeneralInfo,
   reloadAsset
 } from "./redux/assetsAction";
-import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
@@ -24,7 +22,6 @@ import Loading from "../../components/loading";
 // UTILS
 import i18n from "../../utils/i18n";
 import { getAssetInfo } from "../../utils/assets";
-// import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
@@ -50,7 +47,7 @@ class TransactionHistory extends React.Component {
     });
   };
 
-  reloadWallet = () => {
+  reloadAsset = () => {
     let { skeleton, assets, reloadAsset } = this.props;
     let { selectedCoin } = assets;
     let address = skeleton.coins.lunes.address;
@@ -240,7 +237,7 @@ class TransactionHistory extends React.Component {
             <div className={style.alignItemsHeaderHistory}>
               <div
                 className={style.refleshIcon}
-                onClick={() => this.reloadWallet()}
+                onClick={() => this.reloadAsset()}
               >
                 <img
                   width="15px"
@@ -268,21 +265,16 @@ class TransactionHistory extends React.Component {
 
 TransactionHistory.propTypes = {
   user: PropTypes.object.isRequired,
-  wallet: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
   skeleton: PropTypes.object.isRequired,
-  loadWalletInfo: PropTypes.func.isRequired,
-  setAssetLoading: PropTypes.func.isRequired,
-  getAssetHistory: PropTypes.func.isRequired,
   assets: PropTypes.object.isRequired,
+  getAssetHistory: PropTypes.func.isRequired,
   getAssetGeneralInfo: PropTypes.func.isRequired,
   reloadAsset: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  wallet: store.wallet,
-  coins: store.skeleton.coins,
   skeleton: store.skeleton,
   assets: store.assets,
 });
@@ -290,8 +282,6 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadWalletInfo,
-      setAssetLoading,
       getAssetHistory,
       getAssetGeneralInfo,
       reloadAsset
