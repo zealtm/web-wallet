@@ -79,8 +79,6 @@ class TransactionHistory extends React.Component {
 
     let lunesAddress = skeleton.coins.lunes.address;
 
-    console.warn('history',history)
-
     return history.assets.map((val, index) => {
       let transaction = history.assets[index];
       let type = lunesAddress === transaction.toAddress ? "SENT" : "RECEIVED";

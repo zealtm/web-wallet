@@ -99,6 +99,8 @@
   "CONSENT_TITLE": "Consent",
   "SETTINGS_CONSENTS_TERMS_DESCRIPTION": "Accept the GDPR terms?",
 
+  "ASSETS_SELECT_A_TOKEN_ABOVE":"Select a token above",
+
   "SECURITY_LINK_RETURN": "Back to the settings",
   "SET_ALIAS_DESCRIPTION": "You can customize a name for your wallet Lunes, if you prefer. If you make this change, the amount to be deducted from your balance is 5 LUNES.",
   "SET_ALIAS_SAVE_NAME": "Save name",
@@ -380,7 +382,7 @@
   "RECHARGE_CONFIRM_3": "The average recharge confirmation time is up to 30 minutes. Only complete the recharge if you agree.",
   "RECHARGE_PASS_CONFIRMATION": "Enter your password and complete the ",
   "RECHARGE_PASS_TO": " for ",
-  "RECHARGE_FIND": "Search by number", 
+  "RECHARGE_FIND": "Search by number",
 
   "NOTIFICATION_SERVICE_INVALID_LOGIN": "Inavalid Username/Email or Password",
   "NOTIFICATION_SERVICE_NOT_2FA": "Could not verify 2fa",

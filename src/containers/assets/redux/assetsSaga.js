@@ -9,7 +9,6 @@ import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 import AssetService from "../../../services/assetService";
-import AuthService from "../../../services/authService";
 const assetService = new AssetService();
 const coinService = new CoinService();
 const transactionService = new TransactionService();
@@ -162,11 +161,11 @@ export function* getAssetGeneralInfo(action) {
       type: "SET_ASSET_DATA",
       isBalanceLoading: true })
     // TODO remove below --
-    const auth = new AuthService();
-    let { data } = yield call(auth.authenticate, 'lunes2', '12345678');
-    let token = data.data.token;
+    // const auth = new AuthService();
+    // let { data } = yield call(auth.authenticate, 'lunes2', '12345678');
+    // let token = data.data.token;
     // TODO remove above-- uncomment below
-    // let token = getAuthToken();
+    let token = getAuthToken();
 
 
 
