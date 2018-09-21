@@ -229,7 +229,7 @@ class Invoice extends React.Component {
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
-      description: payment.description || invoice.description, 
+      description: payment.description || invoice.description,
       address: coins[invoice.coin.abbreviation].address
     };
 
@@ -309,7 +309,6 @@ class Invoice extends React.Component {
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes("number")}
-              type="number"
             />
           </div>
 
@@ -451,14 +450,14 @@ Invoice.propTypes = {
   getInvoice: PropTypes.func.isRequired,
   getCoinsEnabled: PropTypes.func.isRequired,
   setPayment: PropTypes.func.isRequired,
-  setClearPayment: PropTypes.func.isRequired, 
+  setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
   payment: store.payment.payment,
-  loading: store.payment.loading, 
+  loading: store.payment.loading,
   coins: store.skeleton.coins
 });
 
