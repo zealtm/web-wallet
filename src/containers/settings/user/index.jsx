@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 // REDUX
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { editUserData, loading, updateUserPassword } from "../../user/redux/userAction";
+import {
+  editUserData,
+  loading,
+  updateUserPassword
+} from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -74,7 +78,7 @@ class User extends React.Component {
       state: "",
       password: "",
       newPassword: "",
-      confirmNewPassword: "",
+      confirmNewPassword: ""
     };
   }
 
@@ -144,8 +148,8 @@ class User extends React.Component {
     this.handleSelectChange("state", state.replace(/([\d\\/])/g, ""));
 
   handlePasswordChange = property => event => {
-    this.handleSelectChange(property, event.target.value.replace(/\s/, ''));
-  }
+    this.handleSelectChange(property, event.target.value.replace(/\s/, ""));
+  };
 
   updateData = () => {
     let { editUserData, loading } = this.props;
@@ -179,11 +183,16 @@ class User extends React.Component {
   };
 
   changeUserPassword = () => {
-    const {updateUserPassword, user} = this.props;
-    const {password, newPassword, confirmNewPassword} = this.state;
-
-    updateUserPassword(user.password, password, newPassword, confirmNewPassword);
-  }
+    const { updateUserPassword, user } = this.props;
+    const { password, newPassword, confirmNewPassword } = this.state;
+    console(user);
+    updateUserPassword(
+      user.password,
+      password,
+      newPassword,
+      confirmNewPassword
+    );
+  };
 
   loadDays = () => {
     const { classes } = this.props;
@@ -253,8 +262,7 @@ class User extends React.Component {
   };
 
   render() {
-    const { classes, user, isLoading } = this.props;
-    const { twoFactor } = user;
+    const { classes, user, isLoading, twoFactor } = this.props;
     const {
       emailVerified,
       birthDay,
@@ -391,21 +399,21 @@ class User extends React.Component {
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CURRENT_PASSWORD")}
                   value={password}
-                  onChange={this.handlePasswordChange('password')}
+                  onChange={this.handlePasswordChange("password")}
                 />
                 <input
                   className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
                   value={newPassword}
-                  onChange={this.handlePasswordChange('newPassword')}
+                  onChange={this.handlePasswordChange("newPassword")}
                 />
                 <input
                   className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CONFIRM_NEW_PASSWORD")}
                   value={confirmNewPassword}
-                  onChange={this.handlePasswordChange('confirmNewPassword')}
+                  onChange={this.handlePasswordChange("confirmNewPassword")}
                 />
               </div>
             </Grid>
@@ -414,7 +422,11 @@ class User extends React.Component {
                 className={style.buttonEnable}
                 onClick={this.changeUserPassword}
               >
-                {isLoading ? <Loading /> : i18n.t("SETTINGS_USER_CHANGE_PASSWORD")}
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  i18n.t("SETTINGS_USER_CHANGE_PASSWORD")
+                )}
               </button>
             </Grid>
           </Grid>
@@ -701,6 +713,7 @@ class User extends React.Component {
 User.propTypes = {
   classes: PropTypes.object,
   user: PropTypes.object,
+  twoFactor: PropTypes.string,
   editUserData: PropTypes.func,
   loading: PropTypes.func,
   isLoading: PropTypes.bool
@@ -717,7 +730,8 @@ const mapDispatchToProps = dispatch =>
   );
 
 const mapStateToProps = store => ({
-  user: store.user.user,
+  user: store.user,
+  twoFactor: store.user.twoFactor,
   isLoading: store.user.loading
 });
 

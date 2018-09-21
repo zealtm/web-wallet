@@ -1,10 +1,5 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
-import {
-  getAuthToken
-} from "../../../utils/localStorage";
+import { put, call } from "redux-saga/effects";
+import { getAuthToken } from "../../../utils/localStorage";
 import {
   internalServerError,
   modalSuccess
@@ -14,7 +9,6 @@ import {
 import AuthService from "../../../services/authService";
 // import { userInfo } from "os";
 const authService = new AuthService();
-
 
 export function* getTwoFactorAuth() {
   try {
@@ -54,7 +48,23 @@ export function* verifyTwoFactorAuthSettings(action) {
       return;
     }
 
+    let responseCreate = yield call(authService.createTwoFactorAuth, token);
+
+    if (responseCreate.error || responseCreate.messageError) {
+      yield put(response.error);
+      yield put({
+        type: "CHANGE_LOADING_SETTINGS"
+      });
+      return;
+    }
+
     yield put(modalSuccess("Successfully Activated"));
+
+    yield put({
+      type: "GET_USER_2FA",
+      state: true
+    });
+
     yield put({
       type: "CHANGE_LOADING_SETTINGS"
     });

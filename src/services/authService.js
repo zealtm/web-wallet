@@ -1,25 +1,18 @@
 import axios from "axios";
-import {
-  BASE_URL,
-  API_HEADER,
-  HEADER_RESPONSE
-} from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import {
   unauthorized,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-import {
-  setAuthToken
-} from "../utils/localStorage";
-import {
-  encryptMd5
-} from "../utils/cryptography";
+import { setAuthToken } from "../utils/localStorage";
+import { encryptMd5 } from "../utils/cryptography";
 
 class AuthService {
   async authenticate(email, password) {
     try {
       let response = await axios.post(
-        BASE_URL + "/login", {
+        BASE_URL + "/login",
+        {
           login: email,
           password: encryptMd5(password)
         },
@@ -43,7 +36,7 @@ class AuthService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/user/2fa", API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn(response);
       return response;
     } catch (error) {
       if (error.response.data.code === 401) {
@@ -81,7 +74,8 @@ class AuthService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/user/2fa/verify", {
+        BASE_URL + "/user/2fa/verify",
+        {
           token: token2fa
         },
         API_HEADER
