@@ -3,6 +3,7 @@ import EthereumTx from "ethereumjs-tx";
 import hdkey from "ethereumjs-wallet/hdkey";
 import Web3 from "web3";
 import bip39 from "bip39";
+
 /* eslint-disable */
 const bs = require("biggystring");
 /* eslint-enable */
@@ -10,8 +11,10 @@ const bs = require("biggystring");
 class EthTransaction {
   async createTransaction(data) {
     try {
-      let amount = this.toHex(data.amount);
-      let wallet = await this.mnemonicToWallet(data.seed);
+      let wallet = await this.mnemonicToWallet(
+        data.network.derivePath,
+        data.seed
+      );
 
       let web3 = await new Web3(
         new Web3.providers.HttpProvider(data.network.apiUrl)
@@ -27,23 +30,18 @@ class EthTransaction {
         nonce: nonce,
         to: data.toAddress,
         gasLimit: this.toHex(data.network.gasLimit),
-        gasPrice: this.toHex(data.fee),
-        value: amount,
+        gasPrice: this.toHex(data.feePerByte),
+        value: this.toHex(data.amount),
         data: ""
       };
 
       let tx = new EthereumTx(txData);
-
       await tx.sign(wallet.getPrivateKey());
-
       let signedTx = tx;
-
       signedTx = signedTx.serialize();
       signedTx = EthereumUtil.bufferToHex(signedTx);
-
       let sendResult = await web3.eth.sendSignedTransaction(signedTx);
-
-      return { txID: sendResult };
+      return { txID: sendResult.blockHash };
     } catch (error) {
       console.warn(error);
       return "error";
@@ -64,8 +62,7 @@ class EthTransaction {
     return web3.eth.sendSignedTransaction(signedTx);
   }
 
-  mnemonicToWallet(mnemonic) {
-    const path = "m/44'/60'/0'/0/0";
+  mnemonicToWallet(path, mnemonic) {
     const ethKey = hdkey.fromMasterSeed(bip39.mnemonicToSeed(mnemonic));
     const wallet = ethKey.derivePath(path).getWallet();
     return wallet;

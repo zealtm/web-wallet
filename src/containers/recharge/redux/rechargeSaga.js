@@ -24,37 +24,52 @@ export function* setModalStepSaga(payload) {
   });
 }
 
-export function* getOperatorsSaga(payload){
+export function* getOperatorsSaga(payload) {
   try {
     yield put({
       type: "SET_LOADING_VAL_REDUCER",
       payload: true
     });
 
-    let token       = yield call(getAuthToken);
-    let response    = yield call(rechargeService.getOperadoras, token, payload.ddd);
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      rechargeService.getOperadoras,
+      token,
+      payload.ddd
+    );
+
+    if (!response.operators) {
+      yield put({
+        type: "SET_LOADING_VAL_REDUCER",
+        payload: false
+      });
+      yield put(internalServerError());
+    }
 
     yield put({
       type: "GET_OPERADORAS_REDUCER",
-      operadoras: response
+      operadoras: response.operators || []
     });
 
     return;
-
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* getValuesCreditSaga(payload){
+export function* getValuesCreditSaga(payload) {
   try {
     yield put({
       type: "SET_LOADING_VAL_REDUCER",
       payload: true
     });
 
-    let token       = yield call(getAuthToken);
-    let response    = yield call(rechargeService.getValoresRecarga, token, payload);
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      rechargeService.getValoresRecarga,
+      token,
+      payload
+    );
 
     yield put({
       type: "GET_VALORES_REDUCER",
@@ -62,13 +77,12 @@ export function* getValuesCreditSaga(payload){
     });
 
     return;
-
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* setRechargeSaga(payload){
+export function* setRechargeSaga(payload) {
   try {
     yield put({
       type: "SET_LOADING_REDUCER",
@@ -76,7 +90,7 @@ export function* setRechargeSaga(payload){
     });
 
     const value = parseFloat(payload.recharge.value);
-    const {abbreviation, address} = payload.recharge.coin;
+    const { abbreviation, address } = payload.recharge.coin;
 
     const token = yield call(getAuthToken);
 
@@ -113,8 +127,7 @@ export function* setRechargeSaga(payload){
       type: "SET_RECHARGE_REDUCER",
       payload: data
     });
-
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -135,7 +148,7 @@ export function* getFeeRechargeSaga(payload) {
       payload.decimalPoint
     );
 
-    if(!response.fee){
+    if (!response.fee) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -178,8 +191,6 @@ export function* confirmRechargeSaga(payload) {
       decimalPoint: payload.recharge.decimalPoint
     };
 
-    console.log('payload', payload);
-
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -191,8 +202,6 @@ export function* confirmRechargeSaga(payload) {
         token
       );
 
-      console.log("servico", lunesWallet);
-
       if (lunesWallet) {
         let response = yield call(
           transactionService.transaction,
@@ -203,18 +212,19 @@ export function* confirmRechargeSaga(payload) {
           token
         );
 
-        console.log("transacao", response);
-
         const transacao_obj = JSON.parse(response.config.data);
-        const ddd           = payload.recharge.recharge.number.substring(0,2);
-        const totalnumero   = payload.recharge.recharge.number.length;
-        const numero        = payload.recharge.recharge.number.substring(2,totalnumero);
+        const ddd = payload.recharge.recharge.number.substring(0, 2);
+        const totalnumero = payload.recharge.recharge.number.length;
+        const numero = payload.recharge.recharge.number.substring(
+          2,
+          totalnumero
+        );
 
         if (response) {
           const payload_elastic = {
             ddd: ddd,
-            operatorId: payload.recharge.recharge.operator.operatorId,
-            operatorName: payload.recharge.recharge.operator.operatorName,
+            operatorId: payload.recharge.recharge.operator.id,
+            operatorName: payload.recharge.recharge.operator.name,
             phone: numero,
             value: parseFloat(payload.recharge.recharge.value),
             txID: transacao_obj.txID,
@@ -227,9 +237,6 @@ export function* confirmRechargeSaga(payload) {
             token,
             payload_elastic
           );
-
-          console.log("payload", payload_elastic);
-          console.log("elastic", response_elastic);
 
           yield put({
             type: "SET_CLEAR_RECHARGE_REDUCER"
@@ -247,7 +254,6 @@ export function* confirmRechargeSaga(payload) {
               step: 5
             });
           }
-
           return;
         }
       }
@@ -272,10 +278,8 @@ export function* confirmRechargeSaga(payload) {
       });
 
       yield put(internalServerError());
-
       return;
     } catch (error) {
-      console.log('recharge error', error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -288,7 +292,6 @@ export function* confirmRechargeSaga(payload) {
 
       yield put(internalServerError());
     }
-
   } catch (error) {
     yield put(internalServerError());
   }

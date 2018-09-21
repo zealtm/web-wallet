@@ -35,7 +35,6 @@ class Content extends Component {
   componentDidUpdate() {
     let { type } = this.state;
     let { loading, errors } = this.props.skeleton;
-
     if (errors) {
       if (type !== "error") {
         errorRequest();
@@ -66,6 +65,19 @@ class Content extends Component {
       let { username, seed, password } = this.props.user.user;
       let usernameStorage = getUsername();
 
+      console.warn(
+        type,
+        "type",
+        username,
+        "username",
+        seed,
+        "seed",
+        password,
+        "password",
+        usernameStorage,
+        "usernameStorage"
+      );
+
       if (seed && password && type !== "app" && usernameStorage === username) {
         return this.changeContent(<App />, "app");
       }
@@ -74,6 +86,7 @@ class Content extends Component {
         return this.changeContent(<Login />, "login");
       }
     } catch (error) {
+      console.warn(error);
       clearAll();
       return this.changeContent(<Login />, "login");
     }

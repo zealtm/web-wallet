@@ -14,7 +14,7 @@ export const getOperators = ddd => ({
 
 export const getValoresRecarga = (operadora, ddd) => ({
   type: "GET_VALORES_RECARGA",
-  operadora, 
+  operadora,
   ddd
 });
 
@@ -50,4 +50,8 @@ export const confirmRecharge = recharge => ({
 
 export const getHistoryRecharge = () => ({
   type: "GET_HISTORY_RECHARGE"
+});
+
+export const setClearRecharge = () => ({
+  type: "SET_CLEAR_RECHARGE_REDUCER"
 });

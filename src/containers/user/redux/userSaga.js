@@ -204,15 +204,21 @@ export function* createUser(action) {
       return;
     }
 
-    return yield put({
+    yield put({
       type: "POST_USER_CREATE_USER",
       page: 3
     });
+
+    yield put(modalSuccess("User Created"));
+
+    return;
   } catch (error) {
     yield put({
       type: changeLoadingState
     });
     yield put(internalServerError());
+
+    return;
   }
 }
 
@@ -235,11 +241,14 @@ export function* resetUser(action) {
       });
       yield put(internalServerError());
     }
+
+    return;
   } catch (error) {
     yield put({
       type: changeLoadingState
     });
     yield put(internalServerError());
+    return;
   }
 }
 
