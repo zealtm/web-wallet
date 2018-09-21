@@ -11,7 +11,6 @@ import error from "../errors/redux/errorReducer";
 import payment from "../payment/redux/paymentReducer";
 import assets from "../assets/redux/assetsReducer";
 import recharge from "../recharge/redux/rechargeReducer";
-import logger from "redux-logger";
 
 const sagaMiddleware = new createSagaMiddleware();
 
@@ -29,7 +28,7 @@ const Store = createStore(
     recharge
   }),
 
-  applyMiddleware(sagaMiddleware, logger)
+  applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(rootSaga);
