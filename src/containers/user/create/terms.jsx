@@ -73,7 +73,6 @@ class CreateUserTerms extends React.Component {
         user.user.password
       );
     }
-    console.warn(2);
     return;
   };
 

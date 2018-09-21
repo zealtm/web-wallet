@@ -15,7 +15,6 @@ import style from "../style.css";
 
 class EmailMessage extends React.Component {
   render() {
-    location.reload();
     return (
       <div className={style.contNewAccount}>
         <img src="../../images/logo.svg" className={style.logo} />
