@@ -90,7 +90,7 @@ export function* setRechargeSaga(payload) {
     });
 
     const value = parseFloat(payload.recharge.value);
-    const { abbreviation, address } = payload.recharge.coin;
+    const { abbreviation } = payload.recharge.coin;
 
     const token = yield call(getAuthToken);
 
@@ -104,7 +104,7 @@ export function* setRechargeSaga(payload) {
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
-      address,
+      payload.recharge.address,
       token
     );
 

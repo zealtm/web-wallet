@@ -49,16 +49,11 @@ class DetailsRecharge extends React.Component {
   };
 
   validateForm = () => {
-    const { setModalStep, recharge } = this.props;
+    const { setModalStep } = this.props;
     const { user } = this.state;
 
     if (user.terms === "unread") {
       this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
-      return;
-    }
-
-    if (!recharge.amount || parseFloat(recharge.amount) > recharge.balance) {
-      this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
       return;
     }
 

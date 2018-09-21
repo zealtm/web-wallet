@@ -380,5 +380,6 @@
   "RECHARGE_CONFIRM_3": "O tempo médio de confirmação da recarga é de até 30 minutos. Somente conclua a recarga se estiver de acordo.",
   "RECHARGE_PASS_CONFIRMATION": "Informe sua senha e conclua o envio de",
   "RECHARGE_PASS_TO": " para ",
-  "RECHARGE_FIND": "Buscar pelo número"
+  "RECHARGE_FIND": "Buscar pelo número",
+  "RECHARGE_AMOUNT_ERROR": "Your balance is insufficient to make this recharge"
 }
