@@ -78,7 +78,7 @@ export function* setPaymentSaga(payload) {
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
-      address,
+      payload.pay.address,
       token
     );
 
