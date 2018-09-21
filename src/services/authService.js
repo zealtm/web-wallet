@@ -36,7 +36,6 @@ class AuthService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/user/2fa", API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.warn(response);
       return response;
     } catch (error) {
       if (error.response.data.code === 401) {

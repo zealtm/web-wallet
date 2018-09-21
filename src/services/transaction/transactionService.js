@@ -193,7 +193,6 @@ class TransactionService {
           "P2P",
           token
         );
-        console.warn("responseSaveEth", responseSaveEth);
         return responseSaveEth;
       } else if (coin === "lunes") {
         let transactionLunes = new LunesTransaction();
