@@ -178,8 +178,6 @@ export function* confirmRechargeSaga(payload) {
       decimalPoint: payload.recharge.decimalPoint
     };
 
-    console.log('payload', payload.recharge);
-
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -191,8 +189,6 @@ export function* confirmRechargeSaga(payload) {
         token
       );
 
-      console.log("servico", lunesWallet);
-
       if (lunesWallet) {
         let response = yield call(
           transactionService.transaction,
@@ -203,14 +199,10 @@ export function* confirmRechargeSaga(payload) {
           token
         );
 
-        console.log("transacao", response);
-
         const transacao_obj = JSON.parse(response.config.data);
         const ddd           = payload.recharge.recharge.number.substring(0,2);
         const totalnumero   = payload.recharge.recharge.number.length;
         const numero        = payload.recharge.recharge.number.substring(2,totalnumero);
-
-        console.log('transacao obj', transacao_obj);
 
         if (response) {
           const payload_elastic = {
@@ -230,8 +222,6 @@ export function* confirmRechargeSaga(payload) {
             payload_elastic
           );
 
-          console.log("payload elastic", payload_elastic);
-          console.log("response elastic", response_elastic);
 
           if (response_elastic.data.errorMessage) {
             yield put({
@@ -276,7 +266,7 @@ export function* confirmRechargeSaga(payload) {
       yield put(internalServerError());
       return;
     } catch (error) {
-      console.log('recharge error', error);
+      console.warn('recharge error', error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
