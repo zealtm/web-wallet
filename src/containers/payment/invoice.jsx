@@ -158,7 +158,7 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length === 47,
+      disableNumberInput: newValue.length == 47 ? true : false,
       invoice: {
         ...invoice,
         number: newValue
@@ -168,7 +168,7 @@ class Invoice extends React.Component {
     if (newValue.length == 0) {
       this.setDefaultState();
       setClearPayment();
-    } else if (newValue.length === 47) {
+    } else if (newValue.length == 47) {
       if (disableNumberInput) {
         return;
       }
@@ -186,6 +186,7 @@ class Invoice extends React.Component {
 
       getInvoice(newValue);
     }
+
   };
 
   handleCpfCnpjChange = event => {
