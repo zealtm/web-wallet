@@ -8,13 +8,13 @@ class RechargeService {
   async getOperadoras(token, ddd) {
     try {
       API_HEADER.headers.Authorization = token;
-    
+
       let response = await axios.get(
         `${BASE_URL}/recharge/operators/`+ddd,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       if(response.data.code !== 200){
         return internalServerError();
       }
@@ -34,13 +34,13 @@ class RechargeService {
   async getValoresRecarga(token, action) {
     try {
       API_HEADER.headers.Authorization = token;
-    
+
       let response = await axios.get(
         `${BASE_URL}/recharge/price/`+action.operadora+`/`+action.ddd,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       if(response.data.code !== 200){
         return internalServerError();
       }
@@ -76,6 +76,8 @@ class RechargeService {
     try {
       API_HEADER.headers.Authorization = token;
 
+      console.log('send recharge', payload);
+
       const response = await axios.post(
         `${BASE_URL}/recharge/pay`,
         payload,
@@ -83,8 +85,11 @@ class RechargeService {
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      console.log('response send recharge', response);
+
       return response;
     } catch (error) {
+      console.log('error send recharge', error);
       internalServerError();
       return;
     }

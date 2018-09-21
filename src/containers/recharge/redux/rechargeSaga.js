@@ -178,7 +178,7 @@ export function* confirmRechargeSaga(payload) {
       decimalPoint: payload.recharge.decimalPoint
     };
 
-    console.log('payload', payload);
+    console.log('payload', payload.recharge);
 
     try {
       let seed = yield call(getUserSeedWords);
@@ -210,11 +210,13 @@ export function* confirmRechargeSaga(payload) {
         const totalnumero   = payload.recharge.recharge.number.length;
         const numero        = payload.recharge.recharge.number.substring(2,totalnumero);
 
+        console.log('transacao obj', transacao_obj);
+
         if (response) {
           const payload_elastic = {
             ddd: ddd,
-            operatorId: payload.recharge.recharge.operator.operatorId,
-            operatorName: payload.recharge.recharge.operator.operatorName,
+            operatorId: payload.recharge.recharge.operator.id,
+            operatorName: payload.recharge.recharge.operator.name,
             phone: numero,
             value: parseFloat(payload.recharge.recharge.value),
             txID: transacao_obj.txID,
@@ -228,12 +230,8 @@ export function* confirmRechargeSaga(payload) {
             payload_elastic
           );
 
-          console.log("payload", payload_elastic);
-          console.log("elastic", response_elastic);
-
-          yield put({
-            type: "SET_CLEAR_RECHARGE_REDUCER"
-          });
+          console.log("payload elastic", payload_elastic);
+          console.log("response elastic", response_elastic);
 
           if (response_elastic.data.errorMessage) {
             yield put({
@@ -247,6 +245,10 @@ export function* confirmRechargeSaga(payload) {
               step: 5
             });
           }
+
+          yield put({
+            type: "SET_CLEAR_RECHARGE_REDUCER"
+          });
 
           return;
         }
@@ -272,7 +274,6 @@ export function* confirmRechargeSaga(payload) {
       });
 
       yield put(internalServerError());
-
       return;
     } catch (error) {
       console.log('recharge error', error);

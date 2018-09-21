@@ -15,6 +15,8 @@ class PaymentService {
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      console.log(response.data);
+
       return response.data;
     } catch (error) {
       return internalServerError();
