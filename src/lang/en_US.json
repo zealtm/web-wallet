@@ -386,5 +386,8 @@
   "NOTIFICATION_SERVICE_NOT_2FA": "Could not verify 2fa",
   "NOTIFICATION_SERVICE_ENABLE_2FA": "Could not enable two-factor authentication",
   "NOTIFICATION_SERVICE_INVALID_2FA": "Invalid 2FA token",
-  "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered"
+  "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered",
+
+  "NOTIFICATION_NODE_NOT_FOUND": "No node found"
+
 }

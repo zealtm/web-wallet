@@ -74,7 +74,8 @@ class Payment extends React.Component {
 
 Payment.propTypes = {
   modalStep: PropTypes.number.isRequired,
-  setModalStep: PropTypes.func.isRequired
+  setModalStep: PropTypes.func.isRequired,
+  setClearPayment: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({

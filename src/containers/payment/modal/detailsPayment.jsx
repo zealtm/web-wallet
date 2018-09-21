@@ -48,11 +48,11 @@ class DetailsPayment extends React.Component {
         error: false,
         errorMsg: ""
       });
-    }, 4100); // 100ms a mais que os 4000ms do timer nocomponente ModalBar
+    }, 4100); 
   };
 
   validateForm = () => {
-    const { setModalStep, payment } = this.props;
+    const { setModalStep } = this.props;
     const { user } = this.state;
 
     if (user.terms === "unread") {

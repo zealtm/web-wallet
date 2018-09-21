@@ -1,10 +1,10 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // REDUX
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import {updateUserConsents} from "../../user/redux/userAction";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { updateUserConsents } from "../../user/redux/userAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -24,20 +24,20 @@ const configs = [
     title: "TERMS",
     description: i18n.t("SETTINGS_CONSENTS_TERMS_DESCRIPTION"),
     name: "terms"
-  },
+  }
 ];
 
 class Consent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      terms: props.user.terms || 'unread',
+      terms: props.user.terms || "unread"
     };
   }
 
   handleSwitch = name => event => {
-    const {updateUserConsents} = this.props;
-    const newStatus = event.target.checked ? 'read' : 'unread';
+    const { updateUserConsents } = this.props;
+    const newStatus = event.target.checked ? "read" : "unread";
 
     this.setState({
       [name]: newStatus
@@ -104,9 +104,13 @@ const mapStateToProps = store => ({
   user: store.user.user
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  updateUserConsents
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateUserConsents
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

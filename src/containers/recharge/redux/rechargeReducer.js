@@ -104,11 +104,6 @@ const recharge = (state=initialState, action) => {
           loading: false
         };
 
-
-
-
-
-
       // case "GET_INVOICE_REDUCER":
       //   return {
       //     ...state,
@@ -135,8 +130,6 @@ const recharge = (state=initialState, action) => {
       //     ...state,
       //     history: action.history
       //   };
-
-
 
     default: {
       return {

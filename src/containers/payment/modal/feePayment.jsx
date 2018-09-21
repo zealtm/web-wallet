@@ -2,9 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {getFeePayment,setFeePayment,setModalStep} from "../redux/paymentAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  getFeePayment,
+  setFeePayment,
+  setModalStep
+} from "../redux/paymentAction";
 
 // COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
@@ -23,11 +27,11 @@ class FeePayment extends React.Component {
     this.state = {
       feeSelect: 0,
       error: undefined,
-      errorMsg: '',
-    }
+      errorMsg: ""
+    };
   }
 
-  openError = (message) => {
+  openError = message => {
     this.setState({
       ...this.state,
       error: true,
@@ -38,19 +42,19 @@ class FeePayment extends React.Component {
       this.setState({
         ...this.state,
         error: false,
-        errorMsg: ''
+        errorMsg: ""
       });
     }, 4100);
-  }
+  };
 
   calcFee(set) {
-    const {setFeePayment, fee} = this.props;
+    const { setFeePayment, fee } = this.props;
 
     let feeValue = 0;
     let feePerByte = 0;
     let feeLunes = 0;
 
-    switch(set){
+    switch (set) {
       case "low":
         feeValue = fee.fee.low;
         feePerByte = fee.feePerByte.low;
@@ -68,50 +72,53 @@ class FeePayment extends React.Component {
         break;
     }
 
-    this.setState({feeSelect:feeValue});
+    this.setState({ feeSelect: feeValue });
 
     const payload = {
       fee: feeValue,
-      feePerByte: feePerByte, 
+      feePerByte: feePerByte,
       feeLunes: feeLunes
-    }
-    
+    };
+
     setFeePayment(payload);
   }
 
   validateForm = () => {
     const { setModalStep } = this.props;
     const { feeSelect } = this.state;
-    
-    if(feeSelect > 0){
+
+    if (feeSelect > 0) {
       setModalStep(3);
-    }else{
+    } else {
       this.openError(i18n.t("MESSAGE_SELECT_FEE"));
       return;
     }
-  }
+  };
 
   componentDidMount = () => {
-    const {getFeePayment, payment, wallet} = this.props;
-    
-    // teste 
+    const { getFeePayment, payment, wallet } = this.props;
     const fromAddress = wallet.coins[payment.coin.abbreviation].address;
-    const toAddress = payment.coin.address; 
-  
-    getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
-  }
+    const toAddress = payment.coin.address;
+
+    getFeePayment(
+      payment.coin.abbreviation,
+      payment.amount,
+      fromAddress,
+      toAddress
+    );
+  };
 
   render() {
     const { loading, payment, fee } = this.props;
     const { feeSelect, error, errorMsg } = this.state;
-    
-    if(loading){
+
+    if (loading) {
       return (
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
-      )
-    }else{
+      );
+    } else {
       return (
         <div className={style.modalBox}>
           <div>
@@ -123,16 +130,21 @@ class FeePayment extends React.Component {
           />
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_1")}</span>
-            <span className={style.totalConfirm}>{payment.amount} {payment.coin.abbreviation}</span>
+            <span className={style.totalConfirm}>
+              {payment.amount} {payment.coin.abbreviation}
+            </span>
           </div>
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>
-            <span className={style.addressConfirm}>{i18n.t("PAYMENT_MODAL_TITLE")}</span>
+            <span className={style.addressConfirm}>
+              {i18n.t("PAYMENT_MODAL_TITLE")}
+            </span>
           </div>
 
           <div className={style.confirmFee}>
             <div>
-              {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {payment.coin.abbreviation} </span> é
+              {i18n.t("PAYMENT_FEE_AMOUNT")}
+              <span> {payment.coin.abbreviation} </span>
             </div>
             <div className={style.txtamount}>{feeSelect}</div>
           </div>
@@ -160,7 +172,7 @@ class FeePayment extends React.Component {
 
           <ButtonContinue
             label={i18n.t("BTN_CONTINUE")}
-            action={()=>this.validateForm()}
+            action={() => this.validateForm()}
             loading={loading}
           />
         </div>
@@ -170,30 +182,31 @@ class FeePayment extends React.Component {
 }
 
 FeePayment.propTypes = {
-  fee:              PropTypes.object.isRequired,
-  payment:          PropTypes.object.isRequired,
-  loading:          PropTypes.bool.isRequired,
-  wallet:           PropTypes.object.isRequired, 
-  setModalStep:     PropTypes.func,
-  getFeePayment:    PropTypes.func,
-  setFeePayment:    PropTypes.func
-}
+  fee: PropTypes.object.isRequired,
+  payment: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  wallet: PropTypes.object.isRequired,
+  setModalStep: PropTypes.func,
+  getFeePayment: PropTypes.func,
+  setFeePayment: PropTypes.func
+};
 
 const mapStateToProps = store => ({
-  fee:        store.payment.fee,
-  payment:    store.payment.payment,
-  loading:    store.payment.loading, 
-  wallet:     store.skeleton
+  fee: store.payment.fee,
+  payment: store.payment.payment,
+  loading: store.payment.loading,
+  wallet: store.skeleton
 });
 
-const mapDispatchToProps = dispatch =>bindActionCreators(
-  {
-    setModalStep,
-    getFeePayment,
-    setFeePayment
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep,
+      getFeePayment,
+      setFeePayment
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

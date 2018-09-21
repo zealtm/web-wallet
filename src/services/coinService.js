@@ -374,8 +374,6 @@ class CoinService {
       let feePerByte = {};
       let feeLunes = {};
 
-      //API_HEADER.headers.Authorization = token;
-
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
       let response = await axios.post(

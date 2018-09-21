@@ -38,7 +38,7 @@ export function* getCoinsEnabledSaga() {
           title: coin.abbreviation.toUpperCase(),
           value: {
             abbreviation: coin.abbreviation,
-            address: coin.address
+            // address: coin.address
           },
           img: `/images/icons/coins/${coin.abbreviation}.png`
         };

@@ -194,8 +194,6 @@ export function* confirmRechargeSaga(payload) {
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
-
-      // pega o servico disponivel
       let lunesWallet = yield call(
         transactionService.transactionService,
         payload_transaction.coin,

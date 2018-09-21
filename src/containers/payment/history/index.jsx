@@ -61,7 +61,7 @@ class History extends React.Component {
 
   componentDidMount = () => {
     const { getHistoryPay } = this.props;
-    getHistoryPay(); // lista de historico
+    getHistoryPay(); 
   };
 
   handleSearchChange = event => {
