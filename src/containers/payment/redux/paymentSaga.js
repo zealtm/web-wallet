@@ -66,7 +66,7 @@ export function* setPaymentSaga(payload) {
     });
 
     const value = parseFloat(payload.pay.value);
-    const { abbreviation, address } = payload.pay.coin;
+    const { abbreviation } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
     const amountResponse = yield call(
@@ -290,7 +290,7 @@ export function* confirmPaySaga(payload) {
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
         const dueDateFormat = dueDate[2] + "-" + dueDate[1] + "-" + dueDate[0];
-        
+
         const dataIso = new Date(dueDateFormat).toISOString();
 
         if (response) {
