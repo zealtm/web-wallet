@@ -40,7 +40,7 @@ const menuItens = [
   //   icon: "../../images/icons/general/assets@1x.png"
   // },
   {
-    link: "/payment",
+    link: "/invoices",
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png"
   },

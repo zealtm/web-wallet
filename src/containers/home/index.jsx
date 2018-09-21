@@ -85,7 +85,7 @@ class Home extends React.Component {
                 {i18n.t("CARD_HOME_DESCRIPTION_4")}
               </div>
 
-              <Link to="/invoice">
+              <Link to="/invoices">
                 <button className={style.buttonCard}>{i18n.t("BTN_GO")}</button>
               </Link>
             </div>
