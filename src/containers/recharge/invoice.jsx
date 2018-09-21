@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
 
 // REDUX
@@ -11,7 +10,7 @@ import { getCoinsEnabled } from "./redux/rechargeAction";
 import Select from "../../components/select";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
-import Instructions from "../../components/instructions";
+import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
 
 // MATERIAL
@@ -26,7 +25,7 @@ import style from "./style.css";
 
 const customStyle = {
   inputRoot: {
-    fontSize: '22px',
+    fontSize: "22px",
     color: colors.messages.info,
     margin: "0.5rem 0",
     padding: "5px",
@@ -128,9 +127,7 @@ class Invoice extends React.Component {
         }
       }
     });
-
-    // console.log(this.state);
-  }
+  };
 
   handleValor = (value, title) => {
     this.setState({
@@ -143,9 +140,7 @@ class Invoice extends React.Component {
         }
       }
     });
-
-    // console.log(this.state);
-  }
+  };
 
   handleField = name => event => {
     this.setState({
@@ -162,13 +157,7 @@ class Invoice extends React.Component {
     openModal();
   };
 
-  setPayment = data => {
-    // const { setPayment } = this.props;
-    // setPayment(data);
-  };
-
   inputValidator = () => {
-
     const { invoice, coin } = this.state;
 
     const invoiceData = {
@@ -210,6 +199,12 @@ class Invoice extends React.Component {
     this.openModal();
   };
 
+  checkAllInputs = () => {
+    const {invoice, coin} = this.state;
+
+    return invoice.phone && invoice.operadora.value && invoice.valor.value && coin.value;
+  }
+
   render() {
     const { classes, loading, coinsRedux } = this.props;
     const { coin, errors, invoice } = this.state;
@@ -219,11 +214,13 @@ class Invoice extends React.Component {
 
     return (
       <Grid container direction="row" justify="center">
-
         <Grid container className={style.box}>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
             <Select
-              list={[{ value: "vivo", title: "VIVO" }, { value: "vivo", title: "VIVO" },]}
+              list={[
+                { value: "vivo", title: "VIVO" },
+                { value: "vivo", title: "VIVO" }
+              ]}
               title={invoice.operadora.title}
               error={errors.includes("operadora")}
               selectItem={this.handleOperadora}
@@ -231,7 +228,10 @@ class Invoice extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
             <Select
-              list={[{ value: "15", title: "R$15,00" }, { value: "15", title: "R$15,00" },]}
+              list={[
+                { value: "15", title: "R$15,00" },
+                { value: "15", title: "R$15,00" }
+              ]}
               title={invoice.valor.title}
               error={errors.includes("valor")}
               selectItem={this.handleValor}
@@ -239,8 +239,12 @@ class Invoice extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={style.box} style={{ marginTop: "10px", padding: 5 }}>
-
+        <Grid
+          item
+          xs={12}
+          className={style.box}
+          style={{ marginTop: "10px", padding: 5 }}
+        >
           <Grid container direction="row" justify="center">
             <Grid item xs={8}>
               <Input
@@ -266,10 +270,14 @@ class Invoice extends React.Component {
               </button>
             </Grid> */}
           </Grid>
-
         </Grid>
 
-        <Grid item xs={12} className={style.box} style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}>
+        <Grid
+          item
+          xs={12}
+          className={style.box}
+          style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}
+        >
           <Grid container justify={"center"}>
             <Grid item xs={12} sm={6}>
               <Select
@@ -291,7 +299,7 @@ class Invoice extends React.Component {
           style={{ marginTop: "10px" }}
         >
           <button
-            className={style.buttonBorderGreen}
+            className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
             {loading ? <Loading /> : "EFETUAR RECARGA"}
@@ -304,10 +312,7 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "60px", textAlign: "center" }}
         >
-          <Instructions>
-            {i18n.t("TEXT_ATTENTION")}<br />
-            {i18n.t("PAYMENT_CONFIRM_3")}
-            </Instructions>
+          <Instructions />
         </Grid>
       </Grid>
     );
@@ -328,7 +333,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       // getInvoice,
-      getCoinsEnabled,
+      getCoinsEnabled
       // setPayment
     },
     dispatch

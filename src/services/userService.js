@@ -9,18 +9,15 @@ import {
   badRequest,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-import {
-  setAuthToken
-} from "../utils/localStorage";
-import {
-  encryptMd5
-} from "../utils/cryptography";
+import { setAuthToken } from "../utils/localStorage";
+import { encryptMd5 } from "../utils/cryptography";
 
 class UserService {
   async createUser(userInfo) {
     try {
       let response = await axios.post(
-        BASE_URL + "/user", {
+        BASE_URL + "/user",
+        {
           name: userInfo.name,
           surname: userInfo.surname,
           email: userInfo.email,
@@ -57,13 +54,11 @@ class UserService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      const response = await axios.patch(
-        BASE_URL + "/user",
-        userInfo,
-        API_HEADER
-      ).catch(error => {
-        return error.response;
-      });
+      const response = await axios
+        .patch(BASE_URL + "/user", userInfo, API_HEADER)
+        .catch(error => {
+          return error.response;
+        });
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
@@ -98,7 +93,7 @@ class UserService {
       city: data.city,
       state: data.state,
       zipcode: data.zipcode
-    }
+    };
     API_HEADER.headers.Authorization = token;
     let response = await axios.patch(BASE_URL + "/user", userData, API_HEADER);
     setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -111,14 +106,33 @@ class UserService {
       const user = {
         newPassword: encryptMd5(newPassword),
         oldPassword: encryptMd5(oldPassword)
-      }
+      };
 
       API_HEADER.headers.Authorization = token;
-      const response = await axios.patch(`${BASE_URL}/user`, user, API_HEADER);
-      setAuthToken(response.headers[HEADER_RESPONSE]);
+      const response = await axios.patch(BASE_URL + "/user", user, API_HEADER);
 
       return response;
     } catch (error) {
+      console.warn(error);
+      return internalServerError();
+    }
+  }
+
+  async resetPass(data) {
+    try {
+      const response = await axios
+        .post(
+          BASE_URL + "/user/forgotPassword",
+          data, // {email: email}
+          API_HEADER
+        )
+        .catch(error => {
+          return error.response;
+        });
+
+      return response;
+    } catch (error) {
+      console.warn(error);
       return internalServerError();
     }
   }

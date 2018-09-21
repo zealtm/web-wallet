@@ -114,6 +114,11 @@ class CoinsBar extends React.Component {
                 { asset.abbreviation ? asset.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
               </div>
             </Hidden>
+            {/* <Hidden mdUp>
+              <div className={style.boxHiddenContentMobile}>
+                { coin.abbreviation ? coin.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
+              </div>
+            </Hidden> */}
           </div>
         </div>
       );

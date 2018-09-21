@@ -11,7 +11,7 @@
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock && npm install",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0",
-    "marcelo":"webpack --config marcelo.webpack.js --watch --progress"
+    "marcelo": "webpack --config marcelo.webpack.js --watch --progress"
   },
   "repository": {
     "type": "git",
@@ -82,8 +82,11 @@
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
     "coinselect": "^3.1.11",
-    "crypto-address-validator": "^0.1.0",
     "crypto-js": "^3.1.9-1",
+    "cryptocurrency-address-validator": "^0.1.3",
+    "ethereumjs-tx": "^1.3.7",
+    "ethereumjs-util": "^5.2.0",
+    "ethereumjs-wallet": "^0.6.2",
     "i18next": "^11.3.3",
     "i18next-browser-languagedetector": "^2.2.0",
     "lodash": "^4.17.4",
@@ -108,6 +111,8 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
-    "validator": "^10.4.0"
+    "validator": "^10.4.0",
+    "web3": "^1.0.0-beta.34",
+    "web3-provider-engine": "^13.6.5"
   }
 }
