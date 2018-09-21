@@ -50,7 +50,7 @@ class CreateUserTerms extends React.Component {
     let { loading, createUser, clearMessage, errorInput, user } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
-    console.warn(1, messageError, errors, inputs);
+
     if (
       errors.length > 0 ||
       !user.user.name ||
