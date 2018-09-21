@@ -58,8 +58,8 @@ class TransactionHistory extends React.Component {
     loadWalletInfo(user.password);
   };
 
-  hasDefaultPrice = price => {
-    return price ? price.toFixed(3) : "";
+  hasDefaultPrice = (price, amount) => {
+    return price ? (price * amount).toFixed(3) : "";
   };
 
   defineSymbol = (symbol, price) => {
@@ -133,7 +133,13 @@ class TransactionHistory extends React.Component {
                     coins[defaultCoin].price[defaultFiat].symbol || "$",
                     transaction.price[defaultFiat]
                   )}
-                  {this.hasDefaultPrice(transaction.price[defaultFiat])}
+                  {this.hasDefaultPrice(
+                    transaction.price[defaultFiat],
+                    convertBiggestCoinUnit(
+                      transaction.amount,
+                      decimalPoint
+                    ).toFixed(decimalPoint)
+                  )}
                 </div>
               </Grid>
             </Grid>
