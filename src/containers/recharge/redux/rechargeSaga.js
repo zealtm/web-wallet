@@ -246,6 +246,11 @@ export function* confirmRechargeSaga(payload) {
               step: 5
             });
           }
+
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            payload: false
+          });
           return;
         }
       }
