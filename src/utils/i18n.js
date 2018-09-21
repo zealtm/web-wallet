@@ -9,12 +9,11 @@ i18next.use(LngDetector).init({
   interpolation: {
     escapeValue: false
   },
-  lng: "en",
   resources: {
     en: {
       translation: en_US
     },
-    pt: {
+    "pt-BR": {
       translation: pt_BR
     },
     es: {

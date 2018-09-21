@@ -16,6 +16,7 @@ const initialState = {
     balance: '',
     amount: '',
     operator: '',
+    address: ''
   },
   fee: {
     fee: {

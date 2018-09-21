@@ -65,7 +65,8 @@ import {
   getFeeRechargeSaga,
   setFeeRechargeSaga,
   confirmRechargeSaga,
-  getHistoryRechargeSaga
+  getHistoryRechargeSaga,
+  getRechargeCoinsEnabledSaga
 } from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
@@ -130,6 +131,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_RECHARGE", setFeeRechargeSaga),
     fork(takeLatest, "CONFIRM_RECHARGE", confirmRechargeSaga),
     fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
+    fork(takeLatest, "GET_RECHARGE_COINS_ENABLED", getRechargeCoinsEnabledSaga),
 
     //assets
     fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
