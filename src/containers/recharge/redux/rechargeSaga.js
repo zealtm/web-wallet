@@ -24,6 +24,39 @@ export function* setModalStepSaga(payload) {
   });
 }
 
+export function* getRechargeCoinsEnabledSaga() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(rechargeService.getCoins, token);
+
+    const services = response.data.services;
+
+    const coins = services.reduce((availableCoins, coin) => {
+      if (coin.status === "active") {
+        const active = {
+          title: coin.abbreviation.toUpperCase(),
+          value: {
+            abbreviation: coin.abbreviation,
+            address: coin.address
+          },
+          img: `/images/icons/coins/${coin.abbreviation}.png`
+        };
+
+        availableCoins.push(active);
+      }
+
+      return availableCoins;
+    }, []);
+
+    yield put({
+      type: "GET_COINS_REDUCER",
+      coins: coins
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getOperatorsSaga(payload) {
   try {
     yield put({
@@ -90,7 +123,7 @@ export function* setRechargeSaga(payload) {
     });
 
     const value = parseFloat(payload.recharge.value);
-    const { abbreviation, address } = payload.recharge.coin;
+    const { abbreviation } = payload.recharge.coin;
 
     const token = yield call(getAuthToken);
 
@@ -104,7 +137,7 @@ export function* setRechargeSaga(payload) {
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
-      address,
+      payload.recharge.address,
       token
     );
 

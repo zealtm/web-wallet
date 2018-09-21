@@ -208,7 +208,7 @@ class Invoice extends React.Component {
   }
 
   inputValidator = () => {
-    const { openModal, setRecharge } = this.props;
+    const { openModal, setRecharge, coins } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
@@ -216,7 +216,8 @@ class Invoice extends React.Component {
       number: invoice.phone,
       coin: invoice.coin,
       operatorId: invoice.operadora.value,
-      operatorName: invoice.operadora.title
+      operatorName: invoice.operadora.title,
+      address: coins[invoice.coin.abbreviation].address
     };
 
     const invoiceInputs = {};
@@ -374,6 +375,7 @@ Invoice.propTypes = {
   getValoresRecarga: PropTypes.func.isRequired,
   getOperators: PropTypes.func.isRequired,
   setClearRecharge: PropTypes.func.isRequired,
+  coins: PropTypes.array,
 };
 
 const mapStateToProps = store => ({
@@ -381,7 +383,8 @@ const mapStateToProps = store => ({
   loading: store.recharge.loading,
   loadingValores: store.recharge.loadingValores,
   operadoras: store.recharge.operadoras,
-  valores: store.recharge.valores
+  valores: store.recharge.valores,
+  coins: store.skeleton.coins,
 });
 
 const mapDispatchToProps = dispatch =>

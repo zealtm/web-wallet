@@ -60,14 +60,15 @@ import {
   shareCoinAddress as shareAssetAddress
 } from "../assets/redux/assetsSaga";
 import {
-  setModalStepSaga as setModalStepRechargeSaga, 
-  getOperatorsSaga, 
-  getValuesCreditSaga, 
+  setModalStepSaga as setModalStepRechargeSaga,
+  getOperatorsSaga,
+  getValuesCreditSaga,
   setRechargeSaga,
   getFeeRechargeSaga,
-  setFeeRechargeSaga, 
-  confirmRechargeSaga, 
-  getHistoryRechargeSaga
+  setFeeRechargeSaga,
+  confirmRechargeSaga,
+  getHistoryRechargeSaga,
+  getRechargeCoinsEnabledSaga
 } from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
@@ -132,6 +133,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_RECHARGE", setFeeRechargeSaga),
     fork(takeLatest, "CONFIRM_RECHARGE", confirmRechargeSaga),
     fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
+    fork(takeLatest, "GET_RECHARGE_COINS_ENABLED", getRechargeCoinsEnabledSaga),
 
     //assets
     fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
@@ -140,7 +142,6 @@ export default function* rootSaga() {
     fork(takeLatest, "SHARE_COIN_ADRESS_API", shareAssetAddress),
     fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
     fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
-    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga), 
-
+    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
   ];
 }
