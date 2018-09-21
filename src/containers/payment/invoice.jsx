@@ -309,6 +309,7 @@ class Invoice extends React.Component {
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes("number")}
+              type="number"
             />
           </div>
 
