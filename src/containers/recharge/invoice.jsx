@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, getOperators,getValoresRecarga, setRecharge } from "./redux/rechargeAction";
+import { getCoinsEnabled, getOperators,getValoresRecarga, setRecharge, setClearRecharge } from "./redux/rechargeAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -99,7 +99,8 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled } = this.props;
+    const { getCoinsEnabled, setClearRecharge } = this.props;
+    setClearRecharge();
     getCoinsEnabled();
   }
 
@@ -371,6 +372,7 @@ Invoice.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   getValoresRecarga: PropTypes.func.isRequired,
   getOperators: PropTypes.func.isRequired,
+  setClearRecharge: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -388,6 +390,7 @@ const mapDispatchToProps = dispatch =>
       getValoresRecarga,
       getCoinsEnabled,
       setRecharge,
+      setClearRecharge
     },
     dispatch
   );
