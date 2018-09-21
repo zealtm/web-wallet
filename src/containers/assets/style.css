@@ -408,8 +408,7 @@
 }
 
 :local(.timeInValueHistory) {
-  display: flex;
-  align-items: center;
+  padding-left: 15px;
   font-weight: bold;
 }
 

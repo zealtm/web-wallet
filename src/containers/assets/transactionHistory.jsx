@@ -25,11 +25,6 @@ import { getAssetInfo } from "../../utils/assets";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
-const blockexplorer = {
-  lunes: "https://blockexplorer.lunes.io/tx/",
-  btc: "https://live.blockcypher.com/btc/tx/"
-};
-
 class TransactionHistory extends React.Component {
   constructor() {
     super();
@@ -134,43 +129,25 @@ class TransactionHistory extends React.Component {
                 className={toggleHistory !== index ? style.toggleHistory : null}
               >
                 <Grid item xs={12} className={style.itemDataHistorico}>
-                  <Grid item xs={2}>
-                    {" "}
+                  <Grid item xs={2} className={style.typeItems}>
+                    <p> {i18n.t("ASSETS_HISTORY_TX_TIME")} </p>
                   </Grid>
-                  <Grid item xs={6} sm={7}>
-                    <div className={style.titleBlockExplorer}>
-                      {i18n.t("TEXT_BLOCKEXPLORER")}
-                    </div>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={4}
-                    sm={3}
-                    className={style.alignTimeInValueHistory}
-                  >
-                    <div className={style.timeInValueHistory}>
+                  <Grid item xs={10} className={style.descriptionHistory}>
+                    <p className={style.idTransactionHistory}>
                       {formatDate(transaction.date, "HMS")}
-                    </div>
+                    </p>
                   </Grid>
                 </Grid>
 
                 <Grid item xs={12}>
                   <Grid item xs={12} className={style.itemDataHistorico}>
                     <Grid item xs={2} className={style.typeItems}>
-                      <div> {i18n.t("TEXT_ID")} </div>
+                      <p> {i18n.t("TEXT_ID")} </p>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <a
-                        className={style.idTransactionHistory}
-                        target="blanck"
-                        href={
-                          blockexplorer[selectedCoin]
-                            ? blockexplorer[selectedCoin] + transaction.txID
-                            : ""
-                        }
-                      >
+                      <p className={style.idTransactionHistory}>
                         {transaction.txID.substring(0, 33) + "..." || "-"}
-                      </a>
+                      </p>
                     </Grid>
                   </Grid>
 
