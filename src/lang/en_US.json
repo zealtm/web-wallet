@@ -332,8 +332,8 @@
 
   "MODAL_TITLE_INSTRUCIONS": "Instructions",
   "MODAL_TITLE_START_LEASING": "Start Leasing",
-  "MODAL_SEND_ADDRESS": "Informe o endereço da carteira",
-  "MODAL_SEND_AMOUNT": "Informe a quantidade",
+  "MODAL_SEND_ADDRESS": "Enter the wallet address",
+  "MODAL_SEND_AMOUNT": "Enter quantity",
   "MODAL_SEND_QR_CODE": "Send Scanning QR Code",
   "MODAL_SEND_QR_CODE_INSTRUCTIONS": "For this desktop procedure you need to use a webcam to view the qrcode you want to send.",
   "MODAL_SEND_QR_CODE_ADDRESS": "Send Scanning QR Code",
@@ -372,13 +372,19 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolution:",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
 
-  "RECHARGE_BT_INIT": "EFETUAR RECARGA",
-  "RECHARGE_FEE_TEXT_1": "Você está enviando ",
-  "RECHARGE_FEE_TEXT_2": " para ",
-  "RECHARGE_CONFIRM_1": "Confirme os dados para concluir sua recarga",
-  "RECHARGE_CONFIRM_2": "Será debitado da sua carteira ",
-  "RECHARGE_CONFIRM_3": "O tempo médio de confirmação da recarga é de até 30 minutos. Somente conclua a recarga se estiver de acordo.",
-  "RECHARGE_PASS_CONFIRMATION": "Informe sua senha e conclua o envio de",
-  "RECHARGE_PASS_TO": " para ",
-  "RECHARGE_FIND": "Buscar pelo número"
+  "RECHARGE_BT_INIT": " EFFECT RECHARGE ",
+  "RECHARGE_FEE_TEXT_1": "You are sending ",
+  "RECHARGE_FEE_TEXT_2": " for ",
+  "RECHARGE_CONFIRM_1": "Confirm your data to complete your recharge",
+  "RECHARGE_CONFIRM_2": "You will be charged from your wallet ",
+  "RECHARGE_CONFIRM_3": "The average recharge confirmation time is up to 30 minutes. Only complete the recharge if you agree.",
+  "RECHARGE_PASS_CONFIRMATION": "Enter your password and complete the ",
+  "RECHARGE_PASS_TO": " for ",
+  "RECHARGE_FIND": "Search by number", 
+
+  "NOTIFICATION_SERVICE_INVALID_LOGIN": "Inavalid Username/Email or Password",
+  "NOTIFICATION_SERVICE_NOT_2FA": "Could not verify 2fa",
+  "NOTIFICATION_SERVICE_ENABLE_2FA": "Could not enable two-factor authentication",
+  "NOTIFICATION_SERVICE_INVALID_2FA": "Invalid 2FA token",
+  "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered"
 }

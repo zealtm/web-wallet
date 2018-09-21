@@ -12,6 +12,9 @@ import {
 import { setAuthToken } from "../utils/localStorage";
 import { encryptMd5 } from "../utils/cryptography";
 
+// UTILS
+import i18n from "../utils/i18n";
+
 class UserService {
   async createUser(userInfo) {
     try {
@@ -29,7 +32,7 @@ class UserService {
       return response;
     } catch (error) {
       if (error.response.data.code === 500) {
-        return badRequest("You are already registered");
+        return badRequest(i18n.t("NOTIFICATION_SERVICE_ALREADY_REGISTRED"));        
       }
 
       internalServerError();
