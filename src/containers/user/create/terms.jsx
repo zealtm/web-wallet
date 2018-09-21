@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, createUser, backUserInfo } from "../redux/userAction";
+import { loading, createUser } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -42,9 +42,11 @@ class CreateUserTerms extends React.Component {
       },
       errors: undefined
     });
+
+    return;
   };
 
-  inputValidator = () => {
+  validateInput = () => {
     let { loading, createUser, clearMessage, errorInput, user } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
@@ -71,11 +73,7 @@ class CreateUserTerms extends React.Component {
         user.user.password
       );
     }
-  };
-
-  backLink = () => {
-    let { backUserInfo } = this.props;
-    backUserInfo();
+    return;
   };
 
   render() {
@@ -136,7 +134,7 @@ class CreateUserTerms extends React.Component {
               ? style.buttonEnable
               : style.buttonBorderGreen
           }
-          onClick={() => this.inputValidator()}
+          onClick={() => this.validateInput()}
         >
           {user.loading ? <Loading /> : i18n.t("BTN_CREATE")}
         </button>
@@ -150,8 +148,7 @@ CreateUserTerms.propTypes = {
   createUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object,
-  backUserInfo: PropTypes.function
+  user: PropTypes.object
 };
 
 const mapSateToProps = store => ({
@@ -164,8 +161,7 @@ const mapDispatchToProps = dispatch =>
       loading,
       createUser,
       clearMessage,
-      errorInput,
-      backUserInfo
+      errorInput
     },
     dispatch
   );

@@ -87,7 +87,7 @@ class DetailsRecharge extends React.Component {
     const ddd           = recharge.number.substring(0,2);
     const totalnumero   = recharge.number.length;
     const numero        = recharge.number.substring(2,totalnumero);
-    
+
     return `(${ddd}) ${numero}`;
   }
 
@@ -150,13 +150,13 @@ DetailsRecharge.propTypes = {
   loading: PropTypes.bool,
   user: PropTypes.object.isRequired,
   setModalStep: PropTypes.func,
-  recharge: PropTypes.object.isRequired, 
+  recharge: PropTypes.object.isRequired,
   updateUserConsents: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
   loading: store.recharge.loading,
-  user: store.user.user, 
+  user: store.user.user,
   recharge: store.recharge.recharge
 });
 
