@@ -78,7 +78,7 @@ export function* setPaymentSaga(payload) {
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
-      address,
+      payload.pay.address,
       token
     );
 
@@ -290,11 +290,13 @@ export function* confirmPaySaga(payload) {
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
         const dueDateFormat = dueDate[2] + "-" + dueDate[1] + "-" + dueDate[0];
+        
+        const dataIso = new Date(dueDateFormat).toISOString();
 
         if (response) {
           const payload_elastic = {
             barCode: payload.payment.payment.number,
-            dueDate: dueDateFormat,
+            dueDate: dataIso,
             amount: parseFloat(payload.payment.payment.value),
             name: payload.payment.payment.name,
             document: payload.payment.payment.cpfCnpj,

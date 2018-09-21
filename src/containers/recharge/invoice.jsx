@@ -291,6 +291,7 @@ class Invoice extends React.Component {
                 onChange={this.handleField("phone")}
                 error={errors.includes("phone")}
                 inputComponent={PhoneMask}
+                type="number"
               />
             </Grid>
 
