@@ -1,52 +1,107 @@
-
+import axios from "axios";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
+import { setAuthToken } from "../utils/localStorage";
 
 class RechargeService {
 
-  async getOperadoras() {
+  async getOperadoras(token, ddd) {
     try {
-      const data = [{
-          value: "vivo",
-          title: "Vivo",
-        },
-        {
-          value: "claro",
-          title: "Claro",
-        },
-        {
-          value: "tim",
-          title: "TIM",
-        },
-      ];
+      API_HEADER.headers.Authorization = token;
+    
+      let response = await axios.get(
+        `${BASE_URL}/recharge/operators/`+ddd,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      if(response.data.code !== 200){
+        return internalServerError();
+      }
 
-      return data;
+      let operadoras = [];
+      response.data.data.operators.map(val=>{
+        operadoras.push({ value: val.id, title: val.name });
+      });
+
+      return operadoras;
+
     } catch (error) {
       return internalServerError();
     }
   }
 
-  async getValoresRecarga() {
+  async getValoresRecarga(token, action) {
     try {
-      const data = [{
-          value: "15",
-          title: "R$15,00",
-        },
-        {
-          value: "20",
-          title: "R$20,00",
-        },
-        {
-          value: "30",
-          title: "R$30,00",
-        },
-      ];
+      API_HEADER.headers.Authorization = token;
+    
+      let response = await axios.get(
+        `${BASE_URL}/recharge/price/`+action.operadora+`/`+action.ddd,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      if(response.data.code !== 200){
+        return internalServerError();
+      }
 
-      return data;
+      let valores = [];
+      response.data.data.prices.map(val=>{
+        valores.push({ value: val.value, title: "R$"+val.value });
+      });
+
+      return valores;
+
     } catch (error) {
       return internalServerError();
     }
   }
 
+  async getCoinAmountPay(token, coin, value) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.get(
+        `${BASE_URL}/recharge/amount/${coin}?value=${value}`,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async sendRecharge(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/recharge/pay`,
+        payload,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async getHistory(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(`${BASE_URL}/recharge/history`, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
 }
 
 

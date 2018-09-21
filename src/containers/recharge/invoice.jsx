@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled } from "./redux/rechargeAction";
+import { getCoinsEnabled, getOperators,getValoresRecarga, setRecharge } from "./redux/rechargeAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -19,6 +19,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
+import i18n from "../../utils/i18n";
 
 // STYLES
 import style from "./style.css";
@@ -79,7 +80,8 @@ class Invoice extends React.Component {
         img: undefined
       },
       invoice: {
-        phone: null,
+        coin: null,
+        phone: "",
         operadora: {
           value: null,
           title: "Operadora"
@@ -117,6 +119,8 @@ class Invoice extends React.Component {
   };
 
   handleOperadora = (value, title) => {
+    const {getValoresRecarga} = this.props;
+
     this.setState({
       ...this.state,
       invoice: {
@@ -124,10 +128,16 @@ class Invoice extends React.Component {
         operadora: {
           value: value,
           title: title
+        }, 
+        valor: {
+          value: null,
+          title: "Valor",
         }
       }
     });
-  };
+
+    getValoresRecarga(value, this.state.invoice.ddd);
+  }
 
   handleValor = (value, title) => {
     this.setState({
@@ -140,28 +150,72 @@ class Invoice extends React.Component {
         }
       }
     });
-  };
+  }
 
   handleField = name => event => {
+    const {getOperators} = this.props;
+
+    const telefone = event.target.value;
+    
     this.setState({
       ...this.state,
       invoice: {
         ...this.state.invoice,
-        [name]: event.target.value
+        [name]: telefone, 
+        ddd: telefone.length == 2 ? telefone : this.state.invoice.ddd,
+        operadora: {
+          value: telefone.length == 2 ? null : this.state.invoice.operadora.value,
+          title: telefone.length == 2 ? "Operadora" : this.state.invoice.operadora.title,
+        },
+        valor: {
+          value: telefone.length == 2 ? null : this.state.invoice.valor.value,
+          title: telefone.length == 2 ? "Valor" : this.state.invoice.valor.title,
+        }
       }
     });
+
+    if(telefone.length==2){
+      getOperators(telefone);
+    }
   };
 
-  openModal = () => {
-    const { openModal } = this.props;
-    openModal();
-  };
+  setDefaultState = () => {
+    const emptyValue = {
+      errors: [],
+      disableNumberInput: false,
+      invoiceLoading: false,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      },
+      invoice: {
+        coin: null,
+        phone: "",
+        operadora: {
+          value: null,
+          title: "Operadora"
+        },
+        valor: {
+          value: null,
+          title: "Valor"
+        }
+      }
+    };
+  
+    this.setState(emptyValue);
+  }
 
   inputValidator = () => {
+    const { openModal, setRecharge } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
-      ...invoice
+      value: invoice.valor.value,
+      number: invoice.phone, 
+      coin: invoice.coin,
+      operatorId: invoice.operadora.value,
+      operatorName: invoice.operadora.title
     };
 
     const invoiceInputs = {};
@@ -196,7 +250,9 @@ class Invoice extends React.Component {
       return;
     }
 
-    this.openModal();
+    openModal();
+    setRecharge(invoiceData);
+    this.setDefaultState();
   };
 
   checkAllInputs = () => {
@@ -206,7 +262,7 @@ class Invoice extends React.Component {
   }
 
   render() {
-    const { classes, loading, coinsRedux } = this.props;
+    const { classes, loading, coinsRedux, operadoras, valores, loadingValores } = this.props;
     const { coin, errors, invoice } = this.state;
 
     const title = coin.name || "Select a coin..";
@@ -214,37 +270,9 @@ class Invoice extends React.Component {
 
     return (
       <Grid container direction="row" justify="center">
-        <Grid container className={style.box}>
-          <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
-            <Select
-              list={[
-                { value: "vivo", title: "VIVO" },
-                { value: "vivo", title: "VIVO" }
-              ]}
-              title={invoice.operadora.title}
-              error={errors.includes("operadora")}
-              selectItem={this.handleOperadora}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
-            <Select
-              list={[
-                { value: "15", title: "R$15,00" },
-                { value: "15", title: "R$15,00" }
-              ]}
-              title={invoice.valor.title}
-              error={errors.includes("valor")}
-              selectItem={this.handleValor}
-            />
-          </Grid>
-        </Grid>
 
-        <Grid
-          item
-          xs={12}
-          className={style.box}
-          style={{ marginTop: "10px", padding: 5 }}
-        >
+        <Grid item xs={12} className={style.box} style={{ padding: 5 }}>
+
           <Grid container direction="row" justify="center">
             <Grid item xs={8}>
               <Input
@@ -261,23 +289,31 @@ class Invoice extends React.Component {
               />
             </Grid>
 
-            {/* <Grid item xs={4}>
-              <button
-                className={style.buttonPurple}
-                onClick={()=>alert(1)}
-              >
-                {loading ? <Loading /> : "FAVORITAR"}
-              </button>
-            </Grid> */}
           </Grid>
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          className={style.box}
-          style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}
-        >
+        <Grid container className={style.box} style={{marginTop: "10px"}}>
+          <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
+            <Select
+              list={operadoras}
+              title={invoice.operadora.title}
+              error={errors.includes("operadora")}
+              selectItem={this.handleOperadora}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+            <Select
+              list={valores}
+              title={invoice.valor.title}
+              error={errors.includes("valor")}
+              selectItem={this.handleValor}
+            />
+          </Grid>
+
+          {loadingValores ? <div style={{margin:"10px auto", textAlign: "center"}}><Loading color="lunes" /></div> : null}
+        </Grid>
+
+        <Grid item xs={12} className={style.box} style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}>
           <Grid container justify={"center"}>
             <Grid item xs={12} sm={6}>
               <Select
@@ -302,7 +338,7 @@ class Invoice extends React.Component {
             className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
             onClick={this.inputValidator}
           >
-            {loading ? <Loading /> : "EFETUAR RECARGA"}
+            {loading ? <Loading /> : i18n.t("RECHARGE_BT_INIT")}
           </button>
         </Grid>
 
@@ -321,20 +357,33 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   classes: PropTypes.object,
-  openModal: PropTypes.func
+  openModal: PropTypes.func.isRequired, 
+  setRecharge: PropTypes.func.isRequired, 
+  coinsRedux: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  loadingValores: PropTypes.bool.isRequired,
+  operadoras: PropTypes.array.isRequired,
+  valores: PropTypes.array.isRequired,
+  getCoinsEnabled: PropTypes.func.isRequired,
+  getValoresRecarga: PropTypes.func.isRequired,
+  getOperators: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
-  loading: store.recharge.loading
+  loading: store.recharge.loading,
+  loadingValores: store.recharge.loadingValores,
+  operadoras: store.recharge.operadoras,
+  valores: store.recharge.valores
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      // getInvoice,
-      getCoinsEnabled
-      // setPayment
+      getOperators,
+      getValoresRecarga,
+      getCoinsEnabled,
+      setRecharge,
     },
     dispatch
   );

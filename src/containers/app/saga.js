@@ -62,7 +62,14 @@ import {
   reloadAsset
 } from "../assets/redux/assetsSaga";
 import {
-  setModalStepSaga as setModalStepRechargeSaga
+  setModalStepSaga as setModalStepRechargeSaga,
+  getOperatorsSaga,
+  getValuesCreditSaga,
+  setRechargeSaga,
+  getFeeRechargeSaga,
+  setFeeRechargeSaga,
+  confirmRechargeSaga,
+  getHistoryRechargeSaga
 } from "../recharge/redux/rechargeSaga";
 
 export default function* rootSaga() {
@@ -120,6 +127,13 @@ export default function* rootSaga() {
 
     // recharge-saga
     fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
+    fork(takeLatest, "GET_OPERADORAS", getOperatorsSaga),
+    fork(takeLatest, "GET_VALORES_RECARGA", getValuesCreditSaga),
+    fork(takeLatest, "SET_RECHARGE", setRechargeSaga),
+    fork(takeLatest, "GET_FEE_RECHARGE", getFeeRechargeSaga),
+    fork(takeLatest, "SET_FEE_RECHARGE", setFeeRechargeSaga),
+    fork(takeLatest, "CONFIRM_RECHARGE", confirmRechargeSaga),
+    fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
 
     //assets
     fork(takeLatest, "GET_ASSET_VALIDATE_ADDRESS_API", validateAssetAddress),
@@ -132,5 +146,6 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_GENERAL_INFO_API", getAssetGeneralInfo),
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
+    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
   ];
 }
