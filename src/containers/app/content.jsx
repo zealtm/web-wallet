@@ -35,7 +35,6 @@ class Content extends Component {
   componentDidUpdate() {
     let { type } = this.state;
     let { loading, errors } = this.props.skeleton;
-
     if (errors) {
       if (type !== "error") {
         errorRequest();
@@ -74,6 +73,7 @@ class Content extends Component {
         return this.changeContent(<Login />, "login");
       }
     } catch (error) {
+      console.warn(error);
       clearAll();
       return this.changeContent(<Login />, "login");
     }

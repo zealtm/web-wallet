@@ -3,12 +3,11 @@ import PropTypes from "prop-types";
 
 // REDUX
 import {connect} from "react-redux";
-import { bindActionCreators } from "redux";
 
 // UTILS
 import i18n from "../../../utils/i18n";
 
-// COMPONENTS 
+// COMPONENTS
 import Loading from "../../../components/loading";
 
 // STYLES

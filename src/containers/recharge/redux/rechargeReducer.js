@@ -8,14 +8,14 @@ const initialState = {
   modalStep: 1,
   recharge: {
     value: 0,
-    number: null,
+    number: '',
     coin: {
-      address: null,
-      abbreviation: null,
+      address: '',
+      abbreviation: '',
     },
-    balance: null,
-    amount: null,
-    operator: null,
+    balance: '',
+    amount: '',
+    operator: '',
   },
   fee: {
     fee: {

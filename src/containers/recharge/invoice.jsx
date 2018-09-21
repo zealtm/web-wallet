@@ -128,7 +128,7 @@ class Invoice extends React.Component {
         operadora: {
           value: value,
           title: title
-        }, 
+        },
         valor: {
           value: null,
           title: "Valor",
@@ -156,12 +156,12 @@ class Invoice extends React.Component {
     const {getOperators} = this.props;
 
     const telefone = event.target.value;
-    
+
     this.setState({
       ...this.state,
       invoice: {
         ...this.state.invoice,
-        [name]: telefone, 
+        [name]: telefone,
         ddd: telefone.length == 2 ? telefone : this.state.invoice.ddd,
         operadora: {
           value: telefone.length == 2 ? null : this.state.invoice.operadora.value,
@@ -202,7 +202,7 @@ class Invoice extends React.Component {
         }
       }
     };
-  
+
     this.setState(emptyValue);
   }
 
@@ -212,7 +212,7 @@ class Invoice extends React.Component {
 
     const invoiceData = {
       value: invoice.valor.value,
-      number: invoice.phone, 
+      number: invoice.phone,
       coin: invoice.coin,
       operatorId: invoice.operadora.value,
       operatorName: invoice.operadora.title
@@ -229,6 +229,10 @@ class Invoice extends React.Component {
           value: invoiceData[key],
           required: true
         };
+      }
+
+      if (key === "number") {
+        invoiceInputs[key]["minLength"] = 11;
       }
     }
 
@@ -357,8 +361,8 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   classes: PropTypes.object,
-  openModal: PropTypes.func.isRequired, 
-  setRecharge: PropTypes.func.isRequired, 
+  openModal: PropTypes.func.isRequired,
+  setRecharge: PropTypes.func.isRequired,
   coinsRedux: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   loadingValores: PropTypes.bool.isRequired,

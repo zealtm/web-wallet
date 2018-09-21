@@ -324,7 +324,7 @@ class CoinService {
         return "error";
       }
 
-      if (coin === "lunes") {
+      if (coin === "lunes" || coin === "LUNES") {
         let response = await axios.get(
           LUNESNODE_URL + "/addresses/validate/" + address
         );
