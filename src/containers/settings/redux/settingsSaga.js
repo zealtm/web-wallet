@@ -48,16 +48,6 @@ export function* verifyTwoFactorAuthSettings(action) {
       return;
     }
 
-    let responseCreate = yield call(authService.createTwoFactorAuth, token);
-
-    if (responseCreate.error || responseCreate.messageError) {
-      yield put(response.error);
-      yield put({
-        type: "CHANGE_LOADING_SETTINGS"
-      });
-      return;
-    }
-
     yield put(modalSuccess("Successfully Activated"));
 
     yield put({

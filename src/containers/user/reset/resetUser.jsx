@@ -37,6 +37,8 @@ class ResetUser extends React.Component {
       inputs: { ...this.state.inputs, [name]: value ? input : undefined },
       errors: undefined
     });
+
+    return;
   };
 
   inputValidator = () => {
@@ -54,17 +56,21 @@ class ResetUser extends React.Component {
       clearMessage();
       resetUser(this.state.inputs.emailUsername.value);
     }
+
+    return;
   };
 
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
-      this.inputValidator()
+      this.inputValidator();
     }
-  }
+
+    return;
+  };
 
   render() {
     let { inputs, errors } = this.state;
-    const {loading} = this.props;
+    const { loading } = this.props;
 
     return (
       <div onKeyPress={this.handleKeyPress}>
@@ -122,7 +128,8 @@ ResetUser.propTypes = {
   resetUser: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 const mapSateToProps = store => ({

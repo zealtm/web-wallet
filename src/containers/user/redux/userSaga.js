@@ -241,11 +241,14 @@ export function* resetUser(action) {
       });
       yield put(internalServerError());
     }
+
+    return;
   } catch (error) {
     yield put({
       type: changeLoadingState
     });
     yield put(internalServerError());
+    return;
   }
 }
 

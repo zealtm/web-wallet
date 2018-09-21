@@ -713,7 +713,7 @@ class User extends React.Component {
 User.propTypes = {
   classes: PropTypes.object,
   user: PropTypes.object,
-  twoFactor: PropTypes.string,
+  twoFactor: PropTypes.bool,
   editUserData: PropTypes.func,
   loading: PropTypes.func,
   isLoading: PropTypes.bool
@@ -730,7 +730,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 const mapStateToProps = store => ({
-  user: store.user,
+  user: store.user.user,
   twoFactor: store.user.twoFactor,
   isLoading: store.user.loading
 });

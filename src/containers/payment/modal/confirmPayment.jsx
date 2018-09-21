@@ -30,7 +30,7 @@ class ConfirmPayment extends React.Component {
     if (parseFloat(amount) <= coinBalance) {
       setModalStep(4);
     }else{
-      errorInput("INSUFICIENT BALANCE");
+      errorInput(i18n.t("PAYMENT_AMOUNT_ERROR"));
       return;
     }
   }
