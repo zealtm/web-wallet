@@ -16,12 +16,21 @@
   3.3 ICONS
 
 3. MODAL
+4. DEFAULT INFO
+5. NO TOKENS FOUND
 */
 
 /* ------------------------------------------------------------------------- */
 /* 1. BOX COIN*/
 
 /* 1.1 BASES */
+:local .infoBarLoading {
+  height: 74px;
+  width: 100px!important;
+  display: flex!important;
+  justify-content: center;
+  align-items: center;
+}
 :local .boxCoin {
   margin-top: 7px;
   margin-bottom: 7px;
@@ -106,9 +115,6 @@
 }
 
 :local .boxHiddenContentMobile {
-  /* margin-top: 17px;
-  margin-left: 39px;
-  position: absolute; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,7 +123,6 @@
 @media only screen and (max-width: 959px) {
   :local .boxIconCoin {
     background-color: transparent;
-    /* margin-left: -5px; */
   }
   :local .boxCoinDisabled {
     max-width: 60px;
@@ -403,8 +408,7 @@
 }
 
 :local(.timeInValueHistory) {
-  display: flex;
-  align-items: center;
+  padding-left: 15px;
   font-weight: bold;
 }
 
@@ -744,4 +748,28 @@
   background: transparent;
   color: #fff;
   font-size: 9.7pt;
+}
+
+
+/*4 DEFAULT INFO*/
+:local .defaultInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/*5 NO TOKENS FOUND*/
+:local .noToken {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+:local .noToken h1 {
+  text-align: center;
+  width: 100%;
 }

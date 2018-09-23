@@ -36,11 +36,11 @@ const menuItens = [
     label: i18n.t("MENU_LEASING"),
     icon: "../../images/icons/general/leasing@1x.png"
   },
-  // {
-  //   link: "/assets",
-  //   label: i18n.t("MENU_ASSETS"),
-  //   icon: "../../images/icons/general/assets@1x.png"
-  // },
+  {
+    link: "/assets",
+    label: i18n.t("MENU_ASSETS"),
+    icon: "../../images/icons/general/assets@1x.png"
+  },
   {
     link: "/invoices",
     label: i18n.t("MENU_PAY"),

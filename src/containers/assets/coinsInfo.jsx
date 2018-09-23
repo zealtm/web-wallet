@@ -4,32 +4,23 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setAssetSendModalOpen,
-  setAssetReceiveModalOpen,
-  setAssetModalStep,
-  setAssetLoading
-} from "./redux/assetsAction";
 
-import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-// import Hidden from "@material-ui/core/Hidden";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 //COMPONENTS
-import Modal from "../../components/modal";
-import SendModal from "./modal/sendModal/";
-import ReceiveModal from "./modal/receiveModal/";
+import DefaultInfo from "./defaultInfo";
 
 // UTILS
 import i18n from "../../utils/i18n";
-// import { getDefaultFiat } from "../../utils/localStorage";
+import { getAssetInfo } from "../../utils/assets";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -41,12 +32,6 @@ class CoinsInfo extends React.Component {
   }
 
   previousStep = () => {
-    let { step } = this.props.assets.modal;
-    let { setAssetModalStep } = this.props;
-    if (step >= 0) {
-      setAssetModalStep(step - 1);
-    }
-
     return;
   };
 
@@ -59,61 +44,35 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    // let defaultCoin = getDefaultFiat();
-    let {
-      setAssetSendModalOpen,
-      setAssetReceiveModalOpen,
-      setAssetLoading,
-      loadWalletInfo,
-      coins,
-      assets,
-      user
-    } = this.props;
-    let step = assets.modal.step;
-    let selectedCoin = assets.selectedCoin; // eslint-disable-line
-    let coin = coins[assets.selectedCoin];
-    let coinPrice = 0; /*coins[selectedCoin].price[defaultCoin].price;*/ //eslint-disable-line
-    let coinPercent = 0; /*coins[selectedCoin].price.percent;*/ // eslint-disable-line
-    // let fiatBalance = coin.balance[defaultCoin] ? coin.balance[defaultCoin].toFixed(2) : 0;
-    let balance = coin.balance.available;
+    let { assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+
+    if (selectedCoin === 'lunes' || !selectedCoin) {
+      return <DefaultInfo/>
+    }
+
+    let asset = getAssetInfo(selectedCoin)
+
+    if (!asset) return null;
+
+    let coin = assets.find(asset => asset.assetId === selectedCoin ? true : false);
+
+    if (!coin) return null;
+
+    asset = {
+      ...asset,
+      ...coin
+    }
+
     return (
       <div>
-        <Modal
-          title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
-          content={<ReceiveModal coin={coin} />}
-          show={assets.modalReceive.open}
-          close={() => setAssetReceiveModalOpen()}
-        />
-
-        <Modal
-          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
-          content={<SendModal />}
-          show={assets.modal.open}
-          close={
-            step === 4
-              ? null
-              : step === 5 || step === 6
-                ? () => {
-                  setAssetSendModalOpen(),
-                  setAssetLoading(true),
-                  loadWalletInfo(user.password);
-                }
-                : () => setAssetSendModalOpen()
-          }
-          back={
-            step === 0 || step === 4 || step === 5 || step === 6
-              ? null
-              : () => this.previousStep()
-          }
-        />
-
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{coin.name.toUpperCase()}</h3>
+                <h3>{asset.name.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
+                  src={"./images/icons/coins/" + asset.icon}
                   className={style.iconCoinSelected}
                 />
               </Grid>
@@ -122,7 +81,7 @@ class CoinsInfo extends React.Component {
             <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{balance}</p>
+                <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
               </Grid>
             </Grid>
           </Grid>
@@ -135,29 +94,16 @@ class CoinsInfo extends React.Component {
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
-  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  loadWalletInfo: PropTypes.func.isRequired,
-  setAssetLoading: PropTypes.func.isRequired,
-  setAssetModalStep: PropTypes.func.isRequired,
-  setAssetSendModalOpen: PropTypes.func.isRequired,
-  setAssetReceiveModalOpen: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
-  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    {
-      loadWalletInfo,
-      setAssetLoading,
-      setAssetModalStep,
-      setAssetSendModalOpen,
-      setAssetReceiveModalOpen
-    },
+    {},
     dispatch
   );
 
