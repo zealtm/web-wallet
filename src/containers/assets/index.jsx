@@ -29,7 +29,7 @@ class Assets extends React.Component {
     let { selectedCoin } = this.props.assets;
     let { address } = skeleton.coins.lunes;
     getAssetGeneralInfo(address);
-    this.setState({ lastAsset: selectedCoin })
+    this.setState({ lastAsset: selectedCoin });
   }
 
   componentDidUpdate() {
@@ -37,32 +37,37 @@ class Assets extends React.Component {
     let { selectedCoin } = this.props.assets;
     if (this.state.lastAsset !== selectedCoin) {
       getAssetHistory(selectedCoin, skeleton.coins.lunes.address);
-      this.setState({lastAsset: selectedCoin})
+      this.setState({ lastAsset: selectedCoin });
     }
   }
   reloadAsset() {
     let { reloadAsset } = this.props;
     let { address } = this.props.skeleton.coins.lunes;
-    reloadAsset(undefined, address)
+    reloadAsset(undefined, address);
   }
   renderEmptyAssets() {
     let { isBalanceLoading } = this.props.assets;
     return (
       <div className={style.noToken}>
-        {
-          isBalanceLoading
-            ? <Loading/>
-            :
-            <React.Fragment>
-              <div className={style.refleshIcon} onClick={ () => this.reloadAsset() }>
-                <img width="15px" height="15px"
-                src="images/icons/general/refresh@2x.png"/>
-              </div>
-              <h1>{i18n.t("ASSETS_USER_DOESNT_HAVE_TOKEN")}</h1>
-            </React.Fragment>
-        }
+        {isBalanceLoading ? (
+          <Loading color="wallet" height="80vh" width="100px" />
+        ) : (
+          <React.Fragment>
+            <div
+              className={style.refleshIcon}
+              onClick={() => this.reloadAsset()}
+            >
+              <img
+                width="15px"
+                height="15px"
+                src="images/icons/general/refresh@2x.png"
+              />
+            </div>
+            <h1>{i18n.t("ASSETS_USER_DOESNT_HAVE_TOKEN")}</h1>
+          </React.Fragment>
+        )}
       </div>
-    )
+    );
   }
   renderContent = () => {
     let { setSelectedCoin } = this.props;
@@ -70,7 +75,7 @@ class Assets extends React.Component {
     if (!assets || (assets && assets.length < 1))
       return this.renderEmptyAssets();
 
-    if (!selectedCoin || selectedCoin === 'lunes') {
+    if (!selectedCoin || selectedCoin === "lunes") {
       setSelectedCoin(assets[0].assetId);
     }
     return (
