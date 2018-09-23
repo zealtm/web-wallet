@@ -30,4 +30,4 @@ package-lock.json
 marcelo*
 
 # testnet
-/src/constants
+/src/constants/apiBaseUrl.js
