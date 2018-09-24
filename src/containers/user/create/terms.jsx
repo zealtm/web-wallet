@@ -83,17 +83,17 @@ class CreateUserTerms extends React.Component {
     return (
       <div>
         <div className={style.alignInfoDownloadTerms}>
-          <img src="/images/login/gdpr-compliant@1x.png" />
+          <Link
+            className={style.linkDownloadTerms}
+            to="documents/termos-pt_BR.pdf"
+            target="_blank"
+          >
+            <img src="/images/login/gdpr-compliant@1x.png" />
 
-          <div className={style.infoDownloadTerms}>
-            <Link
-              className={style.linkDownloadTerms}
-              to="documents/termos-pt_BR.pdf"
-              target="_blank"
-            >
+            <div className={style.infoDownloadTerms}>
               {i18n.t("NEW_ACCOUNT_TERMS_DOWNLOAD")}
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
 
         <div className={style.alignInfoTermsOfServices}>
