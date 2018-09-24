@@ -16,15 +16,17 @@ const styles = {
         marginRight: 10
     },
     dots: {
-        marginTop: 40,
-        marginLeft: "auto",
-        marginRight: "auto"
+
     },
     dotActive: {
         background: "#fff"
     },
     root: {
-        background: "none"
+        marginTop: 40,
+        background: "none",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     }
 };
 
@@ -41,41 +43,53 @@ class Carousel extends Component {
     stepChange = activeStep => {
         this.setState({ activeStep });
     };
+    next = () => {
+      let step = this.state.activeStep + 1;
+      if (step > 3) step = 0;
+      this.setState({activeStep: step})
+    }
+    prev = () => {
+      let step = this.state.activeStep - 1;
+      if (step < 0) step = 0;
+      this.setState({activeStep: step})
+    }
 
     render() {
         const { classes } = this.props;
         const props = this.props;
         return (
             <Grid container>
-                <Grid item xs={12} sm={12}>
-                    <AutoPlaySwipeableViews
-                        className={style.center}
-                        index={this.state.activeStep}
-                        onChangeIndex={this.stepChange}
-                        enableMouseEvents>
+              <Grid item xs={12} sm={12}>
+                <AutoPlaySwipeableViews
+                  className={style.center}
+                  index={this.state.activeStep}
+                  onChangeIndex={this.stepChange}
+                enableMouseEvents>
 
-                        {props.imageSteps.map((item, index) => (
-                            <div className={style.paragraph} key={index}>
-                                <img className={style.imageResponsive} src={item.imgPath} alt={item.label} />
-                                <p className={textBase.defaultP}>
-                                    <label>{item.label}</label>
-                                </p>
-                            </div>
-                        ))}
+                  {props.imageSteps.map((item, index) => (
+                    <div className={style.paragraph} key={index}>
+                      <img className={style.imageResponsive} src={item.imgPath} alt={item.label} />
+                      <p className={textBase.defaultP}>
+                        <label>{item.label}</label>
+                      </p>
+                    </div>
+                  ))}
 
-                    </AutoPlaySwipeableViews>
-                    <MobileStepper
-                        steps={props.maxDot}
-                        position="static"
-                        activeStep={this.state.activeStep}
-                        classes={{
-                            dots: classes.dots,
-                            dot: classes.dot,
-                            dotActive: classes.dotActive,
-                            root: classes.root
-                        }}
-                    />
-                </Grid>
+                </AutoPlaySwipeableViews>
+                <MobileStepper
+                  steps={props.maxDot}
+                  position="static"
+                  activeStep={this.state.activeStep}
+                  classes={{
+                    dots: classes.dots,
+                    dot: classes.dot,
+                    dotActive: classes.dotActive,
+                    root: classes.root
+                  }}
+                  nextButton={<button onClick={this.next} className={style.stepButton}>{">"}</button>}
+                  backButton={<button onClick={this.prev} className={style.stepButton}>{"<"}</button>}
+                />
+              </Grid>
             </Grid>
         );
     }
