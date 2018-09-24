@@ -21,7 +21,6 @@ import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getAssetInfo } from "../../utils/assets";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
@@ -49,25 +48,21 @@ class TransactionHistory extends React.Component {
     reloadAsset(selectedCoin, address)
   };
 
+  renderEmpty = () => {
+    return <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
+  }
+
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { assets: assetsRoute, skeleton } = this.props;
-    let { assets, selectedCoin, history } = assetsRoute;
+    let { history } = assetsRoute;
 
-    let currentAsset = assets.find(asset => asset.assetId === selectedCoin ? true : false)
+    if (!history.assets) return this.renderEmpty();
 
-    if (!currentAsset) return null;
+    if (history.assets && history.assets.constructor.name !== 'Array')
+      return this.renderEmpty();
 
-    currentAsset = {
-      ...currentAsset,
-      ...getAssetInfo(selectedCoin)
-    }
-
-    if (!history.assets || history.assets.length < 1) {
-      return (
-        <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
-      );
-    }
+    if (history.assets.length < 1) return this.renderEmpty();
 
     let lunesAddress = skeleton.coins.lunes.address;
 
