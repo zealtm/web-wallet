@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { confirmRecharge } from "../redux/rechargeAction";
+import { setCoinsBalance } from "../../skeleton/redux/skeletonAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -14,7 +15,7 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-// COMPONENTS 
+// COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
 
 class SecureRecharge extends React.Component {
@@ -31,10 +32,10 @@ class SecureRecharge extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput, recharge, coins, confirmRecharge } = this.props;
+    let { user, errorInput, recharge, coins, confirmRecharge, setCoinsBalance } = this.props;
 
     const coin = recharge.coin.abbreviation;
-  
+
     const payload = {
       coin:           coin,
       fromAddress:    coins[coin].address,
@@ -44,13 +45,21 @@ class SecureRecharge extends React.Component {
       feePerByte:     recharge.fee.fee.feePerByte,
       feeLunes:       recharge.fee.fee.feeLunes,
       price:          coins[coin].price,
-      decimalPoint:   coins[coin].decimalPoint, 
-      user:           user.password, 
+      decimalPoint:   coins[coin].decimalPoint,
+      user:           user.password,
       recharge:       recharge,
     }
 
     if (user.password === encryptHmacSha512Key(password)) {
       confirmRecharge(payload);
+
+      const abbreviation = recharge.coin.abbreviation.toLowerCase();
+      const amount = recharge.amount + recharge.fee.fee.fee;
+
+      coins[abbreviation].balance.available -= amount;
+      coins[abbreviation].balance.total -= amount;
+
+      setCoinsBalance(coins);
       return;
     }
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
@@ -103,22 +112,25 @@ SecureRecharge.propTypes = {
   recharge:     PropTypes.object.isRequired,
   loading:      PropTypes.bool.isRequired,
   user:         PropTypes.object.isRequired,
-  errorInput:   PropTypes.func.isRequired, 
-  confirmRecharge:   PropTypes.func.isRequired
+  errorInput:   PropTypes.func.isRequired,
+  confirmRecharge:   PropTypes.func.isRequired,
+  setCoinsBalance:   PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
   recharge:   store.recharge.recharge,
   loading:    store.recharge.loading,
-  user:       store.user.user, 
+  user:       store.user.user,
   coins:      store.skeleton.coins,
 });
 
+
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { 
-    confirmRecharge, 
-    errorInput 
-  }, 
+  {
+    confirmRecharge,
+    setCoinsBalance,
+    errorInput,
+  },
   dispatch
 );
 
