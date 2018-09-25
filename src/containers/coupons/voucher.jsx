@@ -77,16 +77,23 @@ class Voucher extends React.Component {
     });
   };
 
-  handleCodeChange = (id, value) => {
+  handleCodeChange = (id, event) => {
     const code = this.state.code;
+    let value = event.target.value;
+    let { keyCode } = event;
     code[id] = value;
 
     this.setState({
       ...this.state,
       code
     });
+    let dic = ['first','second','third','fourth']
+    if ((keyCode === 8 || keyCode === 48) && value.length < 1) {
+      let prev = document.querySelector(`.${dic[id - 1]}`)
+      if (prev === null) return;
+      prev.focus();
+    }
     if (value.length === 4) {
-      let dic = ['first','second','third','fourth']
       let next = document.querySelector(`.${dic[id + 1]}`)
       if (next === null) return;
       next.focus()
