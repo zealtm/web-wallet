@@ -351,6 +351,7 @@
   "MODAL_SEND_INFO_TRANSACTION": "To confirm your transaction, enter your password and complete the ",
   "MODAL_SEND_TO_ADDRESS": " to the address ",
   "MODAL_SEND_TO_SEND": " you are sending ",
+  "MODAL_SEND_MIN_AMOUNT": "Amount too low",
   "MODAL_SEND_FEE_TRANSACTION": "Your transaction fee on the network",
   "MODAL_SEND_INFO_BLOCKCHAIN": "Your transaction is being processed within Blockchain",
   "MODAL_SEND_INFO_SUCCESS": "Your submission was successful",
