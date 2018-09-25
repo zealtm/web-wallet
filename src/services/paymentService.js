@@ -30,10 +30,15 @@ class PaymentService {
         API_HEADER
       );
 
+      if (response.data.code === 500) {
+        return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
+      }
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response.data;
     } catch (error) {
+      // If the http status = 500
       if (error.response.data.code === 500) {
         return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
       }

@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { loadWalletInfo } from "../../skeleton/redux/skeletonAction";
 
 import { connect } from "react-redux";
 import i18n from "../../../utils/i18n";
@@ -12,6 +14,11 @@ import Loading from "../../../components/loading";
 class DoneRecharge extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    const { loadWalletInfo, user } = this.props;
+    loadWalletInfo(user.password);
   }
 
   render() {
@@ -44,11 +51,21 @@ class DoneRecharge extends React.Component {
 }
 
 DoneRecharge.propTypes = {
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = store => ({
   loading: store.recharge.loading,
+  user: store.user.user
 });
 
-export default connect(mapStateToProps)(DoneRecharge);
+const mapDispatchToProps = dispatch => bindActionCreators(
+  { loadWalletInfo },
+  dispatch
+)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DoneRecharge);

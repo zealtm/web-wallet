@@ -34,7 +34,7 @@ class HistoryItem extends React.Component {
                 src={`/images/icons/coins/${item.coin.toLowerCase()}.png`}
                 alt={item.coin}
               />{" "}
-              <span>{item.coin}</span>
+              <span className={style.coinName}>{item.coin}</span>
             </p>
             
             <p className={style.coinValue}>
