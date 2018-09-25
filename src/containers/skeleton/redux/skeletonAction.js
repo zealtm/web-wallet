@@ -25,8 +25,3 @@ export const createCoinsAddress = coins => ({
 export const balanceCoins = () => ({
   type: "GET_BALANCE_COINS_API"
 });
-
-export const setCoinsBalance = coins => ({
-  type: "SET_COINS_BALANCE",
-  coins
-});

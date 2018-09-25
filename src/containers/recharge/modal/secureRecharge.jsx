@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { confirmRecharge } from "../redux/rechargeAction";
-import { setCoinsBalance } from "../../skeleton/redux/skeletonAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -32,7 +31,7 @@ class SecureRecharge extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput, recharge, coins, confirmRecharge, setCoinsBalance } = this.props;
+    let { user, errorInput, recharge, coins, confirmRecharge } = this.props;
 
     const coin = recharge.coin.abbreviation;
 
@@ -52,16 +51,9 @@ class SecureRecharge extends React.Component {
 
     if (user.password === encryptHmacSha512Key(password)) {
       confirmRecharge(payload);
-
-      const abbreviation = recharge.coin.abbreviation.toLowerCase();
-      const amount = recharge.amount + recharge.fee.fee.fee;
-
-      coins[abbreviation].balance.available -= amount;
-      coins[abbreviation].balance.total -= amount;
-
-      setCoinsBalance(coins);
       return;
     }
+
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
     return;
   };
@@ -114,7 +106,6 @@ SecureRecharge.propTypes = {
   user:         PropTypes.object.isRequired,
   errorInput:   PropTypes.func.isRequired,
   confirmRecharge:   PropTypes.func.isRequired,
-  setCoinsBalance:   PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -128,7 +119,6 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     confirmRecharge,
-    setCoinsBalance,
     errorInput,
   },
   dispatch

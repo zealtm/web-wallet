@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { loadWalletInfo } from "../../skeleton/redux/skeletonAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
 
-// COMPONENTS 
+// COMPONENTS
 import Loading from "../../../components/loading";
 
 // STYLES
@@ -18,15 +20,20 @@ class DonePayment extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    const { loadWalletInfo, user } = this.props;
+    loadWalletInfo(user.password);
+  }
+
   render() {
-    const {loading} = this.props;
-    if(loading){
+    const { loading } = this.props;
+    if (loading) {
       return (
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
       )
-    }else{
+    } else {
       return (
         <div className={style.modalBox}>
           <img
@@ -48,13 +55,21 @@ class DonePayment extends React.Component {
 }
 
 DonePayment.propTypes = {
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = store => ({
   loading: store.payment.loading,
+  user: store.user.user
 });
 
+const mapDispatchToProps = dispatch => bindActionCreators(
+  { loadWalletInfo },
+  dispatch
+)
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(DonePayment);
