@@ -17,7 +17,11 @@ import {
 } from "../../containers/errors/statusCodeMessage";
 
 // COINS
-import { BtcTransaction, LunesTransaction, EthTransaction } from "./coins";
+import {
+  BtcTransaction,
+  LunesTransaction,
+  EthTransaction
+} from "./coins";
 import CoinService from "../../services/coinService";
 
 // UTILS
@@ -152,8 +156,7 @@ class TransactionService {
 
         let responseSaveBtc = await coinService.saveTransaction(
           serviceId,
-          feeLunes,
-          {
+          feeLunes, {
             id: responseBtc,
             sender: fromAddress,
             recipient: toAddress,
@@ -188,8 +191,7 @@ class TransactionService {
 
         let responseSaveEth = await coinService.saveTransaction(
           serviceId,
-          feeLunes,
-          {
+          feeLunes, {
             id: responseEth,
             sender: fromAddress,
             recipient: toAddress,
@@ -329,14 +331,13 @@ class TransactionService {
     try {
       console.warn("transaction", alias, fee, seed);
       let transaction = new LunesTransaction();
-
       let response = await transaction.createAlias({
         alias,
         fee,
         seed,
-        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES        
+        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
       });
-      
+
       return response;
     } catch (error) {
       return error;

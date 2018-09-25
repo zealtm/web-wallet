@@ -71,11 +71,14 @@ class LunesTransaction {
       fee: value.fee,
       timestamp: Date.now()
     };
-
+    console.warn("até aqui funciona");
     let lunes = await create(value.network.APICONFIG);
+    console.warn("is lunes", lunes);
     let seed = await lunes.Seed.fromExistingPhrase(value.seed);
     console.warn("seed.keypair", seed);
-    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair)
+
+    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair).then(x => console.warn(x));
+    console.warn("Olha aqui mano! ", transaction);
 
     return transaction;
   }
