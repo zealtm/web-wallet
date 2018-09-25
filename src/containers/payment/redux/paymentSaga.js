@@ -264,8 +264,6 @@ export function* confirmPaySaga(payload) {
       decimalPoint: payload.payment.decimalPoint
     };
 
-    // transacao
-
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -290,7 +288,7 @@ export function* confirmPaySaga(payload) {
 
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate[2] + "-" + dueDate[1] + "-" + dueDate[0];
+        const dueDateFormat = dueDate.reverse().join('-');
 
         const dataIso = new Date(dueDateFormat).toISOString();
 
