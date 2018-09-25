@@ -90,14 +90,12 @@ class RechargeService {
   async sendRecharge(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
-
       const response = await axios.post(
         `${BASE_URL}/recharge/pay`,
         payload,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
       return response;
     } catch (error) {
       internalServerError();
