@@ -397,5 +397,10 @@
   "NOTIFICATION_SERVICE_NOT_2FA": "Could not verify 2fa",
   "NOTIFICATION_SERVICE_ENABLE_2FA": "Could not enable two-factor authentication",
   "NOTIFICATION_SERVICE_INVALID_2FA": "Invalid 2FA token",
-  "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered"
+  "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered",
+
+  "RECHARGE_TAB_TITLE_RECHARGE": "New recharge",
+  "RECHARGE_TAB_TITLE_HISTORY": "History",
+  "RECHARGE_SELECT_TITLE_OPERATOR": "Operator",
+  "RECHARGE_SELECT_TITLE_VALUE": "Value"
 }
