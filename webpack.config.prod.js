@@ -89,9 +89,7 @@ module.exports = {
       },
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true
-    }),
+    
     new HtmlWebpackPlugin({
       template: "public/index.html"
     })
