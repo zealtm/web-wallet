@@ -39,7 +39,7 @@ class Recharge extends React.Component {
 
     const {modalStep, setModalStep} = this.props;
 
-    const titles = ["Nova recarga", "Histórico"];
+    const titles = [i18n.t("RECHARGE_TAB_TITLE_RECHARGE"), i18n.t("RECHARGE_TAB_TITLE_HISTORY")];
     const contents = [<Invoice openModal={this.handleModal} key={1} />, <History key={2} />]
 
     return (

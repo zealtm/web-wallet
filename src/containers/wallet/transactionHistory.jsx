@@ -217,7 +217,7 @@ class TransactionHistory extends React.Component {
                     </Grid>
                   </Grid>
 
-                  {transaction.promoCode ? (
+                  {transaction.promoCode && transaction.from === address ? (
                     <Grid item xs={12} className={style.itemDataHistorico}>
                       <Grid item xs={2} className={style.typeItems}>
                         <div className={style.forTransactionHistory}>
