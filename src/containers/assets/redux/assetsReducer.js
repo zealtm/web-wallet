@@ -23,7 +23,7 @@ const asset = (state = initialState, action) => {
         isTxHistoryLoading: action.isTxHistoryLoading,
         history: action.history ? action.history : []
       }
-    case "SET_SELECTED_COIN":
+    case "ASSETS_SET_SELECTED_COIN":
       return {
         ...state,
         selectedCoin: action.assetId,
