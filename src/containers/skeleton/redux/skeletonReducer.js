@@ -42,6 +42,12 @@ const skeleton = (state = initialState, action) => {
         errors: action.state
       };
 
+    case "SET_COINS_BALANCE":
+      return {
+        ...state,
+        coins: action.coins
+      };
+
     default: {
       return {
         ...state

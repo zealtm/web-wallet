@@ -294,7 +294,6 @@ class Invoice extends React.Component {
                 inputComponent={PhoneMask}
               />
             </Grid>
-
           </Grid>
         </Grid>
 
