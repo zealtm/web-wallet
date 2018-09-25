@@ -51,7 +51,7 @@ class Home extends React.Component {
             </div>
           </Grid>
 
-          <Grid item>
+          {/* <Grid item>
             <div className={style.cardHome}>
               <img
                 src="/images/icons/general/recharge@2x.png"
@@ -70,7 +70,7 @@ class Home extends React.Component {
                 </button>
               </Link>
             </div>
-          </Grid>
+          </Grid> */}
 
           <Grid item>
             <div className={style.cardHome}>
@@ -85,7 +85,7 @@ class Home extends React.Component {
                 {i18n.t("CARD_HOME_DESCRIPTION_4")}
               </div>
 
-              <Link to="/invoice">
+              <Link to="/home">
                 <button className={style.buttonCard}>{i18n.t("BTN_GO")}</button>
               </Link>
             </div>
@@ -123,7 +123,7 @@ class Home extends React.Component {
                 {i18n.t("CARD_HOME_DESCRIPTION_6")}
               </div>
 
-              <Link to="/cupons">
+              <Link to="/coupons">
                 <button disabled className={style.buttonCard}>
                   {i18n.t("BTN_GO")}
                 </button>

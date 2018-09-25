@@ -3,9 +3,10 @@ SEED1(MAIN)   ::: relax board logic reason sustain client current during toilet 
 Lunes address ::: 37RThBWionPuAbr8H4pzZJM6HYP2U6Y9nLr
 BTC           ::: mj1oZJa8pphtdjeo51LvEnzxFKHoMcmtFA
 ETH           ::: 0xde25bcf8927419baab2ba7363b6e798bec9db627
-DASH          ::: yPpJ7TDVR49JMJhJnB1AJRtmVwm9yQYABU
+DASH          ::: XxNABBfjAt6DHdNj2Gi1yZFkSViP64wRWh
 LTC           ::: mj1oZJa8pphtdjeo51LvEnzxFKHoMcmtFA
 BCH           ::: mj1oZJa8pphtdjeo51LvEnzxFKHoMcmtFA
+
 
 TESTNET WALLET WEB
 SEED2         ::: blush unlock final iron tone nut easy race remember capable soap unfold

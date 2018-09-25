@@ -7,6 +7,8 @@ import i18n from "../../utils/i18n";
 
 // REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { errorInput } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -37,18 +39,19 @@ const menuItens = [
   {
     link: "/assets",
     label: i18n.t("MENU_ASSETS"),
-    icon: "../../images/icons/general/wallet@1x.png"
+    icon: "../../images/icons/general/assets@1x.png"
   },
-
   {
-    link: "/payment",
+    link: "/invoices",
     label: i18n.t("MENU_PAY"),
-    icon: "../../images/icons/general/pay@1x.png"
+    icon: "../../images/icons/general/pay@1x.png",
+    error: true
   },
   {
     link: "/recharge",
     label: i18n.t("MENU_RECHARGE"),
-    icon: "../../images/icons/general/pay@1x.png"
+    icon: "../../images/icons/general/recharge@1x.png",
+    error: true
   },
   {
     link: "/coupons",
@@ -62,9 +65,17 @@ class Menu extends React.Component {
     super(props);
   }
 
+  onClickFunction = error => {
+    const { actionMenu, errorInput } = this.props;
+    actionMenu();
+    if (error) {
+      errorInput("Service Unavailable. Try again later.");
+    }
+    return;
+  };
+
   renderMenu = () => {
     let { pathname } = this.props.location;
-    const { actionMenu } = this.props;
 
     return menuItens.map((item, key) => {
       let classStyle = style.linkMenu;
@@ -76,13 +87,15 @@ class Menu extends React.Component {
       return (
         <NavLink
           className={classStyle}
-          activeClassName={style.linkMenuActive}
-          to={item.link}
+          activeClassName={item.error ? style.linkMenu : style.linkMenuActive}
+          to={item.error ? "/home" : item.link}
           key={key}
-          onClick={actionMenu}
+          onClick={() => this.onClickFunction(item.error)}
         >
           <img src={item.icon} className={style.iconMenu} />
-          <div onClick={actionMenu}>{item.label}</div>
+          <div onClick={() => this.onClickFunction(item.error)}>
+            {item.label}
+          </div>
         </NavLink>
       );
     });
@@ -98,7 +111,7 @@ class Menu extends React.Component {
       >
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
-            <Grid item xs={4} align="center">
+            <Grid item xs={4} align="justify">
               <Avatar alt="Avatar" src={user.profilePicture} />
             </Grid>
             <Grid item xs={8}>
@@ -132,6 +145,7 @@ Menu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
   actionMenu: PropTypes.func.isRequired,
   actionLogout: PropTypes.func.isRequired,
+  errorInput: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 
@@ -139,7 +153,15 @@ const mapSateToProps = store => ({
   user: store.user.user
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      errorInput
+    },
+    dispatch
+  );
+
 export default connect(
   mapSateToProps,
-  null
+  mapDispatchToProps
 )(withRouter(Menu));

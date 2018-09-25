@@ -1,25 +1,21 @@
 import axios from "axios";
-import {
-  BASE_URL,
-  API_HEADER,
-  HEADER_RESPONSE
-} from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 import {
   unauthorized,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-import {
-  setAuthToken
-} from "../utils/localStorage";
-import {
-  encryptMd5
-} from "../utils/cryptography";
+import { setAuthToken } from "../utils/localStorage";
+import { encryptMd5 } from "../utils/cryptography";
+
+// UTILS
+import i18n from "../utils/i18n";
 
 class AuthService {
   async authenticate(email, password) {
     try {
       let response = await axios.post(
-        BASE_URL + "/login", {
+        BASE_URL + "/login",
+        {
           login: email,
           password: encryptMd5(password)
         },
@@ -29,7 +25,7 @@ class AuthService {
       return response;
     } catch (error) {
       if (error.response.data.code === 401) {
-        let notification = "Inavalid Username/Email or Password";
+        let notification = i18n.t("NOTIFICATION_SERVICE_INVALID_LOGIN");
 
         return unauthorized(notification);
       }
@@ -43,11 +39,10 @@ class AuthService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/user/2fa", API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
       return response;
     } catch (error) {
       if (error.response.data.code === 401) {
-        let notification = "Could not verify 2fa";
+        let notification = i18n.t("NOTIFICATION_SERVICE_NOT_2FA");
 
         return unauthorized(notification);
       }
@@ -67,10 +62,10 @@ class AuthService {
         return data;
       }
 
-      return unauthorized("Could not enable two-factor authentication");
+      return unauthorized(i18n.t("NOTIFICATION_SERVICE_ENABLE_2FA"));
     } catch (error) {
       if (error.response.data.code === 500) {
-        return unauthorized("Could not enable two-factor authentication");
+        return unauthorized(i18n.t("NOTIFICATION_SERVICE_ENABLE_2FA"));
       }
 
       return internalServerError();
@@ -81,7 +76,8 @@ class AuthService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/user/2fa/verify", {
+        BASE_URL + "/user/2fa/verify",
+        {
           token: token2fa
         },
         API_HEADER
@@ -91,7 +87,7 @@ class AuthService {
       return response;
     } catch (error) {
       if (error.response.data.code === 401 || error.response.status === 400) {
-        return unauthorized("Invalid 2FA token");
+        return unauthorized(i18n.t("NOTIFICATION_SERVICE_INVALID_2FA"));
       }
       internalServerError();
       return;

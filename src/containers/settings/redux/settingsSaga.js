@@ -3,15 +3,18 @@ import {
   call
 } from "redux-saga/effects";
 import {
-  getAuthToken, getUserSeedWords
+  getAuthToken,
+  getUserSeedWords
 } from "../../../utils/localStorage";
 import {
   internalServerError,
-  modalSuccess, 
-} from "../../../containers/errors/statusCodeMessage"; 
+  modalSuccess,
+} from "../../../containers/errors/statusCodeMessage";
 import AuthService from "../../../services/authService";
 import TransactionService from "../../../services/transaction/transactionService";
-import { decryptAes } from "../../../utils/cryptography";
+import {
+  decryptAes
+} from "../../../utils/cryptography";
 const authService = new AuthService();
 const transactionService = new TransactionService();
 
@@ -54,6 +57,12 @@ export function* verifyTwoFactorAuthSettings(action) {
     }
 
     yield put(modalSuccess("Successfully Activated"));
+
+    yield put({
+      type: "GET_USER_2FA",
+      state: true
+    });
+
     yield put({
       type: "CHANGE_LOADING_SETTINGS"
     });

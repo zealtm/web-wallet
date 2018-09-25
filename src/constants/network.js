@@ -180,7 +180,8 @@ export const networks = {
       },
       pubKeyHash: 0x4c,
       scriptHash: 0x10,
-      wif: 0xcc
+      wif: 0xcc,
+      dustThreshold: 5460
     },
     electrumx: {
       networkName: "Dash",
@@ -320,5 +321,25 @@ export const networks = {
       ]
     },
     insight: null
+  },
+  ETH: {
+    coinSymbol: "ETH",
+    coinName: "Ethereum",
+    testnet: false,
+    derivePath: "m/44'/60'/0'/0/0",
+    gasPrice: 10000000000,
+    gasLimit: 21000,
+    chainID: 1,
+    apiUrl: "https://api.myetherwallet.com/eth"
+  },
+  ROPSTEN: {
+    coinSymbol: "ETH",
+    coinName: "Ethereum Testnet",
+    testnet: true,
+    derivePath: "m/44'/60'/0'/0/0",
+    gasPrice: 10000000000,
+    gasLimit: 21000,
+    chainID: 3,
+    apiUrl: "https://api.myetherwallet.com/rop"
   }
 };

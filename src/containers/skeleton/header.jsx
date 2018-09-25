@@ -76,7 +76,7 @@ class Header extends React.Component {
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
 
-    let coinBalance = coins[coinSelected]
+    let coinBalance = coins[coinSelected] && coins[coinSelected].balance
       ? coins[coinSelected].balance.available
       : 0;
 

@@ -60,11 +60,6 @@ class DetailsPayment extends React.Component {
       return;
     }
 
-    if (!payment.amount || parseFloat(payment.amount) > payment.balance) {
-      this.openError(i18n.t("PAYMENT_AMOUNT_ERROR"));
-      return;
-    }
-
     setModalStep(2);
   };
 
