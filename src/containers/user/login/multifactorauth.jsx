@@ -25,48 +25,49 @@ class MultiFactorAuth extends React.Component {
     this.field = [];
     this.state = {
       twoFactorFields: {
+        field_0: undefined,
         field_1: undefined,
         field_2: undefined,
         field_3: undefined,
         field_4: undefined,
         field_5: undefined,
-        field_6: undefined
       },
       errors: undefined
     };
   }
 
-  getInput = input => {
-    let { name, value } = input;
+  getInput = (event, currentKeyInput) => {
+    let { value } = event.target;
+    let { keyCode } = event;
     let { twoFactorFields } = this.state;
 
-    if (value) {
-      Object.keys(twoFactorFields).map((input, key) => {
-        if (name === input && this.field[key + 1]) {
-          this.field[key + 1].focus();
-        }
-      });
+    if (keyCode === 8 || keyCode === 46) {
+      if (!this.field[currentKeyInput - 1]) return;
+      this.field[currentKeyInput - 1].focus();
+      value = undefined;
     }
-
+    if (value && (keyCode !== 8 && keyCode !== 46)) {
+      if (this.field[currentKeyInput + 1]) {
+        this.field[currentKeyInput + 1].focus();
+      }
+    }
     this.setState({
-      ...this.state,
-      twoFactorFields: { ...twoFactorFields, [name]: value },
+      twoFactorFields: {...twoFactorFields, ['field_'+currentKeyInput]: value},
       errors: undefined
-    });
-    return;
+    })
   };
 
   inputValidator = () => {
     let { loading, errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
     let {
+      field_0,
       field_1,
       field_2,
       field_3,
       field_4,
       field_5,
-      field_6
     } = this.state.twoFactorFields;
-    let token = field_1 + field_2 + field_3 + field_4 + field_5 + field_6;
+    let token = field_0 + field_1 + field_2 + field_3 + field_4 + field_5;
     let input = {
       type: "text",
       name: "2FA",
@@ -83,7 +84,6 @@ class MultiFactorAuth extends React.Component {
         errors
       });
     }
-
     loading();
     clearMessage();
     verifyTwoFactorAuth(token);
@@ -94,7 +94,7 @@ class MultiFactorAuth extends React.Component {
       this.inputValidator()
     }
   }
-  
+
   render() {
     let { loading } = this.props.user;
     let { errors, twoFactorFields } = this.state;
@@ -111,102 +111,25 @@ class MultiFactorAuth extends React.Component {
         </div>
 
         <div className={style.alignInputTwoFactorAuthenticator}>
-          <input
-            name="field_1"
-            maxLength="1"
-            autoFocus
-            ref={input => {
-              this.field[0] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
-
-          <input
-            name="field_2"
-            maxLength="1"
-            ref={input => {
-              this.field[1] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
-
-          <input
-            name="field_3"
-            maxLength="1"
-            ref={input => {
-              this.field[2] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
-
-          <input
-            name="field_4"
-            maxLength="1"
-            ref={input => {
-              this.field[3] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
-
-          <input
-            name="field_5"
-            maxLength="1"
-            ref={input => {
-              this.field[4] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
-
-          <input
-            name="field_6"
-            maxLength="1"
-            ref={input => {
-              this.field[5] = input;
-            }}
-            onChange={event => {
-              this.getInput(event.target);
-            }}
-            className={
-              errors
-                ? style.inputTwoFactorAuthenticatorError
-                : style.inputTwoFactorAuthenticator
-            }
-          />
+          {
+            Array.from(Array(6).keys()).map((i, k) => {
+              return (<input
+                key={k}
+                name={"field_"+k}
+                maxLength="1"
+                autoFocus
+                ref={input => {
+                  this.field[k] = input;
+                }}
+                onKeyUp={(event) => this.getInput(event, k)}
+                onChange={() => {}}
+                className={
+                  errors
+                    ? style.inputTwoFactorAuthenticatorError
+                    : style.inputTwoFactorAuthenticator
+                }/>)
+            })
+          }
         </div>
 
         <div className={style.instructions_2}>
