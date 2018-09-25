@@ -117,7 +117,7 @@ class MultiFactorAuth extends React.Component {
                 key={k}
                 name={"field_"+k}
                 maxLength="1"
-                autoFocus
+                autoFocus={k === 0 ? true : false}
                 ref={input => {
                   this.field[k] = input;
                 }}
