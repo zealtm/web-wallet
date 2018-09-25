@@ -79,16 +79,17 @@ class Ted extends React.Component {
     }
 
     coinSelected = ( title = undefined) => {
-        this.setState({
+        /*this.setState({
             ...this.state,
             coin: {
                 name: title,
             },
-        });
+        });*/
     };
 
     render() {
         const { classes, loading, coinsRedux } = this.props;
+        console.log(JSON.stringify(this.props))
         const { coin, errors } = this.state;
 
         const title = coin.name || "Select a coin..";
