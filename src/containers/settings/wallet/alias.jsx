@@ -23,9 +23,20 @@ class AliasPage extends React.Component {
     this.setState({ fieldAlias: value });
   };
 
+  componentDidMount() {
+    let { coins, getAliases } = this.props;
+    let address = coins.lunes.address;
+    console.warn("COMPONENT DID MOUNTCH", address);
+    if (address) {
+      console.warn("foi", address);
+      getAliases(address);
+    }
+  }
+
   createNewAlias = () => {
     let { createAlias, coins, settings, user } = this.props;
     let { fieldAlias } = this.state;
+
     let coinName = coins.lunes.abbreviation;
     let coinAddress = coins.lunes.address;
     let decimalPoint = coins.lunes.decimalPoint;

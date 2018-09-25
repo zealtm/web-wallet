@@ -15,22 +15,20 @@ export const verifyTwoFactorAuthSettings = token => ({
   token
 });
 
-export const createAlias = (coin, address, alias, fee, password) => (
-  console.warn("action", coin, address, alias, fee, password), {
-    type: "CREATE_ALIAS_ADDRESS_API",
-    data: {
-      coin,
-      address,
-      alias,
-      fee,
-      password
-    }
-  });
-
-export const getAliases = (coin, address) => ({
-  type: "GET_ALIAS_ADDRESS_API",
+export const createAlias = (coin, address, alias, fee, password) => ({
+  type: "CREATE_ALIAS_ADDRESS_API",
   data: {
     coin,
+    address,
+    alias,
+    fee,
+    password
+  }
+});
+
+export const getAliases = (address) => (console.warn("ACTION", address), {
+  type: "GET_ALIAS_ADDRESS_API",
+  data: {
     address
   }
 });

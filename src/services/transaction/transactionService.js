@@ -347,7 +347,7 @@ class TransactionService {
   async getAliases(address) {
     try {
       let transaction = new LunesTransaction();
-      let response = await transaction.createAlias({
+      let response = await transaction.getAliases({
         address,
         network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
       });

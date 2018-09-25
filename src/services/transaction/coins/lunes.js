@@ -77,16 +77,17 @@ class LunesTransaction {
     let seed = await lunes.Seed.fromExistingPhrase(value.seed);
     console.warn("seed.keypair", seed);
 
-    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair).then(x => console.warn(x));
+    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair);
     console.warn("Olha aqui mano! ", transaction);
 
     return transaction;
   }
 
   async getAliases(value) {
+    console.warn("CHEGOU ", value);
     let lunes = await create(value.network.APICONFIG);
     let transaction = lunes.API.Node.v1.aliases.byAddress(value.address)
-
+    console.warn("GET ALIASSES", transaction)
     return transaction;
   }
 }
