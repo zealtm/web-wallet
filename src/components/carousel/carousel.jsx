@@ -13,7 +13,8 @@ const styles = {
         background: "#907db2",
         width: 10.2,
         height: 10,
-        marginRight: 10
+        marginRight: 10,
+        cursor: 'pointer'
     },
     dots: {
 
@@ -43,15 +44,20 @@ class Carousel extends Component {
     stepChange = activeStep => {
         this.setState({ activeStep });
     };
-    next = () => {
-      let step = this.state.activeStep + 1;
-      if (step > 3) step = 0;
-      this.setState({activeStep: step})
+
+    changeStepTo = (step) => {
+      this.setState({activeStep: step});
     }
-    prev = () => {
-      let step = this.state.activeStep - 1;
-      if (step < 0) step = 0;
-      this.setState({activeStep: step})
+    componentDidMount() {
+      setTimeout(() => {
+        let dots = document.querySelectorAll('[class*="MuiMobileStepper-dot-"]');
+        Array.from(dots).map((dot, key) => {
+          dot.onclick = () => {
+            console.warn(`Voce clicou no ${key}`)
+            this.changeStepTo(key)
+          }
+        })
+      }, 200)
     }
 
     render() {
@@ -86,8 +92,6 @@ class Carousel extends Component {
                     dotActive: classes.dotActive,
                     root: classes.root
                   }}
-                  nextButton={<button onClick={this.next} className={style.stepButton}>{">"}</button>}
-                  backButton={<button onClick={this.prev} className={style.stepButton}>{"<"}</button>}
                 />
               </Grid>
             </Grid>
