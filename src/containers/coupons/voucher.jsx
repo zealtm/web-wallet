@@ -69,8 +69,20 @@ class Voucher extends React.Component {
 
   handlePhoneChange = id => event => {
     const phone = this.state.phone;
-    phone[id] = event.target.value;
+    let { value } = event.target;
+    let { keyCode } = event;
 
+    value = value.replace(/[^0-9]/i, '')
+
+    if (id === 0 && value.length === 2) {
+      let phone = document.getElementById("phone");
+      phone.focus();
+    } else if (id === 1 && value.length === 0 && (keyCode === 8 || keyCode === 46)) {
+      let ddd = document.getElementById("ddd");
+      ddd.focus();
+    }
+
+    phone[id] = value;
     this.setState({
       ...this.state,
       phone
@@ -88,10 +100,10 @@ class Voucher extends React.Component {
       code
     });
     let dic = ['first','second','third','fourth']
-    if ((keyCode === 8 || keyCode === 48) && value.length < 1) {
+    if ((keyCode === 8 || keyCode === 46) && value.length < 1) {
       let prev = document.querySelector(`.${dic[id - 1]}`)
       if (prev === null) return;
-      prev.focus();
+      prev.focus()
     }
     if (value.length === 4) {
       let next = document.querySelector(`.${dic[id + 1]}`)
@@ -165,9 +177,11 @@ class Voucher extends React.Component {
                     underline: classes.cssUnderline,
                     input: classes.cssInput
                   }}
-                  placeholder="(xx)"
+                  id="ddd"
                   value={phone[0]}
+                  placeholder="(xx)"
                   inputProps={{ maxLength: 2, required: true }}
+                  onKeyUp={this.handlePhoneChange(0)}
                   onChange={this.handlePhoneChange(0)}
                 />
               </Grid>
@@ -178,9 +192,11 @@ class Voucher extends React.Component {
                     underline: classes.cssUnderline,
                     input: classes.cssInput
                   }}
-                  placeholder="xxxxx-xxxx"
                   value={phone[1]}
+                  id="phone"
+                  placeholder="xxxxx-xxxx"
                   inputProps={{ maxLength: 9, required: true }}
+                  onKeyUp={this.handlePhoneChange(1)}
                   onChange={this.handlePhoneChange(1)}
                 />
               </Grid>

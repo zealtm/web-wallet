@@ -22,9 +22,10 @@ class Code extends React.Component {
             <input key={id}
               className={style.inputTextDefault+' '+dic[id]}
               placeholder="1234"
+              value={values[id]}
               maxLength={4}
               onKeyDown={this.handleChange(id)}
-              onChange={() => {}}
+              onChange={this.handleChange(id)}
               required
             />
           </Grid>
