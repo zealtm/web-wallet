@@ -30,7 +30,7 @@ export function* getAssetGeneralInfo(action) {
 
   } catch (error) {
     yield put({type: "REQUEST_FAILED", message: error.message})
-    console.warn('getAssetsGeneralInfo', error)
+    console.warn(error)
   }
 }
 
@@ -69,7 +69,7 @@ export function* getAssetHistory(action) {
     return;
   } catch (error) {
     yield put({ type: "REQUEST_FAILED", message: error.message });
-    console.warn('getAssetHistory', error)
+    console.warn(error)
   }
 }
 
@@ -86,6 +86,6 @@ export function* reloadAsset(action) {
     })
   } catch(error) {
     yield put({type:"REQUEST_FAILED", message: error.message})
-    console.warn('reloadAsset', error)
+    console.warn(error)
   }
 }
