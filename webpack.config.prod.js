@@ -89,7 +89,6 @@ module.exports = {
       },
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    
     new HtmlWebpackPlugin({
       template: "public/index.html"
     })

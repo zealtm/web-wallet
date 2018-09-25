@@ -31,11 +31,12 @@ class HistoryItem extends React.Component {
           <div className={style.itemRight}>
             <p className={style.icon}>
               <img
-                src={`/images/icons/coins/${item.coin}.png`}
+                src={`/images/icons/coins/${item.coin.toLowerCase()}.png`}
                 alt={item.coin}
               />{" "}
-              {item.coin}
+              <span>{item.coin}</span>
             </p>
+            
             <p className={style.coinValue}>
               {convertBiggestCoinUnit(item.amountCripto, decimalPoint).toFixed(
                 decimalPoint
