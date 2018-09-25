@@ -173,7 +173,7 @@ class CoinService {
     }
   }
 
-  async getavailableCoins(token) {
+  async getAvailableCoins(token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/coin", API_HEADER);
