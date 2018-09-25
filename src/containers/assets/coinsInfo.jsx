@@ -14,9 +14,6 @@ import Grid from "@material-ui/core/Grid";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
-//COMPONENTS
-import DefaultInfo from "./defaultInfo";
-
 // UTILS
 import i18n from "../../utils/i18n";
 import { getAssetInfo } from "../../utils/assets";
@@ -48,11 +45,11 @@ class CoinsInfo extends React.Component {
     let { assets, selectedCoin } = assetsRoute;
 
     if (selectedCoin === 'lunes' || !selectedCoin)
-      return <DefaultInfo/>
+      return null;
 
     let found = assets.find(asset => asset.assetId === selectedCoin ? true : false);
 
-    if (!found) return <DefaultInfo/>
+    if (!found) return null;
 
     let asset = {
       ...found,

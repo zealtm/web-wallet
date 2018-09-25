@@ -74,22 +74,23 @@ class CoinsBar extends React.Component {
     return assets.map((asset, index) => {
       asset = assets[index];
 
+      if (!asset) return null;
+
       asset = {
         ...asset,
         ...getAssetInfo(asset.assetId)
       }
 
-      if (!asset) return null;
-
       asset.status = asset.assetId === selectedCoin ? true : false;
 
       asset.icon = asset.icon ? asset.icon : 'default.png';
 
-      asset.name = asset.name ? asset.name.replace(/(\s?token)/i, '') : i18n.t("UNKNOWN")
+      asset.name = asset.name
+      ? asset.name.replace(/(\s?token)/i, '').toUpperCase()
+      : i18n.t("UNKNOWN")
 
       return (
         <div
-          className={asset.status ? null : style.boxCoinDisabled}
           key={index}
           onClick={ () => this.setCoin(asset.assetId) }
         >
@@ -106,7 +107,9 @@ class CoinsBar extends React.Component {
             </div>
             <Hidden smDown>
               <div className={style.boxHiddenContent}>
-                { asset.abbreviation ? asset.abbreviation.toUpperCase() : i18n.t("UNKNOWN") }
+                { asset.abbreviation
+                  ? asset.abbreviation.toUpperCase()
+                  : i18n.t("UNKNOWN").toUpperCase() }
               </div>
             </Hidden>
           </div>
