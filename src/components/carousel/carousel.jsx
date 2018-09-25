@@ -53,7 +53,6 @@ class Carousel extends Component {
         let dots = document.querySelectorAll('[class*="MuiMobileStepper-dot-"]');
         Array.from(dots).map((dot, key) => {
           dot.onclick = () => {
-            console.warn(`Voce clicou no ${key}`)
             this.changeStepTo(key)
           }
         })
