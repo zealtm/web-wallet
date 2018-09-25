@@ -14,7 +14,7 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-// COMPONENTS 
+// COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
 
 class SecurePayment extends React.Component {
@@ -33,8 +33,8 @@ class SecurePayment extends React.Component {
     let { password } = this.state;
     let { user, errorInput, payment, coins, confirmPay } = this.props;
 
-    const coin = payment.coin.abbreviation;
-  
+    const coin = payment.coin.abbreviation.toLowerCase();
+
     const payload = {
       coin:           coin,
       fromAddress:    coins[coin].address,
@@ -44,15 +44,13 @@ class SecurePayment extends React.Component {
       feePerByte:     payment.fee.fee.feePerByte,
       feeLunes:       payment.fee.fee.feeLunes,
       price:          coins[coin].price,
-      decimalPoint:   coins[coin].decimalPoint, 
-      user:           user.password, 
+      decimalPoint:   coins[coin].decimalPoint,
+      user:           user.password,
       payment:        payment,
     }
 
     if (user.password === encryptHmacSha512Key(password)) {
-      
       confirmPay(payload);
-
       return;
     }
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
@@ -105,22 +103,22 @@ SecurePayment.propTypes = {
   payment:      PropTypes.object.isRequired,
   loading:      PropTypes.bool.isRequired,
   user:         PropTypes.object.isRequired,
-  errorInput:   PropTypes.func.isRequired, 
+  errorInput:   PropTypes.func.isRequired,
   confirmPay:   PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
   payment:    store.payment.payment,
   loading:    store.payment.loading,
-  user:       store.user.user, 
+  user:       store.user.user,
   coins:      store.skeleton.coins,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
-  { 
-    confirmPay, 
-    errorInput 
-  }, 
+  {
+    confirmPay,
+    errorInput
+  },
   dispatch
 );
 

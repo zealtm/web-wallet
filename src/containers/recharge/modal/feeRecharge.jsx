@@ -64,7 +64,7 @@ class FeeRecharge extends React.Component {
 
     const payload = {
       fee: feeValue,
-      feePerByte: feePerByte, 
+      feePerByte: feePerByte,
       feeLunes: feeLunes
     }
 
@@ -74,7 +74,7 @@ class FeeRecharge extends React.Component {
   validateForm = () => {
     const { setModalStep } = this.props;
     const { feeSelect } = this.state;
-    
+
     if(feeSelect > 0){
       setModalStep(3);
     }else{
@@ -85,10 +85,10 @@ class FeeRecharge extends React.Component {
 
   componentDidMount = () => {
     const {getFeeRecharge, recharge, wallet} = this.props;
-    
+
     const fromAddress = wallet.coins[recharge.coin.abbreviation].address;
-    const toAddress = recharge.coin.address; 
-  
+    const toAddress = recharge.coin.address;
+
     getFeeRecharge(recharge.coin.abbreviation, recharge.amount, fromAddress, toAddress);
   }
 
@@ -147,7 +147,7 @@ class FeeRecharge extends React.Component {
               className={style.redLabelFee}
               onClick={() => this.calcFee("high")}
             >
-              {i18n.t("FEE_HIGHT")} {fee.fee.high}
+              {i18n.t("FEE_HIGH")} {fee.fee.high}
             </span>
           </div>
 

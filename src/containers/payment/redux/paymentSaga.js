@@ -37,6 +37,7 @@ export function* getCoinsEnabledSaga() {
         const active = {
           title: coin.abbreviation.toUpperCase(),
           value: {
+            id: coin.id,
             abbreviation: coin.abbreviation,
             address: coin.address
           },
@@ -302,7 +303,7 @@ export function* confirmPaySaga(payload) {
             document: payload.payment.payment.cpfCnpj,
             txID: transacao_obj.txID,
             describe: payload.payment.payment.description,
-            serviceId: lunesWallet.id
+            serviceId: payload.payment.payment.coin.id
           };
 
           // chamar api pra salvar a transacao
