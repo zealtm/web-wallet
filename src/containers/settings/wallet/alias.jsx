@@ -1,20 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { errorInput } from "../../errors/redux/errorAction";
 import { createAlias, getAliases } from "../redux/settingsAction";
-
-// UTILS
 import i18n from "../../../utils/i18n";
-
-// MATERIAL
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
-
-// STYLES
 import style from "./style.css";
 import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
