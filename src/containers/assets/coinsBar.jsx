@@ -73,6 +73,7 @@ class CoinsBar extends React.Component {
 
     return assets.map((asset, index) => {
       asset = assets[index];
+
       asset = {
         ...asset,
         ...getAssetInfo(asset.assetId)
@@ -80,33 +81,27 @@ class CoinsBar extends React.Component {
 
       if (!asset) return null;
 
-      let coin = assets.find(a => a.assetId === asset.assetId ? true : false);
+      asset.status = asset.assetId === selectedCoin ? true : false;
 
-      if (!coin) return null;
+      asset.icon = asset.icon ? asset.icon : 'default.png';
 
-
-      asset = {
-        ...asset,
-        ...coin
-      }
-
-      let coinStatus = asset.assetId === selectedCoin ? true : false;
+      asset.name = asset.name ? asset.name.replace(/(\s?token)/i, '') : i18n.t("UNKNOWN")
 
       return (
         <div
-          className={coinStatus ? null : style.boxCoinDisabled}
+          className={asset.status ? null : style.boxCoinDisabled}
           key={index}
           onClick={ () => this.setCoin(asset.assetId) }
         >
           <div
             className={
-              coinStatus ? style.boxCoinActive : style.boxCoin
+              asset.status ? style.boxCoinActive : style.boxCoin
             }
           >
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/icons/coins/${asset.icon}`}
+                src={`images/icons/tokens/${asset.icon}`}
               />
             </div>
             <Hidden smDown>

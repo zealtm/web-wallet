@@ -48,7 +48,7 @@ DoneRecharge.propTypes = {
 }
 
 const mapStateToProps = store => ({
-  loading: store.payment.loading,
+  loading: store.recharge.loading,
 });
 
 export default connect(mapStateToProps)(DoneRecharge);

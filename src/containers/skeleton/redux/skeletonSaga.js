@@ -118,7 +118,7 @@ export function* loadWalletInfo(action) {
 export function* availableCoins() {
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(coinService.getAvaliableCoins, token);
+    let response = yield call(coinService.getAvailableCoins, token);
 
     yield put({
       type: "GET_AVAILABLE_COINS",
