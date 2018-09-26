@@ -178,7 +178,7 @@ export function* getInvoiceSaga(payload) {
       yield put(internalServerError());
     }
 
-    if (response.code !== 200) {
+    if (!response.hasOwnProperty('code') || response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
