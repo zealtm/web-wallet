@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import {
+    getCoinsEnabled
+} from "./../../payment/redux/paymentAction";
 
 // COMPONENTS
 import Select from "../../../components/select";
@@ -20,6 +23,9 @@ import { withStyles } from "@material-ui/core/styles";
 
 // STYLES
 import style from "../style.css";
+
+// UTILS
+import { inputValidator } from "../../../utils/inputValidator";
 
 const customStyle = {
     inputRoot: {
@@ -71,26 +77,141 @@ class Ted extends React.Component {
         super();
         this.state = {
             errors: [],
+            disableNumberInput: false,
+            tedLoading: false,
+            ted: {
+                banco: "",
+                tipo: "",
+                agencia: "",
+                operacao: "",
+                conta: "",
+                nomeRazao: "",
+                cpfcnpj: "",
+                value: "",
+                coin: {
+                    abbreviation: "",
+                    address: ""
+                }
+            },
             coin: {
                 name: undefined,
+                value: undefined,
+                img: undefined
             }
         };
+
         this.coinSelected = this.coinSelected.bind(this);
+        this.coinSelected = this.coinSelected.bind(this);
+
+    }
+    componentDidMount() {
+        const { getCoinsEnabled } = this.props;
+        getCoinsEnabled();
     }
 
-    coinSelected = ( title = undefined) => {
-        /*this.setState({
+    coinSelected = (value, title, img = undefined) => {
+        const { ted } = this.state;
+
+        this.setState({
             ...this.state,
             coin: {
                 name: title,
+                value,
+                img
             },
-        });*/
+            ted: {
+                ...ted,
+                coin: value
+            }
+        });
     };
 
+    setDefaultState = () => {
+        const emptyValue = {
+            banco: "",
+            tipo: "",
+            agencia: "",
+            operacao: "",
+            conta: "",
+            nomeRazao: "",
+            cpfcnpj: "",
+            value: "",
+            coin: {
+                abbreviation: "",
+                address: ""
+            }
+        };
+
+        this.setState({
+            ...this.state,
+            ted: emptyValue,
+            coin: {
+                name: undefined,
+                value: undefined,
+                img: undefined
+            }
+        });
+    };
+    inputValidator = () => {
+        const { ted, coin } = this.state;
+        const tedData = {
+            ...ted,
+            banco: ted.banco,
+            tipo: ted.tipo,
+            agencia: ted.agencia,
+            operacao: ted.operacao,
+            conta: ted.conta,
+            nomeRazao: ted.nomeRazao,
+            cpfcnpj: ted.cpfcnpj,
+            value: ted.value
+          };
+      
+          const tedInputs = {};
+      
+          for (const key in tedData) {
+            if (tedData.hasOwnProperty(key)) {
+                tedInputs[key] = {
+                type: key === "dueDate" ? "date" : "text",
+                name: key,
+                placeholder: key,
+                value: tedData[key],
+                required: true
+              };
+            }
+          }
+      
+          const coinInput = {
+            type: "text",
+            name: "coin",
+            placeholder: "coin",
+            value: tedData.coin.abbreviation || coin.name || "",
+            required: true
+          };
+      
+          const { errors } = inputValidator({ ...tedInputs, coin: coinInput });
+      
+          if (errors.length > 0) {
+            this.setState({
+              ...this.state,
+              errors
+            });
+            return;
+          }
+
+    }
+    handleTedDefaultChange = name => event => {
+        this.setState({
+          ...this.state,
+          ted: {
+            ...this.state.ted,
+            [name]: event.target.value
+          }
+        });
+      };
+
     render() {
-        const { classes, loading, coinsRedux } = this.props;
-        console.log(JSON.stringify(this.props))
-        const { coin, errors } = this.state;
+        const { classes, loading, coinsRedux} = this.props;
+        const { coin, errors,ted } = this.state;
 
         const title = coin.name || "Select a coin..";
 
@@ -99,18 +220,20 @@ class Ted extends React.Component {
                 <Grid container className={style.box}>
                     <Grid item xs={6}>
                         <Select
-                            list={coinsRedux}
-                            title={"BANCO / INSTITUIÇÃO"}
-                            selectItem={this.coinSelected}
-                            style={{ backgroundColor: "black !important" }}
+                        list={coinsRedux}
+                        selectItem={this.coinSelected}
+                        title={i18n.t("TED_INPUT_BANCK")}
+                        style={{ backgroundColor: "black !important" }}
+                        error={errors.includes("banco")}
                         />
                     </Grid>
 
                     <Grid item xs={6}>
                         <Select
-                            list={coinsRedux}
-                            title={"TIPO DE CONTA"}
-                            selectItem={this.coinSelected}
+                        list={coinsRedux}
+                        selectItem={this.coinSelected}
+                        itle={i18n.t("TED_INPUT_TYPE_TED")}
+                        error={errors.includes("tipo")}
                         />
                     </Grid>
 
@@ -122,7 +245,10 @@ class Ted extends React.Component {
                                     underline: classes.inputCssUnderline,
                                     input: classes.inputCss
                                 }}
-                                placeholder="AGENCIA"
+                                value={ted.agencia}
+                                placeholder={i18n.t("TED_INPUT_AG_TED")}
+                                onChange={this.handleTedDefaultChange("agencia")}
+                                error={errors.includes("agencia")}
                             />
                         </Grid>
                         <Grid item xs={3}>
@@ -132,7 +258,10 @@ class Ted extends React.Component {
                                     underline: classes.inputCssUnderline,
                                     input: classes.inputCss
                                 }}
-                                placeholder="OPERAÇÃO"
+                                value={ted.operacao}
+                                placeholder={i18n.t("TED_INPUT_OP_TED")}
+                                onChange={this.handleTedDefaultChange("operacao")}
+                                error={errors.includes("operacao")}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -142,7 +271,10 @@ class Ted extends React.Component {
                                     underline: classes.inputCssUnderline,
                                     input: classes.inputCss
                                 }}
-                                placeholder="CONTA"
+                                value={ted.conta}
+                                placeholder={i18n.t("TED_INPUT_ACC")}
+                                onChange={this.handleTedDefaultChange("conta")}
+                                error={errors.includes("conta")}
                             />
                         </Grid>
                     </Grid>
@@ -153,7 +285,10 @@ class Ted extends React.Component {
                                 underline: classes.inputCssUnderline,
                                 input: classes.inputCss
                             }}
-                            placeholder="NOME OU RAZÃO SOCIAL"
+                            value={ted.nomeRazao}
+                            placeholder={i18n.t("TED_INPUT_NAME")}
+                            onChange={this.handleTedDefaultChange("nomeRazao")}
+                            error={errors.includes("nomeRazao")}
                         />
                     </Grid>
 
@@ -165,8 +300,12 @@ class Ted extends React.Component {
                                     underline: classes.inputCssUnderline,
                                     input: classes.inputCss
                                 }}
-                                placeholder="CPF"
+                                value={ted.cpfcnpj}
+                                placeholder={i18n.t("TED_INPUT_CPF_CNPJ")}
+                                error={errors.includes("cpfCnpj")}
                                 inputComponent={CpfMask}
+                                onChange={this.handleTedDefaultChange("cpfcnpj")}
+                                error={errors.includes("cpfcnpj")}
 
                             />
                         </Grid>
@@ -177,8 +316,11 @@ class Ted extends React.Component {
                                     underline: classes.inputCssUnderline,
                                     input: classes.inputCss
                                 }}
-                                placeholder="VALOR DO TED"
+                                value={ted.value}
+                                placeholder={i18n.t("TED_INPUT_VALUE")}
                                 inputComponent={MoneyBrlMask}
+                                onChange={this.handleTedDefaultChange("value")}
+                                error={errors.includes("value")}
                             />
                         </Grid>
                     </Grid>
@@ -189,25 +331,26 @@ class Ted extends React.Component {
                         <Grid item xs={12} sm={6} >
                             <Select
                                 list={coinsRedux}
-                                title={title}
                                 selectItem={this.coinSelected}
+                                title={title}                                
                                 error={errors.includes("coin")}
                             />
                         </Grid>
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} className={style.transparentBox}
-                    style={{ marginTop: "10px" }}>
-
-                    <Link to="#">
-                        <button
-                            className={style.buttonBorderGreen}
-                            onClick={this.inputValidator}
-                        >
-                            {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
-                        </button>
-                    </Link>
+                <Grid
+                    item
+                    xs={12}
+                    className={style.transparentBox}
+                    style={{ marginTop: "10px" }}
+                >
+                    <button
+                        className={style.buttonBorderGreen}
+                        onClick={this.inputValidator}
+                    >
+                        {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
+                    </button>
                 </Grid>
 
                 <Grid item xs={12}
@@ -228,6 +371,7 @@ Ted.propTypes = {
     classes: PropTypes.object,
     coinsRedux: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
+    getCoinsEnabled: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -239,6 +383,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
+            getCoinsEnabled
         },
         dispatch
     );

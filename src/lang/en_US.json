@@ -372,6 +372,14 @@
   "INSTRUCTION_MODAL_TED_INFO_1_TITTLE": "TED Rates:",
   "INSTRUCTION_MODAL_TED_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Monday rate) + 6% of the service charge.",
   "INSTRUCTION_MODAL_TED_INFO_2_TITTLE": "Devolution:",
-  "INSTRUCTION_MODAL_TED_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Monday address."
+  "INSTRUCTION_MODAL_TED_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Monday address.",
 
+  "TED_INPUT_BANCK" :"BANCO / INSTITUIÇÃO",
+  "TED_INPUT_TYPE_TED" : "TIPO DE CONTA",
+  "TED_INPUT_AG_TED" : "AGENCIA",
+  "TED_INPUT_OP_TED" : "OPERAÇÃO",
+  "TED_INPUT_ACC" : "CONTA",
+  "TED_INPUT_NAME":"NOME OU RAZÃO SOCIAL",
+  "TED_INPUT_CPF_CNPJ":"CPF / CNPJ (only numbers)",
+  "TED_INPUT_VALUE":"VALOR DO TED"
 }
