@@ -2,7 +2,34 @@ import { getDefaultCrypto } from "../../../utils/localStorage";
 
 //UTILS
 import i18n from "../../../utils/i18n";
-
+const initialModalSendState = {
+  open: false,
+  step: 0,
+  address: undefined,
+  sendAmount: undefined,
+  finalAmount: undefined,
+  feeValue: {
+    fee: {
+      low: 0.001,
+      medium: 0.001,
+      high: 0.001
+    },
+    feePerByte: {
+      low: 0,
+      medium: 0,
+      high: 0
+    },
+    feeLunes: {
+      low: 0,
+      medium: 0,
+      high: 0
+    },
+    selectedFee: undefined,
+    selectedFeePerByte: undefined,
+    selectedFeeLunes: undefined
+  },
+  loading: false
+}
 const initialState = {
   selectedCoin: getDefaultCrypto(),
   coinHistory: {
@@ -10,34 +37,7 @@ const initialState = {
     loading: false,
     history: []
   },
-  modal: {
-    open: false,
-    step: 0,
-    address: undefined,
-    sendAmount: undefined,
-    finalAmount: undefined,
-    feeValue: {
-      fee: {
-        low: 0.001,
-        medium: 0.001,
-        high: 0.001
-      },
-      feePerByte: {
-        low: 0,
-        medium: 0,
-        high: 0
-      },
-      feeLunes: {
-        low: 0,
-        medium: 0,
-        high: 0
-      },
-      selectedFee: undefined,
-      selectedFeePerByte: undefined,
-      selectedFeeLunes: undefined
-    },
-    loading: false
-  },
+  modal: initialModalSendState,
   modalReceive: {
     open: false
   },
@@ -52,6 +52,11 @@ const initialState = {
 
 const wallet = (state = initialState, action) => {
   switch (action.type) {
+    case "RESET_MODAL_SEND":
+      return {
+        ...state,
+        modal: initialModalSendState
+      }
     case "SET_WALLET_UTXOS":
       return {
         ...state,
