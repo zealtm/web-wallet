@@ -25,37 +25,18 @@ class MultiFactorAuth extends React.Component {
     this.field = [];
     this.state = {
       twoFactorFields: {
-        field_0: undefined,
-        field_1: undefined,
-        field_2: undefined,
-        field_3: undefined,
-        field_4: undefined,
-        field_5: undefined,
+        field_0: '',
+        field_1: '',
+        field_2: '',
+        field_3: '',
+        field_4: '',
+        field_5: '',
       },
       errors: undefined
     };
   }
 
-  getInput = (event, currentKeyInput) => {
-    let { value } = event.target;
-    let { keyCode } = event;
-    let { twoFactorFields } = this.state;
 
-    if (keyCode === 8 || keyCode === 46) {
-      if (!this.field[currentKeyInput - 1]) return;
-      this.field[currentKeyInput - 1].focus();
-      value = undefined;
-    }
-    if (value && (keyCode !== 8 && keyCode !== 46)) {
-      if (this.field[currentKeyInput + 1]) {
-        this.field[currentKeyInput + 1].focus();
-      }
-    }
-    this.setState({
-      twoFactorFields: {...twoFactorFields, ['field_'+currentKeyInput]: value},
-      errors: undefined
-    })
-  };
 
   inputValidator = () => {
     let { loading, errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
@@ -95,6 +76,32 @@ class MultiFactorAuth extends React.Component {
     }
   }
 
+  handleOnChange = (event, key) => {
+    let val = event.target.value.replace(/[^0-9]/, '');
+    this.setState({twoFactorFields: {
+      ...this.state.twoFactorFields,
+      [`field_${key}`]: !val ? '' : val.replace(/[^0-9]/, '')
+    }})
+  }
+  getInput = (event, key) => {
+    let { value } = event.target;
+    let { keyCode } = event;
+
+    if (keyCode === 8 || keyCode === 46) {
+      if (this.field[key - 1])
+        this.field[key - 1].focus();
+      value = '';
+    } else if (value && (keyCode !== 8 && keyCode !== 46)) {
+      if (this.field[key + 1])
+        this.field[key + 1].focus();
+    }
+    if (!value) value = '';
+
+    this.setState({twoFactorFields: {
+      ...this.state.twoFactorFields,
+      [`field_${key}`]: value
+    }})
+  };
   render() {
     let { loading } = this.props.user;
     let { errors, twoFactorFields } = this.state;
@@ -115,14 +122,14 @@ class MultiFactorAuth extends React.Component {
             Array.from(Array(6).keys()).map((i, k) => {
               return (<input
                 key={k}
+                type="tel"
                 name={"field_"+k}
                 maxLength="1"
+                value={this.state.twoFactorFields[`field_${k}`]}
                 autoFocus={k === 0 ? true : false}
-                ref={input => {
-                  this.field[k] = input;
-                }}
-                onKeyUp={(event) => this.getInput(event, k)}
-                onChange={() => {}}
+                ref={input => { this.field[k] = input; }}
+                onKeyUp={e => this.getInput(e, k)}
+                onChange={e => this.handleOnChange(e, k)}
                 className={
                   errors
                     ? style.inputTwoFactorAuthenticatorError
@@ -141,12 +148,12 @@ class MultiFactorAuth extends React.Component {
 
         <button
           className={
+            twoFactorFields.field_0 &&
             twoFactorFields.field_1 &&
             twoFactorFields.field_2 &&
             twoFactorFields.field_3 &&
             twoFactorFields.field_4 &&
-            twoFactorFields.field_5 &&
-            twoFactorFields.field_6
+            twoFactorFields.field_5
               ? style.buttonEnable
               : style.buttonBorderGreen
           }
