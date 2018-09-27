@@ -151,10 +151,12 @@
   padding-top: 5px;
   color: #ffffff;
   font-size: 11px;
+  margin: 0 0 10px;
 }
 
 :local .userName {
   font-size: 14px;
+  font-weight: bold;
 }
 
 :local .textBalance {
