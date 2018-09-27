@@ -118,14 +118,9 @@ class Menu extends React.Component {
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
-              <a
-                href="mailto:support@lunes.io"
-                className={style.link}
-                onClick={actionMenu}
-              >
+              <Link to="/support" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SUPPORT")}
-                {/* <Link to="/help" className={style.link}></Link> */}
-              </a>
+              </Link>
               <Link to="/" onClick={actionLogout} className={style.link}>
                 {i18n.t("MENU_LOGOUT")}
               </Link>

@@ -1,0 +1,66 @@
+/*
+1. BASE
+  1.1 BUTTON
+
+2. CARD
+  2.1 CARD
+
+*/
+
+/* ------------------------------------------------------------------------- */
+/* 1. BASE */
+
+
+
+/* 2. BAR */
+:local(.topBar) {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 80px;
+  margin-bottom: 15px;
+}
+/* 2.1 CARD */
+:local(.cardHome) {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  width: 702px;  
+  height: 599px;
+  border-radius: 10px;
+  padding: 5px 5px 8px 5px;  
+  align-items: center;
+  margin: 20px;
+  max-width: 100%;
+  min-height: 400px;
+}
+
+:local(.homeContainer) {
+  justify-content: center;
+  height: 90vh;
+  align-items: center;
+}
+
+:local(.boxContainer) {
+  margin: 0;
+}
+
+@media only screen and (min-width: 1180px) {
+  :local(.boxContainer) {
+    margin: 0 10%;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  :local(.boxContainer) {
+    margin: 0 20%;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  :local(.boxContainer) {
+    margin: 0 30%;
+  }
+}
