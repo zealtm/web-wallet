@@ -63,7 +63,7 @@ class AssetService {
         nodeImages = data.balances.map(async (token, i) => {
           await axios.get(LUNESNODE_URL + "/addresses/alias/by-address/" + token.sender).then((res) => {
             let url = res.data[0].replace("alias:1:", "")
-            data.balances[i].image = url + "/nodeimage.png"
+            data.balances[i].image = "http://" + url + "/nodeimage.png"
           }).catch((() => {
             data.balances[i].image = "images/icons/tokens/default.png"
           }));
