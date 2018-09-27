@@ -36,6 +36,7 @@ class HistoryItem extends React.Component {
               />{" "}
               <span className={style.coinName}>{item.coin}</span>
             </p>
+            
             <p className={style.coinValue}>
               {convertBiggestCoinUnit(item.amountCripto, decimalPoint).toFixed(
                 decimalPoint
