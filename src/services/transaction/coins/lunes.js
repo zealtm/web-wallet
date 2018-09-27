@@ -66,28 +66,22 @@ class LunesTransaction {
   }
 
   async createAlias(value) {
+    let lunes = await create(value.network.APICONFIG);
+    let seed = await lunes.Seed.fromExistingPhrase(value.seed);
     let data = {
-      alias: value.alias,
       fee: value.fee,
+      alias: value.alias,
       timestamp: Date.now()
     };
-    console.warn("até aqui funciona");
-    let lunes = await create(value.network.APICONFIG);
-    console.warn("is lunes", lunes);
-    let seed = await lunes.Seed.fromExistingPhrase(value.seed);
-    console.warn("seed.keypair", seed);
 
     let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair);
-    console.warn("Olha aqui mano! ", transaction);
 
     return transaction;
   }
 
   async getAliases(value) {
-    console.warn("CHEGOU ", value);
     let lunes = await create(value.network.APICONFIG);
-    let transaction = lunes.API.Node.v1.aliases.byAddress(value.address)
-    console.warn("GET ALIASSES", transaction)
+    let transaction = lunes.API.Node.v1.aliases.byAddress(value.address);
     return transaction;
   }
 }
