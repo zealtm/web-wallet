@@ -28,6 +28,7 @@ class Assets extends React.Component {
     let { getAssetGeneralInfo, skeleton } = this.props;
     let { selectedCoin } = this.props.assets;
     let { address } = skeleton.coins.lunes;
+
     getAssetGeneralInfo(address);
     this.setState({ lastAsset: selectedCoin });
   }
@@ -36,6 +37,7 @@ class Assets extends React.Component {
     let { assets, getAssetHistory, skeleton } = this.props;
     let { lastAsset } = this.state; 
     let { selectedCoin } = this.props.assets;
+
     if (lastAsset !== selectedCoin) {
       getAssetHistory(assets.assets[selectedCoin].assetId, skeleton.coins.lunes.address);
       this.setState({ lastAsset: selectedCoin });
@@ -96,6 +98,7 @@ class Assets extends React.Component {
   render() {
     let { assets } = this.props;
     let { isBalanceLoading, isTxHistoryLoading } = assets;
+
     if (isBalanceLoading || isTxHistoryLoading) {
       return (
         <div>
@@ -103,6 +106,7 @@ class Assets extends React.Component {
         </div>
       );
     }
+    
     return this.renderContent();
   }
 }

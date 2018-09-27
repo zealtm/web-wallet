@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-
 // STYLE
 import style from "./style.css";
 
@@ -27,10 +26,6 @@ class CoinsInfo extends React.Component {
     };
   }
 
-  previousStep = () => {
-    return;
-  };
-
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -43,7 +38,7 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin]
-    console.warn(assets, asset.image)
+
     if (selectedCoin === undefined)
       return null;
 
