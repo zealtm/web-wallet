@@ -23,7 +23,7 @@ class Support extends React.Component {
             <div>
                 <SupportBar /><br />
                 <div className={style.boxContainer}>
-                    <Grid container>
+                    <Grid container className={style.homeContainer}>
                         <div className={style.cardHome}>
                             <h1>{'Nome'}</h1>
                             <h2>{'Damiiao'}</h2>
