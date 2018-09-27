@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -54,14 +55,16 @@ class Header extends React.Component {
     } else {
       return (
         <div className={style.iconNotification}>
-          <IconButton color="inherit" aria-label="Notifications">
-            <img
-              src="/images/icons/general/bell@1x.png"
-              height="25px"
-              width="25px"
-              alt=""
-            />
-          </IconButton>
+          <Link to="/notifications">
+            <IconButton color="inherit" aria-label="Notifications">
+              <img
+                src="/images/icons/general/bell@1x.png"
+                height="25px"
+                width="25px"
+                alt=""
+              />
+            </IconButton>
+          </Link>
         </div>
       );
     }
@@ -127,6 +130,7 @@ class Header extends React.Component {
           {this.renderBalance()}
 
           <Hidden mdDown>
+            {this.renderNotifications()}
             <UserControl actionLogout={actionLogout} />
           </Hidden>
         </Toolbar>
