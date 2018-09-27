@@ -1,0 +1,66 @@
+/*
+  1. BASE
+  2. TEXT
+*/
+
+/* ======================================= */
+
+/* 1. BASE */
+:local .itemContainer {
+  composes: bgPurpleLight from "../../../components/bases/colorBase.css";
+  display: flex;
+  min-width: 100%;
+  min-height: 6rem;
+  border-radius: 5px;
+  margin: 1rem auto;
+}
+
+:local .avatar {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+}
+
+:local .right {
+  text-align: right;
+  margin: 0 10px;
+}
+
+/* 2. TEXT */
+:local .textDefault {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  font-size: 12px;
+}
+
+:local .name {
+  composes: textDefault;
+  font-weight: bold;
+  margin: 1.5rem 0;
+  display: flex;
+  align-content: center;
+}
+
+:local .message {
+  composes: textDefault;
+  margin-top: 1rem;
+}
+
+:local .message p {
+  margin: 5px 0;
+}
+
+:local .title {
+  font-weight: bold;
+}
+
+:local .greenText {
+  composes: linkDefault from "../../../components/bases/textBase.css";
+  font-weight: bold;
+}
+
+:local .time {
+  composes: textDefault;
+  font-weight: bold;
+}
+
+

@@ -69,6 +69,10 @@ import {
   getRechargeCoinsEnabledSaga
 } from "../recharge/redux/rechargeSaga";
 
+import {
+  getNotificationsSaga
+} from "../notifications/redux/notificationsSaga"
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -140,5 +144,9 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+
+    // notifications-saga
+    fork(takeLatest, "GET_NOTIFICATIONS_API", getNotificationsSaga),
+
   ];
 }
