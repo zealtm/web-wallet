@@ -406,7 +406,7 @@
   "WALLET_UTXOS_EMPTY_1": "There's a problem: no UTXOS.",
   "WALLET_UTXOS_EMPTY_2": "There's a problem: no UTXOS.",
 
-  "PAYMENT_SUCCESS_1": "You just paid",
+  "PAYMENT_SUCCESS_1": "You just paid for the ticket",
   "PAYMENT_SUCCESS_2": " in your wallet Lunes",
   "PAYMENT_FEE_TEXT_1": "You are sending ",
   "PAYMENT_FEE_TEXT_2": " to the address ",
