@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   setSelectedCoin,
-  getAssetHistory,
 } from "./redux/assetsAction";
 import { errorInput } from "../errors/redux/errorAction";
 
@@ -28,7 +27,6 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getAssetInfo } from "../../utils/assets";
 
 // STYLE
 import style from "./style.css";
@@ -47,9 +45,9 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
-  setCoin = (assetId) => {
+  setCoin = (id) => {
     let { setSelectedCoin } = this.props;
-    setSelectedCoin(assetId);
+    setSelectedCoin(id);
   };
 
   renderArrowPercent = val => {
@@ -63,7 +61,6 @@ class CoinsBar extends React.Component {
   renderCoins = () => {
     let { assets, selectedCoin, isBalanceLoading } = this.props.assets;
 
-
     if (isBalanceLoading)
       return <div className={style.infoBarLoading}><Loading/></div>
 
@@ -73,26 +70,12 @@ class CoinsBar extends React.Component {
 
     return assets.map((asset, index) => {
       asset = assets[index];
-
-      if (!asset) return null;
-
-      asset = {
-        ...asset,
-        ...getAssetInfo(asset.assetId)
-      }
-
-      asset.status = asset.assetId === selectedCoin ? true : false;
-
-      asset.icon = asset.icon ? asset.icon : 'default.png';
-
-      asset.name = asset.name
-      ? asset.name.replace(/(\s?token)/i, '').toUpperCase()
-      : i18n.t("UNKNOWN")
+      asset.status = index === selectedCoin ? true : false;
 
       return (
         <div
           key={index}
-          onClick={ () => this.setCoin(asset.assetId) }
+          onClick={ () => this.setCoin(index) }
         >
           <div
             className={
@@ -102,14 +85,12 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/icons/tokens/${asset.icon}`}
+                src={asset.image ? asset.image : "images/icons/tokens/default.png"}
               />
             </div>
             <Hidden smDown>
               <div className={style.boxHiddenContent}>
-                { asset.abbreviation
-                  ? asset.abbreviation.toUpperCase()
-                  : i18n.t("UNKNOWN").toUpperCase() }
+                { asset.tokenName.toUpperCase() }
               </div>
             </Hidden>
           </div>
@@ -191,7 +172,6 @@ CoinsBar.propTypes = {
   wallet: PropTypes.object,
   assets: PropTypes.object,
   setSelectedCoin: PropTypes.func,
-  getAssetHistory: PropTypes.func,
 };
 
 const mapSateToProps = store => ({
@@ -202,7 +182,6 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAssetHistory,
       setSelectedCoin,
       errorInput
     },

@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   BASE_URL,
   API_HEADER,
+  LUNESNODE_URL
 } from "../constants/apiBaseUrl";
 
 // UTILS
@@ -9,9 +10,10 @@ import i18n from "../utils/i18n.js";
 
 
 const PATHS = {
-  GET_BALANCE: (address) => `coin/lunes/asset/balance/${address}`,
-  GET_TX_HISTORY: (address, assetId) => `coin/lunes/asset/history/${address}/${assetId}`
+  GET_BALANCE: (address) => "coin/lunes/asset/balance/" + address,
+  GET_TX_HISTORY: (address, assetId) => "coin/lunes/asset/history/" + address + "/" + assetId
 }
+
 const Axios = axios.create({
   baseURL: BASE_URL,
   headers: API_HEADER.headers,
@@ -55,7 +57,22 @@ class AssetService {
       let { data: result, status } = await Axios.get(PATHS.GET_BALANCE(address),{
         headers: { Authorization: token }
       });
-      let { data } = result;
+      let { data, nodeImages } = result;
+
+      if(status === 200) {
+        nodeImages = data.balances.map(async (token, i) => {
+          await axios.get(LUNESNODE_URL + "/addresses/alias/by-address/" + token.sender).then((res) => {
+            let url = res.data[0].replace("alias:1:", "")
+            data.balances[i].image = url + "/nodeimage.png"
+          }).catch((() => {
+            data.balances[i].image = "images/icons/tokens/default.png"
+          }));
+        })
+      }
+
+      /* eslint-disable*/
+      await Promise.all(nodeImages)
+      /* eslint-enable*/
 
       this.responseValidation({...result, axiosStatus: status});
 
@@ -69,7 +86,7 @@ class AssetService {
     try {
       let { data: result, status } = await Axios.get(PATHS.GET_TX_HISTORY(
         address, assetId), { headers: { Authorization: token } });
-      let { data, } = result ? result : {};
+      let { data } = result ? result : {};
       let { assets } = data ? data : {};
 
       this.responseValidation({...result, axiosStatus: status});
