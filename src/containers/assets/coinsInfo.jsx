@@ -16,7 +16,6 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getAssetInfo } from "../../utils/assets";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
@@ -43,20 +42,10 @@ class CoinsInfo extends React.Component {
   render() {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
-
-    if (selectedCoin === 'lunes' || !selectedCoin)
+    let asset = assets[selectedCoin]
+    console.warn(assets, asset.image)
+    if (selectedCoin === undefined)
       return null;
-
-    let found = assets.find(asset => asset.assetId === selectedCoin ? true : false);
-
-    if (!found) return null;
-
-    let asset = {
-      ...found,
-      ...getAssetInfo(selectedCoin)
-    }
-    asset.name = asset.tokenName === 'temp' || !asset.tokenName
-    ? 'UNKNOWN' : asset.tokenName;
 
     return (
       <div>
@@ -64,9 +53,9 @@ class CoinsInfo extends React.Component {
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{asset.name.toUpperCase()}</h3>
+                <h3>{asset.tokenName.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/tokens/" + asset.icon}
+                  src={asset.image ? asset.image : "images/icons/tokens/default.png"}
                   className={style.iconCoinSelected}
                 />
               </Grid>

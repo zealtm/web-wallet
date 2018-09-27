@@ -18,6 +18,7 @@ export function* getAssetGeneralInfo(action) {
     let { lunesAddress } = action;
 
     let response = yield call([assetService, assetService.getBalances], lunesAddress, token);
+
     if (response.type !== 'success') {
       yield put({type: "REQUEST_FAILED", message: response.message})
       yield put({type: "SET_ASSET_DATA", isBalanceLoading: false})

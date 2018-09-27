@@ -394,12 +394,14 @@
 
   "WALLET_UTXOS_EMPTY_1": "Existe um problema: não há UTXOS.",
   "WALLET_UTXOS_EMPTY_2": "Existe um problema: não há UTXOS.",
-
+  
+  "PAYMENT_SUCCESS_1": "Você acabou de pagar o boleto",
   "PAYMENT_SUCCESS_2": " na sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você está enviando ",
   "PAYMENT_FEE_TEXT_2": " para o endereço ",
   "PAYMENT_DETAILS_TEXT_1": "Atenção: Confira abaixo os dados da sua solicitação, para que não haja erros. Se as informações estiverem incorretas, clique em Voltar.",
   "PAYMENT_DETAILS_TEXT_2": " e será pago um título de ",
+  "PAYMENT_DETAILS_TEXT_3": ", de acordo com as informações abaixo:",
 
   "PAYMENT_CONFIRM_1": "Confirme seus dados para concluir seu pagamento",
   "PAYMENT_CONFIRM_2": "Você será cobrado da sua carteira ",

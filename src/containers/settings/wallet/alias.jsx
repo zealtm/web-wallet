@@ -26,11 +26,7 @@ class AliasPage extends React.Component {
   componentDidMount() {
     let { coins, getAliases } = this.props;
     let address = coins.lunes.address;
-    console.warn("COMPONENT DID MOUNTCH", address);
-    if (address) {
-      console.warn("foi", address);
-      getAliases(address);
-    }
+    getAliases(address);
   }
 
   createNewAlias = () => {
@@ -97,6 +93,7 @@ class AliasPage extends React.Component {
                   <Grid item xs={12} md={8}>
                     <input
                       type="text"
+                      maxLength={"30"}
                       className={style.inputClear}
                       onChange={event =>
                         this.handleAliasValue(event.target.value)
@@ -131,14 +128,11 @@ AliasPage.propTypes = {
   user: PropTypes.object
 };
 
-const mapSateToProps = store => (
-  console.warn(store),
-  {
-    coins: store.skeleton.coins,
-    settings: store.settings,
-    user: store.user.user
-  }
-);
+const mapSateToProps = store => ({
+  coins: store.skeleton.coins,
+  settings: store.settings,
+  user: store.user.user
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
