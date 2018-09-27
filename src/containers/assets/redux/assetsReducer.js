@@ -1,7 +1,5 @@
-import { getDefaultCrypto } from "../../../utils/localStorage";
-
 const initialState = {
-  selectedCoin: getDefaultCrypto(),
+  selectedCoin: undefined,
   isBalanceLoading: false,
   isTxHistoryLoading: false,
   assets: [],
@@ -17,12 +15,14 @@ const asset = (state = initialState, action) => {
         isTxHistoryLoading: action.isTxHistoryLoading,
         assets: action.assets ? action.assets : state.assets
       }
+
     case "SET_ASSET_HISTORY":
       return {
         ...state,
         isTxHistoryLoading: action.isTxHistoryLoading,
         history: action.history ? action.history : []
       }
+
     case "ASSETS_SET_SELECTED_COIN":
       return {
         ...state,
