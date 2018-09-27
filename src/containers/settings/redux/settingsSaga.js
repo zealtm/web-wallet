@@ -1,14 +1,15 @@
 import { put, call } from "redux-saga/effects";
-import { getAuthToken } from "../../../utils/localStorage";
 import {
   internalServerError,
   modalSuccess
 } from "../../../containers/errors/statusCodeMessage";
 
-// Services
+// SERVICES
 import AuthService from "../../../services/authService";
-// import { userInfo } from "os";
 const authService = new AuthService();
+
+// UTILS
+import { getAuthToken } from "../../../utils/localStorage";
 
 export function* getTwoFactorAuth() {
   try {

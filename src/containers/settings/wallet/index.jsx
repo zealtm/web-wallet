@@ -6,13 +6,11 @@ import i18n from "../../../utils/i18n";
 
 // COMPONENTS
 import Tabs from "../../../components/tabs";
-
-// PAGES
 // import AliasPage from "./alias";
 import FavoritePage from "./favorite";
 import SeedWordsPage from "./seed";
 
-// MATERIAL
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 

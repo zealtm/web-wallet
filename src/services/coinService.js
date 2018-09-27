@@ -1,5 +1,7 @@
 import axios from "axios";
 import CAValidator from "crypto-address-validator";
+
+// CONSTANTS
 import {
   BASE_URL,
   LUNESNODE_URL,
@@ -7,6 +9,8 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
+
+// ERROR
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 // UTILS
@@ -528,20 +532,24 @@ class CoinService {
 
   async verifyCoupon(coupon, token) {
     try {
-      let endpoint = `${BASE_URL}/coupon/rescue/${coupon}`;
+      let endpoint = BASE_URL + "/coupon/rescue/" + coupon;
 
       API_HEADER.headers.Authorization = token;
+
       API_HEADER.validateStatus = function() {
         return true;
       }
+
       let { data, headers } = await axios.post(endpoint, {}, API_HEADER)
 
       let errorMessage = {};
       if (data.errorMessage) {
         errorMessage = JSON.parse(data.errorMessage);
       }
+      
       let status = parseInt(headers.status);
       let code = parseInt(errorMessage.code) || parseInt(data.code);
+
       if ((status != 200) && (code != 200)) {
         let message;
         if ((status === 403) || (code === 403))

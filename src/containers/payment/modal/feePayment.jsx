@@ -93,8 +93,6 @@ class FeePayment extends React.Component {
 
   componentDidMount = () => {
     const {getFeePayment, payment, wallet} = this.props;
-    
-    // teste 
     const fromAddress = wallet.coins[payment.coin.abbreviation].address;
     const toAddress = payment.coin.address; 
   

@@ -105,40 +105,6 @@ const recharge = (state=initialState, action) => {
           loading: false
         };
 
-
-
-
-
-
-      // case "GET_INVOICE_REDUCER":
-      //   return {
-      //     ...state,
-      //     payment: {
-      //       ...state.payment,
-      //       ...action.payment
-      //     }
-      //   };
-
-      // case "GET_USER_GDPR_REDUCER":
-      //   return {
-      //     ...state,
-      //     user: action.user
-      //   };
-
-      // case "SET_USER_GDPR_REDUCER":
-      //   return {
-      //     ...state,
-      //     user: action.user
-      //   };
-
-      // case "GET_HISTORY_PAY_REDUCER":
-      //   return {
-      //     ...state,
-      //     history: action.history
-      //   };
-
-
-
     default: {
       return {
         ...state

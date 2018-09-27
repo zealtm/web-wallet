@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
 import { setLeasingLoading, getLeasingInfo } from "./redux/leasingAction";
 
 // COMPONENTS
@@ -12,6 +14,7 @@ import StartLeasing from "./modal/startLeasing";
 
 // UTILS
 import i18n from "../../utils/i18n";
+
 class Leasing extends React.Component {
   constructor() {
     super();

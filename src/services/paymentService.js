@@ -1,6 +1,12 @@
 import axios from "axios";
+
+//CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
+// ERROR
 import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
+
+// UTILS
 import { setAuthToken } from "../utils/localStorage";
 import i18n from "../utils/i18n";
 
@@ -10,7 +16,7 @@ class PaymentService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        `${BASE_URL}/service/pagamento`,
+        BASE_URL + "/service/pagamento",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -26,7 +32,7 @@ class PaymentService {
       API_HEADER.headers.Authorization = token;
 
       const response = await axios.get(
-        `${BASE_URL}/bill/${number}`,
+        BASE_URL + "/bill/" + number,
         API_HEADER
       );
 

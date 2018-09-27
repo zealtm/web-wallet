@@ -1,13 +1,13 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
+// UTILS
+import { getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { convertToLocaleDate } from "../../../utils/strings";
 
-// UTILS
-import { getUserSeedWords } from "../../../utils/localStorage";
-import { decryptAes } from "../../../utils/cryptography";
 
 // SERVICES
 import PaymentService from "../../../services/paymentService";
@@ -41,7 +41,7 @@ export function* getCoinsEnabledSaga() {
             abbreviation: coin.abbreviation,
             address: coin.address
           },
-          img: `/images/icons/coins/${coin.abbreviation}.png`
+          img: "/images/icons/coins/" + coin.abbreviation + ".png"
         };
 
         availableCoins.push(active);
@@ -85,14 +85,7 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
-
-    // if (balanceResponse.data.code !== 200 || amountResponse.data.code !== 200) {
-    //   yield put({
-    //     type: "SET_LOADING_REDUCER",
-    //     payload: false
-    //   });
-    // }
-
+    
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,

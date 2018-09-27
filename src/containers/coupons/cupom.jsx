@@ -1,8 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
-import { Grid } from "@material-ui/core";
-import style from "./style.css";
-import Instructions from "./instructions";
 import PropTypes from "prop-types";
 
 // REDUX
@@ -13,6 +9,16 @@ import { verifyCoupon } from "./redux/couponsAction.js";
 
 //COMPONENTS
 import Loading from "../../components/loading.jsx";
+import Instructions from "./instructions";
+
+// MATERIAL UI
+import { Grid } from "@material-ui/core";
+
+// UTILS
+import i18n from "../../utils/i18n";
+
+// STYLE
+import style from "./style.css";
 
 class Cupom extends React.Component {
   constructor() {

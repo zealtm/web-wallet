@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
 
 // REDUX
@@ -28,6 +27,8 @@ import style from "./style.css";
 
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
+import i18n from "../../utils/i18n";
+
 
 const customStyle = {
   inputRoot: {

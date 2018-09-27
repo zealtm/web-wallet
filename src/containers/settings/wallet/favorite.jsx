@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {} from "../redux/settingsAction";
 
 // STYLES
 import style from "./style.css";

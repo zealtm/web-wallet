@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../redux/rechargeAction";
+
+// COMPONENTS
 import DetailsRecharge from "./detailsRecharge";
 import FeeRecharge from "./feeRecharge";
 import ConfirmRecharge from "./confirmRecharge";

@@ -1,4 +1,6 @@
 import axios from "axios";
+
+// CONSTANTS
 import {
   BASE_URL,
   API_HEADER,
@@ -7,7 +9,6 @@ import {
 
 // UTILS
 import i18n from "../utils/i18n.js";
-
 
 const PATHS = {
   GET_BALANCE: (address) => "coin/lunes/asset/balance/" + address,

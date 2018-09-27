@@ -1,19 +1,23 @@
 import axios from "axios";
+
+//CONSTANTS
 import {
   BASE_URL,
   API_HEADER,
   HEADER_REQUEST,
   HEADER_RESPONSE
 } from "../constants/apiBaseUrl";
+
+// ERROR
 import {
   badRequest,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-import { setAuthToken } from "../utils/localStorage";
-import { encryptMd5 } from "../utils/cryptography";
 
 // UTILS
 import i18n from "../utils/i18n";
+import { setAuthToken } from "../utils/localStorage";
+import { encryptMd5 } from "../utils/cryptography";
 
 class UserService {
   async createUser(userInfo) {

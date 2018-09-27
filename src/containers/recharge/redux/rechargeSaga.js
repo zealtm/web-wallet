@@ -1,8 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
-import { getAuthToken } from "../../../utils/localStorage";
-
 // SERVICES
 import RechargeService from "../../../services/rechargeService";
 import CoinService from "../../../services/coinService";
@@ -12,6 +10,7 @@ import TransactionService from "../../../services/transaction/transactionService
 // UTILS
 import { getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
+import { getAuthToken } from "../../../utils/localStorage";
 
 const rechargeService = new RechargeService();
 const coinService = new CoinService();

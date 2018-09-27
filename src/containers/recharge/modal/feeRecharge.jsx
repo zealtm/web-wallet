@@ -1,12 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {setModalStep,getFeeRecharge,setFeeRecharge} from "../redux/rechargeAction";
+
+//COMPONENTS
 import ButtonContinue from "./component/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
+
+//UTILS
 import i18n from "../../../utils/i18n";
+
+// STYLE
 import style from "./style.css";
 
 class FeeRecharge extends React.Component {
