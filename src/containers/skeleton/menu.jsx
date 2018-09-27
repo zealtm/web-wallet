@@ -44,12 +44,12 @@ const menuItens = [
   {
     link: "/invoices",
     label: i18n.t("MENU_PAY"),
-    icon: "../../images/icons/general/pay@1x.png",
+    icon: "../../images/icons/general/pay@1x.png"
   },
   {
     link: "/recharge",
     label: i18n.t("MENU_RECHARGE"),
-    icon: "../../images/icons/general/recharge@1x.png",
+    icon: "../../images/icons/general/recharge@1x.png"
   },
   {
     link: "/coupons",
@@ -109,12 +109,18 @@ class Menu extends React.Component {
       >
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
-            <Grid item xs={4} align="justify">
+            <Grid item xs={4} className={style.boxAvatarUser}>
               <Avatar alt="Avatar" src={user.profilePicture} />
             </Grid>
-            <Grid item xs={8}>
+
+            <Grid item xs={8} className={style.boxNameUser}>
               <span className={style.userName}>{user.name}</span>
               <br />
+            </Grid>
+
+            <Grid item xs={4}/>
+
+            <Grid item xs={8}>
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
