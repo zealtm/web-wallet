@@ -37,6 +37,7 @@ export function* getCoinsEnabledSaga() {
         const active = {
           title: coin.abbreviation.toUpperCase(),
           value: {
+            id: coin.id,
             abbreviation: coin.abbreviation,
             address: coin.address
           },
@@ -177,7 +178,7 @@ export function* getInvoiceSaga(payload) {
       yield put(internalServerError());
     }
 
-    if (response.code !== 200) {
+    if (!response.hasOwnProperty('code') || response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -263,8 +264,6 @@ export function* confirmPaySaga(payload) {
       decimalPoint: payload.payment.decimalPoint
     };
 
-    // transacao
-
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -289,7 +288,7 @@ export function* confirmPaySaga(payload) {
 
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate[2] + "-" + dueDate[1] + "-" + dueDate[0];
+        const dueDateFormat = dueDate.reverse().join('-');
 
         const dataIso = new Date(dueDateFormat).toISOString();
 
@@ -302,7 +301,7 @@ export function* confirmPaySaga(payload) {
             document: payload.payment.payment.cpfCnpj,
             txID: transacao_obj.txID,
             describe: payload.payment.payment.description,
-            serviceId: lunesWallet.id
+            serviceId: payload.payment.payment.coin.id
           };
 
           // chamar api pra salvar a transacao

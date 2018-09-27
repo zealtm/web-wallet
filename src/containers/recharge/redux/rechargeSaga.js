@@ -36,6 +36,7 @@ export function* getRechargeCoinsEnabledSaga() {
         const active = {
           title: coin.abbreviation.toUpperCase(),
           value: {
+            id: coin.id,
             abbreviation: coin.abbreviation,
             address: coin.address
           },
@@ -262,7 +263,7 @@ export function* confirmRechargeSaga(payload) {
             value: parseFloat(payload.recharge.recharge.value),
             txID: transacao_obj.txID,
             describe: "Recarga",
-            serviceId: lunesWallet.id
+            serviceId: payload.recharge.recharge.coin.id
           };
 
           let response_elastic = yield call(
@@ -287,6 +288,11 @@ export function* confirmRechargeSaga(payload) {
               step: 5
             });
           }
+
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            payload: false
+          });
           return;
         }
       }

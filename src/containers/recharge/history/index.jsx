@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
-import {getHistoryRecharge} from "../redux/rechargeAction";
+import { bindActionCreators } from "redux";
+import { getHistoryRecharge } from "../redux/rechargeAction";
 
 // MATERIAL UI
 import Search from "@material-ui/icons/Search";
@@ -61,7 +61,7 @@ class History extends React.Component {
 
   componentDidMount = () => {
     const { getHistoryRecharge } = this.props;
-    getHistoryRecharge(); // lista de historico
+    getHistoryRecharge();
   };
 
   handleSearchChange = event => {
@@ -98,7 +98,7 @@ class History extends React.Component {
                 <div className={style.invoiceInfo}>
                   {history.length}
                   <br />
-                  Recarga
+                  {i18n.t("RECHARGE_TAB_TITLE_HISTORY")}
                 </div>
               </div>
             </Grid>

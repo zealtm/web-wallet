@@ -27,7 +27,6 @@ yarn.lock
 package-lock.json
 .eslintcache
 .eslintcache
-marcelo*
 
 # testnet
 /src/constants/apiBaseUrl.js

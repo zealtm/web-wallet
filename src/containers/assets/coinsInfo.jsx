@@ -14,9 +14,6 @@ import Grid from "@material-ui/core/Grid";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
-//COMPONENTS
-import DefaultInfo from "./defaultInfo";
-
 // UTILS
 import i18n from "../../utils/i18n";
 import { getAssetInfo } from "../../utils/assets";
@@ -47,22 +44,19 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
 
-    if (selectedCoin === 'lunes' || !selectedCoin) {
-      return <DefaultInfo/>
+    if (selectedCoin === 'lunes' || !selectedCoin)
+      return null;
+
+    let found = assets.find(asset => asset.assetId === selectedCoin ? true : false);
+
+    if (!found) return null;
+
+    let asset = {
+      ...found,
+      ...getAssetInfo(selectedCoin)
     }
-
-    let asset = getAssetInfo(selectedCoin)
-
-    if (!asset) return null;
-
-    let coin = assets.find(asset => asset.assetId === selectedCoin ? true : false);
-
-    if (!coin) return null;
-
-    asset = {
-      ...asset,
-      ...coin
-    }
+    asset.name = asset.tokenName === 'temp' || !asset.tokenName
+    ? 'UNKNOWN' : asset.tokenName;
 
     return (
       <div>
@@ -72,7 +66,7 @@ class CoinsInfo extends React.Component {
               <Grid item>
                 <h3>{asset.name.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/coins/" + asset.icon}
+                  src={"./images/icons/tokens/" + asset.icon}
                   className={style.iconCoinSelected}
                 />
               </Grid>

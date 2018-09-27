@@ -158,7 +158,7 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length == 47 ? true : false,
+      disableNumberInput: newValue.length == 48,
       invoice: {
         ...invoice,
         number: newValue
@@ -168,7 +168,7 @@ class Invoice extends React.Component {
     if (newValue.length == 0) {
       this.setDefaultState();
       setClearPayment();
-    } else if (newValue.length == 47) {
+    } else if (newValue.length >= 47) {
       if (disableNumberInput) {
         return;
       }
@@ -305,7 +305,7 @@ class Invoice extends React.Component {
                 input: classes.inputCssCenter
               }}
               placeholder="237933802350009031431630033330944400000001000000"
-              inputProps={{ maxLength: 47, required: true }}
+              inputProps={{ maxLength: 48, required: true }}
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
               error={errors.includes("number")}

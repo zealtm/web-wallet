@@ -90,6 +90,15 @@ class Assets extends React.Component {
   };
 
   render() {
+    let { assets } = this.props;
+    let { isBalanceLoading, isTxHistoryLoading } = assets;
+    if (isBalanceLoading || isTxHistoryLoading) {
+      return (
+        <div>
+          <Loading color="wallet" height="80vh" width="100px" />
+        </div>
+      );
+    }
     return this.renderContent();
   }
 }

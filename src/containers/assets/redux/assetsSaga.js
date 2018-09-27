@@ -1,5 +1,4 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
@@ -9,9 +8,7 @@ import AssetService from "../../../services/assetService";
 const assetService = new AssetService();
 
 
-/* eslint-disable */
 export function* getAssetGeneralInfo(action) {
-  //TODO verify if the token is expired, dont forget it!
   try {
     yield put({
       type: "SET_ASSET_DATA",
@@ -23,7 +20,7 @@ export function* getAssetGeneralInfo(action) {
     let response = yield call([assetService, assetService.getBalances], lunesAddress, token);
     if (response.type !== 'success') {
       yield put({type: "REQUEST_FAILED", message: response.message})
-      yield put({ type: "SET_ASSET_DATA", isBalanceLoading: false })
+      yield put({type: "SET_ASSET_DATA", isBalanceLoading: false})
       return;
     }
 
@@ -32,7 +29,8 @@ export function* getAssetGeneralInfo(action) {
     yield put({ type: "SET_ASSET_DATA", assets: assets, isBalanceLoading: false })
 
   } catch (error) {
-    console.log('getAssetsGeneralInfo', error)
+    yield put({type: "REQUEST_FAILED", message: error.message})
+    console.warn(error)
   }
 }
 
@@ -70,19 +68,24 @@ export function* getAssetHistory(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_ASSET_ERROR_STATE", state: true });
-    yield put(internalServerError());
+    yield put({ type: "REQUEST_FAILED", message: error.message });
+    console.warn(error)
   }
 }
 
 export function* reloadAsset(action) {
-  let { assetId, lunesAddress } = action;
+  try {
+    let { assetId, lunesAddress } = action;
 
-  yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress })
+    yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress })
 
-  yield put({
-    type: "GET_ASSET_HISTORY_API",
-    assetId,
-    lunesAddress
-  })
+    yield put({
+      type: "GET_ASSET_HISTORY_API",
+      assetId,
+      lunesAddress
+    })
+  } catch(error) {
+    yield put({type:"REQUEST_FAILED", message: error.message})
+    console.warn(error)
+  }
 }
