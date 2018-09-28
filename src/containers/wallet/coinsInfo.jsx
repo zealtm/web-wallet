@@ -9,7 +9,8 @@ import {
   setWalletReceiveModalOpen,
   setWalletModalStep,
   setWalletLoading,
-  setUtxos
+  setUtxos,
+  resetModalSend
 } from "./redux/walletAction";
 import { errorRequest } from "../errors/redux/errorAction.js";
 
@@ -84,16 +85,32 @@ class CoinsInfo extends React.Component {
     setUtxos(wallet.selectedCoin, address)
     this.setState({lastCoin: wallet.selectedCoin});
   }
+  handleModalSendClose = () => {
+    this.props.resetModalSend();
+    let {
+      user, wallet, setWalletSendModalOpen, setWalletLoading, loadWalletInfo
+    } = this.props;
+    let step = wallet.modal.step;
+
+    if (step === 4) {
+      return null;
+    } else if (step === 5 || step === 6) {
+      return () => {
+        setWalletSendModalOpen(),
+        setWalletLoading(true),
+        loadWalletInfo(user.password);
+      }
+    } else {
+      return () => setWalletSendModalOpen();
+    }
+  }
   render() {
     let defaultCoin = getDefaultFiat();
     let {
       setWalletSendModalOpen,
       setWalletReceiveModalOpen,
-      setWalletLoading,
-      loadWalletInfo,
       coins,
       wallet,
-      user
     } = this.props;
     let step = wallet.modal.step;
     let selectedCoin = wallet.selectedCoin;
@@ -114,19 +131,9 @@ class CoinsInfo extends React.Component {
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
-          content={<SendModal />}
+          content={<SendModal/>}
           show={wallet.modal.open}
-          close={
-            step === 4
-              ? null
-              : step === 5 || step === 6
-                ? () => {
-                  setWalletSendModalOpen(),
-                  setWalletLoading(true),
-                  loadWalletInfo(user.password);
-                }
-                : () => setWalletSendModalOpen()
-          }
+          close={this.handleModalSendClose}
           back={
             step === 0 || step === 4 || step === 5 || step === 6
               ? null
@@ -237,7 +244,8 @@ CoinsInfo.propTypes = {
   setWalletModalStep: PropTypes.func.isRequired,
   setWalletSendModalOpen: PropTypes.func.isRequired,
   setWalletReceiveModalOpen: PropTypes.func,
-  errorRequest: PropTypes.func
+  errorRequest: PropTypes.func,
+  resetModalSend: PropTypes.func,
 };
 
 const mapSateToProps = store => ({
@@ -255,7 +263,8 @@ const mapDispatchToProps = dispatch =>
       setWalletSendModalOpen,
       setWalletReceiveModalOpen,
       setUtxos,
-      errorRequest
+      errorRequest,
+      resetModalSend
     },
     dispatch
   );
