@@ -1,12 +1,20 @@
-import React from "react"; import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { successRequest } from "../../../errors/redux/errorAction";
-import style from "../../style.css";
 import QrCode from "qrcode.react";
 import PropTypes from "prop-types";
-import i18n from "../../../../utils/i18n";
-import Hidden from "@material-ui/core/Hidden";
+
+// REDUX
+import { bindActionCreators } from "redux";
+import React from "react"; import { connect } from "react-redux";
+import { successRequest } from "../../../errors/redux/errorAction";
 import { shareCoinAddress } from "../../redux/walletAction"
+
+// STYLE
+import style from "../../style.css";
+
+// UTILS
+import i18n from "../../../../utils/i18n";
+
+// MATERIAL UI
+import Hidden from "@material-ui/core/Hidden";
 
 class Receive extends React.Component {
 

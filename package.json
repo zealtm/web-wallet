@@ -1,6 +1,6 @@
 {
   "name": "project-viserion",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "Wallet Web",
   "main": "index.js",
   "scripts": {
