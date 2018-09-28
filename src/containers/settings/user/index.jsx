@@ -29,6 +29,8 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 
+
+// STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
   img: {
     width: "60%",
@@ -48,6 +50,7 @@ const customStyle = {
   focused: {}
 };
 
+// STYLE DO MATERIAL UI (Permitido)
 const MenuProps = {
   PaperProps: {
     style: {

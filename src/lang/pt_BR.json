@@ -441,5 +441,6 @@
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
   "RECHARGE_SELECT_TITLE_VALUE": "Valor",
   "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
-  "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente."
+  "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente.",
+  "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado"
 }

@@ -84,7 +84,6 @@ export function* verifyTwoFactorAuthSettings(action) {
 
 export function* createAlias(action) {
   try {
-    console.warn(action);
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
     let token = yield call(getAuthToken);
@@ -96,12 +95,18 @@ export function* createAlias(action) {
       return;
     }
 
-    yield call(transactionService.createAlias,
+    let response = yield call(transactionService.createAlias,
       action.data.alias,
       action.data.fee,
       seedDecrypt
     );
-    
+
+    if (response.data) {
+      yield put(modalError(i18next.t("ALIAS_ALREADY_CLAIMED")));
+
+      return;
+    }
+
     yield put({
       type: "SET_SKELETON_ALIAS_ADDRESS",
       alias: action.data.alias
@@ -127,24 +132,7 @@ export function* getAliases(action) {
       })
     }
   } catch (error) {
-    yield put(internalServerError());
-  }
-}
-
-
-export function* getAddressByAlias() {
-  try {
-    // let response = yield call(transactionService.getAddressByAlias, action.data.address);
-
-    // if (response.length > 0) {
-    //   let firstAlias = response[0].split(":")[2];
-
-    //   yield put({
-    //     type: "SET_SKELETON_ALIAS_ADDRESS",
-    //     alias: firstAlias
-    //   })
-    // }
-  } catch (error) {
+    console.warn("error", error);
     yield put(internalServerError());
   }
 }

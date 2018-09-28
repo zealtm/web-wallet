@@ -1,13 +1,17 @@
 import axios from "axios";
+
+// CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
+// ERROR
 import {
   unauthorized,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
+
+// UTILS 
 import { setAuthToken } from "../utils/localStorage";
 import { encryptMd5 } from "../utils/cryptography";
-
-// UTILS
 import i18n from "../utils/i18n";
 
 class AuthService {

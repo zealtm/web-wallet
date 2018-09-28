@@ -11,6 +11,7 @@ import {
   networks
 } from "../../constants/network";
 
+// ERROR
 import {
   internalServerError,
   modalError
@@ -128,6 +129,8 @@ class TransactionService {
       if (coin === "dash") network = TESTNET ? undefined : networks.DASH;
 
       if (coin === "eth") network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
+      if (coin === "usdt") network = TESTNET ? networks.USDTTESTNET : networks.USDT;
 
       if (
         coin === "btc" ||
@@ -329,7 +332,6 @@ class TransactionService {
 
   async createAlias(alias, fee, seed) {
     try {
-      console.warn("transaction", alias, fee, seed);
       let transaction = new LunesTransaction();
       let response = await transaction.createAlias({
         alias,

@@ -15,8 +15,6 @@ import {
 import {
   encryptMd5
 } from "../utils/cryptography";
-
-// UTILS
 import i18n from "../utils/i18n";
 
 class UserService {
@@ -119,7 +117,6 @@ class UserService {
 
       return response;
     } catch (error) {
-      console.warn(error);
       return internalServerError();
     }
   }
@@ -138,7 +135,6 @@ class UserService {
 
       return response;
     } catch (error) {
-      console.warn(error);
       return internalServerError();
     }
   }

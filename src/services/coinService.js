@@ -1,5 +1,7 @@
 import axios from "axios";
-import CAValidator from "crypto-address-validator";
+import CAValidator from "cryptocurrency-address-validator";
+
+// CONSTANTS
 import {
   BASE_URL,
   LUNESNODE_URL,
@@ -7,7 +9,11 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+
+// ERROR
+import {
+  internalServerError
+} from "../containers/errors/statusCodeMessage";
 
 // UTILS
 import {
@@ -66,9 +72,9 @@ class CoinService {
       const promises = availableCoins.map(async (coin, index) => {
         // CHECK ACTIVE DEFAULT COIN
         if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
-          let coin = availableCoins[index + 1]
-            ? availableCoins[index + 1].abbreviation
-            : availableCoins[index - 1].abbreviation;
+          let coin = availableCoins[index + 1] ?
+            availableCoins[index + 1].abbreviation :
+            availableCoins[index - 1].abbreviation;
           setDefaultCrypto(coin);
         }
 
@@ -87,8 +93,7 @@ class CoinService {
 
           // CREATE ADDRESS
           let responseCreateAddress = await axios.post(
-            BASE_URL + "/coin/" + coin.abbreviation + "/address",
-            {
+            BASE_URL + "/coin/" + coin.abbreviation + "/address", {
               seed
             },
             API_HEADER
@@ -120,10 +125,10 @@ class CoinService {
           // GET BALANCE
           let responseBalance = await axios.get(
             BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
+            "/coin/" +
+            coin.abbreviation +
+            "/balance/" +
+            coin.address,
             API_HEADER
           );
 
@@ -188,7 +193,6 @@ class CoinService {
 
   async getCoinBalance(coinName, address, token) {
     try {
-      console.warn(coinName, address);
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL + "/coin/" + coinName + "/balance/" + address,
@@ -280,8 +284,7 @@ class CoinService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/coin/" + coinType + "/address",
-        {
+        BASE_URL + "/coin/" + coinType + "/address", {
           seed
         },
         API_HEADER
@@ -301,11 +304,11 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          address +
-          "?size=100",
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        address +
+        "?size=100",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -319,6 +322,8 @@ class CoinService {
   async validateAddress(coin, address) {
     try {
       let valid = false;
+
+      if (coin === "usdt") coin = "btc" // USDT/TETHER address === BTC address
 
       if (!coin || !address || address.length < 10) {
         return "error";
@@ -336,16 +341,14 @@ class CoinService {
         return response.data.valid;
       }
 
-      if (coin === "bch") {
-        valid = true;
+      if (TESTNET) {
+        valid = await CAValidator.validate(
+          address,
+          coin.toUpperCase(),
+          "testnet"
+        );
       } else {
-        TESTNET
-          ? (valid = await CAValidator.validate(
-              address,
-              coin.toUpperCase(),
-              "testnet"
-            ))
-          : (valid = await CAValidator.validate(address, coin.toUpperCase()));
+        valid = await CAValidator.validate(address, coin.toUpperCase());
       }
 
       if (!valid) {
@@ -387,8 +390,7 @@ class CoinService {
       amount = convertSmallerCoinUnit(amount, decimalPoint);
 
       let response = await axios.post(
-        BASE_URL + "/coin/" + coinName + "/transaction/fee",
-        {
+        BASE_URL + "/coin/" + coinName + "/transaction/fee", {
           fromAddress,
           toAddress,
           amount
@@ -457,10 +459,10 @@ class CoinService {
 
       let response = await axios.post(
         BASE_URL +
-          "/coin/" +
-          coin +
-          "/transaction/history/" +
-          transaction.sender,
+        "/coin/" +
+        coin +
+        "/transaction/history/" +
+        transaction.sender,
         transactionData,
         API_HEADER
       );
@@ -478,14 +480,14 @@ class CoinService {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
         BASE_URL +
-          "/voucher/" +
-          voucher +
-          "?ddi=" +
-          55 +
-          "&ddd=" +
-          phone[0] +
-          "&phone=" +
-          phone[1],
+        "/voucher/" +
+        voucher +
+        "?ddi=" +
+        55 +
+        "&ddd=" +
+        phone[0] +
+        "&phone=" +
+        phone[1],
         API_HEADER
       );
 
@@ -505,8 +507,7 @@ class CoinService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/voucher/rescue/" + voucher,
-        {
+        BASE_URL + "/voucher/rescue/" + voucher, {
           ddi: 55,
           ddd: phone[0],
           phone: phone[1],
@@ -529,42 +530,64 @@ class CoinService {
 
   async verifyCoupon(coupon, token) {
     try {
-      let endpoint = `${BASE_URL}/coupon/rescue/${coupon}`;
+      let endpoint = BASE_URL + "/coupon/rescue/" + coupon;
 
       API_HEADER.headers.Authorization = token;
-      API_HEADER.validateStatus = function() {
+
+      API_HEADER.validateStatus = function () {
         return true;
-      }
-      let { data, headers } = await axios.post(endpoint, {}, API_HEADER)
+      };
+
+      let {
+        data,
+        headers
+      } = await axios.post(endpoint, {}, API_HEADER);
 
       let errorMessage = {};
       if (data.errorMessage) {
         errorMessage = JSON.parse(data.errorMessage);
       }
+
       let status = parseInt(headers.status);
       let code = parseInt(errorMessage.code) || parseInt(data.code);
-      if ((status != 200) && (code != 200)) {
+
+      if (status != 200 && code != 200) {
         let message;
-        if ((status === 403) || (code === 403))
+        if (status === 403 || code === 403)
           message = i18n.t("COUPON_USER_NOT_AUTHORIZED");
-        else if ((status == 401) || (code == 401))
+        else if (status == 401 || code == 401)
           message = i18n.t("COUPON_INVALID");
-        else if ( (status && status.toString().startsWith('5'))
-        || (code && code.toString().startsWith('5')) )
+        else if (
+          (status && status.toString().startsWith("5")) ||
+          (code && code.toString().startsWith("5"))
+        )
           message = i18n.t("COUPON_SERVER_ERROR");
-        else
-          message = i18n.t("COUPON_UNKNOWN_ERROR_1");
-        return { type: 'error', data: { message: message } };
+        else message = i18n.t("COUPON_UNKNOWN_ERROR_1");
+        return {
+          type: "error",
+          data: {
+            message: message
+          }
+        };
       }
 
-      return { type: 'success', data: { message: data.message } }
-    } catch(error) {
-      console.warn(error)
+      return {
+        type: "success",
+        data: {
+          message: data.message
+        }
+      };
+    } catch (error) {
+      console.warn(error);
       internalServerError();
-      return { type: 'error', data: {
-        message: typeof error === 'string' ? error
-        : error.message || i18n.t("COUPON_UNKNOWN_ERROR_2") }
-      }
+      return {
+        type: "error",
+        data: {
+          message: typeof error === "string" ?
+            error :
+            error.message || i18n.t("COUPON_UNKNOWN_ERROR_2")
+        }
+      };
     }
   }
 }

@@ -9,10 +9,16 @@ import {
   cancelLeasing,
   getLeasingInfo
 } from "../leasing/redux/leasingAction";
+
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
+
+// UTILS
 import { formatDate } from "../../utils/numbers";
-import style from "./style.css";
 import i18n from "../../utils/i18n";
+
+// STYLES
+import style from "./style.css";
 
 class LeasingHistory extends React.Component {
   constructor(props) {

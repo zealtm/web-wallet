@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import { Link } from "react-router-dom";
 
 // MATERIAL UI
@@ -7,6 +6,9 @@ import Grid from "@material-ui/core/Grid";
 
 // STYLE
 import style from "./style.css";
+
+// UTILS
+import i18n from "../../utils/i18n";
 
 class Home extends React.Component {
   render() {

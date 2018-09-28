@@ -1,4 +1,6 @@
 import axios from "axios";
+
+// CONSTANTS
 import {
   BASE_URL,
   API_HEADER,
@@ -7,7 +9,6 @@ import {
 
 // UTILS
 import i18n from "../utils/i18n.js";
-
 
 const PATHS = {
   GET_BALANCE: (address) => "coin/lunes/asset/balance/" + address,
@@ -62,8 +63,8 @@ class AssetService {
       if(status === 200) {
         nodeImages = data.balances.map(async (token, i) => {
           await axios.get(LUNESNODE_URL + "/addresses/alias/by-address/" + token.sender).then((res) => {
-            let url = res.data[0].replace("alias:1:", "")
-            data.balances[i].image = url + "/nodeimage.png"
+            let url = res.data[0].split(":");
+            data.balances[i].image = "http://" + url[2] + "/nodeimage.png"
           }).catch((() => {
             data.balances[i].image = "images/icons/tokens/default.png"
           }));

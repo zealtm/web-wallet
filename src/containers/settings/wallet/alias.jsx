@@ -163,15 +163,12 @@ AliasPage.propTypes = {
   aliasCreated: PropTypes.string
 };
 
-const mapSateToProps = store => (
-  console.warn(store),
-  {
-    coins: store.skeleton.coins,
-    settings: store.settings,
-    user: store.user.user,
-    aliasCreated: store.skeleton.lunesCoin.alias
-  }
-);
+const mapSateToProps = store => ({
+  coins: store.skeleton.coins,
+  settings: store.settings,
+  user: store.user.user,
+  aliasCreated: store.skeleton.lunesCoin.alias
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

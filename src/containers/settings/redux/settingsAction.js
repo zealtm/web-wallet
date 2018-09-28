@@ -26,7 +26,7 @@ export const createAlias = (coin, address, alias, fee, password) => ({
   }
 });
 
-export const getAliases = (address) => (console.warn("ACTION", address), {
+export const getAliases = (address) => ({
   type: "GET_ALIAS_ADDRESS_API",
   data: {
     address
