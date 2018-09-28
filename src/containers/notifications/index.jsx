@@ -16,6 +16,11 @@ class Notifications extends React.Component {
     super();
   }
 
+  componentDidMount() {
+    const { getNotifications } = this.props;
+    getNotifications();
+  }
+
   render() {
     const { loading } = this.props;
 
@@ -37,7 +42,17 @@ Notifications.propTypes = {
 
 const mapStateToProps = store => ({
   loading: store.notifications.loading,
-  // notifications: store.notifications.notifications
+  notifications: store.notifications.notifications
 })
 
-export default connect(mapStateToProps)(Notifications);
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    getNotifications
+  },
+  dispatch
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Notifications);

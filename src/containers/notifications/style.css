@@ -1,3 +1,9 @@
 :local .container {
   margin: 1rem 2rem;
 }
+
+@media only screen and (min-width: 600px) {
+  :local .container {
+    margin: 1rem 7rem;
+  }
+}

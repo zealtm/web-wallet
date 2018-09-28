@@ -15,23 +15,25 @@ class NotificationService {
       // );
       // setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      const response = {
-        data: {
-          notifications: [
-            {
-              from: {
-                name: 'José',
-                img: ''
-              },
-              message: {
-                title: 'Título teste',
-                text: 'Esse é um exemplo de notificação'
-              },
-              date: '2018-09-28T10:00:00'
-            }
-          ]
+      const response = [...Array(5).keys()].map((notification, id) => {
+        return {
+          data: {
+            notifications: [
+              {
+                from: {
+                  name: 'José Manoel',
+                  img: 'https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1'
+                },
+                message: {
+                  title: 'Título teste',
+                  text: 'Esse é um exemplo de notificação'
+                },
+                date: '2018-09-28T10:00:00'
+              }
+            ]
+          }
         }
-      }
+      });
 
       return response.data;
     } catch (error) {

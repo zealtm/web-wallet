@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import { connect } from "react-redux";
+
+// COMPONENTS
 import NotificationItem from "./item";
 
 // Style
@@ -13,28 +17,26 @@ class NotificationList extends React.Component {
   }
 
   renderNotifications = () => {
-    return [...Array(5).keys()].map((notification, id) => {
+    const { notifications } = this.props;
+
+    return notifications.map((notification, id) => {
       return (
-        <NotificationItem key={id} />
+        // TODO: passar os dados a serem exibidos como props
+        <NotificationItem key={id} data={notification} />
       );
     });
   }
+
+  // renderTimeline = () => {
+  //   return
+  // }
 
   render() {
     return (
       <Grid container direction="row" justify="center">
         <Hidden smDown>
           <Grid item sm={3}>
-            <ul>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-            </ul>
+
           </Grid>
         </Hidden>
         <Grid item sm={9}>
@@ -46,7 +48,11 @@ class NotificationList extends React.Component {
 }
 
 NotificationList.propTypes = {
-
+  notifications: PropTypes.array.isRequired,
 }
 
-export default NotificationList;
+const mapStateToProps = store => ({
+  notifications: store.notifications.notifications
+});
+
+export default connect(mapStateToProps)(NotificationList);

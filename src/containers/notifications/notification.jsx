@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 // COMPONENTS
 import NotificationList from "./list";
@@ -26,7 +26,7 @@ class Notification extends React.Component {
 }
 
 Notification.propTypes = {
-
+  loading: PropTypes.bool.isRequired
 }
 
-export default Notification;
+export default connect(mapStateToProps)(Notification);

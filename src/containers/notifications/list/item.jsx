@@ -14,27 +14,27 @@ class NotificationItem extends React.Component {
 
   render() {
     // TODO: pegar imagem que vier da API
-    const img = "https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1";
+    const {notification} = this.props;
     return (
       <div className={style.itemContainer}>
         <Grid container>
-          <Grid item xs={1}>
+          <Grid item xs={4} md={1}>
             <div className={style.avatar}>
               <Avatar alt="Avatar" src={img} />
             </div>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={8} md={2}>
             <div className={style.name}>
               <p>José Lucas</p>
             </div>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <div className={style.message}>
               <p className={style.title}>Tive um problem ao tentar transferir BTC</p>
               <p className={style.text}>Quando tento transferir BTC acontece um erro e a transação não é realizada</p>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} md={3}>
             <div className={style.right}>
               <p className={style.greenText}>http://lunes.io</p>
               <p className={style.time}>4h</p>
