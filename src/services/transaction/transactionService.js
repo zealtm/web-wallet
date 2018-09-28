@@ -5,7 +5,9 @@ import {
   BASE_URL,
   API_HEADER,
   TESTNET,
-  HEADER_RESPONSE
+  HEADER_RESPONSE,
+  HEADER_REQUEST_FORM, 
+  TETHER_URL
 } from "../../constants/apiBaseUrl";
 import {
   networks
@@ -81,6 +83,22 @@ class TransactionService {
     }
   }
 
+  async getUnsigned(params) {
+    try {
+      let response = await axios.post(
+        TETHER_URL + "/v1/transaction/getunsigned/0",
+        params,
+        HEADER_REQUEST_FORM
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
   async transaction(serviceId, transaction, lunesWallet, seed, token) {
     try {
       let network = undefined;
@@ -136,7 +154,8 @@ class TransactionService {
         coin === "btc" ||
         coin === "ltc" ||
         coin === "bch" ||
-        coin === "dash"
+        coin === "dash" ||
+        coin === "usdt"
       ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({

@@ -18,8 +18,8 @@
   height: 85vh;
   overflow: auto;
   padding: 8px;
-  padding-left:0;
-  padding-right:0;
+  padding-left: 0;
+  padding-right: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -31,6 +31,7 @@
   padding-top: 30px;
   transition: 0.5s;
   z-index: 999;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
 :local(.header) {
@@ -39,8 +40,20 @@
 }
 
 :local .boxUserMenu {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #3b1878;
+}
+
+:local(.boxAvatarUser) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:local(.boxNameUser) {
+  display: flex;
+  align-items: center;
 }
 
 :local .boxLogo {
@@ -137,11 +150,14 @@
   display: block;
   padding-top: 5px;
   color: #ffffff;
-  font-size: 11px;
+  font-size: 9px;
+  margin: 0 0 10px;
+  font-weight: bold;
 }
 
 :local .userName {
   font-size: 14px;
+  font-weight: bold;
 }
 
 :local .textBalance {
@@ -173,15 +189,12 @@
 
 :local .linkPopMenu:hover {
   opacity: 1;
-
 }
 
-:local .linkPopMenu:hover img{
+:local .linkPopMenu:hover img {
   opacity: 1;
-  color: #ffffff
-
+  color: #ffffff;
 }
-
 
 /* ------------------------------------------------------------------------- */
 
@@ -250,34 +263,11 @@
   justify-content: center;
   text-align: center;
   padding: 2px;
-
 }
 
 :local .linkPopMenu .boxIcon img {
-
   height: 90%;
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @keyframes :local(shake) {
   25%,

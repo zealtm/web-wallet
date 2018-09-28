@@ -15,7 +15,7 @@ import i18n from "../../../utils/i18n";
 import style from "./style.css";
 
 // COMPONENTS
-import ButtonContinue from "./component/buttonContinue";
+import ButtonContinue from "../../../components/buttonContinue";
 
 class SecureRecharge extends React.Component {
   constructor() {

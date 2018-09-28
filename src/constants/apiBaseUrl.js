@@ -1,5 +1,6 @@
 export const BASE_URL = "https://a.lunes.io/wallet/staging";
 export const LUNESNODE_URL = "https://lunesnode-testnet.lunes.io";
+export const TETHER_URL =  "https://api.omniwallet.org"
 export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
 export const TESTNET = true;
 export const HEADER_REQUEST = {
@@ -9,6 +10,12 @@ export const HEADER_REQUEST = {
     "Access-Control-Allow-Origin": "*"
   }
 };
+
+export const HEADER_REQUEST_FORM = { 
+  headers: {
+  'Content-Type':'application/x-www-form-urlencoded'
+  }
+}
 
 export const API_HEADER = {
   headers: {
