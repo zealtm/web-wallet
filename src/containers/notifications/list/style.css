@@ -56,11 +56,13 @@
 :local .greenText {
   composes: linkDefault from "../../../components/bases/textBase.css";
   font-weight: bold;
+  font-size: 12px;
 }
 
 :local .time {
   composes: textDefault;
   font-weight: bold;
+  margin-top: 1.5rem
 }
 
 
