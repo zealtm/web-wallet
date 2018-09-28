@@ -118,6 +118,8 @@ class TransactionService {
 
       if (coin === "eth") network = TESTNET ? networks.ROPSTEN : networks.ETH;
 
+      if (coin === "usdt") network = TESTNET ? networks.USDTTESTNET : networks.USDT;
+
       if (
         coin === "btc" ||
         coin === "ltc" ||
