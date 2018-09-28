@@ -1,4 +1,5 @@
 const initialState = {
+  loading: false,
   notifications: []
 };
 
@@ -8,6 +9,12 @@ const notifications = (state = initialState, action) => {
       return {
         ...state,
         notifications: action.notifications
+      };
+
+    case "SET_LOADING_REDUCER":
+      return {
+        ...state,
+        loading: action.loading
       };
 
     default: {

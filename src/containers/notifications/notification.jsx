@@ -6,6 +6,11 @@ import i18n from "../../utils/i18n";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
+// REDUX
+// import { connect } from "react-redux";
+
+// COMPONENTS
+import NotificationList from "./list";
 
 // STYLE
 import style from "./style.css";
@@ -31,6 +36,7 @@ class Notification extends React.Component {
             </p>
           </div>
         </div>
+        <NotificationList />
       </Grid>
     );
   }
