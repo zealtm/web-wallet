@@ -357,5 +357,19 @@ class TransactionService {
       return error;
     }
   }
+
+  async getAddressByAlias(alias) {
+    try {
+      let transaction = new LunesTransaction();
+      let response = await transaction.getAddressByAlias({
+        alias,
+        network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+      });
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 export default TransactionService;

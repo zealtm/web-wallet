@@ -130,3 +130,21 @@ export function* getAliases(action) {
     yield put(internalServerError());
   }
 }
+
+
+export function* getAddressByAlias() {
+  try {
+    // let response = yield call(transactionService.getAddressByAlias, action.data.address);
+
+    // if (response.length > 0) {
+    //   let firstAlias = response[0].split(":")[2];
+
+    //   yield put({
+    //     type: "SET_SKELETON_ALIAS_ADDRESS",
+    //     alias: firstAlias
+    //   })
+    // }
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

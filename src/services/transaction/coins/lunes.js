@@ -84,6 +84,12 @@ class LunesTransaction {
     let transaction = lunes.API.Node.v1.aliases.byAddress(value.address);
     return transaction;
   }
+
+  async getAddressByAlias(value) {
+    let lunes = await create(value.network.APICONFIG);
+    let transaction = lunes.API.Node.v1.aliases.byAlias(value.alias);
+    return transaction;
+  }
 }
 
 export default LunesTransaction;
