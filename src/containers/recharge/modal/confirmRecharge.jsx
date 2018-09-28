@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { setModalStep } from "../redux/rechargeAction";
 
 //COMPONENTS
-import ButtonContinue from "./component/buttonContinue";
+import ButtonContinue from "../../../components/buttonContinue";
 
 // UTILS
 import i18n from "../../../utils/i18n";
