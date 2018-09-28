@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../redux/rechargeAction";
 import { updateUserConsents } from "../../user/redux/userAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -32,32 +33,17 @@ class DetailsRecharge extends React.Component {
     this.renderNumber = this.renderNumber.bind(this);
   }
 
-  openError = message => {
-    this.setState({
-      ...this.state,
-      error: true,
-      errorMsg: message
-    });
-
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        error: false,
-        errorMsg: ""
-      });
-    }, 4100);
-  };
-
   validateForm = () => {
-    const { setModalStep } = this.props;
+    const { setModalStep, errorInput, clearMessage } = this.props;
     const { user } = this.state;
 
     if (user.terms === "unread") {
-      this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
+      errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
 
     setModalStep(2);
+    clearMessage();
   };
 
   toogleSwitch = () => {
@@ -104,7 +90,9 @@ class DetailsRecharge extends React.Component {
           </div>
           {i18n.t("RECHARGE_DETAILS_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>{recharge.amount} {recharge.coin.abbreviation.toUpperCase()}</span>
+            <span className={style.textGreen}>
+              {recharge.amount} {recharge.coin.abbreviation.toUpperCase()}
+            </span>
             {i18n.t("RECHARGE_DETAILS_2")}
             <span className={style.textGreen}>R$ {recharge.value}</span>
 
@@ -146,7 +134,9 @@ DetailsRecharge.propTypes = {
   user: PropTypes.object.isRequired,
   setModalStep: PropTypes.func,
   recharge: PropTypes.object.isRequired,
-  updateUserConsents: PropTypes.func.isRequired
+  updateUserConsents: PropTypes.func.isRequired,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -160,6 +150,8 @@ const mapDispatchToProps = dispatch =>
     {
       setModalStep,
       updateUserConsents,
+      clearMessage,
+      errorInput
     },
     dispatch
   );

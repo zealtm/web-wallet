@@ -9,7 +9,7 @@ import {
   getFeeRecharge,
   setFeeRecharge
 } from "../redux/rechargeAction";
-import { errorInput } from "../../errors/redux/errorAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
 import ButtonContinue from "../../../components/buttonContinue";
@@ -68,7 +68,7 @@ class FeeRecharge extends React.Component {
     setFeeRecharge(payload);
   }
   validateForm = () => {
-    const { setModalStep, errorInput } = this.props;
+    const { setModalStep, errorInput, clearMessage } = this.props;
     const { feeSelect } = this.state;
 
     if (feeSelect > 0) {
@@ -77,6 +77,7 @@ class FeeRecharge extends React.Component {
       errorInput(i18n.t("MESSAGE_SELECT_FEE"));
       return;
     }
+    clearMessage();
   };
 
   componentDidMount = () => {
@@ -176,6 +177,7 @@ FeeRecharge.propTypes = {
   getFeeRecharge: PropTypes.func,
   setFeeRecharge: PropTypes.func,
   recharge: PropTypes.object.isRequired,
+  clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };
 
@@ -192,6 +194,7 @@ const mapDispatchToProps = dispatch =>
       setModalStep,
       getFeeRecharge,
       setFeeRecharge,
+      clearMessage,
       errorInput
     },
     dispatch
