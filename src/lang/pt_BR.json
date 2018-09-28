@@ -328,7 +328,7 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_1_TITTLE": "Taxas de Recarga:",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolução:",
   "RECHARGE_BT_INIT": "EFETUAR RECARGA ",
-  
+
   "LOGIN_SLIDE_DESCRIPTION_1": "Faça o pagamento usando suas moedas de criptografia favoritas em uma interface fácil e intuitiva.",
   "LOGIN_SLIDE_DESCRIPTION_2": "Transforme as moedas digitais em Reais por transferência eletrônica para os principais bancos do Brasil.",
   "LOGIN_SLIDE_DESCRIPTION_3": "Recarregue créditos em seu seu celular com suas moedas virtuais com rapidez e segurança.",
@@ -394,7 +394,7 @@
 
   "WALLET_UTXOS_EMPTY_1": "Existe um problema: não há UTXOS.",
   "WALLET_UTXOS_EMPTY_2": "Existe um problema: não há UTXOS.",
-  
+
   "PAYMENT_SUCCESS_1": "Você acabou de pagar o boleto",
   "PAYMENT_SUCCESS_2": " na sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você está enviando ",
@@ -439,5 +439,7 @@
   "RECHARGE_TAB_TITLE_RECHARGE": "Nova recarga",
   "RECHARGE_TAB_TITLE_HISTORY": "Histórico",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
-  "RECHARGE_SELECT_TITLE_VALUE": "Valor"
+  "RECHARGE_SELECT_TITLE_VALUE": "Valor",
+  "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
+  "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente."
 }

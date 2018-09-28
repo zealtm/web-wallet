@@ -15,8 +15,11 @@ import {
 } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import UserService from "../../../services/userService";
+import TransactionService from "../../../services/transaction/transactionService";
+
 const coinService = new CoinService();
 const userService = new UserService();
+const transactionService = new TransactionService();
 
 export function* loadGeneralInfo(action) {
   try {
@@ -37,6 +40,18 @@ export function* loadGeneralInfo(action) {
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
+
+    let responseAlias = yield call(transactionService.getAliases,
+      responseCoins.lunes.address);
+
+    if (responseAlias.length > 0) {
+      let firstAlias = responseAlias[0].split(":")[2];
+
+      yield put({
+        type: "SET_SKELETON_ALIAS_ADDRESS",
+        alias: firstAlias
+      })
+    }
 
     yield put({
       type: "SET_USER_INFO",

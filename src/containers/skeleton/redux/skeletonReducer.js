@@ -49,7 +49,6 @@ const skeleton = (state = initialState, action) => {
       return {
         ...state,
         lunesCoin: {
-          ...state,
           alias: action.alias
         }
       };

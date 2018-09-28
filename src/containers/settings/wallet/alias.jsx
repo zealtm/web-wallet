@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { errorInput } from "../../errors/redux/errorAction";
-import { createAlias, getAliases } from "../redux/settingsAction";
+import { createAlias } from "../redux/settingsAction";
 import i18n from "../../../utils/i18n";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
@@ -15,7 +15,8 @@ class AliasPage extends React.Component {
     super();
 
     this.state = {
-      fieldAlias: ""
+      fieldAlias: "",
+      isEnable: true
     };
   }
 
@@ -24,9 +25,8 @@ class AliasPage extends React.Component {
   };
 
   componentDidMount() {
-    let { coins, getAliases } = this.props;
-    let address = coins.lunes.address;
-    getAliases(address);
+    let { aliasCreated } = this.props;
+    this.setState({ fieldAlias: aliasCreated });
   }
 
   createNewAlias = () => {
@@ -38,13 +38,65 @@ class AliasPage extends React.Component {
     let decimalPoint = coins.lunes.decimalPoint;
     let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
     let password = user.password;
+
     createAlias(coinName, coinAddress, fieldAlias, fee, password);
+  };
+
+  renderAliases = () => {
+    let { aliasCreated } = this.props;
+    let { fieldAlias } = this.state;
+
+    if (aliasCreated) {
+      return (
+        <Grid container className={style.aliasNameRow}>
+          <Grid item xs={12} md={8}>
+            <input
+              type="text"
+              maxLength={"30"}
+              disabled
+              className={style.inputClear}
+              onChange={event => this.handleAliasValue(event.target.value)}
+              value={fieldAlias}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <button
+              disabled
+              className={style.buttonGreen}
+              onClick={() => this.createNewAlias()}
+            >
+              {i18n.t("SET_ALIAS_SAVE_NAME")}
+            </button>
+          </Grid>
+        </Grid>
+      );
+    }
+
+    return (
+      <Grid container className={style.aliasNameRow}>
+        <Grid item xs={12} md={8}>
+          <input
+            type="text"
+            maxLength={"30"}
+            className={style.inputClear}
+            onChange={event => this.handleAliasValue(event.target.value)}
+            value={fieldAlias}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <button
+            className={style.buttonGreen}
+            onClick={() => this.createNewAlias()}
+          >
+            {i18n.t("SET_ALIAS_SAVE_NAME")}
+          </button>
+        </Grid>
+      </Grid>
+    );
   };
 
   render() {
     let { coins } = this.props;
-    let { fieldAlias } = this.state;
-
     return (
       <div>
         <Hidden smUp>
@@ -90,25 +142,7 @@ class AliasPage extends React.Component {
               />
               <div>
                 <Grid container className={style.aliasNameRow}>
-                  <Grid item xs={12} md={8}>
-                    <input
-                      type="text"
-                      maxLength={"30"}
-                      className={style.inputClear}
-                      onChange={event =>
-                        this.handleAliasValue(event.target.value)
-                      }
-                      value={fieldAlias}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <button
-                      className={style.buttonGreen}
-                      onClick={() => this.createNewAlias()}
-                    >
-                      {i18n.t("SET_ALIAS_SAVE_NAME")}
-                    </button>
-                  </Grid>
+                  {this.renderAliases()}
                 </Grid>
               </div>
             </Grid>
@@ -125,20 +159,24 @@ AliasPage.propTypes = {
   createAlias: PropTypes.func,
   getAliases: PropTypes.func,
   settings: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  aliasCreated: PropTypes.string
 };
 
-const mapSateToProps = store => ({
-  coins: store.skeleton.coins,
-  settings: store.settings,
-  user: store.user.user
-});
+const mapSateToProps = store => (
+  console.warn(store),
+  {
+    coins: store.skeleton.coins,
+    settings: store.settings,
+    user: store.user.user,
+    aliasCreated: store.skeleton.lunesCoin.alias
+  }
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createAlias,
-      getAliases,
       errorInput
     },
     dispatch

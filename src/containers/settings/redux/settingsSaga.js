@@ -9,14 +9,18 @@ import {
 import {
   internalServerError,
   modalSuccess,
+  modalError
 } from "../../../containers/errors/statusCodeMessage";
 import AuthService from "../../../services/authService";
 import TransactionService from "../../../services/transaction/transactionService";
 import {
   decryptAes
 } from "../../../utils/cryptography";
+import CoinService from "../../../services/coinService";
+import i18next from "../../../utils/i18n";
 const authService = new AuthService();
 const transactionService = new TransactionService();
+const coinService = new CoinService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -80,22 +84,30 @@ export function* verifyTwoFactorAuthSettings(action) {
 
 export function* createAlias(action) {
   try {
-    console.warn("saga", action);
+    console.warn(action);
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
+    let token = yield call(getAuthToken);
 
-    let response = yield call(
-      transactionService.createAlias,
+    let hasBalance = yield call(coinService.getCoinBalance, action.data.coin, action.data.address, token);
+
+    if (hasBalance.data.data.available === 0) {
+      yield put(modalError(i18next.t("ALIAS_BALANCE_INSUFICIENT")));
+      return;
+    }
+
+    yield call(transactionService.createAlias,
       action.data.alias,
       action.data.fee,
       seedDecrypt
     );
-    console.warn("alias", response);
-    // yield put({
-    //   type: "SET_SKELETON_ALIAS_ADDRESS",
-    //   alias: "leonardinho"
-    // })
-    return response;
+    
+    yield put({
+      type: "SET_SKELETON_ALIAS_ADDRESS",
+      alias: action.data.alias
+    })
+
+    yield put(modalSuccess(i18next.t("ALIAS_CREATED_SUCCESS")));
   } catch (error) {
     console.warn("error", error);
     yield put(internalServerError());
@@ -104,16 +116,17 @@ export function* createAlias(action) {
 
 export function* getAliases(action) {
   try {
-    console.warn("saga", action);
+    let response = yield call(transactionService.getAliases, action.data.address);
 
-    let response = yield call(
-      transactionService.getAliases,
-      action.data.address
-    );
-    console.warn("result ", response);
-    return response;
+    if (response.length > 0) {
+      let firstAlias = response[0].split(":")[2];
+
+      yield put({
+        type: "SET_SKELETON_ALIAS_ADDRESS",
+        alias: firstAlias
+      })
+    }
   } catch (error) {
-    console.warn("error", error);
     yield put(internalServerError());
   }
 }
