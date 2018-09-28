@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {setModalStep,getFeeRecharge,setFeeRecharge} from "../redux/rechargeAction";
+import {
+  setModalStep,
+  getFeeRecharge,
+  setFeeRecharge
+} from "../redux/rechargeAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
 import ButtonContinue from "../../../components/buttonContinue";
@@ -23,34 +28,18 @@ class FeeRecharge extends React.Component {
     this.state = {
       feeSelect: 0,
       error: undefined,
-      errorMsg: '',
-    }
-  }
-
-  openError = (message) => {
-    this.setState({
-      ...this.state,
-      error: true,
-      errorMsg: message
-    });
-
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        error: false,
-        errorMsg: ''
-      });
-    }, 4100);
+      messageError: ""
+    };
   }
 
   calcFee(set) {
-    const {setFeeRecharge, fee} = this.props;
+    const { setFeeRecharge, fee } = this.props;
 
     let feeValue = 0;
     let feePerByte = 0;
     let feeLunes = 0;
 
-    switch(set){
+    switch (set) {
       case "low":
         feeValue = fee.fee.low;
         feePerByte = fee.feePerByte.low;
@@ -68,41 +57,45 @@ class FeeRecharge extends React.Component {
         break;
     }
 
-    this.setState({feeSelect:feeValue});
+    this.setState({ feeSelect: feeValue });
 
     const payload = {
       fee: feeValue,
       feePerByte: feePerByte,
       feeLunes: feeLunes
-    }
+    };
 
     setFeeRecharge(payload);
   }
-
   validateForm = () => {
-    const { setModalStep } = this.props;
+    const { setModalStep, errorInput } = this.props;
     const { feeSelect } = this.state;
 
-    if(feeSelect > 0){
+    if (feeSelect > 0) {
       setModalStep(3);
-    }else{
-      this.openError(i18n.t("MESSAGE_SELECT_FEE"));
+    } else {
+      errorInput(i18n.t("MESSAGE_SELECT_FEE"));
       return;
     }
-  }
+  };
 
   componentDidMount = () => {
-    const {getFeeRecharge, recharge, wallet} = this.props;
+    const { getFeeRecharge, recharge, wallet } = this.props;
 
     const fromAddress = wallet.coins[recharge.coin.abbreviation].address;
     const toAddress = recharge.coin.address;
 
-    getFeeRecharge(recharge.coin.abbreviation, recharge.amount, fromAddress, toAddress);
-  }
+    getFeeRecharge(
+      recharge.coin.abbreviation,
+      recharge.amount,
+      fromAddress,
+      toAddress
+    );
+  };
 
   render() {
     const { loading, recharge, fee } = this.props;
-    const { error, errorMsg, feeSelect } = this.state;
+    const { error, messageError, feeSelect } = this.state;
 
     if (loading) {
       return (
@@ -114,7 +107,9 @@ class FeeRecharge extends React.Component {
       return (
         <div className={style.modalBox}>
           <div>
-            {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+            {error ? (
+              <ModalBar type="error" message={messageError} timer />
+            ) : null}
           </div>
           <img
             src={`/images/icons/coins/${recharge.coin.abbreviation}.png`}
@@ -122,7 +117,9 @@ class FeeRecharge extends React.Component {
           />
           <div>
             <span>{i18n.t("RECHARGE_FEE_TEXT_1")}</span>
-            <span className={style.totalConfirm}>{recharge.amount} {recharge.coin.abbreviation.toUpperCase()}</span>
+            <span className={style.totalConfirm}>
+              {recharge.amount} {recharge.coin.abbreviation.toUpperCase()}
+            </span>
           </div>
           <div>
             <span>{i18n.t("RECHARGE_FEE_TEXT_2")}</span>
@@ -133,7 +130,8 @@ class FeeRecharge extends React.Component {
 
           <div className={style.confirmFee}>
             <div>
-              {i18n.t("PAYMENT_FEE_AMOUNT")}<span> {recharge.coin.abbreviation} </span> é
+              {i18n.t("PAYMENT_FEE_AMOUNT")}
+              <span> {recharge.coin.abbreviation} </span> é
             </div>
             <div className={style.txtamount}>{feeSelect}</div>
           </div>
@@ -171,20 +169,21 @@ class FeeRecharge extends React.Component {
 }
 
 FeeRecharge.propTypes = {
-  fee:              PropTypes.object.isRequired,
-  loading:          PropTypes.bool.isRequired,
-  wallet:           PropTypes.object.isRequired,
-  setModalStep:     PropTypes.func,
-  getFeeRecharge:    PropTypes.func,
-  setFeeRecharge:    PropTypes.func,
-  recharge:         PropTypes.object.isRequired
+  fee: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  wallet: PropTypes.object.isRequired,
+  setModalStep: PropTypes.func,
+  getFeeRecharge: PropTypes.func,
+  setFeeRecharge: PropTypes.func,
+  recharge: PropTypes.object.isRequired,
+  errorInput: PropTypes.func
 };
 
 const mapStateToProps = store => ({
-  fee:        store.recharge.fee,
-  loading:    store.recharge.loading,
-  wallet:     store.skeleton,
-  recharge:   store.recharge.recharge
+  fee: store.recharge.fee,
+  loading: store.recharge.loading,
+  wallet: store.skeleton,
+  recharge: store.recharge.recharge
 });
 
 const mapDispatchToProps = dispatch =>
@@ -193,6 +192,7 @@ const mapDispatchToProps = dispatch =>
       setModalStep,
       getFeeRecharge,
       setFeeRecharge,
+      errorInput
     },
     dispatch
   );
