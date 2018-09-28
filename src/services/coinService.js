@@ -323,6 +323,8 @@ class CoinService {
     try {
       let valid = false;
 
+      if(coin === "usdt") coin = "btc" // USDT/TETHER address === BTC address
+
       if (!coin || !address || address.length < 10) {
         return "error";
       }
