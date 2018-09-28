@@ -14,8 +14,8 @@ import i18n from "../../../utils/i18n";
 import style from "./style.css";
 
 // COMPONENTS
-import CustomSwitch from "./component/customSwitch";
-import ButtonContinue from "./component/buttonContinue";
+import CustomSwitch from "../../../components/customSwitch";
+import ButtonContinue from "../../../components/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
 

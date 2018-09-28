@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import {setModalStep,getFeeRecharge,setFeeRecharge} from "../redux/rechargeAction";
 
 //COMPONENTS
-import ButtonContinue from "./component/buttonContinue";
+import ButtonContinue from "../../../components/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
 
