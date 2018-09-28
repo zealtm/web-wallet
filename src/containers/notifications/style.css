@@ -1,0 +1,13 @@
+:local(.hr) {
+  border-top: 2px solid #654fa4;
+  width: 100%;
+}
+:local(.imgNoNotification) {
+  margin-top: 20%;
+}
+:local(.paragraphs) {
+  font-size: 19px;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+}

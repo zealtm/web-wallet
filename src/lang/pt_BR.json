@@ -437,5 +437,9 @@
   "RECHARGE_TAB_TITLE_RECHARGE": "Nova recarga",
   "RECHARGE_TAB_TITLE_HISTORY": "Histórico",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
-  "RECHARGE_SELECT_TITLE_VALUE": "Valor"
+  "RECHARGE_SELECT_TITLE_VALUE": "Valor",
+
+  "NOTIFICATION_NUMBER_OF_NOTIFICATION": "Notificações",
+  "NOTIFICATION_MESSAGE_1": "Parabéns você não tem nenhuma menssagem.",
+  "NOTIFICATION_MESSAGE_2": "Volte mais tarde para visualizar novas notificações."
 }

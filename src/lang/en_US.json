@@ -435,5 +435,9 @@
   "INSTRUCTION_MODAL_PAY_3": "4.5% above R$ 3001 reais.",
 
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + 5% of the service charge.",
-  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address."
+  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
+
+  "NOTIFICATION_NUMBER_OF_NOTIFICATION": "Notification",
+  "NOTIFICATION_MESSAGE_1": "Congratulations, you do not have any messages.",
+  "NOTIFICATION_MESSAGE_2": "Check back later to see new notifications."
 }
