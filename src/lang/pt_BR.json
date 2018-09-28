@@ -263,6 +263,7 @@
   "MENU_SETTING": "Settings",
   "MENU_LEASING": "Leasing",
   "MENU_PRIVACY": "Privacy",
+  "MENU_P2P": "P2P",
   "WALLET_MY_AMOUNT": "Balance",
   "WALLET_UTXOS_EMPTY_1": "There's a problem: no UTXOS.",
   "WALLET_UTXOS_EMPTY_2": "There's a problem: no UTXOS.",
