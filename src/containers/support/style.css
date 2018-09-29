@@ -81,10 +81,10 @@
 }
 :local(.contentChat){
   width: 89%;
-  height: 263px;
+  height: 260px;
   margin-left: 30px;
+  margin-bottom: 0;
   border-radius: 6px;
-  background-color: #ffffff;
 }
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
@@ -92,9 +92,55 @@
   text-align: center;
   margin-bottom: 5px;
 }
+:local(.inputChat) {
+  right:    0;
+  bottom:   0;
+  float: inherit;
+  color: black;
+  background-color: aliceblue
+}
 /* Text */
 
-:local .textGreen {
+:local(.textGreen) {
   font-size: 12px;
-  color: #68f285;
+  color: #68f285;  
+  width: 85%;
+  max-width: 100%;
+}
+:local(.instructions) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  display: block;
+  text-align: center;
+}
+
+:local(.instructions a) {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+:local(.instructions img) {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
+
+/* MODAL*/
+:local(.infoModal) {
+  width: 95%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+}
+
+:local(.infoModal p) {
+    margin: 50px 0;
+}
+
+@media only screen and (max-width: 499px) {
+  :local(.infoModal) {
+    font-size: 11px;
+    width: 40vh;
+  }
 }

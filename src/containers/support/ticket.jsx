@@ -3,7 +3,8 @@ import React from "react";
 import style from "./style.css";
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-import { Input, TextField } from "@material-ui/core";
+import { Input, InputLabel } from "@material-ui/core";
+import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from "@material-ui/core/styles";
 
 import colors from "../../components/bases/colors";
@@ -25,7 +26,8 @@ const customStyle = {
         fontSize: "14px",
         letterSpacing: "0.5px",
         textAlign: "left",
-        paddingLeft: "10px"
+        paddingLeft: "10px",
+        width:"80%"
     },
     inputCssCenter: {
         fontFamily: "Noto Sans, sans-serif",
@@ -46,6 +48,14 @@ const customStyle = {
             display: "none"
         }
     },
+    textGreen:{
+        color: '#68f285',
+        width: '85%',
+    },
+    control:{
+        width: "calc(100% - 20px)",
+        
+    },
     disabled: {},
     error: {},
     focused: {}
@@ -53,42 +63,54 @@ const customStyle = {
 class Ticket extends React.Component {
     constructor(props) {
         super(props);
-    }
+        
+    }    
     render() {
         const { classes } = this.props;
         return (
             <Grid item xs={12} container>
                 <div className={style.row}>
-                    <Input
-                        classes={{
-                            root: classes.inputRoot,
-                            underline: classes.inputCssUnderline,
-                            input: classes.inputCss
-                        }}
-                        placeholder="Nome"
-                        inputProps={{ maxLength: 48, required: true }}
-                    />
+                    <FormControl className={classes.control}>
+                        <InputLabel htmlFor="nome" className={classes.textGreen}>Name</InputLabel>
+                        <Input
+                            classes={{
+                                root: classes.inputRoot,
+                                underline: classes.inputCssUnderline,
+                                input: classes.inputCss
+                            }}               
+                            id="nome"      
+                            placeholder="Nome"       
+                            fullWidth
+                            inputProps={{ maxLength: 48, required: true }}
+                        />
+                    </FormControl>
                 </div>
                 <div className={style.row}>
+                <FormControl className={classes.control}>
+                <InputLabel htmlFor="assunto" className={classes.textGreen}>Assunto</InputLabel>
                     <Input
                         classes={{
                             root: classes.inputRoot,
                             underline: classes.inputCssUnderline,
                             input: classes.inputCss
                         }}
-                        placeholder="Assunto"
+                        fullWidth
+                        id="assunto"
                         inputProps={{ maxLength: 48, required: true }}
                     />
+                    </FormControl>
                 </div>
-                <div>
-                    <TextField
-                        id="standard-multiline-flexible"
-                        label="Multiline"
+                <div className={style.contentChat}>
+                    <Input
+                        id="chat"
+                        placeholder="Escreva aqui..."
                         multiline
-                        rowsMax="20"
-                        className={style.contentChat}
-                        margin="normal"
+                        rowsMax="10"
+                        rows="1"
+                        fullWidth
+                        className={style.inputChat}
                     />
+
                 </div>
             </Grid>
 
