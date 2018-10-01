@@ -392,8 +392,7 @@
   "COUPON_UNKNOWN_ERROR_2": "Ocorreu um erro desconhecido ao tentar verificar o código do cupom",
   "COUPON_UNKNOWN_ERROR_3": "Ocorreu um erro desconhecido ao tentar verificar o código do cupom",
 
-  "WALLET_UTXOS_EMPTY_1": "Existe um problema: não há UTXOS.",
-  "WALLET_UTXOS_EMPTY_2": "Existe um problema: não há UTXOS.",
+  "WALLET_UTXOS_EMPTY_1": "Rede congestionada ou saldo insuficiente.",
   
   "PAYMENT_SUCCESS_1": "Você acabou de pagar o boleto",
   "PAYMENT_SUCCESS_2": " na sua carteira Lunes",
@@ -410,7 +409,7 @@
   "FEE_HIGH": "Alto",
 
   "MODAL_SEND_TO_SEND": " Você está enviando ",
-  "MODAL_SEND_MIN_AMOUNT": "Quantidade muito baixa",
+  "MODAL_SEND_MIN_AMOUNT": "Você esta tentando enviar uma quantdade muito baixa.",
 
   "RECHARGE_DETAILS_1": "Atenção: Confira abaixo os dados da sua solicitação para que não haja erros. Se as informações estiverem incorretas, reinicie.",
   "RECHARGE_DETAILS_2": " e será adicionado ",

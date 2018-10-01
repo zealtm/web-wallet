@@ -407,7 +407,7 @@ class CoinService {
 
       if (response.data.code === 200) {
         Object.keys(dataFee).map(value => {
-          fee[value] = convertBiggestCoinUnit(dataFee[value], decimalPoint);
+          fee[value] = convertBiggestCoinUnit(dataFee[value] + 1000, decimalPoint);
         });
 
         Object.keys(dataFeePerByte).map(value => {

@@ -228,6 +228,7 @@ export function* setUtxos(action) {
     const utxos = yield call(transactionService.utxo, address, coin, token);
 
     let userMessage = "";
+    
     if (!utxos) {
       userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
       yield put({
@@ -238,8 +239,9 @@ export function* setUtxos(action) {
       });
       return;
     }
+
     if (utxos && utxos.constructor.name === "Array" && utxos.length < 1) {
-      userMessage = i18n.t("WALLET_UTXOS_EMPTY_2");
+      userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
       yield put({
         type: "SET_WALLET_UTXOS",
         message: userMessage,
@@ -248,6 +250,7 @@ export function* setUtxos(action) {
       });
       return;
     }
+
     //success
     if (utxos && utxos.constructor.name === "Array" && utxos.length > 0) {
       yield put({
