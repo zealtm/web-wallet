@@ -207,7 +207,7 @@ export function* setWalletTransaction(action) {
 export function* setUtxos(action) {
   try {
     const { address, coin } = action;
-    if (coin.search(/lunes/i) !== -1 || coin.search(/eth/i) !== -1) {
+    if (coin.search(/lunes/i) !== -1 || coin.search(/eth/i) !== -1 || coin.search(/usdt/i) !== -1) {
       yield put({
         type: "SET_WALLET_UTXOS",
         status: "success",

@@ -36,10 +36,6 @@ export const networks = {
           host: "electrum.hsmiths.com",
           port: 50002
         },
-        // {
-        //   host: 'vps3.hsmiths.com',
-        //   port: 50002
-        // },
         {
           host: "ndnd.selfhost.eu",
           port: 50002

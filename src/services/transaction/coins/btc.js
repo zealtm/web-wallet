@@ -17,12 +17,20 @@ class BtcTransaction {
 
   async createTransaction(data) {
     try {
+      console.warn(data)
+      let usdt = false;
+      if(data.coin === "usdt") usdt = true;
+
       const transService = new TransactionService();
+
       const utxos = await transService.utxo(
         data.fromAddress,
-        data.coin,
+        usdt ? "btc": data.coin,
         data.token
       );
+
+      console.warn(utxos);
+
       const targets = [
         {
           address: data.toAddress,
@@ -42,7 +50,7 @@ class BtcTransaction {
       let keyPair = this.getKeyPair(data.seed, data.network);
 
       let tx = new bitcoin.TransactionBuilder(
-        data.coin === "usdt"
+        usdt
           ? this.usdtTransaction(data, keyPair)
           : data.network.bitcoinjsNetwork
       );
@@ -65,7 +73,7 @@ class BtcTransaction {
 
       const broadcastResult = await transService.broadcast(
         txHex,
-        data.coin,
+        usdt ? "btc" : data.coin,
         data.token
       );
 
@@ -81,22 +89,34 @@ class BtcTransaction {
     return tx;
   }
 
-  usdtTransaction(data, keyPair) {
-    let transService = new TransactionService();
-    let pubKey = keyPair.getPublicKeyBuffer().toString("hex");
-    let response = transService.getUnsigned({
-      transaction_version: 1,
-      currency_identifier: 31,
-      fee: data.fee,
-      testnet: data.network.testnet,
-      pubkey: pubKey,
-      amount_to_transfer: data.amount,
-      transaction_from: data.fromAddress,
-      transaction_to: data.toAddress
-    });
+  async usdtTransaction(data, keyPair) {
+    try {
+      console.warn("data", data);
+      console.warn("keyPair", keyPair);
 
-    let tx = bitcoin.Transaction.fromHex(response);
-    return tx;
+      let transService = new TransactionService();
+      let pubKey = keyPair.getPublicKeyBuffer().toString("hex");
+      console.warn("pubKey", pubKey);
+      let response = await transService.getUnsigned({
+        transaction_version: 1,
+        currency_identifier: 31,
+        fee: data.fee,
+        testnet: data.network.testnet,
+        pubkey: pubKey,
+        amount_to_transfer: data.amount,
+        transaction_from: data.fromAddress,
+        transaction_to: data.toAddress
+      });
+      console.warn("response", response)
+      let tx = bitcoin.Transaction.fromHex(response);
+      console.warn("tx", tx)
+
+      return tx;
+    } catch (error) {
+      console.warn(error);
+      return error;
+    }
+    
   }
 }
 
