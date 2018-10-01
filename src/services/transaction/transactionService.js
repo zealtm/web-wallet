@@ -6,7 +6,7 @@ import {
   API_HEADER,
   TESTNET,
   HEADER_RESPONSE,
-  HEADER_REQUEST_FORM, 
+  HEADER_REQUEST_FORM,
   TETHER_URL
 } from "../../constants/apiBaseUrl";
 import { networks } from "../../constants/network";
@@ -71,15 +71,34 @@ class TransactionService {
     }
   }
 
+  async pushTx(raw) {
+    try {
+      console.warn("raw", raw);
+      let params = new URLSearchParams();
+      params.append("signedTransaction", params);
+      let response = await axios.post(
+        TETHER_URL + "/v1/transaction/pushtx/",
+        params,
+        HEADER_REQUEST_FORM
+      );
+
+      console.warn("raw", response);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
   async getUnsigned(params) {
     try {
+      console.warn("params", params);
       let response = await axios.post(
         TETHER_URL + "/v1/transaction/getunsigned/0",
         params,
         HEADER_REQUEST_FORM
       );
-      setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      console.warn("getUnsigned", response);
       return response.data;
     } catch (error) {
       internalServerError();
@@ -136,7 +155,8 @@ class TransactionService {
 
       if (coin === "eth") network = TESTNET ? networks.ROPSTEN : networks.ETH;
 
-      if (coin === "usdt") network = TESTNET ? networks.USDTTESTNET : networks.USDT;
+      if (coin === "usdt")
+        network = TESTNET ? networks.BTCTESTNET : networks.BTC;
 
       if (
         coin === "btc" ||
@@ -151,10 +171,14 @@ class TransactionService {
           toAddress: toAddress,
           seed: seed,
           lunesWallet: lunesWallet,
-          fee: convertSmallerCoinUnit(fee, decimalPoint),
+          fee:
+            coin === "usdt" ? fee : convertSmallerCoinUnit(fee, decimalPoint),
           feePerByte: feePerByte,
           feeLunes: feeLunes,
-          amount: convertSmallerCoinUnit(amount, decimalPoint),
+          amount:
+            coin === "usdt"
+              ? amount
+              : convertSmallerCoinUnit(amount, decimalPoint),
           coin: coin,
           token: token,
           network: network
