@@ -57,17 +57,17 @@ export const loading = () => ({
 });
 
 export const updateUserConsents = consents => ({
-  type: "UPDATE_USER_CONSENTS_API",
+  type: "PATH_USER_CONSENTS_API",
   consents
 });
 
 export const editUserData = data => ({
-  type: "EDIT_USER_DATA_API",
+  type: "PATH_USER_DATA_API",
   data
 });
 
 export const updateUserPassword = (oldPassword, confirmOldPassword, newPassword, confirmNewPassword) => ({
-  type: "UPDATE_USER_PASSWORD_API",
+  type: "PATH_USER_PASSWORD_API",
   oldPassword,
   confirmOldPassword,
   newPassword,

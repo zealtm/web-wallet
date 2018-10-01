@@ -52,7 +52,7 @@ const initialState = {
 
 const wallet = (state = initialState, action) => {
   switch (action.type) {
-    case "RESET_MODAL_SEND":
+    case "SET_RESET_MODAL_SEND":
       return {
         ...state,
         modal: initialModalSendState
