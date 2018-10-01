@@ -100,7 +100,6 @@ export function* createAlias(action) {
       action.data.fee,
       seedDecrypt
     );
-
     if (response.data) {
       yield put(modalError(i18next.t("ALIAS_ALREADY_CLAIMED")));
 
@@ -110,7 +109,11 @@ export function* createAlias(action) {
     yield put({
       type: "SET_SKELETON_ALIAS_ADDRESS",
       alias: action.data.alias
-    })
+    });
+
+    yield put({
+      type: "CHANGE_LOADING_STATE"
+    });
 
     yield put(modalSuccess(i18next.t("ALIAS_CREATED_SUCCESS")));
   } catch (error) {

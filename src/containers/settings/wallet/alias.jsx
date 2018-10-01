@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { errorInput } from "../../errors/redux/errorAction";
 import { createAlias } from "../redux/settingsAction";
+import { loading } from "../../user/redux/userAction";
 import i18n from "../../../utils/i18n";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import style from "./style.css";
 import { convertSmallerCoinUnit } from "../../../utils/numbers";
+import Loading from "../../../components/loading";
 
 class AliasPage extends React.Component {
   constructor() {
@@ -25,12 +27,12 @@ class AliasPage extends React.Component {
   };
 
   componentDidMount() {
-    let { aliasCreated } = this.props;
-    this.setState({ fieldAlias: aliasCreated });
+    let { aliasCreated, getAliases } = this.props;
+    aliasCreated ? this.setState({ fieldAlias: aliasCreated }) : this.setState({ fieldAlias: "" });
   }
 
   createNewAlias = () => {
-    let { createAlias, coins, settings, user } = this.props;
+    let { createAlias, coins, settings, user, loading } = this.props;
     let { fieldAlias } = this.state;
 
     let coinName = coins.lunes.abbreviation;
@@ -38,12 +40,12 @@ class AliasPage extends React.Component {
     let decimalPoint = coins.lunes.decimalPoint;
     let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
     let password = user.password;
-
+    loading();
     createAlias(coinName, coinAddress, fieldAlias, fee, password);
   };
 
   renderAliases = () => {
-    let { aliasCreated } = this.props;
+    let { aliasCreated, isLoading } = this.props;
     let { fieldAlias } = this.state;
 
     if (aliasCreated) {
@@ -88,7 +90,7 @@ class AliasPage extends React.Component {
             className={style.buttonGreen}
             onClick={() => this.createNewAlias()}
           >
-            {i18n.t("SET_ALIAS_SAVE_NAME")}
+            {isLoading ? <Loading /> : i18n.t("SET_ALIAS_SAVE_NAME")}
           </button>
         </Grid>
       </Grid>
@@ -96,6 +98,7 @@ class AliasPage extends React.Component {
   };
 
   render() {
+    
     let { coins } = this.props;
     return (
       <div>
@@ -160,19 +163,23 @@ AliasPage.propTypes = {
   getAliases: PropTypes.func,
   settings: PropTypes.object,
   user: PropTypes.object,
-  aliasCreated: PropTypes.string
+  aliasCreated: PropTypes.string,
+  isLoading: PropTypes.bool,
+  loading: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   coins: store.skeleton.coins,
   settings: store.settings,
   user: store.user.user,
-  aliasCreated: store.skeleton.lunesCoin.alias
+  aliasCreated: store.skeleton.lunesCoin.alias,
+  isLoading: store.user.loading
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
       createAlias,
       errorInput
     },

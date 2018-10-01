@@ -3,7 +3,7 @@ const initialState = {
   loading: false,
   errors: false,
   lunesCoin: {
-    alias: ""
+    alias: undefined
   }
 };
 
@@ -48,6 +48,7 @@ const skeleton = (state = initialState, action) => {
     case "SET_SKELETON_ALIAS_ADDRESS":
       return {
         ...state,
+        loading: false,
         lunesCoin: {
           alias: action.alias
         }
