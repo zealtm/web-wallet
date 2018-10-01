@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {setModalStep} from "./redux/rechargeAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep } from "./redux/rechargeAction";
 
 // UTILS
 import i18n from "../../utils/i18n";

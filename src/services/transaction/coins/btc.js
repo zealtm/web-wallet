@@ -37,7 +37,7 @@ class BtcTransaction {
         });
       }
 
-      let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
+      let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte <= 2 ? 3 : data.feePerByte);
 
       let keyPair = this.getKeyPair(data.seed, data.network);
 

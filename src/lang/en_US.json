@@ -403,8 +403,7 @@
   "COUPON_UNKNOWN_ERROR_2": "An unknown error occurred when trying to verify that coupon, code",
   "COUPON_UNKNOWN_ERROR_3": "An unknown error occurred when trying to verify that coupon, code",
 
-  "WALLET_UTXOS_EMPTY_1": "There's a problem: no UTXOS.",
-  "WALLET_UTXOS_EMPTY_2": "There's a problem: no UTXOS.",
+  "WALLET_UTXOS_EMPTY_1": "Congested network or insufficient balance.",
 
   "PAYMENT_SUCCESS_1": "You just paid for the ticket",
   "PAYMENT_SUCCESS_2": " in your wallet Lunes",
@@ -419,6 +418,8 @@
   "PAYMENT_CONFIRM_3": "The average payment confirmation time is up to 30 minutes. Only complete the payment if you agree.",
 
   "FEE_HIGH": "High",
+  "MODAL_SEND_TO_SEND": " You are sending ",
+  "MODAL_SEND_MIN_AMOUNT": "You are trying to send a very low amount.",
 
   "RECHARGE_DETAILS_1": "Attention: Check below the data of your request so that there are no errors. If the information is incorrect, restart.",
   "RECHARGE_DETAILS_2": " and will be added ",

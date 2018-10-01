@@ -58,8 +58,8 @@ class BoxAmount extends React.Component {
     } = this.props;
     let coinBalance = coins[coin].balance.available;
 
-    if (coin !== "lunes" && coin !== "eth" && amount < 0.00002000) {
-      return errorInput(i18n.t("MODAL_SEND_MIN_AMOUNT"));
+    if (coin !== "lunes" && coin !== "eth" && amount < 0.00020000) {
+      return errorInput(i18n.t("MODAL_SEND_MIN_AMOUNT") + " Min: 0.00020000");
     }
 
     if (parseFloat(amount) <= coinBalance) {

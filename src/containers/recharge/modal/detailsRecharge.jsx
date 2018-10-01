@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../redux/rechargeAction";
 import { updateUserConsents } from "../../user/redux/userAction";
-import { errorInput } from "../../errors/redux/errorAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
