@@ -440,5 +440,6 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
   "ALIAS_CREATED_SUCCESS": "Alias created with successful!",
   "ALIAS_BALANCE_INSUFICIENT": "Balance insufficient.",
-  "ALIAS_ALREADY_CLAIMED": "Alias already claimed"
+  "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
+  "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!"
 }

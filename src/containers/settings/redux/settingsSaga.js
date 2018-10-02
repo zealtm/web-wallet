@@ -83,15 +83,29 @@ export function* verifyTwoFactorAuthSettings(action) {
 }
 
 export function* createAlias(action) {
+
   let handleLoading = {
     type: "CHANGE_LOADING_STATE"
   };
 
   try {
+    let addressAlias = action.data.alias;
+    let regex = new RegExp("^[-.0-9@_a-z]+$");
+    
+    console.warn(!regex.test(addressAlias));
+
+    if (!regex.test(addressAlias)) {
+      yield put(modalError(i18next.t("ALIAS_INFORMED_INCORRECT")));
+      yield put(handleLoading);
+
+      return;
+    }
+
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
     let token = yield call(getAuthToken);
     let hasBalance = yield call(coinService.getCoinBalance, action.data.coin, action.data.address, token);
+
 
     if (hasBalance.data.data.available === 0) {
       yield put(modalError(i18next.t("ALIAS_BALANCE_INSUFICIENT")));
@@ -100,7 +114,7 @@ export function* createAlias(action) {
     }
 
     let response = yield call(transactionService.createAlias,
-      action.data.alias,
+      addressAlias,
       action.data.fee,
       seedDecrypt
     );
@@ -114,11 +128,10 @@ export function* createAlias(action) {
 
     yield put({
       type: "SET_SKELETON_ALIAS_ADDRESS",
-      alias: action.data.alias
+      alias: addressAlias
     });
 
     yield put(handleLoading);
-
     yield put(modalSuccess(i18next.t("ALIAS_CREATED_SUCCESS")));
   } catch (error) {
     console.warn("error", error);

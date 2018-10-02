@@ -444,5 +444,6 @@
   "RECHARGE_SELECT_TITLE_VALUE": "Valor",
   "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
   "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente.",
-  "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado"
+  "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
+  "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!"
 }
