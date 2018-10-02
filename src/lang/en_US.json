@@ -426,7 +426,7 @@
   "RECHARGE_DETAILS_1": "Attention: Check below the data of your request so that there are no errors. If the information is incorrect, restart.",
   "RECHARGE_DETAILS_2": " and will be added ",
   "RECHARGE_DETAILS_3": " in credits to recharge the number below: ",
-  "RECHARGE_SUCCESS_1": "You have reloaded the value of ",
+  "RECHARGE_SUCCESS_1": "You have successfully loaded your cell phone!",
   "RECHARGE_SUCCESS_2": "View your refill history on the History tab",
 
   "INSTRUCTION_MODAL_PAY_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + (A), (B) or (C) of the service charge.",

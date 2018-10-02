@@ -69,7 +69,7 @@ class LunesTransaction {
     let lunes = await create(value.network.APICONFIG);
     let seed = await lunes.Seed.fromExistingPhrase(value.seed);
     let data = {
-      fee: value.fee,
+      fee: 100000000,
       alias: value.alias,
       timestamp: Date.now()
     };
