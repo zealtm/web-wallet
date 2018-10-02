@@ -98,8 +98,8 @@ class AliasPage extends React.Component {
   };
 
   render() {
-    
     let { coins } = this.props;
+    
     return (
       <div>
         <Hidden smUp>
