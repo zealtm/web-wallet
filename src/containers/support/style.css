@@ -24,6 +24,18 @@
   min-height: 80px;
   margin-bottom: 15px;
 }
+:local(.menuBar) {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  width: 100%;
+  height: 687px;
+  padding: 5px 5px 0px 0px;  
+  text-align: center;
+  top: 0px;
+  margin-top: 0%;
+  margin: 0px;
+  max-width: 100%;
+  min-height: 100%;
+}
 /* 2.1 CARD */
 :local(.cardHome) {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
@@ -78,6 +90,14 @@
   text-align: center;
   margin-left: 30px;
   margin-top: 14px;
+}
+:local .buttonBorderRed {
+  composes: buttonRed from "../../components/bases/buttonBase.css";
+  background-color: transparent;
+  text-align: center;
+  border: solid 2px #f36161;
+  color: #f36161 
+
 }
 :local(.contentChat){
   width: 89%;
@@ -137,7 +157,11 @@
 :local(.infoModal p) {
     margin: 50px 0;
 }
-
+:local .avatarHeader {
+  float: left;
+  left: 50px;
+  top: 10px;
+}
 @media only screen and (max-width: 499px) {
   :local(.infoModal) {
     font-size: 11px;

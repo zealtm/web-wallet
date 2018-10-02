@@ -1,8 +1,10 @@
 import React from "react";
+import Redirect from "react-router-dom";
 // STYLE
 import style from "./style.css";
 // MATERIAL UI
 import { Grid, Hidden } from "@material-ui/core";
+
 // COMPONENTS
 import Select from "../../components/select";
 import Modal from "../../components/modal";
@@ -27,7 +29,8 @@ class SupportBar extends React.Component {
         this.setDefaultState();
     }
     handleMeusTicket = (event) => {
-        this.handleModal();
+       // this.handleModal();      
+       
     }
     handleModal = () => this.setState({ isOpen: !this.state.isOpen });
     setDefaultState = () => {

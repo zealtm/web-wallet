@@ -116,6 +116,12 @@ let support = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../support")
 });
 
+let meuTickets = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../support/meusTickets")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../support/meusTickets")
+});
+
 
 /* eslint-enable */
 
@@ -148,6 +154,7 @@ class App extends Component {
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
               <Route path="/support" component={support} />
+              <Route path="/meus-tickets" component={meuTickets}/>
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />
