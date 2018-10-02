@@ -4,7 +4,8 @@ import axios from "axios";
 import {
   BASE_URL,
   API_HEADER,
-  LUNESNODE_URL
+  LUNESNODE_URL,
+  HEADER_REQUEST
 } from "../constants/apiBaseUrl";
 
 // UTILS
@@ -53,6 +54,7 @@ class AssetService {
     }
     return { type: 'success' }
   }
+
   async getBalances(address, token) {
     try {
       let { data: result, status } = await Axios.get(PATHS.GET_BALANCE(address),{
@@ -62,8 +64,8 @@ class AssetService {
 
       if(status === 200) {
         nodeImages = data.balances.map(async (token, i) => {
-          await axios.get(LUNESNODE_URL + "/addresses/alias/by-address/" + token.sender).then((res) => {
-            let url = res.data[0].split(":");
+          await axios.get(LUNESNODE_URL + "/addresses/alias/by-address/" + token.sender, HEADER_REQUEST).then((res) => {
+            let url = res.data[0].split(":"); 
             data.balances[i].image = "http://" + url[2] + "/nodeimage.png"
           }).catch((() => {
             data.balances[i].image = "images/icons/tokens/default.png"
