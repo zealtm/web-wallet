@@ -92,8 +92,6 @@ export function* createAlias(action) {
     let addressAlias = action.data.alias;
     let regex = new RegExp("^[-.0-9@_a-z]+$");
     
-    console.warn(!regex.test(addressAlias));
-
     if (!regex.test(addressAlias)) {
       yield put(modalError(i18next.t("ALIAS_INFORMED_INCORRECT")));
       yield put(handleLoading);
