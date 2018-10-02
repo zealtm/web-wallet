@@ -1,0 +1,40 @@
+:local(.cardP2p) {
+  composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
+  width: 187px;
+  padding: 20px 5px 8px 5px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 230px;
+}
+
+:local(.boxContainer) {
+  margin: 0;
+}
+
+:local(.p2pContainer) {
+  justify-content: center;
+  height: 90vh;
+  align-items: center;
+  margin-bottom: 30%;
+}
+
+@media only screen and (min-width: 1180px) {
+  :local(.boxContainer) {
+    margin: 0 5%;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  :local(.boxContainer) {
+    margin: 0 15%;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  :local(.boxContainer) {
+    margin: 0 20%;
+  }
+}

@@ -92,6 +92,12 @@ let recharge = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
 
+let p2p = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/p2p")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/p2p")
+});
+
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -136,6 +142,7 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+              <Route path="/p2p" component={p2p} />
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
