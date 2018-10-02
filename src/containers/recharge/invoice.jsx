@@ -312,7 +312,7 @@ class Invoice extends React.Component {
                   underline: classes.inputCssUnderlineDisabled,
                   input: classes.inputCss
                 }}
-                placeholder={"(00)9999-9999"}
+                placeholder={"(00) 99999-9999"}
                 value={this.state.invoice.phone}
                 onChange={this.handleField("phone")}
                 error={errors.includes("phone")}
