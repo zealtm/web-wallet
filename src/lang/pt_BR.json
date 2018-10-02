@@ -63,6 +63,8 @@
   "LOGIN_SLIDE_DESCRIPTION_plural": "Send, receive, and store key crypto-coins on the market in a decentralized portfolio.",
   "SETTINGS_CONSENTS_TERMS_DESCRIPTION": "Você aceita os termos GDPR?",
   "SET_ALIAS_DESCRIPTION": "Você pode customizar o nome de sua Carteira Lunes se preferir. Se você fizer essa mudança, uma taxa de 5 Lunes será aplicada.",
+  "ALIAS_RULES_1": "Apenas esses caracteres são permitidos: ",
+  "ALIAS_RULES_2": "-.0123456789@_abcdefghijklmnopqrstuvwxyz",
   "CARD_HOME_DESCRIPTION": "Recarregue seu celular com créditos em qualquer lugar a qualquer hora, usando as criptomoedas disponíveis na Carteira Lunes, rápido fácil e seguro.",
   "CARD_HOME_DESCRIPTION_plural": "Pay your bank cards with crypto-coins in the simplest way possible. A quick and easy procedure, with all the security and confidence that only Lunes has.",
   "PAYMENT_SHORT_DESCRIPTION": "Descrição curta",

@@ -28,7 +28,9 @@ class AliasPage extends React.Component {
 
   componentDidMount() {
     let { aliasCreated, getAliases } = this.props;
-    aliasCreated ? this.setState({ fieldAlias: aliasCreated }) : this.setState({ fieldAlias: "" });
+    aliasCreated
+      ? this.setState({ fieldAlias: aliasCreated })
+      : this.setState({ fieldAlias: "" });
   }
 
   createNewAlias = () => {
@@ -99,23 +101,29 @@ class AliasPage extends React.Component {
 
   render() {
     let { coins } = this.props;
-    
+
     return (
       <div>
-        <Hidden smUp>
+        {/* <Hidden smUp>
           <div className={style.description}>
-            {" "}
-            {i18n.t("SET_ALIAS_DESCRIPTION")}{" "}
+            <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>
+            <p>
+              {i18n.t("ALIAS_RULES_1")}
+              <br />
+              {i18n.t("ALIAS_RULES_2")}
+            </p>
           </div>
-        </Hidden>
+        </Hidden> */}
 
         <div className={style.box}>
-          <Hidden xsDown>
-            <div className={style.description}>
-              {" "}
-              {i18n.t("SET_ALIAS_DESCRIPTION")}{" "}
-            </div>
-          </Hidden>
+          <div className={style.description}>
+            <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>
+            <p>
+              {i18n.t("ALIAS_RULES_1")}
+              <br />
+              {i18n.t("ALIAS_RULES_2")}
+            </p>
+          </div>
           <Grid container justify="center" spacing={16}>
             <Grid item xs={11} md={2}>
               <Grid container>
