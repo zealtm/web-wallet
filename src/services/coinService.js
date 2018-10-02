@@ -406,8 +406,10 @@ class CoinService {
       let dataFeeLunes = response.data.data.feeLunes;
 
       if (response.data.code === 200) {
+        let extraFee = coinName === "lunes" || coinName === "eth" ? 0 : 1000;
+        
         Object.keys(dataFee).map(value => {
-          fee[value] = convertBiggestCoinUnit(dataFee[value] + 1000, decimalPoint);
+          fee[value] = convertBiggestCoinUnit(dataFee[value] + extraFee, decimalPoint);
         });
 
         Object.keys(dataFeePerByte).map(value => {

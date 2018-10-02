@@ -122,16 +122,14 @@ export function* setRechargeSaga(payload) {
       payload: true
     });
 
-    const value = parseFloat(payload.recharge.value);
     const { abbreviation } = payload.recharge.coin;
-
     const token = yield call(getAuthToken);
 
     const amountResponse = yield call(
       rechargeService.getCoinAmountPay,
       token,
       abbreviation,
-      value
+      parseFloat(payload.recharge.value)
     );
 
     const balanceResponse = yield call(
@@ -149,7 +147,7 @@ export function* setRechargeSaga(payload) {
       coin: payload.recharge.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
-      value: value.toFixed(2).replace(".", ","),
+      value: payload.recharge.value,
       operator: {
         id: payload.recharge.operatorId,
         name: payload.recharge.operatorName
