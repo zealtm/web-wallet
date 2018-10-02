@@ -230,7 +230,9 @@ class Invoice extends React.Component {
       coin: invoice.coin,
       operatorId: invoice.operadora.value,
       operatorName: invoice.operadora.title,
-      address: coins[invoice.coin.abbreviation].address
+      address: coins[invoice.coin.abbreviation]
+        ? coins[invoice.coin.abbreviation].address
+        : ""
     };
 
     const invoiceInputs = {};
