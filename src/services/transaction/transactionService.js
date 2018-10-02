@@ -73,9 +73,8 @@ class TransactionService {
 
   async pushTx(raw) {
     try {
-      console.warn("raw", raw);
       let params = new URLSearchParams();
-      params.append("signedTransaction", params);
+      params.append("signedTransaction", raw);
       let response = await axios.post(
         TETHER_URL + "/v1/transaction/pushtx/",
         params,

@@ -20,6 +20,8 @@ class BtcTransaction {
       console.warn(data);
       let usdt = false;
       let broadcastResult = undefined;
+      let txb = undefined;
+      let txHex = undefined;
 
       if (data.coin === "usdt") usdt = true;
 
@@ -55,41 +57,47 @@ class BtcTransaction {
 
       let keyPair = this.getKeyPair(data.seed, data.network);
 
-      let tx = new bitcoin.TransactionBuilder(
-        usdt
-          ? await this.usdtTransaction(data, keyPair)
-          : data.network.bitcoinjsNetwork
-      );
+      let tx = usdt
+        ? await this.usdtTransaction(data, keyPair)
+        : new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
 
-      if(!usdt) {
+      if (usdt) {
+        txb = bitcoin.TransactionBuilder.fromTransaction(tx);
+        console.warn("txb", txb);
+        for (let i = 0; i < tx.ins.length; i++) {
+          txb.sign(i, keyPair);
+        }
+        txHex = txb.build().toHex();
+      } else {
         outputs.forEach(output => {
           if (!output.address) {
             output.address = data.fromAddress;
           }
-  
+
           tx.addOutput(output.address, output.value);
         });
-  
+
         inputs.forEach(input => {
           tx.addInput(input.txId, input.vout);
         });
+
+        tx = this.sign(tx, keyPair);
+        txHex = tx.build().toHex();
       }
 
-      tx = this.sign(tx, keyPair);
-
-      const txHex = tx.build().toHex();
+      console.warn("txHex", txHex);
 
       if (usdt) {
         broadcastResult = await transService.pushTx(txHex);
-      } else {
-        broadcastResult = await transService.broadcast(
-          txHex,
-          usdt ? "btc" : data.coin,
-          data.token
-        );
+        console.warn("broadcastResult", broadcastResult);
+        return broadcastResult.tx
       }
 
-      console.warn(broadcastResult)
+      broadcastResult = await transService.broadcast(
+        txHex,
+        usdt ? "btc" : data.coin,
+        data.token
+      );
 
       return broadcastResult.data.data.txId;
     } catch (error) {
