@@ -104,17 +104,6 @@ class AliasPage extends React.Component {
 
     return (
       <div>
-        {/* <Hidden smUp>
-          <div className={style.description}>
-            <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>
-            <p>
-              {i18n.t("ALIAS_RULES_1")}
-              <br />
-              {i18n.t("ALIAS_RULES_2")}
-            </p>
-          </div>
-        </Hidden> */}
-
         <div className={style.box}>
           <div className={style.description}>
             <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>

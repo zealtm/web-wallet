@@ -83,15 +83,19 @@ export function* verifyTwoFactorAuthSettings(action) {
 }
 
 export function* createAlias(action) {
+  let handleLoading = {
+    type: "CHANGE_LOADING_STATE"
+  };
+
   try {
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
     let token = yield call(getAuthToken);
-
     let hasBalance = yield call(coinService.getCoinBalance, action.data.coin, action.data.address, token);
 
     if (hasBalance.data.data.available === 0) {
       yield put(modalError(i18next.t("ALIAS_BALANCE_INSUFICIENT")));
+      yield put(handleLoading);
       return;
     }
 
@@ -100,8 +104,10 @@ export function* createAlias(action) {
       action.data.fee,
       seedDecrypt
     );
+
     if (response.data) {
       yield put(modalError(i18next.t("ALIAS_ALREADY_CLAIMED")));
+      yield put(handleLoading);
 
       return;
     }
@@ -111,13 +117,13 @@ export function* createAlias(action) {
       alias: action.data.alias
     });
 
-    yield put({
-      type: "CHANGE_LOADING_STATE"
-    });
+    yield put(handleLoading);
 
     yield put(modalSuccess(i18next.t("ALIAS_CREATED_SUCCESS")));
   } catch (error) {
     console.warn("error", error);
+
+    yield put(handleLoading);
     yield put(internalServerError());
   }
 }
