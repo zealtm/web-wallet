@@ -17,7 +17,6 @@ class BtcTransaction {
 
   async createTransaction(data) {
     try {
-      console.warn(data);
       let usdt = false;
       let broadcastResult = undefined;
       let txb = undefined;
@@ -32,8 +31,6 @@ class BtcTransaction {
         usdt ? "btc" : data.coin,
         data.token
       );
-
-      console.warn(utxos);
 
       const targets = [
         {
