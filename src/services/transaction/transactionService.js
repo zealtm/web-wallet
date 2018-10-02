@@ -81,7 +81,6 @@ class TransactionService {
         HEADER_REQUEST_FORM
       );
 
-      console.warn("raw", response);
       return response.data;
     } catch (error) {
       internalServerError();
@@ -91,13 +90,11 @@ class TransactionService {
 
   async getUnsigned(params) {
     try {
-      console.warn("params", params);
       let response = await axios.post(
         TETHER_URL + "/v1/transaction/getunsigned/0",
         params,
         HEADER_REQUEST_FORM
       );
-      console.warn("getUnsigned", response);
       return response.data;
     } catch (error) {
       internalServerError();
