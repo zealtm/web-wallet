@@ -63,7 +63,6 @@ class BtcTransaction {
 
       if (usdt) {
         txb = bitcoin.TransactionBuilder.fromTransaction(tx);
-        console.warn("txb", txb);
         for (let i = 0; i < tx.ins.length; i++) {
           txb.sign(i, keyPair);
         }
@@ -85,11 +84,8 @@ class BtcTransaction {
         txHex = tx.build().toHex();
       }
 
-      console.warn("txHex", txHex);
-
       if (usdt) {
         broadcastResult = await transService.pushTx(txHex);
-        console.warn("broadcastResult", broadcastResult);
         return broadcastResult.tx
       }
 
@@ -113,13 +109,9 @@ class BtcTransaction {
 
   async usdtTransaction(data, keyPair) {
     try {
-      console.warn("data", data);
-      console.warn("keyPair", keyPair);
-
       let pubKey = keyPair.getPublicKeyBuffer().toString("hex");
-      console.warn("pubKey", pubKey);
-
       let params = new URLSearchParams();
+
       params.append("transaction_version", 1);
       params.append("currency_identifier", 31);
       params.append("fee", data.fee);
@@ -131,10 +123,7 @@ class BtcTransaction {
 
       let transService = new TransactionService();
       let response = await transService.getUnsigned(params);
-      console.warn("response", response);
-
       let tx = bitcoin.Transaction.fromHex(response.unsignedhex);
-      console.warn("tx", tx);
 
       return tx;
     } catch (error) {
