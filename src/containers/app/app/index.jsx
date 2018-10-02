@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
+import Loadable from "react-loadable";
+import React, { Component } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
+// REDUX
+import { connect } from "react-redux";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -13,6 +15,7 @@ import ModalBar from "../../../components/modalBar";
 
 function loading({ error }) {
   if (error) {
+    console.warn(error);
     return "Error!";
   } else {
     return <Loading color="wallet" height="80vh" width="100px" />;
