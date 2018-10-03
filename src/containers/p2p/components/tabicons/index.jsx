@@ -5,14 +5,34 @@ import PropTypes from "prop-types";
 import style from "./style.css";
 
 class TabIcons extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      active: 0
+    }
+  }
+
+  handleIcon = (key) => {
+    const {handle} = this.props;
+    this.setState({
+      active: key
+    });
+    handle(key);
+  }
+  
   render(){
-    const {content,handle} = this.props;
+    const {content} = this.props;
+    const {active} = this.state;
     
     return (
       <div className={style.baseTab}>
         {
           content.map((val,key)=>{
-            return <div key={key} onClick={()=>handle(key)} className={style.itemTab}>{val}</div>
+            const open = (key==active) ? style.itemTabActive : style.itemTab;
+
+            return <div key={key} onClick={()=>this.handleIcon(key)} className={open}>
+              <img src={`images/icons/p2p/${val}.png`} />
+            </div>
           })
         }
       </div>

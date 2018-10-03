@@ -13,4 +13,21 @@
   padding: 10px;
   text-align:center;
   flex-grow: 1;
+  align-self: center;
+  opacity: .3;
+}
+
+:local .itemTab img {
+  height: 24px;
+}
+
+:local .itemTabActive {
+  padding: 10px;
+  text-align:center;
+  flex-grow: 1;
+  align-self: center;
+}
+
+:local .itemTabActive img {
+  height: 24px;
 }

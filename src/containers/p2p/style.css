@@ -6,13 +6,13 @@
 
 :local .arrowHeader {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
-  padding: 3px;
+  padding: 5px;
 }
 
 :local .baseWidget {
   position: absolute;
   bottom: 0px;
-  right: 16px;
+  right: 0px;
   max-height: 500px;
   height: 100vh;
   width: 100%;
@@ -22,7 +22,7 @@
 :local .baseWidgetClose {
   position: absolute;
   bottom: -465px;
-  right: 16px;
+  right: 0px;
   max-height: 500px;
   height: 100vh;
   width: 100%;
