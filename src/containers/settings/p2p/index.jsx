@@ -15,47 +15,104 @@ class P2P extends React.Component {
     return (
       <div className={style.boxContainer}>
         <Grid container className={style.p2pContainer}>
-
           <Grid item>
             <div className={style.cardP2p}>
-              <div>
-                <p>Teste</p>
+              <h1>Plano básico</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hr} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
               </div>
-              <img src="/images/icons/general/leasing@2x.png" />
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>R$</span>{" "}
+                <div className={style.containerValue}>
+                  <span className={style.value}>15</span>{" "}
+                  <span className={style.decimals}>,00</span>
+                </div>
+              </div>
             </div>
           </Grid>
 
           <Grid item>
             <div className={style.cardP2p}>
-              <div>
-                <p>Teste</p>
+              <h1>Plano básico</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hr} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
               </div>
-              <img src="/images/icons/general/leasing@2x.png" />
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>R$</span>{" "}
+                <div className={style.containerValue}>
+                  <span className={style.value}>15</span>{" "}
+                  <span className={style.decimals}>,00</span>
+                </div>
+              </div>
             </div>
           </Grid>
 
           <Grid item>
             <div className={style.cardP2p}>
-              <div>
-                <p>Teste</p>
+              <h1>Plano básico</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hr} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
               </div>
-              <img src="/images/icons/general/leasing@2x.png" />
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>R$</span>{" "}
+                <div className={style.containerValue}>
+                  <span className={style.value}>15</span>{" "}
+                  <span className={style.decimals}>,00</span>
+                </div>
+              </div>
             </div>
           </Grid>
 
           <Grid item>
             <div className={style.cardP2p}>
-              <div>
-                <p>Teste</p>
+              <h1>Plano básico</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hr} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
               </div>
-              <img src="/images/icons/general/leasing@2x.png" />
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>R$</span>{" "}
+                <div className={style.containerValue}>
+                  <span className={style.value}>15</span>{" "}
+                  <span className={style.decimals}>,00</span>
+                </div>
+              </div>
             </div>
           </Grid>
-          
         </Grid>
       </div>
     );
   }
 }
-
 export default P2P;
