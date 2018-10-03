@@ -188,7 +188,7 @@ class User extends React.Component {
   changeUserPassword = () => {
     const { updateUserPassword, user } = this.props;
     const { password, newPassword, confirmNewPassword } = this.state;
-    console(user);
+
     updateUserPassword(
       user.password,
       password,
