@@ -109,6 +109,12 @@ let assets = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
+
+let p2p = Loadable({
+  loader: () => fakeDelay(0).then(()=>import("../../p2p")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../p2p"),
+});
 /* eslint-enable */
 
 class App extends Component {
@@ -139,6 +145,7 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/p2p" component={p2p} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />
