@@ -719,7 +719,8 @@ User.propTypes = {
   twoFactor: PropTypes.bool,
   editUserData: PropTypes.func,
   loading: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  updateUserPassword: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
