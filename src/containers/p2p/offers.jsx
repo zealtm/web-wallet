@@ -9,6 +9,9 @@ import { withStyles } from "@material-ui/core/styles";
 import style from "./style.css";
 import colors from "../../components/bases/colors";
 
+// COMPONENTS 
+import CardOffer from "./components/cardOffer";
+
 const inputStyle = {
   root: {
     color: colors.messages.info,
@@ -82,7 +85,11 @@ class Offers extends React.Component {
        </div>
 
        <div>
-         conteudo 1 
+         {
+          [1,2,3].map((val,key) => {
+            return <CardOffer key={key} />
+          })
+         }
        </div>
       </div>
     )
