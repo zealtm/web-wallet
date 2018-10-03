@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 //MATERIAL 
-import {Grid,Hidden} from "@material-ui/core/";
+import {Hidden} from "@material-ui/core/";
 import {KeyboardArrowDown,KeyboardArrowUp} from "@material-ui/icons/";
 
 //COMPONENTS
@@ -47,34 +47,39 @@ class P2P extends React.Component {
     }
   }
 
-  render() {
-    const {tabIcon,openP2P} = this.state;
+  renderContent = () => {
+    const {tabIcon} = this.state;
     const titles = [
       ["Comprar", "Vender"], 
       ["Compras", "Vendas"]
     ];
     const contents = [
       [<Offers key={1} />, <Offers key={2} />],
-      [<Offers key={1} />, <Offers key={2} />]
+      [<Offers key={1} />, <Offers key={2} />], 
     ];
 
-    const contentTabIcons = ["tag", "user", "user_star"];
+    if(tabIcon==2){
+      return <div>PERFIL USUARIO</div>
+    }else{
+      return <Tabs tabTitles={titles[tabIcon]} tabContents={contents[tabIcon]} justify="center" />
+    }
+  }
 
+  render() {
+    const {openP2P} = this.state;
+    const contentTabIcons = ["tag", "user", "user_star"];
     const showBox = (openP2P)?style.baseWidget:style.baseWidgetClose;
 
     return (
-   
-        <div className={showBox}>
-          <Hidden smDown>
-            <div className={style.headerP2P}>
-              {this.renderArrow()}
-            </div>
-          </Hidden>
-          <Tabs tabTitles={titles[tabIcon]} tabContents={contents[tabIcon]} justify="center" />
-
-          <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-        </div>
-  
+      <div className={showBox}>
+        <Hidden smDown>
+          <div className={style.headerP2P}>
+            {this.renderArrow()}
+          </div>
+        </Hidden>
+        {this.renderContent()}
+        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+      </div>
     );
   }
 }

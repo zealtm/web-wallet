@@ -41,7 +41,8 @@ class TabIcons extends React.Component {
 }
 
 TabIcons.propTypes = {
-  content: PropTypes.array.isRequired
+  content: PropTypes.array.isRequired, 
+  handle: PropTypes.func.isRequired
 };
 
 export default TabIcons;

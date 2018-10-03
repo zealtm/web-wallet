@@ -14,12 +14,18 @@ const inputStyle = {
     color: colors.messages.info,
     margin: "0",
     padding: "3px",
-    width: "100%",//"calc(100% - 20px)",
+    width: "95%",
+    marginLeft:"auto",
+    marginRight:"auto",
+    display:"block",
     borderRadius: '6px',
     border: 'solid 1px #654fa4',
     fontSize: "11px",
     height: "20px",
     maxHeight: "20px",
+    backgroundImage: "url(images/icons/p2p/search.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "95% center",
     backgroundColor: colors.purple.default,
     "&:hover:before": {
       borderBottom: 'none'
@@ -71,8 +77,8 @@ class Offers extends React.Component {
         />
 
        <div className={style.tabContent}>
-         <div className={style.itemTabActive}>LINK 1 </div>
-         <div className={style.itemTab}>LINK 2</div>
+         <div className={style.itemTabActive}>P2P</div>
+         <div className={style.itemTab}>ESCROOW</div>
        </div>
 
        <div>
