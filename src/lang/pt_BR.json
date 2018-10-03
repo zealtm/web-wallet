@@ -63,6 +63,8 @@
   "LOGIN_SLIDE_DESCRIPTION_plural": "Send, receive, and store key crypto-coins on the market in a decentralized portfolio.",
   "SETTINGS_CONSENTS_TERMS_DESCRIPTION": "Você aceita os termos GDPR?",
   "SET_ALIAS_DESCRIPTION": "Você pode customizar o nome de sua Carteira Lunes se preferir. Se você fizer essa mudança, uma taxa de 5 Lunes será aplicada.",
+  "ALIAS_RULES_1": "Apenas esses caracteres são permitidos: ",
+  "ALIAS_RULES_2": "-.0123456789@_abcdefghijklmnopqrstuvwxyz",
   "CARD_HOME_DESCRIPTION": "Recarregue seu celular com créditos em qualquer lugar a qualquer hora, usando as criptomoedas disponíveis na Carteira Lunes, rápido fácil e seguro.",
   "CARD_HOME_DESCRIPTION_plural": "Pay your bank cards with crypto-coins in the simplest way possible. A quick and easy procedure, with all the security and confidence that only Lunes has.",
   "PAYMENT_SHORT_DESCRIPTION": "Descrição curta",
@@ -139,7 +141,7 @@
   "SETTINGS_USER_2FA_VERIFIED": "2FA verificado",
   "SETTINGS_USER_2FA_NOT_VERIFIED": "2FA não verificado",
   "SETTINGS_USER_FIRST_NAME": "Nome",
-  "SET_ALIAS_SAVE_NAME": "Salvar Nome",
+  "SET_ALIAS_SAVE_NAME": "Salvar",
   "PLACEHOLDER_FIRST_NAME": "Nome",
   "PLACEHOLDER_LAST_NAME": "Sobrenome",
   "PAYMENT_TITLE_NAME": "Nome",
@@ -161,7 +163,7 @@
   "SETTINGS_USER_CITY": "Cidade",
   "SETTINGS_USER_STATE": "Estado",
   "SETTINGS_USER_SAVE_DATA": "Salvar informações",
-  "SETTINGS_ALIAS_WALLET_LUNES": "Carteira Lunes",
+  "SETTINGS_ALIAS_WALLET_LUNES": "Lunes",
   "SECURITY_ITEM": "Insira o Código de Autenticação para ativar o 2FA em sua conta.",
   "SECURITY_ITEM_plural": "Install: Google Authenticator on your Smartphone",
   "SETTING_LINK_RETURN": "Voltar para configurações",
@@ -328,7 +330,7 @@
   "INSTRUCTION_MODAL_RECHARGE_INFO_1_TITTLE": "Taxas de Recarga:",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2_TITTLE": "Devolução:",
   "RECHARGE_BT_INIT": "EFETUAR RECARGA ",
-  
+
   "LOGIN_SLIDE_DESCRIPTION_1": "Faça o pagamento usando suas moedas de criptografia favoritas em uma interface fácil e intuitiva.",
   "LOGIN_SLIDE_DESCRIPTION_2": "Transforme as moedas digitais em Reais por transferência eletrônica para os principais bancos do Brasil.",
   "LOGIN_SLIDE_DESCRIPTION_3": "Recarregue créditos em seu seu celular com suas moedas virtuais com rapidez e segurança.",
@@ -414,7 +416,7 @@
   "RECHARGE_DETAILS_1": "Atenção: Confira abaixo os dados da sua solicitação para que não haja erros. Se as informações estiverem incorretas, reinicie.",
   "RECHARGE_DETAILS_2": " e será adicionado ",
   "RECHARGE_DETAILS_3": " em créditos para recarregar o número abaixo: ",
-  "RECHARGE_SUCCESS_1": "Você recarregou o valor de ",
+  "RECHARGE_SUCCESS_1": "Você recarregou seu celular com sucesso!",
   "RECHARGE_SUCCESS_2": "Visualize seu histórico de recargas na guia Histórico",
 
   "INSTRUCTION_MODAL_PAY_INFO_1": " Taxa de mineração de rede (O valor varia de acordo com a rede monetária + 20% da taxa Lunes) + (A), (B) ou (C) da taxa de serviço.",
@@ -438,5 +440,9 @@
   "RECHARGE_TAB_TITLE_RECHARGE": "Nova recarga",
   "RECHARGE_TAB_TITLE_HISTORY": "Histórico",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
-  "RECHARGE_SELECT_TITLE_VALUE": "Valor"
+  "RECHARGE_SELECT_TITLE_VALUE": "Valor",
+  "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
+  "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente.",
+  "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
+  "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!"
 }
