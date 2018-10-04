@@ -57,3 +57,8 @@
   composes: itemTabBase;
   composes: clGreenDefault from "../../components/bases/colorBase.css";
 }
+
+:local .content {
+  height: 390px;
+  overflow: scroll;
+}

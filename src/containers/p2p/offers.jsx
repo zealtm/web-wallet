@@ -84,7 +84,7 @@ class Offers extends React.Component {
          <div className={style.itemTab}>ESCROOW</div>
        </div>
 
-       <div>
+       <div className={style.content}>
          {
           [1,2,3].map((val,key) => {
             return <CardOffer key={key} />

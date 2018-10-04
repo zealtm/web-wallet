@@ -11,13 +11,22 @@ import style from "./style.css";
 class CardOffer extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      openDetails: false
+    }
   }
 
+  handleDetails = () => {
+    this.setState({
+      ...this.state, 
+      openDetails: !this.state.openDetails
+    })
+  }
   
   render(){
+    const {openDetails} = this.state;
     return (
-
-      <div className={style.baseUser}>
+      <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
           <Grid item xs={2}>
             <Avatar alt="avatar" src="https://loremflickr.com/40/40" className={style.avatar} />
@@ -53,7 +62,7 @@ class CardOffer extends React.Component {
             <span className={style.hours}>11:23 am</span>
           </Grid>
           <Grid item xs={2}></Grid>
-          <Grid item xs={10} className={style.boxDetails}>
+          <Grid item xs={10} className={style.boxDetails} style={(openDetails)?{display:"block"}:null} >
             <div className={style.textDetails}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
             </div>
