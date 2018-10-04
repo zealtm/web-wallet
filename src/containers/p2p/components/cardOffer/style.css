@@ -1,7 +1,7 @@
 :local .baseUser {
   composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
   padding: 20px;
-  border-bottom: solid 1px rgba(0,0,0,.2);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 :local .avatar {
@@ -16,18 +16,18 @@
 :local .name {
   composes: textGreen;
   font-size: 16px;
-  display:block;
+  display: block;
 }
 
 :local .textSmall {
   composes: textGreen;
   font-size: 11px;
-  display:block;
+  display: block;
 }
 
 :local .numberText {
   font-size: 16px;
-  display:block;
+  display: block;
   margin-bottom: 8px;
   margin-top: 4px;
 }
@@ -36,16 +36,16 @@
   composes: textGreen;
   margin-left: -20px;
   float: left;
-  margin-top:2px;
+  margin-top: 2px;
   max-width: 14px;
 }
 
 :local .hours {
   font-size: 9px;
-  opacity: .5;
-  display:block;
+  opacity: 0.5;
+  display: block;
   text-align: right;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 :local .boxDetails {
@@ -62,10 +62,9 @@
   font-size: 11px;
 }
 
-
 :local .btContinue {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
-  
+
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -94,7 +93,7 @@
 }
 
 :local .star {
-  opacity: .4;
+  opacity: 0.4;
   width: 12px;
 }
 

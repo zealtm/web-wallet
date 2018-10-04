@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 import { Grid, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 import colors from "../../components/bases/colors";
 
-// COMPONENTS 
+// COMPONENTS
 import CardOffer from "./components/cardOffer";
 
 const inputStyle = {
@@ -18,11 +18,11 @@ const inputStyle = {
     margin: "0",
     padding: "3px",
     width: "95%",
-    marginLeft:"auto",
-    marginRight:"auto",
-    display:"block",
-    borderRadius: '6px',
-    border: 'solid 1px #654fa4',
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "block",
+    borderRadius: "6px",
+    border: "solid 1px #654fa4",
     fontSize: "11px",
     height: "20px",
     maxHeight: "20px",
@@ -31,18 +31,18 @@ const inputStyle = {
     backgroundPosition: "95% center",
     backgroundColor: colors.purple.default,
     "&:hover:before": {
-      borderBottom: 'none'
+      borderBottom: "none"
     }
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
     fontSize: "12px",
-    letterSpacing: "0.5px",
+    letterSpacing: "0.5px"
   },
   cssUnderline: {
     "&:before, &:after": {
       //borderBottomColor: colors.purple.dark
-      borderBottom: 'none'
+      borderBottom: "none"
     },
     "&:hover:not($disabled):not($error):not($focused):before": {
       //borderBottomColor: `${colors.purple.dark} !important`
@@ -55,17 +55,17 @@ const inputStyle = {
 };
 
 class Offers extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      search: "",
-    }
+      search: ""
+    };
   }
 
-  render(){
-    const {classes} = this.props;
-    const {search} = this.state;
-    
+  render() {
+    const { classes } = this.props;
+    const { search } = this.state;
+
     return (
       <div>
         <Input
@@ -76,23 +76,21 @@ class Offers extends React.Component {
           }}
           value={search}
           id="find"
-          onChange={(e)=>this.setState({search: e.target.value})}
+          onChange={e => this.setState({ search: e.target.value })}
         />
 
-       <div className={style.tabContent}>
-         <div className={style.itemTabActive}>P2P</div>
-         <div className={style.itemTab}>ESCROOW</div>
-       </div>
+        <div className={style.tabContent}>
+          <div className={style.itemTabActive}>P2P</div>
+          <div className={style.itemTab}>ESCROOW</div>
+        </div>
 
-       <div className={style.content}>
-         {
-          [1,2,3].map((val,key) => {
-            return <CardOffer key={key} />
-          })
-         }
-       </div>
+        <div className={style.content}>
+          {[1, 2, 3].map((val, key) => {
+            return <CardOffer key={key} />;
+          })}
+        </div>
       </div>
-    )
+    );
   }
 }
 
