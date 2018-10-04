@@ -9,6 +9,9 @@ import { withStyles } from "@material-ui/core/styles";
 import style from "./style.css";
 import colors from "../../components/bases/colors";
 
+// COMPONENTS
+import StarVotes from "./components/starvotes";
+
 const inputStyle = {
   root: {
     color: colors.messages.info,
@@ -50,7 +53,6 @@ const inputStyle = {
   error: {},
   focused: {}
 };
-
 class Offers extends React.Component {
   constructor(props){
     super(props);
@@ -83,6 +85,9 @@ class Offers extends React.Component {
 
        <div>
          conteudo 1 
+
+          <StarVotes votes={1} />
+
        </div>
       </div>
     )
