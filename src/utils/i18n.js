@@ -14,10 +14,10 @@ i18next.use(LngDetector).init({
   },
   resources: {
     en: {
-      translation: pt_BR
+      translation: en_US
     },
     "pt-BR": {
-      translation: en_US
+      translation: pt_BR
     },
     es: {
       translation: en_US
