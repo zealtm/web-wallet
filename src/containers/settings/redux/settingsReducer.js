@@ -2,6 +2,9 @@ const initialState = {
   security: {
     urlImage: undefined
   },
+  waller: {
+    modalAlias: true,
+  },
   loading: false,
   coinFee: {
     low: 0.001,

@@ -1,16 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { errorInput } from "../../errors/redux/errorAction";
 import { createAlias } from "../redux/settingsAction";
 import { loading } from "../../user/redux/userAction";
-import i18n from "../../../utils/i18n";
+import { errorInput } from "../../errors/redux/errorAction";
+
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
-import style from "./style.css";
-import { convertSmallerCoinUnit } from "../../../utils/numbers";
+
+// COMPONENTS
 import Loading from "../../../components/loading";
+import Modal from "../../../components/modal";
+import BoxConfirm from "./modal/boxConfirm";
+
+// STYLE
+import style from "./style.css";
+
+// UTILS
+import i18n from "../../../utils/i18n";
+import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
 class AliasPage extends React.Component {
   constructor() {
@@ -27,7 +38,7 @@ class AliasPage extends React.Component {
   };
 
   componentDidMount() {
-    let { aliasCreated, getAliases } = this.props;
+    let { aliasCreated } = this.props;
     aliasCreated
       ? this.setState({ fieldAlias: aliasCreated })
       : this.setState({ fieldAlias: "" });
@@ -36,14 +47,25 @@ class AliasPage extends React.Component {
   createNewAlias = () => {
     let { createAlias, coins, settings, user, loading } = this.props;
     let { fieldAlias } = this.state;
-
     let coinName = coins.lunes.abbreviation;
     let coinAddress = coins.lunes.address;
     let decimalPoint = coins.lunes.decimalPoint;
     let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
     let password = user.password;
+
     loading();
     createAlias(coinName, coinAddress, fieldAlias, fee, password);
+  };
+
+  renderModalConfirm = () => {
+    return (
+      <Modal
+        title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
+        content={<BoxConfirm />}
+        show={true}
+        close={() => alert("Fechou")}
+      />
+    );
   };
 
   renderAliases = () => {
@@ -104,6 +126,9 @@ class AliasPage extends React.Component {
 
     return (
       <div>
+        <div>
+         {this.renderModalConfirm()}
+        </div>
         <div className={style.box}>
           <div className={style.description}>
             <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>
@@ -133,7 +158,7 @@ class AliasPage extends React.Component {
               <input
                 type="text"
                 disabled
-                className={style.inputClear}
+                className={style.inputClearAlias}
                 value={
                   coins["lunes"]
                     ? coins["lunes"].address
