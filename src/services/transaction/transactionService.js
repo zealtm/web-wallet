@@ -418,6 +418,7 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/service/alias", API_HEADER);
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response.data.data.services[0];
     } catch (error) {
@@ -427,11 +428,7 @@ class TransactionService {
     }
   }
 
-<<<<<<< HEAD
-  async createAlias(alias, fee, seed) {
-=======
   async createAlias(alias, seed) {
->>>>>>> V-278
     try {
       let transaction = new LunesTransaction();
       let response = await transaction.createAlias({
