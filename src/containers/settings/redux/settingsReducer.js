@@ -2,17 +2,15 @@ const initialState = {
   security: {
     urlImage: undefined
   },
-  loading: false,
-  coinFee: {
-    low: 0.001,
-    medium: 0.001,
-    high: 0.001,
-    selectedFee: undefined
+  wallet: {
+    modalAlias: false,
+    loadingAlias: false
   },
+  loading: false,
   errors: []
 };
 
-const user = (state = initialState, action) => {
+const settings = (state = initialState, action) => {
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
@@ -34,6 +32,24 @@ const user = (state = initialState, action) => {
         loading: !state.loading
       };
 
+    case "SET_WALLET_ALIAS_MODAL_OPEN":
+      return {
+        ...state,
+        wallet: {
+          modalAlias: !state.wallet.modalAlias,
+          loadingAlias: false
+        }
+      };
+
+    case "SET_WALLET_ALIAS_LOADING":
+      return {
+        ...state,
+        wallet: {
+          modalAlias: state.wallet.modalAlias,
+          loadingAlias: action.state ? true : false
+        }
+      };
+
     default: {
       return {
         ...state
@@ -42,4 +58,4 @@ const user = (state = initialState, action) => {
   }
 };
 
-export default user;
+export default settings;

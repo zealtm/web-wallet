@@ -67,7 +67,6 @@ class TransactionService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
       return response;
     } catch (error) {
       internalServerError();
@@ -116,6 +115,7 @@ class TransactionService {
         fee,
         feePerByte,
         feeLunes,
+        describe,
         price,
         amount,
         coin,
@@ -128,7 +128,6 @@ class TransactionService {
         !seed ||
         !fee ||
         !price ||
-        !feePerByte ||
         !amount ||
         !serviceId ||
         !token ||
@@ -200,7 +199,7 @@ class TransactionService {
           },
           coin,
           transaction.price,
-          "P2P",
+          describe ? describe : "P2P",
           token
         );
         return responseSaveBtc;
@@ -236,7 +235,7 @@ class TransactionService {
           },
           coin,
           transaction.price,
-          "P2P",
+          describe ? describe : "P2P",
           token
         );
         return responseSaveEth;
@@ -261,7 +260,7 @@ class TransactionService {
           respondeLunes,
           coin,
           transaction.price,
-          "P2P",
+          describe ? describe : "P2P",
           token
         );
         return responseSaveLunes;
@@ -409,23 +408,41 @@ class TransactionService {
 
       return coin ? coins[coin] : coins;
     } catch (error) {
+      console.warn(error);
       internalServerError();
       return error;
     }
   }
 
+  async aliasService(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(BASE_URL + "/service/alias", API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data.data.services[0];
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return error;
+    }
+  }
+
+<<<<<<< HEAD
   async createAlias(alias, fee, seed) {
+=======
+  async createAlias(alias, seed) {
+>>>>>>> V-278
     try {
       let transaction = new LunesTransaction();
       let response = await transaction.createAlias({
         alias,
-        fee,
         seed,
         network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
       });
 
       return response;
     } catch (error) {
+      console.warn(error);
       return error;
     }
   }

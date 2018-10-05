@@ -327,16 +327,16 @@ export const networks = {
     apiUrl: "https://api.myetherwallet.com/rop"
   },
   USDT: {
-    coinSymbol: 'USDT',
-    coinName: 'Tether MainNet',
+    coinSymbol: "USDT",
+    coinName: "Tether MainNet",
     testnet: false,
-    derivePath: 'm/44\'/1\'/0\'/0',
+    derivePath: "m/44'/1'/0'/0",
     maxFee: 1000000,
     defaultFee: 1000,
-    insight: 'https://test-insight.bitpay.com/api/',
+    insight: "https://test-insight.bitpay.com/api/",
     bitcoinjsNetwork: {
-      messagePrefix: '\x18Tether Signed Message:\n',
-      bech32: 'bc',
+      messagePrefix: "\x18Tether Signed Message:\n",
+      bech32: "bc",
       bip32: {
         public: 0x0488b21e,
         private: 0x0488ade4
@@ -347,16 +347,16 @@ export const networks = {
     }
   },
   USDTTESTNET: {
-    coinSymbol: 'USDTTESTNET',
-    coinName: 'Tether Testnet',
+    coinSymbol: "USDTTESTNET",
+    coinName: "Tether Testnet",
     testnet: true,
-    derivePath: 'm/44\'/1\'/0\'/0',
+    derivePath: "m/44'/1'/0'/0",
     maxFee: 1000000,
     defaultFee: 1000,
-    insight: 'https://test-insight.bitpay.com/api/',
+    insight: "https://test-insight.bitpay.com/api/",
     bitcoinjsNetwork: {
-      messagePrefix: '\x18Tether Signed Message:\n',
-      bech32: 'tb',
+      messagePrefix: "\x18Tether Signed Message:\n",
+      bech32: "tb",
       bip32: {
         public: 0x043587cf,
         private: 0x04358394
@@ -364,6 +364,6 @@ export const networks = {
       pubKeyHash: 0x6f,
       scriptHash: 0xc4,
       wif: 0xef
-    },
+    }
   }
 };
