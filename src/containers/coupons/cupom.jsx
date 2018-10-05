@@ -33,66 +33,52 @@ class Cupom extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.inputEL = document.querySelector(`.inputCoupon`);
-    }, 200)
+    }, 200);
   }
-  setInputTo = (type) => {
-    if (type === 'success') {
+  setInputTo = type => {
+    if (type === "success") {
       this.inputEL.classList.remove(style.error, style.warning);
       this.inputEL.classList.add(style.success);
-    } else if (type === 'error') {
+    } else if (type === "error") {
       this.inputEL.classList.remove(style.success, style.warning);
       this.inputEL.classList.add(style.error);
-    } else if (type === 'warning') {
+    } else if (type === "warning") {
       this.inputEL.classList.remove(style.success, style.error);
       this.inputEL.classList.add(style.warning);
     }
-  }
+  };
   componentDidUpdate() {
     let { coupons } = this.props;
     let { coupon } = coupons;
     if (coupon.verified === false) {
-      this.setInputTo('error');
+      this.setInputTo("error");
       this.props.coupons.coupon.verified = undefined;
     }
   }
+
   handleChange = event => {
     let val = event.target.value;
-    if (val.search(/[^0-9a-z-]/gi) !== -1) return;
+
+    if (val.search(/[^0-9a-zA-Z-]/gi) !== -1) return;
+
     this.setState({
       ...this.state,
       code: val
     });
   };
-  handleKeyDown = (event) => {
-    let { code } = this.state;
-    let key = event.keyCode;
-    let index = code.search(/([0-9a-z]{4})(?!-)/ig);
-    if (key !== 8 && index !== -1) {
-      let hyphens = code.match(/(-+)/g);
-      if (hyphens === null || hyphens.length !== 3)
-        code += '-';
-    }
-    this.setState({ code })
-  }
-  handleKeyUp = () => {
-    setTimeout(() => {
-      let code = this.inputEL.value;
-      if (!code || (code && code.length !== 19)) {
-        this.setInputTo('warning')
-      } else {
-        this.setInputTo('success')
-      }
-    }, 100);
-  }
+
   handleSend = () => {
     const { code } = this.state;
-    if (code && code.length !== 19) {
-      this.setInputTo('error');
+    let { verifyCoupon } = this.props;
+    if (!code && code.length <= 1) {
+      this.setInputTo("error");
       errorRequest(i18n.t("SHORT_COUPON_LENGTH"));
       return;
     }
-    this.props.verifyCoupon(code);
-  }
+
+    verifyCoupon(code);
+    return;
+  };
 
   render() {
     const { code } = this.state;
@@ -105,13 +91,11 @@ class Cupom extends React.Component {
           <div className={style.cupomRow}>
             <label>{i18n.t("VOUCHER_CODE")}</label>
             <input
-              className={style.inputTextDefault+" inputCoupon"}
+              className={style.inputTextDefault + " inputCoupon"}
               value={code}
               placeholder="1234-1234-1234-1234"
               maxLength={19}
               onChange={this.handleChange}
-              onKeyDown={this.handleKeyDown}
-              onKeyUp={this.handleKeyUp}
               required
             />
           </div>
@@ -125,7 +109,7 @@ class Cupom extends React.Component {
               className={style.buttonBorderGreen}
               onClick={this.handleSend}
             >
-              {coupon.loading ? <Loading/> : i18n.t("VOUCHER_BUTTON")}
+              {coupon.loading ? <Loading /> : i18n.t("VOUCHER_BUTTON")}
             </button>
           </div>
         </Grid>
@@ -138,14 +122,20 @@ Cupom.propTypes = {
   verifyCoupon: PropTypes.func.isRequired,
   errorRequest: PropTypes.func,
   coupons: PropTypes.object
-}
+};
 const mapStateToProps = state => ({
   coupons: state.coupons
-})
+});
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    errorRequest,
-    verifyCoupon
-  }, dispatch)
+  bindActionCreators(
+    {
+      errorRequest,
+      verifyCoupon
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps,mapDispatchToProps)(Cupom);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cupom);

@@ -9,9 +9,7 @@ import {
   HEADER_REQUEST_FORM,
   TETHER_URL
 } from "../../constants/apiBaseUrl";
-import {
-  networks
-} from "../../constants/network";
+import { networks } from "../../constants/network";
 
 // ERROR
 import {
@@ -20,28 +18,21 @@ import {
 } from "../../containers/errors/statusCodeMessage";
 
 // COINS
-import {
-  BtcTransaction,
-  LunesTransaction,
-  EthTransaction
-} from "./coins";
+import { BtcTransaction, LunesTransaction, EthTransaction } from "./coins";
 import CoinService from "../../services/coinService";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import {
-  setAuthToken
-} from "../../utils/localStorage";
-import {
-  convertSmallerCoinUnit
-} from "../../utils/numbers";
+import { setAuthToken } from "../../utils/localStorage";
+import { convertSmallerCoinUnit } from "../../utils/numbers";
 
 class TransactionService {
   async utxo(address, coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/coin/" + coin + "/transaction/utxo", {
+        BASE_URL + "/coin/" + coin + "/transaction/utxo",
+        {
           fromAddress: address
         },
         API_HEADER
@@ -69,7 +60,8 @@ class TransactionService {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
-        BASE_URL + "/coin/" + coin + "/transaction/broadcast", {
+        BASE_URL + "/coin/" + coin + "/transaction/broadcast",
+        {
           txHex: txhex
         },
         API_HEADER
@@ -198,7 +190,8 @@ class TransactionService {
 
         let responseSaveBtc = await coinService.saveTransaction(
           serviceId,
-          feeLunes, {
+          feeLunes,
+          {
             id: responseBtc,
             sender: fromAddress,
             recipient: toAddress,
@@ -233,7 +226,8 @@ class TransactionService {
 
         let responseSaveEth = await coinService.saveTransaction(
           serviceId,
-          feeLunes, {
+          feeLunes,
+          {
             id: responseEth,
             sender: fromAddress,
             recipient: toAddress,
@@ -294,7 +288,8 @@ class TransactionService {
 
     await coinService.saveTransaction(
       4,
-      0, {
+      0,
+      {
         id: response.id,
         sender: response.sender,
         recipient: response.recipient,
@@ -324,7 +319,8 @@ class TransactionService {
 
       await coinService.saveTransaction(
         4,
-        0, {
+        0,
+        {
           id: txId,
           sender: response.sender,
           recipient: response.recipient,
@@ -349,6 +345,55 @@ class TransactionService {
       let coins = [];
       let response = await axios.get(
         BASE_URL + "/service/transferencia",
+        API_HEADER
+      );
+
+      let lunesCoin = await response.data.data.services.map(value => {
+        coins[value.abbreviation] = value;
+      });
+
+      /* eslint-disable */
+      await Promise.all(lunesCoin);
+      /* eslint-enabled */
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return coin ? coins[coin] : coins;
+    } catch (error) {
+      internalServerError();
+      return error;
+    }
+  }
+
+  async rechargeService(coin = undefined, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let coins = [];
+      let response = await axios.get(BASE_URL + "/service/recarga", API_HEADER);
+
+      let lunesCoin = await response.data.data.services.map(value => {
+        coins[value.abbreviation] = value;
+      });
+
+      /* eslint-disable */
+      await Promise.all(lunesCoin);
+      /* eslint-enabled */
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return coin ? coins[coin] : coins;
+    } catch (error) {
+      internalServerError();
+      return error;
+    }
+  }
+
+  async invoiceService(coin = undefined, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let coins = [];
+      let response = await axios.get(
+        BASE_URL + "/service/pagamento",
         API_HEADER
       );
 

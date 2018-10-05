@@ -2,7 +2,7 @@ import React from "react";
 
 // COMPONENTS
 import Cupom from "./cupom";
-// import LunesGift from './lunesGift';
+// import LunesGift from "./lunesGift";
 import Tabs from "../../components/tabs";
 import Voucher from "./voucher";
 
@@ -17,8 +17,8 @@ const titles = [
 
 const contents = [
   <Voucher key="1" />,
-  // <LunesGift />,
-  <Cupom key="2" />
+  // <LunesGift key="2" />,
+  <Cupom key="3" />
 ];
 
 class Recharge extends React.Component {

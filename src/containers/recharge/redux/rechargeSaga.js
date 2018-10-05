@@ -228,7 +228,7 @@ export function* confirmRechargeSaga(payload) {
 
       // pega o servico disponivel
       let lunesWallet = yield call(
-        transactionService.transactionService,
+        transactionService.rechargeService,
         payload_transaction.coin,
         token
       );
