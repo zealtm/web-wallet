@@ -188,7 +188,7 @@ class User extends React.Component {
   changeUserPassword = () => {
     const { updateUserPassword, user } = this.props;
     const { password, newPassword, confirmNewPassword } = this.state;
-    console(user);
+
     updateUserPassword(
       user.password,
       password,
@@ -719,7 +719,8 @@ User.propTypes = {
   twoFactor: PropTypes.bool,
   editUserData: PropTypes.func,
   loading: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  updateUserPassword: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>
