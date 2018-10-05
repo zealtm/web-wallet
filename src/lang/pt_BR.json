@@ -251,6 +251,7 @@
   "COUPON_USER_NOT_AUTHORIZED": "Você não está autorizado a realizar esta ação, verifique se você está corretamente logado",
   "SHORT_COUPON_LENGTH": "Campo do cupom possui menos de 19 caracteres",
   "COUPON_INVALID": "O cupom não é válido",
+  "COUPON_EXPIRED": "O cupom está expirado",
   "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": "Onde eu encontro o código?",
   "RECHARGE_FIND": "Procurar pelo número",
   "RESET_INSTRUCTIONS2": "Informações sobre reset",

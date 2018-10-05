@@ -251,6 +251,7 @@
   "COUPON_USER_NOT_AUTHORIZED": "You are not authorized to do this request, verify if you are correctly logged in",
   "SHORT_COUPON_LENGTH": "Coupon length is less than 19 characters",
   "COUPON_INVALID": "The coupon is not valid",
+  "COUPON_EXPIRED": "The coupon is expired",
   "2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND": "Where do I find the code",
   "RECHARGE_FIND": "Search by number",
   "RESET_INSTRUCTIONS2": "About resetting it",
