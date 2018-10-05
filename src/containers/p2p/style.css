@@ -19,7 +19,9 @@
   max-width: 400px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
+  overflow: scroll;
 }
+
 :local .baseWidgetClose {
   position: absolute;
   bottom: -465px;
@@ -59,14 +61,9 @@
 :local(.cardProfile) {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   border-radius: 10px;
-  min-height: 150px;
+  min-height: 195px;
   width: 97%;
   margin: 2px 0px 0px 5px;
-}
-
-:local(.userDescription) {
-  border-radius: 5px;
-  border: solid 1px #6351a8;
 }
 
 :local(.userInfo) {
@@ -81,4 +78,66 @@
   font-size: 17px;
   color: #68f285;
   margin: 20px 0px 0px 20px;
+}
+
+:local(.userDescription) {
+  width: 70%;
+  margin: 8% 0% 0% 14%;
+}
+
+:local(.textDescription) {
+  border-radius: 5px;
+  border: solid 1px #6351a8;
+}
+
+:local(.spanDescription) {
+  font-size: 15px;
+  color: #68f285;
+}
+
+:local(.hr) {
+  border-top: 1px solid #6351a8;
+}
+
+:local(.data) {
+  width: 80%;
+  padding-top: 5%;
+  margin-left: 10%;
+}
+
+:local(.negotiationsBar) {
+  height: 5px;
+  border-radius: 3px;
+  background-color: #63d585;
+}
+
+:local(.concludedBar) {
+  height: 5px;
+  border-radius: 3px;
+  background-color: #63d585;
+}
+
+:local(.negotiation) {
+  width: 80%;
+  margin: 10% 0% 0% 10%;
+}
+
+:local(.concluded) {
+  width: 80%;
+  margin: 10% 0% 0% 10%;
+}
+
+:local(.spanNegotiationsBar) {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+:local(.spanConcludedBar) {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+:local(.userFeedback) {
+  margin: 10% 0% 0% 10%;
+  width: 80%;
 }

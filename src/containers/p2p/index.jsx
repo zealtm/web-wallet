@@ -70,7 +70,7 @@ class P2P extends React.Component {
     if (tabIcon == 2) {
       return (
         <div>
-          <Grid container className={style.boxContainer}>
+          <Grid container>
             <Grid item xs={12} sm={12}>
               <div className={style.cardProfile}>
                 <div className={style.userInfo}>
@@ -80,18 +80,48 @@ class P2P extends React.Component {
                   />
                   <p className={style.userName}>Felipe Mendes</p>
                 </div>
+                <div className={style.userDescription}>
+                  <span className={style.spanDescription}>Descrição</span>
+                  <div className={style.textDescription}>
+                    <p>O usuário com mais numeros de trades!</p>
+                  </div>
+                </div>
               </div>
             </Grid>
 
             <Grid item xs={12} sm={12}>
               <div className={style.cardProfile}>
-                
+                <div className={style.data}>
+                  <span className={style.spanDescription}>Dados</span>
+                  <div className={style.hr} />
+                </div>
+
+                <div className={style.negotiation}>
+                  <span className={style.spanNegotiationsBar}>Negociações</span>
+                  <div className={style.negotiationsBar} />
+                </div>
+
+                <div className={style.concluded}>
+                  <span className={style.spanConcludedBar}>Concluídas</span>
+                  <div className={style.concludedBar} />
+                </div>
               </div>
             </Grid>
 
             <Grid item xs={12} sm={12}>
               <div className={style.cardProfile}>
+                <div className={style.data}>
+                  <span className={style.spanDescription}>Feedback</span>
+                  <div className={style.hr} />
+                </div>
                 
+                <div className={style.userFeedback}>
+                  <span className={style.spanDescription}>João</span>
+                  <div className={style.textDescription}>
+                    <p>Bom trader, recomendo!</p>
+                  </div>
+                </div>
+
               </div>
             </Grid>
           </Grid>
