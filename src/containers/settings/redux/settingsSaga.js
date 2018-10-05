@@ -1,11 +1,5 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
-import {
-  getAuthToken,
-  getUserSeedWords
-} from "../../../utils/localStorage";
+import { put, call } from "redux-saga/effects";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import {
   internalServerError,
   modalSuccess,
@@ -13,9 +7,7 @@ import {
 } from "../../../containers/errors/statusCodeMessage";
 import AuthService from "../../../services/authService";
 import TransactionService from "../../../services/transaction/transactionService";
-import {
-  decryptAes
-} from "../../../utils/cryptography";
+import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import i18next from "../../../utils/i18n";
 const authService = new AuthService();
@@ -83,35 +75,28 @@ export function* verifyTwoFactorAuthSettings(action) {
 }
 
 export function* createAlias(action) {
-
-  let handleLoading = {
-    type: "CHANGE_LOADING_STATE"
-  };
-
   try {
     let addressAlias = action.data.alias;
-    let regex = new RegExp("^[-.0-9@_a-z]+$");
-    
-    if (!regex.test(addressAlias)) {
-      yield put(modalError(i18next.t("ALIAS_INFORMED_INCORRECT")));
-      yield put(handleLoading);
-
-      return;
-    }
-
     let userSeed = yield call(getUserSeedWords);
     let seedDecrypt = yield call(decryptAes, userSeed, action.data.password);
     let token = yield call(getAuthToken);
-    let hasBalance = yield call(coinService.getCoinBalance, action.data.coin, action.data.address, token);
-
+    let hasBalance = yield call(
+      coinService.getCoinBalance,
+      action.data.coin,
+      action.data.address,
+      token
+    );
 
     if (hasBalance.data.data.available === 0) {
       yield put(modalError(i18next.t("ALIAS_BALANCE_INSUFICIENT")));
-      yield put(handleLoading);
+      yield put({
+        type: "SET_WALLET_ALIAS_LOADING"
+      });
       return;
     }
 
-    let response = yield call(transactionService.createAlias,
+    let response = yield call(
+      transactionService.createAlias,
       addressAlias,
       action.data.fee,
       seedDecrypt
@@ -119,7 +104,9 @@ export function* createAlias(action) {
 
     if (response.data) {
       yield put(modalError(i18next.t("ALIAS_ALREADY_CLAIMED")));
-      yield put(handleLoading);
+      yield put({
+        type: "SET_WALLET_ALIAS_LOADING"
+      });
 
       return;
     }
@@ -129,19 +116,25 @@ export function* createAlias(action) {
       alias: addressAlias
     });
 
-    yield put(handleLoading);
+    yield put({
+      type: "SET_WALLET_ALIAS_LOADING"
+    });
     yield put(modalSuccess(i18next.t("ALIAS_CREATED_SUCCESS")));
   } catch (error) {
-    console.warn("error", error);
-
-    yield put(handleLoading);
+    console.warn(error);
+    yield put({
+      type: "SET_WALLET_ALIAS_LOADING"
+    });
     yield put(internalServerError());
   }
 }
 
 export function* getAliases(action) {
   try {
-    let response = yield call(transactionService.getAliases, action.data.address);
+    let response = yield call(
+      transactionService.getAliases,
+      action.data.address
+    );
 
     if (response.length > 0) {
       let firstAlias = response[0].split(":")[2];
@@ -149,7 +142,7 @@ export function* getAliases(action) {
       yield put({
         type: "SET_SKELETON_ALIAS_ADDRESS",
         alias: firstAlias
-      })
+      });
     }
   } catch (error) {
     console.warn("error", error);

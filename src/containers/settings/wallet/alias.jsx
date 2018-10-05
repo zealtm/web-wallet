@@ -4,15 +4,17 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createAlias } from "../redux/settingsAction";
-import { loading } from "../../user/redux/userAction";
+import {
+  createAlias,
+  setAliasModal,
+  setAliasLoading
+} from "../redux/settingsAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 
 // COMPONENTS
-import Loading from "../../../components/loading";
 import Modal from "../../../components/modal";
 import BoxConfirm from "./modal/boxConfirm";
 
@@ -35,68 +37,69 @@ class AliasPage extends React.Component {
 
   handleAliasValue = value => {
     this.setState({ fieldAlias: value });
+    return;
   };
 
   componentDidMount() {
     let { aliasCreated } = this.props;
-    aliasCreated
-      ? this.setState({ fieldAlias: aliasCreated })
-      : this.setState({ fieldAlias: "" });
+    this.setState({ fieldAlias: aliasCreated || "" });
+    return;
   }
 
   createNewAlias = () => {
-    let { createAlias, coins, settings, user, loading } = this.props;
+    let {
+      createAlias,
+      coins,
+      settings,
+      user,
+      setAliasLoading,
+      errorInput,
+      aliasCreated
+    } = this.props;
     let { fieldAlias } = this.state;
     let coinName = coins.lunes.abbreviation;
     let coinAddress = coins.lunes.address;
     let decimalPoint = coins.lunes.decimalPoint;
     let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
     let password = user.password;
+    let regex = new RegExp("^[-.0-9@_a-z]+$");
 
-    loading();
+    if (!aliasCreated) {
+      // HERE
+      errorInput("Alias já criado");
+      return;
+    }
+
+    if (!regex.test(fieldAlias)) {
+      errorInput(i18n.t("ALIAS_INFORMED_INCORRECT"));
+      return;
+    }
+
+    setAliasLoading(true);
     createAlias(coinName, coinAddress, fieldAlias, fee, password);
+    return;
   };
 
   renderModalConfirm = () => {
+    let { settings, setAliasModal, aliasCreated } = this.props;
+
+    if (!aliasCreated) {
+      return;
+    }
+
     return (
       <Modal
         title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
-        content={<BoxConfirm />}
-        show={true}
-        close={() => alert("Fechou")}
+        content={<BoxConfirm action={() => this.createNewAlias()} />}
+        show={settings.wallet.modalAlias}
+        close={() => setAliasModal()}
       />
     );
   };
 
   renderAliases = () => {
-    let { aliasCreated, isLoading } = this.props;
+    let { aliasCreated, setAliasModal } = this.props;
     let { fieldAlias } = this.state;
-
-    if (aliasCreated) {
-      return (
-        <Grid container className={style.aliasNameRow}>
-          <Grid item xs={12} md={8}>
-            <input
-              type="text"
-              maxLength={"30"}
-              disabled
-              className={style.inputClear}
-              onChange={event => this.handleAliasValue(event.target.value)}
-              value={fieldAlias}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <button
-              disabled
-              className={style.buttonGreen}
-              onClick={() => this.createNewAlias()}
-            >
-              {i18n.t("SET_ALIAS_SAVE_NAME")}
-            </button>
-          </Grid>
-        </Grid>
-      );
-    }
 
     return (
       <Grid container className={style.aliasNameRow}>
@@ -104,17 +107,15 @@ class AliasPage extends React.Component {
           <input
             type="text"
             maxLength={"30"}
+            disabled={aliasCreated ? true : false}
             className={style.inputClear}
             onChange={event => this.handleAliasValue(event.target.value)}
             value={fieldAlias}
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <button
-            className={style.buttonGreen}
-            onClick={() => this.createNewAlias()}
-          >
-            {isLoading ? <Loading /> : i18n.t("SET_ALIAS_SAVE_NAME")}
+          <button className={style.buttonGreen} onClick={() => setAliasModal()}>
+            {i18n.t("SET_ALIAS_SAVE_NAME")}
           </button>
         </Grid>
       </Grid>
@@ -126,9 +127,7 @@ class AliasPage extends React.Component {
 
     return (
       <div>
-        <div>
-         {this.renderModalConfirm()}
-        </div>
+        <div>{this.renderModalConfirm()}</div>
         <div className={style.box}>
           <div className={style.description}>
             <p>{i18n.t("SET_ALIAS_DESCRIPTION")}</p>
@@ -183,26 +182,26 @@ AliasPage.propTypes = {
   errorInput: PropTypes.func,
   createAlias: PropTypes.func,
   getAliases: PropTypes.func,
+  setAliasLoading: PropTypes.func,
   settings: PropTypes.object,
   user: PropTypes.object,
   aliasCreated: PropTypes.string,
-  isLoading: PropTypes.bool,
-  loading: PropTypes.func
+  setAliasModal: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   coins: store.skeleton.coins,
   settings: store.settings,
   user: store.user.user,
-  aliasCreated: store.skeleton.lunesCoin.alias,
-  isLoading: store.user.loading
+  aliasCreated: store.skeleton.lunesCoin.alias
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loading,
+      setAliasModal,
       createAlias,
+      setAliasLoading,
       errorInput
     },
     dispatch

@@ -31,10 +31,10 @@ class BoxConfirm extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput } = this.props;
+    let { user, errorInput, action } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      alert("FOI");
+      action();
       return;
     }
 
@@ -44,7 +44,7 @@ class BoxConfirm extends React.Component {
 
   render() {
     let { password } = this.state;
-    // let { modal } = this.props;
+    let { modal } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -70,7 +70,7 @@ class BoxConfirm extends React.Component {
 
           <ButtonContinue
             action={() => this.confirmPassword()}
-            loading={true}
+            loading={modal.loadingAlias}
           />
         </div>
       </div>
@@ -81,19 +81,18 @@ class BoxConfirm extends React.Component {
 BoxConfirm.propTypes = {
   user: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
-  errorInput: PropTypes.func.isRequired
+  errorInput: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal,
+  modal: store.settings.wallet,
   user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      // setWalletModalStep,
-      // setWalletSendModalLoading,
       errorInput
     },
     dispatch
