@@ -3,14 +3,23 @@
   width: 100%;
   align-content: space-between;
   font-size: 12px;
+  
 }
 
 :local .star {
   opacity: .4;
-  width: 12px;
+  width: 10.9px;
+  height: 10.3px;
+  padding-right: 3px;
 }
 
 :local .starActive {
-  color: yellow;
+  color: #fad04d;
   opacity: 1;
+  width: 10.9px;
+  height: 10.3px;
+  padding-right: 3px;
+
 }
+
+

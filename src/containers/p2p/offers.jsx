@@ -86,7 +86,7 @@ class Offers extends React.Component {
        <div>
          conteudo 1 
 
-          <StarVotes votes={1} />
+          <StarVotes votes={0} />
 
        </div>
       </div>
