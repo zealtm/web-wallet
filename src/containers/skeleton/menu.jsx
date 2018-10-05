@@ -44,14 +44,12 @@ const menuItens = [
   {
     link: "/invoices",
     label: i18n.t("MENU_PAY"),
-    icon: "../../images/icons/general/pay@1x.png",
-    error: true,
+    icon: "../../images/icons/general/pay@1x.png"
   },
   {
     link: "/recharge",
     label: i18n.t("MENU_RECHARGE"),
-    icon: "../../images/icons/general/recharge@1x.png",
-    error: true
+    icon: "../../images/icons/general/recharge@1x.png"
   },
   {
     link: "/coupons",
@@ -120,7 +118,7 @@ class Menu extends React.Component {
               <br />
             </Grid>
 
-            <Grid item xs={4}/>
+            <Grid item xs={4} />
 
             <Grid item xs={8}>
               <Link to="/settings" className={style.link} onClick={actionMenu}>

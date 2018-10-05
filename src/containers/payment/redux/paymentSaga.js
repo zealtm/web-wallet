@@ -8,7 +8,6 @@ import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { convertToLocaleDate } from "../../../utils/strings";
 
-
 // SERVICES
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
@@ -87,7 +86,7 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
-    
+
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
@@ -106,7 +105,7 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
-    console.warn(error)
+    console.warn(error);
     yield put(internalServerError());
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
@@ -174,7 +173,7 @@ export function* getInvoiceSaga(payload) {
       yield put(internalServerError());
     }
 
-    if (!response.hasOwnProperty('code') || response.code !== 200) {
+    if (!response.hasOwnProperty("code") || response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -266,7 +265,7 @@ export function* confirmPaySaga(payload) {
 
       // pega o servico disponivel
       let lunesWallet = yield call(
-        transactionService.transactionService,
+        transactionService.invoiceService,
         payload_transaction.coin,
         token
       );
@@ -284,7 +283,7 @@ export function* confirmPaySaga(payload) {
 
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate.reverse().join('-');
+        const dueDateFormat = dueDate.reverse().join("-");
         const dataIso = new Date(dueDateFormat).toISOString();
 
         if (response) {
