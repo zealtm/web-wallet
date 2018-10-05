@@ -68,15 +68,16 @@ class Cupom extends React.Component {
   };
 
   handleSend = () => {
-    const { code } = this.state;
-    let { verifyCoupon } = this.props;
+    let { code } = this.state;
+    let { verifyCoupon, coins } = this.props;
+    console.warn(coins);
     if (!code && code.length <= 1) {
       this.setInputTo("error");
       errorRequest(i18n.t("SHORT_COUPON_LENGTH"));
       return;
     }
 
-    verifyCoupon(code);
+    verifyCoupon(code, coins);
     return;
   };
 
@@ -120,10 +121,12 @@ class Cupom extends React.Component {
 
 Cupom.propTypes = {
   verifyCoupon: PropTypes.func.isRequired,
+  coins: PropTypes.object,
   errorRequest: PropTypes.func,
   coupons: PropTypes.object
 };
 const mapStateToProps = state => ({
+  coins: state.skeleton.coins,
   coupons: state.coupons
 });
 const mapDispatchToProps = dispatch =>

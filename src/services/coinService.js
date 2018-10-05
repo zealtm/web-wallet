@@ -535,7 +535,7 @@ class CoinService {
     }
   }
 
-  async verifyCoupon(coupon, token) {
+  async verifyCoupon(coupon, addresses, token) {
     try {
       let endpoint = BASE_URL + "/coupon/rescue/" + coupon;
 
@@ -545,7 +545,11 @@ class CoinService {
         return true;
       };
 
-      let { data, headers } = await axios.post(endpoint, {}, API_HEADER);
+      let { data, headers } = await axios.post(
+        endpoint,
+        { addresses },
+        API_HEADER
+      );
 
       let errorMessage = {};
       if (data.errorMessage) {
@@ -554,8 +558,6 @@ class CoinService {
 
       let status = parseInt(headers.status);
       let code = parseInt(errorMessage.code) || parseInt(data.code);
-
-      console.warn(data, status, code);
 
       if (status != 200 && code != 200) {
         let message;
