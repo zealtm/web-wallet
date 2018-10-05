@@ -442,6 +442,7 @@
   "ALIAS_CREATED_SUCCESS": "Alias created with successful!",
   "ALIAS_BALANCE_INSUFICIENT": "Balance insufficient.",
   "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
+  "ALIAS_ERROR_TRANSACTION": "Could not make a transaction from",
   "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
   "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: "
 }

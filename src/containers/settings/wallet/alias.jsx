@@ -23,7 +23,6 @@ import style from "./style.css";
 
 // UTILS
 import i18n from "../../../utils/i18n";
-import { convertSmallerCoinUnit } from "../../../utils/numbers";
 
 class AliasPage extends React.Component {
   constructor() {
@@ -50,7 +49,6 @@ class AliasPage extends React.Component {
     let {
       createAlias,
       coins,
-      settings,
       user,
       setAliasLoading,
       errorInput,
@@ -59,13 +57,11 @@ class AliasPage extends React.Component {
     let { fieldAlias } = this.state;
     let coinName = coins.lunes.abbreviation;
     let coinAddress = coins.lunes.address;
-    let decimalPoint = coins.lunes.decimalPoint;
-    let fee = convertSmallerCoinUnit(settings.coinFee.low, decimalPoint);
+    let price = coins.lunes.price;
     let password = user.password;
     let regex = new RegExp("^[-.0-9@_a-z]+$");
 
-    if (!aliasCreated) {
-      // HERE
+    if (aliasCreated) {
       errorInput("Alias já criado");
       return;
     }
@@ -76,7 +72,7 @@ class AliasPage extends React.Component {
     }
 
     setAliasLoading(true);
-    createAlias(coinName, coinAddress, fieldAlias, fee, password);
+    createAlias(coinName, coinAddress, fieldAlias, price, password);
     return;
   };
 

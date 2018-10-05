@@ -1,9 +1,5 @@
-import {
-  internalServerError
-} from "../../../containers/errors/statusCodeMessage";
-import {
-  create
-} from "lunes-js-api";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+import { create } from "lunes-js-api";
 
 class LunesTransaction {
   async createLunesTransaction(data) {
@@ -11,7 +7,8 @@ class LunesTransaction {
       const Lunes = await create(data.network.APICONFIG);
       const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
       const transaction = await Lunes.API.Node.v1.assets
-        .transfer({
+        .transfer(
+          {
             recipient: data.toAddress,
             assetId: "WAVES",
             amount: data.amount,

@@ -7,12 +7,6 @@ const initialState = {
     loadingAlias: false
   },
   loading: false,
-  coinFee: {
-    low: 0.001,
-    medium: 0.001,
-    high: 0.001,
-    selectedFee: undefined
-  },
   errors: []
 };
 
