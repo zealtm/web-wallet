@@ -10,6 +10,7 @@ import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 
+import ModalPayment from "./components/modal"
 //STYLE
 import style from "./style.css";
 
