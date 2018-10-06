@@ -114,9 +114,9 @@ let assets = Loadable({
 });
 
 let p2p = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../p2p/components/header")),
+  loader: () => fakeDelay(0).then(()=>import("../../p2p")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../p2p/components/header")
+  serverSideRequirePath: path.resolve(__dirname, "../../p2p"),
 });
 /* eslint-enable */
 
