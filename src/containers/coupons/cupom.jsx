@@ -70,7 +70,6 @@ class Cupom extends React.Component {
   handleSend = () => {
     let { code } = this.state;
     let { verifyCoupon, coins } = this.props;
-    console.warn(coins);
     if (!code && code.length <= 1) {
       this.setInputTo("error");
       errorRequest(i18n.t("SHORT_COUPON_LENGTH"));

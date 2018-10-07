@@ -79,7 +79,7 @@ class AliasPage extends React.Component {
   renderModalConfirm = () => {
     let { settings, setAliasModal, aliasCreated } = this.props;
 
-    if (!aliasCreated) {
+    if (aliasCreated) {
       return;
     }
 
