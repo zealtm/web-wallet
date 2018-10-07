@@ -1,8 +1,8 @@
-export const BASE_URL = "https://a.lunes.io/wallet/staging";
+export const BASE_URL = "https://a.lunes.io/wallet/v1";
 export const LUNESNODE_URL = "https://lunesnode-testnet.lunes.io";
 export const TETHER_URL = "https://api.omniwallet.org";
 export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
-export const TESTNET = true;
+export const TESTNET = false;
 export const HEADER_REQUEST = {
   headers: {
     "Content-Type": "application/json",
