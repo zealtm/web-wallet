@@ -1,3 +1,76 @@
-:local .modelo {
-  font-size: 12px;
+:local .modalContainerChat {
+  max-width: 100%;
+  text-align: center;
+}
+
+:local .modalImgChat {
+  width: 11%;
+}
+
+:local .openChat {
+  width: 100%;
+}
+
+:local .textOpenChat {
+  width: 44%;
+  font-size: 1.1em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 50px auto 60px auto;
+}
+
+:local .btnChat {
+  display: flex;
+  justify-content: center;
+}
+
+:local .btnTalkChat {
+  width: 30%;
+  height: 60px;
+  color:#4cd566;
+  border: 1px solid  #4cd566; 
+  border-radius: 10px;
+  background: none;
+  padding: 5px auto;
+  margin: 0 10px;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.9s;
+  display: flex;
+  box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.6);
+}
+
+:local .btnNotTalkChat {
+  width: 30%;
+  height: 60px;
+  color: #4cd566;
+  border: 1px solid  #4cd566; 
+  border-radius: 10px;
+  background: none;
+  padding: 5px auto;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  margin: 0 0 0 10px;
+  text-align: center;
+  transition: 0.9s;
+  justify-content: center;
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.6);
+}
+
+:local .btnTalkChat:hover {
+  text-decoration: none;
+  background-color: #4cd566;
+  color: #ffffff;
+}
+
+:local .btnNotTalkChat:hover{
+  text-decoration: none;
+  background-color: #4cd566;
+  color: #ffffff;
 }
