@@ -20,6 +20,6 @@ export const HEADER_REQUEST_FORM = {
 export const API_HEADER = {
   headers: {
     key:
-      "yKpfJj/Q6tuTM4xXebG3r1yKv/hnVdo9thIyUJNDOSLkw+q8SIsTU+Put4tpgj7Zp3jsPq8PMyw="
+      "IIP0X6S4Ui7z0lTfTkeLO6te2ZmyxOJ1fNeuoIC9"
   }
 };
