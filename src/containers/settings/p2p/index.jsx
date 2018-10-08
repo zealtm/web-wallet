@@ -19,7 +19,7 @@ class P2P extends React.Component {
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
               <Grid item xs={12}>
-                <h3>{i18n.t("SETTINGS_USER")} </h3>
+                <h3>{i18n.t("SETTINGS_P2P")} </h3>
               </Grid>
             </Hidden>
             <Grid item xs={2} />
@@ -31,7 +31,7 @@ class P2P extends React.Component {
             </Grid>
             <Hidden xsDown>
               <Grid item xs={12} sm={3}>
-                <h3>{i18n.t("SETTINGS_USER")}</h3>
+                <h3>{i18n.t("SETTINGS_P2P")}</h3>
               </Grid>
             </Hidden>
 
