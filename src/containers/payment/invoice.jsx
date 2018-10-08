@@ -29,7 +29,6 @@ import style from "./style.css";
 import { inputValidator } from "../../utils/inputValidator";
 import i18n from "../../utils/i18n";
 
-
 const customStyle = {
   inputRoot: {
     color: colors.messages.info,
@@ -181,25 +180,24 @@ class Invoice extends React.Component {
           assignor: "",
           dueDate: "",
           value: "",
-          description: "",
+          description: ""
         }
-      })
+      });
 
       getInvoice(newValue);
     }
-
   };
 
   handleCpfCnpjChange = event => {
-    const {invoice} = this.state;
+    const { invoice } = this.state;
 
     this.setState({
       invoice: {
         ...invoice,
-        cpfCnpj: event.target.value.replace(/\D/, '')
+        cpfCnpj: event.target.value.replace(/\D/, "")
       }
     });
-  }
+  };
 
   handleInvoiceDefaultChange = name => event => {
     this.setState({
@@ -231,7 +229,9 @@ class Invoice extends React.Component {
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
-      address: coins[invoice.coin.abbreviation].address
+      address: coins[invoice.coin.abbreviation]
+        ? coins[invoice.coin.abbreviation].address
+        : undefined
     };
 
     const invoiceInputs = {};
@@ -277,16 +277,25 @@ class Invoice extends React.Component {
     this.setPayment(invoiceData);
     this.openModal();
     this.setDefaultState();
+
+    return;
   };
 
   checkAllInputs = () => {
-    const {invoice, coin} = this.state;
-    const {payment} = this.props;
+    const { invoice, coin } = this.state;
+    const { payment } = this.props;
 
-    return invoice.number && invoice.name && invoice.cpfCnpj && (payment.assignor || invoice.assignor) &&
-      (payment.description || invoice.description) && (payment.dueDate || invoice.dueDate) &&
-      (payment.value || invoice.value) && coin.value;
-  }
+    return (
+      invoice.number &&
+      invoice.name &&
+      invoice.cpfCnpj &&
+      (payment.assignor || invoice.assignor) &&
+      (payment.description || invoice.description) &&
+      (payment.dueDate || invoice.dueDate) &&
+      (payment.value || invoice.value) &&
+      coin.value
+    );
+  };
 
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
@@ -422,7 +431,11 @@ class Invoice extends React.Component {
           style={{ marginTop: "10px" }}
         >
           <button
-            className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
+            className={
+              this.checkAllInputs()
+                ? style.buttonEnable
+                : style.buttonBorderGreen
+            }
             onClick={this.inputValidator}
           >
             {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
@@ -435,7 +448,7 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <Instructions/>
+          <Instructions />
         </Grid>
       </Grid>
     );

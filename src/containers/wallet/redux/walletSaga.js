@@ -1,12 +1,20 @@
-import { put, call } from "redux-saga/effects";
+import {
+  put,
+  call
+} from "redux-saga/effects";
 import {
   internalServerError,
   modalError
 } from "../../../containers/errors/statusCodeMessage";
 
 import i18n from "../../../utils/i18n";
-import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
-import { decryptAes } from "../../../utils/cryptography";
+import {
+  getAuthToken,
+  getUserSeedWords
+} from "../../../utils/localStorage";
+import {
+  decryptAes
+} from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 
@@ -34,6 +42,28 @@ export function* validateAddress(action) {
       });
 
       return;
+    } else if (response === "error") {
+      let dataAlias = yield call(transactionService.getAddressByAlias, address);
+
+      let response = yield call(
+        coinService.validateAddress,
+        action.coin,
+        dataAlias.address
+      );
+
+      if (!response.error && response !== "error") {
+        yield put({
+          type: "SET_WALLET_MODAL_ADDRESS",
+          address: dataAlias.address
+        });
+
+        yield put({
+          type: "SET_WALLET_MODAL_STEP",
+          step: 1
+        });
+
+        return;
+      }
     }
 
     yield put(modalError(i18n.t("MESSAGE_INVALID_ADDRESS")));
@@ -80,7 +110,10 @@ export function* getWalletSendModalFee(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }

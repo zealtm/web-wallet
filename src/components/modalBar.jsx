@@ -90,7 +90,8 @@ class ModalBar extends Component {
     let { classes } = this.props;
     let { type, message } = this.state;
     let { bgInfo, bgSuccess, bgError } = colorBase;
-
+    type = type ? type : "error";
+    
     return (
       <div>
         <Snackbar
@@ -116,7 +117,7 @@ class ModalBar extends Component {
                 <div className={classes.modalContent}>
                   <img
                     className={classes.typeIcon}
-                    src={imagePath + "/" + type + ".png"}
+                    src={imagePath + type + ".png"}
                   />
                   <span className={classes.message}>{message}</span>
                   <CloseIcon

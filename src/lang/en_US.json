@@ -63,6 +63,8 @@
   "LOGIN_SLIDE_DESCRIPTION_plural": "",
   "SETTINGS_CONSENTS_TERMS_DESCRIPTION": "Do you accept the GDPR terms?",
   "SET_ALIAS_DESCRIPTION": "You can customize a name for your wallet Lunes, if you prefer. If you make this change, the amount to be deducted from your balance is 5 LUNES.",
+  "ALIAS_RULES_1": "Only these characters are allowed: ",
+  "ALIAS_RULES_2": "'-.0123456789@_abcdefghijklmnopqrstuvwxyz",
   "CARD_HOME_DESCRIPTION": "Recharge your mobile with credits, anywhere, anytime, using the available cryptocurrenies in the Lunes wallet, quickly, easily and securely.",
   "CARD_HOME_DESCRIPTION_plural": "Make the low risk investment that returns you up to 5% per year. Have total security and control of your coins, with a better income than savings.",
   "PAYMENT_SHORT_DESCRIPTION": "Short description",
@@ -139,7 +141,7 @@
   "SETTINGS_USER_2FA_VERIFIED": "2FA verified",
   "SETTINGS_USER_2FA_NOT_VERIFIED": "2FA not verified",
   "SETTINGS_USER_FIRST_NAME": "First name",
-  "SET_ALIAS_SAVE_NAME": "Save name",
+  "SET_ALIAS_SAVE_NAME": "Save",
   "PLACEHOLDER_FIRST_NAME": "First name",
   "PLACEHOLDER_LAST_NAME": "Last name",
   "PAYMENT_TITLE_NAME": "Name",
@@ -161,7 +163,7 @@
   "SETTINGS_USER_CITY": "City",
   "SETTINGS_USER_STATE": "State",
   "SETTINGS_USER_SAVE_DATA": "Save data",
-  "SETTINGS_ALIAS_WALLET_LUNES": "Wallet Lunes",
+  "SETTINGS_ALIAS_WALLET_LUNES": "Lunes",
   "SECURITY_ITEM": "Enter the Authentication Number to enable 2FA in your account.",
   "SECURITY_ITEM_plural": "",
   "SETTING_LINK_RETURN": "Back to the settings",
@@ -425,7 +427,7 @@
   "RECHARGE_DETAILS_1": "Attention: Check below the data of your request so that there are no errors. If the information is incorrect, restart.",
   "RECHARGE_DETAILS_2": " and will be added ",
   "RECHARGE_DETAILS_3": " in credits to recharge the number below: ",
-  "RECHARGE_SUCCESS_1": "You have reloaded the value of ",
+  "RECHARGE_SUCCESS_1": "You have successfully loaded your cell phone!",
   "RECHARGE_SUCCESS_2": "View your refill history on the History tab",
 
   "INSTRUCTION_MODAL_PAY_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + (A), (B) or (C) of the service charge.",
@@ -437,5 +439,9 @@
   "INSTRUCTION_MODAL_PAY_3": "4.5% above R$ 3001 reais.",
 
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining rate (Value varies according to the currency network + 20% of the Lunes rate) + 5% of the service charge.",
-  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address."
+  "INSTRUCTION_MODAL_RECHARGE_INFO_2": " In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
+  "ALIAS_CREATED_SUCCESS": "Alias created with successful!",
+  "ALIAS_BALANCE_INSUFICIENT": "Balance insufficient.",
+  "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
+  "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!"
 }

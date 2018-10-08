@@ -70,12 +70,14 @@ export function* setPaymentSaga(payload) {
     const { abbreviation } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
+
     const amountResponse = yield call(
       paymentService.getCoinAmountPay,
       token,
       abbreviation,
       value
     );
+
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
@@ -91,7 +93,7 @@ export function* setPaymentSaga(payload) {
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
-      value: value.toFixed(2).replace(".", ","),
+      value: value,
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
@@ -104,6 +106,7 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
+    console.warn(error)
     yield put(internalServerError());
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
@@ -282,14 +285,13 @@ export function* confirmPaySaga(payload) {
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
         const dueDateFormat = dueDate.reverse().join('-');
-
         const dataIso = new Date(dueDateFormat).toISOString();
 
         if (response) {
           const payload_elastic = {
             barCode: payload.payment.payment.number,
             dueDate: dataIso,
-            amount: parseFloat(payload.payment.payment.value),
+            amount: payload.payment.payment.value,
             name: payload.payment.payment.name,
             document: payload.payment.payment.cpfCnpj,
             txID: transacao_obj.txID,
@@ -348,6 +350,7 @@ export function* confirmPaySaga(payload) {
 
       return;
     } catch (error) {
+      console.warn(error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -361,6 +364,7 @@ export function* confirmPaySaga(payload) {
       yield put(internalServerError());
     }
   } catch (error) {
+    console.warn(error);
     yield put(internalServerError());
   }
 }

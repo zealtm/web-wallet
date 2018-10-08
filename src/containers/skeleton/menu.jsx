@@ -45,7 +45,6 @@ const menuItens = [
     link: "/invoices",
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png",
-    error: true
   },
   {
     link: "/recharge",
@@ -55,6 +54,11 @@ const menuItens = [
   {
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
+    icon: "../../images/icons/general/cupon@1x.png"
+  },
+  {
+    link: "/p2p",
+    label: "P2P",
     icon: "../../images/icons/general/cupon@1x.png"
   }
 ];
