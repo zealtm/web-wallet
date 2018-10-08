@@ -307,6 +307,7 @@
   "PAYMENT_TITLE_DOC": "CPF/CNPJ",
   "PAYMENT_TITLE_VALUE": "Valor",
   "PAYMENT_VALUE": "Valor",
+  "PAYMENT_AMOUNT_LIMIT": "Valor excede o limite diário de R$ 3.000,00",
   "PAYMENT_TERMS_DESC": "Você aceita os termos?",
   "FEE_HIGHT": "Alta",
   "PAYMENT_HEADER_SUBTITLE": "Efetue seus pagamentos online com criptomoedas",

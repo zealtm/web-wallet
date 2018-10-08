@@ -120,7 +120,7 @@ class Cupom extends React.Component {
 
 Cupom.propTypes = {
   verifyCoupon: PropTypes.func.isRequired,
-  coins: PropTypes.object,
+  coins: PropTypes.array.isRequired,
   errorRequest: PropTypes.func,
   coupons: PropTypes.object
 };

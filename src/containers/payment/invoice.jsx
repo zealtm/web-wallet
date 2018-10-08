@@ -10,6 +10,7 @@ import {
   getInvoice,
   setClearPayment
 } from "./redux/paymentAction";
+import { errorInput } from "../errors/redux/errorAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -220,7 +221,7 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { payment, coins } = this.props;
+    const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
@@ -233,6 +234,11 @@ class Invoice extends React.Component {
         ? coins[invoice.coin.abbreviation].address
         : undefined
     };
+
+    if (invoiceData.value > 3000) {
+      errorInput("Valor excede o limite diário de R$ 3.000,00")
+      return;
+    }
 
     const invoiceInputs = {};
 
@@ -465,7 +471,8 @@ Invoice.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
-  coins: PropTypes.array
+  coins: PropTypes.array,
+  errorInput: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -481,7 +488,8 @@ const mapDispatchToProps = dispatch =>
       getInvoice,
       getCoinsEnabled,
       setPayment,
-      setClearPayment
+      setClearPayment,
+      errorInput
     },
     dispatch
   );
