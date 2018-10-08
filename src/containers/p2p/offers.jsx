@@ -10,6 +10,7 @@ import style from "./style.css";
 import colors from "../../components/bases/colors";
 
 // COMPONENTS
+import StarVotes from "./components/starvotes";
 import CardOffer from "./components/cardOffer";
 
 const inputStyle = {
@@ -53,7 +54,6 @@ const inputStyle = {
   error: {},
   focused: {}
 };
-
 class Offers extends React.Component {
   constructor(props) {
     super(props);
@@ -84,11 +84,14 @@ class Offers extends React.Component {
           <div className={style.itemTab}>ESCROOW</div>
         </div>
 
+          <StarVotes votes={4} />
+
         <div className={style.content}>
           {[1, 2, 3].map((val, key) => {
             return <CardOffer key={key} />;
           })}
         </div>
+
       </div>
     );
   }
