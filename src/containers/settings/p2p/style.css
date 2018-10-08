@@ -1,3 +1,14 @@
+/**
+1. CARDS SETTINGS
+2. HEADER SETTINGS
+
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/*1. CARD SETTINGS  */
+
 :local(.cardP2p) {
   composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
   width: 230px;
@@ -15,13 +26,10 @@
 }
 
 :local(.p2pContainer) {
-  justify-content: center;
-  height: 90vh;
-  align-items: center;
-  margin-bottom: 30%;
+  padding-left: 16%;
 }
 
-:local(.hr) {
+:local(.hrCard) {
   width: 30%;
   border-bottom: 1px solid #6351a8;
   margin-left: 35%;
@@ -81,5 +89,73 @@
 @media only screen and (min-width: 1920px) {
   :local(.boxContainer) {
     margin: 0 20%;
+  }
+}
+
+/* 2. HEADER SETTINGS */
+:local(a) {
+  text-decoration: none;
+}
+
+:local(.containerHeaderSettings) {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+:local(.headerSettingsDefault) {
+  display: flex;
+}
+
+:local(.headerSettingsDefault p) {
+  color: #68f285;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+:local(.headerSettingsDefault h3) {
+  text-align: right;
+  margin: 0;
+  padding-right: 15px;
+}
+
+#hr hr {
+  border: 0;
+  width: 100%;
+  border-bottom: 2px dotted #654fa4;
+  size: 15px;
+  height: 4px;
+}
+
+#hr {
+  display: flex;
+}
+
+:local(.plansDescription) {
+  padding: 0% 0% 0% 17%;
+}
+
+
+@media screen and (min-width: 1199px) {
+  :local(.headerSettingsDefault p) {
+    padding-left: 0.82cm;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  :local(.headerSettingsDefault p) {
+    float: left;
+    padding: 0 5px;
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault h3) {
+    font-size: 9px;
+  }
+  :local(.headerSettingsDefault) {
+    display: block;
+  }
+  #hr hr {
+    height: 0.4px;
   }
 }
