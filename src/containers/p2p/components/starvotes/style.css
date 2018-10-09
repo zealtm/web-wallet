@@ -1,0 +1,20 @@
+:local .boxStar {
+  display: flex;
+  width: 100%;
+  align-content: space-between;
+}
+:local .star {
+  opacity: .4;
+  max-width: 12px;
+  max-height: 12px;
+  font-size: 12px;
+  padding-right: 2px;
+}
+
+:local .starActive {
+  composes: star;
+  color: #fad04d;
+  opacity: 1;
+}
+
+
