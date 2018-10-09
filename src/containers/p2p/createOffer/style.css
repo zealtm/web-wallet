@@ -34,8 +34,8 @@
 
 :local .arrowPrice {
   composes: textGreen;
-  
-  margin-top: 2px;
+  margin-left:20px;
+  margin-top: 10px;
   max-width: 14px;
 }
 
@@ -85,22 +85,8 @@
 }
 
 :local .boxStar {
-  display: flex;
-  width: 100%;
-  align-content: space-between;
-  font-size: 12px;
+  margin-top:10px;
 }
-
-:local .star {
-  opacity: 0.4;
-  width: 12px;
-}
-
-:local .starActive {
-  color: yellow;
-  opacity: 1;
-}
-
 
 
 :local .inputDefault {

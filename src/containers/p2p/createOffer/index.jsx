@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
-import { ArrowForward, Star } from "@material-ui/icons/";
+import { ArrowForward } from "@material-ui/icons/";
 
 // COMPONENTS 
 import Select from "../../../components/select";
+import StarVotes from "../components/starvotes";
 
 // STYLE
 import style from "./style.css";
@@ -15,9 +16,22 @@ class CreateOffer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      img: "",
-      coinsExample: "",
+      title: "Lunes",
+      img: "images/icons/coins/lunes.png",
+      coinsExample: [
+        {
+          img: "images/icons/coins/lunes.png",
+          title: "Lunes"
+        },
+        {
+          img: "images/icons/coins/lunes.png",
+          title: "Lunes"
+        },
+        {
+          img: "images/icons/coins/lunes.png",
+          title: "Lunes"
+        },
+      ],
     };
   }
 
@@ -52,11 +66,7 @@ class CreateOffer extends React.Component {
               </Grid>
               <Grid item xs={5} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
-                <Star className={style.starActive} />
-                <Star className={style.starActive} />
-                <Star className={style.starActive} />
-                <Star className={style.starActive} />
-                <Star className={style.star} />
+                <StarVotes votes={4} />
               </div>
             </Grid>
             </Grid>
@@ -92,7 +102,14 @@ class CreateOffer extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={7}>
-                  SELECT 
+                  <Select
+                    list={coinsExample}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={null}
+                    width={"100%"}
+                  /> 
                 </Grid>
               </Grid>
 
@@ -121,6 +138,7 @@ class CreateOffer extends React.Component {
               <div className={style.textSmall}>E-mail</div>
               <input type="text" placeholder="email@email.com" className={style.inputDefault} />
             </div>
+            <hr />
             <div className={style.formGroup}>
               <div className={style.textSmall}>Descrição</div>
               <textarea className={style.textArea}>

@@ -86,10 +86,8 @@
 }
 
 :local .boxStar {
-  display: flex;
-  width: 100%;
-  align-content: space-between;
-  font-size: 12px;
+  margin-top:3px;
+  margin-bottom:2px;
 }
 
 :local .star {
