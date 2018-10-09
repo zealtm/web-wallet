@@ -119,11 +119,6 @@ let assets = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
 
-let p2p = Loadable({
-  loader: () => fakeDelay(0).then(()=>import("../../p2p")),
-  loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../p2p"),
-});
 /* eslint-enable */
 
 class App extends Component {
