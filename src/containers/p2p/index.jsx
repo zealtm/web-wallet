@@ -91,6 +91,7 @@ class P2P extends React.Component {
         </Hidden>
         {this.renderContent()}
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+        <ModalPayment modal={true} />
       </div>
     );
   }

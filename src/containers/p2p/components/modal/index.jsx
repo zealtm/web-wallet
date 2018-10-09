@@ -1,7 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Modal from "../../../../components/modal";
-import ConfirmModal from "./fluxo/confirmModal";
+import FluxoModal from "./fluxo/";
 
 class ModalPayment extends React.Component {
     constructor() {
@@ -19,7 +20,7 @@ class ModalPayment extends React.Component {
           <div>
             { modal &&
               <Modal                
-                content={<ConfirmModal />}
+                content={<FluxoModal modalStep = { 2 } />}
                 show={isOpen}
                 close={() => this.handleModal()}
             />
@@ -29,4 +30,5 @@ class ModalPayment extends React.Component {
         );
       }
 }
+ModalPayment.propTypes = {}
 export default ModalPayment;

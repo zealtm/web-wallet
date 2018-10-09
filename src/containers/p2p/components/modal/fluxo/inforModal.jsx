@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 // STYLE
 import style from "../style.css";
+
 
 class InforModal extends React.Component {
     render() {
@@ -27,4 +29,5 @@ class InforModal extends React.Component {
         );
     }
 }
+InforModal.propTypes = {}
 export default InforModal;

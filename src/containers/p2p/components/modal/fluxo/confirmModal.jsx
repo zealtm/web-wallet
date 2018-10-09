@@ -1,26 +1,31 @@
 import React from "react";
 // STYLE
-import InforModal from "./inforModal"
 import style from "../style.css";
+import PropTypes from "prop-types";
 
 class ConfirmModal extends React.Component {
     constructor() {
         super();
         this.state = {
-            confirm: false
+            confirm: false,
+            selectFee: false,
         };
+        this.hendlerContinue = this.hendlerContinue.bind(this);
     }
-    renderContent = () => {
-        return <InforModal />;
+
+    calcFee() {
+        console.log("fee : " + confirm);
+        this.setState({ selectFee: true });
     }
-    
-    hendlerContinue = () => this.setState({confirm: !this.state.confirm});
+
+    hendlerContinue = () => {
+        if(this.state.selectFree){
+            this.setState({ confirm: !this.state.confirm });
+        }
+        
+    }
 
     render() {
-        const { confirm } = this.state;
-         if (confirm) {
-            return this.renderContent();
-        }       
         return (
             <div className={style.modalBox}>
                 <img
@@ -46,28 +51,34 @@ class ConfirmModal extends React.Component {
                 <div className={style.boxFee}>
                     <span
                         className={style.greenLabelFee}
+                        onClick={() => this.calcFee()}
                     >
                         {"Low 0.001"}
                     </span>
                     <span
                         className={style.yellowLabelFee}
+                        onClick={() => this.calcFee()}
                     >
                         {"Medium 0.001"}
                     </span>
                     <span
                         className={style.redLabelFee}
+                        onClick={() => this.calcFee()}
                     >
                         {"High 0.001"}
                     </span>
                 </div>
                 <button
                     className={style.btGreen}
-                    onClick={this.hendlerContinue()}
+                    onClick={ this.hendlerContinue() }
                 >
-                   {"Confirmar"}
+                    {"Confirmar"}
                 </button>
             </div>
         );
     }
+}
+ConfirmModal.propTypes = {
+
 }
 export default ConfirmModal;
