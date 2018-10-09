@@ -1,22 +1,20 @@
 :local(.topBar) {
-    composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
-    width: 100%;
-    border-radius: 10px;
-    text-align: center;
-    margin: 0px;
-    align-items: center;
-    max-width: 100%;
-    margin-bottom: 15px;
-  }
-  :local(.header) {
+  composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
+  padding: 20px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+:local .colorGreen {
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+}
+:local(.header) {
     padding: 10px;
     margin: 50px,0px,0px,50px;
     justify-content: center;
     align-items: center;
   }
-  /* 2.1 CARD */
-:local(.card) {
-    background-color: #6351a8;
+  :local(.card) {
+    composes: clPurpleClear from "../../../../components/bases/colorBase.css";    
+    background-color: composes;
     width: 100%;
     padding: 10px;
     border-radius: 10px;
@@ -28,37 +26,31 @@
     justify-content: center;
     align-items: center;
   }
-  :local .iconCoin {
-    width: 24px;
-    height: 24px;
+  :local .avatar {
+    width: 30px;
+    height: 30px;
   }
   /*
   Text
   */
   :local(.textGreen) {
-    font-family: NotoSans;
-    font-size: 14px;
-    align-items: initial;
-    margin-left: 10px;
-    color: #68f285;
+    composes: textGreen;
+    font-size: 16px;
+    display: block;
   }
 
   :local(.textSmall){
-    font-family: NotoSans;
-    font-size: 14px;
-    color: #ffffff;
-    text-align: left;
+    font-size: 11px;
+    display: block;
   }
-  :local(.buttonGreen) {
-    composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+
+  :local .star {
+    opacity: 0.4;
+    width: 12px;
   }
-  :local(.buttonBlue) {
-    composes: buttonEnable from "../../../../components/bases/buttonBase.css";
-    color: #ffffff;
-    background-color: #0099ff;
-    border-radius: 6px;
-    border: none;
-    padding: 15px;
-    width: 100%;
-    height: 50px;
+  
+  :local .starActive {
+    color: yellow;
+    opacity: 1;
   }
+  
