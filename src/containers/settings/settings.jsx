@@ -46,7 +46,7 @@ class Settings extends React.Component {
             </Grid>
             
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
-              <Link to="/p2p">
+              <Link to="/setp2p">
                 <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_6")}</Grid>
               </Link>
             </Grid>
