@@ -118,6 +118,7 @@ let p2p = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../p2p"),
 });
+
 /* eslint-enable */
 
 class App extends Component {
