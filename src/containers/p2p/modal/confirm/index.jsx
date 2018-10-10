@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import style from "./style.css";
 
+//MATERIAL
+
 class ConfirmModal extends React.Component {
   render(){
     return (
