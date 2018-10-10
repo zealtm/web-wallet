@@ -27,7 +27,7 @@ class Header extends React.Component {
                             />
                         </Grid>
                         <Grid item xl={4}>
-                            <span className={style.name}>Ricardo Lopez</span>
+                            <span className={style.textGreen}>Ricardo Lopez</span>
                             <span className={style.textSmall}>00/00/2018</span>
                             <div className={style.card}><div className={style.textSmall}>200.00000</div>
                             </div>

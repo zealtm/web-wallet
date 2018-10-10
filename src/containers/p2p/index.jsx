@@ -9,7 +9,6 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
-import Header from "./components/header";
 //STYLE
 import style from "./style.css";
 
@@ -90,7 +89,6 @@ class P2P extends React.Component {
         </Hidden>
         {this.renderContent()}
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-        <Header />
       </div>
     );
   }
