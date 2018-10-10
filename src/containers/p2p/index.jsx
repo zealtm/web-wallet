@@ -80,7 +80,7 @@ class P2P extends React.Component {
 
   render() {
     const { openP2P } = this.state;
-    const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const contentTabIcons = ["tag", "user_star", "newoffer", "user"];
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
