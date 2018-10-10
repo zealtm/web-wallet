@@ -1,3 +1,84 @@
-:local .modelo {
-  font-size: 12px;
+/*
+
+1. CONTAINER
+
+2. MODAL
+
+3. ICON
+  
+4. TEXT
+
+5. BUTTON
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. CONTAINER */
+
+:local(.confirmContainer) {
+  display: inline-block;
+  justify-content: center;
+  height: 10vh;
+  align-items: center;
+  margin-bottom: 30%;
 }
+
+@media only screen and (max-width: 1023px) {
+  :local(.confirmContainer) {
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
+    justify-content: space-between;
+    height: 75vh;
+    align-items: center;
+  }
+}
+
+/* 2. MODAL */
+
+:local(.btnModal) {
+  text-align: center;
+  margin-top: 5vh;
+}
+
+:local(.boxModal) {
+  margin: 0px;
+  display: inline-block;
+}
+
+:local(.textModal) {
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  padding: 1vh 2vh;
+  max-width: 100%;
+  font-weight: bold;
+  text-align: justify;
+  height: 40vh;
+  position: relative;
+  
+}
+
+:local(.textModal p) {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) 
+}
+
+/*3. ICON */
+
+:local(.cardIcon) {
+  text-align: center;
+}
+
+/*3. BUTTON */
+
+:local(.buttonCard) {
+  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+  width: 60%;
+  height: 45px;
+  font-weight: bold;
+  margin: 2vh;
+}
+
