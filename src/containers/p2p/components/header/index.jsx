@@ -29,8 +29,7 @@ class Header extends React.Component {
                         <Grid item xl={4}>
                             <span className={style.textGreen}>Ricardo Lopez</span>
                             <span className={style.textSmall}>00/00/2018</span>
-                            <div className={style.card}><div className={style.textSmall}>200.00000</div>
-                            </div>
+                            <div className={style.card}>200.00000</div>
                         </Grid>
                         <ArrowForward className={style.arrowPrice} />
                         <Grid xl={4}>
@@ -41,8 +40,7 @@ class Header extends React.Component {
                                 <Star className={style.starActive} />
                                 <Star className={style.star} /> 
                             </div>                            
-                            <div className={style.cardRight}><div className={style.textSmall}>R$650,00</div>
-                            </div>
+                            <div className={style.card}>R$650,00</div>
                         </Grid>   
                         
                         <Grid item xs={1}>
