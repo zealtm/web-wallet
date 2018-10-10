@@ -78,7 +78,13 @@ class P2P extends React.Component {
                     src={"images/lunio/lunio-user@100x100.jpg"}
                     className={style.avatar}
                   />
-                  <p className={style.userName}>Felipe Mendes</p>
+                  <p className={style.userName}>
+                    Felipe Mendes <br />{" "}
+                    <span className={style.textSmall}>
+                      Usuário desde 12/10/1998
+                    </span>{" "}
+                  </p>{" "}
+                  <br />
                 </div>
                 <div className={style.userDescription}>
                   <span className={style.spanDescription}>Descrição</span>
@@ -96,15 +102,21 @@ class P2P extends React.Component {
                   <div className={style.hr} />
                 </div>
 
-                <div className={style.negotiation}>
-                  <span className={style.spanNegotiationsBar}>Negociações</span>
-                  <div className={style.negotiationsBar} />
+                <div className={style.bars}>
+                  <span className={style.spanBars}>Negociações</span>
+                  <div className={style.barsNumbers}>
+                    <span>+500</span>
+                  </div>
                 </div>
+                <div className={style.bar} />
 
-                <div className={style.concluded}>
-                  <span className={style.spanConcludedBar}>Concluídas</span>
-                  <div className={style.concludedBar} />
+                <div className={style.bars}>
+                  <span className={style.spanBars}>Concluídas</span>
+                  <div className={style.barsNumbers}>
+                    <span>50%</span>
+                  </div>
                 </div>
+                <div className={style.bar} />
               </div>
             </Grid>
 
@@ -114,14 +126,13 @@ class P2P extends React.Component {
                   <span className={style.spanDescription}>Feedback</span>
                   <div className={style.hr} />
                 </div>
-                
+
                 <div className={style.userFeedback}>
                   <span className={style.spanDescription}>João</span>
                   <div className={style.textDescription}>
                     <p>Bom trader, recomendo!</p>
                   </div>
                 </div>
-
               </div>
             </Grid>
           </Grid>
