@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // MATERIAL
-import { Grid, Avatar } from "@material-ui/core/";
-import { ArrowForward } from "@material-ui/icons/";
+import { Grid, Avatar,Radio,FormControlLabel,withStyles } from "@material-ui/core/";
+import { ArrowForward, ArrowBack } from "@material-ui/icons/";
 
 // COMPONENTS 
 import Select from "../../../components/select";
@@ -11,6 +11,22 @@ import StarVotes from "../components/starvotes";
 
 // STYLE
 import style from "./style.css";
+
+const stylesCustom = theme => ({
+  root: {
+    color: "#68f285",
+    '&$checked': {
+      color: "#68f285",
+    },
+  },
+  rootLabel: {
+    fontSize: "11px",
+    color: "#fff"
+  },
+  checked: {
+    color: "#68f285",
+  }
+});
 
 class CreateOffer extends React.Component {
   constructor(props) {
@@ -48,11 +64,16 @@ class CreateOffer extends React.Component {
 
   render() {
     const {title,img,coinsExample} = this.state;
+    const {classes} = this.props;
+
     return (
       <div className={style.baseUser} >
       
           <div className={style.headerUser}>
             <Grid container>
+              <Grid item xs={1}>
+                <ArrowBack className={style.arrowBack} />
+              </Grid>
               <Grid item xs={2}>
                 <Avatar
                   alt="avatar"
@@ -64,7 +85,7 @@ class CreateOffer extends React.Component {
                 <span className={style.name}>Nome Usuario</span>
                 <span className={style.textSmall}>00/00/2018</span>
               </Grid>
-              <Grid item xs={5} style={{ paddingLeft: 10 }}>
+              <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
                 <StarVotes votes={4} />
               </div>
@@ -120,10 +141,22 @@ class CreateOffer extends React.Component {
               <div className={style.textSmall}>Método de negociação</div>
               <Grid container>
                 <Grid item xs={6}>
-                  P2P (Peer to Peer)
+                  <FormControlLabel
+                    value="p2p"
+                    classes={{label: classes.rootLabel}} 
+                    control={<Radio color="primary" classes={{root: classes.root, checked: classes.checked}}  />}
+                    label="P2P (Peer to Peer)"
+                    labelPlacement="start"
+                  />
                 </Grid>
                 <Grid item xs={6}>
-                  SCROOW 
+                  <FormControlLabel
+                    value="scroow"
+                    classes={{label: classes.rootLabel}} 
+                    control={<Radio color="primary" classes={{root: classes.root, checked: classes.checked}}  />}
+                    label="SCROOW"
+                    labelPlacement="start"
+                  /> 
                 </Grid>
               </Grid>
 
@@ -154,6 +187,8 @@ class CreateOffer extends React.Component {
   }
 }
 
-CreateOffer.propTypes = {};
+CreateOffer.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default CreateOffer;
+export default withStyles(stylesCustom)(CreateOffer);

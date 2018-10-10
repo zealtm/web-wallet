@@ -39,6 +39,12 @@
   max-width: 14px;
 }
 
+:local .arrowBack {
+  color: #fff;
+  margin-top: 10px;
+  max-width: 18px;
+}
+
 :local .hours {
   font-size: 9px;
   opacity: 0.5;
@@ -112,6 +118,7 @@
 }
 
 :local .formBase {
+  padding-left: 30px;
   padding-top:20px;
   height: 375px;
   overflow: scroll;
