@@ -5,6 +5,9 @@ import PropTypes from "prop-types";
 import { Grid, Avatar } from "@material-ui/core/";
 import { ArrowForward, Star } from "@material-ui/icons/";
 
+// COMPONENTS
+import StarVotes from "../starvotes";
+
 // STYLE
 import style from "./style.css";
 
@@ -47,11 +50,7 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.star} />
+              <StarVotes votes={4} />
             </div>
             <span className={style.textSmall}>Unid. R$6,00</span>
             <ArrowForward className={style.arrowPrice} />
