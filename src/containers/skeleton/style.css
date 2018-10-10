@@ -333,3 +333,11 @@
 :local(body) {
   background-color: #42227d;
 }
+:local(.menuP2P){
+  margin-left: 50px;
+  margin-top: 20%;  
+}
+:local .iconP2p {
+  width: 32px;
+  height: 32px;
+}
