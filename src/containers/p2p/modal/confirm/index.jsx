@@ -11,6 +11,8 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
+//MATERIAL
+
 class ConfirmModal extends React.Component {
   render(){
     return (
