@@ -11,9 +11,11 @@ import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
-import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import UserProfile from "./userProfile";
+import Modal from "../../components/modal";
+import ConfirmModal from "./modal/confirm"
 
 //STYLE
 import style from "./style.css";
@@ -69,7 +71,7 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <div key={3}>Perfil Usuario</div>,
+      <UserProfile key={3} />,
       <CreateOffer  key={4} />
     ];
 
@@ -92,22 +94,19 @@ class P2P extends React.Component {
 
         {
           (chatOpened==false)?
-               (
-                <div>
-                  <div className={style.baseContent}>
+            (
+              <div>
+                <div className={style.baseContent}>
                   {this.renderContent()}
-                  </div>
-                  <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
                 </div>
-              )
-            :
-               (
-                <div>
-                  chat
-                </div>
-              )
-            }
-        
+                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+              </div>
+            ) : (
+              <div>
+                chat
+              </div>
+            )
+        }
 
       </div>
     );

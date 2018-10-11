@@ -1,9 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import { Star,FavoriteBorder, ArrowForward  } from "@material-ui/icons/";
+
+// COMPONENTS 
+import StarVotes from "../starvotes";
 
 // STYLE
 import style from "./style.css";
@@ -34,11 +38,7 @@ class Header extends React.Component {
                         <ArrowForward className={style.arrowPrice} />
                         <Grid xl={4}>
                             <div className={style.boxStar}>
-                                <Star className={style.starActive} />
-                                <Star className={style.starActive} />
-                                <Star className={style.starActive} />
-                                <Star className={style.starActive} />
-                                <Star className={style.star} /> 
+                                <StarVotes votes={3} />
                             </div>                            
                             <div className={style.card}>R$650,00</div>
                         </Grid>   
