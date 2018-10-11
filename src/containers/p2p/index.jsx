@@ -8,6 +8,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import UserProfile from "./userProfile";
 import Modal from "../../components/modal";
 import ConfirmModal from "./modal/confirm"
 
@@ -65,7 +66,7 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <div key={3}>Perfil Usuario</div>,
+      <UserProfile key={3} />,
       <CreateOffer  key={4} />
     ];
 
@@ -88,13 +89,6 @@ class P2P extends React.Component {
         {this.renderContent()}
         </div>
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-
-        <Modal
-          title={"Cofirmar"}
-          content={<ConfirmModal />}
-          show={true}
-          close={()=>alert("close")}
-        />
       </div>
     );
   }
