@@ -20,6 +20,7 @@ import ConfirmModal from "./modal/confirm"
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
+import Chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -103,7 +104,7 @@ class P2P extends React.Component {
               </div>
             ) : (
               <div>
-                chat
+                <Chat />
               </div>
             )
         }

@@ -17,6 +17,12 @@ const p2p = (state = initialState, action) => {
           iduser: action.iduser
         }
       };
+    
+    case "CLOSE_CHAT_P2P_REDUCER":
+      return {
+        ...state,
+        chatOpened: false,
+      }
 
     default: {
       return {

@@ -1,4 +1,4 @@
-import { put, call } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 //import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
@@ -13,9 +13,16 @@ import { put, call } from "redux-saga/effects";
 //import P2PService from "../../../services/p2pService";
 //const p2pService = new P2PService();
 
-export function* setChatStatus(payload) {
+export function* openChat(payload) {
   yield put({
     type: "OPEN_CHAT_P2P_REDUCER",
     iduser: payload.iduser
   });
+}
+
+
+export function* closeChat() {
+  yield put({
+    type: "CLOSE_CHAT_P2P_REDUCER"
+  })
 }

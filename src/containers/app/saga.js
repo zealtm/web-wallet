@@ -77,7 +77,8 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
-  setChatStatus
+  openChat, 
+  closeChat
 } from "../p2p/redux/p2pSaga";
 
 export default function* rootSaga() {
@@ -155,6 +156,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
 
     // p2pchat
-    fork(takeLatest, "OPEN_CHAT_P2P", setChatStatus),
+    fork(takeLatest, "OPEN_CHAT_P2P", openChat),
+    fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
   ];
 }
