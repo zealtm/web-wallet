@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "./redux/p2pAction";
+
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
@@ -15,6 +20,7 @@ import ConfirmModal from "./modal/confirm"
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
+import Chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -75,8 +81,10 @@ class P2P extends React.Component {
   };
 
   render() {
-    const { openP2P } = this.state;
     const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const {chatOpened} = this.props.p2pStore;
+
+    const { openP2P } = this.state;
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
@@ -84,16 +92,36 @@ class P2P extends React.Component {
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
-        
-        <div className={style.baseContent}>
-        {this.renderContent()}
-        </div>
-        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+
+        {
+          (chatOpened==false)?
+            (
+              <div>
+                <div className={style.baseContent}>
+                  {this.renderContent()}
+                </div>
+                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+              </div>
+            ) : (
+              <div>
+                <Chat />
+              </div>
+            )
+        }
+
       </div>
     );
   }
 }
 
-P2P.propTypes = {};
+P2P.propTypes = {
+  p2pStore:PropTypes.object.isRequired
+};
 
-export default P2P;
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
+
+export default connect(
+  mapStateToProps
+)(P2P);
