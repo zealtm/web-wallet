@@ -2,15 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 //MATERIAL
-import Grid from "@material-ui/core/Grid";
 import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
-import Avatar from "@material-ui/core/Avatar";
 
 //COMPONENTS
 import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import UserProfile from "./userProfile";
 
 //STYLE
 import style from "./style.css";
@@ -64,89 +63,18 @@ class P2P extends React.Component {
     const titles = [["Comprar", "Vender"], ["Compras", "Vendas"]];
     const contents = [
       [<Offers key={1} />, <Offers key={2} />],
-      [<Offers key={1} />, <Offers key={2} />]
+      [<Offers key={1} />, <Offers key={2} />], 
+      <UserProfile />
     ];
 
-    if (tabIcon == 2) {
-      return (
-        <div>
-          <Grid container>
-            <Grid item xs={12} sm={12}>
-              <div className={style.cardProfile}>
-                <div className={style.userInfo}>
-                  <Avatar
-                    src={"images/lunio/lunio-user@100x100.jpg"}
-                    className={style.avatar}
-                  />
-                  <p className={style.userName}>
-                    Felipe Mendes <br />{" "}
-                    <span className={style.textSmall}>
-                      Usuário desde 12/10/1998
-                    </span>{" "}
-                  </p>{" "}
-                  <br />
-                </div>
-                <div className={style.userDescription}>
-                  <span className={style.spanDescription}>Descrição</span>
-                  <div className={style.textDescription}>
-                    <p>O usuário com mais numeros de trades!</p>
-                  </div>
-                </div>
-              </div>
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <div className={style.cardProfile}>
-                <div className={style.data}>
-                  <span className={style.spanDescription}>Dados</span>
-                  <div className={style.hr} />
-                </div>
-
-                <div className={style.bars}>
-                  <span className={style.spanBars}>Negociações</span>
-                  <div className={style.barsNumbers}>
-                    <span>+500</span>
-                  </div>
-                </div>
-                <div className={style.bar} />
-
-                <div className={style.bars}>
-                  <span className={style.spanBars}>Concluídas</span>
-                  <div className={style.barsNumbers}>
-                    <span>50%</span>
-                  </div>
-                </div>
-                <div className={style.bar} />
-              </div>
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <div className={style.cardProfile}>
-                <div className={style.data}>
-                  <span className={style.spanDescription}>Feedback</span>
-                  <div className={style.hr} />
-                </div>
-
-                <div className={style.userFeedback}>
-                  <span className={style.spanDescription}>João</span>
-                  <div className={style.textDescription}>
-                    <p>Bom trader, recomendo!</p>
-                  </div>
-                </div>
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-      );
-    } else {
-      return (
-        <Tabs
-          tabTitles={titles[tabIcon]}
-          tabContents={contents[tabIcon]}
-          justify="center"
-        />
-      );
-    }
+    return (
+      <Tabs
+        tabTitles={titles[tabIcon]}
+        tabContents={contents[tabIcon]}
+        justify="center"
+      />
+    );
+    
   };
 
   render() {
