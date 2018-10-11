@@ -51,9 +51,10 @@
   padding: 1vh 2vh;
   max-width: 100%;
   font-weight: bold;
-  text-align: justify;
-  height: 40vh;
+  text-align: center;
   position: relative;
+  margin-top: 100px;
+  margin-bottom: 50px;
   
 }
 
