@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "./redux/p2pAction";
+
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
@@ -92,5 +97,7 @@ class P2P extends React.Component {
 }
 
 P2P.propTypes = {};
+
+
 
 export default P2P;
