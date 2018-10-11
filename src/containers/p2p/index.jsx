@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -9,6 +17,8 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import Modal from "../../components/modal";
+import ConfirmModal from "./modal/confirm"
 
 //STYLE
 import style from "./style.css";
@@ -90,6 +100,13 @@ class P2P extends React.Component {
         </Hidden>
         {this.renderContent()}
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+
+        <Modal
+          title={"Avaliação"}
+          content={<ConfirmModal />}
+          show={true}
+          close={()=>alert("close")}
+        />
       </div>
     );
   }
@@ -98,3 +115,8 @@ class P2P extends React.Component {
 P2P.propTypes = {};
 
 export default P2P;
+
+
+
+
+

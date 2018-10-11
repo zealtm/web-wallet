@@ -18,21 +18,7 @@ class ConfirmModal extends React.Component {
     return (
       <div className={style.boxModal}>
         <Grid container spacing={24} classeName={style.confirmContainer}>
-          <Grid item xs={12} className={style.cardIcon}>
-            <div>
-             <img src="/images/icons/general/group@1x.png" />
-            </div>
-          </Grid>
-
-          <Grid item xs={12} className={style.textModal}>
-            <div>
-              <p>
-              {i18n.t("P2P_MODAL_DEPOSIT_CONFIRM")}
-
-              </p>
-              
-            </div>
-          </Grid>
+          
           
           <Grid item xs={12}>
             <div className={style.btnModal}>
