@@ -334,7 +334,9 @@
   background-color: #42227d;
 }
 :local(.menuP2P){
-  margin-left: 50px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40%;
   margin-top: 20%;  
   margin-bottom: 50%;
 }
