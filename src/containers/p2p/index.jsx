@@ -6,7 +6,6 @@ import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
-import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 
@@ -82,6 +81,7 @@ class P2P extends React.Component {
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
+        
         <div className={style.baseContent}>
         {this.renderContent()}
         </div>
