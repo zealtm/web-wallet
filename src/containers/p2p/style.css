@@ -160,3 +160,11 @@
   width: 100%;
   text-align: right;
 }
+:local .content {
+  height: 475px;
+  overflow: scroll;
+}
+
+:local .baseContent {
+  margin: 15px;
+}
