@@ -6,7 +6,6 @@ import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
-import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import Modal from "../../components/modal";
@@ -14,6 +13,7 @@ import ConfirmModal from "./modal/confirm"
 
 //STYLE
 import style from "./style.css";
+import CreateOffer from "./createOffer";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -61,23 +61,16 @@ class P2P extends React.Component {
 
   renderContent = () => {
     const { tabIcon } = this.state;
-    const titles = [["Comprar", "Vender"], ["Compras", "Vendas"]];
+    
     const contents = [
-      [<Offers key={1} />, <Offers key={2} />],
-      [<Offers key={1} />, <Offers key={2} />]
+      <Offers key={1} />,
+      <Offers key={2} />,
+      <div key={3}>Perfil Usuario</div>,
+      <CreateOffer  key={4} />
     ];
 
-    if (tabIcon == 2) {
-      return <div>PERFIL USUARIO</div>;
-    } else {
-      return (
-        <Tabs
-          tabTitles={titles[tabIcon]}
-          tabContents={contents[tabIcon]}
-          justify="center"
-        />
-      );
-    }
+    return (contents[tabIcon] );
+  
   };
 
   render() {
@@ -90,7 +83,10 @@ class P2P extends React.Component {
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
+        
+        <div className={style.baseContent}>
         {this.renderContent()}
+        </div>
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
 
         <Modal
