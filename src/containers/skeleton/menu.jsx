@@ -141,12 +141,12 @@ class Menu extends React.Component {
         {this.renderMenu()}
         <div className={style.menuP2P}>
         <NavLink
-          className={style.linkMenu}
+          className={style.linkMenuP2P}
           to={"/p2p"}
           onClick={() => this.onClickFunction()}
         >
           <img src={"../../images/icons/p2p/user_star.png"} className={style.iconP2p} />    
-          <div> </div>      
+          <div>{"  "}</div>      
         </NavLink>
         </div>
       </div>
