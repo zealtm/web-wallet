@@ -78,8 +78,10 @@ class P2P extends React.Component {
   };
 
   render() {
-    const { openP2P } = this.state;
     const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const {chatOpened} = this.props.p2pStore;
+
+    const { openP2P } = this.state;
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
@@ -87,17 +89,39 @@ class P2P extends React.Component {
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
-        <div className={style.baseContent}>
-        {this.renderContent()}
-        </div>
-        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+
+        {
+          (chatOpened==false)?
+               (
+                <div>
+                  <div className={style.baseContent}>
+                  {this.renderContent()}
+                  </div>
+                  <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+                </div>
+              )
+            :
+               (
+                <div>
+                  chat
+                </div>
+              )
+            }
+        
+
       </div>
     );
   }
 }
 
-P2P.propTypes = {};
+P2P.propTypes = {
+  p2pStore:PropTypes.object.isRequired
+};
 
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
 
-
-export default P2P;
+export default connect(
+  mapStateToProps
+)(P2P);

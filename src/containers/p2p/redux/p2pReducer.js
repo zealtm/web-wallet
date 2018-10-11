@@ -2,7 +2,7 @@ const initialState = {
   chat: {
     iduser: null
   },
-  openChat: false, 
+  chatOpened: false, 
   loading: false
 };
 
@@ -11,7 +11,7 @@ const p2p = (state = initialState, action) => {
     case "OPEN_CHAT_P2P_REDUCER":
       return {
         ...state,
-        openChat: true,
+        chatOpened: true,
         chat: {
           ...state.chat,
           iduser: action.iduser

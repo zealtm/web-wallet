@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "../../redux/p2pAction";
+
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
 import { ArrowForward, Star } from "@material-ui/icons/";
@@ -25,6 +30,12 @@ class CardOffer extends React.Component {
       openDetails: !this.state.openDetails
     });
   };
+
+  openChat = (id) => {
+    const {openChat} = this.props;
+    
+    openChat(id);
+  }
 
   render() {
     const { openDetails } = this.state;
@@ -74,7 +85,7 @@ class CardOffer extends React.Component {
             <div className={style.textDetails}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
             </div>
-            <button className={style.btContinue}>Negociar</button>
+            <button className={style.btContinue} onClick={()=>this.openChat(1)}>Negociar</button>
           </Grid>
         </Grid>
       </div>
@@ -82,6 +93,17 @@ class CardOffer extends React.Component {
   }
 }
 
-CardOffer.propTypes = {};
+CardOffer.propTypes = {
+  openChat: PropTypes.func.isRequired
+};
 
-export default CardOffer;
+const mapStateToProps = store => ({
+
+});
+
+const mapDispatchToProps = dispatch => 
+bindActionCreators(
+  {openChat},dispatch
+);
+
+export default connect(mapStateToProps,mapDispatchToProps)(CardOffer);
