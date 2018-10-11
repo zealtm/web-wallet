@@ -11,13 +11,13 @@ import style from "../style.css";
 class UserProfile extends React.Component {
   render(){
     return (
-      <Grid container>
+      <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.userInfo}>
-              <Avatar
+              <img
                 src={"images/lunio/lunio-user@100x100.jpg"}
-                className={style.avatar}
+                className={style.avatarProfile}
               />
               <p className={style.userName}>
                 Felipe Mendes <br />{" "}
