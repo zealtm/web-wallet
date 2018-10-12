@@ -10,6 +10,7 @@ import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 
+import MultiSelect from "./components/multiSelect";
 //STYLE
 import style from "./style.css";
 
@@ -18,8 +19,16 @@ class P2P extends React.Component {
     super(props);
     this.state = {
       tabIcon: 0,
-      openP2P: true
+      openP2P: true,
+      coin: [{
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }]
     };
+  }
+  coinSelected = (value, title, img = undefined) => {
+
   }
 
   handleTabIcon = key => {
@@ -79,7 +88,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    const { openP2P } = this.state;
+    const { openP2P,coin } = this.state;
     const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
@@ -90,6 +99,11 @@ class P2P extends React.Component {
         </Hidden>
         {this.renderContent()}
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+        <MultiSelect  
+           list={coin}
+           selectItem={this.coinSelected}
+           width = {"100%"}
+         />
       </div>
     );
   }
