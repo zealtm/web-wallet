@@ -1,4 +1,4 @@
-export const TESTNET = false;
+export const TESTNET = true;
 export const BASE_URL = TESTNET ? "https://a.lunes.io/wallet/staging" : "https://a.lunes.io/wallet/v1";
 export const LUNESNODE_URL = TESTNET ? "https://lunesnode-testnet.lunes.io" : "https://lunesnode.lunes.io";
 export const TETHER_URL = "https://api.omniwallet.org";
