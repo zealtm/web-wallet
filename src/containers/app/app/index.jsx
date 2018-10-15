@@ -112,6 +112,12 @@ let assets = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
+
+let buycoin = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../buycoin")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+});
 /* eslint-enable */
 
 class App extends Component {
@@ -142,6 +148,7 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/buycoin" component={buycoin} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

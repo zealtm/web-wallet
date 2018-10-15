@@ -448,5 +448,9 @@
   "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
   "ALIAS_ERROR_TRANSACTION": "Não foi possível fazer a transação de Alias",
   "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!",
-  "ALIAS_MODAL_TRANSACTION": "Para confirmar sua transação, insira sua senha: "
+  "ALIAS_MODAL_TRANSACTION": "Para confirmar sua transação, insira sua senha: ",
+
+  "MENU_BUYCOINS": "Comprar", 
+  "BUYCOINS_TITLE": "COMPRAR CRIPTOMOEDAS",
+  "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura."
 }
