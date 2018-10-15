@@ -28,7 +28,7 @@ class Security extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
-              <Link to="#">
+              <Link to="/KYC">
                 <Grid className={style.cards}>kyc</Grid>
               </Link>
             </Grid>

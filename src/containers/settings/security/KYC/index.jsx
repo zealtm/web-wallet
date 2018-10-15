@@ -23,7 +23,7 @@ import i18n from "../../../../utils/i18n";
 // COMPONENTS
 import Loading from "../../../../components/loading";
 
-class CellPhoneAuthenticate extends React.Component {
+class KYC extends React.Component {
   componentDidMount() {
     let { getTwoFactorAuth, settings, twoFactor } = this.props;
     if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
@@ -115,7 +115,7 @@ class CellPhoneAuthenticate extends React.Component {
                 </Grid>
               </Grid>
               <Hidden xsDown>
-                <p>Digite o número</p>
+                <p>KYC</p>
                 <Grid container className={style.containerItemsWeb}>
                   <Input value={""} onChange={this.handleSearchChange} />
                   <button>confirm</button>
@@ -138,7 +138,7 @@ class CellPhoneAuthenticate extends React.Component {
   }
 }
 
-CellPhoneAuthenticate.propTypes = {
+KYC.propTypes = {
   twoFactor: PropTypes.bool,
   loadingSettings: PropTypes.func,
   getTwoFactorAuth: PropTypes.func,
@@ -164,4 +164,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CellPhoneAuthenticate);
+)(KYC);

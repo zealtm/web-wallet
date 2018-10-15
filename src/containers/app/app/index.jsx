@@ -65,16 +65,22 @@ let security = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
 });
 
-let TwoFactoryAuthenticate = Loadable({
+let twoFactoryAuthenticate = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/security/2FA")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security/2FA")
 });
 
-let CellPhoneAuthenticate = Loadable({
+let cellPhoneAuthenticate = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/security/cellPhone")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security/cellPhone")
+});
+
+let KYC = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/security/KYC")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/KYC")
 });
 
 let walletSettings = Loadable({
@@ -154,8 +160,10 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
-              <Route path="/TwoFactoryAuthenticate" component={TwoFactoryAuthenticate}/>
-              <Route path="/CellPhoneAuthenticate" component={CellPhoneAuthenticate}/>
+              <Route path="/twoFactoryAuthenticate" component={twoFactoryAuthenticate}/>
+              <Route path="/cellPhoneAuthenticate" component={cellPhoneAuthenticate}/>
+              <Route path="/KYC" component={KYC}/>
+
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

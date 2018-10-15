@@ -169,6 +169,7 @@
   "SECURITY_ITEM_plural": "",
   "SETTING_LINK_RETURN": "Back to the settings",
   "SECURITY_LINK_RETURN": "Back to the security",
+  "CELL_PHONE_NUMBER_TITLE": "Cell Phone",
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered",
   "SET_SEED_WORDS": "Your key words",
