@@ -55,11 +55,6 @@ const menuItens = [
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
     icon: "../../images/icons/general/cupon@1x.png"
-  },
-  {
-    link: "/p2p",
-    label: "P2P",
-    icon: "../../images/icons/general/cupon@1x.png"
   }
 ];
 
@@ -144,6 +139,16 @@ class Menu extends React.Component {
           </Grid>
         </Hidden>
         {this.renderMenu()}
+        <div className={style.menuP2P}>
+        <NavLink
+          className={style.linkMenuP2P}
+          to={"/p2p"}
+          onClick={() => this.onClickFunction()}
+        >
+          <img src={"../../images/icons/p2p/user_star.png"} className={style.iconP2p} />    
+          <div>{"  "}</div>      
+        </NavLink>
+        </div>
       </div>
     );
   }
