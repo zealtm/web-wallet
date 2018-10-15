@@ -343,20 +343,23 @@
 :local .iconP2p {
   width: 32px;
   height: 32px;
-  
-
-  
 }
 :local(.linkMenuP2P) {
-  composes: linkDefault from "../../components/bases/textBase.css";
-  composes: bdGreenDefault from "../../components/bases/colorBase.css";
-  font-weight: bold;
-  display: block;
-  color: #654ea6;
-  transition: 0.3s;
   position: absolute;
-  top: 80%;
-  margin-top: 50px;
-  
-  
+  top: 100%;
+  margin-top: -100px;
+  opacity: .5;
+}
+
+:local .linkMenuP2P:hover {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.linkMenuP2P) {
+    position: static;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    opacity: 1;
+  }
 }
