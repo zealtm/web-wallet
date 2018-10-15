@@ -65,6 +65,18 @@ let security = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
 });
 
+let TwoFactoryAuthenticate = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/security/2FA")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/2FA")
+});
+
+let CellPhoneAuthenticate = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/security/cellPhone")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/cellPhone")
+});
+
 let walletSettings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
   loading: loading,
@@ -142,6 +154,8 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/TwoFactoryAuthenticate" component={TwoFactoryAuthenticate}/>
+              <Route path="/CellPhoneAuthenticate" component={CellPhoneAuthenticate}/>
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />
