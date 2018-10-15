@@ -9,19 +9,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "./redux/p2pAction";
+
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
-import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import Modal from "../../components/modal";
+import InterestModal from "./modal/interest"
+import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm"
 
 //STYLE
 import style from "./style.css";
+import CreateOffer from "./createOffer";
+import Chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -69,28 +77,23 @@ class P2P extends React.Component {
 
   renderContent = () => {
     const { tabIcon } = this.state;
-    const titles = [["Comprar", "Vender"], ["Compras", "Vendas"]];
+    
     const contents = [
-      [<Offers key={1} />, <Offers key={2} />],
-      [<Offers key={1} />, <Offers key={2} />]
+      <Offers key={1} />,
+      <Offers key={2} />,
+      <UserProfile key={3} />,
+      <CreateOffer  key={4} />
     ];
 
-    if (tabIcon == 2) {
-      return <div>PERFIL USUARIO</div>;
-    } else {
-      return (
-        <Tabs
-          tabTitles={titles[tabIcon]}
-          tabContents={contents[tabIcon]}
-          justify="center"
-        />
-      );
-    }
+    return (contents[tabIcon] );
+  
   };
 
   render() {
-    const { openP2P } = this.state;
     const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const {chatOpened} = this.props.p2pStore;
+
+    const { openP2P } = this.state;
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
@@ -98,25 +101,37 @@ class P2P extends React.Component {
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
-        {this.renderContent()}
-        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
 
-        <Modal
-          title={"Avaliação"}
-          content={<ConfirmModal />}
-          show={true}
-          close={()=>alert("close")}
-        />
+        {
+          (chatOpened==false)?
+            (
+              <div>
+                <div className={style.baseContent}>
+                  {this.renderContent()}
+                </div>
+                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+              </div>
+            ) : (
+              <div>
+                <Chat />
+              </div>
+            )
+        }
+
       </div>
     );
   }
 }
 
-P2P.propTypes = {};
+P2P.propTypes = {
+  p2pStore:PropTypes.object.isRequired
+};
 
-export default P2P;
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
 
-
-
-
+export default connect(
+  mapStateToProps
+)(P2P);
 

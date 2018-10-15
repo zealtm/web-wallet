@@ -6,8 +6,8 @@ export const HEADER_RESPONSE = "x-amzn-remapped-authorization";
 export const HEADER_REQUEST = {
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Headers": "*",
-    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Headers": "",
+    "Access-Control-Allow-Origin": ""
   }
 };
 
@@ -19,7 +19,6 @@ export const HEADER_REQUEST_FORM = {
 
 export const API_HEADER = {
   headers: {
-    key:
-      "IIP0X6S4Ui7z0lTfTkeLO6te2ZmyxOJ1fNeuoIC9"
+    key: "IIP0X6S4Ui7z0lTfTkeLO6te2ZmyxOJ1fNeuoIC9"
   }
 };
