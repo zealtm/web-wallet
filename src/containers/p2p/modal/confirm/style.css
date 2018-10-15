@@ -9,7 +9,6 @@
 3. BUTTON
 */
 
-
 /* PROFILE */
 :local(.profile) {
   text-align: -webkit-center;
@@ -20,7 +19,7 @@
   height: 8.5rem !important;
 }
 
-:local(.userName){
+:local(.userName) {
   margin-top: 5%;
 }
 
@@ -49,13 +48,18 @@
 }
 
 :local(.comment) {
+  /* composes: inputTextDefault from "../../../../components/bases/inputBase.css"; */
+  width: 60%;
   border-radius: 5px;
   border: solid 1px #6351a8;
+  margin-top: 5%;
+  text-align: center;
+  color: #fff !important;
 }
 
 /* BUTTON */
 
-:local(.btnConfirm){
+:local(.btnConfirm) {
   text-align: -webkit-center;
   margin-top: 15%;
 }

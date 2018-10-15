@@ -23,7 +23,7 @@ class ConfirmModal extends React.Component {
               src={"images/lunio/lunio-user@100x100.jpg"}
               className={style.avatar}
             />
-            <div className ={style.userName}>
+            <div className={style.userName}>
               <span className={style.name}>Felipe Mendes</span>
             </div>
             <div className={style.hr} />
