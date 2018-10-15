@@ -337,12 +337,14 @@
   align-items: center;
   justify-content: center;
   margin-left: 40%;
-  margin-top: 20%;  
+  margin-top: 100px;
   margin-bottom: 50%;
 }
 :local .iconP2p {
   width: 32px;
   height: 32px;
+  
+
   
 }
 :local(.linkMenuP2P) {
@@ -352,23 +354,9 @@
   display: block;
   color: #654ea6;
   transition: 0.3s;
-  align-content: center;
-}
-:local .linkMenuP2P img {
-  filter: grayscale(100%);
-  opacity: 0.2;
-}
-
-:local .linkMenuP2P:hover {
-  padding-left: 14px;
-  border-left-style: solid;
-  border-left-width: 6px;
-  opacity: 1;
-  color: white;
-  transition: 0.3s;
-}
-
-:local .linkMenuP2P:hover img {
-  filter: grayscale(0);
-  opacity: 1;
+  position: absolute;
+  top: 80%;
+  margin-top: 50px;
+  
+  
 }
