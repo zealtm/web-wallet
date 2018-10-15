@@ -13,8 +13,9 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
-import UserProfile from "./userProfile";
 import Modal from "../../components/modal";
+import InterestModal from "./modal/interest"
+import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm"
 
 //STYLE
