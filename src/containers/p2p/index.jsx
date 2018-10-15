@@ -1,98 +1,128 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-//MATERIAL 
-import {Hidden} from "@material-ui/core/";
-import {KeyboardArrowDown,KeyboardArrowUp} from "@material-ui/icons/";
+//REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "./redux/p2pAction";
+
+//MATERIAL
+import { Hidden } from "@material-ui/core/";
+import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
-import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import Modal from "../../components/modal";
 import InterestModal from "./modal/interest"
+import UserProfile from "./userProfile";
+import ConfirmModal from "./modal/confirm"
 
 //STYLE
 import style from "./style.css";
+import CreateOffer from "./createOffer";
+import Chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabIcon: 0, 
-      openP2P: true,
+      tabIcon: 0,
+      openP2P: true
     };
   }
 
-  handleTabIcon = (key) => {
+  handleTabIcon = key => {
     this.setState({
-      ...this.state, 
+      ...this.state,
       tabIcon: key
     });
-  }
+  };
 
   handleP2P = () => {
-    const {openP2P} = this.state;
+    const { openP2P } = this.state;
     this.setState({
-      ...this.state, 
+      ...this.state,
       openP2P: !openP2P
     });
-  }
+  };
 
   renderArrow = () => {
-    const {openP2P} = this.state;
+    const { openP2P } = this.state;
 
-    if(openP2P){
-      return <KeyboardArrowDown className={style.arrowHeader} onClick={this.handleP2P} />
-    }else{
-      return <KeyboardArrowUp className={style.arrowHeader} onClick={this.handleP2P} />
+    if (openP2P) {
+      return (
+        <KeyboardArrowDown
+          className={style.arrowHeader}
+          onClick={this.handleP2P}
+        />
+      );
+    } else {
+      return (
+        <KeyboardArrowUp
+          className={style.arrowHeader}
+          onClick={this.handleP2P}
+        />
+      );
     }
-  }
+  };
 
   renderContent = () => {
-    const {tabIcon} = this.state;
-    const titles = [
-      ["Comprar", "Vender"], 
-      ["Compras", "Vendas"]
-    ];
+    const { tabIcon } = this.state;
+    
     const contents = [
-      [<Offers key={1} />, <Offers key={2} />],
-      [<Offers key={1} />, <Offers key={2} />], 
+      <Offers key={1} />,
+      <Offers key={2} />,
+      <UserProfile key={3} />,
+      <CreateOffer  key={4} />
     ];
 
-    if(tabIcon==2){
-      return <div>PERFIL USUARIO</div>
-    }else{
-      return <Tabs tabTitles={titles[tabIcon]} tabContents={contents[tabIcon]} justify="center" />
-    }
-  }
+    return (contents[tabIcon] );
+  
+  };
 
   render() {
-    const {openP2P} = this.state;
-    const contentTabIcons = ["tag", "user", "user_star"];
-    const showBox = (openP2P)?style.baseWidget:style.baseWidgetClose;
+    const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const {chatOpened} = this.props.p2pStore;
+
+    const { openP2P } = this.state;
+    const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
       <div className={showBox}>
         <Hidden smDown>
-          <div className={style.headerP2P}>
-            {this.renderArrow()}
-          </div>
+          <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
-        {this.renderContent()}
-        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
 
-        <Modal
-          title={"P2P"}
-          content={<InterestModal />}
-          show={true}
-          close={()=>alert("close")}
-        />
+        {
+          (chatOpened==false)?
+            (
+              <div>
+                <div className={style.baseContent}>
+                  {this.renderContent()}
+                </div>
+                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+              </div>
+            ) : (
+              <div>
+                <Chat />
+              </div>
+            )
+        }
+
       </div>
     );
   }
 }
 
-P2P.propTypes = {};
+P2P.propTypes = {
+  p2pStore:PropTypes.object.isRequired
+};
 
-export default P2P;
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
+
+export default connect(
+  mapStateToProps
+)(P2P);

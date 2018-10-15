@@ -358,6 +358,7 @@
   "SETTINGS_CARD_3": "CARTEIRAS",
   "SETTINGS_CARD_4": "CONSENTIMENTO",
   "SETTINGS_CARD_5": "DEFINIÇÕES",
+  "SETTINGS_CARD_6": "P2P",
 
   "SECURITY_ITEM_1": "Instale o Google Authenticator no seu smartphone",
   "SECURITY_ITEM_2": "Abra o Google Authenticator, insira o código manualmente ou leia o código QR abaixo",
@@ -441,8 +442,13 @@
   "RECHARGE_TAB_TITLE_HISTORY": "Histórico",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
   "RECHARGE_SELECT_TITLE_VALUE": "Valor",
+  
   "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
   "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente.",
   "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
-  "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!"
+  "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!", 
+  
+  "SETTINGS_P2P": "Configurações P2P",
+  "P2P_BTN_CONFIRM": "Confirmar",
+  "P2P_MODAL_DEPOSIT_CONFIRM": "Parabêns, você acaba de fazer uma venda.Assim que você se certificar que o depósito foi realizado, confirme que a trasição foi um sucesso!"
 }
