@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-
 // MATERIAL UI
-import Grid from "@material-ui/core/Grid";
+import { Grid, Input } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -14,42 +14,45 @@ import style from "./style.css";
 //MATERIAL
 
 class ConfirmModal extends React.Component {
-  render(){
+  render() {
     return (
-      <div className={style.boxModal}>
-        <Grid container spacing={24} classeName={style.confirmContainer}>
-          <Grid item xs={12} className={style.cardIcon}>
-            <div>
-             <img src="/images/icons/general/group@1x.png" />
+      <Grid container>
+        <Grid item xs={12}>
+          <div className={style.profile}>
+            <Avatar
+              src={"images/lunio/lunio-user@100x100.jpg"}
+              className={style.avatar}
+            />
+            <div className={style.userName}>
+              <span className={style.name}>Felipe Mendes</span>
             </div>
-          </Grid>
-
-          <Grid item xs={12} className={style.textModal}>
-            <div>
-              <p>
-              {i18n.t("P2P_MODAL_DEPOSIT_CONFIRM")}
-
-              </p>
-              
-            </div>
-          </Grid>
-          
-          <Grid item xs={12}>
-            <div className={style.btnModal}>
-              <button className={style.buttonCard}>{i18n.t("P2P_BTN_CONFIRM")}</button>
-            </div>
-          </Grid>
-
-          
+            <div className={style.hr} />
+          </div>
         </Grid>
-      </div>
-    )
+
+        <Grid item xs={12}>
+          <div className={style.avaliation}>
+            <span className={style.spanTitle}>Classifique o vendedor</span>
+            <div>
+              <span>**ESTRELAS**</span>
+            </div>
+            <div>
+              <Input className={style.comment} />
+            </div>
+          </div>
+        </Grid>
+
+        <Grid item xs={12}>
+          <div className={style.btnConfirm}>
+            <button className={style.buttonCard}>Confirmar</button>
+          </div>
+        </Grid>
+      </Grid>
+    );
   }
 }
 
-ConfirmModal.propTypes = {
-  
-}
+ConfirmModal.propTypes = {};
 
 export default ConfirmModal;
 

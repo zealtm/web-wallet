@@ -1,79 +1,68 @@
 /*
 
-1. CONTAINER
+1. PROFILE
 
-2. MODAL
 
-3. ICON
-  
-4. TEXT
+2. AVALIATION
 
-5. BUTTON
 
+3. BUTTON
 */
 
-/* ------------------------------------------------------------------------- */
-
-/* 1. CONTAINER */
-
-:local(.confirmContainer) {
-  display: inline-block;
-  justify-content: center;
-  height: 10vh;
-  align-items: center;
-  margin-bottom: 30%;
+/* PROFILE */
+:local(.profile) {
+  text-align: -webkit-center;
 }
 
-@media only screen and (max-width: 1023px) {
-  :local(.confirmContainer) {
-    flex-wrap: nowrap !important;
-    overflow-x: scroll;
-    justify-content: space-between;
-    height: 75vh;
-    align-items: center;
-  }
+:local(.avatar) {
+  width: 8.5rem !important;
+  height: 8.5rem !important;
 }
 
-/* 2. MODAL */
+:local(.userName) {
+  margin-top: 5%;
+}
 
-:local(.btnModal) {
+:local(.name) {
+  font-size: 24px;
+  color: #68f285;
+}
+
+:local(.hr) {
+  width: 154px;
+  height: 0;
+  border: solid 1px #40217b;
+  margin-top: 3%;
+}
+
+/* AVALIATION */
+
+:local(.avaliation) {
+  text-align: -webkit-center;
+  margin-top: 7%;
+}
+
+:local(.spanTitle) {
+  font-size: 12px;
+  color: #68f285;
+}
+
+:local(.comment) {
+  /* composes: inputTextDefault from "../../../../components/bases/inputBase.css"; */
+  width: 60%;
+  border-radius: 5px;
+  border: solid 1px #6351a8;
+  margin-top: 5%;
   text-align: center;
-  margin-top: 5vh;
+  color: #fff !important;
 }
 
-:local(.boxModal) {
-  margin: 0px;
-  display: inline-block;
+/* BUTTON */
+
+:local(.btnConfirm) {
+  text-align: -webkit-center;
+  margin-top: 15%;
 }
-
-:local(.textModal) {
-  composes: textDefault from "../../../../components/bases/textBase.css";
-  padding: 1vh 2vh;
-  max-width: 100%;
-  font-weight: bold;
-  text-align: center;
-  position: relative;
-  margin-top: 100px;
-  margin-bottom: 50px;
-  
-}
-
-:local(.textModal p) {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%) 
-}
-
-/*3. ICON */
-
-:local(.cardIcon) {
-  text-align: center;
-}
-
-/*3. BUTTON */
 
 :local(.buttonCard) {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
@@ -82,4 +71,3 @@
   font-weight: bold;
   margin: 2vh;
 }
-

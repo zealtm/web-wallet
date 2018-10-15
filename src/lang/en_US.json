@@ -443,9 +443,5 @@
   "ALIAS_CREATED_SUCCESS": "Alias created with successful!",
   "ALIAS_BALANCE_INSUFICIENT": "Balance insufficient.",
   "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
-  "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
-
-  "P2P_BTN_CONFIRM": "Confirm",
-  "P2P_MODAL_DEPOSIT_CONFIRM": "Congratulations, you just made a sale. Once you make sure the deposit has been made, confirm that the transfer was a success!"
-  
+  "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!"
 }

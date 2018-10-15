@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -126,3 +134,4 @@ const mapStateToProps = store => ({
 export default connect(
   mapStateToProps
 )(P2P);
+
