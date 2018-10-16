@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 // COMPONENTS 
 import Tabs from "../../components/tabs";
+import CoinsBar from "./components/coinsBar";
+import PackCoins from "./components/packCoins";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -23,8 +25,13 @@ class BuyCoins extends React.Component {
     
     const contents = [
       <div>
-        <div>SCROLL DE MOEDAS</div>
-        <div>CONTEUDO SCROLL DE VALORES</div>
+        <div>Créditos $ 300,00</div>
+        <div>
+          <CoinsBar />
+        </div>  
+        <div>
+          <PackCoins />
+        </div>
       </div>, <div>Historico</div>
     ]
 
