@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Slider from "react-slick";
 
 // MATERIAL UI
@@ -34,7 +35,7 @@ class CoinsBar extends React.Component {
   };
 
   renderPacks = () => {
-    return ["15","30", "50", "100"].map((val, index) => {
+    return ["15","30", "50", "100", "1000"].map((val, index) => {
       return (
         <div key={index}>
           {val}
@@ -75,7 +76,7 @@ class CoinsBar extends React.Component {
     };
 
     return (
-      <div className={style.contentCoins}>
+      <div>
         <Grid container style={{ justifyContent: "center" }}>
           <Hidden xsDown>
             <Grid item xs={1} className={style.arrowControl}>

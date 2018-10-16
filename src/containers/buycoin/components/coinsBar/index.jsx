@@ -43,7 +43,7 @@ class CoinsBar extends React.Component {
 
   renderCoins = () => {
     const coinStatus = true;
-    return ["lunes","bitcoin"].map((val, index) => {
+    return ["lunes","btc"].map((val, index) => {
       return (
         <div
           className={null}
@@ -63,30 +63,10 @@ class CoinsBar extends React.Component {
                 src={"images/icons/coins/" + val + ".png"}
               />
             </div>
-            <Hidden smDown>
-              {coinStatus ? (
-                <div className={style.boxLabelCoin}>
-                  R$ 50,00 <br />
-                  <div className={style.labelPercent}>
-                    {this.renderArrowPercent(30)}
-                    {30}
-                  </div>
-                </div>
-              ) : (
-                <div className={style.boxLabelCoinDisabled}>
-                  {i18n.t("TEXT_UNAVAILABLE")}
-                </div>
-              )}
-            </Hidden>
-            <Hidden mdUp>
-              <div className={style.boxArrowPercent}>
-                {coinStatus ? (
-                  this.renderArrowPercent(30)
-                ) : (
-                  <Close className={style.arrowPercentDisabled} />
-                )}
-              </div>
-            </Hidden>
+            <div className={style.boxLabelCoin}>
+              {val} <br />
+              R$ 50,00
+            </div>
           </div>
         </div>
       );
