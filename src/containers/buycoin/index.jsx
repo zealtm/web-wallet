@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 // COMPONENTS 
 import Tabs from "../../components/tabs";
+import PaymentBar from "./components/paymentBar";
 import CoinsBar from "./components/coinsBar";
 import PackCoins from "./components/packCoins";
 
@@ -32,6 +33,7 @@ class BuyCoins extends React.Component {
         <div>
           <PackCoins />
         </div>
+         <PaymentBar />
       </div>, <div>Historico</div>
     ]
 
