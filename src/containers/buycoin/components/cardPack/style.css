@@ -1,0 +1,58 @@
+:local(.cardBuy) {
+  background-color: rgba(255,255,255,.02);
+  width: 230px;
+  padding: 20px 5px 8px 5px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 305px;
+  box-shadow: 0px 0px 0px rgba(0,0,0,0);
+  transition: .2s;
+}
+
+:local .cardBuy:hover {
+  background-color: #473088;
+  box-shadow: 0px 10px 10px rgba(0,0,0,.05);
+}
+
+:local(.cardIcon) {
+  width: 30%;
+}
+
+:local(.amount) {
+  font-family: "OffSide";
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+:local(.hrCard) {
+  width: 30%;
+  border-bottom: 1px solid #6351a8;
+  margin: 5% 0% 0% 35%;
+}
+
+:local(.dollarSign) {
+  font-weight: 300;
+  font-size: 25px;
+  color: #54d467;
+  margin-top: 5%;
+}
+
+:local(.value) {
+  font-size: 60px;
+  font-weight: 500;
+  color: #54d467;
+}
+
+:local(.decimals) {
+  font-size: 25px;
+  font-weight: 500;
+  color: #54d467;
+  margin-top: 7px;
+}
+
+:local(.valueCard) {
+  display: inline-flex;
+}
