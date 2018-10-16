@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-// MATERIAL
-import { Grid, Avatar } from "@material-ui/core/";
 
 // STYLE
 import style from "./style.css";
@@ -10,7 +8,8 @@ class MultiSelect extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            listOpen: false
+            listOpen: false,
+            listCoins: [],
         };
     }
 
@@ -22,16 +21,41 @@ class MultiSelect extends React.Component {
 
     selectListItem = (value = undefined, title = undefined, img = undefined) => {
         const { selectItem } = this.props;
+        const { listCoins } = this.state;
+        let found = false;
+        listCoins.map(
+            (v, key) => {
+                if (v.value === value) {
+                    found = true;
+                    delete listCoins[key];
+                }
+            }
+        );
+        if (!found) {
+            if (value !== undefined) {
+                this.setState({
+                    ...this.state,
+                    listCoins:
+                    {
+                        value, title, img
+                    }
 
-        selectItem(value, title, img);
+                })
+
+            }
+
+        }
+
+        selectItem(listCoins);
         this.toggleList();
     };
 
     renderItems = () => {
-        const { list, width } = this.props;
+        const { list } = this.props;
 
         const listStyle = {
-            width: width ? `calc(${width} + 17px)` : "170px"
+            width: "148px",
+            marginLeft: 1
         };
 
         return (
@@ -86,55 +110,31 @@ class MultiSelect extends React.Component {
             >
                 <div className={style.header} onClick={() => this.toggleList()}>
                     <div className={style.title}>
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt="avatar"
-                                    src="images/icons/p2p/user.png"
-                                    className={style.avatar}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt="avatar"
-                                    src="images/icons/p2p/user.png"
-                                    className={style.avatar}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt="avatar"
-                                    src="images/icons/p2p/user.png"
-                                    className={style.avatar}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt="avatar"
-                                    src="images/icons/p2p/user.png"
-                                    className={style.avatar}
-                                />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Avatar
-                                    alt="avatar"
-                                    src="images/icons/p2p/user.png"
-                                    className={style.avatar}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid  item xs={2}>
-                        <div className={style.icon}>
-                        {listOpen ? (
-                            <img src="./images/icons/arrow/expand-less@2x.png" />
-                        ) : (
-                                <img src="./images/icons/arrow/expand-more@2x.png" />
-                            )}
-                    </div>
-                        </Grid>
-                    </div>                    
-                </div>
+                        <div className={style.ico}>
 
+                        </div>
+                        <div className={style.ico}>
+
+                        </div>
+                        <div className={style.ico}>
+
+                        </div>
+                        <div className={style.ico}>
+
+                        </div>
+                        <div className={style.ico}>
+
+                        </div>
+                        <div className={style.icon}>
+                            {listOpen ? (
+                                <img src="./images/icons/arrow/expand-less@2x.png" />
+                            ) : (
+                                    <img src="./images/icons/arrow/expand-more@2x.png" />
+                                )}
+                        </div>
+
+                    </div>
+                </div>
                 {listOpen && this.renderItems()}
             </div>
         );
@@ -143,9 +143,7 @@ class MultiSelect extends React.Component {
 
 MultiSelect.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectItem: PropTypes.func.isRequired,
-    width: PropTypes.string,
-    height: PropTypes.string
+    selectItem: PropTypes.func.isRequired
 };
 
 export default MultiSelect;

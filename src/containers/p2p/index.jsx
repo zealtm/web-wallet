@@ -27,7 +27,7 @@ class P2P extends React.Component {
       }]
     };
   }
-  coinSelected = (value, title, img = undefined) => {
+  coinSelected = (list = []) => {
 
   }
 
@@ -102,7 +102,6 @@ class P2P extends React.Component {
         <MultiSelect  
            list={coin}
            selectItem={this.coinSelected}
-           width = {"100%"}
          />
       </div>
     );

@@ -12,10 +12,11 @@
   :local .title {
     display: flex;
   }
-  :local .avatar {
-    width: 16px;
-    height: 16px;
-    margin-right: 20px;      
+  :local .ico {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;  
+    border-radius: 50%;    
     composes: bgPurpleClear from "../../../../components/bases/colorBase.css";
   }
   
