@@ -8,6 +8,12 @@ class Settings extends React.Component {
   render() {
     return (
       <div>
+        <Grid container className={style.containerHeaderSettings}>
+          <Grid item xs={12} id={"hr"}>
+            <hr />
+          </Grid>
+        </Grid>
+
         <Grid container className={style.containerSettings}>
           <Grid item xs={10} sm={11} className={style.headerSettings}>
             <h2>{i18n.t("SETTINGS_TITLE")}</h2>

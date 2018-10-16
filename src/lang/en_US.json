@@ -169,7 +169,6 @@
   "SECURITY_ITEM_plural": "",
   "SETTING_LINK_RETURN": "Back to the settings",
   "SECURITY_LINK_RETURN": "Back to the security",
-  "CELL_PHONE_NUMBER_TITLE": "Cell Phone",
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered",
   "SET_SEED_WORDS": "Your key words",
@@ -448,5 +447,14 @@
   "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
   "ALIAS_ERROR_TRANSACTION": "Could not make a transaction from",
   "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
-  "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: "
+  "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: ",
+
+  "TITLE_SECURITY_1": "2FA AUTHENTICATOR",
+  "TITLE_SECURITY_2": "MOBILE",
+  "TITLE_SECURITY_3": "KYC",
+  "CARD_SECURITY_1": "2FA AUTHENTICATOR ",
+  "CARD_SECURITY_2": "MOBILE ",
+  "CARD_SECURITY_3": "KYC"
+
+
 }

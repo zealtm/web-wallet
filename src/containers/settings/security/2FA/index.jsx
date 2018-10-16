@@ -64,7 +64,7 @@ class TwoFactoryAuthenticate extends React.Component {
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
               <Grid item xs={12}>
-                <h3>{i18n.t("SECURITY_TITLE")} </h3>
+                <h3>{i18n.t("TITLE_SECURITY_1")} </h3>
               </Grid>
             </Hidden>
             <Grid item sm={2} />
@@ -76,7 +76,7 @@ class TwoFactoryAuthenticate extends React.Component {
             </Grid>
             <Hidden xsDown>
               <Grid item xs={12} sm={3}>
-                <h3>{i18n.t("SECURITY_TITLE")}</h3>
+                <h3>{i18n.t("TITLE_SECURITY_1")}</h3>
               </Grid>
             </Hidden>
 
