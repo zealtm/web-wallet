@@ -14,6 +14,7 @@
   "LEASING": "Leasing",
   "UNKNOWN": "Unknown",
   "MESSAGE_TRANSACTION_FAILED": "Your transaction could not be completed.",
+  "MESSAGE_LOGIN_FAILED": "Incorrect username or password.",
   "MESSAGE_INVALID_VOUCHER": "Invalid Voucher",
   "MESSAGE_INVALID_AMOUNT": "Invalid Amount",
   "WALLET_MY_AMOUNT": "Balance",
@@ -348,7 +349,7 @@
   "RECHARGE_TAB_TITLE_HISTORY": "History",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operator",
   "RECHARGE_SELECT_TITLE_VALUE": "Value",
-  
+
   "LOGIN_SLIDE_DESCRIPTION_1": "Make the payment using your favorite crypto-coins in an easy and intuitive interface.",
   "LOGIN_SLIDE_DESCRIPTION_2": "Turn digital currencies into Reais by electronic transfer to major banks in Brazil.",
   "LOGIN_SLIDE_DESCRIPTION_3": "Perform cell phone credit recharges with your virtual coins quickly and securely.",

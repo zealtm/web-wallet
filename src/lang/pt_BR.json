@@ -14,6 +14,7 @@
   "LEASING": "Leasing",
   "UNKNOWN": "Desconhecido",
   "MESSAGE_TRANSACTION_FAILED": "Sua transação não pôde ser completada.",
+  "MESSAGE_LOGIN_FAILED": "Usuário ou senha incorretos.",
   "MESSAGE_INVALID_VOUCHER": "Voucher Inválido",
   "MESSAGE_INVALID_AMOUNT": "Montante Inválido",
   "WALLET_MY_AMOUNT": "Saldo",
@@ -397,7 +398,7 @@
   "COUPON_UNKNOWN_ERROR_3": "Ocorreu um erro desconhecido ao tentar verificar o código do cupom",
 
   "WALLET_UTXOS_EMPTY_1": "Rede congestionada ou saldo insuficiente.",
-  
+
   "PAYMENT_SUCCESS_1": "Você acabou de pagar o boleto",
   "PAYMENT_SUCCESS_2": " na sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você está enviando ",
