@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 // COMPONENTS 
 import Tabs from "../../components/tabs";
-import CardPack from "./components/cardPack";
+import PaymentBar from "./components/paymentBar";
+import CoinsBar from "./components/coinsBar";
+import PackCoins from "./components/packCoins";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -23,16 +25,16 @@ class BuyCoins extends React.Component {
     ];
     
     const contents = [
-      <div key="0">
-        <div>SCROLL DE MOEDAS</div>
+      <div>
+        <div>Créditos $ 300,00</div>
         <div>
-          {
-            [0,1,2,3].map(val=>{
-              return <CardPack />
-            })
-          }
+          <CoinsBar />
+        </div>  
+        <div>
+          <PackCoins />
         </div>
-      </div>, <div key="1">Historico</div>
+         <PaymentBar />
+      </div>, <div>Historico</div>
     ]
 
     return (
