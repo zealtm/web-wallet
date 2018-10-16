@@ -14,8 +14,7 @@ class CardPack extends React.Component {
 
   render() {
     return (
-      <Grid container>
-        <Grid item>
+    
           <div className={style.cardBuy}>
             <img
               src="/images/icons/coins/lunes.png"
@@ -30,8 +29,6 @@ class CardPack extends React.Component {
               <span className={style.decimals}>,00</span>
             </div>
           </div>
-        </Grid>
-      </Grid>
     );
   }
 }

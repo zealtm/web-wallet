@@ -1,41 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// COMPONENTS 
+// COMPONENTS
 import Tabs from "../../components/tabs";
-import PaymentBar from "./components/paymentBar";
-import CoinsBar from "./components/coinsBar";
-import PackCoins from "./components/packCoins";
+import Buy from "./components/buy";
 
 // UTILS
 import i18n from "../../utils/i18n";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 
 class BuyCoins extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
-  render(){
+  render() {
+    const titles = ["Comprar", "Historico"];
 
-    const titles = [
-      "Comprar","Historico"
-    ];
-    
-    const contents = [
-      <div>
-        <div>Créditos $ 300,00</div>
-        <div>
-          <CoinsBar />
-        </div>  
-        <div>
-          <PackCoins />
-        </div>
-         <PaymentBar />
-      </div>, <div>Historico</div>
-    ]
+    const contents = [<Buy key={0} />, <div key={1}>Historico</div>];
 
     return (
       <div>
@@ -45,14 +29,11 @@ class BuyCoins extends React.Component {
         </div>
 
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
-
       </div>
-    )
+    );
   }
 }
 
-BuyCoins.propTypes = {
-
-};
+BuyCoins.propTypes = {};
 
 export default BuyCoins;

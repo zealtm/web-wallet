@@ -13,6 +13,9 @@ import {KeyboardArrowLeft, KeyboardArrowRight, ArrowDropDown, ArrowDropUp, Close
 // UTILS
 import i18n from "../../../../utils/i18n";
 
+// COMPONENTS 
+import CardPack from "../cardPack";
+
 // STYLE
 import style from "./style.css";
 
@@ -37,9 +40,7 @@ class CoinsBar extends React.Component {
   renderPacks = () => {
     return ["15","30", "50", "100", "1000"].map((val, index) => {
       return (
-        <div key={index}>
-          {val}
-        </div>
+        <CardPack key={index} />
       );
     });
   };
@@ -63,13 +64,13 @@ class CoinsBar extends React.Component {
         {
           breakpoint: 959,
           settings: {
-            slidesToShow: 5
+            slidesToShow: 3
           }
         },
         {
           breakpoint: 599,
           settings: {
-            slidesToShow: 4
+            slidesToShow: 2
           }
         }
       ]
