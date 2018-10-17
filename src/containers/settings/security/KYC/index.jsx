@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import compose from "recompose/compose";
+import FileUploadProgress from "react-fileupload-progress";
 
 // REDUX
 import { connect } from "react-redux";
@@ -145,9 +146,7 @@ class KYC extends React.Component {
                     <Grid container className={style.boxKYC_1}>
                       <Grid item xs={12} sm={6}>
                         <Hidden smUp>
-                          <div
-                            
-                          >
+                          <div>
                             <img src="images/icons/security/anexo@1x.png" />
                           </div>
                         </Hidden>
@@ -162,9 +161,7 @@ class KYC extends React.Component {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Hidden xsDown>
-                          <div
-                            
-                          >
+                          <div>
                             <img src="images/icons/security/anexo@1x.png" />
                           </div>
                         </Hidden>
@@ -178,7 +175,6 @@ class KYC extends React.Component {
                         />
                       </Grid>
                     </Grid>
-
                     <Grid container className={style.boxKYC_2}>
                       <Grid item xs={6}>
                         <p>Cidade</p>
@@ -200,14 +196,43 @@ class KYC extends React.Component {
                         />
                       </Grid>
                     </Grid>
+                    {/* <input type="file"  /> */}
+
+                    <label id="add" htmlFor="fileupload">
+                      <img src="images/icons/security/anexo@1x.png" />
+                      <input type="file" id="fileupload" multiple />
+                      <button type="submit"/>
+                    </label>
+
+                    {/* <input id="fileupload" type="file" multiple="multiple" name="_photos" accept="image/*"></input> */}
+
+                    <label id="add" htmlFor="fileupload">
+                      <img src="images/icons/security/anexo@1x.png" />
+
+                      <FileUploadProgress
+                        id="fileupload"
+                        key="ex1"
+                        url="http://localhost:3000/api/upload"
+                        onProgress={(e, request, progress) => {
+                          console.log("progress", e, request, progress);
+                        }}
+                        onLoad={(e, request) => {
+                          console.log("load", e, request);
+                        }}
+                        onError={(e, request) => {
+                          console.log("error", e, request);
+                        }}
+                        onAbort={(e, request) => {
+                          console.log("abort", e, request);
+                        }}
+                      />
+                    </label>
                   </Grid>
 
                   <Grid item className={style.contentKYC}>
                     <Grid container className={style.boxKYC_1}>
                       <Grid item xs={12}>
-                        <div
-                          
-                        >
+                        <div>
                           <img src="images/icons/security/anexo@1x.png" />
                         </div>
                         <p> CPF/CNPJ/CNH/Passaporte</p>
@@ -224,7 +249,9 @@ class KYC extends React.Component {
                   <Grid item xs={12}>
                     <center>
                       <Grid item xs={12} sm={6}>
-                        <button className={style.buttonEnableSecurity}>confirm</button>
+                        <button className={style.buttonEnableSecurity}>
+                          {i18n.t("BTN_CONFIRM")}
+                        </button>
                       </Grid>
                     </center>
                   </Grid>

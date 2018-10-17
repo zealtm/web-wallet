@@ -34,7 +34,7 @@ const inputStyle = {
     fontSize: "18px",
     width: "95%",
     "&:hover:before": {
-      borderBottomColor: colors.purple.dark
+      borderBottomColor: colors.purple.clear
     }
   },
   root: {
@@ -44,7 +44,7 @@ const inputStyle = {
     fontSize: "32px",
     width: "calc(100% - 50px)",
     "&:hover:before": {
-      borderBottomColor: colors.purple.dark
+      borderBottomColor: colors.purple.clear
     }
   },
   cssInput: {
@@ -54,17 +54,17 @@ const inputStyle = {
   },
   cssUnderline: {
     "&:before, &:after": {
-      borderBottomColor: colors.purple.dark
+      borderBottomColor: colors.purple.clear
     },
     "&:hover:not($disabled):not($error):not($focused):before": {
-      borderBottomColor: `${colors.purple.dark} !important`
+      borderBottomColor: `${colors.purple.clear} !important`
     }
   },
   disabled: {},
   error: {},
   focused: {}
 };
-class CellPhoneAuthenticate extends React.Component {
+class MobileAuthenticator extends React.Component {
   componentDidMount() {
     let { getTwoFactorAuth, settings, twoFactor } = this.props;
     if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
@@ -131,27 +131,27 @@ class CellPhoneAuthenticate extends React.Component {
           <Grid item xs={11} sm={8}>
             <Grid container className={style.allSecurity}>
               <Grid item xs={12} className={style.containerItems}>
-                <Grid item xs={12} className={style.counterItemsCellPhone}>
+                <Grid item xs={12} className={style.counterItemsMobile}>
                   <Grid item xs={12} sm={3} className={style.columItems}>
-                    <Grid className={style.indicatorItemCellPhone}>
+                    <Grid className={style.indicatorItemMobile}>
                       {"1"} <p>{i18n.t("SECURITY_ITEM_1")}</p>
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.columItems}>
-                    <Grid className={style.indicatorItemCellPhone}>
+                    <Grid className={style.indicatorItemMobile}>
                       {"2"} <p> {i18n.t("SECURITY_ITEM_2")} </p>
                     </Grid>
                   </Grid>
 
                   <Grid item xs={12} sm={3} className={style.columItems}>
-                    <Grid className={style.indicatorItemCellPhone}>
+                    <Grid className={style.indicatorItemMobile}>
                       {"3"} <p>{i18n.t("SECURITY_ITEM_3")}</p>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid container className={style.contentCellPhone}>
-                <h3>Insira o número</h3>
+              <Grid container className={style.contentMobile}>
+                <h3>{i18n.t("SECURITY_INSERT_PHONE")}</h3>
                 <Grid container className={style.alignNumberField}>
                   <Grid item xs={12} sm={9} className={style.fontSizeInput}>
                     <Hidden smUp>
@@ -181,14 +181,9 @@ class CellPhoneAuthenticate extends React.Component {
                       />
                     </Hidden>
                   </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    sm={3}
-                    className={style.alignButtonCellPhone}
-                  >
+                  <Grid item xs={12} sm={3} className={style.alignButtonMobile}>
                     <button className={style.buttonEnableSecurity}>
-                      Submit
+                      {i18n.t("BTN_SUBMIT")}
                     </button>
                   </Grid>
                 </Grid>
@@ -201,7 +196,7 @@ class CellPhoneAuthenticate extends React.Component {
   }
 }
 
-CellPhoneAuthenticate.propTypes = {
+MobileAuthenticator.propTypes = {
   twoFactor: PropTypes.bool,
   loadingSettings: PropTypes.func,
   getTwoFactorAuth: PropTypes.func,
@@ -229,4 +224,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   )
-)(CellPhoneAuthenticate);
+)(MobileAuthenticator);

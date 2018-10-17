@@ -71,10 +71,10 @@ let twoFactoryAuthenticate = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security/2FA")
 });
 
-let cellPhoneAuthenticate = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/security/cellPhone")),
+let mobileAuthenticator = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/security/mobile")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/cellPhone")
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/mobile")
 });
 
 let KYC = Loadable({
@@ -161,7 +161,7 @@ class App extends Component {
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
               <Route path="/twoFactoryAuthenticate" component={twoFactoryAuthenticate}/>
-              <Route path="/cellPhoneAuthenticate" component={cellPhoneAuthenticate}/>
+              <Route path="/mobileAuthenticator" component={mobileAuthenticator}/>
               <Route path="/KYC" component={KYC}/>
 
 

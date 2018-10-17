@@ -344,12 +344,12 @@
 }
 
 /* 3.  CELL PHONE */
-:local(.alignButtonCellPhone) {
+:local(.alignButtonMobile) {
   display: flex;
   align-items: flex-end;
 }
 
-:local(.counterItemsCellPhone) {
+:local(.counterItemsMobile) {
   display: flex;
   justify-content: space-between;
 }
@@ -359,15 +359,15 @@
   align-items: flex-end;
 }
 
-:local(.indicatorItemCellPhone) {
+:local(.indicatorItemMobile) {
   composes: indicatorItem;
 }
 
-:local(.contentCellPhone) {
+:local(.contentMobile) {
   padding: 50px 0 0;
 }
 
-:local(.contentCellPhone h3) {
+:local(.contentMobile h3) {
   color: #68f285;
 }
 
@@ -376,15 +376,15 @@
 }
 
 @media screen and (max-width: 599px) {
-  :local(.indicatorItemCellPhone) {
-    color: red;
+  :local(.indicatorItemMobile) {
+    color: #68f285;
     text-align: left;
     display: flex;
   }
-  :local(.alignButtonCellPhone) {
+  :local(.alignButtonMobile) {
     margin-top: 35px;
   }
-  :local(.contentCellPhone h3) {
+  :local(.contentMobile h3) {
     font-size: 10px;
   }
   :local(.fontSizeInput) {
@@ -420,8 +420,6 @@
 }
 :local(.indicatorItemKYC) {
   composes: indicatorItem;
-  /* color: red; */
-  /* text-align: left; */
 }
 :local(.boxKYC_2) {
   display: flex;
@@ -450,8 +448,59 @@
   }
 
   :local(.indicatorItemKYC) {
-    color: rgb(54, 39, 139);
+    color: #68f285;
     text-align: left;
     display: flex;
   }
 }
+
+/* input[type="file"]::-ms-browse {
+  background-color: #0b6b2800;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  color: #f05252;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #a8830800;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  display: none;
+} */
+
+label {
+  cursor: pointer;
+  margin-top: 25px;
+  display: inline-block;
+  padding: 6px;
+  padding-right: 29px;
+  padding-left: 29px;
+  transition: all 1s ease;
+  color: red;
+  text-transform: capitalize;
+  font-size: 15px;
+  z-index: 1;
+  position: relative;
+  border-radius: 25px;
+  background-color: transparent;
+  border: 2px solid red;
+}
+
+label button {
+  background-color: #68f285;
+}
+
+/* ::-webkit-file-upload-button {
+  color: transparent;
+  width: 30px;
+  height: 30px;
+  background-color: aquamarine;
+}
+::-webkit-submit-button {
+  color: transparent;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+} */
