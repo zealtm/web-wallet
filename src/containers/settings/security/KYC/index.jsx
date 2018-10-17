@@ -40,8 +40,7 @@ const inputStyle = {
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
     fontSize: "17px",
-    letterSpacing: "0.5px",
-    textAlign: "center"
+    letterSpacing: "0.5px"
   },
   cssUnderline: {
     "&:before, &:after": {
@@ -196,41 +195,28 @@ class KYC extends React.Component {
                         />
                       </Grid>
                     </Grid>
-                    {/* <input type="file"  /> */}
-
-                    <label id="add" htmlFor="fileupload">
-                      <img src="images/icons/security/anexo@1x.png" />
-                      <input type="file" id="fileupload" multiple />
-                      <button type="submit"/>
-                    </label>
-
-                    {/* <input id="fileupload" type="file" multiple="multiple" name="_photos" accept="image/*"></input> */}
-
-                    <label id="add" htmlFor="fileupload">
-                      <img src="images/icons/security/anexo@1x.png" />
-
-                      <FileUploadProgress
-                        id="fileupload"
-                        key="ex1"
-                        url="http://localhost:3000/api/upload"
-                        onProgress={(e, request, progress) => {
-                          console.log("progress", e, request, progress);
-                        }}
-                        onLoad={(e, request) => {
-                          console.log("load", e, request);
-                        }}
-                        onError={(e, request) => {
-                          console.log("error", e, request);
-                        }}
-                        onAbort={(e, request) => {
-                          console.log("abort", e, request);
-                        }}
-                      />
-                    </label>
+                    <input type="file" multiple />
+                    {/* <FileUploadProgress
+                      id="fileupload"
+                      key="ex1"
+                      url="http://localhost:3000/api/upload"
+                      onProgress={(e, request, progress) => {
+                        console.log("progress", e, request, progress);
+                      }}
+                      onLoad={(e, request) => {
+                        console.log("load", e, request);
+                      }}
+                      onError={(e, request) => {
+                        console.log("error", e, request);
+                      }}
+                      onAbort={(e, request) => {
+                        console.log("abort", e, request);
+                      }}
+                    /> */}
                   </Grid>
 
-                  <Grid item className={style.contentKYC}>
-                    <Grid container className={style.boxKYC_1}>
+                  <Grid item className={style.contentKYC_2}>
+                    <Grid container className={style.boxKYC_2}>
                       <Grid item xs={12}>
                         <div>
                           <img src="images/icons/security/anexo@1x.png" />
