@@ -419,16 +419,22 @@
   justify-content: space-between;
 }
 
+:local(.indicatorItemKYC) {
+  composes: indicatorItem;
+}
+
 :local(.boxKYC_1) {
   display: flex;
   padding: 10px 25px;
 }
-:local(.indicatorItemKYC) {
-  composes: indicatorItem;
-}
+
 :local(.boxKYC_2) {
   display: flex;
   padding: 25px;
+}
+
+:local(.boxKYC_3) {  
+  padding: 15px 25px;
 }
 
 :local(.containerKYC p) {
@@ -459,20 +465,21 @@
   }
 }
 
-input[type="file"]::-ms-browse {
+/* input[type="file"]::-ms-browse {
   background-color: #0b6b2800;
   margin: 0px;
   padding: 0px;
   border: 0px;
   color: #f05252;
-}
+} */
 
 input[type="file"]::-webkit-file-upload-button {
-  background-color: #a8830800;
+  background-color: transparent;
+  font-weight: bold;
   margin: 0px;
   padding: 0px;
   border: 0px;
-  /* display: none; */
+  color: #68f285;
 }
 
 label {

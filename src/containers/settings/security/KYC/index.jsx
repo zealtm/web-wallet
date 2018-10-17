@@ -52,7 +52,78 @@ const inputStyle = {
   },
   disabled: {},
   error: {},
-  focused: {}
+  focused: {},
+  progressWrapper: {
+    height: "5px",
+    marginTop: "10px",
+    width: "50px",
+    float: "left",
+    overflow: "hidden",
+    backgroundColor: "#f5f5f5",
+    borderRadius: "6px",
+    WebkitBoxShadow: "inset 0 1px 2px rgba(0,0,0,.1)",
+    boxShadow: "inset 0 1px 2px rgba(0,0,0,.1)"
+  },
+  progressBar: {
+    float: "left",
+    width: "0",
+    height: "100%",
+    fontSize: "12px",
+    lineHeight: "20px",
+    color: "#fff",
+    textAlign: "center",
+    backgroundColor: "#65e986",
+    WebkitBoxShadow: "inset 0 -1px 0 rgba(0,0,0,.15)",
+    boxShadow: "inset 0 -1px 0 rgba(0,0,0,.15)",
+    WebkitTransition: "width .6s ease",
+    Otransition: "width .6s ease",
+    transition: "width .6s ease"
+  },
+  cancelButton: {
+    marginTop: "2px",
+    WebkitAppearance: "none",
+    padding: 0,
+    cursor: "pointer",
+    background: "0 0",
+    border: 0,
+    float: "left",
+    fontSize: "21px",
+    fontWeight: 700,
+    lineHeight: 1,
+    color: "#f05252"
+  },
+
+  sendIcon: {
+    float: "left",
+    backgroundColor: "transparent",
+    border: 0,
+    color: "red"
+  },
+
+  bsButton: {
+    marginLeft: "25px",
+    fontSize: "12px",
+    lineHeight: "1.5",
+    borderRadius: "3px",
+    color: "#fff",
+    backgroundColor: "#65e986",
+    borderColor: "#65e986",
+    display: "inline-block",
+    padding: "6px 12px",
+    marginBottom: 0,
+    fontWeight: 400,
+    textAlign: "center",
+    whiteSpace: "nowrap",
+    verticalAlign: "middle",
+    touchAction: "manipulation",
+    cursor: "pointer",
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    backgroundImage: "none",
+    border: "1px solid transparent"
+  }
 };
 class KYC extends React.Component {
   componentDidMount() {
@@ -86,6 +157,58 @@ class KYC extends React.Component {
       </Grid>
     );
   };
+
+  formGetter() {
+    return new FormData(document.getElementById("customForm"));
+  }
+
+  customFormRenderer(onSubmit) {
+    return (
+      <form id="customForm" >
+        <input type="file" name="file" id="exampleInputFile" />
+        <button type="button" style={inputStyle.bsButton} onClick={onSubmit}>
+          Upload
+        </button>
+      </form>
+    );
+  }
+
+  customProgressRenderer(progress, hasError, cancelHandler) {
+    if (hasError || progress > -1) {
+      let barStyle = Object.assign({}, inputStyle.progressBar);
+      barStyle.width = progress + "%";
+
+      let message = <span>{barStyle.width}</span>;
+      if (hasError) {
+        barStyle.backgroundColor = "#f05252";
+        message = (
+          <span style={{ color: "#f05252" }}>Failed to upload ...</span>
+        );
+      }
+      if (progress === 100) {
+        message = <span>Done</span>;
+      }
+
+      return (
+        <div>
+          <button style={inputStyle.sendIcon}>
+            <span>
+              <img src="images/icons/security/anexo@1x.png" />
+            </span>
+          </button>
+          <div style={inputStyle.progressWrapper}>
+            <div style={barStyle} />
+          </div>
+          <button style={inputStyle.cancelButton} onClick={cancelHandler}>
+            <span>&times;</span>
+          </button>
+          <div style={{ clear: "left" }}>{message}</div>
+        </div>
+      );
+    } else {
+      return;
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -164,7 +287,7 @@ class KYC extends React.Component {
                             <img src="images/icons/security/anexo@1x.png" />
                           </div>
                         </Hidden>
-                        <p>CEP</p>
+                        <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
                         <Input
                           classes={{
                             root: classes.root,
@@ -181,7 +304,7 @@ class KYC extends React.Component {
                           list={1}
                           title={"Cidade"}
                           selectItem={"1"}
-                          width={"calc(100% - 50px)"}
+                          width={"calc(100% - 60px)"}
                         />
                       </Grid>
                       <Grid item xs={6}>
@@ -191,28 +314,34 @@ class KYC extends React.Component {
                           list={1}
                           title={"Estado"}
                           selectItem={"1"}
-                          width={"calc(100% - 50px)"}
+                          width={"calc(100% - 60px)"}
                         />
                       </Grid>
                     </Grid>
-                    <input type="file" multiple />
-                    {/* <FileUploadProgress
-                      id="fileupload"
-                      key="ex1"
-                      url="http://localhost:3000/api/upload"
-                      onProgress={(e, request, progress) => {
-                        console.log("progress", e, request, progress);
-                      }}
-                      onLoad={(e, request) => {
-                        console.log("load", e, request);
-                      }}
-                      onError={(e, request) => {
-                        console.log("error", e, request);
-                      }}
-                      onAbort={(e, request) => {
-                        console.log("abort", e, request);
-                      }}
-                    /> */}
+                    <Grid item xs={12} className={style.boxKYC_3}>
+                      <FileUploadProgress
+                        id="fileupload"
+                        key="ex1"
+                        // url="http://localhost:3000/api/upload"
+                        onProgress={(e, request, progress) => {
+                          console.log("progress", e, request, progress);
+                        }}
+                        onLoad={(e, request) => {
+                          console.log("load", e, request);
+                        }}
+                        onError={(e, request) => {
+                          console.log("error", e, request);
+                        }}
+                        onAbort={(e, request) => {
+                          console.log("abort", e, request);
+                        }}
+                        formGetter={this.formGetter.bind(this)}
+                        formRenderer={this.customFormRenderer.bind(this)}
+                        progressRenderer={this.customProgressRenderer.bind(
+                          this
+                        )}
+                      />
+                    </Grid>
                   </Grid>
 
                   <Grid item className={style.contentKYC_2}>
@@ -230,7 +359,32 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
+
                     </Grid>
+                      <Grid item xs={12} className={style.boxKYC_3}>
+                        <FileUploadProgress
+                          id="fileupload"
+                          key="ex1"
+                          // url="http://localhost:3000/api/upload"
+                          onProgress={(e, request, progress) => {
+                            console.log("progress", e, request, progress);
+                          }}
+                          onLoad={(e, request) => {
+                            console.log("load", e, request);
+                          }}
+                          onError={(e, request) => {
+                            console.log("error", e, request);
+                          }}
+                          onAbort={(e, request) => {
+                            console.log("abort", e, request);
+                          }}
+                          formGetter={this.formGetter.bind(this)}
+                          formRenderer={this.customFormRenderer.bind(this)}
+                          progressRenderer={this.customProgressRenderer.bind(
+                            this
+                          )}
+                        />
+                      </Grid>
                   </Grid>
                   <Grid item xs={12}>
                     <center>
