@@ -20,15 +20,7 @@ class P2P extends React.Component {
     this.state = {
       tabIcon: 0,
       openP2P: true,
-      coin: [{
-        name: undefined,
-        value: undefined,
-        img: undefined
-      }]
     };
-  }
-  coinSelected = (list = []) => {
-
   }
 
   handleTabIcon = key => {
@@ -99,10 +91,6 @@ class P2P extends React.Component {
         </Hidden>
         {this.renderContent()}
         <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-        <MultiSelect  
-           list={coin}
-           selectItem={this.coinSelected}
-         />
       </div>
     );
   }

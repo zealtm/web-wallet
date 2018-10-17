@@ -32,7 +32,6 @@
     position: absolute;
     z-index: 99999;
   }
-  
   :local .listItem {
     display: flex;
     padding: 10px;
@@ -49,4 +48,3 @@
   :local .icon img {
     margin: 0;
   }
-  

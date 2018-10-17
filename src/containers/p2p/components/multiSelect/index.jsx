@@ -25,20 +25,25 @@ class MultiSelect extends React.Component {
         let found = false;
         listCoins.map(
             (v, key) => {
-                if (v.value === value) {
-                    found = true;
-                    delete listCoins[key];
-                }
+                if(v!==undefined){
+                    if (v.value === value) {
+                        found = true;
+                        delete listCoins[key];
+                    }
+                }                
             }
         );
         if (!found) {
             if (value !== undefined) {
                 this.setState({
                     ...this.state,
-                    listCoins:
-                    {
-                        value, title, img
-                    }
+                    listCoins:[
+                        ...this.state.listCoins,
+                        {
+                            value, title, img
+                        }
+                    ]
+                    
 
                 })
 
@@ -54,8 +59,7 @@ class MultiSelect extends React.Component {
         const { list } = this.props;
 
         const listStyle = {
-            width: "148px",
-            marginLeft: 1
+            width: "148px"
         };
 
         return (
@@ -92,7 +96,37 @@ class MultiSelect extends React.Component {
     componentWillUnmount() {
         document.addEventListener("click", this.handleClick);
     }
-
+    renderListCoins = () => {
+        const { listCoins } = this.state;
+        if (listCoins.length > 0) {
+            return (
+                <div className={style.title}>
+                    {listCoins.map((item, id) => (
+                        
+                        item!==undefined ? <img key={id} className={style.ico} src={item.img} />:""
+                    ))}
+                </div>
+            );
+        } else {
+            return this.renderNull();
+        }
+    }
+    renderNull = () =>{
+        return (
+            <div className={style.title}>
+                <div className={style.ico}>
+                </div>
+                <div className={style.ico}>
+                </div>
+                <div className={style.ico}>
+                </div>
+                <div className={style.ico}>
+                </div>
+                <div className={style.ico}>
+                </div>
+            </div>
+        );
+    }
     render() {
         const { width, error } = this.props;
         const { listOpen } = this.state;
@@ -110,21 +144,7 @@ class MultiSelect extends React.Component {
             >
                 <div className={style.header} onClick={() => this.toggleList()}>
                     <div className={style.title}>
-                        <div className={style.ico}>
-
-                        </div>
-                        <div className={style.ico}>
-
-                        </div>
-                        <div className={style.ico}>
-
-                        </div>
-                        <div className={style.ico}>
-
-                        </div>
-                        <div className={style.ico}>
-
-                        </div>
+                        {this.renderListCoins()}
                         <div className={style.icon}>
                             {listOpen ? (
                                 <img src="./images/icons/arrow/expand-less@2x.png" />
@@ -132,7 +152,6 @@ class MultiSelect extends React.Component {
                                     <img src="./images/icons/arrow/expand-more@2x.png" />
                                 )}
                         </div>
-
                     </div>
                 </div>
                 {listOpen && this.renderItems()}
