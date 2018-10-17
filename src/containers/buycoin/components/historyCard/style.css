@@ -1,0 +1,43 @@
+:local .line {
+    border-bottom: 2px solid #42227d;
+    margin: 0.5rem 0;
+    width: 100%;
+}
+
+:local .bold{
+    composes: inputTextDefault from "../../../../components/bases/textBase.css";
+    font-weight: bold;
+}
+
+:local .lunes{
+    composes: inputTextDefault from "../../../../components/bases/textBase.css";
+    font-weight: bold;
+    text-align: right;
+}
+
+:local .status{
+    composes: inputTextDefault from "../../../../components/bases/textBase.css";
+    composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+    margin-left: 3rem;
+    font-weight: bold;
+}
+
+:local(.text), :local(.img){
+    composes: inputTextDefault from "../../../../components/bases/textBase.css";
+    text-align: right;
+}
+
+:local .maginText{
+    margin-top: 1rem;
+}
+
+:local .maginTextRight{
+    margin-top: 1rem;
+    text-align: right;
+}
+
+@media screen and (max-width: 600px) {
+    :local(.status){
+        margin-left: 1rem;
+    }
+}
