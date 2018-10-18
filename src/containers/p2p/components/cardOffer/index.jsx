@@ -1,9 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {openChat} from "../../redux/p2pAction";
+
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
 import { ArrowForward, Star } from "@material-ui/icons/";
+
+// COMPONENTS
+import StarVotes from "../starvotes";
 
 // STYLE
 import style from "./style.css";
@@ -22,6 +30,12 @@ class CardOffer extends React.Component {
       openDetails: !this.state.openDetails
     });
   };
+
+  openChat = (id) => {
+    const {openChat} = this.props;
+    
+    openChat(id);
+  }
 
   render() {
     const { openDetails } = this.state;
@@ -47,11 +61,7 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.starActive} />
-              <Star className={style.star} />
+              <StarVotes votes={4} />
             </div>
             <span className={style.textSmall}>Unid. R$6,00</span>
             <ArrowForward className={style.arrowPrice} />
@@ -75,7 +85,7 @@ class CardOffer extends React.Component {
             <div className={style.textDetails}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
             </div>
-            <button className={style.btContinue}>Negociar</button>
+            <button className={style.btContinue} onClick={()=>this.openChat(1)}>Negociar</button>
           </Grid>
         </Grid>
       </div>
@@ -83,6 +93,17 @@ class CardOffer extends React.Component {
   }
 }
 
-CardOffer.propTypes = {};
+CardOffer.propTypes = {
+  openChat: PropTypes.func.isRequired
+};
 
-export default CardOffer;
+const mapStateToProps = store => ({
+
+});
+
+const mapDispatchToProps = dispatch => 
+bindActionCreators(
+  {openChat},dispatch
+);
+
+export default connect(mapStateToProps,mapDispatchToProps)(CardOffer);

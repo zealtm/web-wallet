@@ -46,8 +46,9 @@ class Skeleton extends React.Component {
               openMenu={openMenu}
               actionMenu={this.toggleMenu}
               actionLogout={this.logout}
-            />
+            />                  
           </Grid>
+          
           <Grid item xs={12} lg={10} xl={11}>
             <div className={style.colContainer}>{children}</div>
           </Grid>
