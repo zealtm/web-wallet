@@ -79,7 +79,8 @@ import {
 import {
   setModalStepSaga as setModalStepBuySaga,
   getBuyCoinsEnabledSaga,
-  getCoinPackageSaga
+  getCoinPackageSaga, 
+  openModalPaySaga
 } from "../buycoin/redux/buySaga";
 
 export default function* rootSaga() {
@@ -160,6 +161,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
     fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
     fork(takeLatest, "GET_COIN_PACKAGE", getCoinPackageSaga),
+    fork(takeLatest, "SET_MODAL_OPEN", openModalPaySaga),
     
   ];
 }

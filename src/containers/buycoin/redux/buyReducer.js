@@ -3,8 +3,10 @@ const initialState = {
   packages: [],
   history: [],
   loading: false,
+  loadingCoins: false,
   loadingPackages: false,
   modalStep: 1,
+  modalOpen: false,
   buypackage: {
     idpack: '',
     coin: {
@@ -35,6 +37,18 @@ const buy = (state=initialState, action) => {
           ...state,
           modalStep: action.step
         };
+      
+      case "SET_MODAL_OPEN_REDUCER":
+        return {
+          ...state,
+          modalOpen: action.open
+        };
+
+      case "SET_LOADING_COIN_REDUCER":
+        return {
+          ...state,
+          loadingCoins: action.payload
+        };
 
       case "SET_LOADING_REDUCER":
         return {
@@ -51,13 +65,21 @@ const buy = (state=initialState, action) => {
       case "GET_COINS_REDUCER":
         return {
           ...state,
-          coins: action.coins
+          coins: action.coins,
+          loadingCoins: false
         };
 
       case "GET_BUY_PACKAGE_REDUCER":
         return {
           ...state,
           packages: action.packages,
+          buypackage: {
+            ...state.buypackage,
+            coin: {
+              abbreviation: action.coin,
+              address: action.address
+            }
+          },
           loadingPackages: false
         };
 

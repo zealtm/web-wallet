@@ -23,9 +23,21 @@ export function* setModalStepSaga(payload) {
   });
 }
 
+export function* openModalPaySaga(payload){
+  yield put({
+    type: "SET_MODAL_OPEN_REDUCER",
+    open: payload.open
+  });
+}
+
 
 export function* getBuyCoinsEnabledSaga() {
   try {
+    yield put({
+      type: "SET_LOADING_COIN_REDUCER",
+      payload: true
+    });
+    
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
 
@@ -62,7 +74,7 @@ export function* getBuyCoinsEnabledSaga() {
 export function* getCoinPackageSaga(payload) {
   try {
     yield put({
-      type: "SET_LOADING_VAL_REDUCER",
+      type: "SET_LOADING_PACK_REDUCER",
       payload: true
     });
 
@@ -70,12 +82,12 @@ export function* getCoinPackageSaga(payload) {
     let response = yield call(
       buyService.getPackages,
       token,
-      payload
+      payload.coin
     );
 
     if (!response) {
       yield put({
-        type: "SET_LOADING_VAL_REDUCER",
+        type: "SET_LOADING_PACK_REDUCER",
         payload: false
       });
       yield put(internalServerError());
@@ -83,7 +95,9 @@ export function* getCoinPackageSaga(payload) {
 
     yield put({
       type: "GET_BUY_PACKAGE_REDUCER",
-      packages: response.packages || []
+      packages: response.packages || [], 
+      coin: payload.coin, 
+      address: payload.address
     });
 
     return;

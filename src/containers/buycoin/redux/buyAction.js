@@ -1,3 +1,8 @@
+export const openModal = open => ({
+  type: "SET_MODAL_OPEN",
+  open
+});
+
 export const setModalStep = step => ({
   type: "SET_MODAL_BUY_STEP",
   step
@@ -7,9 +12,10 @@ export const getCoinsEnabled = () => ({
   type: "GET_BUY_COINS_ENABLED"
 });
 
-export const getCoinPackage = (coin) => ({
+export const getCoinPackage = (coin, address) => ({
   type: "GET_COIN_PACKAGE",
-  coin
+  coin, 
+  address
 });
 
 

@@ -45,7 +45,7 @@ class CoinsBar extends React.Component {
     // fazer aqui a chamada para o servico de pegar os Pacotes disponiveis para a Moeda selecionada
     const {getCoinPackage} = this.props;
 
-    getCoinPackage(coin);
+    getCoinPackage(coin, address);
   };
 
   renderArrowPercent = val => {
@@ -57,9 +57,12 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    const {coinsEnabled, coins} = this.props;
+    const {coinsEnabled, coins, loading, selected} = this.props;
 
     let defaultCoin = getDefaultFiat();
+
+    if(loading)
+      return (<div>Aguarde...</div>)
 
     if(coinsEnabled.length<1)
       return;
@@ -79,7 +82,7 @@ class CoinsBar extends React.Component {
         >
           <div
             className={
-                val === "lunes"
+                val.title === selected.toUpperCase()
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -177,7 +180,9 @@ CoinsBar.propTypes = {
 
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  loading: store.buy.loadingCoins,
+  selected: store.buy.buypackage.coin.abbreviation
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

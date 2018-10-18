@@ -35,8 +35,7 @@ class BuyCoins extends React.Component {
   }
 
   render() {
-    const {isOpen} = this.state;
-    const {modalStep, setModalStep} = this.props;
+    const {modalStep, setModalStep, modalOpen} = this.props;
 
     const titles = ["Comprar", "Historico"];
     const contents = [<Buy key={0} />, <div key={1}>Historico</div>];
@@ -53,7 +52,7 @@ class BuyCoins extends React.Component {
         <Modal
           title={i18n.t("BUYCOINS_TITLE")}
           content={<BuyModal />}
-          show={isOpen}
+          show={modalOpen}
           close={
             modalStep === 1 || modalStep === 3 || modalStep === 4 ? ()=>this.closeModal() : null
           }
@@ -68,11 +67,13 @@ class BuyCoins extends React.Component {
 
 BuyCoins.propTypes = {
   modalStep: PropTypes.number.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
-  modaStep: store.buy.modalStep,
+  modalStep: store.buy.modalStep,
+  modalOpen: store.buy.modalOpen,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
