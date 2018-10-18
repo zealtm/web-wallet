@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // COMPONENTS
 import Modal from "../../components/modal";
 import Tabs from "../../components/tabs";
+import History from "./components/history";
 import Buy from "./components/buy";
 import BuyModal from "./modal/buyModal";
 
@@ -32,7 +33,7 @@ class BuyCoins extends React.Component {
   render() {
     const {isOpen} = this.state;
     const titles = ["Comprar", "Historico"];
-    const contents = [<Buy key={0} />, <div key={1}>Historico</div>];
+    const contents = [<Buy key={0} />, <History key={1} />];
 
     return (
       <div>
