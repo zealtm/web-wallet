@@ -21,6 +21,7 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
+import { inputValidator } from "../../../../utils/inputValidator";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
@@ -65,10 +66,46 @@ const inputStyle = {
   focused: {}
 };
 class MobileAuthenticator extends React.Component {
-  componentDidMount() {
-    let { getTwoFactorAuth, settings, twoFactor } = this.props;
-    if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
+  constructor() {
+    super();
+    this.state = {
+      phone: "",
+      errors: true
+    };
   }
+
+  handlePhoneChange = event => {
+    let { phone } = this.state;
+
+    this.setState({
+      ...this.state,
+      phone: event.value
+    });
+    if (phone.length === 10) {
+      this.setState({
+        ...this.state,
+        errors: false
+      });
+    }
+    console.log(phone.length);
+  };
+
+  inputValidator = () => {
+    let { phone } = this.state;
+    if (phone.length != 10) {
+      this.setState({
+        ...this.state,
+        errors: true
+      });
+      alert("Erro");
+    } else {
+      this.setState({
+        ...this.state,
+        errors: false
+      });
+      alert("Certo");
+    }
+  };
 
   renderTwoFactor = () => {
     let { settings, twoFactor } = this.props;
@@ -99,6 +136,7 @@ class MobileAuthenticator extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { errors } = this.state;
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -158,12 +196,17 @@ class MobileAuthenticator extends React.Component {
                       <Grid item xs={12}>
                         <Input
                           classes={{
-                            root: classes.inputMobile,
+                            root: classes.root,
                             underline: classes.cssUnderline,
                             input: classes.cssInput
                           }}
+                          name="phone"
                           width={"100%"}
                           inputComponent={PhoneMask}
+                          onChange={event =>
+                            this.handlePhoneChange(event.target)
+                          }
+                          value={this.phone}
                         />
                       </Grid>
                     </Hidden>
@@ -176,13 +219,24 @@ class MobileAuthenticator extends React.Component {
                           underline: classes.cssUnderline,
                           input: classes.cssInput
                         }}
+                        name="phone"
                         width={"100%"}
                         inputComponent={PhoneMask}
+                        onChange={event => this.handlePhoneChange(event.target)}
+                        value={this.phone}
                       />
                     </Hidden>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.alignButtonMobile}>
-                    <button className={style.buttonEnableSecurity}>
+                    <button
+                      // disabled
+                      className={
+                        errors
+                          ? style.buttonDisabledMobile
+                          : style.buttonEnableSecurity
+                      }
+                      onClick={() => this.inputValidator()}
+                    >
                       {i18n.t("BTN_SUBMIT")}
                     </button>
                   </Grid>

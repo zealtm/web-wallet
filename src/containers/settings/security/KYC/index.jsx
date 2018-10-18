@@ -116,7 +116,8 @@ const inputStyle = {
     MozUserSelect: "none",
     msUserSelect: "none",
     userSelect: "none",
-    border: "1px solid transparent"
+    border: "1px solid transparent",
+    marginRight: "14px"
   },
   alignForm: {
     display: "flex",
@@ -331,7 +332,7 @@ class KYC extends React.Component {
                         <Select
                           list={1}
                           title={"Cidade"}
-                          // selectItem={"1"}
+                          // selectItem={func()}
                           width={"calc(100% - 60px)"}
                         />
                       </Grid>
@@ -340,7 +341,7 @@ class KYC extends React.Component {
                         <Select
                           list={1}
                           title={"Estado"}
-                          // selectItem={}
+                          // selectItem={func()}
                           width={"calc(100% - 60px)"}
                         />
                       </Grid>
@@ -377,7 +378,7 @@ class KYC extends React.Component {
                         <div>
                           <img src="images/icons/security/anexo@1x.png" />
                         </div>
-                        <p> CPF/CNPJ/CNH/Passaporte</p>
+                        <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
                         <Input
                           classes={{
                             root: classes.root,
@@ -387,29 +388,58 @@ class KYC extends React.Component {
                         />
                       </Grid>
                     </Grid>
-                    <Grid item xs={12} lg={6} className={style.boxKYC_3}>
-                      <FileUploadProgress
-                        id="fileupload"
-                        key="ex1"
-                        // url="http://localhost:3000/api/upload"
-                        onProgress={(e, request, progress) => {
-                          console.log("progress", e, request, progress);
-                        }}
-                        onLoad={(e, request) => {
-                          console.log("load", e, request);
-                        }}
-                        onError={(e, request) => {
-                          console.log("error", e, request);
-                        }}
-                        onAbort={(e, request) => {
-                          console.log("abort", e, request);
-                        }}
-                        formGetter={this.formGetter.bind(this)}
-                        formRenderer={this.customFormRenderer.bind(this)}
-                        progressRenderer={this.customProgressRenderer.bind(
-                          this
-                        )}
-                      />
+                    <Grid item className={style.displayBox_3}>
+                      <Grid item xs={12} lg={6} className={style.boxKYC_3}>
+                        <p>Frente</p>
+                        <FileUploadProgress
+                          id="fileupload"
+                          key="ex1"
+                          url="http://localhost:3000/api/upload"
+                          onProgress={(e, request, progress) => {
+                            console.log("progress", e, request, progress);
+                          }}
+                          onLoad={(e, request) => {
+                            console.log("load", e, request);
+                          }}
+                          onError={(e, request) => {
+                            console.log("error", e, request);
+                          }}
+                          onAbort={(e, request) => {
+                            console.log("abort", e, request);
+                          }}
+                          formGetter={this.formGetter.bind(this)}
+                          formRenderer={this.customFormRenderer.bind(this)}
+                          progressRenderer={this.customProgressRenderer.bind(
+                            this
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} lg={6} className={style.boxKYC_3}>
+                        <p>Verso</p>
+
+                        <FileUploadProgress
+                          id="fileupload"
+                          key="ex1"
+                          // url="http://localhost:3000/api/upload"
+                          onProgress={(e, request, progress) => {
+                            console.log("progress", e, request, progress);
+                          }}
+                          onLoad={(e, request) => {
+                            console.log("load", e, request);
+                          }}
+                          onError={(e, request) => {
+                            console.log("error", e, request);
+                          }}
+                          onAbort={(e, request) => {
+                            console.log("abort", e, request);
+                          }}
+                          formGetter={this.formGetter.bind(this)}
+                          formRenderer={this.customFormRenderer.bind(this)}
+                          progressRenderer={this.customProgressRenderer.bind(
+                            this
+                          )}
+                        />
+                      </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
@@ -417,9 +447,7 @@ class KYC extends React.Component {
                       <Grid item xs={12} sm={6}>
                         <button
                           className={style.buttonEnableSecurity}
-                          onClick={() => {
-                            this.inputValidator();
-                          }}
+                          onClick={() => alert("click")}
                         >
                           {i18n.t("BTN_CONFIRM")}
                         </button>

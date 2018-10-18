@@ -433,7 +433,7 @@
   padding: 25px;
 }
 
-:local(.boxKYC_3) {  
+:local(.boxKYC_3) {
   padding: 15px 25px;
 }
 
@@ -447,23 +447,6 @@
   width: 20px;
 }
 
-@media screen and (max-width: 599px) {
-  :local(.boxKYC_1) {
-    display: block;
-  }
-
-  :local(.containerKYC p) {
-    color: red;
-    font-size: 10px;
-  }
-
-  :local(.indicatorItemKYC) {
-    color: #68f285;
-    text-align: left;
-    display: flex;
-  }
-}
-
 input[type="file"]::-webkit-file-upload-button {
   background-color: transparent;
   font-weight: bold;
@@ -473,24 +456,34 @@ input[type="file"]::-webkit-file-upload-button {
   color: #68f285;
 }
 
-label {
-  cursor: pointer;
-  margin-top: 25px;
-  display: inline-block;
-  padding: 6px;
-  padding-right: 29px;
-  padding-left: 29px;
-  transition: all 1s ease;
-  color: red;
-  text-transform: capitalize;
-  font-size: 15px;
-  z-index: 1;
-  position: relative;
-  border-radius: 25px;
-  background-color: transparent;
-  border: 2px solid red;
+:local(.buttonDisabledMobile) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+
 }
 
-label button {
-  background-color: #68f285;
+:local(.displayBox_3) {
+  display: flex;
+}
+
+@media screen and (max-width: 1279px) {
+  :local(.displayBox_3) {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  :local(.boxKYC_1) {
+    display: block;
+  }
+
+  :local(.containerKYC p) {
+    color: #68f285;
+    font-size: 10px;
+  }
+
+  :local(.indicatorItemKYC) {
+    color: #68f285;
+    text-align: left;
+    display: flex;
+  }
 }
