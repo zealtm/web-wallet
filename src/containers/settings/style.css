@@ -445,7 +445,6 @@
 :local(.contentKYC img) {
   float: right;
   width: 20px;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 599px) {
@@ -464,14 +463,6 @@
     display: flex;
   }
 }
-
-/* input[type="file"]::-ms-browse {
-  background-color: #0b6b2800;
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  color: #f05252;
-} */
 
 input[type="file"]::-webkit-file-upload-button {
   background-color: transparent;
@@ -503,16 +494,3 @@ label {
 label button {
   background-color: #68f285;
 }
-
-/* ::-webkit-file-upload-button {
-  color: transparent;
-  width: 30px;
-  height: 30px;
-  background-color: aquamarine;
-}
-::-webkit-submit-button {
-  color: transparent;
-  width: 30px;
-  height: 30px;
-  background-color: red;
-} */
