@@ -1,0 +1,8 @@
+:local .buttonBorderGreen {
+  composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";
+  background-color: transparent;
+}
+
+:local .buttonEnable {
+  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+}

@@ -1,33 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// COMPONENTS 
+// COMPONENTS
+import Modal from "../../components/modal";
 import Tabs from "../../components/tabs";
 import History from "./components/history";
+import Buy from "./components/buy";
+import BuyModal from "./modal/buyModal";
 
 // UTILS
 import i18n from "../../utils/i18n";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 
 class BuyCoins extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.state = {
+      isOpen: false
+    }
   }
 
-  render(){
+  handleModal = () => this.setState({ isOpen: !this.state.isOpen });
 
-    const titles = [
-      "Comprar","Historico"
-    ];
-    
-    const contents = [
-      <div>
-        <div>SCROLL DE MOEDAS</div>
-        <div>CONTEUDO SCROLL DE VALORES</div>
-      </div>, <History />
-    ]
+  closeModal(){
+    //const {setModalStep} = this.props;
+    this.handleModal();
+    //setModalStep(1);
+  }
+
+  render() {
+    const {isOpen} = this.state;
+    const titles = ["Comprar", "Historico"];
+    const contents = [<Buy key={0} />, <History key={1} />];
 
     return (
       <div>
@@ -38,13 +44,18 @@ class BuyCoins extends React.Component {
 
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
 
+        <Modal
+          title={i18n.t("BUYCOINS_TITLE")}
+          content={<BuyModal />}
+          show={isOpen}
+          close={()=>this.closeModal()}
+          back={() => alert("voltar")}
+        />
       </div>
-    )
+    );
   }
 }
 
-BuyCoins.propTypes = {
-
-};
+BuyCoins.propTypes = {};
 
 export default BuyCoins;
