@@ -17,11 +17,12 @@ import Modal from "../../components/modal";
 import InterestModal from "./modal/interest"
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm"
+import Chat from './chat'
 
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
-import Chat from "./chat";
+import chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -73,8 +74,10 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <UserProfile key={3} />,
-      <CreateOffer  key={4} />
+      <UserProfile key={2} />,
+      <CreateOffer  key={2} />,
+      <Chat key={4}/>,
+      
     ];
 
     return (contents[tabIcon] );
@@ -82,7 +85,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const contentTabIcons = ["tag", "user", "user_star", "newoffer","chat"];
     const {chatOpened} = this.props.p2pStore;
     const { openP2P } = this.state;
 
