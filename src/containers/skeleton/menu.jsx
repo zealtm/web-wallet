@@ -59,7 +59,7 @@ const menuItens = [
   {
     link: "/buycoin",
     label: i18n.t("MENU_BUYCOINS"),
-    icon: "../../images/icons/general/purchase@1x.png"
+    icon: "../../images/icons/general/buycoin@1x.png"
   }
 ];
 
