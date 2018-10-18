@@ -68,15 +68,8 @@ class PaymentBar extends React.Component {
       <div className={style.baseBar}>
         <Grid container>
           <Grid item xs={12} md={8}>
-            <span className={style.label}>Formas de pagamento</span>
+            <span className={style.label}>Selecione uma forma de pagamento</span>
             <div className={style.baseBackgroundFlex}>
-              <FormControlLabel
-                value="p2p"
-                classes={{label: classes.rootLabel}} 
-                control={<Radio color="primary" classes={{root: classes.root, checked: classes.checked}}  />}
-                label="Crédito"
-                labelPlacement="start"
-              />
 
               <FormControlLabel
                 value="p2p"
@@ -86,17 +79,11 @@ class PaymentBar extends React.Component {
                 labelPlacement="start"
               />
 
-              <FormControlLabel
-                value="p2p"
-                classes={{label: classes.rootLabel}} 
-                control={<Radio color="primary" classes={{root: classes.root, checked: classes.checked}}  />}
-                label="Recorrente"
-                labelPlacement="start"
-              />
+              
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <span className={style.label}>Moeda desejada</span>
+            <span className={style.label}>Moeda para pagamento</span>
             <div className={style.baseBackground}>
               <Select
                 list={coinsExample}

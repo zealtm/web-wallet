@@ -76,6 +76,13 @@ import {
   getRechargeCoinsEnabledSaga
 } from "../recharge/redux/rechargeSaga";
 
+import {
+  setModalStepSaga as setModalStepBuySaga,
+  getBuyCoinsEnabledSaga,
+  getCoinPackageSaga, 
+  openModalPaySaga
+} from "../buycoin/redux/buySaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -149,5 +156,12 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+    
+    // buy coins 
+    fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
+    fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
+    fork(takeLatest, "GET_COIN_PACKAGE", getCoinPackageSaga),
+    fork(takeLatest, "SET_MODAL_OPEN", openModalPaySaga),
+    
   ];
 }

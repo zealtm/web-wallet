@@ -2,6 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
@@ -19,9 +23,12 @@ import CardPack from "../cardPack";
 // STYLE
 import style from "./style.css";
 
-class CoinsBar extends React.Component {
+class PackCoins extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activecard: null
+    }
   }
 
   moveSlide = (direction = "next") => {
@@ -37,10 +44,28 @@ class CoinsBar extends React.Component {
     }
   };
 
+  handleCard = (id) => {
+    this.setState({
+      ...this.state,
+      activecard: id
+    });
+  }
+
   renderPacks = () => {
-    return ["15","30", "50", "100", "1000"].map((val, index) => {
+    const {packages, loading,selectedCoin} = this.props;
+    const {activecard} = this.state;
+
+    if(loading)
+      return (<div>Aguarde...</div>)
+
+    if(packages.length<1)
+      return;
+
+    return packages.map((val, index) => {
+      const active = activecard==val.id ? true : false;
+
       return (
-        <CardPack key={index} />
+        <CardPack key={index} buypack={val} selectedCoin={selectedCoin} onSelect={this.handleCard} active={active} />
       );
     });
   };
@@ -114,4 +139,23 @@ class CoinsBar extends React.Component {
   }
 }
 
-export default CoinsBar;
+PackCoins.propTypes = {
+  packages: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = store => ({
+  packages: store.buy.packages || [],
+  loading: store.buy.loadingPackages, 
+  selectedCoin: store.buy.buypackage.coin
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    
+  }, dispatch
+);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps 
+)(PackCoins);

@@ -1,5 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Slider from "react-slick";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getCoinsEnabled, getCoinPackage } from "../../redux/buyAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -11,6 +17,7 @@ import {KeyboardArrowLeft, KeyboardArrowRight, ArrowDropDown, ArrowDropUp, Close
 
 // UTILS
 import i18n from "../../../../utils/i18n";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // STYLE
 import style from "./style.css";
@@ -24,13 +31,21 @@ class CoinsBar extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    const {getCoinsEnabled} = this.props;
+    getCoinsEnabled();
+  }
+
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
 
   setCoin = (coin, address) => {
-  
+    // fazer aqui a chamada para o servico de pegar os Pacotes disponiveis para a Moeda selecionada
+    const {getCoinPackage} = this.props;
+
+    getCoinPackage(coin, address);
   };
 
   renderArrowPercent = val => {
@@ -42,17 +57,32 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    const coinStatus = true;
-    return ["lunes","btc"].map((val, index) => {
+    const {coinsEnabled, coins, loading, selected} = this.props;
+
+    let defaultCoin = getDefaultFiat();
+
+    if(loading)
+      return (<div>Aguarde...</div>)
+
+    if(coinsEnabled.length<1)
+      return;
+    
+    return coinsEnabled.map((val, index) => {
+      let coin = coins[val.value.abbreviation];
+
+      if (!coin) return;
+
+      const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
+     
       return (
         <div
           className={null}
           key={index}
-          onClick={() => this.setCoin(val, val)}
+          onClick={() => this.setCoin(val.value.abbreviation, val.value.address)}
         >
           <div
             className={
-                val === "lunes"
+                val.title === selected.toUpperCase()
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -60,16 +90,18 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={"images/icons/coins/" + val + ".png"}
+                src={"images/icons/coins/" + val.value.abbreviation + ".png"}
               />
             </div>
             <div className={style.boxLabelCoin}>
-              {val} <br />
-              R$ 50,00
+              {val.title} <br />
+              {coin.price[defaultCoin].symbol + coinPrice.toFixed(3)}
             </div>
           </div>
         </div>
       );
+
+
     });
   };
 
@@ -103,7 +135,7 @@ class CoinsBar extends React.Component {
         }
       ]
     };
-
+    
     return (
       <div className={style.contentCoins}>
         <Grid container style={{ justifyContent: "center" }}>
@@ -142,4 +174,26 @@ class CoinsBar extends React.Component {
   }
 }
 
-export default CoinsBar;
+CoinsBar.propTypes = {
+  getCoinsEnabled: PropTypes.func.isRequired
+};
+
+const mapStateToProps = store => ({
+  coinsEnabled: store.buy.coins,
+  coins: store.skeleton.coins,
+  loading: store.buy.loadingCoins,
+  selected: store.buy.buypackage.coin.abbreviation
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    getCoinsEnabled,
+    getCoinPackage
+  }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(CoinsBar);
