@@ -22,7 +22,6 @@
   max-height: 150px;
   padding: 5px;
   overflow-y: auto;
-  position: absolute;
   z-index: 99999;
 }
 
