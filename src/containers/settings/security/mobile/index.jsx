@@ -61,7 +61,7 @@ class MobileAuthenticator extends React.Component {
     super();
     this.state = {
       phone: "",
-      errors: true
+      enableButton: false
     };
   }
 
@@ -69,11 +69,11 @@ class MobileAuthenticator extends React.Component {
     let phoneValue = event.value.replace(" ", "");
     phoneValue.length === 11
       ? this.setState({
-          errors: false,
+          enableButton: true,
           phone: phoneValue
         })
       : this.setState({
-          errors: true,
+          enableButton: false,
           phone: phoneValue
         });
   };
@@ -84,7 +84,7 @@ class MobileAuthenticator extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { errors } = this.state;
+    const { enableButton } = this.state;
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -176,17 +176,17 @@ class MobileAuthenticator extends React.Component {
                     </Hidden>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.alignButtonMobile}>
-                    {errors ? (
+                    {enableButton ? (
                       <button
-                        disabled
-                        className={style.buttonDisabledMobile}
+                        className={style.buttonEnableSecurity}
                         onClick={() => this.sendData()}
                       >
                         {i18n.t("BTN_SUBMIT")}
                       </button>
                     ) : (
                       <button
-                        className={style.buttonEnableSecurity}
+                        disabled
+                        className={style.buttonDisabledSecurity}
                         onClick={() => this.sendData()}
                       >
                         {i18n.t("BTN_SUBMIT")}
@@ -204,7 +204,7 @@ class MobileAuthenticator extends React.Component {
 }
 
 MobileAuthenticator.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(inputStyle)(MobileAuthenticator);

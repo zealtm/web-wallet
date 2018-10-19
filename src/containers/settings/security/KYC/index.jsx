@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import compose from "recompose/compose";
 import FileUploadProgress from "react-fileupload-progress";
-
-// REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { getTwoFactorAuth } from "../../redux/settingsAction";
-import { errorInput } from "../../../errors/redux/errorAction";
 
 // STYLE
 import style from "../../style.css";
@@ -27,7 +20,6 @@ import i18n from "../../../../utils/i18n";
 import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
-import Loading from "../../../../components/loading";
 import Select from "../../../../components/select";
 import { CEP } from "../../../../components/inputMask";
 
@@ -109,50 +101,33 @@ class KYC extends React.Component {
   constructor() {
     super();
     this.state = {
+      inputs: {
+        address: ""
+      },
       enableButton: false
     };
   }
 
-  getInput = input => {
-    let { name, value } = input;
+  // getInput = event => {
+  //   this.setState({
+  //     ...this.state,
+  //     address: event.target.value,
+  //     errors: undefined
+  //   });
+  // };
 
+  getInput = event => {
+    let { name, value } = event;
+    let { inputs } = this.state;
     this.setState({
       ...this.state,
-      inputs: { [name]: value ? input : undefined },
+      inputs: { ...inputs, [name]: value ? event : { value: "" } },
       errors: undefined
     });
   };
 
-  componentDidMount() {
-    let { getTwoFactorAuth, settings, twoFactor } = this.props;
-    if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
-  }
-
-  renderTwoFactor = () => {
-    let { settings, twoFactor } = this.props;
-    if (twoFactor) {
-      return <div>{i18n.t("SECURITY_2FA_REGISTRED")}</div>;
-    }
-
-    return (
-      <Grid item xs={8} className={style.twoFactorQr}>
-        <Grid item xs={3} className={style.item}>
-          <Grid className={style.contentItem}>
-            {settings.security.urlImage ? (
-              <img width="200px" src={settings.security.urlImage} />
-            ) : (
-              <Loading />
-            )}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={3} className={style.item}>
-          <Grid className={style.contentItem}>
-            <Grid item>1</Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
+  inputValidator = () => {
+    alert("ffoi");
   };
 
   formGetter() {
@@ -184,7 +159,7 @@ class KYC extends React.Component {
               className={style.enableButtonUpload}
               onClick={onSubmit}
             >
-              Upload
+              {i18n.t("TEXT_UPLOAD")}
             </button>
           </div>
         ) : (
@@ -195,7 +170,7 @@ class KYC extends React.Component {
               className={style.disabledButtonUpload}
               onClick={onSubmit}
             >
-              Upload
+              {i18n.t("TEXT_UPLOAD")}
             </button>
           </div>
         )}
@@ -318,11 +293,13 @@ class KYC extends React.Component {
                         </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
                         <Input
+                          name={"address"}
                           classes={{
                             root: classes.root,
                             underline: classes.cssUnderline,
                             input: classes.cssInput
                           }}
+                          onChange={event => this.getInput(event.target)}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -332,6 +309,7 @@ class KYC extends React.Component {
                           </div>
                         </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
+
                         <Input
                           classes={{
                             root: classes.root,
@@ -463,7 +441,7 @@ class KYC extends React.Component {
                       <Grid item xs={12} sm={6}>
                         <button
                           className={style.buttonEnableSecurity}
-                          onClick={() => alert("click")}
+                          onClick={() => this.inputValidator()}
                         >
                           {i18n.t("BTN_CONFIRM")}
                         </button>
@@ -481,32 +459,7 @@ class KYC extends React.Component {
 }
 
 KYC.propTypes = {
-  twoFactor: PropTypes.bool,
-  loadingSettings: PropTypes.func,
-  getTwoFactorAuth: PropTypes.func,
-  clearMessage: PropTypes.func,
-  errorInput: PropTypes.func,
-  settings: PropTypes.object
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = store => ({
-  twoFactor: store.user.twoFactor,
-  settings: store.settings
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getTwoFactorAuth,
-      errorInput
-    },
-    dispatch
-  );
-
-export default compose(
-  withStyles(inputStyle),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(KYC);
+export default withStyles(inputStyle)(KYC);

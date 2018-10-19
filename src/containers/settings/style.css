@@ -437,6 +437,10 @@
   padding: 15px 25px;
 }
 
+:local(.displayBox_3) {
+  display: flex;
+}
+
 :local(.containerKYC p) {
   color: white;
   margin: 0;
@@ -456,12 +460,21 @@ input[type="file"]::-webkit-file-upload-button {
   color: #68f285;
 }
 
-:local(.buttonDisabledMobile) {
+:local(.buttonDisabledSecurity) {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }
+:local(.enableButtonUpload) {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
+}
 
-:local(.displayBox_3) {
-  display: flex;
+:local(.disabledButtonUpload) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
 }
 
 @media screen and (max-width: 1279px) {
@@ -485,18 +498,4 @@ input[type="file"]::-webkit-file-upload-button {
     text-align: left;
     display: flex;
   }
-}
-
-:local(.enableButtonUpload) {
-  composes: buttonEnable from "../../components/bases/buttonBase.css";
-  width: 80px;
-  max-height: 30px;
-  padding: 5px;
-}
-
-:local(.disabledButtonUpload) {
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-  width: 80px;
-  max-height: 30px;
-  padding: 5px;
 }
