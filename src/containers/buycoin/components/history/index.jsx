@@ -49,11 +49,11 @@ class History extends React.Component {
       return <Loading/>
 
     if (!history)
-      return <h1>{i18n.t("BUYCOINS_FAILED_TO_GET_HISTORY")}</h1>
+      return <h1 className={style.textCenter}>{i18n.t("BUYCOINS_FAILED_TO_GET_HISTORY")}</h1>
     if (history.constructor.name !== 'Array')
-      return <h1>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
+      return <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
     if (history.length < 1)
-      return <h1>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
+      return <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
 
     history = this.removeDuplicatedData(history)
     history = this.orderByTime(history)

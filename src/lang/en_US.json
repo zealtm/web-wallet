@@ -461,5 +461,6 @@
   "BUYCOINS_INFO_ERROR": "Procedimento de compra falhou",
   "BUYCOINS_STATUS_WAITING": "Waiting",
   "BUYCOINS_STATUS_CONFIRMED": "Confirmed",
-  "BUYCOINS_STATUS_CANCELED": "Canceled"
+  "BUYCOINS_STATUS_CANCELED": "Canceled",
+  "BUYCOINS_NO_HISTORY": "You have no payments history"
 }
