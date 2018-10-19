@@ -17,8 +17,8 @@
 }
 
 :local(.cardIcon) {
-  width: 40px;
-  margin-left:auto;
+  width: 50px;
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -39,20 +39,20 @@
 
 :local(.dollarSign) {
   font-weight: 300;
-  font-size: 25px;
+  font-size: 20px;
   color: #54d467;
   margin-top: 5%;
 }
 
 :local(.value) {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 500;
   margin-top:-5px;
   color: #54d467;
 }
 
 :local(.decimals) {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   color: #54d467;
   margin-top: 7px;
@@ -60,4 +60,8 @@
 
 :local(.valueCard) {
   display: inline-flex;
+}
+
+:local(.paragraph){
+  font-size: 12px;
 }
