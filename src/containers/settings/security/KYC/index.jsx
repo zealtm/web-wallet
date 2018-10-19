@@ -94,30 +94,11 @@ const inputStyle = {
     lineHeight: 1,
     color: "#f05252"
   },
-
   sendIcon: {
     float: "left",
     backgroundColor: "transparent",
     border: 0,
     color: "red"
-  },
-
-  bsButton: {
-    fontSize: "12px",
-    lineHeight: "1.5",
-    borderRadius: "3px",
-    color: "#fff",
-    backgroundColor: "#65e986",
-    borderColor: "#65e986",
-    display: "inline-block",
-    padding: "6px 12px",
-    cursor: "pointer",
-    WebkitUserSelect: "none",
-    MozUserSelect: "none",
-    msUserSelect: "none",
-    userSelect: "none",
-    border: "1px solid transparent",
-    marginRight: "14px"
   },
   alignForm: {
     display: "flex",
@@ -125,6 +106,13 @@ const inputStyle = {
   }
 };
 class KYC extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      enableButton: false
+    };
+  }
+
   getInput = input => {
     let { name, value } = input;
 
@@ -171,7 +159,15 @@ class KYC extends React.Component {
     return new FormData(document.getElementById("customForm"));
   }
 
+  enableButton = () => {
+    this.setState({
+      ...this.state,
+      enableButton: true
+    });
+  };
+
   customFormRenderer(onSubmit) {
+    const { enableButton } = this.state;
     return (
       <form id="customForm" style={inputStyle.alignForm}>
         <input
@@ -179,10 +175,30 @@ class KYC extends React.Component {
           name="file"
           id="inputFile"
           style={{ width: "100%" }}
+          onClick={() => this.enableButton()}
         />
-        <button type="button" style={inputStyle.bsButton} onClick={onSubmit}>
-          Upload
-        </button>
+        {enableButton ? (
+          <div>
+            <button
+              type="button"
+              className={style.enableButtonUpload}
+              onClick={onSubmit}
+            >
+              Upload
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button
+              disabled
+              type="button"
+              className={style.disabledButtonUpload}
+              onClick={onSubmit}
+            >
+              Upload
+            </button>
+          </div>
+        )}
       </form>
     );
   }
@@ -348,7 +364,7 @@ class KYC extends React.Component {
                     </Grid>
                     <Grid item xs={12} lg={6} className={style.boxKYC_3}>
                       <FileUploadProgress
-                        id="fileupload"
+                        id="fileupkeyload"
                         key="ex1"
                         url="http://localhost:3000/api/upload"
                         onProgress={(e, request, progress) => {

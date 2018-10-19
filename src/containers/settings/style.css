@@ -458,7 +458,6 @@ input[type="file"]::-webkit-file-upload-button {
 
 :local(.buttonDisabledMobile) {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-
 }
 
 :local(.displayBox_3) {
@@ -486,4 +485,18 @@ input[type="file"]::-webkit-file-upload-button {
     text-align: left;
     display: flex;
   }
+}
+
+:local(.enableButtonUpload) {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
+}
+
+:local(.disabledButtonUpload) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
 }

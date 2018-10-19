@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import compose from "recompose/compose";
-
-// REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { getTwoFactorAuth } from "../../redux/settingsAction";
-import { errorInput } from "../../../errors/redux/errorAction";
 
 // STYLE
 import style from "../../style.css";
@@ -21,10 +14,8 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
-import { inputValidator } from "../../../../utils/inputValidator";
 
 // COMPONENTS
-import Loading from "../../../../components/loading";
 import { PhoneMask } from "../../../../components/inputMask";
 
 const inputStyle = {
@@ -75,65 +66,20 @@ class MobileAuthenticator extends React.Component {
   }
 
   handlePhoneChange = event => {
-    let { phone } = this.state;
-    console.log("teste", phone.length);
-
-    this.setState({
-      ...this.state,
-      phone: event.value
-    });
-
-    if (phone.length === 10) {
-      this.setState({
-        ...this.state,
-        errors: false
-      });
-    }
+    let phoneValue = event.value.replace(" ", "");
+    phoneValue.length === 11
+      ? this.setState({
+          errors: false,
+          phone: phoneValue
+        })
+      : this.setState({
+          errors: true,
+          phone: phoneValue
+        });
   };
 
-  inputValidator = () => {
-    // alert("click");
-    let { phone } = this.state;
-    if (phone.length != 10) {
-      this.setState({
-        ...this.state,
-        errors: true
-      });
-      alert("Erro");
-    } else {
-      this.setState({
-        ...this.state,
-        errors: false
-      });
-      alert("Certo");
-    }
-  };
-
-  renderTwoFactor = () => {
-    let { settings, twoFactor } = this.props;
-    if (twoFactor) {
-      return <div>{i18n.t("SECURITY_2FA_REGISTRED")}</div>;
-    }
-
-    return (
-      <Grid item xs={8} className={style.twoFactorQr}>
-        <Grid item xs={3} className={style.item}>
-          <Grid className={style.contentItem}>
-            {settings.security.urlImage ? (
-              <img width="200px" src={settings.security.urlImage} />
-            ) : (
-              <Loading />
-            )}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={3} className={style.item}>
-          <Grid className={style.contentItem}>
-            <Grid item>1</Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
+  sendData = () => {
+    alert("OBRIGADA");
   };
 
   render() {
@@ -210,7 +156,6 @@ class MobileAuthenticator extends React.Component {
                           }
                           value={this.phone}
                         />
-                        Mobile
                       </Grid>
                     </Hidden>
                     <Grid item sm={2} />
@@ -228,21 +173,25 @@ class MobileAuthenticator extends React.Component {
                         onChange={event => this.handlePhoneChange(event.target)}
                         value={this.phone}
                       />
-                      web
                     </Hidden>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.alignButtonMobile}>
-                    <button
-                      // disabled
-                      className={
-                        errors
-                          ? style.buttonDisabledMobile
-                          : style.buttonEnableSecurity
-                      }
-                      onClick={() => this.inputValidator()}
-                    >
-                      {i18n.t("BTN_SUBMIT")}
-                    </button>
+                    {errors ? (
+                      <button
+                        disabled
+                        className={style.buttonDisabledMobile}
+                        onClick={() => this.sendData()}
+                      >
+                        {i18n.t("BTN_SUBMIT")}
+                      </button>
+                    ) : (
+                      <button
+                        className={style.buttonEnableSecurity}
+                        onClick={() => this.sendData()}
+                      >
+                        {i18n.t("BTN_SUBMIT")}
+                      </button>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
@@ -255,31 +204,7 @@ class MobileAuthenticator extends React.Component {
 }
 
 MobileAuthenticator.propTypes = {
-  twoFactor: PropTypes.bool,
-  loadingSettings: PropTypes.func,
-  getTwoFactorAuth: PropTypes.func,
-  clearMessage: PropTypes.func,
-  errorInput: PropTypes.func,
-  settings: PropTypes.object
+  classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = store => ({
-  twoFactor: store.user.twoFactor,
-  settings: store.settings
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getTwoFactorAuth,
-      errorInput
-    },
-    dispatch
-  );
-export default compose(
-  withStyles(inputStyle),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(MobileAuthenticator);
+export default withStyles(inputStyle)(MobileAuthenticator);
