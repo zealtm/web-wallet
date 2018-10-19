@@ -16,12 +16,12 @@ class Buy extends React.Component {
       <div>
         <div>
           <Grid item xs={12} id={"hr"}>
-            <hr align="left" />
+            <hr align="left" />      
             <span>
-              <b>Créditos</b>
+            <b>Créditos</b>
             </span>
             <span className={style.credit}>&nbsp;$ 500.00000000</span>
-          </Grid>
+        </Grid>
         </div>
         <div>
           <CoinsBar />
