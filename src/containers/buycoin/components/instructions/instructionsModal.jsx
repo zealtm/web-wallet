@@ -12,9 +12,6 @@ class InstructionsModal extends React.Component {
       <div className={style.alignInstructions}>
         <div className={style.infoModal}>
           <p>
-            <strong>{i18n.t("INSTRUCTION_MODAL_BUY_INFO_1_TITTLE")}</strong>
-          </p>
-          <p>
             {i18n.t("INSTRUCTION_MODAL_BUY_INFO_1")}
           </p>
           <p>
