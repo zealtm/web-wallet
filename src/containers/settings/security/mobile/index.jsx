@@ -76,21 +76,23 @@ class MobileAuthenticator extends React.Component {
 
   handlePhoneChange = event => {
     let { phone } = this.state;
+    console.log("teste", phone.length);
 
     this.setState({
       ...this.state,
       phone: event.value
     });
+
     if (phone.length === 10) {
       this.setState({
         ...this.state,
         errors: false
       });
     }
-    console.log(phone.length);
   };
 
   inputValidator = () => {
+    // alert("click");
     let { phone } = this.state;
     if (phone.length != 10) {
       this.setState({
@@ -208,6 +210,7 @@ class MobileAuthenticator extends React.Component {
                           }
                           value={this.phone}
                         />
+                        Mobile
                       </Grid>
                     </Hidden>
                     <Grid item sm={2} />
@@ -225,6 +228,7 @@ class MobileAuthenticator extends React.Component {
                         onChange={event => this.handlePhoneChange(event.target)}
                         value={this.phone}
                       />
+                      web
                     </Hidden>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.alignButtonMobile}>
