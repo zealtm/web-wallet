@@ -459,5 +459,7 @@
   "BUYCOINS_SUCCESS_1": "Você realizou a compra com sucesso!",
   "BUYCOINS_SUCCESS_2": "Visualize seu histórico de compras na guia Histórico",
   "BUYCOINS_INFO_ERROR": "Procedimento de compra falhou",
-  "BUYCOINS_STATUS_WAITING": "Waiting"
+  "BUYCOINS_STATUS_WAITING": "Waiting",
+  "BUYCOINS_STATUS_CONFIRMED": "Confirmed",
+  "BUYCOINS_STATUS_CANCELED": "Canceled"
 }

@@ -83,7 +83,6 @@ module.exports = {
     port: 6001
   },
   plugins: [
-    new HardSource(),
     new ObjectRestSpreadPlugin(),
     new HtmlWebpackPlugin({
       template: "public/index.html"

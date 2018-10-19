@@ -53,7 +53,7 @@ class BuyService {
     }
   }
 
-  async sendBuy(token, payload) {
+  // async sendBuy(token, payload) {
     // try {
     //   API_HEADER.headers.Authorization = token;
     //   const response = await axios.post(
@@ -67,14 +67,13 @@ class BuyService {
     //   internalServerError();
     //   return;
     // }
-  }
-// https://a.lunes.io/wallet/staging/coin/btc/sell/history
-  async getHistory(token) {
+  // }
+  async getHistory(token, coins) {
     try {
       API_HEADER.headers.Authorization = token
 
       let url;
-      let coins = ['btc','lunes','usdt','dash','bch','eth']
+      coins = Object.keys(coins)
       let promises = []
       let thenFunc = (r) => {
         let { data } = r
@@ -91,7 +90,7 @@ class BuyService {
       let results = await Promise.all(promises) //eslint-disable-line
 
       results.map(array => {
-        txs.push(...array) //USE IT <
+        txs.push(...array)
       })
       return txs
     } catch (err) {

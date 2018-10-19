@@ -52,8 +52,9 @@ export const confirmBuy = buy => ({
   buy
 });
 
-export const getHistoryBuy = () => ({
-  type: "GET_HISTORY_BUY"
+export const getHistoryBuy = (coins) => ({
+  type: "GET_HISTORY_BUY",
+  coins
 });
 
 export const setClearBuy = () => ({

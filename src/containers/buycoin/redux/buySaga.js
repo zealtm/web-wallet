@@ -4,17 +4,12 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 // SERVICES
 import BuyService from "../../../services/buyService";
 import CoinService from "../../../services/coinService";
-import { convertBiggestCoinUnit } from "../../../utils/numbers";
-import TransactionService from "../../../services/transaction/transactionService";
 
 // UTILS
-import { getUserSeedWords } from "../../../utils/localStorage";
-import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken } from "../../../utils/localStorage";
 
 const buyService = new BuyService();
 const coinService = new CoinService();
-const transactionService = new TransactionService();
 
 export function* setModalStepSaga(payload) {
   yield put({
@@ -321,18 +316,21 @@ export function* setFeeBuySaga(payload) {
 
 export function* getHistoryBuySaga(payload) {
   try {
+    let { coins } = payload
+
     yield put({
-      type: "SET_LOADING_REDUCER",
+      type: "SET_LOADING_HISTORY",
       payload: true
     });
 
     let token = yield call(getAuthToken);
-    let history = yield call(buyService.getHistory, token);
+    let history = yield call(buyService.getHistory, token, coins);
 
     yield put({
       type: "GET_HISTORY_BUY_REDUCER",
       history
     });
+    yield put({type: "SET_LOADING_HISTORY", payload: false})
   } catch (error) {
     yield put(internalServerError());
   }

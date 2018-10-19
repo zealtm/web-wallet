@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 
 // COMPONENTS
 import { Grid } from "@material-ui/core";
@@ -9,8 +10,9 @@ import style from "./style.css";
 //UTILS
 import {
   convertISO8601,
-  convertBiggestCoinUnit ,
-  convertSmallerCoinUnit
+  convertBiggestCoinUnit,
+  satoshiToCommon,
+  localCurrency
 } from "../../../../utils/numbers.js";
 import i18n from '../../../../utils/i18n.js'
 
@@ -20,10 +22,18 @@ class HistoryCard extends React.Component {
     this.convert(props)
   }
   convertFiat = (val) => {
-    //TODO I think this service is available just here for now, isnt it ?
-    return val.toLocaleString('pt-BR', {
-      style: 'currency', currency: 'BRL'
-    })
+    let { user } = this.props
+    let { country } = user
+    country = country ? country.replace(/\s/gmi, '_').toLowerCase() : undefined
+    let currency
+    if (country === 'brazil') {
+      currency = 'BRL'
+      val = val.BRL
+    } else {
+      currency = 'USD'
+      val = val.USD
+    }
+    return localCurrency(val, currency)
   }
   convertStatus = (status) => {
     return i18n.t(`BUYCOINS_STATUS_${status.toUpperCase()}`)
@@ -33,12 +43,12 @@ class HistoryCard extends React.Component {
   }
   capitalCase = (val) => {
     let f = val.charAt(0).toUpperCase()
-    let rest = val.substr(1,90)
+    let rest = val.substr(1)
     return f + rest
   }
   convert = (data) => {
     try {
-      let { coin, status, amount, fiatAmount, date } = data
+      let { coin, status, amount, fiatAmount, date, id } = data
       date = convertISO8601(date)
       this.state = { //eslint-disable-line
         upCoin: coin.toUpperCase(),
@@ -53,13 +63,13 @@ class HistoryCard extends React.Component {
         status,
         convertedStatus: this.convertStatus(status),
         amount,
-        satoshiAmount: convertBiggestCoinUnit(amount, 8),
-        commonAmount: convertSmallerCoinUnit(amount, 8),
-        id: 'NAO VEIO' //TODO pay attention
+        satoshiAmount: amount,
+        commonAmount: satoshiToCommon(amount, 8),
+        id: id || 'Unknown',
       }
     } catch (err) {
       console.error(err)
-      return undefined
+      return;
     }
   }
   render() {
@@ -92,7 +102,7 @@ class HistoryCard extends React.Component {
             </Grid>
 
             <Grid direction="row" className={style.maginTextRight}>
-              <span className={style.lunes}>{obj.satoshiAmount} {obj.upCoin}</span>
+              <span className={style.lunes}>{obj.commonAmount.toFixed(8)} {obj.upCoin}</span>
             </Grid>
 
             <Grid direction="row" className={style.maginTextRight}>
@@ -105,9 +115,8 @@ class HistoryCard extends React.Component {
     )
   }
 }
-
 HistoryCard.propTypes = {
-
+  user: PropTypes.object
 };
 
 export default HistoryCard;
