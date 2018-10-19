@@ -65,11 +65,25 @@ class FeeBuy extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage } = this.props;
+    const {
+      setModalStep,
+      errorInput,
+      clearMessage,
+      coins,
+      buypack
+    } = this.props;
     const { feeSelect } = this.state;
 
+    let coinBalance = coins[buypack.paycoin].balance.available;
+    let amount = buypack.amountPay + feeSelect;
+
     if (feeSelect > 0) {
-      setModalStep(2);
+      if (parseFloat(amount) <= coinBalance) {
+        setModalStep(2);
+      } else {
+        errorInput(i18n.t("PAYMENT_AMOUNT_ERROR"));
+        return;
+      }
     } else {
       errorInput(i18n.t("MESSAGE_SELECT_FEE"));
       return;
@@ -170,14 +184,16 @@ FeeBuy.propTypes = {
   fee: PropTypes.object.isRequired,
   buypack: PropTypes.object.isRequired,
   wallet: PropTypes.any.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  coins: PropTypes.array.isRequired
 };
 
 const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
   wallet: store.skeleton,
   loading: store.buy.loading,
-  fee: store.buy.fee
+  fee: store.buy.fee,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

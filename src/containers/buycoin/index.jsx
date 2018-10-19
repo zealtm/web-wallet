@@ -36,7 +36,7 @@ class BuyCoins extends React.Component {
     const contents = [<Buy key={0} />, <div key={1}>Historico</div>];
 
     return (
-      <div>
+      <div className={style.box}>
         <div className={style.header}>
           <h1>{i18n.t("BUYCOINS_TITLE")}</h1>
           <p>{i18n.t("BUYCOINS_DESCRIPTION")}</p>

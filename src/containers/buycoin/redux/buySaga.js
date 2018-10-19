@@ -45,7 +45,6 @@ export function* getBuyCoinsEnabledSaga() {
     
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
-    console.log("coins",response);
 
     if (!response.data.services) {
       yield put({
@@ -98,7 +97,7 @@ export function* getCoinPackageSaga(payload) {
       token,
       payload.coin
     );
-    console.log("packs",response);
+
     if (!response.packages) {
       yield put({
         type: "SET_LOADING_PACK_REDUCER",
@@ -244,96 +243,96 @@ export function* confirmBuySaga(payload) {
 
     console.log(payload_transaction);
 
-    // try {
-    //   let seed = yield call(getUserSeedWords);
-    //   let token = yield call(getAuthToken);
+    try {
+      let seed = yield call(getUserSeedWords);
+      let token = yield call(getAuthToken);
 
-    //   // pega o servico disponivel
-    //   let lunesWallet = yield call(
-    //     transactionService.buyService,
-    //     payload_transaction.coin,
-    //     token
-    //   );
+      // pega o servico disponivel
+      let lunesWallet = yield call(
+        transactionService.buyService,
+        payload_transaction.coin,
+        token
+      );
 
-    //   if (lunesWallet) {
-    //     let response = yield call(
-    //       transactionService.transaction,
-    //       lunesWallet.id,
-    //       payload_transaction,
-    //       lunesWallet,
-    //       decryptAes(seed, payload.recharge.user),
-    //       token
-    //     );
+      if (lunesWallet) {
+        let response = yield call(
+          transactionService.transaction,
+          lunesWallet.id,
+          payload_transaction,
+          lunesWallet,
+          decryptAes(seed, payload.buy.user),
+          token
+        );
 
-    //     const transacao_obj = JSON.parse(response.config.data);
+        const transacao_obj = JSON.parse(response.config.data);
         
-    //     if (response) {
-    //       const payload_elastic = {
-    //         txID: transacao_obj.txID,
-    //         packageId: 0,
-    //         coinId: 0,
-    //         address: payload_transaction.fromAddress,
-    //         amount: payload_transaction.amountReceive,
+        if (response) {
+          const payload_elastic = {
+            txID: transacao_obj.txID,
+            packageId: payload.buy.buypack.idpack,
+            coinId: payload.buy.buypack.coin.id,
+            address: payload_transaction.fromAddress,
+            amount: payload_transaction.amountReceive,
+            coin: coin
+          };
 
-    //         coin: coin
-    //       };
+          console.log(payload_elastic);
 
+          let response_elastic = yield call(
+            buyService.sendBuy,
+            token,
+            payload_elastic
+          );
 
-    //       let response_elastic = yield call(
-    //         buyService.sendBuy,
-    //         token,
-    //         payload_elastic
-    //       );
+          yield put({
+            type: "SET_CLEAR_BUY_REDUCER"
+          });
 
-    //       yield put({
-    //         type: "SET_CLEAR_BUY_REDUCER"
-    //       });
+          if (response_elastic.data.errorMessage) {
+            yield put({
+              type: "SET_MODAL_BUY_STEP_REDUCER",
+              step: 4
+            });
+            yield put(internalServerError());
+          } else {
+            yield put({
+              type: "SET_MODAL_BUY_STEP_REDUCER",
+              step: 3
+            });
+          }
 
-    //       if (response_elastic.data.errorMessage) {
-    //         yield put({
-    //           type: "SET_MODAL_BUY_STEP_REDUCER",
-    //           step: 4
-    //         });
-    //         yield put(internalServerError());
-    //       } else {
-    //         yield put({
-    //           type: "SET_MODAL_BUY_STEP_REDUCER",
-    //           step: 3
-    //         });
-    //       }
-
-    //       yield put({
-    //         type: "SET_LOADING_REDUCER",
-    //         payload: false
-    //       });
-    //       return;
-    //     }
-    //   }
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            payload: false
+          });
+          return;
+        }
+      }
       
-    //   yield put({
-    //     type: "SET_CLEAR_BUY_REDUCER"
-    //   });
+      yield put({
+        type: "SET_CLEAR_BUY_REDUCER"
+      });
 
-    //   yield put({
-    //     type: "SET_MODAL_BUY_STEP_REDUCER",
-    //     step: 4
-    //   });
+      yield put({
+        type: "SET_MODAL_BUY_STEP_REDUCER",
+        step: 4
+      });
 
-    //   yield put(internalServerError());
-    //   return;
-    // } catch (error) {
-    //   yield put({
-    //     type: "SET_LOADING_REDUCER",
-    //     payload: false
-    //   });
+      yield put(internalServerError());
+      return;
+    } catch (error) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
 
-    //   yield put({
-    //     type: "SET_MODAL_BUY_STEP_REDUCER",
-    //     step: 4
-    //   });
+      yield put({
+        type: "SET_MODAL_BUY_STEP_REDUCER",
+        step: 4
+      });
 
-    //   yield put(internalServerError());
-    // }
+      yield put(internalServerError());
+    }
   } catch (error) {
     yield put(internalServerError());
   }

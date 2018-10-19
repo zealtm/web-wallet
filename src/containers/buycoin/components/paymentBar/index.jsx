@@ -58,7 +58,7 @@ class PaymentBar extends React.Component {
       img
     });
 
-    setCoinSelected(title, toAddress[title]);
+    setCoinSelected(title.toLowerCase(), toAddress[title.toLowerCase()]);
   };
 
   render() {
@@ -71,7 +71,7 @@ class PaymentBar extends React.Component {
       const val = coins[key];
       let item = {
         img: `images/icons/coins/${val.abbreviation}.png`,
-        title: val.abbreviation
+        title: val.abbreviation.toUpperCase()
       };
       if (val.abbreviation.toLowerCase() != "lunes") {
         coinspayment.push(item);

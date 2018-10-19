@@ -428,15 +428,24 @@ class TransactionService {
     }
   }
 
-  async buyService(token) {
+  async buyService(coin = undefined, token) {
     try {
       API_HEADER.headers.Authorization = token;
+      let coins = [];
       let response = await axios.get(BASE_URL + "/service/compra", API_HEADER);
+      console.log(response);
+      let lunesCoin = await response.data.data.services.map(value => {
+        coins[value.abbreviation] = value;
+      });
+    
+      /* eslint-disable */
+      await Promise.all(lunesCoin);
+      /* eslint-enabled */
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      return response.data.data.services[0];
+
+      return coin ? coins[coin] : coins;
     } catch (error) {
-      console.warn(error);
       internalServerError();
       return error;
     }
