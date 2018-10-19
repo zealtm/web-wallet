@@ -5,7 +5,7 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, getCoinPackage } from "../../redux/buyAction";
+import { getCoinsEnabled, getCoinPackage, getCoinForPayment } from "../../redux/buyAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -50,9 +50,10 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage } = this.props;
+    const { getCoinPackage, getCoinForPayment } = this.props;
 
     getCoinPackage(id, coin, address);
+    getCoinForPayment(coin);
   };
 
   renderArrowPercent = val => {
@@ -190,6 +191,7 @@ class CoinsBar extends React.Component {
 
 CoinsBar.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
+  getCoinForPayment: PropTypes.func.isRequired,
   getCoinPackage: PropTypes.func.isRequired,
   coinsEnabled: PropTypes.array.isRequired,
   coins: PropTypes.array.isRequired,
@@ -208,7 +210,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getCoinsEnabled,
-      getCoinPackage
+      getCoinPackage, 
+      getCoinForPayment
     },
     dispatch
   );

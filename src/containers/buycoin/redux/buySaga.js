@@ -45,7 +45,7 @@ export function* getBuyCoinsEnabledSaga() {
     
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
-
+ 
     if (!response.data.services) {
       yield put({
         type: "SET_LOADING_COIN_REDUCER",
@@ -79,6 +79,39 @@ export function* getBuyCoinsEnabledSaga() {
       type: "GET_COINS_REDUCER",
       coins: coins
     });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getCoinForPaymentSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_PACK_REDUCER",
+      payload: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      buyService.getCoinPayment,
+      token,
+      payload.coin
+    );
+
+    if (!response.coin) {
+      yield put({
+        type: "SET_LOADING_PACK_REDUCER",
+        payload: false
+      });
+      yield put(internalServerError());
+    }
+
+    yield put({
+      type: "GET_COIN_FOR_PAYMENT_REDUCER",
+      coins: response.coins || [],
+    });
+
+    return;
   } catch (error) {
     yield put(internalServerError());
   }
@@ -218,7 +251,6 @@ export function* setBuySaga(payload) {
   }
 }
 
-
 export function* confirmBuySaga(payload) {
   try {
     yield put({
@@ -301,10 +333,6 @@ export function* confirmBuySaga(payload) {
             });
           }
 
-          yield put({
-            type: "SET_LOADING_REDUCER",
-            payload: false
-          });
           return;
         }
       }

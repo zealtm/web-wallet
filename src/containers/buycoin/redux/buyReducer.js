@@ -2,6 +2,7 @@ const initialState = {
   coins: [],
   packages: [],
   history: [],
+  coinsPayment: [],
 
   loading: false,
   loadingCoins: false,
@@ -146,6 +147,13 @@ const buy = (state=initialState, action) => {
             amountPay: action.payload.amount,
             balance: action.payload.balance
           }
+        }
+
+      case "GET_COIN_FOR_PAYMENT_REDUCER":
+        return {
+          ...state,
+          coinsPayment: action.coins,
+          loadingPackages: false
         }
 
     default: {

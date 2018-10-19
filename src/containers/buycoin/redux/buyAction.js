@@ -12,6 +12,11 @@ export const getCoinsEnabled = () => ({
   type: "GET_BUY_COINS_ENABLED"
 });
 
+export const getCoinForPayment = (coin) => ({
+  type: "GET_COIN_FOR_PAYMENT",
+  coin
+})
+
 export const getCoinPackage = (id, coin, address) => ({
   type: "GET_COIN_PACKAGE",
   id,

@@ -31,16 +31,6 @@ const stylesCustom = theme => ({
   }
 });
 
-const toAddress = {
-  lunes: "37u9fJLsQyQrhE1TdkNTVywKRKipWbG3uXg",
-  btc: "1GcAXn8WtbAuHDqzGES4Dwwa6vWmpxeZNk",
-  ltc: "LWReYervhavnWsTJp2f4DUWmhLDpzrUJUv",
-  bch: "1CtGdnvA7JmLs9ntohmjfCELjHy1GRPyX1",
-  dash: "Xg67wUFBJ7mRNQw9NMUNqmZjZxtUfN3154",
-  usdt: "1GcAXn8WtbAuHDqzGES4Dwwa6vWmpxeZNk",
-  eth: "0xa0ccd72a83f52a67f45b87e244cd0391e81d306c"
-};
-
 class PaymentBar extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +48,7 @@ class PaymentBar extends React.Component {
       img
     });
 
-    setCoinSelected(title.toLowerCase(), toAddress[title.toLowerCase()]);
+    setCoinSelected(title.toLowerCase(), value);
   };
 
   render() {
@@ -71,7 +61,8 @@ class PaymentBar extends React.Component {
       const val = coins[key];
       let item = {
         img: `images/icons/coins/${val.abbreviation}.png`,
-        title: val.abbreviation.toUpperCase()
+        title: val.abbreviation.toUpperCase(), 
+        value: val.address,
       };
       if (val.abbreviation.toLowerCase() != "lunes") {
         coinspayment.push(item);
@@ -127,7 +118,7 @@ PaymentBar.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  coins: store.skeleton.coins || []
+  coins: store.buy.coinsPayment || []
 });
 
 const mapDispatchToProps = dispatch =>

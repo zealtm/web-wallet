@@ -37,6 +37,33 @@ class BuyService {
     }
   }
 
+  async getCoinPayment(token, coin) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        BASE_URL + "/coin/" + coin + "/sell/paymentMethods",
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+     
+      // if (response.code !== 200) {
+      //   return internalServerError();
+      // }
+
+      let coins = [];
+      response.data.data.coin.map(val => {
+        coins.push(val);
+      });
+      
+      return {
+        coins
+      };
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
   async getCoins(token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -45,8 +72,9 @@ class BuyService {
         BASE_URL + "/service/compra",
         API_HEADER
       );
+     
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+    
       if (response.data.code !== 200) {
         return internalServerError();
       }

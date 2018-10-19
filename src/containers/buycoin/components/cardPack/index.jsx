@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
 // UTILS
-import {convertSmallerCoinUnit,convertBiggestCoinUnit} from "../../../../utils/numbers";
+import {convertBiggestCoinUnit} from "../../../../utils/numbers";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // STYLES
 import style from "./style.css";
@@ -18,20 +19,22 @@ class CardPack extends React.Component {
   render() {
     const {buypack, onSelect, active, selectedCoin} = this.props;
     const styleactive = active ? style.cardBuyActive : style.cardBuy;
+    let defaultCoin = getDefaultFiat();
+    let fiatAmount = buypack.fiatAmount[defaultCoin.toUpperCase()];
 
     return (
-      <div className={styleactive} onClick={()=>onSelect(buypack.id, buypack.coinAmount, buypack.fiatAmount)}>
+      <div className={styleactive} onClick={()=>onSelect(buypack.id, buypack.coinAmount, fiatAmount)}>
         <img
           src={`/images/icons/coins/${selectedCoin.abbreviation}.png`}
           className={style.cardIcon}
         />
         <div className={style.hrCard} />
-        <p>Você está comprando <b>{`R$${buypack.fiatAmount}`}</b> e está recebendo</p>
+        <p>Você está comprando <b>{`${defaultCoin} ${fiatAmount}`}</b> e está recebendo</p>
         <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount,8)}</h1>
         <div className={style.valueCard}>
-          <span className={style.dollarSign}>R$</span>
-          <span className={style.value}>{buypack.fiatAmount}</span>
-          <span className={style.decimals}>,00</span>
+          <span className={style.dollarSign}>{defaultCoin}</span>
+          <span className={style.value}>{parseFloat(fiatAmount)}</span>
+          {/* <span className={style.decimals}>,00</span> */}
         </div>
       </div>
     );

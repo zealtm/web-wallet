@@ -369,7 +369,7 @@ class TransactionService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let response = await axios.get(BASE_URL + "/service/recarga", API_HEADER);
-
+  
       let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
