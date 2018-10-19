@@ -16,6 +16,12 @@ const buyService = new BuyService();
 const coinService = new CoinService();
 const transactionService = new TransactionService();
 
+export function* setClearBuySaga() {
+  yield put({
+    type: "SET_CLEAR_BUY_REDUCER"
+  });
+}
+
 export function* setModalStepSaga(payload) {
   yield put({
     type: "SET_MODAL_BUY_STEP_REDUCER",
@@ -30,7 +36,6 @@ export function* openModalPaySaga(payload){
   });
 }
 
-
 export function* getBuyCoinsEnabledSaga() {
   try {
     yield put({
@@ -40,6 +45,15 @@ export function* getBuyCoinsEnabledSaga() {
     
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
+    console.log("coins",response);
+
+    if (!response.data.services) {
+      yield put({
+        type: "SET_LOADING_COIN_REDUCER",
+        payload: false
+      });
+      yield put(internalServerError());
+    }
 
     const services = response.data.services;
    
@@ -84,8 +98,8 @@ export function* getCoinPackageSaga(payload) {
       token,
       payload.coin
     );
-
-    if (!response) {
+    console.log("packs",response);
+    if (!response.packages) {
       yield put({
         type: "SET_LOADING_PACK_REDUCER",
         payload: false
@@ -96,6 +110,7 @@ export function* getCoinPackageSaga(payload) {
     yield put({
       type: "GET_BUY_PACKAGE_REDUCER",
       packages: response.packages || [], 
+      id: payload.id,
       coin: payload.coin, 
       address: payload.address
     });
@@ -106,53 +121,22 @@ export function* getCoinPackageSaga(payload) {
   }
 }
 
-// export function* setRechargeSaga(payload) {
-//   try {
-//     yield put({
-//       type: "SET_LOADING_REDUCER",
-//       payload: true
-//     });
+export function* setBuyPackageSaga(payload){
+  yield put({
+    type: "SET_BUY_PACKAGE_REDUCER",
+    package: payload.package, 
+    amount: payload.amount,
+    amountFiat: payload.amountFiat,
+  });
+}
 
-//     const { abbreviation } = payload.recharge.coin;
-//     const token = yield call(getAuthToken);
-
-//     const amountResponse = yield call(
-//       rechargeService.getCoinAmountPay,
-//       token,
-//       abbreviation,
-//       parseFloat(payload.recharge.value)
-//     );
-
-//     const balanceResponse = yield call(
-//       coinService.getCoinBalance,
-//       abbreviation,
-//       payload.recharge.address,
-//       token
-//     );
-
-//     const balance = balanceResponse.data.data.available;
-//     const amount = amountResponse.data.data.value;
-
-//     const data = {
-//       number: payload.recharge.number,
-//       coin: payload.recharge.coin,
-//       balance: convertBiggestCoinUnit(balance, 8),
-//       amount: convertBiggestCoinUnit(amount, 8),
-//       value: payload.recharge.value,
-//       operator: {
-//         id: payload.recharge.operatorId,
-//         name: payload.recharge.operatorName
-//       }
-//     };
-
-//     yield put({
-//       type: "SET_RECHARGE_REDUCER",
-//       payload: data
-//     });
-//   } catch (error) {
-//     yield put(internalServerError());
-//   }
-// }
+export function* setCoinSelectedSaga(payload){
+  yield put({
+    type: "SET_BUY_COIN_PAYMENT_REDUCER",
+    coin: payload.coin,
+    address: payload.address
+  });
+}
 
 export function* getFeeBuySaga(payload) {
   try {
@@ -194,130 +178,169 @@ export function* setFeeBuySaga(payload) {
   });
 }
 
-// export function* confirmBuySaga(payload) {
-//   try {
-//     yield put({
-//       type: "SET_LOADING_REDUCER",
-//       payload: true
-//     });
+export function* setAmountPaySaga(payload) {
+  yield put({
+    type: "SET_AMOUNT_BUY_PAY_REDUCER",
+    amount: payload
+  });
+}
 
-//     const payload_transaction = {
-//       coin: payload.recharge.coin,
-//       fromAddress: payload.recharge.fromAddress,
-//       toAddress: payload.recharge.toAddress,
-//       amount: payload.recharge.amount,
-//       fee: payload.recharge.fee,
-//       feePerByte: payload.recharge.feePerByte,
-//       feeLunes: payload.recharge.feeLunes,
-//       price: payload.recharge.price,
-//       decimalPoint: payload.recharge.decimalPoint
-//     };
+export function* setBuySaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
 
-//     try {
-//       let seed = yield call(getUserSeedWords);
-//       let token = yield call(getAuthToken);
+    const abbreviation = payload.payload.coin;
+    const token = yield call(getAuthToken);
 
-//       // pega o servico disponivel
-//       let lunesWallet = yield call(
-//         transactionService.rechargeService,
-//         payload_transaction.coin,
-//         token
-//       );
+    const balanceResponse = yield call(
+      coinService.getCoinBalance,
+      abbreviation,
+      payload.payload.address,
+      token
+    );
 
-//       if (lunesWallet) {
-//         let response = yield call(
-//           transactionService.transaction,
-//           lunesWallet.id,
-//           payload_transaction,
-//           lunesWallet,
-//           decryptAes(seed, payload.recharge.user),
-//           token
-//         );
+    const balance = balanceResponse.data.data.available;
+    const amount = payload.payload.amount;
 
-//         const transacao_obj = JSON.parse(response.config.data);
-//         const ddd = payload.recharge.recharge.number.substring(0, 2);
-//         const totalnumero = payload.recharge.recharge.number.length;
-//         const numero = payload.recharge.recharge.number.substring(
-//           2,
-//           totalnumero
-//         );
+    const data = {
+      balance: convertBiggestCoinUnit(balance, 8),
+      amount: convertBiggestCoinUnit(amount, 8),
+    };
 
-//         if (response) {
-//           const payload_elastic = {
-//             ddd: ddd,
-//             operatorId: payload.recharge.recharge.operator.id,
-//             operatorName: payload.recharge.recharge.operator.name,
-//             phone: numero,
-//             value: parseFloat(payload.recharge.recharge.value),
-//             txID: transacao_obj.txID,
-//             describe: "Recarga",
-//             serviceId: payload.recharge.recharge.coin.id
-//           };
+    yield put({
+      type: "SET_AMOUNT_BUY_PAY_REDUCER",
+      payload: data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
 
-//           let response_elastic = yield call(
-//             rechargeService.sendRecharge,
-//             token,
-//             payload_elastic
-//           );
 
-//           yield put({
-//             type: "SET_CLEAR_RECHARGE_REDUCER"
-//           });
+export function* confirmBuySaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
 
-//           if (response_elastic.data.errorMessage) {
-//             yield put({
-//               type: "SET_MODAL_RECHARGE_STEP_REDUCER",
-//               step: 6
-//             });
-//             yield put(internalServerError());
-//           } else {
-//             yield put({
-//               type: "SET_MODAL_RECHARGE_STEP_REDUCER",
-//               step: 5
-//             });
-//           }
+    const coin = payload.buy.coin;
 
-//           yield put({
-//             type: "SET_LOADING_REDUCER",
-//             payload: false
-//           });
-//           return;
-//         }
-//       }
+    const payload_transaction = {
+      coin: coin,
+      fromAddress: payload.buy.fromAddress,
+      toAddress: payload.buy.toAddress,
+      amount: payload.buy.amount,
+      amountReceive: payload.buy.amountReceive,
+      fee: payload.buy.fee,
+      feePerByte: payload.buy.feePerByte,
+      feeLunes: payload.buy.feeLunes,
+      price: payload.buy.price,
+      decimalPoint: payload.buy.decimalPoint
+    };
 
-//       yield put({
-//         type: "SET_CLEAR_RECHARGE_REDUCER"
-//       });
+    console.log(payload_transaction);
 
-//       yield put({
-//         type: "SET_LOADING_REDUCER",
-//         payload: false
-//       });
+    // try {
+    //   let seed = yield call(getUserSeedWords);
+    //   let token = yield call(getAuthToken);
 
-//       yield put({
-//         type: "SET_MODAL_RECHARGE_STEP_REDUCER",
-//         step: 6
-//       });
+    //   // pega o servico disponivel
+    //   let lunesWallet = yield call(
+    //     transactionService.buyService,
+    //     payload_transaction.coin,
+    //     token
+    //   );
 
-//       yield put(internalServerError());
-//       return;
-//     } catch (error) {
-//       yield put({
-//         type: "SET_LOADING_REDUCER",
-//         payload: false
-//       });
+    //   if (lunesWallet) {
+    //     let response = yield call(
+    //       transactionService.transaction,
+    //       lunesWallet.id,
+    //       payload_transaction,
+    //       lunesWallet,
+    //       decryptAes(seed, payload.recharge.user),
+    //       token
+    //     );
 
-//       yield put({
-//         type: "SET_MODAL_RECHARGE_STEP_REDUCER",
-//         step: 6
-//       });
+    //     const transacao_obj = JSON.parse(response.config.data);
+        
+    //     if (response) {
+    //       const payload_elastic = {
+    //         txID: transacao_obj.txID,
+    //         packageId: 0,
+    //         coinId: 0,
+    //         address: payload_transaction.fromAddress,
+    //         amount: payload_transaction.amountReceive,
 
-//       yield put(internalServerError());
-//     }
-//   } catch (error) {
-//     yield put(internalServerError());
-//   }
-// }
+    //         coin: coin
+    //       };
+
+
+    //       let response_elastic = yield call(
+    //         buyService.sendBuy,
+    //         token,
+    //         payload_elastic
+    //       );
+
+    //       yield put({
+    //         type: "SET_CLEAR_BUY_REDUCER"
+    //       });
+
+    //       if (response_elastic.data.errorMessage) {
+    //         yield put({
+    //           type: "SET_MODAL_BUY_STEP_REDUCER",
+    //           step: 4
+    //         });
+    //         yield put(internalServerError());
+    //       } else {
+    //         yield put({
+    //           type: "SET_MODAL_BUY_STEP_REDUCER",
+    //           step: 3
+    //         });
+    //       }
+
+    //       yield put({
+    //         type: "SET_LOADING_REDUCER",
+    //         payload: false
+    //       });
+    //       return;
+    //     }
+    //   }
+      
+    //   yield put({
+    //     type: "SET_CLEAR_BUY_REDUCER"
+    //   });
+
+    //   yield put({
+    //     type: "SET_MODAL_BUY_STEP_REDUCER",
+    //     step: 4
+    //   });
+
+    //   yield put(internalServerError());
+    //   return;
+    // } catch (error) {
+    //   yield put({
+    //     type: "SET_LOADING_REDUCER",
+    //     payload: false
+    //   });
+
+    //   yield put({
+    //     type: "SET_MODAL_BUY_STEP_REDUCER",
+    //     step: 4
+    //   });
+
+    //   yield put(internalServerError());
+    // }
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+
+
 
 export function* getHistoryBuySaga() {
   try {

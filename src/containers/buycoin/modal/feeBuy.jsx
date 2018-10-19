@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getFeeBuy, setFeeBuy, setModalStep } from "../redux/buyAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
@@ -15,7 +17,6 @@ import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
-import { unescapeLeadingUnderscores } from "typescript";
 
 class FeeBuy extends React.Component {
   constructor(props) {
@@ -28,85 +29,66 @@ class FeeBuy extends React.Component {
   }
 
   calcFee(set) {
-    // const { setFeeRecharge, fee } = this.props;
+    const { setFeeBuy, fee } = this.props;
 
-    // let feeValue = 0;
-    // let feePerByte = 0;
-    // let feeLunes = 0;
+    let feeValue = 0;
+    let feePerByte = 0;
+    let feeLunes = 0;
 
-    // switch (set) {
-    //   case "low":
-    //     feeValue = fee.fee.low;
-    //     feePerByte = fee.feePerByte.low;
-    //     feeLunes = fee.feeLunes.low;
-    //     break;
-    //   case "medium":
-    //     feeValue = fee.fee.medium;
-    //     feePerByte = fee.feePerByte.medium;
-    //     feeLunes = fee.feeLunes.medium;
-    //     break;
-    //   case "high":
-    //     feeValue = fee.fee.high;
-    //     feePerByte = fee.feePerByte.high;
-    //     feeLunes = fee.feeLunes.high;
-    //     break;
-    // }
+    switch (set) {
+      case "low":
+        feeValue = fee.fee.low;
+        feePerByte = fee.feePerByte.low;
+        feeLunes = fee.feeLunes.low;
+        break;
+      case "medium":
+        feeValue = fee.fee.medium;
+        feePerByte = fee.feePerByte.medium;
+        feeLunes = fee.feeLunes.medium;
+        break;
+      case "high":
+        feeValue = fee.fee.high;
+        feePerByte = fee.feePerByte.high;
+        feeLunes = fee.feeLunes.high;
+        break;
+    }
 
-    // this.setState({ feeSelect: feeValue });
+    this.setState({ feeSelect: feeValue });
 
-    // const payload = {
-    //   fee: feeValue,
-    //   feePerByte: feePerByte,
-    //   feeLunes: feeLunes
-    // };
+    const payload = {
+      fee: feeValue,
+      feePerByte: feePerByte,
+      feeLunes: feeLunes
+    };
 
-    // setFeeRecharge(payload);
+    setFeeBuy(payload);
   }
-  validateForm = () => {
-    // const { setModalStep, errorInput, clearMessage } = this.props;
-    // const { feeSelect } = this.state;
 
-    // if (feeSelect > 0) {
-    //   setModalStep(3);
-    // } else {
-    //   errorInput(i18n.t("MESSAGE_SELECT_FEE"));
-    //   return;
-    // }
-    // clearMessage();
+  validateForm = () => {
+    const { setModalStep, errorInput, clearMessage } = this.props;
+    const { feeSelect } = this.state;
+
+    if (feeSelect > 0) {
+      setModalStep(2);
+    } else {
+      errorInput(i18n.t("MESSAGE_SELECT_FEE"));
+      return;
+    }
+    clearMessage();
   };
 
   componentDidMount = () => {
-    // const { getFeeRecharge, recharge, wallet } = this.props;
+    const { getFeeBuy, buypack, wallet } = this.props;
 
-    // const fromAddress = wallet.coins[recharge.coin.abbreviation].address;
-    // const toAddress = recharge.coin.address;
+    const fromAddress = wallet.coins[buypack.paycoin].address;
+    const toAddress = buypack.address;
 
-    // getFeeRecharge(
-    //   recharge.coin.abbreviation,
-    //   recharge.amount,
-    //   fromAddress,
-    //   toAddress
-    // );
+    getFeeBuy(buypack.paycoin, buypack.amountPay, fromAddress, toAddress);
   };
 
   render() {
-    //const { loading, recharge, fee } = this.props;
+    const { loading, buypack, fee } = this.props;
     const { error, messageError, feeSelect } = this.state;
-
-    const loading = false;
-    const recharge = {
-      coin: {
-        abbreviation: "lunes",
-        amount: 2000
-      }
-    }
-    const fee = {
-      fee:{
-        low: 1,
-        medium: 2,
-        high: 3
-      }
-    }
 
     if (loading) {
       return (
@@ -123,13 +105,13 @@ class FeeBuy extends React.Component {
             ) : null}
           </div>
           <img
-            src={`/images/icons/coins/${recharge.coin.abbreviation}.png`}
+            src={`/images/icons/coins/${buypack.paycoin}.png`}
             className={style.modalIconCoin}
           />
           <div>
             <span>{i18n.t("BUYCOINS_FEE_TEXT_1")}</span>
             <span className={style.totalConfirm}>
-              {recharge.amount} {recharge.coin.abbreviation.toUpperCase()}
+              {buypack.amountPay} {buypack.paycoin.toUpperCase()}
             </span>
           </div>
           <div>
@@ -142,7 +124,7 @@ class FeeBuy extends React.Component {
           <div className={style.confirmFee}>
             <div>
               {i18n.t("PAYMENT_FEE_AMOUNT")}
-              <span> {recharge.coin.abbreviation} </span> é
+              <span> {buypack.paycoin} </span> é
             </div>
             <div className={style.txtamount}>{feeSelect}</div>
           </div>
@@ -180,7 +162,37 @@ class FeeBuy extends React.Component {
 }
 
 FeeBuy.propTypes = {
- 
+  setFeeBuy: PropTypes.func.isRequired,
+  getFeeBuy: PropTypes.func.isRequired,
+  setModalStep: PropTypes.func.isRequired,
+  clearMessage: PropTypes.func.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  fee: PropTypes.object.isRequired,
+  buypack: PropTypes.object.isRequired,
+  wallet: PropTypes.any.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
-export default FeeBuy;
+const mapStateToProps = store => ({
+  buypack: store.buy.buypackage,
+  wallet: store.skeleton,
+  loading: store.buy.loading,
+  fee: store.buy.fee
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getFeeBuy,
+      setFeeBuy,
+      setModalStep,
+      clearMessage,
+      errorInput
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FeeBuy);

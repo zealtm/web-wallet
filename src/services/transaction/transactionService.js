@@ -428,6 +428,20 @@ class TransactionService {
     }
   }
 
+  async buyService(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(BASE_URL + "/service/compra", API_HEADER);
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data.data.services[0];
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return error;
+    }
+  }
+
   async createAlias(alias, seed) {
     try {
       let transaction = new LunesTransaction();

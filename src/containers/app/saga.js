@@ -80,7 +80,14 @@ import {
   setModalStepSaga as setModalStepBuySaga,
   getBuyCoinsEnabledSaga,
   getCoinPackageSaga, 
-  openModalPaySaga
+  openModalPaySaga,
+  setClearBuySaga,
+  setBuyPackageSaga,
+  setCoinSelectedSaga,
+  setBuySaga,
+  getFeeBuySaga,
+  setFeeBuySaga,
+  confirmBuySaga
 } from "../buycoin/redux/buySaga";
 
 export default function* rootSaga() {
@@ -162,6 +169,13 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
     fork(takeLatest, "GET_COIN_PACKAGE", getCoinPackageSaga),
     fork(takeLatest, "SET_MODAL_OPEN", openModalPaySaga),
+    fork(takeLatest, "SET_CLEAR_BUY", setClearBuySaga),
+    fork(takeLatest, "SET_BUY_PACKAGE", setBuyPackageSaga),
+    fork(takeLatest, "SET_BUY_COIN_PAYMENT", setCoinSelectedSaga),
+    fork(takeLatest, "SET_BUY", setBuySaga),
+    fork(takeLatest, "GET_FEE_BUY", getFeeBuySaga),
+    fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
+    fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     
   ];
 }

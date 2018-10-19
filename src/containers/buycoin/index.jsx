@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep } from "./redux/buyAction";
+import { setModalStep,openModal } from "./redux/buyAction";
 
 // COMPONENTS
 import Modal from "../../components/modal";
@@ -21,16 +21,11 @@ import style from "./style.css";
 class BuyCoins extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false
-    }
   }
 
-  handleModal = () => this.setState({ isOpen: !this.state.isOpen });
-
   closeModal(){
-    const {setModalStep} = this.props;
-    this.handleModal();
+    const {setModalStep, openModal} = this.props;
+    openModal(false);
     setModalStep(1);
   }
 
@@ -69,6 +64,7 @@ BuyCoins.propTypes = {
   modalStep: PropTypes.number.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -78,7 +74,8 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    setModalStep
+    setModalStep, 
+    openModal
   }, 
   dispatch
 );

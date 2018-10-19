@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 // UTILS
 import i18n from "../../../utils/i18n";
 
-// COMPONENTS 
+// COMPONENTS
 import Loading from "../../../components/loading";
 
 // STYLES
@@ -19,24 +20,22 @@ class ErrorBuy extends React.Component {
   }
 
   render() {
-    //const {loading} = this.props;
-    const loading = false;
-    if(loading){
+    const { loading } = this.props;
+
+    if (loading) {
       return (
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
-      )
-    }else{
+      );
+    } else {
       return (
         <div className={style.modalBox}>
           <img
             src="/images/icons/error/error.png"
             className={style.imageResult}
           />
-          <div>
-            {i18n.t("BUYCOINS_INFO_ERROR")}
-          </div>
+          <div>{i18n.t("BUYCOINS_INFO_ERROR")}</div>
         </div>
       );
     }
@@ -44,7 +43,16 @@ class ErrorBuy extends React.Component {
 }
 
 ErrorBuy.propTypes = {
-  //loading: PropTypes.bool.isRequired
-}
+  loading: PropTypes.bool.isRequired
+};
 
-export default ErrorBuy;
+const mapStateToProps = store => ({
+  loading: store.buy.loading
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ErrorBuy);

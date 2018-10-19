@@ -2,22 +2,14 @@ const initialState = {
   coins: [],
   packages: [],
   history: [],
+
   loading: false,
   loadingCoins: false,
   loadingPackages: false,
+
   modalStep: 1,
   modalOpen: false,
-  buypackage: {
-    idpack: '',
-    coin: {
-      address: '',
-      abbreviation: '',
-    },
-    balance: '',
-    amount: '',
-    operator: '',
-    address: ''
-  },
+
   fee: {
     fee: {
       low: 0,
@@ -25,9 +17,22 @@ const initialState = {
       high: 0
     }
   },
-  user: {
-    gdpr: 'unread'
-  },
+
+  buypackage: {
+    idpack: '', // o pacote escolhido
+    coin: {
+      id: '',
+      address: '',
+      abbreviation: '',
+    },
+    paycoin: '', // moeda usada pra pagar
+    amountFiat: '', // qtde em fiat a pagar
+    amountPay: '', // qtde a pagar
+    balance: '', // o balance do usuario de moeda pra pagar
+    amount: '', // qtde a receber
+    operator: '',
+    address: '' // endereco para enviar o pgto
+  }
 };
 
 const buy = (state=initialState, action) => {
@@ -76,6 +81,7 @@ const buy = (state=initialState, action) => {
           buypackage: {
             ...state.buypackage,
             coin: {
+              id: action.id,
               abbreviation: action.coin,
               address: action.address
             }
@@ -86,8 +92,12 @@ const buy = (state=initialState, action) => {
       case "SET_BUY_PACKAGE_REDUCER":
         return {
           ...state,
-          buypackage: action.payload,
-          loading: false
+          buypackage: {
+            ...state.buypackage,
+            idpack: action.package, 
+            amount: action.amount,
+            amountFiat: action.amountFiat,
+          }
         }
 
       case "GET_FEE_BUY_REDUCER":
@@ -99,12 +109,12 @@ const buy = (state=initialState, action) => {
 
       case "SET_FEE_BUY_REDUCER":
         return {
-          ...state,
-          buypackage: {
-            ...state.recharge,
-            fee: action.fee
-          }
-        };
+            ...state,
+            buypackage: {
+              ...state.buypackage,
+              fee: action.fee
+            }
+          };
 
       case "SET_CLEAR_BUY_REDUCER":
         return {
@@ -117,6 +127,26 @@ const buy = (state=initialState, action) => {
           history: action.history,
           loading: false
         };
+
+      case "SET_BUY_COIN_PAYMENT_REDUCER":
+        return {
+          ...state,
+          buypackage: {
+            ...state.buypackage,
+            paycoin: action.coin, 
+            address: action.address
+          }
+        }
+      
+      case "SET_AMOUNT_BUY_PAY_REDUCER":
+        return {
+          ...state, 
+          buypackage: {
+            ...state.buypackage,
+            amountPay: action.payload.amount,
+            balance: action.payload.balance
+          }
+        }
 
     default: {
       return {

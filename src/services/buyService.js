@@ -47,6 +47,10 @@ class BuyService {
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
       return response.data;
     } catch (error) {
       return internalServerError();
@@ -54,19 +58,19 @@ class BuyService {
   }
 
   async sendBuy(token, payload) {
-    // try {
-    //   API_HEADER.headers.Authorization = token;
-    //   const response = await axios.post(
-    //     `${BASE_URL}/recharge/pay`,
-    //     payload,
-    //     API_HEADER
-    //   );
-    //   setAuthToken(response.headers[HEADER_RESPONSE]);
-    //   return response;
-    // } catch (error) {
-    //   internalServerError();
-    //   return;
-    // }
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/coin/${payload.coin}/sell`,
+        payload,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
   }
 
   async getHistory(token) {

@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import FeeBuy from "./feeBuy";
@@ -15,9 +17,7 @@ class BuyModal extends React.Component {
   }
 
   render() {
-    //const { modalStep } = this.props;
-
-    const modalStep = 1;
+    const { modalStep } = this.props;
 
     switch (modalStep) {
       case 1:
@@ -33,6 +33,16 @@ class BuyModal extends React.Component {
 }
 
 BuyModal.propTypes = {
+  modalStep: PropTypes.number.isRequired
 };
 
-export default BuyModal;
+const mapStateToProps = store => ({
+  modalStep: store.buy.modalStep
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BuyModal);
