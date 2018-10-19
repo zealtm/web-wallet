@@ -14,7 +14,7 @@ export const getCoinsEnabled = () => ({
 
 export const getCoinPackage = (coin, address) => ({
   type: "GET_COIN_PACKAGE",
-  coin, 
+  coin,
   address
 });
 
@@ -59,3 +59,7 @@ export const getHistoryBuy = () => ({
 export const setClearBuy = () => ({
   type: "SET_CLEAR_BUY_REDUCER"
 });
+export const setLoadingHistory = (payload) => ({
+  type: "SET_LOADING_HISTORY",
+  payload
+})

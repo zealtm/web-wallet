@@ -71,6 +71,14 @@ export const formatDate = (date, type = "DMY", monthNumber = false) => {
   }
 };
 
+export const convertISO8601 = (iso) => {
+  let d = new Date(iso)
+  return {
+    hour: `${d.getHours() + 1}:${d.getMinutes()}`,
+    date: `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+  }
+}
+
 const addZeroIfLessThan = (value, number = 10) => {
   return value < number ? "0" + value : value;
 };

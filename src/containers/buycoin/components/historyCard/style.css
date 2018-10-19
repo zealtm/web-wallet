@@ -35,7 +35,16 @@
     margin-top: 1rem;
     text-align: right;
 }
-
+:local .wrapper1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+:local .icon {
+  width: 19px;
+  height: 19px;
+  margin-right: 5px;
+}
 @media screen and (max-width: 600px) {
     :local(.status){
         margin-left: 1rem;
