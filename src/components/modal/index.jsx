@@ -32,7 +32,14 @@ class Modal extends React.Component {
       </div>
     );
   };
-
+  componentDidMount(){
+    let { close, show } = this.props;
+    document.addEventListener('keyup', (e) => {
+        if (e.keyCode === 27) {
+          close();
+        };
+    });
+  }
   renderContent = () => {
     let { content, show } = this.props;
     return (
@@ -42,6 +49,7 @@ class Modal extends React.Component {
           ariaHideApp={false}
           className={style.modalBox}
           overlayClassName={style.overlay}
+          closeOnEscape={true}
         >
           <div>
             {this.renderHeader()}
