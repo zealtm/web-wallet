@@ -20,8 +20,14 @@
   padding-top: 2px;
 }
 
-:local .arrowControl {
-  justify-content: center;
+:local .arrowControlLeft {
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+
+:local .arrowControlRight {
+  justify-content: flex-end;
   align-items: center;
   display: flex;
 }
