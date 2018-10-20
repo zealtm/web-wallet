@@ -24,10 +24,6 @@ export const getCoinPackage = (id, coin, address) => ({
   address
 });
 
-export const setClearBuy = () => ({
-  type: "SET_CLEAR_BUY"
-});
-
 export const setBuyPackage = (id, amount, amountFiat) => ({
   type: "SET_BUY_PACKAGE",
   package: id,
@@ -71,10 +67,15 @@ export const confirmBuy = buy => ({
   buy
 });
 
-
-
-
-export const getHistoryBuy = () => ({
-  type: "GET_HISTORY_BUY"
+export const getHistoryBuy = (coins) => ({
+  type: "GET_HISTORY_BUY",
+  coins
 });
 
+export const setClearBuy = () => ({
+  type: "SET_CLEAR_BUY_REDUCER"
+});
+export const setLoadingHistory = (payload) => ({
+  type: "SET_LOADING_HISTORY",
+  payload
+})

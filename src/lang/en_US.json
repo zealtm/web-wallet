@@ -348,7 +348,7 @@
   "RECHARGE_TAB_TITLE_HISTORY": "History",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operator",
   "RECHARGE_SELECT_TITLE_VALUE": "Value",
-  
+
   "LOGIN_SLIDE_DESCRIPTION_1": "Make the payment using your favorite crypto-coins in an easy and intuitive interface.",
   "LOGIN_SLIDE_DESCRIPTION_2": "Turn digital currencies into Reais by electronic transfer to major banks in Brazil.",
   "LOGIN_SLIDE_DESCRIPTION_3": "Perform cell phone credit recharges with your virtual coins quickly and securely.",
@@ -446,12 +446,11 @@
   "ALIAS_ALREADY_CLAIMED": "Alias already claimed",
   "ALIAS_ERROR_TRANSACTION": "Could not make a transaction from",
   "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
-  "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: ", 
+  "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: ",
 
   "MENU_BUYCOINS": "Buy", 
   "BUYCOINS_TITLE": "BUY CRIPTOCOINS",
   "BUYCOINS_DESCRIPTION": "Buy your coins quickly, simply and safely.",
-
   "BUYCOINS_FEE_TEXT_1": "You is send ",
   "BUYCOINS_FEE_TEXT_2": " for ",
   "BUYCOINS_CONFIRM_1": "send",
@@ -459,5 +458,9 @@
   "BUY_BT_INIT": "BUY",
   "BUYCOINS_SUCCESS_1": "You have successfully completed the purchase!",
   "BUYCOINS_SUCCESS_2": "View your purchase history on the History tab",
-  "BUYCOINS_INFO_ERROR": "Process of buy failed"
+  "BUYCOINS_INFO_ERROR": "Process of buy failed",
+  "BUYCOINS_STATUS_WAITING": "Waiting",
+  "BUYCOINS_STATUS_CONFIRMED": "Confirmed",
+  "BUYCOINS_STATUS_CANCELED": "Canceled",
+  "BUYCOINS_NO_HISTORY": "You have no payments history"
 }

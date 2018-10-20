@@ -9,6 +9,7 @@ import { setModalStep,openModal } from "./redux/buyAction";
 // COMPONENTS
 import Modal from "../../components/modal";
 import Tabs from "../../components/tabs";
+import History from "./components/history";
 import Buy from "./components/buy";
 import BuyModal from "./modal/buyModal";
 
@@ -33,7 +34,7 @@ class BuyCoins extends React.Component {
     const {modalStep, setModalStep, modalOpen} = this.props;
 
     const titles = ["Comprar", "Historico"];
-    const contents = [<Buy key={0} />, <div key={1}>Historico</div>];
+    const contents = [<Buy key={0} />, <History key={1} />];
 
     return (
       <div className={style.box}>

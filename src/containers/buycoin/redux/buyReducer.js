@@ -2,8 +2,12 @@ const initialState = {
   coins: [],
   packages: [],
   history: [],
+<<<<<<< HEAD
   coinsPayment: [],
 
+=======
+  loadingHistory: false,
+>>>>>>> V-311
   loading: false,
   loadingCoins: false,
   loadingPackages: false,
@@ -48,13 +52,18 @@ const buy = (state=initialState, action) => {
           ...state,
           modalStep: action.step
         };
-      
+
       case "SET_MODAL_OPEN_REDUCER":
         return {
           ...state,
           modalOpen: action.open
         };
 
+      case "SET_LOADING_HISTORY":
+        return {
+          ...state,
+          loadingHistory: action.payload
+        }
       case "SET_LOADING_COIN_REDUCER":
         return {
           ...state,

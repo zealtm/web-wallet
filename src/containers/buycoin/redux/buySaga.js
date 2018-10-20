@@ -4,17 +4,17 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 // SERVICES
 import BuyService from "../../../services/buyService";
 import CoinService from "../../../services/coinService";
+<<<<<<< HEAD
 import { convertBiggestCoinUnit,convertSmallerCoinUnit } from "../../../utils/numbers";
 import TransactionService from "../../../services/transaction/transactionService";
+=======
+>>>>>>> V-311
 
 // UTILS
-import { getUserSeedWords } from "../../../utils/localStorage";
-import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken } from "../../../utils/localStorage";
 
 const buyService = new BuyService();
 const coinService = new CoinService();
-const transactionService = new TransactionService();
 
 export function* setClearBuySaga() {
   yield put({
@@ -42,7 +42,7 @@ export function* getBuyCoinsEnabledSaga() {
       type: "SET_LOADING_COIN_REDUCER",
       payload: true
     });
-    
+
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
  
@@ -55,7 +55,7 @@ export function* getBuyCoinsEnabledSaga() {
     }
 
     const services = response.data.services;
-   
+
     const coins = services.reduce((availableCoins, coin) => {
       if (coin.status === "active") {
         const active = {
@@ -63,7 +63,7 @@ export function* getBuyCoinsEnabledSaga() {
           value: {
             id: coin.id,
             abbreviation: coin.abbreviation,
-            address: coin.address, 
+            address: coin.address,
             fee: coin.fee
           },
           img: `/images/icons/coins/${coin.abbreviation}.png`
@@ -174,7 +174,7 @@ export function* setCoinSelectedSaga(payload){
 export function* getFeeBuySaga(payload) {
   try {
     yield put({
-      type: "SET_LOADING_REDUCER",
+      type: "SET_LOADING_HISTORY",
       payload: true
     });
 
@@ -189,7 +189,7 @@ export function* getFeeBuySaga(payload) {
 
     if (!response.fee) {
       yield put({
-        type: "SET_LOADING_REDUCER",
+        type: "SET_LOADING_HISTORY",
         payload: false
       });
       yield put(internalServerError());
@@ -376,25 +376,23 @@ export function* confirmBuySaga(payload) {
 
 
 
-export function* getHistoryBuySaga() {
+export function* getHistoryBuySaga(payload) {
   try {
+    let { coins } = payload
+
     yield put({
-      type: "SET_LOADING_REDUCER",
+      type: "SET_LOADING_HISTORY",
       payload: true
     });
 
     let token = yield call(getAuthToken);
-    let response = yield call(buyService.getHistory, token);
-
-    let data = [];
-    if (response.buy) {
-      data = response.buy;
-    }
+    let history = yield call(buyService.getHistory, token, coins);
 
     yield put({
       type: "GET_HISTORY_BUY_REDUCER",
-      history: data
+      history
     });
+    yield put({type: "SET_LOADING_HISTORY", payload: false})
   } catch (error) {
     yield put(internalServerError());
   }

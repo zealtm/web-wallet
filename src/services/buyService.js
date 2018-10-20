@@ -19,16 +19,16 @@ class BuyService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       if (response.data.code !== 200) {
         return internalServerError();
       }
-      
+
       let packages = [];
       response.data.data.packages.map(val => {
         packages.push(val);
       });
-      
+
       return {
         packages
       };
@@ -100,9 +100,35 @@ class BuyService {
       return;
     }
   }
+  
+  async getHistory(token, coins) {
+    try {
+      API_HEADER.headers.Authorization = token
 
-  async getHistory(token) {
-    
+      let url;
+      coins = Object.keys(coins)
+      let promises = []
+      let thenFunc = (r) => {
+        let { data } = r
+        if (data.code !== 200) throw data
+        return data.data.txs
+      }
+      for (let coin of coins) {
+        url = `${BASE_URL}/coin/${coin}/sell/history`
+        promises.push(
+          axios.get(url, API_HEADER).then(thenFunc).catch(() => {})
+        )
+      }
+      let txs = []
+      let results = await Promise.all(promises) //eslint-disable-line
+
+      results.map(array => {
+        txs.push(...array)
+      })
+      return txs
+    } catch (err) {
+      return internalServerError()
+    }
   }
 }
 
