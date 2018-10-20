@@ -4,7 +4,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 // SERVICES
 import BuyService from "../../../services/buyService";
 import CoinService from "../../../services/coinService";
-import { convertBiggestCoinUnit } from "../../../utils/numbers";
+import { convertBiggestCoinUnit,convertSmallerCoinUnit } from "../../../utils/numbers";
 import TransactionService from "../../../services/transaction/transactionService";
 
 // UTILS
@@ -241,6 +241,8 @@ export function* setBuySaga(payload) {
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
     };
+
+    console.log(data);
 
     yield put({
       type: "SET_AMOUNT_BUY_PAY_REDUCER",

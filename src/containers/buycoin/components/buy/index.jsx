@@ -16,6 +16,7 @@ import ModalBar from "../../../../components/modalBar";
 
 //UTILS
 //import { getDefaultFiat } from "../../../../utils/localStorage";
+import {convertSmallerCoinUnit} from "../../../../utils/numbers";
 
 // STYLES
 import style from "./style.css";
@@ -55,18 +56,17 @@ class Buy extends React.Component {
       });
     } else {
       // calcular amount de acordo com o valor
-      //let defaultCoin = getDefaultFiat();
+      // let defaultCoin = getDefaultFiat();
       let defaultCoin = "BRL";
       let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
-      //const amountPay = buypack.amountFiat / coinPrice;
-      const amountPay = 100;
-
+      const amountPay = (buypack.amountFiat + (buypack.amountFiat*0.05)) / coinPrice;
+      
       const data = {
-        amount: amountPay,
+        amount: convertSmallerCoinUnit(amountPay,8),
         coin: buypack.paycoin,
         address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : ""
       };
-
+      console.log(data);
       setBuy(data);
       openModal(true);
     }

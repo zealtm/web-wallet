@@ -29,11 +29,11 @@ class CardPack extends React.Component {
           className={style.cardIcon}
         />
         <div className={style.hrCard} />
-        <p>Você está comprando <b>{`${defaultCoin} ${fiatAmount}`}</b> e está recebendo</p>
+        <p>Você está comprando <b>{`${defaultCoin} ${parseFloat(fiatAmount).toFixed(2)}`}</b> e está recebendo</p>
         <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount,8)}</h1>
         <div className={style.valueCard}>
           <span className={style.dollarSign}>{defaultCoin}</span>
-          <span className={style.value}>{parseFloat(fiatAmount)}</span>
+          <span className={style.value}>{parseFloat(fiatAmount).toFixed(2)}</span>
           {/* <span className={style.decimals}>,00</span> */}
         </div>
       </div>

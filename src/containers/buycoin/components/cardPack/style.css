@@ -38,6 +38,7 @@
 :local(.amount) {
   font-family: "OffSide";
   font-weight: normal;
+  font-size: 18px;
   letter-spacing: 2px;
 }
 
@@ -58,7 +59,7 @@
 }
 
 :local(.value) {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 500;
   margin-top:-5px;
   color: #54d467;
