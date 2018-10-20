@@ -31,10 +31,11 @@ export const setBuyPackage = (id, amount, amountFiat) => ({
   amountFiat: amountFiat
 });
 
-export const setCoinSelected = (coin,address) => ({
+export const setCoinSelected = (coin, address, id) => ({
   type: "SET_BUY_COIN_PAYMENT",
   coin: coin,
-  address: address
+  address: address, 
+  id: id
 });
 
 export const getFeeBuy = (

@@ -65,7 +65,8 @@ class Buy extends React.Component {
       const data = {
         amount: convertSmallerCoinUnit(amountPay,8),
         coin: buypack.paycoin,
-        address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : ""
+        address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "", 
+        receiveAddress: coins[buypack.coin.abbreviation] ? coins[buypack.coin.abbreviation].address : "",
       };
      
       setBuy(data);

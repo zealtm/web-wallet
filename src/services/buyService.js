@@ -90,6 +90,7 @@ class BuyService {
         payload,
         API_HEADER
       );
+      console.log(response);
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response;
     } catch (error) {

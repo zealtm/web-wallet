@@ -33,12 +33,14 @@ const initialState = {
       abbreviation: '',
     },
     paycoin: '', // moeda usada pra pagar
+    paycoinid: '', // id da moeda usada pra pagar
     amountFiat: '', // qtde em fiat a pagar
     amountPay: '', // qtde a pagar
     balance: '', // o balance do usuario de moeda pra pagar
     amount: '', // qtde a receber
     operator: '',
-    address: '' // endereco para enviar o pgto
+    address: '', // endereco para enviar o pgto
+    receiveAddress: '' // endereco onde o usuario vai receber a moeda comprada
   }
 };
 
@@ -146,7 +148,8 @@ const buy = (state=initialState, action) => {
           buypackage: {
             ...state.buypackage,
             paycoin: action.coin, 
-            address: action.address
+            address: action.address, 
+            paycoinid: action.id
           }
         }
       
@@ -157,10 +160,11 @@ const buy = (state=initialState, action) => {
             ...state.buypackage,
             amountPay: action.payload.amount,
             balance: action.payload.balance,
+            receiveAddress: action.payload.receiveAddress
           },
           loading: false, 
           modalStep: 1,
-          modalOpen: true,
+          modalOpen: true
         }
 
       case "GET_COIN_FOR_PAYMENT_REDUCER":

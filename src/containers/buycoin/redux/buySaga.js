@@ -97,7 +97,7 @@ export function* getCoinForPaymentSaga(payload) {
       token,
       payload.coin
     );
-
+    
     if (!response.coins) {
       yield put({
         type: "SET_LOADING_PACK_REDUCER",
@@ -167,7 +167,8 @@ export function* setCoinSelectedSaga(payload){
   yield put({
     type: "SET_BUY_COIN_PAYMENT_REDUCER",
     coin: payload.coin,
-    address: payload.address
+    address: payload.address, 
+    id: payload.id
   });
 }
 
@@ -241,6 +242,7 @@ export function* setBuySaga(payload) {
     const data = {
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
+      receiveAddress: payload.payload.receiveAddress
     };
 
     yield put({
@@ -305,12 +307,12 @@ export function* confirmBuySaga(payload) {
           const payload_elastic = {
             txID: transacao_obj.txID,
             packageId: payload.buy.buypack.idpack,
-            coinId: payload.buy.buypack.coin.id,
-            address: payload_transaction.fromAddress,
+            coinId: payload.buy.buypack.paycoinid,//payload.buy.buypack.coin.id,
+            address: payload.buy.buypack.receiveAddress, //payload_transaction.fromAddress,
             amount: payload_transaction.amountReceive,
-            coin: coin
+            coin: payload.buy.buypack.coin.abbreviation//coin
           };
-
+          console.log(payload_elastic);
 
           let response_elastic = yield call(
             buyService.sendBuy,
@@ -380,7 +382,7 @@ export function* getHistoryBuySaga(payload) {
 
     let token = yield call(getAuthToken);
     let history = yield call(buyService.getHistory, token, coins);
- 
+
     yield put({
       type: "GET_HISTORY_BUY_REDUCER",
       history
