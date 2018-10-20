@@ -312,7 +312,6 @@ export function* confirmBuySaga(payload) {
             amount: payload_transaction.amountReceive,
             coin: payload.buy.buypack.coin.abbreviation//coin
           };
-          console.log(payload_elastic);
 
           let response_elastic = yield call(
             buyService.sendBuy,

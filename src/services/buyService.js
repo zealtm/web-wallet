@@ -90,7 +90,7 @@ class BuyService {
         payload,
         API_HEADER
       );
-      console.log(response);
+     
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response;
     } catch (error) {
@@ -129,7 +129,7 @@ class BuyService {
       results.map(array => {
         txs.push(...array);
       });
-
+     
       return txs;
     } catch (err) {
       return internalServerError();
