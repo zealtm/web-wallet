@@ -46,7 +46,7 @@ class BuyService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-     
+
       // if (response.code !== 200) {
       //   return internalServerError();
       // }
@@ -55,7 +55,7 @@ class BuyService {
       response.data.data.coin.map(val => {
         coins.push(val);
       });
-      
+
       return {
         coins
       };
@@ -68,13 +68,10 @@ class BuyService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let response = await axios.get(
-        BASE_URL + "/service/compra",
-        API_HEADER
-      );
-     
+      let response = await axios.get(BASE_URL + "/service/compra", API_HEADER);
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
-    
+
       if (response.data.code !== 200) {
         return internalServerError();
       }
@@ -100,34 +97,41 @@ class BuyService {
       return;
     }
   }
-  
+
   async getHistory(token, coins) {
     try {
-      API_HEADER.headers.Authorization = token
+      API_HEADER.headers.Authorization = token;
 
       let url;
-      coins = Object.keys(coins)
-      let promises = []
-      let thenFunc = (r) => {
-        let { data } = r
-        if (data.code !== 200) throw data
-        return data.data.txs
-      }
+      coins = Object.keys(coins);
+
+      let promises = [];
+      let thenFunc = r => {
+        let { data } = r;
+        if (data.code !== 200) throw data;
+        return data.data.txs;
+      };
+
       for (let coin of coins) {
-        url = `${BASE_URL}/coin/${coin}/sell/history`
+        url = `${BASE_URL}/coin/${coin}/sell/history`;
         promises.push(
-          axios.get(url, API_HEADER).then(thenFunc).catch(() => {})
-        )
+          axios
+            .get(url, API_HEADER)
+            .then(thenFunc)
+            .catch(() => {})
+        );
       }
-      let txs = []
-      let results = await Promise.all(promises) //eslint-disable-line
+
+      let txs = [];
+      let results = await Promise.all(promises); //eslint-disable-line
 
       results.map(array => {
-        txs.push(...array)
-      })
-      return txs
+        txs.push(...array);
+      });
+
+      return txs;
     } catch (err) {
-      return internalServerError()
+      return internalServerError();
     }
   }
 }

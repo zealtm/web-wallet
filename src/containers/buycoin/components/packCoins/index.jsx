@@ -63,23 +63,8 @@ class PackCoins extends React.Component {
   };
 
   renderPacks = () => {
-    const { packages, loading, selectedCoin } = this.props;
+    const { packages, selectedCoin } = this.props;
     const { activecard } = this.state;
-
-    if (loading)
-      return (
-        <div style={{ marginTop: 40, marginBottom: 40 }}>
-          <Loading color="lunes" />
-        </div>
-      );
-
-    if (packages.length < 1) {
-      return (
-        <div style={{ textAlign: "center", margin: 40 }}>
-          Selecione uma moeda.
-        </div>
-      );
-    }
 
     return packages.map((val, index) => {
       const active = activecard == val.id ? true : false;
@@ -97,6 +82,23 @@ class PackCoins extends React.Component {
   };
 
   render() {
+    const {loading,packages} = this.props;
+
+    if (loading)
+      return (
+        <div style={{ padding: 40 }}>
+          <Loading color="lunes" />
+        </div>
+      );
+
+    if (packages.length < 1) {
+      return (
+        <h2 style={{ textAlign: "center", margin: 40 }}>
+          {i18n.t("BUY_SEL_COIN")}
+        </h2>
+      );
+    }
+
     let settings = {
       arrows: false,
       draggable: true,

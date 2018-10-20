@@ -37,7 +37,6 @@ class DoneBuy extends React.Component {
           />
           <div>
             {i18n.t("BUYCOINS_SUCCESS_1")}
-            {i18n.t("BUYCOINS_SUCCESS_2")}
           </div>
 
           <div className={style.smallDescription}>

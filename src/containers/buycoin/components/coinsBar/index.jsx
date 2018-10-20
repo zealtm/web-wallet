@@ -65,18 +65,9 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    const { coinsEnabled, coins, loading, selected } = this.props;
+    const { coinsEnabled, coins, selected } = this.props;
 
     let defaultCoin = getDefaultFiat();
-
-    if (loading)
-      return (
-        <div style={{ marginTop: 40, marginBottom: 40 }}>
-          <Loading color="lunes" />
-        </div>
-      );
-
-    if (coinsEnabled.length < 1) return;
 
     return coinsEnabled.map((val, index) => {
       let coin = coins[val.value.abbreviation];
@@ -121,6 +112,22 @@ class CoinsBar extends React.Component {
   };
 
   render() {
+    const {loading,coinsEnabled} = this.props;
+
+    if (loading)
+      return (
+        <div style={{ marginTop: 40, marginBottom: 40 }}>
+          <Loading color="lunes" />
+        </div>
+      );
+
+    if (coinsEnabled.length < 1) 
+      return (
+        <div style={{ marginTop: 40, marginBottom: 40 }}>
+          Erro. Tente recarregar a página.
+        </div>
+      );
+
     let settings = {
       arrows: false,
       draggable: true,

@@ -380,7 +380,7 @@ export function* getHistoryBuySaga(payload) {
 
     let token = yield call(getAuthToken);
     let history = yield call(buyService.getHistory, token, coins);
-
+ 
     yield put({
       type: "GET_HISTORY_BUY_REDUCER",
       history
