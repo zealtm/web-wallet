@@ -42,7 +42,7 @@ class BuyService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/sell/paymentMethods",
+        BASE_URL + "/coin/lunes/sell/paymentMethods",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
