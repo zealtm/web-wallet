@@ -19,7 +19,8 @@ class CardPack extends React.Component {
   render() {
     const {buypack, onSelect, active, selectedCoin} = this.props;
     const styleactive = active ? style.cardBuyActive : style.cardBuy;
-    let defaultCoin = getDefaultFiat();
+    //let defaultCoin = getDefaultFiat();
+    let defaultCoin = "BRL";
     let fiatAmount = buypack.fiatAmount[defaultCoin.toUpperCase()];
 
     return (

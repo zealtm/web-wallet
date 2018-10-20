@@ -20,6 +20,11 @@ const initialState = {
   },
 
   buypackage: {
+    fee: {
+      fee: 0,
+      feePerByte: 0,
+      feeLunes: 0,
+    },
     idpack: '', // o pacote escolhido
     coin: {
       id: '',
@@ -145,8 +150,11 @@ const buy = (state=initialState, action) => {
           buypackage: {
             ...state.buypackage,
             amountPay: action.payload.amount,
-            balance: action.payload.balance
-          }
+            balance: action.payload.balance,
+          },
+          loading: false, 
+          modalStep: 1,
+          modalOpen: true,
         }
 
       case "GET_COIN_FOR_PAYMENT_REDUCER":

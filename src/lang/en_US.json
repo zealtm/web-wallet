@@ -448,15 +448,16 @@
   "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
   "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: ", 
 
-  "MENU_BUYCOINS": "Comprar", 
-  "BUYCOINS_TITLE": "COMPRAR CRIPTOMOEDAS",
-  "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
+  "MENU_BUYCOINS": "Buy", 
+  "BUYCOINS_TITLE": "BUY CRIPTOCOINS",
+  "BUYCOINS_DESCRIPTION": "Buy your coins quickly, simply and safely.",
 
-  "BUYCOINS_FEE_TEXT_1": "Você está enviando ",
-  "BUYCOINS_FEE_TEXT_2": " para ",
-  "BUYCOINS_CONFIRM_1": "Confirme seus dados para concluir sua compra",
-  "BUYCOINS_CONFIRM_2": "Insira sua senha e confirme a ",
-  "BUYCOINS_SUCCESS_1": "Você realizou a compra com sucesso!",
-  "BUYCOINS_SUCCESS_2": "Visualize seu histórico de compras na guia Histórico",
-  "BUYCOINS_INFO_ERROR": "Procedimento de compra falhou"
+  "BUYCOINS_FEE_TEXT_1": "You is send ",
+  "BUYCOINS_FEE_TEXT_2": " for ",
+  "BUYCOINS_CONFIRM_1": "send",
+  "BUYCOINS_CONFIRM_2": "Insert your password and confirm the ",
+  "BUY_BT_INIT": "BUY",
+  "BUYCOINS_SUCCESS_1": "You have successfully completed the purchase!",
+  "BUYCOINS_SUCCESS_2": "View your purchase history on the History tab",
+  "BUYCOINS_INFO_ERROR": "Process of buy failed"
 }

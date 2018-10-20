@@ -11,12 +11,13 @@ import PaymentBar from "../paymentBar";
 import CoinsBar from "../coinsBar";
 import PackCoins from "../packCoins";
 import Instructions from "../instructions";
-//import Loading from "../../../../components/loading";
+import Loading from "../../../../components/loading";
 import ModalBar from "../../../../components/modalBar";
 
 //UTILS
 //import { getDefaultFiat } from "../../../../utils/localStorage";
 import {convertSmallerCoinUnit} from "../../../../utils/numbers";
+import i18n from "../../../../utils/i18n";
 
 // STYLES
 import style from "./style.css";
@@ -66,14 +67,15 @@ class Buy extends React.Component {
         coin: buypack.paycoin,
         address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : ""
       };
-      console.log(data);
+     
       setBuy(data);
-      openModal(true);
+      //openModal(true);
     }
   };
 
   render() {
     const { error, messageError } = this.state;
+    const {loading} = this.props;
 
     return (
       <div>
@@ -91,7 +93,7 @@ class Buy extends React.Component {
             className={style.buttonBorderGreen}
             onClick={() => this.validateModal()}
           >
-            COMPRAR
+            {loading ? <Loading /> : i18n.t("BUY_BT_INIT")}
           </button>
         </div>
 
@@ -108,12 +110,14 @@ Buy.propTypes = {
   setClearBuy: PropTypes.func.isRequired,
   buypack: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
-  setBuy: PropTypes.func.isRequired
+  setBuy: PropTypes.func.isRequired, 
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  loading: store.buy.loading
 });
 
 const mapDispatchToProps = dispatch =>

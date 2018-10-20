@@ -98,12 +98,13 @@ export function* getCoinForPaymentSaga(payload) {
       payload.coin
     );
 
-    if (!response.coin) {
+    if (!response.coins) {
       yield put({
         type: "SET_LOADING_PACK_REDUCER",
         payload: false
       });
       yield put(internalServerError());
+      return;
     }
 
     yield put({
@@ -249,6 +250,10 @@ export function* setBuySaga(payload) {
       payload: data
     });
   } catch (error) {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
     yield put(internalServerError());
   }
 }
@@ -331,7 +336,7 @@ export function* confirmBuySaga(payload) {
           } else {
             yield put({
               type: "SET_MODAL_BUY_STEP_REDUCER",
-              step: 3
+              step: 4
             });
           }
 
