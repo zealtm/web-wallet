@@ -34,8 +34,8 @@ class CardPack extends React.Component {
         <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount,8)}</h1>
         <div className={style.valueCard}>
           <span className={style.dollarSign}>{defaultCoin}</span>
-          <span className={style.value}>{parseFloat(fiatAmount).toFixed(2)}</span>
-          {/* <span className={style.decimals}>,00</span> */}
+          <span className={style.value}>{parseFloat(fiatAmount).toFixed(0)}</span>
+          <span className={style.decimals}>,00</span>
         </div>
       </div>
     );

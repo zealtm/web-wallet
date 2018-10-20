@@ -2,12 +2,9 @@ const initialState = {
   coins: [],
   packages: [],
   history: [],
-<<<<<<< HEAD
   coinsPayment: [],
-
-=======
+  
   loadingHistory: false,
->>>>>>> V-311
   loading: false,
   loadingCoins: false,
   loadingPackages: false,

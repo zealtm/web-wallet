@@ -4,17 +4,17 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 // SERVICES
 import BuyService from "../../../services/buyService";
 import CoinService from "../../../services/coinService";
-<<<<<<< HEAD
-import { convertBiggestCoinUnit,convertSmallerCoinUnit } from "../../../utils/numbers";
 import TransactionService from "../../../services/transaction/transactionService";
-=======
->>>>>>> V-311
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import {convertBiggestCoinUnit} from "../../../utils/numbers";
+import { getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 
 const buyService = new BuyService();
 const coinService = new CoinService();
+const transactionService = new TransactionService();
 
 export function* setClearBuySaga() {
   yield put({
@@ -174,7 +174,7 @@ export function* setCoinSelectedSaga(payload){
 export function* getFeeBuySaga(payload) {
   try {
     yield put({
-      type: "SET_LOADING_HISTORY",
+      type: "SET_LOADING_REDUCER",
       payload: true
     });
 
@@ -189,7 +189,7 @@ export function* getFeeBuySaga(payload) {
 
     if (!response.fee) {
       yield put({
-        type: "SET_LOADING_HISTORY",
+        type: "SET_LOADING_REDUCER",
         payload: false
       });
       yield put(internalServerError());
@@ -243,8 +243,6 @@ export function* setBuySaga(payload) {
       amount: convertBiggestCoinUnit(amount, 8),
     };
 
-    console.log(data);
-
     yield put({
       type: "SET_AMOUNT_BUY_PAY_REDUCER",
       payload: data
@@ -280,8 +278,6 @@ export function* confirmBuySaga(payload) {
       decimalPoint: payload.buy.decimalPoint
     };
 
-    console.log(payload_transaction);
-
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
@@ -315,16 +311,16 @@ export function* confirmBuySaga(payload) {
             coin: coin
           };
 
-          console.log(payload_elastic);
 
           let response_elastic = yield call(
             buyService.sendBuy,
             token,
             payload_elastic
           );
-
+    
           yield put({
-            type: "SET_CLEAR_BUY_REDUCER"
+            type: "SET_LOADING_REDUCER", //SET_CLEAR_BUY_REDUCER
+            payload:false
           });
 
           if (response_elastic.data.errorMessage) {
@@ -336,7 +332,7 @@ export function* confirmBuySaga(payload) {
           } else {
             yield put({
               type: "SET_MODAL_BUY_STEP_REDUCER",
-              step: 4
+              step: 3
             });
           }
 
@@ -372,9 +368,6 @@ export function* confirmBuySaga(payload) {
     yield put(internalServerError());
   }
 }
-
-
-
 
 export function* getHistoryBuySaga(payload) {
   try {
