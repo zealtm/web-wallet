@@ -11,6 +11,19 @@
   transition: .2s;
 }
 
+:local(.cardBuyActive) {
+  background-color: #473088;
+  padding: 20px 5px 8px 5px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 305px;
+  box-shadow: 0px 10px 10px rgba(0,0,0,.05);
+  transition: .2s;
+}
+
 :local .cardBuy:hover {
   background-color: #473088;
   box-shadow: 0px 10px 10px rgba(0,0,0,.05);
@@ -25,6 +38,7 @@
 :local(.amount) {
   font-family: "OffSide";
   font-weight: normal;
+  font-size: 18px;
   letter-spacing: 2px;
 }
 
@@ -45,7 +59,7 @@
 }
 
 :local(.value) {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 500;
   margin-top:-5px;
   color: #54d467;

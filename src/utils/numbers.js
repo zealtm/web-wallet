@@ -1,4 +1,5 @@
 import i18n from "./i18n";
+import { countriesInfo } from "../constants/user.js"
 
 export const convertBiggestCoinUnit = (value, decimal) => {
   let number = "1";
@@ -70,6 +71,36 @@ export const formatDate = (date, type = "DMY", monthNumber = false) => {
     return day + "/" + month + "/" + year;
   }
 };
+
+export const convertISO8601 = (iso) => {
+  let d = new Date(iso)
+  return {
+    hour: `${d.getHours() + 1}:${d.getMinutes()}`,
+    date: `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+  }
+}
+export const commonToSatoshi = (value, zeros = 8) => {
+  return parseInt(value * 10**zeros)
+}
+export const satoshiToCommon = (value, zeros = 8) => {
+  return parseFloat(value / 10**zeros)
+}
+export const localCurrency = (number, currency) => {
+  if (!currency) {
+    let { user } = window.store.getState().user
+    let { country } = user
+    country = country ? country.replace(/\s/gmi, '_').toLowerCase() : undefined
+    let countryInfo = countriesInfo[country]
+    let currencyAbbr = countryInfo && countryInfo.currencyAbbr
+    ? countryInfo.currencyAbbr : 'USD'
+    return number.toLocaleString('it-IT', {
+      style: 'currency', currency: currencyAbbr
+    })
+  }
+  return number.toLocaleString('it-IT', {
+    style: 'currency', currency
+  })
+}
 
 const addZeroIfLessThan = (value, number = 10) => {
   return value < number ? "0" + value : value;
