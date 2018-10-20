@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import { confirmRecharge } from "../redux/rechargeAction";
-// import { errorInput } from "../../errors/redux/errorAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { confirmBuy } from "../redux/buyAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import { encryptHmacSha512Key } from "../../../utils/cryptography";
@@ -30,38 +30,38 @@ class SecureBuy extends React.Component {
   };
 
   confirmPassword = () => {
-    // let { password } = this.state;
-    // let { user, errorInput, recharge, coins, confirmRecharge } = this.props;
+    let { password } = this.state;
+    let { user, errorInput, buypack, coins, confirmBuy } = this.props;
 
-    // const coin = recharge.coin.abbreviation;
+    const coin = buypack.paycoin;
 
-    // const payload = {
-    //   coin:           coin,
-    //   fromAddress:    coins[coin].address,
-    //   toAddress:      recharge.coin.address,
-    //   amount:         recharge.amount,
-    //   fee:            recharge.fee.fee.fee,
-    //   feePerByte:     recharge.fee.fee.feePerByte,
-    //   feeLunes:       recharge.fee.fee.feeLunes,
-    //   price:          coins[coin].price,
-    //   decimalPoint:   coins[coin].decimalPoint,
-    //   user:           user.password,
-    //   recharge:       recharge,
-    // }
+    const payload = {
+      coin: coin,
+      fromAddress: coins[coin].address,
+      toAddress: buypack.address,
+      amount: buypack.amountPay,
+      amountReceive: buypack.amount,
+      fee: buypack.fee.fee.fee,
+      feePerByte: buypack.fee.fee.feePerByte,
+      feeLunes: buypack.fee.fee.feeLunes,
+      price: coins[coin].price,
+      decimalPoint: coins[coin].decimalPoint,
+      user: user.password,
+      buypack: buypack
+    };
 
-    // if (user.password === encryptHmacSha512Key(password)) {
-    //   confirmRecharge(payload);
-    //   return;
-    // }
+    if (user.password === encryptHmacSha512Key(password)) {
+      confirmBuy(payload);
+      return;
+    }
 
-    // errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
-    // return;
+    errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
+    return;
   };
 
   render() {
     let { password } = this.state;
-    // let { recharge, loading } = this.props;
-    const loading = false;
+    let { loading } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -93,7 +93,7 @@ class SecureBuy extends React.Component {
 
         <ButtonContinue
           label={i18n.t("BTN_CONFIRM")}
-          action={()=>this.confirmPassword()}
+          action={() => this.confirmPassword()}
           loading={loading}
         />
       </div>
@@ -102,12 +102,31 @@ class SecureBuy extends React.Component {
 }
 
 SecureBuy.propTypes = {
-  // recharge:     PropTypes.object.isRequired,
-  // loading:      PropTypes.bool.isRequired,
-  // user:         PropTypes.object.isRequired,
-  // errorInput:   PropTypes.func.isRequired,
-  // confirmRecharge:   PropTypes.func.isRequired,
+  buypack: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  coins: PropTypes.array.isRequired,
+  confirmBuy: PropTypes.func.isRequired
 };
 
+const mapStateToProps = store => ({
+  buypack: store.buy.buypackage,
+  loading: store.buy.loading,
+  user: store.user.user,
+  coins: store.skeleton.coins
+});
 
-export default SecureBuy;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      confirmBuy,
+      errorInput
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SecureBuy);

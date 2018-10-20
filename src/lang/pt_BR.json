@@ -456,8 +456,9 @@
 
   "BUYCOINS_FEE_TEXT_1": "Você está enviando ",
   "BUYCOINS_FEE_TEXT_2": " para ",
-  "BUYCOINS_CONFIRM_1": "Confirme seus dados para concluir sua compra",
-  "BUYCOINS_CONFIRM_2": "Insira sua senha e confirme a ",
+  "BUYCOINS_CONFIRM_1": "envio",
+  "BUYCOINS_CONFIRM_2": "Insira sua senha e confirme o ",
+  "BUY_BT_INIT": "COMPRAR",
   "BUYCOINS_SUCCESS_1": "Você realizou a compra com sucesso!",
   "BUYCOINS_SUCCESS_2": "Visualize seu histórico de compras na guia Histórico",
   "BUYCOINS_INFO_ERROR": "Procedimento de compra falhou"

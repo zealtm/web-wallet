@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep,openModal } from "./redux/buyAction";
+
 // COMPONENTS
 import Modal from "../../components/modal";
 import Tabs from "../../components/tabs";
@@ -17,26 +22,22 @@ import style from "./style.css";
 class BuyCoins extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false
-    }
   }
 
-  handleModal = () => this.setState({ isOpen: !this.state.isOpen });
-
   closeModal(){
-    //const {setModalStep} = this.props;
-    this.handleModal();
-    //setModalStep(1);
+    const {setModalStep, openModal} = this.props;
+    openModal(false);
+    setModalStep(1);
   }
 
   render() {
-    const {isOpen} = this.state;
+    const {modalStep, setModalStep, modalOpen} = this.props;
+
     const titles = ["Comprar", "Historico"];
     const contents = [<Buy key={0} />, <History key={1} />];
 
     return (
-      <div>
+      <div className={style.box}>
         <div className={style.header}>
           <h1>{i18n.t("BUYCOINS_TITLE")}</h1>
           <p>{i18n.t("BUYCOINS_DESCRIPTION")}</p>
@@ -47,15 +48,40 @@ class BuyCoins extends React.Component {
         <Modal
           title={i18n.t("BUYCOINS_TITLE")}
           content={<BuyModal />}
-          show={isOpen}
-          close={()=>this.closeModal()}
-          back={() => alert("voltar")}
+          show={modalOpen}
+          close={
+            modalStep === 1 || modalStep === 3 || modalStep === 4 ? ()=>this.closeModal() : null
+          }
+          back={
+            modalStep === 2 ? () => setModalStep(modalStep-1) : null
+          }
         />
       </div>
     );
   }
 }
 
-BuyCoins.propTypes = {};
+BuyCoins.propTypes = {
+  modalStep: PropTypes.number.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
+  setModalStep: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
+};
 
-export default BuyCoins;
+const mapStateToProps = store => ({
+  modalStep: store.buy.modalStep,
+  modalOpen: store.buy.modalOpen,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setModalStep, 
+    openModal
+  }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(BuyCoins);
