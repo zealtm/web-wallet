@@ -23,7 +23,7 @@ const stylesCustom = theme => ({
     }
   },
   rootLabel: {
-    fontSize: "11px",
+    fontSize: "15px",
     color: "#fff"
   },
   checked: {
