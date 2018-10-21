@@ -12,6 +12,9 @@ import { Grid, Radio, FormControlLabel, withStyles } from "@material-ui/core/";
 // COMPONENTS
 import Select from "../../../../components/select";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "./style.css";
 
@@ -74,7 +77,7 @@ class PaymentBar extends React.Component {
         <Grid container>
           <Grid item xs={12} md={8}>
             <span className={style.label}>
-              Selecione uma forma de pagamento
+              {i18n.t("BUY_PAYMENT_SELECT")}
             </span>
             <div className={style.baseBackgroundFlex}>
               <FormControlLabel
@@ -87,13 +90,13 @@ class PaymentBar extends React.Component {
                     classes={{ root: classes.root, checked: classes.checked }}
                   />
                 }
-                label="Criptomoeda"
+                label={i18n.t("BUY_METHOD_COIN")}
                 labelPlacement="start"
               />
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <span className={style.label}>Moeda para pagamento</span>
+            <span className={style.label}>{i18n.t("BUY_PAYMENT_COIN")}</span>
             <div className={style.baseBackground}>
               <Select
                 list={coinspayment}
