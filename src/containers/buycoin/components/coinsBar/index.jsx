@@ -75,6 +75,7 @@ class CoinsBar extends React.Component {
       if (!coin) return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
+      const active = val.title === selected.toUpperCase() ? true : false;
 
       return (
         <div
@@ -90,7 +91,7 @@ class CoinsBar extends React.Component {
         >
           <div
             className={
-              val.title === selected.toUpperCase()
+              active
                 ? style.boxCoinActive
                 : style.boxCoin
             }
@@ -101,10 +102,13 @@ class CoinsBar extends React.Component {
                 src={"images/icons/coins/" + val.value.abbreviation + ".png"}
               />
             </div>
-            <div className={style.boxLabelCoin}>
-              {val.title} <br />
-              {coin.price[defaultCoin].symbol + coinPrice.toFixed(3)}
-            </div>
+
+            <Hidden smDown>
+              <div className={style.boxLabelCoin}>
+                {val.title} <br />
+                {coin.price[defaultCoin].symbol + coinPrice.toFixed(3)}
+              </div>
+            </Hidden>
           </div>
         </div>
       );
@@ -146,13 +150,13 @@ class CoinsBar extends React.Component {
         {
           breakpoint: 959,
           settings: {
-            slidesToShow: 5
+            slidesToShow: 3
           }
         },
         {
           breakpoint: 599,
           settings: {
-            slidesToShow: 4
+            slidesToShow: 3
           }
         }
       ]

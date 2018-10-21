@@ -25,3 +25,10 @@
   composes: baseBackground;
   margin-right: 20px;
 }
+
+@media only screen and (max-width: 599px) {
+  :local .baseBackgroundFlex {
+    composes: baseBackground;
+    margin-right: 0px;
+  }
+}

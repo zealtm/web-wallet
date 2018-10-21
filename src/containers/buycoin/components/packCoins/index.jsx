@@ -111,13 +111,13 @@ class PackCoins extends React.Component {
         {
           breakpoint: 1279,
           settings: {
-            slidesToShow: 5
+            slidesToShow: 3
           }
         },
         {
           breakpoint: 959,
           settings: {
-            slidesToShow: 3
+            slidesToShow: 2
           }
         },
         {
