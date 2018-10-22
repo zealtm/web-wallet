@@ -43,6 +43,7 @@ class BuyCoins extends React.Component {
           <p>{i18n.t("BUYCOINS_DESCRIPTION")}</p>
         </div>
 
+
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
 
         <Modal
