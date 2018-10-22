@@ -126,9 +126,7 @@
 
 :local .boxLabelCoin {
   font-size: 12px;
-  text-align: right;
   padding-top: 12px;
-  padding-right: 5px;
   word-wrap: break-word;
 }
 
@@ -143,11 +141,17 @@
   font-size: 11px;
 }
 
+@media screen and (max-width: 1024px) {
+  :local .boxLabelCoin {
+    color: transparent;
+  }
+}
+
 /* ------------------------------------------------------------------------- */
 /* 2. COINS INFO */
 
 /* 2.1 BASES */
-:local(.styleCoinDefalt){
+:local(.styleCoinDefalt) {
   box-shadow: 0 2px 36px -18px rgba(0, 0, 0, 0.6);
 }
 
@@ -237,7 +241,7 @@
     font-size: 14px;
   }
   :local(.containerInfo) {
-    margin-top: 30px
+    margin-top: 30px;
   }
 }
 
@@ -289,7 +293,7 @@
 }
 
 :local(.containerTransactions) {
-  composes: displayAlign;  
+  composes: displayAlign;
 }
 
 :local(.contentTransactions) {
@@ -297,7 +301,7 @@
   box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.05);
   background-color: #473088;
   max-height: 55vh;
-  overflow: auto;   
+  overflow: auto;
   padding-bottom: 100px;
 }
 
@@ -307,7 +311,7 @@
 
 :local(.typeItems) {
   text-align: center;
-  padding: 10px 0; 
+  padding: 10px 0;
   margin: auto auto;
 }
 
@@ -337,13 +341,13 @@
 }
 
 :local(.alignItemsHeaderHistory) {
-  composes: textDefault from "../../../../components/bases/textBase.css";  
+  composes: textDefault from "../../../../components/bases/textBase.css";
   padding: 15px 0;
   font-weight: bold;
 }
 
 :local(.alignTimeInValueHistory) {
-  composes: displayAlign;    
+  composes: displayAlign;
 }
 
 :local(.opacityItem) {
@@ -371,7 +375,7 @@
 }
 
 :local(.titleBlockExplorer) {
-  padding: 10px 15px; 
+  padding: 10px 15px;
   margin: auto auto;
   font-weight: bold;
 }
@@ -448,7 +452,7 @@
 @media only screen and (max-width: 599px) {
   :local(.descriptionHistory) {
     font-size: 9px;
-  }  
+  }
   :local(.valueHistory) {
     padding-right: 10px;
   }
@@ -456,7 +460,7 @@
 
 /* 3.2 ICONS */
 :local(.refleshIcon) {
-  composes: displayAlign;  
+  composes: displayAlign;
   cursor: pointer;
   background-color: #473088;
   border-radius: 20px;
@@ -686,7 +690,7 @@
   composes: clError from "../../../../components/bases/colorBase.css";
   font-size: 24px;
   font-weight: 700;
-  margin-bottom:40px;
+  margin-bottom: 40px;
 }
 
 :local .boxReceive {
@@ -694,7 +698,7 @@
   width: 100%;
 }
 
-:local .boxReceive .qrCodeReceive{
+:local .boxReceive .qrCodeReceive {
   padding-top: 15%;
   width: 100%;
   text-align: center;
@@ -707,19 +711,19 @@
   box-shadow: inset 0 1px 8px 0 #4b2c82;
 }
 
-:local .boxReceive .address{
+:local .boxReceive .address {
   color: #68f285;
   text-align: center;
 }
 
-:local .boxReceive .qrMessage{
+:local .boxReceive .qrMessage {
   color: #fff;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
 }
 
-:local .boxReceive .spacingBox{
+:local .boxReceive .spacingBox {
   align-items: center;
   padding: 5% 2% 2% 2%;
   max-width: 50%;
