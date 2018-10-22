@@ -130,6 +130,7 @@
   "SETTINGS_CARD_plural": "CONSENT",
   "SETTINGS_USER": "Perfil de Usuário",
   "SETTINGS_USER_BACK": "Voltar para configurações",
+  "SECURITY_USER_BACK": "Voltar para segurança",
   "BTN_BACK": "Voltar",
   "SETTINGS_USER_IMAGE": "Imagem de Perfil",
   "SETTINGS_USER_STATUS": "Status",
@@ -167,7 +168,7 @@
   "SECURITY_ITEM": "Insira o Código de Autenticação para ativar o 2FA em sua conta.",
   "SECURITY_ITEM_plural": "Install: Google Authenticator on your Smartphone",
   "SETTING_LINK_RETURN": "Voltar para configurações",
-  "SECURITY_LINK_RETURN": "Voltara para configurações",
+  "SECURITY_LINK_RETURN": "Voltar para segurança",
   "SECURITY_2FA_REGISTRED": "Dois Fatores já ativado!",
   "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "Você já está registrado",
   "SET_SEED_WORDS": "Sua Seed",
@@ -356,7 +357,7 @@
   "COUPON_TITLE_2": "Promoção",
   "COUPON_TITLE_3": "Cupom",
   "SETTINGS_CARD_1": "DADOS DO USUÁRIO",
-  "SETTINGS_CARD_2": "2FA AUTENTICAÇÃO",
+  "SETTINGS_CARD_2": "SEGURANÇA",
   "SETTINGS_CARD_3": "CARTEIRAS",
   "SETTINGS_CARD_4": "CONSENTIMENTO",
   "SETTINGS_CARD_5": "DEFINIÇÕES",
@@ -397,7 +398,7 @@
   "COUPON_UNKNOWN_ERROR_3": "Ocorreu um erro desconhecido ao tentar verificar o código do cupom",
 
   "WALLET_UTXOS_EMPTY_1": "Rede congestionada ou saldo insuficiente.",
-  
+
   "PAYMENT_SUCCESS_1": "Você acabou de pagar o boleto",
   "PAYMENT_SUCCESS_2": " na sua carteira Lunes",
   "PAYMENT_FEE_TEXT_1": "Você está enviando ",
@@ -448,5 +449,18 @@
   "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
   "ALIAS_ERROR_TRANSACTION": "Não foi possível fazer a transação de Alias",
   "ALIAS_INFORMED_INCORRECT": "O alias informado é incorreto!",
-  "ALIAS_MODAL_TRANSACTION": "Para confirmar sua transação, insira sua senha: "
+  "ALIAS_MODAL_TRANSACTION": "Para confirmar sua transação, insira sua senha: ",
+
+  "TITLE_SECURITY_1": "2FA AUTENTICAÇÃO",
+  "TITLE_SECURITY_2": "CELULAR",
+  "TITLE_SECURITY_3": "KYC",
+  "CARD_SECURITY_1": "2FA AUTENTICAÇÃO ",
+  "CARD_SECURITY_2": "CELULAR ",
+  "CARD_SECURITY_3": "KYC",
+  "SECURITY_INSERT_PHONE": "Insira seu telefone",
+  "SECURITY_INSERT_DOC": "CPF/CNPJ/CNH/Passport",
+  "TEXT_UPLOAD": "Envio",
+  "TEXT_FAILED_UPLOAD": "Envio falhou",
+  "TEXT_FRONT": "Frente",
+  "TEXT_BACK": "Trás"
 }

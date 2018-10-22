@@ -26,6 +26,7 @@ import { CEP } from "../../../../components/inputMask";
 const inputStyle = {
   root: {
     color: colors.messages.info,
+    marginBottom: "5px",
     margin: "0",
     padding: "5px",
     width: "calc(100% - 50px)",
@@ -101,48 +102,24 @@ class KYC extends React.Component {
   constructor() {
     super();
     this.state = {
-      inputs: {
-        address: ""
-      },
-      enableButton: false
+      enableButtonUpload: false,
+      enableButtonConfirm: false
     };
   }
-
-  // getInput = event => {
-  //   this.setState({
-  //     ...this.state,
-  //     address: event.target.value,
-  //     errors: undefined
-  //   });
-  // };
-
-  getInput = event => {
-    let { name, value } = event;
-    let { inputs } = this.state;
-    this.setState({
-      ...this.state,
-      inputs: { ...inputs, [name]: value ? event : { value: "" } },
-      errors: undefined
-    });
-  };
-
-  inputValidator = () => {
-    alert("ffoi");
-  };
 
   formGetter() {
     return new FormData(document.getElementById("customForm"));
   }
 
-  enableButton = () => {
+  enableButtonUpload = () => {
     this.setState({
       ...this.state,
-      enableButton: true
+      enableButtonUpload: true
     });
   };
 
   customFormRenderer(onSubmit) {
-    const { enableButton } = this.state;
+    const { enableButtonUpload } = this.state;
     return (
       <form id="customForm" style={inputStyle.alignForm}>
         <input
@@ -150,9 +127,9 @@ class KYC extends React.Component {
           name="file"
           id="inputFile"
           style={{ width: "100%" }}
-          onClick={() => this.enableButton()}
+          onClick={() => this.enableButtonUpload()}
         />
-        {enableButton ? (
+        {enableButtonUpload ? (
           <div>
             <button
               type="button"
@@ -187,7 +164,9 @@ class KYC extends React.Component {
       if (hasError) {
         barStyle.backgroundColor = "#68f285";
         message = (
-          <span style={{ color: "#f05252" }}>Failed to upload ...</span>
+          <span style={{ color: "#f05252" }}>
+            {i18n.t("TEXT_FAILED_UPLOAD")}
+          </span>
         );
       }
       if (progress === 100) {
@@ -231,6 +210,7 @@ class KYC extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { enableButtonConfirm } = this.state;
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -293,13 +273,12 @@ class KYC extends React.Component {
                         </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
                         <Input
-                          name={"address"}
+                          name={"Address"}
                           classes={{
                             root: classes.root,
                             underline: classes.cssUnderline,
                             input: classes.cssInput
                           }}
-                          onChange={event => this.getInput(event.target)}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -342,20 +321,21 @@ class KYC extends React.Component {
                     </Grid>
                     <Grid item xs={12} lg={6} className={style.boxKYC_3}>
                       <FileUploadProgress
+                        isRequired
                         id="fileupkeyload"
                         key="ex1"
-                        url="http://localhost:3000/api/upload"
+                        url=""
                         onProgress={(e, request, progress) => {
-                          console.log("progress", e, request, progress);
+                          console.warn("progress", e, request, progress);
                         }}
                         onLoad={(e, request) => {
-                          console.log("load", e, request);
+                          console.warn("load", e, request);
                         }}
                         onError={(e, request) => {
-                          console.log("error", e, request);
+                          console.warn("error", e, request);
                         }}
                         onAbort={(e, request) => {
-                          console.log("abort", e, request);
+                          console.warn("abort", e, request);
                         }}
                         formGetter={this.formGetter.bind(this)}
                         formRenderer={this.customFormRenderer.bind(this)}
@@ -384,22 +364,23 @@ class KYC extends React.Component {
                     </Grid>
                     <Grid item className={style.displayBox_3}>
                       <Grid item xs={12} lg={6} className={style.boxKYC_3}>
-                        <p>Frente</p>
+                        <p> {i18n.t("TEXT_FRONT")}</p>
                         <FileUploadProgress
+                          isRequired
                           id="fileupload"
                           key="ex1"
-                          url="http://localhost:3000/api/upload"
+                          url=""
                           onProgress={(e, request, progress) => {
-                            console.log("progress", e, request, progress);
+                            console.warn("progress", e, request, progress);
                           }}
                           onLoad={(e, request) => {
-                            console.log("load", e, request);
+                            console.warn("load", e, request);
                           }}
                           onError={(e, request) => {
-                            console.log("error", e, request);
+                            console.warn("error", e, request);
                           }}
                           onAbort={(e, request) => {
-                            console.log("abort", e, request);
+                            console.warn("abort", e, request);
                           }}
                           formGetter={this.formGetter.bind(this)}
                           formRenderer={this.customFormRenderer.bind(this)}
@@ -409,23 +390,24 @@ class KYC extends React.Component {
                         />
                       </Grid>
                       <Grid item xs={12} lg={6} className={style.boxKYC_3}>
-                        <p>Verso</p>
+                        <p> {i18n.t("TEXT_BACK")}</p>
 
                         <FileUploadProgress
+                          isRequired
                           id="fileupload"
                           key="ex1"
-                          // url="http://localhost:3000/api/upload"
+                          url="http://localhost:6000/api/upload"
                           onProgress={(e, request, progress) => {
-                            console.log("progress", e, request, progress);
+                            console.warn("progress", e, request, progress);
                           }}
                           onLoad={(e, request) => {
-                            console.log("load", e, request);
+                            console.warn("load", e, request);
                           }}
                           onError={(e, request) => {
-                            console.log("error", e, request);
+                            console.warn("error", e, request);
                           }}
                           onAbort={(e, request) => {
-                            console.log("abort", e, request);
+                            console.warn("abort", e, request);
                           }}
                           formGetter={this.formGetter.bind(this)}
                           formRenderer={this.customFormRenderer.bind(this)}
@@ -439,12 +421,18 @@ class KYC extends React.Component {
                   <Grid item xs={12}>
                     <center>
                       <Grid item xs={12} sm={6}>
-                        <button
-                          className={style.buttonEnableSecurity}
-                          onClick={() => this.inputValidator()}
-                        >
-                          {i18n.t("BTN_CONFIRM")}
-                        </button>
+                        {enableButtonConfirm ? (
+                          <button className={style.buttonEnableSecurity}>
+                            {i18n.t("BTN_CONFIRM")}
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className={style.buttonDisabledSecurity}
+                          >
+                            {i18n.t("BTN_CONFIRM")}
+                          </button>
+                        )}
                       </Grid>
                     </center>
                   </Grid>

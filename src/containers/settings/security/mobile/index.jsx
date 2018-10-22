@@ -24,7 +24,7 @@ const inputStyle = {
     margin: "0",
     padding: "5px",
     fontSize: "18px",
-    width: "95%",
+    width: "96%",
     "&:hover:before": {
       borderBottomColor: colors.purple.clear
     }
@@ -79,7 +79,7 @@ class MobileAuthenticator extends React.Component {
   };
 
   sendData = () => {
-    alert("OBRIGADA");
+    alert("ok");
   };
 
   render() {
@@ -144,7 +144,7 @@ class MobileAuthenticator extends React.Component {
                       <Grid item xs={12}>
                         <Input
                           classes={{
-                            root: classes.root,
+                            root: classes.inputMobile,
                             underline: classes.cssUnderline,
                             input: classes.cssInput
                           }}

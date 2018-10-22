@@ -457,5 +457,8 @@
   "CARD_SECURITY_3": "KYC",
   "SECURITY_INSERT_PHONE": "Insert your phone",
   "SECURITY_INSERT_DOC": "CPF/CNPJ/CNH/Passport",
-  "TEXT_UPLOAD": "Upload"
+  "TEXT_UPLOAD": "Upload",
+  "TEXT_FAILED_UPLOAD": "Failed to upload ...",
+  "TEXT_FRONT": "Front",
+  "TEXT_BACK": "Back"
 }

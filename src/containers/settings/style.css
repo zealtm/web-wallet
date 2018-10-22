@@ -13,9 +13,12 @@
     2.5 BUTTONS
     2.6 HEADER SETTINGS
 3.  CELL PHONE
+    3.1 BASES
+    3.2 TEXTS
 4.  KYC
-
-
+    4.1 BASES
+    4.2 TEXTS
+    4.3 BUTTONS
 */
 
 /* ------------------------------------------------------------------------- */
@@ -337,13 +340,16 @@
 }
 
 /* ------------------------------------------------------------------------- */
+
+/* 3.  CELL PHONE */
+
+/* 3.1 BASES */
 :local(.buttonEnableSecurity) {
   composes: buttonEnable;
   font-weight: bold;
   margin: 0;
 }
 
-/* 3.  CELL PHONE */
 :local(.alignButtonMobile) {
   display: flex;
   align-items: flex-end;
@@ -367,6 +373,7 @@
   padding: 50px 0 0;
 }
 
+/* 3.2 TEXTS */
 :local(.contentMobile h3) {
   color: #68f285;
 }
@@ -395,6 +402,7 @@
 
 /* 4.  KYC */
 
+/* 4.1 BASE */
 :local(.containerKYC) {
   padding: 5px;
 }
@@ -419,10 +427,6 @@
   justify-content: space-between;
 }
 
-:local(.indicatorItemKYC) {
-  composes: indicatorItem;
-}
-
 :local(.boxKYC_1) {
   display: flex;
   padding: 10px 25px;
@@ -430,7 +434,7 @@
 
 :local(.boxKYC_2) {
   display: flex;
-  padding: 25px;
+  padding: 10px 25px;
 }
 
 :local(.boxKYC_3) {
@@ -451,6 +455,12 @@
   width: 20px;
 }
 
+/* 4.2 TEXT */
+:local(.indicatorItemKYC) {
+  composes: indicatorItem;
+}
+
+/* 4.3 BUTTON */
 input[type="file"]::-webkit-file-upload-button {
   background-color: transparent;
   font-weight: bold;
