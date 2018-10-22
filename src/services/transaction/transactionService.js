@@ -369,7 +369,7 @@ class TransactionService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let response = await axios.get(BASE_URL + "/service/recarga", API_HEADER);
-
+  
       let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
@@ -423,6 +423,29 @@ class TransactionService {
       return response.data.data.services[0];
     } catch (error) {
       console.warn(error);
+      internalServerError();
+      return error;
+    }
+  }
+
+  async buyService(coin = undefined, token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let coins = [];
+      let response = await axios.get(BASE_URL + "/service/compra", API_HEADER);
+      
+      let lunesCoin = await response.data.data.services.map(value => {
+        coins[value.abbreviation] = value;
+      });
+    
+      /* eslint-disable */
+      await Promise.all(lunesCoin);
+      /* eslint-enabled */
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return coin ? coins[coin] : coins;
+    } catch (error) {
       internalServerError();
       return error;
     }
