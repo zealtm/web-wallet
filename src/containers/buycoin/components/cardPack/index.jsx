@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 // UTILS
 import {convertBiggestCoinUnit} from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
+import i18n from "../../../../utils/i18n";
 
 // STYLES
 import style from "./style.css";
@@ -30,7 +31,7 @@ class CardPack extends React.Component {
           className={style.cardIcon}
         />
         <div className={style.hrCard} />
-        <p className={style.paragraph}>Você está comprando <b>{`${defaultCoin} ${parseFloat(fiatAmount).toFixed(2)}`}</b> e está recebendo</p>
+        <p className={style.paragraph}> {i18n.t("BUYCOINS_PACK_TEXT_PREFIX")} <b>{`${defaultCoin} ${parseFloat(fiatAmount).toFixed(2)}`}</b> {i18n.t("BUYCOINS_PACK_TEXT_SUFIX")} </p>
         <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount,8)}</h1>
         <div className={style.valueCard}>
           <span className={style.dollarSign}>R$</span>

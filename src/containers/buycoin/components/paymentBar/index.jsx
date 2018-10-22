@@ -38,7 +38,7 @@ class PaymentBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Escolha",
+      title: i18n.t("BUY_SEL_COIN"),
       img: null
     };
   }
