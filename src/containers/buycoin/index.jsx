@@ -33,7 +33,7 @@ class BuyCoins extends React.Component {
   render() {
     const {modalStep, setModalStep, modalOpen} = this.props;
 
-    const titles = ["Comprar", "Historico"];
+    const titles = [i18n.t("BUYCOINS_PURCHASE_TAB_TITLE"), i18n.t("BUYCOINS_HISTORY_TAB_TITLE")];
     const contents = [<Buy key={0} />, <History key={1} />];
 
     return (

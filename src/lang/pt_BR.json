@@ -463,6 +463,10 @@
   "BUYCOINS_SUCCESS_2": "Visualize seu histórico de compras na guia Histórico",
   "BUYCOINS_INFO_ERROR": "Procedimento de compra falhou",
 
+  "BUYCOINS_PACK_TEXT_PREFIX": "Você está comprando ",
+  "BUYCOINS_PACK_TEXT_SUFIX": " e receberá",
+  "BUYCOINS_PURCHASE_TAB_TITLE": "Comprar moedas",
+  "BUYCOINS_HISTORY_TAB_TITLE": "Histórico",
   "INSTRUCTION_MODAL_BUY_INFO_1": "A taxa de uso do serviço é de 5%. Ou seja, a cotação usada como base na carteira é acrescida dos 5% para a manutenção do serviço pela Lunes.",
   "INSTRUCTION_MODAL_BUY_INFO_2": "Usando criptomoeda como forma de pagamento, ao finalizar a compra as moedas serão automaticamente descontadas da sua carteira Lunes e a escolhida para comprar será enviada para o endereço da moeda em sua carteira Lunes.",
   "INSTRUCTION_MODAL_BUY_INFO_3": "O tempo da operação varia de acordo com a rede da moeda escolhida como meio de pagamento.", 
