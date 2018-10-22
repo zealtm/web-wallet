@@ -80,7 +80,7 @@ class CoinsBar extends React.Component {
       <div>
         <Grid container style={{ justifyContent: "center" }}>
           <Hidden xsDown>
-            <Grid item xs={1} className={style.arrowControlLeft}>
+            <Grid item xs={1} className={style.arrowControl}>
               <IconButton
                 color="inherit"
                 aria-label={i18n.t("TEXT_PREV")}
@@ -98,7 +98,7 @@ class CoinsBar extends React.Component {
           </Grid>
 
           <Hidden xsDown>
-            <Grid item xs={1} className={style.arrowControlRight}>
+            <Grid item xs={1} className={style.arrowControl}>
               <IconButton
                 color="inherit"
                 aria-label={i18n.t("TEXT_PREV")}

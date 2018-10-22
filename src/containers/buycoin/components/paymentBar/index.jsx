@@ -67,9 +67,11 @@ class PaymentBar extends React.Component {
     return (
       <div className={style.baseBar}>
         <Grid container>
-          <Grid item xs={12} md={8}>
+
+        <Grid item xs={12} md={1}></Grid>
+          <Grid item xs={12} md={7}>
             <span className={style.label}>Formas de pagamento</span>
-            <div className={style.baseBackgroundFlex}>
+            <div className={style.baseBackgroundFlex} >
               <FormControlLabel
                 value="p2p"
                 classes={{label: classes.rootLabel}} 
@@ -95,7 +97,7 @@ class PaymentBar extends React.Component {
               />
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <span className={style.label}>Moeda desejada</span>
             <div className={style.baseBackground}>
               <Select

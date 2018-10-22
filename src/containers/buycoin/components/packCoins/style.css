@@ -20,19 +20,11 @@
   padding-top: 2px;
 }
 
-:local .arrowControlLeft {
-  justify-content: flex-start;
+:local .arrowControl{
+  justify-content: center;
   align-items: center;
   display: flex;
 }
-
-:local .arrowControlRight {
-  justify-content: flex-end;
-  align-items: center;
-  display: flex;
-}
-
-
 
 :local .contentCoins {
   composes: bgPurpleLight from "../../../../components/bases/colorBase.css";
