@@ -9,7 +9,8 @@ import {
   getCoinsEnabled,
   getCoinPackage,
   getCoinForPayment,
-  getHistoryBuy
+  getHistoryBuy,
+  setClearBuyPack
 } from "../../redux/buyAction";
 
 // MATERIAL UI
@@ -55,8 +56,9 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment, getHistoryBuy } = this.props;
+    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack } = this.props;
 
+    setClearBuyPack();
     getCoinPackage(id, coin, address);
     getCoinForPayment(coin);
     getHistoryBuy(coin);
@@ -205,6 +207,7 @@ CoinsBar.propTypes = {
   getCoinForPayment: PropTypes.func.isRequired,
   getCoinPackage: PropTypes.func.isRequired,
   getHistoryBuy: PropTypes.func.isRequired,
+  setClearBuyPack: PropTypes.func.isRequired,
   coinsEnabled: PropTypes.array.isRequired,
   coins: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -224,7 +227,8 @@ const mapDispatchToProps = dispatch =>
       getCoinsEnabled,
       getCoinPackage,
       getCoinForPayment,
-      getHistoryBuy
+      getHistoryBuy,
+      setClearBuyPack
     },
     dispatch
   );

@@ -473,5 +473,8 @@
   "BUY_SEL_COIN": "Selecione uma moeda", 
   "BUY_PAYMENT_SELECT": "Selecione um método de pagamento",
   "BUY_PAYMENT_COIN": "Moeda para pagamento",
-  "BUY_METHOD_COIN": "Criptomoedas"
+  "BUY_METHOD_COIN": "Criptomoedas", 
+  "BUY_ERROR_PACK": "Selecione um pacote",
+  "BUY_ERROR_COIN": "Selecione uma moeda",
+  "BUY_ERROR_COIN_PAY": "Selecione uma moeda de pagamento"
 }

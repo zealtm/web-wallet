@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openModal, setBuy } from "../../redux/buyAction";
+import { setBuy } from "../../redux/buyAction";
 
 // COMPONENTS
 import PaymentBar from "../paymentBar";
@@ -31,16 +31,16 @@ class Buy extends React.Component {
   }
 
   validateModal = () => {
-    const { openModal, buypack, coins, setBuy } = this.props;
+    const { buypack, coins, setBuy } = this.props;
 
     let errors = [];
 
-    if (buypack.idpack == "") errors.push("Selecione um pacote / ");
+    if (buypack.idpack == "") errors.push(`${i18n.t("BUY_ERROR_PACK")} / `);
 
     if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
-      errors.push("Selecione uma moeda / ");
+      errors.push(`${i18n.t("BUY_ERROR_COIN")} / `);
 
-    if (buypack.paycoin == "") errors.push("Selecione uma moeda de pagamento");
+    if (buypack.paycoin == "") errors.push(`${i18n.t("BUY_ERROR_COIN_PAY")}`);
 
     if (errors.length > 0) {
       this.setState({
@@ -65,7 +65,6 @@ class Buy extends React.Component {
       };
      
       setBuy(data);
-      //openModal(true);
     }
   };
 
@@ -99,7 +98,6 @@ class Buy extends React.Component {
 }
 
 Buy.propTypes = {
-  openModal: PropTypes.func.isRequired,
   setClearBuy: PropTypes.func.isRequired,
   buypack: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
@@ -116,7 +114,6 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openModal,
       setBuy
     },
     dispatch
