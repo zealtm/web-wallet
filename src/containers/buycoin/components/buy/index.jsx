@@ -4,11 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openModal, setClearBuy, setBuy } from "../../redux/buyAction";
+import { openModal, setBuy } from "../../redux/buyAction";
 
 // COMPONENTS
 import PaymentBar from "../paymentBar";
-import CoinsBar from "../coinsBar";
 import PackCoins from "../packCoins";
 import Instructions from "../instructions";
 import Loading from "../../../../components/loading";
@@ -30,10 +29,6 @@ class Buy extends React.Component {
       messageError: ""
     };
   }
-  componentWillUnmount = () => {
-    const { setClearBuy } = this.props;
-    setClearBuy();
-  };
 
   validateModal = () => {
     const { openModal, buypack, coins, setBuy } = this.props;
@@ -82,9 +77,6 @@ class Buy extends React.Component {
       <div>
         {error ? <ModalBar type="error" message={messageError} timer /> : null}
         <div>
-          <CoinsBar />
-        </div>
-        <div>
           <PackCoins />
         </div>
         <PaymentBar />
@@ -125,7 +117,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       openModal,
-      setClearBuy,
       setBuy
     },
     dispatch
