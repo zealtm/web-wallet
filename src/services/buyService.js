@@ -37,7 +37,7 @@ class BuyService {
     }
   }
 
-  async getCoinPayment(token, coin) {
+  async getCoinPayment(token) {
     try {
       API_HEADER.headers.Authorization = token;
 
