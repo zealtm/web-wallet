@@ -29,7 +29,7 @@
   padding-top: 2px;
 }
 
-:local .arrowControl {
+:local .arrowControl{
   justify-content: center;
   align-items: center;
   display: flex;
