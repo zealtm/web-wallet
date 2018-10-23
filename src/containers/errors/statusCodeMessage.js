@@ -5,10 +5,10 @@ const typeSuccess = "REQUEST_SUCCESS";
 export const internalServerError = () => ({
   type,
   message:
-    (i18n.t("MESSAGE_LOGIN_FAILED"))
+    (i18n.t("ASSETS_SERVER_ERROR"))
 
 });
-
+ 
 export const unauthorized = message => ({
   error: {
     type,
