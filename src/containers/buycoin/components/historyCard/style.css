@@ -1,40 +1,54 @@
+/*
+1. TEXT
+
+2. CARD
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* TEXT */
+
 :local .line {
-    border-bottom: 2px solid #42227d;
-    margin: 0.5rem 0;
-    width: 100%;
+  border-bottom: 2px solid #42227d;
+  margin: 0.5rem 0;
+  width: 100%;
 }
 
-:local .bold{
-    composes: inputTextDefault from "../../../../components/bases/textBase.css";
-    font-weight: bold;
+:local .bold {
+  composes: inputTextDefault from "../../../../components/bases/textBase.css";
+  font-weight: bold;
 }
 
-:local .lunes{
-    composes: inputTextDefault from "../../../../components/bases/textBase.css";
-    font-weight: bold;
-    text-align: right;
+:local .lunes {
+  composes: inputTextDefault from "../../../../components/bases/textBase.css";
+  font-weight: bold;
+  text-align: right;
 }
 
-:local .status{
-    composes: inputTextDefault from "../../../../components/bases/textBase.css";
-    composes: clGreenDefault from "../../../../components/bases/colorBase.css";
-    margin-left: 3rem;
-    font-weight: bold;
+:local .status {
+  composes: inputTextDefault from "../../../../components/bases/textBase.css";
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+  margin-left: 3rem;
+  font-weight: bold;
 }
 
-:local(.text), :local(.img){
-    composes: inputTextDefault from "../../../../components/bases/textBase.css";
-    text-align: right;
+:local(.text),
+:local(.img) {
+  composes: inputTextDefault from "../../../../components/bases/textBase.css";
+  text-align: right;
 }
 
-:local .maginText{
-    margin-top: 1rem;
+:local .maginText {
+  margin-top: 1rem;
 }
 
-:local .maginTextRight{
-    margin-top: 1rem;
-    text-align: right;
+:local .maginTextRight {
+  margin-top: 1rem;
+  text-align: right;
 }
+
+/* CARD */
+
 :local .wrapper1 {
   display: flex;
   justify-content: flex-end;
@@ -46,7 +60,7 @@
   margin-right: 5px;
 }
 @media screen and (max-width: 600px) {
-    :local(.status){
-        margin-left: 1rem;
-    }
+  :local(.status) {
+    margin-left: 1rem;
+  }
 }
