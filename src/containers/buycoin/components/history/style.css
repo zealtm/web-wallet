@@ -31,4 +31,5 @@
 
 :local .textCenter {
   text-align: center;
+  composes: textDefault from "../../../../components/bases/textBase.css";
 }
