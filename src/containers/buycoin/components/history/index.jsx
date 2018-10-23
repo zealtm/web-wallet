@@ -13,40 +13,15 @@ import { Grid } from "@material-ui/core";
 //REDUX
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { getHistoryBuy } from "../../redux/buyAction";
 
 // UTILS
 import i18n from "../../../../utils/i18n.js";
 
 class History extends React.Component {
-  componentDidMount() {
-    let { getHistoryBuy, coins } = this.props;
-    getHistoryBuy(coins);
-  }
-
-  removeDuplicatedData = data => {
-    let newData = [];
-    let ids = [];
-    data.map(tx => {
-      if (ids.indexOf(tx.id) === -1) {
-        newData.push(tx);
-        ids.push(tx.id);
-      }
-    });
-    return newData;
-  };
-  orderByTime = data =>
-    data.sort((a, b) => {
-      a = { timestamp: new Date(a.date).getTime() };
-      b = { timestamp: new Date(b.date).getTime() };
-      if (a.timestamp < b.timestamp) return -1;
-      if (a.timestamp > b.timestamp) return 1;
-      return 0;
-    });
-
   renderHistory = () => {
     let { user } = this.props;
-    let { history, loadingHistory } = this.props.buy;
+    let { loadingHistory, history } = this.props.buy;
+
     if (loadingHistory) return <Loading />;
 
     if (!history)
@@ -55,17 +30,17 @@ class History extends React.Component {
           {i18n.t("BUYCOINS_FAILED_TO_GET_HISTORY")}
         </h1>
       );
+
     if (history.constructor.name !== "Array")
       return (
         <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
       );
+
     if (history.length < 1)
       return (
         <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
       );
 
-    history = this.removeDuplicatedData(history);
-    history = this.orderByTime(history);
     return history.map((tx, key) => (
       <HistoryCard user={user} {...tx} key={key} />
     ));
@@ -83,7 +58,6 @@ class History extends React.Component {
 }
 
 History.propTypes = {
-  getHistoryBuy: PropTypes.func.isRequired,
   buy: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
@@ -93,13 +67,7 @@ const mapStateToProps = state => ({
   coins: state.skeleton.coins,
   user: state.user.user
 });
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getHistoryBuy
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -103,34 +103,15 @@ class BuyService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let url;
-      coins = Object.keys(coins);
+      let response = await axios.get(`${BASE_URL}/coin/${coins}/sell/history`, API_HEADER);
 
-      let promises = [];
-      let thenFunc = r => {
-        let { data } = r;
-        if (data.code !== 200) throw data;
-        return data.data.txs;
-      };
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      for (let coin of coins) {
-        url = `${BASE_URL}/coin/${coin}/sell/history`;
-        promises.push(
-          axios
-            .get(url, API_HEADER)
-            .then(thenFunc)
-            .catch(() => {})
-        );
+      if(response.data.code !== 200){
+        return internalServerError();
       }
-
-      let txs = [];
-      let results = await Promise.all(promises); //eslint-disable-line
-
-      results.map(array => {
-        txs.push(...array);
-      });
      
-      return txs;
+      return response.data.data.txs;
     } catch (err) {
       return internalServerError();
     }

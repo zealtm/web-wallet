@@ -134,6 +134,15 @@ const buy = (state=initialState, action) => {
         return {
           ...initialState
         };
+        
+      case "SET_CLEAR_BUY_PACK_REDUCER":
+        return {
+          ...state,
+          coinsPayment: [],
+          buypackage: {
+            ...initialState.buypackage
+          }
+        };
 
       case "GET_HISTORY_BUY_REDUCER":
         return {

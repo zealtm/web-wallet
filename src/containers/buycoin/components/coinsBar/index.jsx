@@ -5,7 +5,13 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, getCoinPackage, getCoinForPayment } from "../../redux/buyAction";
+import {
+  getCoinsEnabled,
+  getCoinPackage,
+  getCoinForPayment,
+  getHistoryBuy,
+  setClearBuyPack
+} from "../../redux/buyAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -50,10 +56,12 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment } = this.props;
+    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack } = this.props;
 
+    setClearBuyPack();
     getCoinPackage(id, coin, address);
     getCoinForPayment(coin);
+    getHistoryBuy(coin);
   };
 
   renderArrowPercent = val => {
@@ -89,13 +97,7 @@ class CoinsBar extends React.Component {
             )
           }
         >
-          <div
-            className={
-              active
-                ? style.boxCoinActive
-                : style.boxCoin
-            }
-          >
+          <div className={active ? style.boxCoinActive : style.boxCoin}>
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
@@ -116,7 +118,7 @@ class CoinsBar extends React.Component {
   };
 
   render() {
-    const {loading,coinsEnabled} = this.props;
+    const { loading, coinsEnabled } = this.props;
 
     if (loading)
       return (
@@ -125,7 +127,7 @@ class CoinsBar extends React.Component {
         </div>
       );
 
-    if (coinsEnabled.length < 1) 
+    if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
           Erro. Tente recarregar a página.
@@ -204,6 +206,8 @@ CoinsBar.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   getCoinForPayment: PropTypes.func.isRequired,
   getCoinPackage: PropTypes.func.isRequired,
+  getHistoryBuy: PropTypes.func.isRequired,
+  setClearBuyPack: PropTypes.func.isRequired,
   coinsEnabled: PropTypes.array.isRequired,
   coins: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -221,8 +225,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getCoinsEnabled,
-      getCoinPackage, 
-      getCoinForPayment
+      getCoinPackage,
+      getCoinForPayment,
+      getHistoryBuy,
+      setClearBuyPack
     },
     dispatch
   );
