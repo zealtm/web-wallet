@@ -89,7 +89,8 @@ import {
   getFeeBuySaga,
   setFeeBuySaga,
   confirmBuySaga,
-  getHistoryBuySaga
+  getHistoryBuySaga, 
+  getLoadInfosPackageSaga
 } from "../buycoin/redux/buySaga";
 
 export default function* rootSaga() {
@@ -180,6 +181,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+    fork(takeLatest, "SET_BUY_COIN_GENERAL", getLoadInfosPackageSaga),
 
   ];
 }

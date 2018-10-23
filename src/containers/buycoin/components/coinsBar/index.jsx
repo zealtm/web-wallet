@@ -10,7 +10,8 @@ import {
   getCoinPackage,
   getCoinForPayment,
   getHistoryBuy,
-  setClearBuyPack
+  setClearBuyPack, 
+  getLoadInfosPackage
 } from "../../redux/buyAction";
 
 // MATERIAL UI
@@ -56,12 +57,15 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack } = this.props;
+    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack,getLoadInfosPackage } = this.props;
 
     setClearBuyPack();
-    getCoinPackage(id, coin, address);
-    getCoinForPayment(coin);
-    getHistoryBuy(coin);
+    // getCoinPackage(id, coin, address);
+    // getCoinForPayment(coin);
+    // getHistoryBuy(coin);
+
+    getLoadInfosPackage(coin, address, id);
+
   };
 
   renderArrowPercent = val => {
@@ -228,7 +232,8 @@ const mapDispatchToProps = dispatch =>
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
-      setClearBuyPack
+      setClearBuyPack, 
+      getLoadInfosPackage
     },
     dispatch
   );

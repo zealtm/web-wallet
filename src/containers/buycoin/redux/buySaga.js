@@ -400,3 +400,90 @@ export function* getHistoryBuySaga(payload) {
     yield put(internalServerError());
   }
 }
+
+
+
+
+
+export function* getLoadInfosPackageSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_PACK_REDUCER",
+      payload: true
+    });
+    yield put({
+      type: "SET_LOADING_HISTORY",
+      payload: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      buyService.getPackages,
+      token,
+      payload.coin
+    );
+
+    if (!response.packages) {
+      yield put({
+        type: "SET_LOADING_PACK_REDUCER",
+        payload: false
+      });
+      yield put(internalServerError());
+    }
+
+    yield put({
+      type: "GET_BUY_PACKAGE_REDUCER",
+      packages: response.packages || [], 
+      id: payload.id,
+      coin: payload.coin, 
+      address: payload.address
+    });
+
+
+    token = yield call(getAuthToken);
+    let response2 = yield call(
+      buyService.getCoinPayment,
+      token,
+      payload.coin
+    );
+    
+    if (!response2.coins) {
+      yield put({
+        type: "SET_LOADING_PACK_REDUCER",
+        payload: false
+      });
+      yield put(internalServerError());
+      return;
+    }
+    
+    let coins = [];
+    if(response2.coins.length>0){
+      response2.coins.map((val,key)=>{
+        if(val.abbreviation!==payload.coin){
+          coins.push(val);
+        }
+      });
+    }
+
+    yield put({
+      type: "GET_COIN_FOR_PAYMENT_REDUCER",
+      coins: coins || [],
+    });
+
+
+
+    token = yield call(getAuthToken);
+    let history = yield call(buyService.getHistory, token, payload.coin);
+
+    yield put({
+      type: "GET_HISTORY_BUY_REDUCER",
+      history
+    });
+    yield put({type: "SET_LOADING_HISTORY", payload: false})
+
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

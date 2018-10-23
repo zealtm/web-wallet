@@ -38,6 +38,13 @@ export const setCoinSelected = (coin, address, id) => ({
   id: id
 });
 
+export const getLoadInfosPackage = (coin, address, id) => ({
+  type: "SET_BUY_COIN_GENERAL",
+  coin: coin,
+  address: address, 
+  id: id
+});
+
 export const getFeeBuy = (
   coin,
   amount,
