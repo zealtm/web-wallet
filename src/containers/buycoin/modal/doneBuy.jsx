@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-// import { loadWalletInfo } from "../../skeleton/redux/skeletonAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -20,20 +19,15 @@ class DoneBuy extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    //const { loadWalletInfo, user } = this.props;
-    //loadWalletInfo(user.password);
-  }
-
   render() {
-    //const {loading} = this.props;
-    const loading = false;
+    const { loading } = this.props;
+
     if (loading) {
       return (
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
-      )
+      );
     } else {
       return (
         <div className={style.modalBox}>
@@ -43,7 +37,6 @@ class DoneBuy extends React.Component {
           />
           <div>
             {i18n.t("BUYCOINS_SUCCESS_1")}
-            {i18n.t("BUYCOINS_SUCCESS_2")}
           </div>
 
           <div className={style.smallDescription}>
@@ -56,8 +49,16 @@ class DoneBuy extends React.Component {
 }
 
 DoneBuy.propTypes = {
-  // loading: PropTypes.bool.isRequired,
-  // user: PropTypes.object.isRequired
-}
+  loading: PropTypes.bool.isRequired
+};
 
-export default DoneBuy;
+const mapStateToProps = store => ({
+  loading: store.buy.loading
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DoneBuy);

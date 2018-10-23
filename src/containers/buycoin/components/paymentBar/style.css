@@ -1,19 +1,27 @@
+/*
+1. BASE
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* BASE */
+
 :local .baseBar {
-  padding-top: 15px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 :local .label {
   font-weight: 700;
   display: block;
-  margin-bottom:12px;
-  margin-top:12px;
+  margin-bottom: 12px;
+  margin-top: 12px;
   font-size: 12px;
 }
 
 :local .baseBackground {
   composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
-  padding:10px;
+  padding: 10px;
   border-radius: 5px;
   min-height: 60px;
   display: flex;
@@ -26,3 +34,9 @@
   margin-right: 20px;
 }
 
+@media only screen and (max-width: 599px) {
+  :local .baseBackgroundFlex {
+    composes: baseBackground;
+    margin-right: 0px;
+  }
+}
