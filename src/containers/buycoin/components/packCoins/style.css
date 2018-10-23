@@ -1,6 +1,16 @@
 @import url("~slick-carousel/slick/slick.css");
 
 
+/*
+1. BASE
+
+2. ICON
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASE */
+
 :local .arrowPercent {
   width: 10px;
   margin-bottom: -8px;
@@ -26,7 +36,7 @@
   display: flex;
 }
 
-
+/* ICON */
 
 :local .contentCoins {
   composes: bgPurpleLight from "../../../../components/bases/colorBase.css";

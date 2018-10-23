@@ -1,3 +1,15 @@
+/*
+1. CARD
+  
+2. TEXT
+*/
+
+/* ------------------------------------------------------------------------- */
+
+
+
+/* 1. CARD */
+
 :local(.cardBuy) {
   background-color: rgba(255,255,255,.02);
   padding: 20px 5px 8px 5px;
@@ -35,13 +47,6 @@
   margin-right: auto;
 }
 
-:local(.amount) {
-  font-family: "OffSide";
-  font-weight: normal;
-  font-size: 18px;
-  letter-spacing: 2px;
-}
-
 :local(.hrCard) {
   width: 30px;
   margin-left:auto;
@@ -49,6 +54,15 @@
   margin-top:15px;
   margin-bottom:10px;
   border-bottom: 1px solid #6351a8;
+}
+
+/* 2. TEXT */
+
+:local(.amount) {
+  font-family: "OffSide";
+  font-weight: normal;
+  font-size: 18px;
+  letter-spacing: 2px;
 }
 
 :local(.dollarSign) {

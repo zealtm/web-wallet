@@ -1,10 +1,16 @@
 /*
-  1. BASES
-  2. TEXTS 
-  3. BUTTONS/INPUTS
+1. BASE
+  
+2. TEXT
+
+3. BUTTON/INPUT
+
 */
 
-/* 1. BASES */
+/* ------------------------------------------------------------------------- */
+
+
+/* 1. BASE */
 
 :local .modalBox {
   text-align: center;
@@ -67,7 +73,7 @@
   }
 }
 
-/* 2. TEXTS */
+/* 2. TEXT */
 :local .strongText {
   font-size: 16px;
   font-weight: 700;
@@ -172,7 +178,7 @@
   }
 }
 
-/* 3. BUTTONS */
+/* 3. BUTTON */
 
 :local .bt {
   max-width: 300px;

@@ -1,3 +1,21 @@
+/*
+1. BASE
+  
+2. TEXT
+
+3. SCROLLBAR
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
 /* 1. BASE */
 :local .box {
   margin-left: auto;
@@ -86,7 +104,7 @@
 }
 
 
-/* 4. SCROLLBAR */
+/* 3. SCROLLBAR */
 ::-webkit-scrollbar              {
   background-color: transparent;
   height: 5px;

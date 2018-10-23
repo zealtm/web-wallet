@@ -1,4 +1,13 @@
-/* BASE */
+/*
+1. BASE
+
+2. MODAL
+*/
+
+/* ------------------------------------------------------------------------- */
+
+
+/* 1. BASE */
 :local(.instructions) {
   composes: textDefault from "../../../../components/bases/textBase.css";
   display: block;
@@ -16,7 +25,7 @@
   top: 5px;
 }
 
-/* MODAL*/
+/* 2. MODAL*/
 :local(.alignInstructions, ol) {
   list-style-type: upper-alpha;
   font-size: 16px;
