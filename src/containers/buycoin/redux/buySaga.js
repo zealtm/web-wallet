@@ -106,10 +106,19 @@ export function* getCoinForPaymentSaga(payload) {
       yield put(internalServerError());
       return;
     }
+    
+    let coins = [];
+    if(response.coins.length>0){
+      response.coins.map((val,key)=>{
+        if(val.abbreviation!==payload.coin){
+          coins.push(val);
+        }
+      });
+    }
 
     yield put({
       type: "GET_COIN_FOR_PAYMENT_REDUCER",
-      coins: response.coins || [],
+      coins: coins || [], //response.coins || [],
     });
 
     return;

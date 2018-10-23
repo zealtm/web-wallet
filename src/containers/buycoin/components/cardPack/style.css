@@ -91,3 +91,38 @@
 :local(.paragraph) {
   font-size: 12px;
 }
+
+@media screen and (max-width: 599px) {
+  :local .amount {
+    font-family: "OffSide";
+    font-weight: normal;
+    font-size: 3.5vw;
+    letter-spacing: 2px;
+  }
+
+  :local(.dollarSign) {
+    font-weight: 300;
+    font-size: 10px;
+    color: #54d467;
+    margin-top: 5%;
+  }
+
+  :local(.value) {
+    font-size: 40px;
+    font-weight: 500;
+    margin-top: -5px;
+    color: #54d467;
+  }
+
+  :local(.decimals) {
+    font-size: 10px;
+    font-weight: 500;
+    color: #54d467;
+    margin-top: 7px;
+  }
+
+  :local(.valueCard) {
+    display: inline-flex;
+    padding-top: 20%;
+  }
+}

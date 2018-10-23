@@ -126,10 +126,10 @@
 
 :local .boxLabelCoin {
   font-size: 12px;
-  text-align: right;
   padding-top: 12px;
-  padding-right: 5px;
   word-wrap: break-word;
+  padding-left: 7px;
+  float:left;
 }
 
 :local .boxLabelCoinDisabled {
@@ -141,6 +141,12 @@
 
 :local .labelPercent {
   font-size: 11px;
+}
+
+@media screen and (max-width: 1024px) {
+  :local .boxLabelCoin {
+    color: transparent;
+  }
 }
 
 /* ------------------------------------------------------------------------- */
