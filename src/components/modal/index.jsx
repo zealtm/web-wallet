@@ -32,13 +32,16 @@ class Modal extends React.Component {
       </div>
     );
   };
-  componentDidMount(){
-    let { close, show } = this.props;
-    document.addEventListener('keyup', (e) => {
-        if (e.keyCode === 27) {
-          close();
-        };
+  handleCloseOnPressEscape() {
+    document.addEventListener('keydown', (event) => {
+      event = event || window.event;
+      if (event.keyCode == 27 && this.props.show) {
+        this.props.close();
+      }
     });
+  }
+  componentDidMount(){
+    this.handleCloseOnPressEscape();
   }
   renderContent = () => {
     let { content, show } = this.props;
