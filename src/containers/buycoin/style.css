@@ -3,18 +3,13 @@
   
 2. TEXT
 
-3. SCROLLBAR
+3. BUTTONS
+
+4. SCROLLBAR
 
 */
 
 /* ------------------------------------------------------------------------- */
-
-
-
-
-
-
-
 
 /* 1. BASE */
 :local .box {
@@ -103,9 +98,8 @@
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
 }
 
-
-/* 3. SCROLLBAR */
-::-webkit-scrollbar              {
+/* 4. SCROLLBAR */
+::-webkit-scrollbar {
   background-color: transparent;
   height: 5px;
   width: 5px;
@@ -113,7 +107,7 @@
   padding: 2px;
 }
 
-::-webkit-scrollbar-thumb        {
+::-webkit-scrollbar-thumb {
   background-color: #654fa4;
   border-radius: 6px;
 }
