@@ -2,6 +2,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ObjectRestSpreadPlugin = require('@sucrase/webpack-object-rest-spread-plugin');
+const HardSource = require('hard-source-webpack-plugin')
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log("------------------------------------------------------------------------------------------");
@@ -37,7 +38,7 @@ console.log("    `~/  )` ) ,/|                 ~-_~&gt;--&lt;_/-__       __-~ _/
 console.log(" ._-~//( )/ )) `                    ~~-'_/_/ /~~~~~~~__--~  ");
 console.log("  ;'( ')/ ,)(                              ~~~~~~~~~~  ");
 console.log(" ' ') '( (/  ");
-console.log("    '   '  `     ");             
+console.log("    '   '  `     ");
 console.log("                       ");
 console.log("                         ");
 
