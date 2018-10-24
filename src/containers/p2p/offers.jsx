@@ -53,7 +53,6 @@ const inputStyle = {
   error: {},
   focused: {}
 };
-
 class Offers extends React.Component {
   constructor(props) {
     super(props);
@@ -89,6 +88,7 @@ class Offers extends React.Component {
             return <CardOffer key={key} />;
           })}
         </div>
+
       </div>
     );
   }
