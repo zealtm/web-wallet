@@ -19,8 +19,10 @@ class ConfirmModal extends React.Component {
     }
 
     hendlerContinue = () => {
+        let { modalStep } = this.props;
         if(this.state.selectFree){
             this.setState({ confirm: !this.state.confirm });
+            modalStep(2);
         }
         
     }

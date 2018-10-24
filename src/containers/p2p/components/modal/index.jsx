@@ -20,7 +20,7 @@ class ModalPayment extends React.Component {
           <div>
             { modal &&
               <Modal                
-                content={<FluxoModal modalStep = { 2 } />}
+                content={<FluxoModal modalStep = {1} />}
                 show={isOpen}
                 close={() => this.handleModal()}
             />
@@ -30,5 +30,7 @@ class ModalPayment extends React.Component {
         );
       }
 }
-ModalPayment.propTypes = {}
+ModalPayment.propTypes = {
+  modalStep: PropTypes.number.isRequired
+}
 export default ModalPayment;

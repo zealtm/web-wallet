@@ -27,9 +27,8 @@ class Select extends React.Component {
 
   renderItems = () => {
     const { list, width } = this.props;
-
     const listStyle = {
-      width: width ? `calc(${width} + 20px)` : "200px"
+      width: width ? `calc(${width} - 20px)` : "200px"
     };
 
     return (

@@ -9,6 +9,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 import Tabs from "../../components/tabs";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import ModalPayment from "./components/modal/";
 
 //STYLE
 import style from "./style.css";
@@ -89,7 +90,8 @@ class P2P extends React.Component {
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
         {this.renderContent()}
-        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />        
+        <TabIcons content={contentTabIcons} handle={this.handleTabIcon} /> 
+        <ModalPayment modal={true} />       
       </div>
     );
   }

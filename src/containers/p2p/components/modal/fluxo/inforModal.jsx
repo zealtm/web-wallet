@@ -9,7 +9,7 @@ class InforModal extends React.Component {
         return (
             <div className={style.modalBox}>
                 <img
-                    src={"/images/icons/coins/lunes.png"}
+                    src={"/images/icons/confirm/confirm.png"}
                     className={style.iconInfor}
                 />
                 <div className={style.totalConfirm}>
