@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep,openModal,setClearBuy } from "./redux/buyAction";
+import {
+  setModalStep,
+  openModal,
+  setClearBuy,
+  getCoinsEnabled
+} from "./redux/buyAction";
 
 // COMPONENTS
 import Modal from "../../components/modal";
@@ -13,6 +18,7 @@ import History from "./components/history";
 import Buy from "./components/buy";
 import BuyModal from "./modal/buyModal";
 import CoinsBar from "./components/coinsBar";
+import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -30,17 +36,27 @@ class BuyCoins extends React.Component {
     setClearBuy();
   };
 
-  closeModal(){
-    const {setModalStep, openModal} = this.props;
+  componentDidMount = () => {
+    const { getCoinsEnabled } = this.props;
+    getCoinsEnabled();
+  };
+
+  closeModal() {
+    const { setModalStep, openModal } = this.props;
     openModal(false);
     setModalStep(1);
   }
 
   render() {
-    const {modalStep, setModalStep, modalOpen} = this.props;
+    const { modalStep, setModalStep, modalOpen, loading } = this.props;
 
-    const titles = [i18n.t("BUYCOINS_PURCHASE_TAB_TITLE"), i18n.t("BUYCOINS_HISTORY_TAB_TITLE")];
+    const titles = [
+      i18n.t("BUYCOINS_PURCHASE_TAB_TITLE"),
+      i18n.t("BUYCOINS_HISTORY_TAB_TITLE")
+    ];
     const contents = [<Buy key={0} />, <History key={1} />];
+
+    if (loading) return <Loading color="wallet" height="80vh" width="100px" />;
 
     return (
       <div>
@@ -58,11 +74,11 @@ class BuyCoins extends React.Component {
             content={<BuyModal />}
             show={modalOpen}
             close={
-              modalStep === 1 || modalStep === 3 || modalStep === 4 ? ()=>this.closeModal() : null
+              modalStep === 1 || modalStep === 3 || modalStep === 4
+                ? () => this.closeModal()
+                : null
             }
-            back={
-              modalStep === 2 ? () => setModalStep(modalStep-1) : null
-            }
+            back={modalStep === 2 ? () => setModalStep(modalStep - 1) : null}
           />
         </div>
       </div>
@@ -76,23 +92,28 @@ BuyCoins.propTypes = {
   setModalStep: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
   setClearBuy: PropTypes.func.isRequired,
+  getCoinsEnabled: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = store => ({
   modalStep: store.buy.modalStep,
   modalOpen: store.buy.modalOpen,
+  loading: store.buy.loadingCoins
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    setModalStep, 
-    setClearBuy,
-    openModal
-  }, 
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep,
+      setClearBuy,
+      openModal,
+      getCoinsEnabled
+    },
+    dispatch
+  );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(BuyCoins);
