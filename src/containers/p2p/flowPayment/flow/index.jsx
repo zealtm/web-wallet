@@ -3,12 +3,15 @@ import React from "react";
 import InforModal from "./inforModal"
 import ConfirmModal from "./confirmModal"
 import PropTypes from "prop-types";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 class FluxoModal extends React.Component {
     constructor(props) {
         super(props);
-    }
-    renderContent = () => {
+    }    
+    render() {
         const { modalStep } = this.props;
 
         switch (modalStep) {
@@ -18,12 +21,17 @@ class FluxoModal extends React.Component {
                 return <InforModal />;
         }
     }
-    render() {
-        return <div>{this.renderContent()}</div>;
-    }
 }
 
 FluxoModal.propTypes = {
     modalStep: PropTypes.number.isRequired
 }
-export default (FluxoModal);
+const mapStateToProps = store => ({
+    modalStep: store.p2p.modalStep
+});
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FluxoModal);

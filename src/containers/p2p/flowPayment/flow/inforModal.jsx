@@ -2,9 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 // STYLE
 import style from "../style.css";
-
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep } from "../../redux/p2pAction";
 
 class InforModal extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <div className={style.modalBox}>
@@ -29,5 +35,23 @@ class InforModal extends React.Component {
         );
     }
 }
-InforModal.propTypes = {}
-export default InforModal;
+InforModal.propTypes = {
+
+    setModalStep: PropTypes.func.isRequired,
+}
+const mapStateToProps = store => ({
+    modalStep: store.p2p.modalStep
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            setModalStep,
+        },
+        dispatch
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+) (InforModal);

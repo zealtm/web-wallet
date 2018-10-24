@@ -2,29 +2,32 @@ import React from "react";
 // STYLE
 import style from "../style.css";
 import PropTypes from "prop-types";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep } from "../../redux/p2pAction";
 
 class ConfirmModal extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             confirm: false,
             selectFee: false,
         };
-        this.hendlerContinue = this.hendlerContinue.bind(this);
     }
 
-    calcFee() {
-        console.log("fee : " + confirm);
+    calcFee= () => {
         this.setState({ selectFee: true });
     }
 
     hendlerContinue = () => {
-        let { modalStep } = this.props;
-        if(this.state.selectFree){
-            this.setState({ confirm: !this.state.confirm });
-            modalStep(2);
-        }
-        
+        const { setModalStep } = this.props;
+        /*if (this.state.selectFree) {
+            this.setState({ confirm: !this.state.confirm });            
+        }*/
+        console.log("Acionou!")
+        setModalStep(2);
+
     }
 
     render() {
@@ -72,7 +75,7 @@ class ConfirmModal extends React.Component {
                 </div>
                 <button
                     className={style.btGreen}
-                    onClick={ this.hendlerContinue() }
+                    onClick={() => this.hendlerContinue()}
                 >
                     {"Confirmar"}
                 </button>
@@ -81,6 +84,21 @@ class ConfirmModal extends React.Component {
     }
 }
 ConfirmModal.propTypes = {
-
+    setModalStep: PropTypes.func.isRequired,
 }
-export default ConfirmModal;
+const mapStateToProps = store => ({
+    
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(
+        {
+            setModalStep,
+        },
+        dispatch
+    );
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ConfirmModal);
