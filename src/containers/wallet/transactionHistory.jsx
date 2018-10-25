@@ -39,12 +39,6 @@ class TransactionHistory extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let { wallet, coins, getWalletCoinHistory } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
-    getWalletCoinHistory(wallet.selectedCoin, address);
-  }
-
   stateDataHistory = key => {
     let { toggleHistory } = this.state;
     this.setState({
@@ -69,18 +63,21 @@ class TransactionHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { wallet, coins } = this.props;
-    let defaultFiat = getDefaultFiat();
-    let defaultCoin = getDefaultCrypto();
-    let selectedCoin = wallet.selectedCoin;
-    let decimalPoint = coins[selectedCoin].decimalPoint;
+    
     let history = wallet.coinHistory.history.txs;
-    let address = coins[selectedCoin].address;
+    let selectedCoin = wallet.selectedCoin;
+    let coin = coins[selectedCoin];
 
-    if (!history || wallet.coinHistory.history <= 0) {
+    if (!coin || !history || wallet.coinHistory.history.length <= 0) {
       return (
         <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
       );
     }
+
+    let defaultFiat = getDefaultFiat();
+    let defaultCoin = getDefaultCrypto();
+    let decimalPoint = coin.decimalPoint;
+    let address = coin.address;
 
     return Object.keys(history).map((val, index) => {
       let transaction = history[index];
