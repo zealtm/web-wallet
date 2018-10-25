@@ -74,20 +74,24 @@
 
 /* 2. TEXT */
 :local .strongText {
+  composes: textDefault from "../../../components/bases/textBase.css";
   font-size: 16px;
   font-weight: 700;
 }
 
 :local .textGreen {
   composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  composes: textDefault from "../../../components/bases/textBase.css";
 }
 
 :local .strongTextGreen {
+  composes: textDefault from "../../../components/bases/textBase.css";
   composes: strongText;
   composes: textGreen;
 }
 
 :local .inlineInfoLabel {
+  composes: textDefault from "../../../components/bases/textBase.css";
   composes: textGreen;
   font-size: 11px;
   display: block;
@@ -95,6 +99,7 @@
 }
 
 :local .labelFee {
+  composes: textDefault from "../../../components/bases/textBase.css";
   display: block;
   padding: 5px;
   padding-left: 10px;
@@ -129,6 +134,7 @@
 }
 
 :local .txtamount {
+  composes: textDefault from "../../../components/bases/textBase.css";
   composes: inputTextDefault from "../../../components/bases/inputBase.css";
   background: transparent;
   font-size: 42px;
