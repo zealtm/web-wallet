@@ -7,7 +7,10 @@ import { bindActionCreators } from "redux";
 import { setCoinSelected } from "../../redux/buyAction";
 
 // MATERIAL
-import { Grid, Radio, FormControlLabel, withStyles } from "@material-ui/core/";
+import { Grid, Radio, Checkbox, FormControlLabel, withStyles } from "@material-ui/core/";
+
+// ICONS 
+import {RadioButtonUnchecked,Lens} from "@material-ui/icons";
 
 // COMPONENTS
 import Select from "../../../../components/select";
@@ -20,7 +23,7 @@ import style from "./style.css";
 
 const stylesCustom = theme => ({
   root: {
-    color: "#68f285",
+    color: "#654fa4",
     "&$checked": {
       color: "#68f285"
     }
@@ -84,9 +87,11 @@ class PaymentBar extends React.Component {
                 value="cripto"
                 classes={{ label: classes.rootLabel }}
                 control={
-                  <Radio
-                  checked="true"
+                  <Checkbox
+                    checked="true"
                     color="primary"
+                    icon={<Lens />} 
+                    checkedIcon={<Lens />}
                     classes={{ root: classes.root, checked: classes.checked }}
                   />
                 }
