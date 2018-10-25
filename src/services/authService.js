@@ -25,6 +25,10 @@ class AuthService {
         },
         API_HEADER
       );
+      if(response.data.code ===401){
+        let notification = i18n.t("NOTIFICATION_SERVICE_INVALID_LOGIN");      
+        return unauthorized(notification);
+      }
 
       return response;
     } catch (error) {
