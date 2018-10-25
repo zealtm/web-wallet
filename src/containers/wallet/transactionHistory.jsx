@@ -63,10 +63,12 @@ class TransactionHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { wallet, coins } = this.props;
+    
     let history = wallet.coinHistory.history.txs;
+    let selectedCoin = wallet.selectedCoin;
     let coin = coins[selectedCoin];
 
-    if (!coin || !history || wallet.coinHistory.history <= 0) {
+    if (!coin || !history || wallet.coinHistory.history.length <= 0) {
       return (
         <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
       );
@@ -74,7 +76,6 @@ class TransactionHistory extends React.Component {
 
     let defaultFiat = getDefaultFiat();
     let defaultCoin = getDefaultCrypto();
-    let selectedCoin = wallet.selectedCoin;
     let decimalPoint = coin.decimalPoint;
     let address = coin.address;
 
