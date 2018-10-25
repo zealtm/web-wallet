@@ -144,7 +144,7 @@ class PackCoins extends React.Component {
             </Grid>
           </Hidden>
 
-          <Grid item xs={12} sm={10} style={{ minHeight: 400 }}>
+          <Grid item xs={12} sm={10} style={{ minHeight: 300 }}>
             <Slider ref={c => (this.slider = c)} {...settings}>
               {this.renderPacks()}
             </Slider>

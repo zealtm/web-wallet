@@ -451,7 +451,7 @@
   "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, enter your password: ",
 
   "MENU_BUYCOINS": "Buy", 
-  "BUYCOINS_TITLE": "BUY CRIPTOCOINS",
+  "BUYCOINS_TITLE": "BUY CRYPTOCURRENCY",
   "BUYCOINS_DESCRIPTION": "Buy your coins quickly, simply and safely.",
   "BUYCOINS_FEE_TEXT_1": "You are sending ",
   "BUYCOINS_FEE_TEXT_2": " to ",
@@ -475,8 +475,10 @@
   "BUY_SEL_COIN": "Select a coin", 
   "BUY_PAYMENT_SELECT": "Select a payment method",
   "BUY_PAYMENT_COIN": "Coin for payment",
-  "BUY_METHOD_COIN": "Cryptocoin",
+  "BUY_METHOD_COIN": "Cryptocurrency",
   "BUY_ERROR_PACK": "Select a pack",
   "BUY_ERROR_COIN": "Select a coin",
-  "BUY_ERROR_COIN_PAY": "Select a coin for payment"
+  "BUY_ERROR_COIN_PAY": "Select a coin for payment",
+  "BUY_ERROR_RELOAD": "Error. Try reload page.",
+  "BUY_CREDIT": "Payment"
 }
