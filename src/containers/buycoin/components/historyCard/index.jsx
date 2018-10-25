@@ -86,7 +86,7 @@ class HistoryCard extends React.Component {
             </Grid>
 
             <Grid direction="row" className={style.maginText}>
-              <span className={style.text}>Crédito</span>
+              <span className={style.text}>{i18n.t("BUY_CREDIT")}</span>
             </Grid>
 
             <Grid direction="row" className={style.maginText}>
