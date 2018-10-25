@@ -477,5 +477,7 @@
   "BUY_METHOD_COIN": "Cryptocurrency",
   "BUY_ERROR_PACK": "Select a pack",
   "BUY_ERROR_COIN": "Select a coin",
-  "BUY_ERROR_COIN_PAY": "Select a coin for payment"
+  "BUY_ERROR_COIN_PAY": "Select a coin for payment",
+  "BUY_ERROR_RELOAD": "Error. Try reload page.",
+  "BUY_CREDIT": "Credit"
 }
