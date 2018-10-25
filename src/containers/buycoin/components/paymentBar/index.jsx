@@ -7,10 +7,10 @@ import { bindActionCreators } from "redux";
 import { setCoinSelected } from "../../redux/buyAction";
 
 // MATERIAL
-import { Grid, Radio, Checkbox, FormControlLabel, withStyles } from "@material-ui/core/";
+import { Grid, Checkbox, FormControlLabel, withStyles } from "@material-ui/core/";
 
 // ICONS 
-import {RadioButtonUnchecked,Lens} from "@material-ui/icons";
+import {Lens} from "@material-ui/icons";
 
 // COMPONENTS
 import Select from "../../../../components/select";
