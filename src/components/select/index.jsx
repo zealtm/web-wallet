@@ -73,8 +73,7 @@ class Select extends React.Component {
 
     const wrapperStyle = {
       width: width ? width : "180px",
-      borderBottom: `1px solid ${error ? "#f44336" : ("#42227d", false)}`,
-     
+      borderBottom: error ? '1px solid #f44336' : 'none',
     };
 
     return (
