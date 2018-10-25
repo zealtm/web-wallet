@@ -216,7 +216,7 @@
   "PIN_CREATE": "Crie seu PIN",
   "BTN_NEXT": "Próximo",
   "BTN_LOGIN": "Login",
-  "NOTIFICATION_SERVICE_INVALID_LOGIN": "Usuário/Email ou Senha Inválido",
+  "NOTIFICATION_SERVICE_INVALID_LOGIN": "Usuário ou senha incorretos",
   "BTN_CONFIRM_PIN": "Validar",
   "BTN_RESET": "Resetar",
   "BTN_SAVE": "Salvar",

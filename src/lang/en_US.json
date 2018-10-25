@@ -216,7 +216,7 @@
   "PIN_CREATE": "CREATE your PIN",
   "BTN_NEXT": "Next",
   "BTN_LOGIN": "Login",
-  "NOTIFICATION_SERVICE_INVALID_LOGIN": "Inavalid Username/Email or Password",
+  "NOTIFICATION_SERVICE_INVALID_LOGIN": "Inavalid username or password",
   "BTN_CONFIRM_PIN": "Validate",
   "BTN_RESET": "Reset",
   "BTN_SAVE": "Save",
