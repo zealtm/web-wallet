@@ -1,3 +1,22 @@
+/*
+
+1. BASE
+
+2. TEXT
+
+3. IMAGES/UI
+
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASE */
+
+:local .textGreen {
+  composes: clGreenDefault from "../../components/bases/colorBase.css";
+}
+
 :local .headerP2P {
   composes: bgPurpleClear from "../../components/bases/colorBase.css";
   border-radius: 8px 8px 0px 0px;
@@ -13,13 +32,15 @@
   position: absolute;
   bottom: 0px;
   right: 0px;
-  max-height: 600px;
-  height: 90vh;
+  max-height: 572px;
+  height: 92vh;
   width: 100%;
-  max-width: 400px;
+  max-width: 414px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
+  overflow: auto;
 }
+
 :local .baseWidgetClose {
   position: absolute;
   bottom: -465px;
@@ -56,7 +77,111 @@
   composes: clGreenDefault from "../../components/bases/colorBase.css";
 }
 
+:local(.cardProfile) {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  border-radius: 10px;
+  min-height: 195px;
+  width: 97%;
+  margin: 2px 0px 0px 5px;
+  overflow: hidden;
+}
+
+:local(.userInfo) {
+  display: flex;
+}
+
+:local(.avatar) {
+  margin: 20px 0px 0px 80px;
+}
+
+:local(.avatarProfile) {
+  margin: 20px 0px 0px 10%;
+  max-width:70px;
+  max-height:70px;
+  border-radius: 50px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,.2);
+}
+
+:local(.userDescription) {
+  width: 80%;
+  padding-top: 5%;
+  margin-left: 10%;
+  margin-bottom: 30px;
+}
+
+:local(.textDescription) {
+  border-radius: 5px;
+  border: solid 1px #6351a8;
+  text-align: center;
+}
+
+:local(.spanDescription) {
+  font-size: 15px;
+  composes: textGreen;
+}
+
+:local(.hr) {
+  border-top: 1px solid #6351a8;
+}
+
+:local(.data) {
+  width: 80%;
+  padding-top: 5%;
+  margin-left: 10%;
+}
+
+:local(.bar) {
+  height: 5px;
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 3px;
+  background-color: #63d585;
+}
+
+:local(.bars) {
+  width: 80%;
+  margin: 10% 0% 0% 10%;
+  display: flex;
+}
+
+:local(.spanBars) {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+:local(.userFeedback) {
+  margin: 10% 0% 0% 10%;
+  width: 80%;
+}
+
+:local .userName {
+  composes: textGreen;
+  font-size: 16px;
+  display: block;
+  margin: 20px 0px 0px 20px;
+}
+
+:local .textSmall {
+  color: #ffffff;
+  font-size: 11px;
+  display: block;
+}
+
+:local .barsNumbers {
+  width: 100%;
+  text-align: right;
+}
 :local .content {
-  height: 390px;
-  overflow: scroll;
+  height: 400px;
+  overflow: auto;
+}
+
+:local .baseContent {
+  margin: 15px;
+}
+
+
+:local .baseUserProfile {
+  max-height:490px;
+  overflow: auto;
 }
