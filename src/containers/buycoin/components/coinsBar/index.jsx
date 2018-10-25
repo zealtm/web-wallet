@@ -47,7 +47,12 @@ class CoinsBar extends React.Component {
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack } = this.props;
+    const {
+      getCoinPackage,
+      getCoinForPayment,
+      getHistoryBuy,
+      setClearBuyPack
+    } = this.props;
 
     setClearBuyPack();
     getCoinPackage(id, coin, address);
@@ -114,7 +119,7 @@ class CoinsBar extends React.Component {
     if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
-          Erro. Tente recarregar a página.
+          {i18n.t("BUY_ERROR_RELOAD")}
         </div>
       );
 
