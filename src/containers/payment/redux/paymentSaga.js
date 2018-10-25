@@ -247,10 +247,11 @@ export function* confirmPaySaga(payload) {
       payload: true
     });
 
-    const payload_transaction = {
+    const payloadTransaction = {
       coin: payload.payment.coin,
       fromAddress: payload.payment.fromAddress,
       toAddress: payload.payment.toAddress,
+      lunesUserAddress: payload.payment.lunesUserAddress,
       amount: payload.payment.amount,
       fee: payload.payment.fee,
       feePerByte: payload.payment.feePerByte,
@@ -266,7 +267,7 @@ export function* confirmPaySaga(payload) {
       // pega o servico disponivel
       let lunesWallet = yield call(
         transactionService.invoiceService,
-        payload_transaction.coin,
+        payloadTransaction.coin,
         token
       );
 
@@ -275,7 +276,7 @@ export function* confirmPaySaga(payload) {
         let response = yield call(
           transactionService.transaction,
           lunesWallet.id,
-          payload_transaction,
+          payloadTransaction,
           lunesWallet,
           decryptAes(seed, payload.payment.user),
           token

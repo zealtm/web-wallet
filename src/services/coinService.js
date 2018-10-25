@@ -442,6 +442,7 @@ class CoinService {
     transaction,
     coin,
     price,
+    lunesUserAddress,
     describe,
     token
   ) {
@@ -456,6 +457,7 @@ class CoinService {
         amount: transaction.amount,
         fee: transaction.fee,
         describe: describe ? describe : null,
+        cashback: { address: lunesUserAddress },
         price: {
           USD: price ? price.USD.price : undefined,
           EUR: price ? price.EUR.price : undefined,
