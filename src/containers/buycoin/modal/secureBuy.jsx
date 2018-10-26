@@ -39,6 +39,7 @@ class SecureBuy extends React.Component {
       coin: coin,
       fromAddress: coins[coin].address,
       toAddress: buypack.address,
+      lunesUserAddress: coins["lunes"].address,
       amount: buypack.amountPay,
       amountReceive: buypack.amount,
       fee: buypack.fee.fee.fee,

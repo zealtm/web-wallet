@@ -76,6 +76,11 @@ export const getHistoryBuy = (coins) => ({
 export const setClearBuy = () => ({
   type: "SET_CLEAR_BUY_REDUCER"
 });
+
+export const setClearBuyPack = () => ({
+  type: "SET_CLEAR_BUY_PACK_REDUCER"
+});
+
 export const setLoadingHistory = (payload) => ({
   type: "SET_LOADING_HISTORY",
   payload

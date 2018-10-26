@@ -5,7 +5,12 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCoinsEnabled, getCoinPackage, getCoinForPayment } from "../../redux/buyAction";
+import {
+  getCoinPackage,
+  getCoinForPayment,
+  getHistoryBuy,
+  setClearBuyPack
+} from "../../redux/buyAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -19,9 +24,6 @@ import {
   ArrowDropDown,
   ArrowDropUp
 } from "@material-ui/icons";
-
-// COMPONENTS
-import Loading from "../../../../components/loading";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -39,21 +41,23 @@ class CoinsBar extends React.Component {
     };
   }
 
-  componentDidMount = () => {
-    const { getCoinsEnabled } = this.props;
-    getCoinsEnabled();
-  };
-
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment } = this.props;
+    const {
+      getCoinPackage,
+      getCoinForPayment,
+      getHistoryBuy,
+      setClearBuyPack
+    } = this.props;
 
+    setClearBuyPack();
     getCoinPackage(id, coin, address);
     getCoinForPayment(coin);
+    getHistoryBuy(coin);
   };
 
   renderArrowPercent = val => {
@@ -89,13 +93,7 @@ class CoinsBar extends React.Component {
             )
           }
         >
-          <div
-            className={
-              active
-                ? style.boxCoinActive
-                : style.boxCoin
-            }
-          >
+          <div className={active ? style.boxCoinActive : style.boxCoin}>
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
@@ -116,19 +114,12 @@ class CoinsBar extends React.Component {
   };
 
   render() {
-    const {loading,coinsEnabled} = this.props;
+    const { coinsEnabled } = this.props;
 
-    if (loading)
+    if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
-          <Loading color="lunes" />
-        </div>
-      );
-
-    if (coinsEnabled.length < 1) 
-      return (
-        <div style={{ marginTop: 40, marginBottom: 40 }}>
-          Erro. Tente recarregar a página.
+          {i18n.t("BUY_ERROR_RELOAD")}
         </div>
       );
 
@@ -201,28 +192,28 @@ class CoinsBar extends React.Component {
 }
 
 CoinsBar.propTypes = {
-  getCoinsEnabled: PropTypes.func.isRequired,
   getCoinForPayment: PropTypes.func.isRequired,
   getCoinPackage: PropTypes.func.isRequired,
+  getHistoryBuy: PropTypes.func.isRequired,
+  setClearBuyPack: PropTypes.func.isRequired,
   coinsEnabled: PropTypes.array.isRequired,
   coins: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
   selected: PropTypes.string.isRequired
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
   coins: store.skeleton.coins,
-  loading: store.buy.loadingCoins,
   selected: store.buy.buypackage.coin.abbreviation
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getCoinsEnabled,
-      getCoinPackage, 
-      getCoinForPayment
+      getCoinPackage,
+      getCoinForPayment,
+      getHistoryBuy,
+      setClearBuyPack
     },
     dispatch
   );

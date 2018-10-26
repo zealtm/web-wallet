@@ -2,7 +2,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ObjectRestSpreadPlugin = require('@sucrase/webpack-object-rest-spread-plugin');
-const HardSource = require('hard-source-webpack-plugin')
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log("------------------------------------------------------------------------------------------");

@@ -1,7 +1,21 @@
+/*
+1. BASE
+  
+2. TEXT
+
+3. BUTTONS
+
+4. SCROLLBAR
+
+*/
+
+/* ------------------------------------------------------------------------- */
+
 /* 1. BASE */
 :local .box {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 40px;
 }
 
 :local(.alignSelectItem_1) {
@@ -85,9 +99,8 @@
   composes: buttonPurpleClear from "../../components/bases/buttonBase.css";
 }
 
-
 /* 4. SCROLLBAR */
-::-webkit-scrollbar              {
+::-webkit-scrollbar {
   background-color: transparent;
   height: 5px;
   width: 5px;
@@ -95,7 +108,7 @@
   padding: 2px;
 }
 
-::-webkit-scrollbar-thumb        {
+::-webkit-scrollbar-thumb {
   background-color: #654fa4;
   border-radius: 6px;
 }

@@ -70,21 +70,17 @@ class CoinsInfo extends React.Component {
     }
     setWalletSendModalOpen();
   };
+
   componentDidUpdate() {
     let { lastCoin } = this.state;
     let { wallet, coins, setUtxos } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
+    let address = coins[wallet.selectedCoin].address;
     if (lastCoin !== wallet.selectedCoin) {
       setUtxos(wallet.selectedCoin, address);
       this.setState({ lastCoin: wallet.selectedCoin });
     }
   }
-  componentDidMount = () => {
-    let { wallet, coins, setUtxos } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
-    setUtxos(wallet.selectedCoin, address);
-    this.setState({ lastCoin: wallet.selectedCoin });
-  };
+
   handleModalSendClose = () => {
     this.props.resetModalSend();
     let {
@@ -108,6 +104,7 @@ class CoinsInfo extends React.Component {
       return () => setWalletSendModalOpen();
     }
   };
+
   render() {
     let defaultCoin = getDefaultFiat();
     let {
@@ -119,7 +116,7 @@ class CoinsInfo extends React.Component {
     let step = wallet.modal.step;
     let selectedCoin = wallet.selectedCoin ? wallet.selectedCoin : "lunes";
 
-    if (!coins[selectedCoin]) return;
+    if (!coins[selectedCoin]) return null;
 
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[selectedCoin].price[defaultCoin].price;

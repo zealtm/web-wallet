@@ -119,9 +119,11 @@ class TransactionService {
         price,
         amount,
         coin,
-        decimalPoint
+        decimalPoint,
+        lunesUserAddress
       } = transaction;
       if (
+        !lunesUserAddress ||
         !lunesWallet ||
         !fromAddress ||
         !toAddress ||
@@ -199,6 +201,7 @@ class TransactionService {
           },
           coin,
           transaction.price,
+          lunesUserAddress,
           describe ? describe : "P2P",
           token
         );
@@ -235,6 +238,7 @@ class TransactionService {
           },
           coin,
           transaction.price,
+          lunesUserAddress,
           describe ? describe : "P2P",
           token
         );
@@ -260,6 +264,7 @@ class TransactionService {
           respondeLunes,
           coin,
           transaction.price,
+          lunesUserAddress,
           describe ? describe : "P2P",
           token
         );
@@ -369,7 +374,7 @@ class TransactionService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let response = await axios.get(BASE_URL + "/service/recarga", API_HEADER);
-  
+
       let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
@@ -433,11 +438,11 @@ class TransactionService {
       API_HEADER.headers.Authorization = token;
       let coins = [];
       let response = await axios.get(BASE_URL + "/service/compra", API_HEADER);
-      
+
       let lunesCoin = await response.data.data.services.map(value => {
         coins[value.abbreviation] = value;
       });
-    
+
       /* eslint-disable */
       await Promise.all(lunesCoin);
       /* eslint-enabled */

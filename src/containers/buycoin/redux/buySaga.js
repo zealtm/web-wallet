@@ -8,7 +8,7 @@ import TransactionService from "../../../services/transaction/transactionService
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
-import {convertBiggestCoinUnit} from "../../../utils/numbers";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 
@@ -29,7 +29,7 @@ export function* setModalStepSaga(payload) {
   });
 }
 
-export function* openModalPaySaga(payload){
+export function* openModalPaySaga(payload) {
   yield put({
     type: "SET_MODAL_OPEN_REDUCER",
     open: payload.open
@@ -45,7 +45,7 @@ export function* getBuyCoinsEnabledSaga() {
 
     let token = yield call(getAuthToken);
     let response = yield call(buyService.getCoins, token);
- 
+
     if (!response.data.services) {
       yield put({
         type: "SET_LOADING_COIN_REDUCER",
@@ -92,12 +92,8 @@ export function* getCoinForPaymentSaga(payload) {
     });
 
     let token = yield call(getAuthToken);
-    let response = yield call(
-      buyService.getCoinPayment,
-      token,
-      payload.coin
-    );
-    
+    let response = yield call(buyService.getCoinPayment, token, payload.coin);
+
     if (!response.coins) {
       yield put({
         type: "SET_LOADING_PACK_REDUCER",
@@ -107,9 +103,20 @@ export function* getCoinForPaymentSaga(payload) {
       return;
     }
 
+    let coins = [];
+
+    if(response.coins.length>0){
+      response.coins.map((val)=>{
+        if(val.abbreviation!==payload.coin){
+
+          coins.push(val);
+        }
+      });
+    }
+
     yield put({
       type: "GET_COIN_FOR_PAYMENT_REDUCER",
-      coins: response.coins || [],
+      coins: coins || [] //response.coins || [],
     });
 
     return;
@@ -126,11 +133,7 @@ export function* getCoinPackageSaga(payload) {
     });
 
     let token = yield call(getAuthToken);
-    let response = yield call(
-      buyService.getPackages,
-      token,
-      payload.coin
-    );
+    let response = yield call(buyService.getPackages, token, payload.coin);
 
     if (!response.packages) {
       yield put({
@@ -142,9 +145,9 @@ export function* getCoinPackageSaga(payload) {
 
     yield put({
       type: "GET_BUY_PACKAGE_REDUCER",
-      packages: response.packages || [], 
+      packages: response.packages || [],
       id: payload.id,
-      coin: payload.coin, 
+      coin: payload.coin,
       address: payload.address
     });
 
@@ -154,20 +157,20 @@ export function* getCoinPackageSaga(payload) {
   }
 }
 
-export function* setBuyPackageSaga(payload){
+export function* setBuyPackageSaga(payload) {
   yield put({
     type: "SET_BUY_PACKAGE_REDUCER",
-    package: payload.package, 
+    package: payload.package,
     amount: payload.amount,
-    amountFiat: payload.amountFiat,
+    amountFiat: payload.amountFiat
   });
 }
 
-export function* setCoinSelectedSaga(payload){
+export function* setCoinSelectedSaga(payload) {
   yield put({
     type: "SET_BUY_COIN_PAYMENT_REDUCER",
     coin: payload.coin,
-    address: payload.address, 
+    address: payload.address,
     id: payload.id
   });
 }
@@ -267,10 +270,11 @@ export function* confirmBuySaga(payload) {
 
     const coin = payload.buy.coin;
 
-    const payload_transaction = {
+    const payloadTransaction = {
       coin: coin,
       fromAddress: payload.buy.fromAddress,
       toAddress: payload.buy.toAddress,
+      lunesUserAddress: payload.buy.lunesUserAddress,
       amount: payload.buy.amount,
       amountReceive: payload.buy.amountReceive,
       fee: payload.buy.fee,
@@ -287,7 +291,7 @@ export function* confirmBuySaga(payload) {
       // pega o servico disponivel
       let lunesWallet = yield call(
         transactionService.buyService,
-        payload_transaction.coin,
+        payloadTransaction.coin,
         token
       );
 
@@ -295,22 +299,22 @@ export function* confirmBuySaga(payload) {
         let response = yield call(
           transactionService.transaction,
           lunesWallet.id,
-          payload_transaction,
+          payloadTransaction,
           lunesWallet,
           decryptAes(seed, payload.buy.user),
           token
         );
 
         const transacao_obj = JSON.parse(response.config.data);
-        
+
         if (response) {
           const payload_elastic = {
             txID: transacao_obj.txID,
             packageId: payload.buy.buypack.idpack,
-            coinId: payload.buy.buypack.paycoinid,//payload.buy.buypack.coin.id,
-            address: payload.buy.buypack.receiveAddress, //payload_transaction.fromAddress,
-            amount: payload_transaction.amountReceive,
-            coin: payload.buy.buypack.coin.abbreviation//coin
+            coinId: payload.buy.buypack.paycoinid, //payload.buy.buypack.coin.id,
+            address: payload.buy.buypack.receiveAddress, //payloadTransaction.fromAddress,
+            amount: payloadTransaction.amountReceive,
+            coin: payload.buy.buypack.coin.abbreviation //coin
           };
 
           let response_elastic = yield call(
@@ -318,10 +322,10 @@ export function* confirmBuySaga(payload) {
             token,
             payload_elastic
           );
-    
+
           yield put({
             type: "SET_LOADING_REDUCER", //SET_CLEAR_BUY_REDUCER
-            payload:false
+            payload: false
           });
 
           if (response_elastic.data.errorMessage) {
@@ -340,7 +344,7 @@ export function* confirmBuySaga(payload) {
           return;
         }
       }
-      
+
       yield put({
         type: "SET_CLEAR_BUY_REDUCER"
       });
@@ -372,7 +376,7 @@ export function* confirmBuySaga(payload) {
 
 export function* getHistoryBuySaga(payload) {
   try {
-    let { coins } = payload
+    let { coins } = payload;
 
     yield put({
       type: "SET_LOADING_HISTORY",
@@ -386,7 +390,7 @@ export function* getHistoryBuySaga(payload) {
       type: "GET_HISTORY_BUY_REDUCER",
       history
     });
-    yield put({type: "SET_LOADING_HISTORY", payload: false})
+    yield put({ type: "SET_LOADING_HISTORY", payload: false });
   } catch (error) {
     yield put(internalServerError());
   }

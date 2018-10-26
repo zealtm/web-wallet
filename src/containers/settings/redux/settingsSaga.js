@@ -131,6 +131,7 @@ export function* createAlias(action) {
       coin: "lunes",
       fromAddress: action.data.address,
       toAddress: lunesWallet.address,
+      lunesUserAddress: action.data.address,
       amount: lunesWallet.fee,
       fee: responseFee.fee.low,
       describe: "ALIAS",
