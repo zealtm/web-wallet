@@ -86,8 +86,8 @@
 }
 
 :local .boxStar {
-  margin-top:3px;
-  margin-bottom:2px;
+  margin-top: 3px;
+  margin-bottom: 2px;
 }
 
 :local .star {
@@ -98,4 +98,15 @@
 :local .starActive {
   color: yellow;
   opacity: 1;
+}
+
+/* . SCROLLBAR */
+::-webkit-scrollbar {
+  background-color: #654fa4;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #68f285;
+  border-radius: 6px;
 }
