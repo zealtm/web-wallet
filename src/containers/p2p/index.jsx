@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -28,6 +20,7 @@ import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
 
+import HeaderDetails  from "./components/headerdetails/index";
 
 //STYLE
 import style from "./style.css";
@@ -120,7 +113,6 @@ class P2P extends React.Component {
               </div>
             )
         }
-
       </div>
     );
   }
