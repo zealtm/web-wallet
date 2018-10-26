@@ -5,9 +5,9 @@
 }
 :local .star {
   opacity: .4;
-  max-width: 16px;
-  max-height: 16px;
-  font-size: 16px;
+  max-width: 12px;
+  max-height: 12px;
+  font-size: 12px;
   padding-right: 2px;
 }
 
