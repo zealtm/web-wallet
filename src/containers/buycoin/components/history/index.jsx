@@ -33,12 +33,12 @@ class History extends React.Component {
 
     if (history.constructor.name !== "Array")
       return (
-        <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
+        <h1 className={style.textCenter}>{i18n.t("COINSALE_NO_HISTORY")}</h1>
       );
 
     if (history.length < 1)
       return (
-        <h1 className={style.textCenter}>{i18n.t("BUYCOINS_NO_HISTORY")}</h1>
+        <h1 className={style.textCenter}>{i18n.t("COINSALE_NO_HISTORY")}</h1>
       );
 
     return history.map((tx, key) => (

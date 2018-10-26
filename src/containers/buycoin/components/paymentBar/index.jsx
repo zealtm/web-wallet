@@ -41,7 +41,7 @@ class PaymentBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: i18n.t("BUY_SEL_COIN"),
+      title: i18n.t("COINSALE_SEL_COIN"),
       img: null
     };
   }
@@ -80,7 +80,7 @@ class PaymentBar extends React.Component {
         <Grid container>
           <Grid item xs={12} md={8}>
             <span className={style.label}>
-              {i18n.t("BUY_PAYMENT_SELECT")}
+              {i18n.t("COINSALE_PAYMENT_SELECT")}
             </span>
             <div className={style.baseBackgroundFlex}>
               <FormControlLabel
@@ -95,13 +95,13 @@ class PaymentBar extends React.Component {
                     classes={{ root: classes.root, checked: classes.checked }}
                   />
                 }
-                label={i18n.t("BUY_METHOD_COIN")}
+                label={i18n.t("COINSALE_METHOD_COIN")}
                 labelPlacement="start"
               />
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
-            <span className={style.label}>{i18n.t("BUY_PAYMENT_COIN")}</span>
+            <span className={style.label}>{i18n.t("COINSALE_PAYMENT_COIN")}</span>
             <div className={style.baseBackground}>
               <Select
                 list={coinspayment}
