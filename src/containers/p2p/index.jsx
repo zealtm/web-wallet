@@ -25,7 +25,7 @@ import HeaderDetails  from "./components/headerdetails/index";
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
-import chat from "./chat";
+import Chat from "./chat";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -78,8 +78,7 @@ class P2P extends React.Component {
       <Offers key={1} />,
       <Offers key={2} />,
       <UserProfile key={2} />,
-      <CreateOffer  key={2} />,
-      <Chat key={4}/>,
+      <CreateOffer  key={2} />
       
     ];
 

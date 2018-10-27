@@ -85,6 +85,7 @@ class HeaderDetails extends React.Component {
                         <Grid item xs={6}>
                             <button className={style.btBuy}>Vender</button>
                         </Grid>
+
                         <Grid item xs={6}>
                             <button className={style.btEscroow}>Escroow</button>
                         </Grid>
