@@ -5,6 +5,9 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 
+// COMPONENTS
+import StarVotes from "../components/starvotes";
+
 // styles
 import style from "../style.css";
 
@@ -21,6 +24,9 @@ class UserProfile extends React.Component {
               />
               <p className={style.userName}>
                 Felipe Mendes <br />{" "}
+                <div className={style.boxStar}>
+                  <StarVotes votes={4} />
+                </div>
                 <span className={style.textSmall}>
                   Usuário desde 12/10/1998
                 </span>{" "}
