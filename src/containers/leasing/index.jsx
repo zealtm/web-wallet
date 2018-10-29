@@ -33,7 +33,7 @@ class Leasing extends React.Component {
         coins.lunes.decimalPoint,
         user.password
       );
-    }, 4000);
+    }, 5000);
   }
 
   handleModalLeasing = () => {
@@ -97,7 +97,6 @@ Leasing.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  balance: store.skeleton.coins.lunes.balance.available,
   leasing: store.leasing,
   coins: store.skeleton.coins,
   user: store.user.user
