@@ -42,7 +42,7 @@ class History extends React.Component {
       );
 
     return history.map((tx, key) => (
-      <HistoryCard user={user} {...tx} key={key} />
+      <HistoryCard user={user} obj={tx} key={key} />
     ));
   };
 
@@ -59,12 +59,10 @@ class History extends React.Component {
 
 History.propTypes = {
   buy: PropTypes.object.isRequired,
-  coins: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   buy: state.buy,
-  coins: state.skeleton.coins,
   user: state.user.user
 });
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

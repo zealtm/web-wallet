@@ -104,7 +104,7 @@ class BuyService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(`${BASE_URL}/coin/${coins}/sell/history`, API_HEADER);
-
+     
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if(response.data.code !== 200){
