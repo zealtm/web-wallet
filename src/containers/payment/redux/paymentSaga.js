@@ -38,7 +38,8 @@ export function* getCoinsEnabledSaga() {
           value: {
             id: coin.id,
             abbreviation: coin.abbreviation,
-            address: coin.address
+            address: coin.address,
+            limit: coin.limit
           },
           img: "/images/icons/coins/" + coin.abbreviation + ".png"
         };

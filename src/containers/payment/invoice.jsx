@@ -235,8 +235,8 @@ class Invoice extends React.Component {
         : undefined
     };
 
-    if (invoiceData.value > 3000) {
-      errorInput("Valor excede o limite diário de R$ 3.000,00")
+    if (invoiceData.value > coin.value.limit) {
+      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
       return;
     }
 
@@ -472,7 +472,7 @@ Invoice.propTypes = {
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  errorInput: PropTypes.func.isRequired,
+  errorInput: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
