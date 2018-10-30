@@ -35,12 +35,12 @@ class Buy extends React.Component {
 
     let errors = [];
 
-    if (buypack.idpack == "") errors.push(`${i18n.t("BUY_ERROR_PACK")} / `);
+    if (buypack.idpack == "") errors.push(`${i18n.t("COINSALE_ERROR_PACK")} / `);
 
     if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
-      errors.push(`${i18n.t("BUY_ERROR_COIN")} / `);
+      errors.push(`${i18n.t("COINSALE_ERROR_COIN")} / `);
 
-    if (buypack.paycoin == "") errors.push(`${i18n.t("BUY_ERROR_COIN_PAY")}`);
+    if (buypack.paycoin == "") errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
 
     if (errors.length > 0) {
       this.setState({
@@ -85,7 +85,7 @@ class Buy extends React.Component {
             className={style.buttonBorderGreen}
             onClick={() => this.validateModal()}
           >
-            {loading ? <Loading /> : i18n.t("BUY_BT_INIT")}
+            {loading ? <Loading /> : i18n.t("COINSALE_BT_INIT")}
           </button>
         </div>
 

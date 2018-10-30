@@ -119,7 +119,7 @@ class CoinsBar extends React.Component {
     if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
-          {i18n.t("BUY_ERROR_RELOAD")}
+          {i18n.t("COINSALE_ERROR_RELOAD")}
         </div>
       );
 
