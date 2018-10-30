@@ -8,6 +8,7 @@ import { ArrowForward, ArrowBack } from "@material-ui/icons/";
 // COMPONENTS 
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
+import MultiSelect from "../components/multiSelect"
 
 // STYLE
 import style from "./style.css";
@@ -36,19 +37,29 @@ class CreateOffer extends React.Component {
       img: "images/icons/coins/lunes.png",
       coinsExample: [
         {
+          value: "BTC",
           img: "images/icons/coins/lunes.png",
           title: "Lunes"
         },
         {
+          value:"LTC",
           img: "images/icons/coins/lunes.png",
           title: "Lunes"
         },
         {
+          value:"LUNES",
           img: "images/icons/coins/lunes.png",
           title: "Lunes"
         },
       ],
+      listCoinSelects:[]
     };
+  }
+  selectItems = (listCoins) => {
+    this.setState({
+      ...this.state,
+      listCoinSelects: listCoins
+    });
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -63,7 +74,7 @@ class CreateOffer extends React.Component {
   };
 
   render() {
-    const {title,img,coinsExample} = this.state;
+    const {title,img,coinsExample, listCoinSelects} = this.state;
     const {classes} = this.props;
 
     return (
@@ -123,13 +134,9 @@ class CreateOffer extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={7}>
-                  <Select
+                  <MultiSelect
                     list={coinsExample}
-                    title={title}
-                    titleImg={img}
-                    selectItem={this.coinSelected}
-                    error={null}
-                    width={"100%"}
+                    selectItems={this.selectItems}
                   /> 
                 </Grid>
               </Grid>

@@ -20,7 +20,7 @@ class MultiSelect extends React.Component {
     };
 
     selectListItem = (value = undefined, title = undefined, img = undefined) => {
-        const { selectItem } = this.props;
+        const { selectItems } = this.props;
         const { listCoins } = this.state;
         let found = false;
         listCoins.map(
@@ -51,7 +51,7 @@ class MultiSelect extends React.Component {
 
         }
 
-        selectItem(listCoins);
+        selectItems(listCoins);
         this.toggleList();
     };
 
@@ -104,7 +104,8 @@ class MultiSelect extends React.Component {
                     {listCoins.map((item, id) => (
                         
                         item!==undefined ? <img key={id} className={style.ico} src={item.img} />:""
-                    ))}
+                    ))
+                    }                   
                 </div>
             );
         } else {
@@ -162,7 +163,7 @@ class MultiSelect extends React.Component {
 
 MultiSelect.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectItem: PropTypes.func.isRequired
+    selectItems: PropTypes.func.isRequired
 };
 
 export default MultiSelect;
