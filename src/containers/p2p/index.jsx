@@ -22,10 +22,12 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import Modal from "../../components/modal";
-import InterestModal from "./modal/interest"
+
+import DepositModal from "./modal/deposit";
+import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
-import ConfirmModal from "./modal/confirm"
 import ModalPayment from "./flowPayment/index";
+
 
 //STYLE
 import style from "./style.css";
