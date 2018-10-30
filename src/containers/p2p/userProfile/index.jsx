@@ -24,7 +24,7 @@ class UserProfile extends React.Component {
               />
               <p className={style.userName}>
                 Felipe Mendes <br />{" "}
-                <div className={style.boxStar}>
+                <div>
                   <StarVotes votes={4} />
                 </div>
                 <span className={style.textSmall}>
@@ -75,7 +75,11 @@ class UserProfile extends React.Component {
             </div>
 
             <div className={style.userFeedback}>
-              <span className={style.spanDescription}>João</span>
+              <span className={style.spanDescription}>João
+              </span>
+                <div className={style.boxStar}>
+                  <StarVotes votes={4} />
+                </div>
               <div className={style.textDescription}>
                 <p>Bom trader, recomendo!</p>
               </div>

@@ -154,6 +154,12 @@
   width: 80%;
 }
 
+:local(.boxStar) {
+  display: inline-flex;
+  float: right;
+  
+}
+
 :local .userName {
   composes: textGreen;
   font-size: 16px;
@@ -185,3 +191,5 @@
   max-height:490px;
   overflow: auto;
 }
+
+
