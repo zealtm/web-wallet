@@ -29,7 +29,7 @@ export function* closeChat() {
 
 export function* setModalStepSaga(payload) {
   yield put({
-    type: "SET_MODAL_BUY_STEP_REDUCER",
+    type: "SET_MODAL_FLOW_STEP_REDUCER",
     step: payload.step
   });
 }

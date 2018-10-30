@@ -9,7 +9,7 @@ export const closeChat = () => ({
 });
 
 export const setModalStep = step => ({
-  type: "SET_MODAL_BUY_STEP",
+  type: "SET_MODAL_FLOW_STEP",
   step
 });
 

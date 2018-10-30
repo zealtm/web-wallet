@@ -26,7 +26,7 @@ const p2p = (state = initialState, action) => {
         chatOpened: false,
       }
 
-    case "SET_MODAL_BUY_STEP_REDUCER":
+    case "SET_MODAL_FLOW_STEP_REDUCER":
       return {
         ...state,
         modalStep: action.step

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-class FluxoModal extends React.Component {
+class FlowModal extends React.Component {
     constructor(props) {
         super(props);
     }    
@@ -23,7 +23,7 @@ class FluxoModal extends React.Component {
     }
 }
 
-FluxoModal.propTypes = {
+FlowModal.propTypes = {
     modalStep: PropTypes.number.isRequired
 }
 const mapStateToProps = store => ({
@@ -34,4 +34,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(FluxoModal);
+)(FlowModal);
