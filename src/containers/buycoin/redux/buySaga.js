@@ -104,9 +104,11 @@ export function* getCoinForPaymentSaga(payload) {
     }
 
     let coins = [];
-    if (response.coins.length > 0) {
-      response.coins.map(val => {
-        if (val.abbreviation !== payload.coin) {
+
+    if(response.coins.length>0){
+      response.coins.map((val)=>{
+        if(val.abbreviation!==payload.coin){
+
           coins.push(val);
         }
       });

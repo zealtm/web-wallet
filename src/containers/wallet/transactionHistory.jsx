@@ -27,7 +27,7 @@ const blockexplorer = {
   btc: "https://live.blockcypher.com/btc/tx/",
   ltc: "https://live.blockcypher.com/ltc/tx/",
   bch: "https://live.blockcypher.com/bch/tx/",
-  dash: "https://explorer.bitcoin.com/bch/tx/",
+  dash: "https://chainz.cryptoid.info/dash/search.dws?q=",
   eth: "https://etherscan.io/tx/"
 };
 

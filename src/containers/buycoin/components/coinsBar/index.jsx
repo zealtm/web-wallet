@@ -6,7 +6,6 @@ import Slider from "react-slick";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  getCoinsEnabled,
   getCoinPackage,
   getCoinForPayment,
   getHistoryBuy,
@@ -26,9 +25,6 @@ import {
   ArrowDropUp
 } from "@material-ui/icons";
 
-// COMPONENTS
-import Loading from "../../../../components/loading";
-
 // UTILS
 import i18n from "../../../../utils/i18n";
 import { getDefaultFiat } from "../../../../utils/localStorage";
@@ -45,18 +41,18 @@ class CoinsBar extends React.Component {
     };
   }
 
-  componentDidMount = () => {
-    const { getCoinsEnabled } = this.props;
-    getCoinsEnabled();
-  };
-
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
 
   setCoin = (id, coin, address) => {
-    const { getCoinPackage, getCoinForPayment, getHistoryBuy,setClearBuyPack } = this.props;
+    const {
+      getCoinPackage,
+      getCoinForPayment,
+      getHistoryBuy,
+      setClearBuyPack
+    } = this.props;
 
     setClearBuyPack();
     getCoinPackage(id, coin, address);
@@ -118,19 +114,12 @@ class CoinsBar extends React.Component {
   };
 
   render() {
-    const { loading, coinsEnabled } = this.props;
-
-    if (loading)
-      return (
-        <div style={{ marginTop: 40, marginBottom: 40 }}>
-          <Loading color="lunes" />
-        </div>
-      );
+    const { coinsEnabled } = this.props;
 
     if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
-          Erro. Tente recarregar a página.
+          {i18n.t("BUY_ERROR_RELOAD")}
         </div>
       );
 
@@ -203,28 +192,24 @@ class CoinsBar extends React.Component {
 }
 
 CoinsBar.propTypes = {
-  getCoinsEnabled: PropTypes.func.isRequired,
   getCoinForPayment: PropTypes.func.isRequired,
   getCoinPackage: PropTypes.func.isRequired,
   getHistoryBuy: PropTypes.func.isRequired,
   setClearBuyPack: PropTypes.func.isRequired,
   coinsEnabled: PropTypes.array.isRequired,
   coins: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
   selected: PropTypes.string.isRequired
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
   coins: store.skeleton.coins,
-  loading: store.buy.loadingCoins,
   selected: store.buy.buypackage.coin.abbreviation
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getCoinsEnabled,
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
