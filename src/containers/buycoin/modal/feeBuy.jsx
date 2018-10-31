@@ -96,8 +96,7 @@ class FeeBuy extends React.Component {
 
     const fromAddress = wallet.coins[buypack.paycoin].address;
     const toAddress = buypack.address;
-    //const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
-    const decimalPoint = 8;
+    const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
     
     getFeeBuy(buypack.paycoin, buypack.amountPay, fromAddress, toAddress, decimalPoint);
   };

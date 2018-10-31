@@ -164,6 +164,7 @@
 
 :local .totalConfirmBlock {
   composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  display:block;
   margin-bottom: 30px;
   font-size: 24px;
   font-weight: 700;
