@@ -56,8 +56,8 @@ class Buy extends React.Component {
       let defaultCoin = "BRL";
       let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
       const amountPay = buypack.amountFiat / coinPrice;
-      let decimalPoint = coins[buypack.paycoin].decimalPoint;
-
+     //const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
+      const decimalPoint = 8;
       const data = {
         amount: convertSmallerCoinUnit(amountPay,decimalPoint),
         coin: buypack.paycoin,
