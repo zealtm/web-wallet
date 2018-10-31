@@ -44,17 +44,19 @@ class Invite extends React.Component {
           close={this.handleModal}
         />
         
-        <Grid container className={style.card}>
-          <Grid item xs={12} sm={8}>
-            <input type="text" name="txtemail" />
-            <span>Link de compartilhamento</span>
-            <span>12as3d45ads546asd456asd456asd546asd</span>
-            <span>Copiar</span>
-            <span>Compartilhar</span>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <button>Enviar</button>
-            <button onClick={this.handleModal}>Convites enviados</button>
+        <Grid container direction="row" justify="center">
+          <Grid item xs={12} className={style.box}>
+            <Grid item xs={12} sm={8}>
+              <input type="text" name="txtemail" />
+              <span>Link de compartilhamento</span>
+              <span>12as3d45ads546asd456asd456asd546asd</span>
+              <span>Copiar</span>
+              <span>Compartilhar</span>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <button>Enviar</button>
+              <button onClick={this.handleModal}>Convites enviados</button>
+            </Grid>
           </Grid>
         </Grid>
 
