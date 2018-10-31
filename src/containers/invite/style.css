@@ -10,13 +10,37 @@
 
 */
 
+/* 1. BASE */
 
 :local .header {
   margin: 0 auto;
+}
+
+@media screen and (min-width: 600px) {
+  :local .header {
+    max-width: 60vw !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  :local .header {
+    max-width: 40vw !important;
+  }
 }
 
 :local .card {
   background-color: red;
   padding: 20px;
   margin-bottom:20px;
+}
+
+/* 2. TEXT */
+:local .header h1 {
+  text-align: center;
+  font-size: 14px;
+}
+
+:local .header p {
+  text-align: center;
+  font-size: 12px;
 }
