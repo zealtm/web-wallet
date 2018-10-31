@@ -52,14 +52,14 @@ const menuItens = [
     icon: "../../images/icons/general/recharge@1x.png"
   },
   {
-    link: "/coupons",
-    label: i18n.t("MENU_COUPONS"),
-    icon: "../../images/icons/general/cupon@1x.png"
-  },
-  {
     link: "/coinsale",
     label: i18n.t("MENU_COINSALE"),
     icon: "../../images/icons/general/buycoin@1x.png"
+  },
+  {
+    link: "/coupons",
+    label: i18n.t("MENU_COUPONS"),
+    icon: "../../images/icons/general/cupon@1x.png"
   }
 ];
 
