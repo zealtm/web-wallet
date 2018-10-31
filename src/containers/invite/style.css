@@ -16,7 +16,8 @@
 }
 
 :local .card {
-  background-color: red;
   padding: 20px;
   margin-bottom:20px;
+  border-radius: 6.3px;
+  background-color: #473088;
 }
