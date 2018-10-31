@@ -5,8 +5,13 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Avatar from "@material-ui/core/Avatar";
+
+// COMPONENTS
+import StarVotes from "../components/starvotes";
+
 import { withStyles } from '@material-ui/core/styles';
 import colors from "../../../components/bases/colors";
+
 // styles
 import style from "../style.css";
 import StarVotes from "../components/starvotes";
@@ -39,8 +44,10 @@ class UserProfile extends React.Component {
               />
                <div className={style.online} ></div>
               <p className={style.userName}>
-                Felipe Mendes <br />
-                <StarVotes votes={4} />
+                Felipe Mendes <br />{" "}
+                <div className={style.boxStar}>
+                  <StarVotes votes={4} />
+                </div>
                 <span className={style.textSmall}>
                   Usuário desde 12/10/1998
                 </span>{" "}
@@ -91,7 +98,11 @@ class UserProfile extends React.Component {
             </div>
 
             <div className={style.userFeedback}>
-              <span className={style.spanDescription}>João</span>
+              <span className={style.spanDescription}>João
+              </span>
+                <div className={style.feedbackBox}>
+                  <StarVotes votes={4} />
+                </div>
               <div className={style.textDescription}>
                 <p>Bom trader, recomendo!</p>
               </div>
