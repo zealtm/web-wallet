@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -28,6 +20,7 @@ import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
 
+import HeaderDetails  from "./components/headerdetails/index";
 
 //STYLE
 import style from "./style.css";
@@ -84,8 +77,9 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <UserProfile key={3} />,
-      <CreateOffer  key={4} />
+      <UserProfile key={2} />,
+      <CreateOffer  key={2} />
+      
     ];
 
     return (contents[tabIcon] );
@@ -120,7 +114,6 @@ class P2P extends React.Component {
               </div>
             )
         }
-
       </div>
     );
   }
