@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // MATERIAL UI
-import { Grid, TextField, withStyles, Input } from "@material-ui/core";
+import { Grid, withStyles, Input } from "@material-ui/core";
 
 
 // ICONS
-import DateRange from '@material-ui/icons/DateRange';
+import Email from '@material-ui/icons/Email';
 
 //COMPONENTS 
 import ItemInvite from "./components/itemInvite";
@@ -82,7 +82,7 @@ class Invite extends React.Component {
         <Grid container className={style.card}>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item>
-              <DateRange className={style.icon} />
+              <Email className={style.icon} />
             </Grid>
             <Grid item>
               <Input placeholder="Lunes@gmail.com" classes={{
