@@ -30,20 +30,14 @@ class Invite extends React.Component {
 
   render(){
     const {modalOpen} = this.state;
-    return (
-      <div>
+    return <div>
         <div className={style.header}>
           <h1>Convites</h1>
           <p>Convide seus amigos e familiares para se cadastrar na Lunes</p>
         </div>
 
-        <Modal
-          title="Convites enviados"
-          content={<InviteSend />}
-          show={modalOpen}
-          close={this.handleModal}
-        />
-        
+        <Modal title="Convites enviados" content={<InviteSend />} show={modalOpen} close={this.handleModal} />
+
         <Grid container className={style.card}>
           <Grid item xs={12} sm={8}>
             <input type="text" name="txtemail" />
@@ -53,8 +47,11 @@ class Invite extends React.Component {
             <span>Compartilhar</span>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <button>Enviar</button>
-            <button onClick={this.handleModal}>Convites enviados</button>
+            <div className={style.btnInvite}>
+              <button className={style.btnInviteSends}>Enviar</button>
+              <span className={style.textInviteSents}>Convites enviados</span>
+            <button onClick={this.handleModal} className={style.btnInviteSent}>Exibir</button>
+            </div>
           </Grid>
         </Grid>
 
@@ -63,16 +60,12 @@ class Invite extends React.Component {
             <span>Convites confirmados</span>
           </Grid>
           <Grid item xs={12}>
-            {
-              [1,2,3,4,5].map(val=>{
-                return (<ItemInvite />)
-              })
-            }
+            {[1, 2, 3, 4, 5].map(val => {
+              return <ItemInvite />;
+            })}
           </Grid>
         </Grid>
-
-      </div>
-    )
+      </div>;
   }
 }
 

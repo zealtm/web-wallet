@@ -16,7 +16,41 @@
 }
 
 :local .card {
-  background-color: red;
+  border: 1px solid;
   padding: 20px;
   margin-bottom:20px;
+}
+
+/*2. TEXTS*/
+
+
+:local .textInviteSents {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  font-size: 14px;
+  border: none;
+  padding: 0;
+}
+
+
+/*3. BUTTONS*/ 
+
+
+:local .btnInviteSends {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+    background: none;
+    border: solid 1px #68f285;
+    font-weight: bold;
+    padding: 0;
+    margin-top: 5px;
+    margin-bottom: 100px;
+}
+
+:local .btnInviteSent {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+    background: none;
+    border: solid 1px #68f285;
+    font-weight: bold;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
