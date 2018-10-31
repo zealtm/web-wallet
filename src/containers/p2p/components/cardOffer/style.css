@@ -46,6 +46,7 @@
   display: block;
   text-align: right;
   margin-top: 10px;
+  width: 85px;
 }
 
 :local .boxDetails {
@@ -56,6 +57,7 @@
 
 :local .textDetails {
   composes: bgPurpleClear from "../../../../components/bases/colorBase.css";
+  width: 220px;
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 6px;
@@ -64,12 +66,7 @@
 
 :local .btContinue {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
-
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: 240px;
 }
 
 :local .offerText {
@@ -90,6 +87,8 @@
   width: 100%;
   align-content: space-between;
   font-size: 12px;
+  margin-top: 3px;
+  margin-bottom: 2px;
 }
 
 :local .star {
@@ -100,4 +99,15 @@
 :local .starActive {
   color: yellow;
   opacity: 1;
+}
+
+/* . SCROLLBAR */
+::-webkit-scrollbar {
+  background-color: #654fa4;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #68f285;
+  border-radius: 6px;
 }
