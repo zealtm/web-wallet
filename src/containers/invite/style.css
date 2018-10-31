@@ -16,19 +16,9 @@
 }
 
 :local .card {
-  border: 1px solid;
+  background-color: red;
   padding: 20px;
   margin-bottom:20px;
-}
-
-/*2. TEXTS*/
-
-
-:local .textInviteSents {
-  composes: inputTextDefault from "../../components/bases/inputBase.css";
-  font-size: 14px;
-  border: none;
-  padding: 0;
 }
 
 
