@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
 
-
-// ICONS
-import Email from '@material-ui/icons/Email';
-
 //COMPONENTS 
 import ItemInvite from "./components/itemInvite";
 import Modal from "../../components/modal";
@@ -82,7 +78,7 @@ class Invite extends React.Component {
         <Grid container className={style.card}>
           <Grid container spacing={8} alignItems="flex-end">
             <Grid item>
-              <Email className={style.icon} />
+              <img src="/images/icons/email/email@1x.png" className={style.icon} />
             </Grid>
             <Grid item>
               <Input placeholder="Lunes@gmail.com" classes={{

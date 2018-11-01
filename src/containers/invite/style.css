@@ -22,6 +22,6 @@
 }
 
 :local .icon{
-  composes: clGreenDefault from '../../components/bases/colorBase.css';
   margin-right: 15px;
+  height: 30px;
 }
