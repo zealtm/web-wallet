@@ -13,21 +13,25 @@ class ItemInvite extends React.Component {
     return (
       <div>
         <Grid container>
-          <Grid item xs={2}>
-            <Avatar src="https://picsum.photos/30/30" />
+          <Grid item xs={5} sm={5}>
+            <div>
+              <span className={style.spanTitle}>E-mail</span> <br />
+              <p className={style.spanSub}>email@email.com</p>
+            </div>
           </Grid>
-          <Grid item xs={10} sm={4}>
-            <span className={style.spanTitle}>E-mail</span> <br />
-            <span>email@email.com</span>
-          </Grid>
-          <Grid item xs={10} sm={4}>
+          <Grid item xs={5} sm={5}>
             <span className={style.spanTitle}>Cupom</span> <br />
-            <span>f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543</span>
+            <p className={style.spanSub}>
+              f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543
+            </p>
           </Grid>
-          <Grid item xs={2}>
-            <img className={style.imgCopy} src="/images/icons/modal-receive/ic_copy@1x.png" />
+          <Grid item xs={2} sm={2}>
+            <img
+              className={style.imgCopy}
+              src="/images/icons/modal-receive/ic_copy@1x.png"
+            />
           </Grid>
-          <Grid item xs={12} sm={6} id={"hr"}>
+          <Grid item xs={6} sm={6} id={"hr"}>
             <hr />
           </Grid>
         </Grid>
