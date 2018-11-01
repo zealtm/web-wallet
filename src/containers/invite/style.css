@@ -9,14 +9,56 @@
 4. IMAGES
 
 */
+/* -------------------------------------- */
 
+/* 1. BAES */
 
 :local .header {
   margin: 0 auto;
 }
 
 :local .card {
-  background-color: red;
+  
   padding: 20px;
   margin-bottom:20px;
+}
+
+
+/* 2. TEXT */
+
+:local(.linkTitle) {
+  margin-top: 20px;
+  composes: textDefault from "../../components/bases/textBase.css";
+}
+
+:local(.linkShared) {
+  composes: linkDefault from "../../components/bases/textBase.css";
+  margin-bottom: 25px;
+}
+
+
+/* 3. BUTTONS */
+
+
+:local(.copyIcon) {
+  opacity: 0.5;
+  margin-left: 5px;
+  float: left;
+  align-content: flex-end;
+  text-align: center;
+}
+
+:local(.shareIcon) {
+  opacity: 0.5;
+  display: inline-block;
+  float: right;
+  text-align: center;
+  margin-top: 6px;
+
+}
+
+@media screen and (max-width: 600px) {
+  :local(.shareIcon) {
+    margin-right: 70px;
+  }
 }
