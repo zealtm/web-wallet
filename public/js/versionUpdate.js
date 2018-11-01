@@ -8,7 +8,6 @@ function readFile() {
     return data
       ? JSON.parse(data)
       : {
-          version: "2.0.0",
           build: "Development"
         };
   } catch (error) {
@@ -29,12 +28,7 @@ function writeFile(file) {
 }
 
 if (!file) return console.log("Verion Update Failure");
-
-let version = file.version.split(".");
-version[version.length - 1] = parseInt(version[version.length - 1]) + 1;
-version = version.join(".");
-file.version = version;
-file.build = new Date().toISOString();
+file.build = new Date();
 
 writeFile(file);
 return;

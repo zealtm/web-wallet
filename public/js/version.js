@@ -1,1 +1,1 @@
-const data = {"version":"2.0.1","build":"2018-10-31T20:27:12.981Z"}
+const data = {"build":"2018-11-01T14:03:32.378Z"}
