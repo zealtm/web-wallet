@@ -11,6 +11,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
+import LogoLunes from "../../../components/logoLunes";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -25,18 +26,16 @@ class MultiFactorAuth extends React.Component {
     this.field = [];
     this.state = {
       twoFactorFields: {
-        field_0: '',
-        field_1: '',
-        field_2: '',
-        field_3: '',
-        field_4: '',
-        field_5: '',
+        field_0: "",
+        field_1: "",
+        field_2: "",
+        field_3: "",
+        field_4: "",
+        field_5: ""
       },
       errors: undefined
     };
   }
-
-
 
   inputValidator = () => {
     let { loading, errorInput, clearMessage, verifyTwoFactorAuth } = this.props;
@@ -46,7 +45,7 @@ class MultiFactorAuth extends React.Component {
       field_2,
       field_3,
       field_4,
-      field_5,
+      field_5
     } = this.state.twoFactorFields;
     let token = field_0 + field_1 + field_2 + field_3 + field_4 + field_5;
     let input = {
@@ -70,37 +69,39 @@ class MultiFactorAuth extends React.Component {
     verifyTwoFactorAuth(token);
   };
 
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
-      this.inputValidator()
+      this.inputValidator();
     }
-  }
+  };
 
   handleOnChange = (event, key) => {
-    let val = event.target.value.replace(/[^0-9]/, '');
-    this.setState({twoFactorFields: {
-      ...this.state.twoFactorFields,
-      [`field_${key}`]: !val ? '' : val.replace(/[^0-9]/, '')
-    }})
-  }
+    let val = event.target.value.replace(/[^0-9]/, "");
+    this.setState({
+      twoFactorFields: {
+        ...this.state.twoFactorFields,
+        [`field_${key}`]: !val ? "" : val.replace(/[^0-9]/, "")
+      }
+    });
+  };
   getInput = (event, key) => {
     let { value } = event.target;
     let { keyCode } = event;
 
     if (keyCode === 8 || keyCode === 46) {
-      if (this.field[key - 1])
-        this.field[key - 1].focus();
-      value = '';
+      if (this.field[key - 1]) this.field[key - 1].focus();
+      value = "";
     } else if (value && (keyCode !== 8 && keyCode !== 46)) {
-      if (this.field[key + 1])
-        this.field[key + 1].focus();
+      if (this.field[key + 1]) this.field[key + 1].focus();
     }
-    if (!value) value = '';
+    if (!value) value = "";
 
-    this.setState({twoFactorFields: {
-      ...this.state.twoFactorFields,
-      [`field_${key}`]: value
-    }})
+    this.setState({
+      twoFactorFields: {
+        ...this.state.twoFactorFields,
+        [`field_${key}`]: value
+      }
+    });
   };
   render() {
     let { loading } = this.props.user;
@@ -108,7 +109,9 @@ class MultiFactorAuth extends React.Component {
 
     return (
       <div onKeyPress={this.handleKeyPress}>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <div className={style.description}>{i18n.t("2FA_HEADER")}</div>
 
         <div className={style.instructions}>
@@ -118,25 +121,28 @@ class MultiFactorAuth extends React.Component {
         </div>
 
         <div className={style.alignInputTwoFactorAuthenticator}>
-          {
-            Array.from(Array(6).keys()).map((i, k) => {
-              return (<input
+          {Array.from(Array(6).keys()).map((i, k) => {
+            return (
+              <input
                 key={k}
                 type="tel"
-                name={"field_"+k}
+                name={"field_" + k}
                 maxLength="1"
                 value={this.state.twoFactorFields[`field_${k}`]}
                 autoFocus={k === 0 ? true : false}
-                ref={input => { this.field[k] = input; }}
+                ref={input => {
+                  this.field[k] = input;
+                }}
                 onKeyUp={e => this.getInput(e, k)}
                 onChange={e => this.handleOnChange(e, k)}
                 className={
                   errors
                     ? style.inputTwoFactorAuthenticatorError
                     : style.inputTwoFactorAuthenticator
-                }/>) 
-            })
-          }
+                }
+              />
+            );
+          })}
         </div>
 
         <div className={style.instructions_2}>
