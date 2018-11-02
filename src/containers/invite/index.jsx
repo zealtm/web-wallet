@@ -68,11 +68,11 @@ class Invite extends React.Component {
           <p>Convide seus amigos e familiares para se cadastrar na Lunes</p>
         </div>
 
-        <Modal
-          title="Convites enviados"
-          content={<InviteSend />}
-          show={modalOpen}
-          close={this.handleModal}
+        <Modal 
+          title="Convites enviados" 
+          content={<InviteSend />} 
+          show={modalOpen} 
+          close={this.handleModal} 
         />
 
         <Grid container className={style.card}>
@@ -96,8 +96,10 @@ class Invite extends React.Component {
             <span>Compartilhar</span>
           </Grid>
           <Grid item xs={12} sm={4}>
-            <button>Enviar</button>
-            <button onClick={this.handleModal}>Convites enviados</button>
+            <div className={style.btnInvite}>
+            <button className={style.btnInviteSends}>Enviar</button>
+            <button onClick={this.handleModal} className={style.btnInviteSent}>Convites enviados</button>
+            </div>
           </Grid>
         </Grid>
 
@@ -106,15 +108,14 @@ class Invite extends React.Component {
             <span className={style.label}>Convites confirmados</span>
           </Grid>
           <Grid item xs={12}>
-            {
-              [1, 2, 3, 4, 5].map(val => {
-                return (<ItemInvite />)
-              })
+            {[1, 2, 3, 4, 5].map(val=>{
+              return (<ItemInvite />)
+            })
             }
           </Grid>
         </Grid>
-
-      </div>
+        
+    </div>
     )
   }
 }
