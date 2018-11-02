@@ -30,9 +30,19 @@
 
 :local .card {
   padding: 20px;
+  margin-top: 50px;
+  margin-bottom: 20px;
   margin-bottom:20px;
   border-radius: 6.3px;
   background-color: #473088;
+}
+
+:local .label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12px;
+  margin-top: -40px;
+  font-size: 12px;
 }
 
 /* 2. TEXT */
@@ -44,5 +54,4 @@
 :local .header p {
   text-align: center;
   font-size: 12px;
-  
 }
