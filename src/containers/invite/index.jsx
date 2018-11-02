@@ -13,23 +13,23 @@ import InviteSend from "./modal";
 import style from "./style.css";
 
 class Invite extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       modalOpen: false
     }
   }
 
-  handleModal = ()=> {
-    const {modalOpen} = this.state;
+  handleModal = () => {
+    const { modalOpen } = this.state;
     this.setState({
-      ...this.state, 
+      ...this.state,
       modalOpen: !modalOpen
     });
   }
 
-  render(){
-    const {modalOpen} = this.state;
+  render() {
+    const { modalOpen } = this.state;
     return (
       <div>
         <div className={style.header}>
@@ -43,7 +43,7 @@ class Invite extends React.Component {
           show={modalOpen}
           close={this.handleModal}
         />
-        
+
         <Grid container className={style.card}>
           <Grid item xs={12} sm={8}>
             <input type="text" name="txtemail" />
@@ -64,7 +64,7 @@ class Invite extends React.Component {
           </Grid>
           <Grid item xs={12}>
             {
-              [1,2,3,4,5].map(val=>{
+              [1, 2, 3, 4, 5].map(val => {
                 return (<ItemInvite />)
               })
             }
