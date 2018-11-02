@@ -37,6 +37,11 @@
   background-color: #473088;
 }
 
+:local .icon{
+  margin-right: 15px;
+  height: 30px;
+}
+
 :local .label {
   font-weight: 700;
   display: block;
