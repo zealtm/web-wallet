@@ -103,7 +103,7 @@ class Invite extends React.Component {
 
         <Grid container className={style.card}>
           <Grid item xs={12}>
-            <span>Convites confirmados</span>
+            <span className={style.label}>Convites confirmados</span>
           </Grid>
           <Grid item xs={12}>
             {
