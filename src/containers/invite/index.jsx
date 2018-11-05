@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
 
+// UTILS
+import i18n from "../../utils/i18n";
+
 //COMPONENTS 
 import ItemInvite from "./components/itemInvite";
 import Modal from "../../components/modal";
@@ -87,17 +90,27 @@ class Invite extends React.Component {
                 input: classes.cssInput
               }} />
             </Grid>
-          </Grid>
-
-          <Grid item xs={12} sm={8}>
-            <span> Link de compartilhamento</span>
-            <span>12as3d45ads546asd456asd456asd546asd</span>
-            <span>Copiar</span>
-            <span>Compartilhar</span>
+            
+            <div className={style.linkTitle}>
+              <p>{i18n.t("INVITE_LINK_SHARE")}</p>
+            </div>
+            <div className={style.linkShared}>
+              <p>12as3d45ads546asd456asd456asd546asd</p>
+            </div>
           </Grid>
           <Grid item xs={12} sm={4}>
+            <div className={style.copyIcon}>
+              <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+              <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+            </div>
+            <div className={style.shareIcon}>  
+              <img src="/images/icons/invite/share@1x.png" />
+              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <button className={style.btnInviteSent}>Enviar</button>
             <div className={style.btnInvite}>
-            <button className={style.btnInviteSends}>Enviar</button>
             <button onClick={this.handleModal} className={style.btnInviteSent}>Convites enviados</button>
             </div>
           </Grid>
