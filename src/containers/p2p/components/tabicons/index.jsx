@@ -27,7 +27,17 @@ class TabIcons extends React.Component {
     return (
       <div className={style.baseTab}>
         {content.map((val, key) => {
-          const open = key == active ? style.itemTabActive : style.itemTab;
+          let open;
+          let icon_img;
+          if( key == active) {
+
+           open = style.itemTabActive;
+            icon_img = val;
+            
+          } else{
+           open = style.itemTab;
+           icon_img = val + "-purple";
+          }
 
           return (
             <div
@@ -35,7 +45,7 @@ class TabIcons extends React.Component {
               onClick={() => this.handleIcon(key)}
               className={open}
             >
-              <img src={`images/icons/p2p/${val}.png`} />
+              <img src={`images/icons/p2p/${icon_img}.png`} />
             </div>
           );
         })}

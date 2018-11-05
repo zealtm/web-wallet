@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -28,6 +20,7 @@ import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
 
+import HeaderDetails  from "./components/headerdetails/index";
 
 import MultiSelect from "./components/multiSelect";
 //STYLE
@@ -85,8 +78,9 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <UserProfile key={3} />,
-      <CreateOffer  key={4} />
+      <UserProfile key={2} />,
+      <CreateOffer  key={2} />
+      
     ];
 
     return (contents[tabIcon] );
@@ -94,8 +88,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    
-    const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const contentTabIcons = ["tag", "user-star", "newoffer", "user",];
     const {chatOpened} = this.props.p2pStore;
     const { openP2P } = this.state;
 
@@ -122,7 +115,6 @@ class P2P extends React.Component {
               </div>
             )
         }
-
       </div>
     );
   }

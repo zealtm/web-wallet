@@ -12,10 +12,11 @@
 
 :local .itemTab {
   padding: 10px;
+  padding-bottom:5px;
+  padding-top:15px;
   text-align: center;
   flex-grow: 1;
   align-self: center;
-  opacity: 0.3;
 }
 
 :local .itemTab img {
@@ -24,6 +25,8 @@
 
 :local .itemTabActive {
   padding: 10px;
+  padding-bottom:5px;
+  padding-top:15px;
   text-align: center;
   flex-grow: 1;
   align-self: center;
