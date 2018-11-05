@@ -4,9 +4,54 @@
 
 2. TEXTS
 
-3. BUTTONS 
+3. IMAGES 
 
-4. IMAGES
+4. BUTTONS
 
 */
 
+/* 1. BASES  */
+#hr hr {
+  height: 0;
+  border: solid 1px #42227d;
+  width: 170%;
+}
+
+@media screen and (max-width: 1024px) {
+  #hr hr {
+    width: 185%;
+  }
+}
+
+/* 2. TEXTS */
+:local(.spanTitle) {
+  color: #68f285;
+}
+
+:local(.spanSub) {
+  margin: 0%;
+}
+
+@media screen and (max-width: 1024px) {
+  :local(.spanSub) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* 3. IMAGES */
+:local(.imgCopy) {
+  opacity: 0.15;
+  cursor: pointer;
+}
+
+:local .imgCopy:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  :local(.imgCopy) {
+    margin: 4px 0px 0px 5px;
+  }
+}

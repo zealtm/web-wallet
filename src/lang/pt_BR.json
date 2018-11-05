@@ -459,5 +459,10 @@
   "BUY_ERROR_RELOAD": "Erro. Tente recarregar a página.",
   "BUY_CREDIT": "Pagamento", 
 
-  "MENU_INVITE": "Convites"
+  "MENU_INVITE": "Convites",
+
+
+  "INVITE_LINK_SHARE": "Link de compartilhamento",
+  "INVITE_COPY_BUTTON": "Copiar",
+  "INVITE_SHARE_BUTTON": "Compartilhar"
 }
