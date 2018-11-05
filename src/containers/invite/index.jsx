@@ -90,12 +90,7 @@ class Invite extends React.Component {
                 input: classes.cssInput
               }} />
             </Grid>
-          </Grid>
-
-          <Grid item xs={12} sm={8}>
-            <input type="text" name="txtemail" />
-          </Grid>
-          <Grid item xs={12} sm={8}>
+            
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
@@ -114,8 +109,7 @@ class Invite extends React.Component {
             </div>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <button>Enviar</button>
-            <button onClick={this.handleModal}>Convites enviados</button>
+            <button className={style.btnInviteSent}>Enviar</button>
             <div className={style.btnInvite}>
             <button onClick={this.handleModal} className={style.btnInviteSent}>Convites enviados</button>
             </div>
