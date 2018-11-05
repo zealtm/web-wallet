@@ -38,13 +38,13 @@ class CreateOffer extends React.Component {
       coinsExample: [
         {
           value: "BTC",
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
+          img: "images/icons/coins/btc.png",
+          title: "BTC"
         },
         {
           value:"LTC",
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
+          img: "images/icons/coins/ltc.png",
+          title: "LTC"
         },
         {
           value:"LUNES",
