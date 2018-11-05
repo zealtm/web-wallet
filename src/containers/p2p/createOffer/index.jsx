@@ -11,6 +11,7 @@ import { Lens } from "@material-ui/icons";
 // COMPONENTS 
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
+import MultiSelect from "../components/multiSelect"
 
 // STYLE
 import style from "./style.css";
@@ -39,20 +40,30 @@ class CreateOffer extends React.Component {
       img: "images/icons/coins/lunes.png",
       coinsExample: [
         {
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
+          value: "BTC",
+          img: "images/icons/coins/btc.png",
+          title: "BTC"
         },
         {
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
+          value:"LTC",
+          img: "images/icons/coins/ltc.png",
+          title: "LTC"
         },
         {
+          value:"LUNES",
           img: "images/icons/coins/lunes.png",
           title: "Lunes"
         },
       ],
+      listCoinSelects:[],
       selectedValue: ''
     };
+  }
+  selectItems = (listCoins) => {
+    this.setState({
+      ...this.state,
+      listCoinSelects: listCoins
+    });
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -71,9 +82,8 @@ class CreateOffer extends React.Component {
   };
 
   render() {
-    const { title, img, coinsExample } = this.state;
-    const { classes } = this.props;
-
+    const {title,img,coinsExample, listCoinSelects} = this.state;
+    const {classes} = this.props;
     return (
       <div className={style.baseUser} >
 
@@ -130,15 +140,26 @@ class CreateOffer extends React.Component {
                   width={"100%"}
                 />
               </Grid>
-              <Grid item xs={7}>
-                <Select
-                  list={coinsExample}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={null}
-                  width={"100%"}
-                />
+
+            <div className={style.formGroup}>
+              <div className={style.textSmall}>Moeda desejada</div>
+              <Grid container>
+                <Grid item xs={5}>
+                  <Select
+                    list={coinsExample}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={null}
+                    width={"100%"}
+                  />
+                </Grid>
+                <Grid item xs={7}>
+                  <MultiSelect
+                    list={coinsExample}
+                    selectItems={this.selectItems}
+                  /> 
+                </Grid>
               </Grid>
             </Grid>
 

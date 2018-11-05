@@ -22,6 +22,7 @@ import ConfirmModal from "./modal/confirm";
 
 import HeaderDetails  from "./components/headerdetails/index";
 
+import MultiSelect from "./components/multiSelect";
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
@@ -32,7 +33,7 @@ class P2P extends React.Component {
     super(props);
     this.state = {
       tabIcon: 0,
-      openP2P: true
+      openP2P: true,
     };
   }
 
