@@ -67,8 +67,8 @@ class Invite extends React.Component {
     return (
       <div>
         <div className={style.header}>
-          <h1>Convites</h1>
-          <p>Convide seus amigos e familiares para se cadastrar na Lunes</p>
+          <h1>{i18n.t("INVITE_TITLE_INVITE")}</h1>
+          <p>{i18n.t("INVITE_TEXT_1")}</p>
         </div>
 
         <Modal 
@@ -109,16 +109,16 @@ class Invite extends React.Component {
             </div>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <button className={style.btnInviteSent}>Enviar</button>
+            <button className={style.btnInviteSent}>{i18n.t("INVITE_BUTTON_SEND")}</button>
             <div className={style.btnInvite}>
-            <button onClick={this.handleModal} className={style.btnInviteSent}>Convites enviados</button>
+            <button onClick={this.handleModal} className={style.btnInviteSent}>{i18n.t("INVITE_SEND_INVITATIONS")}</button>
             </div>
           </Grid>
         </Grid>
 
         <Grid container className={style.card}>
           <Grid item xs={12}>
-            <span className={style.label}>Convites confirmados</span>
+            <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
           <Grid item xs={12}>
             {[1, 2, 3, 4, 5].map(val=>{

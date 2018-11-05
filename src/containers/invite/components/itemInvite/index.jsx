@@ -8,6 +8,9 @@ import Avatar from "@material-ui/core/Avatar";
 // STYLE
 import style from "./style.css";
 
+//UTILS
+import i18n from "../../../../utils/i18n";
+
 class ItemInvite extends React.Component {
   render() {
     return (
@@ -15,12 +18,12 @@ class ItemInvite extends React.Component {
         <Grid container>
           <Grid item xs={5} sm={5}>
             <div>
-              <span className={style.spanTitle}>E-mail</span> <br />
+              <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_EMAIL")}</span> <br />
               <p className={style.spanSub}>email@email.com</p>
             </div>
           </Grid>
           <Grid item xs={5} sm={5}>
-            <span className={style.spanTitle}>Cupom</span> <br />
+            <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_COUPON")}</span> <br />
             <p className={style.spanSub}>
               f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543
             </p>

@@ -466,5 +466,12 @@
   "MENU_INVITE": "Invites",
   "INVITE_LINK_SHARE": "Share link",
   "INVITE_COPY_BUTTON": "Copy",
-  "INVITE_SHARE_BUTTON": "Share"
+  "INVITE_SHARE_BUTTON": "Share",
+  "INVITE_TITLE_EMAIL": "E-mail",
+  "INVITE_TITLE_INVITE": "Invites",
+  "INVITE_TITLE_COUPON": "Coupon",
+  "INVITE_TEXT_1": "Invite your friends and family to register on Lunes",
+  "INVITE_BUTTON_SEND": "Send",
+  "INVITE_SEND_INVITATIONS": "Sent invitations",
+  "INVITE_CONFIRMED_INVITATIONS": "Confirmed invitations"
 }
