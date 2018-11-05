@@ -57,8 +57,8 @@ class Invite extends React.Component {
             <button onClick={this.handleModal}>Convites enviados</button>
           </Grid>
         </Grid>
-
-        <Grid container className={style.card}>
+        
+        <Grid container className={style.cardInviteConfirmation}>
           <Grid item xs={12}>
             <span>Convites confirmados</span>
           </Grid>
@@ -70,7 +70,7 @@ class Invite extends React.Component {
             }
           </Grid>
         </Grid>
-
+    
       </div>
     )
   }
