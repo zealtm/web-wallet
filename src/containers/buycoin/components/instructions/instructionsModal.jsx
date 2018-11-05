@@ -12,13 +12,13 @@ class InstructionsModal extends React.Component {
       <div className={style.alignInstructions}>
         <div className={style.infoModal}>
           <p>
-            {i18n.t("INSTRUCTION_MODAL_BUY_INFO_1")}
+            {i18n.t("INSTRUCTION_MODAL_COINSALE_INFO_1")}
           </p>
           <p>
-            {i18n.t("INSTRUCTION_MODAL_BUY_INFO_2")}
+            {i18n.t("INSTRUCTION_MODAL_COINSALE_INFO_2")}
           </p>
           <p>
-            {i18n.t("INSTRUCTION_MODAL_BUY_INFO_3")}
+            {i18n.t("INSTRUCTION_MODAL_COINSALE_INFO_3")}
           </p>
         </div>
       </div>
