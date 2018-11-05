@@ -41,13 +41,13 @@ class ItemInvite extends React.Component {
               <p className={style.spanSub}>email@email.com</p>
             </div>
           </Grid>
-          <Grid item xs={5} sm={5}>
+          <Grid item xs={5} sm={6}>
             <span className={style.spanTitle}>Cupom</span> <br />
             <p className={style.spanSub}>
               f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543
             </p>
           </Grid>
-          <Grid item xs={2} sm={2}>
+          <Grid item xs={2} sm={1}>
             <img
               onClick = {() => this.copyAddress('f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543')}
               className={style.imgCopy}
