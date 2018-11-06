@@ -53,6 +53,17 @@ class Invite extends React.Component {
     }
   }
 
+  copyAddress = (address) => {
+    let { successRequest } = this.props;
+    const element = document.createElement("textarea");
+    element.value = address;
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+    successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
+  };
+
   handleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
@@ -94,18 +105,22 @@ class Invite extends React.Component {
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
-            <div className={style.linkShared}>
+            <div className={style.adressShared}>
               <p>12as3d45ads546asd456asd456asd546asd</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.copyIcon}>
-              <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-              <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+                <a  onClick = {() => this.copyAddress('12as3d45ads546asd456asd456asd546asd') }>
+                  <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+                  <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+                </a>
             </div>
             <div className={style.shareIcon}>  
-              <img src="/images/icons/invite/share@1x.png" />
-              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
+                  <a href={"mailto:" + this.props.email}>
+                  <img src="/images/icons/invite/share@1x.png" />
+                  <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
+                  </a>
             </div>
           </Grid>
           <Grid item xs={12} sm={2}>
@@ -134,7 +149,8 @@ class Invite extends React.Component {
 }
 
 Invite.propTypes = {
-  classes: PropTypes.object.isRequired
+   classes: PropTypes.object.isRequired
 };
 
 export default withStyles(inputStyle)(Invite);
+

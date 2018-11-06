@@ -44,7 +44,7 @@
   composes: textDefault from "../../components/bases/textBase.css";
 }
 
-:local(.linkShared) {
+:local(.adressShared) {
   composes: linkDefault from "../../components/bases/textBase.css";
   margin-bottom: 25px;
 }
@@ -57,6 +57,7 @@
   float: left;
   align-content: flex-end;
   text-align: center;
+  cursor: pointer;
 }
 
 :local(.shareIcon) {
@@ -65,7 +66,20 @@
   float: right;
   text-align: center;
   margin-top: 6px;
+  cursor: pointer;
+}
 
+:local .shareIcon  a{
+  color: white;
+  text-decoration: none;
+}
+
+:local(.copyIcon):hover {
+  opacity: 1;
+}
+
+:local(.shareIcon):hover {
+  opacity: 1;
 }
 
 @media screen and (max-width: 600px) {
