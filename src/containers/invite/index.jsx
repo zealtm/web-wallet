@@ -79,26 +79,25 @@ class Invite extends React.Component {
         />
 
         <Grid container className={style.card}>
-          <Grid container spacing={8} alignItems="flex-end">
-            <Grid item>
-              <img src="/images/icons/email/email@1x.png" className={style.icon} />
-            </Grid>
-            <Grid item>
+          <Grid item xs={12} sm={8}>
+            <Grid container spacing={8} alignItems="flex-end">
+              <Grid item>
+                <img src="/images/icons/email/email@1x.png" className={style.icon} />
+              </Grid>
+              <Grid item>
               <Input placeholder="Lunes@gmail.com" classes={{
                 root: classes.root,
                 underline: classes.cssUnderline,
                 input: classes.cssInput
               }} />
             </Grid>
-            
+            </Grid>
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.linkShared}>
               <p>12as3d45ads546asd456asd456asd546asd</p>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={4}>
             <div className={style.copyIcon}>
               <img src="/images/icons/modal-receive/ic_copy@1x.png" />
               <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
@@ -108,10 +107,10 @@ class Invite extends React.Component {
               <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <button className={style.btnInviteSent}>{i18n.t("INVITE_BUTTON_SEND")}</button>
-            <div className={style.btnInvite}>
-            <button onClick={this.handleModal} className={style.btnInviteSent}>{i18n.t("INVITE_SEND_INVITATIONS")}</button>
+          <Grid item xs={12} sm={4}>
+            <div className={style.boxButtons}>
+              <button className={style.btnInviteSent}>{i18n.t("INVITE_BUTTON_SEND")}</button>
+              <button onClick={this.handleModal} className={style.btnInviteSent2}>{i18n.t("INVITE_SEND_INVITATIONS")}</button>
             </div>
           </Grid>
         </Grid>
