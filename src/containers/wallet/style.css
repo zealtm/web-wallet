@@ -256,7 +256,7 @@
 /* 2.3 BUTTONS */
 :local(.alignButtons) {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 2%;
 }
 :local(.receiveButton) {
@@ -722,8 +722,9 @@
 :local .boxReceive .spacingBox{
   align-items: center;
   padding: 5% 2% 2% 2%;
-  max-width: 50%;
-  margin-left: 23%;
+  max-width: 90%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 :local .boxReceive .buttonReceive {
@@ -740,4 +741,8 @@
   background: transparent;
   color: #fff;
   font-size: 9.7pt;
+}
+
+:local .buttonReceiveImgShare{
+  width: 38px;
 }
