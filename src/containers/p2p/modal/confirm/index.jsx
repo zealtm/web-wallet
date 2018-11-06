@@ -11,7 +11,8 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-//MATERIAL
+//COMPONENTS
+import Starvotes from "../../components/starvotes"
 
 class ConfirmModal extends React.Component {
   render() {
@@ -33,9 +34,9 @@ class ConfirmModal extends React.Component {
         <Grid item xs={12}>
           <div className={style.avaliation}>
             <span className={style.spanTitle}>Classifique o vendedor</span>
-            <div>
-              <span>**ESTRELAS**</span>
-            </div>
+          <div className={style.starVotes}>
+              <Starvotes  /> 
+          </div>
             <div>
               <Input className={style.comment} />
             </div>
