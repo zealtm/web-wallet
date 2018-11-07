@@ -78,13 +78,10 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
-      <UserProfile key={2} />,
-      <CreateOffer  key={2} />
-      
-    ];
-
+      <UserProfile key={3} />,
+      <CreateOffer  key={4} />,
+      ];
     return (contents[tabIcon] );
-  
   };
 
   render() {

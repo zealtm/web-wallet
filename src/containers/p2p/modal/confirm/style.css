@@ -12,11 +12,12 @@
 /* PROFILE */
 :local(.profile) {
   text-align: -webkit-center;
+  margin-top: 40px;
 }
 
 :local(.avatar) {
-  width: 8.5rem !important;
-  height: 8.5rem !important;
+  width: 95px !important;
+  height: 95px !important;
 }
 
 :local(.userName) {
@@ -40,7 +41,15 @@
 :local(.avaliation) {
   text-align: -webkit-center;
   margin-top: 7%;
+  
 }
+
+:local(.starVotes) {
+   margin-top: 15px;
+   display: table ;
+
+}
+
 
 :local(.spanTitle) {
   font-size: 12px;
@@ -61,7 +70,8 @@
 
 :local(.btnConfirm) {
   text-align: -webkit-center;
-  margin-top: 15%;
+  margin-top: 15px;
+  
 }
 
 :local(.buttonCard) {
