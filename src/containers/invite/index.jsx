@@ -114,8 +114,8 @@ class Invite extends React.Component {
             </div>
           </Grid>
         </Grid>
-
-        <Grid container className={style.card}>
+        
+        <Grid container className={style.cardInviteConfirmation}>
           <Grid item xs={12}>
             <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
