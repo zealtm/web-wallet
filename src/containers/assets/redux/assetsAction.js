@@ -16,3 +16,24 @@ export const reloadAsset = (assetId, lunesAddress) => ({
   assetId,
   lunesAddress
 })
+//wallet
+export const setAssetSendModalOpen = () => ({
+  type: "SET_ASSET_MODAL_OPEN"
+});
+export const setAssetSendModalLoading = () => ({
+  type: "SET_ASSET_MODAL_LOADING"
+});
+
+export const setAssetModalStep = step => ({
+  type: "SET_ASSET_MODAL_STEP",
+  step
+});
+
+export const setAssetSendModalFinalAmount = amount => ({
+  type: "SET_ASSET_MODAL_FINAL_AMOUNT",
+  amount
+});
+
+export const resetAssetModalSend = () => ({
+  type: "RESET_ASSET_MODAL_SEND"
+})

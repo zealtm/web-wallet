@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import {
+  setAssetModalStep,
+  setAssetSendModalOpen
+} from "./redux/assetsAction";
 
 // STYLE
 import style from "./style.css";
@@ -17,6 +21,10 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 import i18n from "../../utils/i18n";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
+//COMPONENTS
+import Modal from "../../components/modal";
+import SendModal from "./modal/sendModal/";
+
 class CoinsInfo extends React.Component {
   constructor() {
     super();
@@ -25,7 +33,29 @@ class CoinsInfo extends React.Component {
       modalReceive: false
     };
   }
+  previousStep = () => {
+    let { step } = this.props.asset.modal;
+    let { setAssetModalStep } = this.props;
+    if (step >= 0) {
+      setAssetModalStep(step - 1);
+    }
 
+    return;
+  };
+  handleModalSendClose = () => {
+    let { setAssetSendModalOpen } = this.props;
+    let step = asset.modal.step;
+
+    if (step === 4) {
+      return null;
+    } else {
+      return () => setAssetSendModalOpen();
+    }
+  };
+  handleSendModalOpen = () => {
+    let { setAssetSendModalOpen } = this.props;
+    setAssetSendModalOpen();
+  }
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -35,23 +65,34 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    let { assets: assetsRoute } = this.props;
+    let { assets: assetsRoute, asset } = this.props;
     let { assets, selectedCoin } = assetsRoute;
-    let asset = assets[selectedCoin];
-
+    let token = assets[selectedCoin];
+    let step = asset.step;
     if (selectedCoin === undefined) return null;
 
     return (
       <div>
+        <Modal
+          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
+          content={<SendModal />}
+          show={asset.open}
+          close={this.handleModalSendClose}
+          back={
+            step === 0 || step === 4 || step === 5 || step === 6
+              ? null
+              : () => this.previousStep()
+          }
+        />
         <Grid container className={style.containerInfo}>
-          <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
+          <Grid item xs={12} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{asset.tokenName.toUpperCase()}</h3>
+                <h3>{token.tokenName.toUpperCase()}</h3>
                 <img
                   src={
-                    asset.image
-                      ? asset.image
+                    token.image
+                      ? token.image
                       : "images/icons/tokens/default.png"
                   }
                   className={style.iconCoinSelected}
@@ -70,7 +111,20 @@ class CoinsInfo extends React.Component {
               </Grid>
             </Grid>
           </Grid>
+          <Grid xs={12} item>
+            <div className={style.centerSend}>
+              <button
+                className={style.sentButton}
+                onClick={() => {
+                  this.handleSendModalOpen();
+                }}
+              >
+                {i18n.t("BTN_SEND")}
+              </button>
+            </div>
+          </Grid>
         </Grid>
+
       </div>
     );
   }
@@ -78,15 +132,19 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired
+  asset: PropTypes.object.isRequired,
+  assets: PropTypes.object.isRequired,
+  setAssetModalStep: PropTypes.func.isRequired,
+  setAssetSendModalOpen: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets
+  assets: store.assets,
+  asset: store.modal
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setAssetModalStep, setAssetSendModalOpen }, dispatch);
 
 export default connect(
   mapSateToProps,
