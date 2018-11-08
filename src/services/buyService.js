@@ -37,16 +37,16 @@ class BuyService {
     }
   }
 
-  async getCoinPayment(token) {
+  async getCoinPayment(token, coin) {
     try {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        BASE_URL + "/coin/lunes/sell/paymentMethods",
+        BASE_URL + "/coin/"+coin+"/sell/paymentMethods",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      
       // if (response.code !== 200) {
       //   return internalServerError();
       // }
