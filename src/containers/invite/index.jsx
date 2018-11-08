@@ -1,5 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
+
+// REDUX
+import { bindActionCreators } from "redux";
+import React from "react";
+import { connect } from "react-redux";
+import { successRequest } from "../errors/redux/errorAction";
+
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -64,6 +70,19 @@ class Invite extends React.Component {
     successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
   };
 
+  sendCoinAddressEmail = (address) => {
+    return (window.location.href =
+      "mailto:" + "?body=" + address);
+  };
+
+  inviteAdress = () => {
+    const address = "invite address test";
+    return address;
+  }
+
+
+
+
   handleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
@@ -106,7 +125,7 @@ class Invite extends React.Component {
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>12as3d45ads546asd456asd456asd546asd</p>
+              <p>{address}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -116,11 +135,12 @@ class Invite extends React.Component {
                   <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
                 </a>
             </div>
-            <div className={style.shareIcon}>  
-                  <a href={"mailto:" + this.props.email}>
-                  <img src="/images/icons/invite/share@1x.png" />
-                  <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
-                  </a>
+            <div 
+              onClick={() => this.sendCoinAddressEmail(address)}
+              className={style.shareIcon}
+            >     
+              <img src="/images/icons/invite/share@1x.png" />
+              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={2}>
