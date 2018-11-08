@@ -38,7 +38,7 @@
   margin-left: auto;
   margin-right: auto;
   max-width: 800px;
-  box-shadow: 0px 0px 10px 0px rgba(51,51,51,.1);
+  box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.1);
 }
 
 :local .boxButtons {
@@ -49,10 +49,9 @@
   height: 100%;
 }
 
-
 :local .cardInviteConfirmation {
   overflow-y: scroll;
-  height: 240px; 
+  height: 240px;
   padding-bottom: 100px;
 }
 :local .cardInviteConfirmation::-webkit-scrollbar-thumb {
@@ -72,7 +71,7 @@
   composes: textDefault from "../../components/bases/textBase.css";
 }
 
-:local(.linkShared) {
+:local(.adressShared) {
   composes: linkDefault from "../../components/bases/textBase.css";
   margin-bottom: 25px;
 }
@@ -85,6 +84,7 @@
   float: left;
   align-content: flex-end;
   text-align: center;
+  cursor: pointer;
 }
 
 :local(.shareIcon) {
@@ -92,7 +92,21 @@
   display: inline-block;
   text-align: center;
   margin-top: 6px;
-  margin-left:20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+:local .shareIcon a {
+  color: white;
+  text-decoration: none;
+}
+
+:local(.copyIcon):hover {
+  opacity: 1;
+}
+
+:local(.shareIcon):hover {
+  opacity: 1;
 }
 
 @media screen and (max-width: 600px) {
@@ -101,7 +115,7 @@
   }
 }
 
-/*3. BUTTONS*/ 
+/*3. BUTTONS*/
 
 :local .button {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
@@ -114,14 +128,13 @@
 
 :local .btnInviteSent {
   composes: button;
-  
 }
 
 :local .btnInviteSent2 {
   composes: button;
 }
 
-:local .icon{
+:local .icon {
   margin-right: 15px;
   height: 30px;
 }
