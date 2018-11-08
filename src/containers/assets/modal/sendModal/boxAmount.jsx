@@ -28,20 +28,11 @@ class BoxAmount extends React.Component {
   }
 
   setAmount = amount => {
-    let regex = new RegExp("^[0-9,.]+$");
-    amount = amount.replace(",", ".");
-    if (!amount || regex.test(amount.toString())) {
-      this.setState({ ...this.state, amount });
-    }
+
   };
 
   calcPercent = value => {
-    let { assets, coin } = this.props;
-    let coinBalance = coins[coin].balance.available;
-    let calcPercent = ((coinBalance / 100) * value).toFixed(
-      assets[coin].decimalPoint
-    );
-    this.setAmount(calcPercent.toString());
+    
   };
 
   confirmAmount = () => {
@@ -53,12 +44,15 @@ class BoxAmount extends React.Component {
 
   render() {
     let { amount } = this.state;
-    let { modal, coin } = this.props;
+    let { modal } = this.props;
+    let { asset: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let token = assets[selectedCoin];
 
     return (
       <div className={style.modalBox}>
         <img
-          src={"/images/icons/coins/" + coin + ".png"}
+          src={token.image}
           className={style.modalIconCoin}
         />
         <div>{i18n.t("MODAL_SEND_AMOUNT")}</div>
@@ -97,15 +91,14 @@ class BoxAmount extends React.Component {
 
 BoxAmount.propTypes = {
   modal: PropTypes.object.isRequired,
-  coin: PropTypes.string.isRequired,
-  assets: PropTypes.array.isRequired,
+  asset: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
   setAssetModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   modal: store.asset.modal,
-  assets: store.asset.assets
+  asset: store.asset
 });
 
 const mapDispatchToProps = dispatch =>

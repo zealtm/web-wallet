@@ -248,7 +248,7 @@ TransactionHistory.propTypes = {
 const mapSateToProps = store => ({
   user: store.user.user,
   skeleton: store.skeleton,
-  assets: store.assets,
+  assets: store.asset,
 });
 
 const mapDispatchToProps = dispatch =>

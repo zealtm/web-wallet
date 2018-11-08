@@ -125,7 +125,7 @@ Assets.propTypes = {
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets,
+  assets: store.asset,
   skeleton: store.skeleton
 });
 

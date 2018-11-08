@@ -91,14 +91,14 @@ export function* reloadAsset(action) {
   }
 }
 
-export function* setAssetModalStepSaga(payload) {
+export function* setAssetModalStep(payload) {
   yield put({
     type: "SET_ASSET_MODAL_STEP",
     step: payload.step
   });
 }
 
-export function* setAssetSendModalOpenSaga(payload){
+export function* setAssetSendModalOpen(payload){
   yield put({
     type: "SET_ASSET_MODAL_OPEN",
     open: payload.open

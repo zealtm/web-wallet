@@ -39,22 +39,24 @@ class BoxFee extends React.Component {
   };
 
   render() {
-    let { coin, modal } = this.props;
+    let {  modal } = this.props;
     let selectedFee = modal.feeValue.selectedFee
       ? modal.feeValue.selectedFee
       : 0;
     let amount = (modal.sendAmount + selectedFee).toFixed(8);
-
+    let { asset: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let token = assets[selectedCoin];
     return (
       <div className={style.modalBox}>
         <img
-          src={"/images/icons/coins/" + coin + ".png"}
+          src={assets.image}
           className={style.modalIconCoin}
         />
         <div>
           <span>{i18n.t("MODAL_SEND_TO_SEND")}</span>
           <span className={style.totalConfirm}>
-            {" " + amount + " " + coin.toUpperCase()}
+            {" " + amount + " " + token.tokenName.toUpperCase()}
           </span>
         </div>
         <div>
@@ -65,7 +67,7 @@ class BoxFee extends React.Component {
         <div className={style.confirmFee}>
           <div>
             {i18n.t("MODAL_SEND_FEE_TRANSACTION")}
-            <span> {coin.toUpperCase()} </span>
+            <span> {token.tokenName.toUpperCase()} </span>
             {i18n.t("TEXT_IS")}
           </div>
           <div className={style.txtamount}>{selectedFee}</div>
@@ -105,15 +107,14 @@ class BoxFee extends React.Component {
 
 BoxFee.propTypes = {
   modal: PropTypes.object.isRequired,
-  coin: PropTypes.string.isRequired,
-  assets: PropTypes.array.isRequired,
+  asset: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
   setAssetModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   modal: store.asset.modal,
-  assets: store.asset.assets
+  asset: store.asset
 });
 
 const mapDispatchToProps = dispatch =>

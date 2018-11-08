@@ -39,18 +39,12 @@ class CoinsInfo extends React.Component {
     if (step >= 0) {
       setAssetModalStep(step - 1);
     }
-
     return;
   };
   handleModalSendClose = () => {
     let { setAssetSendModalOpen } = this.props;
-    let step = asset.modal.step;
-
-    if (step === 4) {
-      return null;
-    } else {
-      return () => setAssetSendModalOpen();
-    }
+    return () => setAssetSendModalOpen();
+    
   };
   handleSendModalOpen = () => {
     let { setAssetSendModalOpen } = this.props;
@@ -65,10 +59,11 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    let { assets: assetsRoute, asset } = this.props;
+    const {modalSend} =this.state;
+    let { asset: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let token = assets[selectedCoin];
-    let step = asset.step;
+    let step = assetsRoute.modal.slep;
     if (selectedCoin === undefined) return null;
 
     return (
@@ -76,10 +71,10 @@ class CoinsInfo extends React.Component {
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          show={asset.open}
+          show={this.props.asset.modal.open}
           close={this.handleModalSendClose}
           back={
-            step === 0 || step === 4 || step === 5 || step === 6
+            step === 0 || step === 4 || step === 5
               ? null
               : () => this.previousStep()
           }
@@ -107,7 +102,7 @@ class CoinsInfo extends React.Component {
             >
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+                <p>{convertBiggestCoinUnit(token.balance, 8)}</p>
               </Grid>
             </Grid>
           </Grid>
@@ -133,15 +128,14 @@ class CoinsInfo extends React.Component {
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
   asset: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired,
   setAssetModalStep: PropTypes.func.isRequired,
   setAssetSendModalOpen: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets,
-  asset: store.modal
+  asset: store.asset,
+  
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({ setAssetModalStep, setAssetSendModalOpen }, dispatch);

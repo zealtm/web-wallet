@@ -35,7 +35,11 @@ class BoxAddress extends React.Component {
 
   handleQrCodeReader = () => {
     let { address } = this.state;
-    let { coin, modal } = this.props;
+    let { modal } = this.props;
+    let { asset: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let token = assets[selectedCoin];
+    console.log(token);
     return (
       <div>
         <div className={style.modalBox}>
@@ -45,7 +49,7 @@ class BoxAddress extends React.Component {
               className={style.icon}
             />
             <div>
-              {i18n.t("MODAL_SEND_ADDRESS")} {coin.toUpperCase()}
+              {i18n.t("MODAL_SEND_ADDRESS")} {token.tokenName.toUpperCase()}
             </div>
           </div>
 
@@ -73,14 +77,15 @@ class BoxAddress extends React.Component {
 }
 
 BoxAddress.propTypes = {
-  coin: PropTypes.string.isRequired,
+  asset: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   setAssetModalStep: PropTypes.func.isRequired,
   errorInput: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal
+  modal: store.asset.modal,
+  asset: store.asset
 });
 
 const mapDispatchToProps = dispatch =>

@@ -62,7 +62,10 @@ import {
 import {
   getAssetGeneralInfo,
   getAssetHistory,
-  reloadAsset
+  reloadAsset,
+  setAssetModalStep,
+  setAssetSendModalOpen,
+
 } from "../assets/redux/assetsSaga";
 import {
   setModalStepSaga as setModalStepRechargeSaga,
@@ -146,7 +149,8 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
     fork(takeLatest, "CREATE_ALIAS_ADDRESS_API", createAlias),
     fork(takeLatest, "GET_ALIAS_ADDRESS_API", getAliases),
-
+    fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
+    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
     // recharge-saga
     fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
     fork(takeLatest, "GET_OPERADORAS", getOperatorsSaga),
@@ -158,13 +162,15 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
     fork(takeLatest, "GET_RECHARGE_COINS_ENABLED", getRechargeCoinsEnabledSaga),
 
-    //assets
-    fork(takeLatest, "CONFIRM_PAY", confirmPaySaga),
-    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+    //assets   
     fork(takeLatest, "GET_ASSET_GENERAL_INFO_API", getAssetGeneralInfo),
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
-    fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+    fork(takeLatest, "SET_ASSET_MODAL_OPEN", setAssetSendModalOpen),
+    //fork(takeLatest, "SET_ASSET_MODAL_LOADING", confirmPaySaga),
+    fork(takeLatest, "SET_ASSET_MODAL_STEP", setAssetModalStep),
+    //fork(takeLatest, "SET_ASSET_MODAL_FINAL_AMOUNT", setModalStepSaga),
+    //fork(takeLatest, "RESET_ASSET_MODAL_SEND", setModalStepSaga),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),

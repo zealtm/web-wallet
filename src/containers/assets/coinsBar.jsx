@@ -171,7 +171,7 @@ CoinsBar.propTypes = {
 
 const mapSateToProps = store => ({
   wallet: store.wallet,
-  assets: store.assets
+  assets: store.asset
 });
 
 const mapDispatchToProps = dispatch =>
