@@ -30,11 +30,38 @@
 }
 
 :local .card {
-  padding: 20px;
+  padding: 30px;
   margin-top: 50px;
   margin-bottom: 20px;
   border-radius: 6.3px;
   background-color: #473088;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
+  box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.1);
+}
+
+:local .boxButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+:local .cardInviteConfirmation {
+  overflow-y: scroll;
+  height: 240px;
+  padding-bottom: 100px;
+}
+:local .cardInviteConfirmation::-webkit-scrollbar-thumb {
+  background-color: #68f285;
+  border-radius: 6px;
+}
+
+:local .cardInviteConfirmation::-webkit-scrollbar {
+  background-color: #654fa4;
+  border-radius: 6px;
 }
 
 /* 2. TEXT */
@@ -63,13 +90,13 @@
 :local(.shareIcon) {
   opacity: 0.5;
   display: inline-block;
-  float: right;
   text-align: center;
   margin-top: 6px;
+  margin-left: 20px;
   cursor: pointer;
 }
 
-:local .shareIcon  a{
+:local .shareIcon a {
   color: white;
   text-decoration: none;
 }
@@ -88,26 +115,26 @@
   }
 }
 
-/*3. BUTTONS*/ 
+/*3. BUTTONS*/
 
-
-:local .btnInviteSends {
+:local .button {
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-    font-weight: bold;
-    padding: 0;
-    margin-top: 5px;
-    margin-bottom: 100px;
+  font-weight: bold;
+  padding: 0px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 :local .btnInviteSent {
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-    font-weight: bold;
-    padding: 0;
-    margin-top: 10px;
-    margin-bottom: 5px;
+  composes: button;
 }
 
-:local .icon{
+:local .btnInviteSent2 {
+  composes: button;
+}
+
+:local .icon {
   margin-right: 15px;
   height: 30px;
 }
@@ -116,7 +143,7 @@
   font-weight: 700;
   display: block;
   margin-bottom: 12px;
-  margin-top: -40px;
+  margin-top: -60px;
   font-size: 12px;
 }
 

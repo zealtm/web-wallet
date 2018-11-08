@@ -92,8 +92,8 @@ class Invite extends React.Component {
     return (
       <div>
         <div className={style.header}>
-          <h1>Convites</h1>
-          <p>Convide seus amigos e familiares para se cadastrar na Lunes</p>
+          <h1>{i18n.t("INVITE_TITLE_INVITE")}</h1>
+          <p>{i18n.t("INVITE_TEXT_1")}</p>
         </div>
 
         <Modal 
@@ -104,26 +104,25 @@ class Invite extends React.Component {
         />
 
         <Grid container className={style.card}>
-          <Grid container spacing={8} alignItems="flex-end">
-            <Grid item>
-              <img src="/images/icons/email/email@1x.png" className={style.icon} />
-            </Grid>
-            <Grid item>
+          <Grid item xs={12} sm={8}>
+            <Grid container spacing={8} alignItems="flex-end">
+              <Grid item>
+                <img src="/images/icons/email/email@1x.png" className={style.icon} />
+              </Grid>
+              <Grid item>
               <Input placeholder="Lunes@gmail.com" classes={{
                 root: classes.root,
                 underline: classes.cssUnderline,
                 input: classes.cssInput
               }} />
             </Grid>
-            
+            </Grid>
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
               <p>{address_code}</p>
             </div>
-          </Grid>
-          <Grid item xs={12} sm={4}>
             <div className={style.copyIcon}>
                 <a  onClick = {() => this.copyAddress(address) }>
                   <img src="/images/icons/modal-receive/ic_copy@1x.png" />
@@ -138,17 +137,17 @@ class Invite extends React.Component {
               <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <button className={style.btnInviteSent}>Enviar</button>
-            <div className={style.btnInvite}>
-            <button onClick={this.handleModal} className={style.btnInviteSent}>Convites enviados</button>
+          <Grid item xs={12} sm={4}>
+            <div className={style.boxButtons}>
+              <button className={style.btnInviteSent}>{i18n.t("INVITE_BUTTON_SEND")}</button>
+              <button onClick={this.handleModal} className={style.btnInviteSent2}>{i18n.t("INVITE_SEND_INVITATIONS")}</button>
             </div>
           </Grid>
         </Grid>
-
-        <Grid container className={style.card}>
+        
+        <Grid container className={style.cardInviteConfirmation}>
           <Grid item xs={12}>
-            <span className={style.label}>Convites confirmados</span>
+            <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
           <Grid item xs={12}>
             {[1, 2, 3, 4, 5].map(val=>{
