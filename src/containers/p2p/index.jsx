@@ -26,7 +26,6 @@ import Modal from "../../components/modal";
 import DepositModal from "./modal/deposit";
 import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
-import ModalPayment from "./flowPayment/index";
 
 
 //STYLE
@@ -120,7 +119,6 @@ class P2P extends React.Component {
               </div>
             )
         }
-        <ModalPayment />
       </div>
     );
   }

@@ -1,5 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalStep, openModal } from "../p2p/redux/p2pAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -11,10 +16,28 @@ import style from "./style.css";
 // UTILS
 import i18n from "../../../utils/i18n";
 
+// COMPONENTS
+import ModalPayment from "./modal/index";
+import Modal from "../../../components/modal";
+
 class P2P extends React.Component {
+  closeModal() {
+    const { setModalStep, openModal } = this.props;
+    openModal(false);
+    setModalStep(1);
+  }
+
   render() {
+    const {modalOpen} = this.props;
+    
     return (
       <div>
+        <Modal
+          content={<ModalPayment />}
+          show={modalOpen}
+          close={() => this.closeModal() }         
+        />
+
         <Grid item xs={12} className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
@@ -149,4 +172,26 @@ class P2P extends React.Component {
     );
   }
 }
-export default P2P;
+
+P2P.propTypes = {
+  modalStep: PropTypes.number.isRequired,
+  modalOpen: PropTypes.bool.isRequired,
+  setModalStep: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired
+}
+const mapStateToProps = store => ({
+  modalStep: store.p2p.modalStep,
+  modalOpen: store.p2p.modalOpen,
+});
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setModalStep, 
+    openModal
+  }, 
+  dispatch
+);
+
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+) (P2P);
