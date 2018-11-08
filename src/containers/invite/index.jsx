@@ -1,11 +1,10 @@
+import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
 import { bindActionCreators } from "redux";
-import React from "react";
 import { connect } from "react-redux";
 import { successRequest } from "../errors/redux/errorAction";
-
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -71,17 +70,9 @@ class Invite extends React.Component {
   };
 
   sendCoinAddressEmail = (address) => {
-    return (window.location.href =
-      "mailto:" + "?body=" + address);
+    const base_email = "email@..."; // mock
+    return (window.location.href = "mailto:" + base_email + "?body=" + address);
   };
-
-  inviteAdress = () => {
-    const address = "invite address test";
-    return address;
-  }
-
-
-
 
   handleModal = () => {
     const { modalOpen } = this.state;
@@ -94,6 +85,10 @@ class Invite extends React.Component {
   render() {
     const { classes } = this.props;
     const { modalOpen } = this.state;
+
+    const address_code = "12as3d45ads546asd456asd456asd546asd"; // mock
+    const address = "https://luneswallet.app/invite?="+address_code; // mock
+
     return (
       <div>
         <div className={style.header}>
@@ -125,12 +120,12 @@ class Invite extends React.Component {
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>{address}</p>
+              <p>{address_code}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.copyIcon}>
-                <a  onClick = {() => this.copyAddress('12as3d45ads546asd456asd456asd546asd') }>
+                <a  onClick = {() => this.copyAddress(address) }>
                   <img src="/images/icons/modal-receive/ic_copy@1x.png" />
                   <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
                 </a>
@@ -169,8 +164,19 @@ class Invite extends React.Component {
 }
 
 Invite.propTypes = {
-   classes: PropTypes.object.isRequired
+   classes: PropTypes.object.isRequired, 
+   successRequest: PropTypes.func.isRequired
 };
 
-export default withStyles(inputStyle)(Invite);
+const mapDispatchToProps = dispatch =>bindActionCreators(
+  {
+    successRequest
+  },
+  dispatch
+);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(inputStyle)(Invite));
 
