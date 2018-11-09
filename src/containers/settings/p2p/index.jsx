@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep, openModal } from "../p2p/redux/p2pAction";
+import { setModalStep, openModal } from "../../p2p/redux/p2pAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -28,7 +28,7 @@ class P2P extends React.Component {
   }
 
   render() {
-    const {modalOpen} = this.props;
+    const {modalOpen, openModal} = this.props;
     
     return (
       <div>
@@ -73,7 +73,7 @@ class P2P extends React.Component {
 
         <Grid container className={style.p2pContainer}>
           <Grid item>
-            <div className={style.cardP2p}>
+            <div className={style.cardP2p} onClick={()=>openModal(true)}>
               <h1>Plano básico</h1>
               <img
                 src="/images/icons/p2p/card.png"
