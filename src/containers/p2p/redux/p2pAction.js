@@ -7,3 +7,13 @@ export const openChat = iduser => ({
 export const closeChat = () => ({
   type: "CLOSE_CHAT_P2P"
 });
+
+export const setModalStep = step => ({
+  type: "SET_MODAL_FLOW_STEP",
+  step
+});
+
+export const openModal = open => ({
+  type: "SET_MODAL_OPEN",
+  open
+});

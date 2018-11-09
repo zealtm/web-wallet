@@ -18,7 +18,6 @@ import Modal from "../../components/modal";
 import DepositModal from "./modal/deposit";
 import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
-import ConfirmModal from "./modal/confirm";
 
 import HeaderDetails  from "./components/headerdetails/index";
 

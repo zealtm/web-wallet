@@ -26,3 +26,17 @@ export function* closeChat() {
     type: "CLOSE_CHAT_P2P_REDUCER"
   })
 }
+
+export function* setModalStepSaga(payload) {
+  yield put({
+    type: "SET_MODAL_FLOW_STEP_REDUCER",
+    step: payload.step
+  });
+}
+
+export function* openModalPaySaga(payload){
+  yield put({
+    type: "SET_MODAL_OPEN_REDUCER",
+    open: payload.open
+  });
+}
