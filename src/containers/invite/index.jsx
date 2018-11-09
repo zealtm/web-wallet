@@ -115,11 +115,11 @@ class Invite extends React.Component {
           </Grid>
         </Grid>
         
-        <Grid container className={style.cardInviteConfirmation}>
+        <Grid container className={style.card}>
           <Grid item xs={12}>
             <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={style.cardInviteConfirmation}>
             {[1, 2, 3, 4, 5].map(val=>{
               return (<ItemInvite />)
             })
