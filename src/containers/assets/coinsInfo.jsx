@@ -26,8 +26,8 @@ import Modal from "../../components/modal";
 import SendModal from "./modal/sendModal/";
 
 class CoinsInfo extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       modalSend: false,
       modalReceive: false
@@ -40,11 +40,6 @@ class CoinsInfo extends React.Component {
       setAssetModalStep(step - 1);
     }
     return;
-  };
-  handleModalSendClose = () => {
-    let { setAssetSendModalOpen } = this.props;
-    return () => setAssetSendModalOpen();
-    
   };
   handleSendModalOpen = () => {
     let { setAssetSendModalOpen } = this.props;
@@ -59,22 +54,21 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    const {modalSend} =this.state;
     let { asset: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let token = assets[selectedCoin];
-    let step = assetsRoute.modal.slep;
+    let modal = this.props.asset.modal;
     if (selectedCoin === undefined) return null;
-
+    
     return (
       <div>
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          show={this.props.asset.modal.open}
-          close={this.handleModalSendClose}
+          show={modal.open}
+          close={this.handleSendModalOpen}
           back={
-            step === 0 || step === 4 || step === 5
+            modal.step === 0 || modal.step === 4 || modal.step === 5
               ? null
               : () => this.previousStep()
           }
@@ -131,7 +125,7 @@ CoinsInfo.propTypes = {
   setAssetModalStep: PropTypes.func.isRequired,
   setAssetSendModalOpen: PropTypes.func.isRequired
 };
-
+ 
 const mapSateToProps = store => ({
   user: store.user.user,
   asset: store.asset,

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import BoxQrReader from "./boxQrReader";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -24,7 +24,10 @@ class BoxAddress extends React.Component {
     super();
     this.state = { address: "", isVisible: false };
   }
-
+  showQrCodeReader = () => {
+    let { isVisible } = this.state;
+    this.setState({ isVisible: !isVisible });
+  };
   changeAddress = address => this.setState({ address });
 
   validateAddress = () => {    
@@ -34,12 +37,27 @@ class BoxAddress extends React.Component {
   };
 
   handleQrCodeReader = () => {
-    let { address } = this.state;
+    let { address,isVisible } = this.state;
     let { modal } = this.props;
     let { asset: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let token = assets[selectedCoin];
-    console.log(token);
+    if (isVisible) {
+      return (
+        <div className={style.boxQr}>
+          <div className={style.qrCode}>
+            <div style={{ width: "50vh" }}>
+              <BoxQrReader coin={token} />
+            </div>
+          </div>
+          <ButtonContinue
+            label={i18n.t("BTN_BACK")}
+            action={() => this.showQrCodeReader()}
+            loading={modal.loading}
+          />
+        </div>
+      );
+    }
     return (
       <div>
         <div className={style.modalBox}>
