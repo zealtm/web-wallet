@@ -5,7 +5,7 @@ const initialState = {
   chatOpened: false,
   loading: false,
   modalStep: 1,
-  modalOpen: true,
+  modalOpen: false,
 };
 
 const p2p = (state = initialState, action) => {

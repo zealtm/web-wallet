@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep } from "../../../redux/p2pAction";
+import { setModalStep } from "../../../p2p/redux/p2pAction";
 
 // STYLE
 import style from "./style.css";
