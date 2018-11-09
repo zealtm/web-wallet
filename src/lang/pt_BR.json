@@ -460,9 +460,14 @@
   "BUY_CREDIT": "Pagamento", 
 
   "MENU_INVITE": "Convites",
-
-
   "INVITE_LINK_SHARE": "Link de compartilhamento",
   "INVITE_COPY_BUTTON": "Copiar",
-  "INVITE_SHARE_BUTTON": "Compartilhar"
-}
+  "INVITE_SHARE_BUTTON": "Compartilhar",
+  "INVITE_TITLE_EMAIL": "E-mail", 
+  "INVITE_TITLE_INVITE": "Convites",
+  "INVITE_TITLE_COUPON": "Cupom",
+  "INVITE_TEXT_1": "Convide seus amigos e familiares para se cadastrar na Lunes",
+  "INVITE_BUTTON_SEND": "Enviar",
+  "INVITE_SEND_INVITATIONS": "Convites enviados",
+  "INVITE_CONFIRMED_INVITATIONS": "Convites confirmados"
+} 

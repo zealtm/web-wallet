@@ -38,6 +38,7 @@
   margin-left: auto;
   margin-right: auto;
   max-width: 800px;
+  box-shadow: 0px 0px 10px 0px rgba(51,51,51,.1);
 }
 
 :local .boxButtons {
@@ -46,6 +47,22 @@
   justify-content: center;
   flex-direction: column;
   height: 100%;
+}
+
+
+:local .cardInviteConfirmation {
+  overflow-y: scroll;
+  height: 240px; 
+  padding-bottom: 100px;
+}
+:local .cardInviteConfirmation::-webkit-scrollbar-thumb {
+  background-color: #68f285;
+  border-radius: 6px;
+}
+
+:local .cardInviteConfirmation::-webkit-scrollbar {
+  background-color: #654fa4;
+  border-radius: 6px;
 }
 
 /* 2. TEXT */
@@ -99,7 +116,6 @@
   composes: button;
   
 }
-
 
 :local .btnInviteSent2 {
   composes: button;
