@@ -2,9 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
+<<<<<<< HEAD
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setInviteModal, getInviteAddress, sendMailInvite, getInviteSent } from "./redux/inviteAction";
+=======
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { successRequest } from "../errors/redux/errorAction";
+>>>>>>> devinvite
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -58,6 +64,22 @@ class Invite extends React.Component {
     }
   }
 
+  copyAddress = (address) => {
+    let { successRequest } = this.props;
+    const element = document.createElement("textarea");
+    element.value = address;
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+    successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
+  };
+
+  sendCoinAddressEmail = (address) => {
+    const base_email = "email@..."; // mock
+    return (window.location.href = "mailto:" + base_email + "?body=" + address);
+  };
+
   handleModal = () => {
     const { modalOpen } = this.state;
     this.setState({
@@ -69,6 +91,10 @@ class Invite extends React.Component {
   render() {
     const { classes } = this.props;
     const { modalOpen } = this.state;
+
+    const address_code = "12as3d45ads546asd456asd456asd546asd"; // mock
+    const address = "https://luneswallet.app/invite?="+address_code; // mock
+
     return (
       <div>
         <div className={style.header}>
@@ -100,14 +126,19 @@ class Invite extends React.Component {
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
-            <div className={style.linkShared}>
-              <p>12as3d45ads546asd456asd456asd546asd</p>
+            <div className={style.adressShared}>
+              <p>{address_code}</p>
             </div>
             <div className={style.copyIcon}>
-              <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-              <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+                <a  onClick = {() => this.copyAddress(address) }>
+                  <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+                  <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+                </a>
             </div>
-            <div className={style.shareIcon}>  
+            <div 
+              onClick={() => this.sendCoinAddressEmail(address)}
+              className={style.shareIcon}
+            >     
               <img src="/images/icons/invite/share@1x.png" />
               <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
@@ -120,11 +151,11 @@ class Invite extends React.Component {
           </Grid>
         </Grid>
         
-        <Grid container className={style.cardInviteConfirmation}>
+        <Grid container className={style.card}>
           <Grid item xs={12}>
             <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={style.cardInviteConfirmation}>
             {[1, 2, 3, 4, 5].map(val=>{
               return (<ItemInvite />)
             })
