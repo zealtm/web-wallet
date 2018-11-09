@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -27,7 +19,9 @@ import DepositModal from "./modal/deposit";
 import InterestModal from "./modal/interest";
 import UserProfile from "./userProfile";
 
+import HeaderDetails  from "./components/headerdetails/index";
 
+import MultiSelect from "./components/multiSelect";
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
@@ -38,7 +32,7 @@ class P2P extends React.Component {
     super(props);
     this.state = {
       tabIcon: 0,
-      openP2P: true
+      openP2P: true,
     };
   }
 
@@ -84,15 +78,13 @@ class P2P extends React.Component {
       <Offers key={1} />,
       <Offers key={2} />,
       <UserProfile key={3} />,
-      <CreateOffer  key={4} />
-    ];
-
+      <CreateOffer  key={4} />,
+      ];
     return (contents[tabIcon] );
-  
   };
 
   render() {
-    const contentTabIcons = ["tag", "user", "user_star", "newoffer"];
+    const contentTabIcons = ["tag", "user-star", "newoffer", "user",];
     const {chatOpened} = this.props.p2pStore;
     const { openP2P } = this.state;
 

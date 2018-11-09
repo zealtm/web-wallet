@@ -1,4 +1,5 @@
 :local .modalContainerChat {
+  padding-top:  50px;
   max-width: 100%;
   text-align: center;
 }
@@ -12,7 +13,7 @@
 }
 
 :local .textOpenChat {
-  width: 44%;
+  width: 90%;
   font-size: 1.1em;
   font-weight: bold;
   letter-spacing: 1px;

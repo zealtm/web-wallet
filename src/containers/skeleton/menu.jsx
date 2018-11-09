@@ -145,7 +145,7 @@ class Menu extends React.Component {
           to={"/p2p"}
           onClick={() => this.onClickFunction()}
         >
-          <img src={"../../images/icons/p2p/user_star.png"} className={style.iconP2p} />    
+          <img src={"../../images/icons/p2p/user-star.png"} className={style.iconP2p} />    
           <div>{"  "}</div>      
         </NavLink>
         </div>

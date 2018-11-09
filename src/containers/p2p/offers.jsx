@@ -16,7 +16,7 @@ const inputStyle = {
   root: {
     color: colors.messages.info,
     margin: "0",
-    padding: "3px",
+    padding: "9px",
     width: "95%",
     marginLeft: "auto",
     marginRight: "auto",
