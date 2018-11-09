@@ -42,6 +42,11 @@ const menuItens = [
     icon: "../../images/icons/general/assets@1x.png"
   },
   {
+    link: "/coinsale",
+    label: i18n.t("MENU_COINSALE"),
+    icon: "../../images/icons/general/buycoin@1x.png"
+  },
+  {
     link: "/invoices",
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png"
@@ -55,11 +60,6 @@ const menuItens = [
     link: "/coupons",
     label: i18n.t("MENU_COUPONS"),
     icon: "../../images/icons/general/cupon@1x.png"
-  },
-  {
-    link: "/coinsale",
-    label: i18n.t("MENU_COINSALE"),
-    icon: "../../images/icons/general/buycoin@1x.png"
   }
 ];
 
