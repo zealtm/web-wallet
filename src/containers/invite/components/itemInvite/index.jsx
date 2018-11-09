@@ -8,16 +8,12 @@ import { successRequest } from "../../../errors/redux/errorAction";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
-
-//UTILS
-import i18n from "../../../../utils/i18n";
 
 class ItemInvite extends React.Component {
   constructor(props) {
