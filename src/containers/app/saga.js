@@ -92,6 +92,12 @@ import {
   getHistoryBuySaga
 } from "../buycoin/redux/buySaga";
 
+import {
+  getInviteAddressSaga,
+  sendMailInviteSaga, 
+  getInviteSentSaga
+} from "../invite/redux/inviteSaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -180,6 +186,11 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+
+    // invite
+    fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
+    fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
+    fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
 
   ];
 }

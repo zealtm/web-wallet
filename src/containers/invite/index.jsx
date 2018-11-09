@@ -2,9 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
+<<<<<<< HEAD
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setInviteModal, getInviteAddress, sendMailInvite, getInviteSent } from "./redux/inviteAction";
+=======
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { successRequest } from "../errors/redux/errorAction";
+>>>>>>> devinvite
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -163,19 +169,26 @@ class Invite extends React.Component {
 }
 
 Invite.propTypes = {
-   classes: PropTypes.object.isRequired, 
-   successRequest: PropTypes.func.isRequired
+  classes: PropTypes.object.isRequired,
+  invite: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch =>bindActionCreators(
-  {
-    successRequest
-  },
-  dispatch
-);
+const mapStateToProps = store => ({
+  invite: store.invite
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setInviteModal,
+      getInviteAddress,
+      sendMailInvite,
+      getInviteSent,
+    },
+    dispatch
+  );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(inputStyle)(Invite));
-
