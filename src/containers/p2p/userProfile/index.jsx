@@ -4,17 +4,15 @@ import PropTypes from "prop-types";
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Avatar from "@material-ui/core/Avatar";
+import { withStyles } from '@material-ui/core/styles';
 
 // COMPONENTS
 import StarVotes from "../components/starvotes";
 
-import { withStyles } from '@material-ui/core/styles';
-import colors from "../../../components/bases/colors";
-
 // styles
 import style from "../style.css";
-import StarVotes from "../components/starvotes";
+import colors from "../../../components/bases/colors";
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -113,6 +111,8 @@ class UserProfile extends React.Component {
     )
   }
 }
-UserProfile.propTypes = {}
+UserProfile.propTypes = {
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles) (UserProfile);
+export default withStyles(styles)(UserProfile);

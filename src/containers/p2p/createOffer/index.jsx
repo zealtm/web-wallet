@@ -127,20 +127,6 @@ class CreateOffer extends React.Component {
             </Grid>
           </div>
 
-          <div className={style.formGroup}>
-            <div className={style.textSmall}>Moeda desejada</div>
-            <Grid container>
-              <Grid item xs={5}>
-                <Select
-                  list={coinsExample}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={null}
-                  width={"100%"}
-                />
-              </Grid>
-
             <div className={style.formGroup}>
               <div className={style.textSmall}>Moeda desejada</div>
               <Grid container>
@@ -161,8 +147,6 @@ class CreateOffer extends React.Component {
                   /> 
                 </Grid>
               </Grid>
-            </Grid>
-
             <hr />
           </div>
 
@@ -215,7 +199,6 @@ class CreateOffer extends React.Component {
 
           </div>
         </div>
-
       </div>
     );
   }
