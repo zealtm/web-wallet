@@ -51,8 +51,8 @@ class BuyCoins extends React.Component {
     const { modalStep, setModalStep, modalOpen, loading } = this.props;
 
     const titles = [
-      i18n.t("BUYCOINS_PURCHASE_TAB_TITLE"),
-      i18n.t("BUYCOINS_HISTORY_TAB_TITLE")
+      i18n.t("COINSALE_PURCHASE_TAB_TITLE"),
+      i18n.t("COINSALE_HISTORY_TAB_TITLE")
     ];
     const contents = [<Buy key={0} />, <History key={1} />];
 
@@ -63,14 +63,14 @@ class BuyCoins extends React.Component {
         <CoinsBar />
         <div className={style.box}>
           <div className={style.header}>
-            <h1>{i18n.t("BUYCOINS_TITLE")}</h1>
-            <p>{i18n.t("BUYCOINS_DESCRIPTION")}</p>
+            <h1>{i18n.t("COINSALE_TITLE")}</h1>
+            <p>{i18n.t("COINSALE_DESCRIPTION")}</p>
           </div>
 
           <Tabs tabTitles={titles} tabContents={contents} justify="center" />
 
           <Modal
-            title={i18n.t("BUYCOINS_TITLE")}
+            title={i18n.t("COINSALE_TITLE")}
             content={<BuyModal />}
             show={modalOpen}
             close={

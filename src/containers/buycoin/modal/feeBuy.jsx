@@ -123,15 +123,15 @@ class FeeBuy extends React.Component {
             className={style.modalIconCoin}
           />
           <div>
-            <span>{i18n.t("BUYCOINS_FEE_TEXT_1")}</span>
+            <span>{i18n.t("COINSALE_FEE_TEXT_1")}</span>
             <span className={style.totalConfirm}>
               {buypack.amountPay} {buypack.paycoin.toUpperCase()}
             </span>
           </div>
           <div>
-            <span>{i18n.t("BUYCOINS_FEE_TEXT_2")}</span>
+            <span>{i18n.t("COINSALE_FEE_TEXT_2")}</span>
             <span className={style.addressConfirm}>
-              {i18n.t("BUYCOINS_TITLE")}
+              {i18n.t("COINSALE_TITLE")}
             </span>
           </div>
 
