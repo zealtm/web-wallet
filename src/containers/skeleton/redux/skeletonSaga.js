@@ -1,22 +1,19 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
-import {
-  internalServerError
-} from "../../../containers/errors/statusCodeMessage";
+import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 import {
   setAuthToken,
   getAuthToken,
-  getUserSeedWords
+  getUserSeedWords,
+  getDefaultCrypto
 } from "../../../utils/localStorage";
-import {
-  decryptAes
-} from "../../../utils/cryptography";
+import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import UserService from "../../../services/userService";
+import TransactionService from "../../../services/transaction/transactionService";
+
 const coinService = new CoinService();
 const userService = new UserService();
+const transactionService = new TransactionService();
 
 export function* loadGeneralInfo(action) {
   try {
@@ -37,6 +34,20 @@ export function* loadGeneralInfo(action) {
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
+
+    let responseAlias = yield call(
+      transactionService.getAliases,
+      responseCoins.lunes.address
+    );
+
+    if (responseAlias.length > 0) {
+      let firstAlias = responseAlias[0].split(":")[2];
+
+      yield put({
+        type: "SET_SKELETON_ALIAS_ADDRESS",
+        alias: firstAlias
+      });
+    }
 
     yield put({
       type: "SET_USER_INFO",
@@ -78,8 +89,9 @@ export function* loadGeneralInfo(action) {
 
 export function* loadWalletInfo(action) {
   try {
-    let token = yield call(getAuthToken);
-    let seed = yield call(getUserSeedWords);
+    const token = yield call(getAuthToken);
+    const seed = yield call(getUserSeedWords);
+    const defaultCrypto = yield call(getDefaultCrypto);
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -89,9 +101,21 @@ export function* loadWalletInfo(action) {
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
+    let responseCoinHistory = yield call(
+      coinService.getCoinHistory,
+      defaultCrypto,
+      responseCoins[defaultCrypto].address,
+      token
+    );
+
     yield put({
       type: "GET_GENERAL_INFO",
       coins: responseCoins
+    });
+
+    yield put({
+      type: "SET_WALLET_HISTORY",
+      history: responseCoinHistory
     });
 
     yield put({
@@ -103,7 +127,7 @@ export function* loadWalletInfo(action) {
     });
     yield put({
       type: "SET_ASSET_LOADING"
-    })
+    });
 
     return;
   } catch (error) {

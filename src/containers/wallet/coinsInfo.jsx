@@ -64,31 +64,31 @@ class CoinsInfo extends React.Component {
   handleSendModalOpen = () => {
     let { wallet, errorRequest, setWalletSendModalOpen } = this.props;
     let utxos = !wallet.utxos ? {} : wallet.utxos;
-    if (utxos.status === 'error') {
+    if (utxos.status === "error") {
       errorRequest(utxos.message);
       return;
     }
-    setWalletSendModalOpen()
-  }
+    setWalletSendModalOpen();
+  };
+
   componentDidUpdate() {
     let { lastCoin } = this.state;
     let { wallet, coins, setUtxos } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
+    let address = coins[wallet.selectedCoin].address;
     if (lastCoin !== wallet.selectedCoin) {
       setUtxos(wallet.selectedCoin, address);
-      this.setState({lastCoin: wallet.selectedCoin});
+      this.setState({ lastCoin: wallet.selectedCoin });
     }
   }
-  componentDidMount = () => {
-    let { wallet, coins, setUtxos } = this.props;
-    let address = coins[(wallet.selectedCoin = wallet.selectedCoin)].address;
-    setUtxos(wallet.selectedCoin, address)
-    this.setState({lastCoin: wallet.selectedCoin});
-  }
+
   handleModalSendClose = () => {
     this.props.resetModalSend();
     let {
-      user, wallet, setWalletSendModalOpen, setWalletLoading, loadWalletInfo
+      user,
+      wallet,
+      setWalletSendModalOpen,
+      setWalletLoading,
+      loadWalletInfo
     } = this.props;
     let step = wallet.modal.step;
 
@@ -97,23 +97,27 @@ class CoinsInfo extends React.Component {
     } else if (step === 5 || step === 6) {
       return () => {
         setWalletSendModalOpen(),
-        setWalletLoading(true),
-        loadWalletInfo(user.password);
-      }
+          setWalletLoading(true),
+          loadWalletInfo(user.password);
+      };
     } else {
       return () => setWalletSendModalOpen();
     }
-  }
+  };
+
   render() {
     let defaultCoin = getDefaultFiat();
     let {
       setWalletSendModalOpen,
       setWalletReceiveModalOpen,
       coins,
-      wallet,
+      wallet
     } = this.props;
     let step = wallet.modal.step;
-    let selectedCoin = wallet.selectedCoin;
+    let selectedCoin = wallet.selectedCoin ? wallet.selectedCoin : "lunes";
+
+    if (!coins[selectedCoin]) return null;
+
     let coin = coins[wallet.selectedCoin];
     let coinPrice = coins[selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[selectedCoin].price.percent;
@@ -131,7 +135,7 @@ class CoinsInfo extends React.Component {
 
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
-          content={<SendModal/>}
+          content={<SendModal />}
           show={wallet.modal.open}
           close={this.handleModalSendClose}
           back={
@@ -183,13 +187,17 @@ class CoinsInfo extends React.Component {
                   <button
                     className={style.sentButton}
                     onClick={() => {
-                      if (utxos.status === 'loading') return;
-                      this.handleSendModalOpen()
+                      if (utxos.status === "loading") return;
+                      this.handleSendModalOpen();
                     }}
                   >
-                    { utxos.status == 'loading' ? <Loading/>
-                    : utxos.status == 'error'   ? i18n.t("BTN_SEND_ERROR")
-                    : i18n.t("BTN_SEND")}
+                    {utxos.status == "loading" ? (
+                      <Loading />
+                    ) : utxos.status == "error" ? (
+                      i18n.t("BTN_SEND_ERROR")
+                    ) : (
+                      i18n.t("BTN_SEND")
+                    )}
                   </button>
                 </Grid>
               </Grid>
@@ -245,13 +253,13 @@ CoinsInfo.propTypes = {
   setWalletSendModalOpen: PropTypes.func.isRequired,
   setWalletReceiveModalOpen: PropTypes.func,
   errorRequest: PropTypes.func,
-  resetModalSend: PropTypes.func,
+  resetModalSend: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   wallet: store.wallet,
-  coins: store.skeleton.coins,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>

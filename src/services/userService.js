@@ -1,30 +1,27 @@
 import axios from "axios";
-
-//CONSTANTS
 import {
   BASE_URL,
   API_HEADER,
   HEADER_REQUEST,
   HEADER_RESPONSE
 } from "../constants/apiBaseUrl";
-
-// ERROR
 import {
   badRequest,
   internalServerError
 } from "../containers/errors/statusCodeMessage";
-
-// UTILS
+import {
+  setAuthToken
+} from "../utils/localStorage";
+import {
+  encryptMd5
+} from "../utils/cryptography";
 import i18n from "../utils/i18n";
-import { setAuthToken } from "../utils/localStorage";
-import { encryptMd5 } from "../utils/cryptography";
 
 class UserService {
   async createUser(userInfo) {
     try {
       let response = await axios.post(
-        BASE_URL + "/user",
-        {
+        BASE_URL + "/user", {
           name: userInfo.name,
           surname: userInfo.surname,
           email: userInfo.email,
@@ -36,7 +33,7 @@ class UserService {
       return response;
     } catch (error) {
       if (error.response.data.code === 500) {
-        return badRequest(i18n.t("NOTIFICATION_SERVICE_ALREADY_REGISTRED"));        
+        return badRequest(i18n.t("NOTIFICATION_SERVICE_ALREADY_REGISTRED"));
       }
 
       internalServerError();
@@ -120,7 +117,6 @@ class UserService {
 
       return response;
     } catch (error) {
-      console.warn(error);
       return internalServerError();
     }
   }
@@ -130,7 +126,7 @@ class UserService {
       const response = await axios
         .post(
           BASE_URL + "/user/forgotPassword",
-          data, // {email: email}
+          data,
           API_HEADER
         )
         .catch(error => {
@@ -139,7 +135,6 @@ class UserService {
 
       return response;
     } catch (error) {
-      console.warn(error);
       return internalServerError();
     }
   }

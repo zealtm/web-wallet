@@ -22,6 +22,7 @@ class BoxProcess extends React.Component {
       {
         coin: coin,
         fromAddress: coins[coin].address,
+        lunesUserAddress: coins["lunes"].address,
         toAddress: modal.address,
         amount: modal.sendAmount,
         fee: modal.feeValue.selectedFee,

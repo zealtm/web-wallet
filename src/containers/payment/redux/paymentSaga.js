@@ -8,7 +8,6 @@ import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { convertToLocaleDate } from "../../../utils/strings";
 
-
 // SERVICES
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
@@ -39,7 +38,8 @@ export function* getCoinsEnabledSaga() {
           value: {
             id: coin.id,
             abbreviation: coin.abbreviation,
-            address: coin.address
+            address: coin.address,
+            limit: coin.limit
           },
           img: "/images/icons/coins/" + coin.abbreviation + ".png"
         };
@@ -70,12 +70,14 @@ export function* setPaymentSaga(payload) {
     const { abbreviation } = payload.pay.coin;
 
     const token = yield call(getAuthToken);
+
     const amountResponse = yield call(
       paymentService.getCoinAmountPay,
       token,
       abbreviation,
       value
     );
+
     const balanceResponse = yield call(
       coinService.getCoinBalance,
       abbreviation,
@@ -85,13 +87,13 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
-    
+
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
-      value: value.toFixed(2).replace(".", ","),
+      value: value,
       assignor: payload.pay.assignor,
       name: payload.pay.name,
       dueDate: payload.pay.dueDate,
@@ -104,6 +106,7 @@ export function* setPaymentSaga(payload) {
       payload: data
     });
   } catch (error) {
+    console.warn(error);
     yield put(internalServerError());
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
@@ -171,7 +174,7 @@ export function* getInvoiceSaga(payload) {
       yield put(internalServerError());
     }
 
-    if (!response.hasOwnProperty('code') || response.code !== 200) {
+    if (!response.hasOwnProperty("code") || response.code !== 200) {
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -245,10 +248,11 @@ export function* confirmPaySaga(payload) {
       payload: true
     });
 
-    const payload_transaction = {
+    const payloadTransaction = {
       coin: payload.payment.coin,
       fromAddress: payload.payment.fromAddress,
       toAddress: payload.payment.toAddress,
+      lunesUserAddress: payload.payment.lunesUserAddress,
       amount: payload.payment.amount,
       fee: payload.payment.fee,
       feePerByte: payload.payment.feePerByte,
@@ -263,8 +267,8 @@ export function* confirmPaySaga(payload) {
 
       // pega o servico disponivel
       let lunesWallet = yield call(
-        transactionService.transactionService,
-        payload_transaction.coin,
+        transactionService.invoiceService,
+        payloadTransaction.coin,
         token
       );
 
@@ -273,7 +277,7 @@ export function* confirmPaySaga(payload) {
         let response = yield call(
           transactionService.transaction,
           lunesWallet.id,
-          payload_transaction,
+          payloadTransaction,
           lunesWallet,
           decryptAes(seed, payload.payment.user),
           token
@@ -281,15 +285,14 @@ export function* confirmPaySaga(payload) {
 
         const transacao_obj = JSON.parse(response.config.data);
         const dueDate = payload.payment.payment.dueDate.split("/");
-        const dueDateFormat = dueDate.reverse().join('-');
-
+        const dueDateFormat = dueDate.reverse().join("-");
         const dataIso = new Date(dueDateFormat).toISOString();
 
         if (response) {
           const payload_elastic = {
             barCode: payload.payment.payment.number,
             dueDate: dataIso,
-            amount: parseFloat(payload.payment.payment.value),
+            amount: payload.payment.payment.value,
             name: payload.payment.payment.name,
             document: payload.payment.payment.cpfCnpj,
             txID: transacao_obj.txID,
@@ -348,6 +351,7 @@ export function* confirmPaySaga(payload) {
 
       return;
     } catch (error) {
+      console.warn(error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -361,6 +365,7 @@ export function* confirmPaySaga(payload) {
       yield put(internalServerError());
     }
   } catch (error) {
+    console.warn(error);
     yield put(internalServerError());
   }
 }

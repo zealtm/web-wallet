@@ -53,27 +53,6 @@ class Home extends React.Component {
             </div>
           </Grid>
 
-          {/* <Grid item>
-            <div className={style.cardHome}>
-              <img
-                src="/images/icons/general/recharge@2x.png"
-                className={style.cardIcon}
-              />
-              <div className={style.cardTitle}>
-                {i18n.t("CARD_HOME_TITLE_3")}
-              </div>
-              <div className={style.descriptionCard}>
-                {i18n.t("CARD_HOME_DESCRIPTION_3")}
-              </div>
-
-              <Link to="/recharge">
-                <button disabled className={style.buttonCard}>
-                  {i18n.t("BTN_GO")}
-                </button>
-              </Link>
-            </div>
-          </Grid> */}
-
           <Grid item>
             <div className={style.cardHome}>
               <img
@@ -87,7 +66,7 @@ class Home extends React.Component {
                 {i18n.t("CARD_HOME_DESCRIPTION_4")}
               </div>
 
-              <Link to="/home">
+              <Link to="/invoices">
                 <button className={style.buttonCard}>{i18n.t("BTN_GO")}</button>
               </Link>
             </div>
@@ -126,7 +105,7 @@ class Home extends React.Component {
               </div>
 
               <Link to="/coupons">
-                <button disabled className={style.buttonCard}>
+                <button className={style.buttonCard}>
                   {i18n.t("BTN_GO")}
                 </button>
               </Link>

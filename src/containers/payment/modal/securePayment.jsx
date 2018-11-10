@@ -36,18 +36,19 @@ class SecurePayment extends React.Component {
     const coin = payment.coin.abbreviation.toLowerCase();
 
     const payload = {
-      coin:           coin,
-      fromAddress:    coins[coin].address,
-      toAddress:      payment.coin.address,
-      amount:         payment.amount,
-      fee:            payment.fee.fee.fee,
-      feePerByte:     payment.fee.fee.feePerByte,
-      feeLunes:       payment.fee.fee.feeLunes,
-      price:          coins[coin].price,
-      decimalPoint:   coins[coin].decimalPoint,
-      user:           user.password,
-      payment:        payment,
-    }
+      coin: coin,
+      fromAddress: coins[coin].address,
+      toAddress: payment.coin.address,
+      lunesUserAddress: coins["lunes"].address,
+      amount: payment.amount,
+      fee: payment.fee.fee.fee,
+      feePerByte: payment.fee.fee.feePerByte,
+      feeLunes: payment.fee.fee.feeLunes,
+      price: coins[coin].price,
+      decimalPoint: coins[coin].decimalPoint,
+      user: user.password,
+      payment: payment
+    };
 
     if (user.password === encryptHmacSha512Key(password)) {
       confirmPay(payload);
@@ -91,7 +92,7 @@ class SecurePayment extends React.Component {
 
         <ButtonContinue
           label={i18n.t("BTN_CONFIRM")}
-          action={()=>this.confirmPassword()}
+          action={() => this.confirmPassword()}
           loading={loading}
         />
       </div>
@@ -100,27 +101,28 @@ class SecurePayment extends React.Component {
 }
 
 SecurePayment.propTypes = {
-  payment:      PropTypes.object.isRequired,
-  loading:      PropTypes.bool.isRequired,
-  user:         PropTypes.object.isRequired,
-  errorInput:   PropTypes.func.isRequired,
-  confirmPay:   PropTypes.func.isRequired
+  payment: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  confirmPay: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
-  payment:    store.payment.payment,
-  loading:    store.payment.loading,
-  user:       store.user.user,
-  coins:      store.skeleton.coins,
+  payment: store.payment.payment,
+  loading: store.payment.loading,
+  user: store.user.user,
+  coins: store.skeleton.coins
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    confirmPay,
-    errorInput
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      confirmPay,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

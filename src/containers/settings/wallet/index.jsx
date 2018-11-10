@@ -1,28 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-// UTILS
 import i18n from "../../../utils/i18n";
-
-// COMPONENTS
 import Tabs from "../../../components/tabs";
-// import AliasPage from "./alias";
+import AliasPage from "./alias";
 import FavoritePage from "./favorite";
 import SeedWordsPage from "./seed";
-
-// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
-
-// STYLES
 import style from "./style.css";
 
-// const titles = ["Favoritos", "Alias", "SeedWords"];
-const titles = ["Favoritos", "SeedWords"];
-
+const titles = ["Favoritos", "Alias", "SeedWords"];
 const contents = [
   <FavoritePage key="1" />,
-  // <AliasPage key="2" />,
+  <AliasPage key="2" />,
   <SeedWordsPage key="3" />
 ];
 

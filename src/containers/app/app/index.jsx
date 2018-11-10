@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
+import Loadable from "react-loadable";
+import React, { Component } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
+// REDUX
+import { connect } from "react-redux";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -13,6 +15,7 @@ import ModalBar from "../../../components/modalBar";
 
 function loading({ error }) {
   if (error) {
+    console.warn(error);
     return "Error!";
   } else {
     return <Loading color="wallet" height="80vh" width="100px" />;
@@ -109,6 +112,12 @@ let assets = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
+
+let buycoin = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../buycoin")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+});
 /* eslint-enable */
 
 class App extends Component {
@@ -139,6 +148,7 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/coinsale" component={buycoin} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

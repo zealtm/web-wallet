@@ -9,6 +9,9 @@ i18next.use(LngDetector).init({
   interpolation: {
     escapeValue: false
   },
+  fallbackLng:  {
+    'default': ['en'],
+  },
   resources: {
     en: {
       translation: en_US

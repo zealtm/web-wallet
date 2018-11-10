@@ -122,16 +122,14 @@ export function* setRechargeSaga(payload) {
       payload: true
     });
 
-    const value = parseFloat(payload.recharge.value);
     const { abbreviation } = payload.recharge.coin;
-
     const token = yield call(getAuthToken);
 
     const amountResponse = yield call(
       rechargeService.getCoinAmountPay,
       token,
       abbreviation,
-      value
+      parseFloat(payload.recharge.value)
     );
 
     const balanceResponse = yield call(
@@ -149,7 +147,7 @@ export function* setRechargeSaga(payload) {
       coin: payload.recharge.coin,
       balance: convertBiggestCoinUnit(balance, 8),
       amount: convertBiggestCoinUnit(amount, 8),
-      value: value.toFixed(2).replace(".", ","),
+      value: payload.recharge.value,
       operator: {
         id: payload.recharge.operatorId,
         name: payload.recharge.operatorName
@@ -212,10 +210,11 @@ export function* confirmRechargeSaga(payload) {
       payload: true
     });
 
-    const payload_transaction = {
+    const payloadTransaction = {
       coin: payload.recharge.coin,
       fromAddress: payload.recharge.fromAddress,
       toAddress: payload.recharge.toAddress,
+      lunesUserAddress: payload.recharge.lunesUserAddress,
       amount: payload.recharge.amount,
       fee: payload.recharge.fee,
       feePerByte: payload.recharge.feePerByte,
@@ -230,8 +229,8 @@ export function* confirmRechargeSaga(payload) {
 
       // pega o servico disponivel
       let lunesWallet = yield call(
-        transactionService.transactionService,
-        payload_transaction.coin,
+        transactionService.rechargeService,
+        payloadTransaction.coin,
         token
       );
 
@@ -239,7 +238,7 @@ export function* confirmRechargeSaga(payload) {
         let response = yield call(
           transactionService.transaction,
           lunesWallet.id,
-          payload_transaction,
+          payloadTransaction,
           lunesWallet,
           decryptAes(seed, payload.recharge.user),
           token
@@ -254,7 +253,7 @@ export function* confirmRechargeSaga(payload) {
         );
 
         if (response) {
-          const payload_elastic = {
+          const payloadElastic = {
             ddd: ddd,
             operatorId: payload.recharge.recharge.operator.id,
             operatorName: payload.recharge.recharge.operator.name,
@@ -268,7 +267,7 @@ export function* confirmRechargeSaga(payload) {
           let response_elastic = yield call(
             rechargeService.sendRecharge,
             token,
-            payload_elastic
+            payloadElastic
           );
 
           yield put({

@@ -1,9 +1,13 @@
-import React, { Component } from "react";
-import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
+import Loadable from "react-loadable";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
+// REDUX
+import React, { Component } from "react";
 import { connect } from "react-redux";
+
+// UTILS
 import i18n from "../../../utils/i18n";
 
 // COMPONENTS
@@ -21,6 +25,7 @@ import style from "../style.css";
 
 function Transition({ error }) {
   if (error) {
+    console.warn(error);
     return "Error!";
   } else {
     return <Loading color="lunes" width="35px" />;

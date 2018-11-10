@@ -190,11 +190,11 @@ class CoinService {
     }
   }
 
-  async getCoinBalance(coinType, address, token) {
+  async getCoinBalance(coinName, address, token) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(
-        BASE_URL + "/coin/" + coinType + "/balance/" + address,
+        BASE_URL + "/coin/" + coinName + "/balance/" + address,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -323,7 +323,7 @@ class CoinService {
     try {
       let valid = false;
 
-      if(coin === "usdt") coin = "btc" // USDT/TETHER address === BTC address
+      if (coin === "usdt") coin = "btc"; // USDT/TETHER address === BTC address
 
       if (!coin || !address || address.length < 10) {
         return "error";
@@ -406,8 +406,13 @@ class CoinService {
       let dataFeeLunes = response.data.data.feeLunes;
 
       if (response.data.code === 200) {
+        let extraFee = coinName === "lunes" || coinName === "eth" ? 0 : 1000;
+
         Object.keys(dataFee).map(value => {
-          fee[value] = convertBiggestCoinUnit(dataFee[value] + 1000, decimalPoint);
+          fee[value] = convertBiggestCoinUnit(
+            dataFee[value] + extraFee,
+            decimalPoint
+          );
         });
 
         Object.keys(dataFeePerByte).map(value => {
@@ -437,6 +442,7 @@ class CoinService {
     transaction,
     coin,
     price,
+    lunesUserAddress,
     describe,
     token
   ) {
@@ -451,6 +457,7 @@ class CoinService {
         amount: transaction.amount,
         fee: transaction.fee,
         describe: describe ? describe : null,
+        cashback: { address: lunesUserAddress },
         price: {
           USD: price ? price.USD.price : undefined,
           EUR: price ? price.EUR.price : undefined,
@@ -530,7 +537,7 @@ class CoinService {
     }
   }
 
-  async verifyCoupon(coupon, token) {
+  async verifyCoupon(coupon, addresses, token) {
     try {
       let endpoint = BASE_URL + "/coupon/rescue/" + coupon;
 
@@ -540,7 +547,11 @@ class CoinService {
         return true;
       };
 
-      let { data, headers } = await axios.post(endpoint, {}, API_HEADER);
+      let { data, headers } = await axios.post(
+        endpoint,
+        { addresses },
+        API_HEADER
+      );
 
       let errorMessage = {};
       if (data.errorMessage) {
@@ -554,18 +565,30 @@ class CoinService {
         let message;
         if (status === 403 || code === 403)
           message = i18n.t("COUPON_USER_NOT_AUTHORIZED");
-        else if (status == 401 || code == 401)
+        else if (status === 401 || code === 401 || status === 1 || code === 1)
           message = i18n.t("COUPON_INVALID");
-        else if (
+        else if (status === 2 || code === 2) {
+          message = i18n.t("COUPON_EXPIRED");
+        } else if (
           (status && status.toString().startsWith("5")) ||
           (code && code.toString().startsWith("5"))
         )
           message = i18n.t("COUPON_SERVER_ERROR");
         else message = i18n.t("COUPON_UNKNOWN_ERROR_1");
-        return { type: "error", data: { message: message } };
+        return {
+          type: "error",
+          data: {
+            message: message
+          }
+        };
       }
 
-      return { type: "success", data: { message: data.message } };
+      return {
+        type: "success",
+        data: {
+          message: data.message
+        }
+      };
     } catch (error) {
       console.warn(error);
       internalServerError();

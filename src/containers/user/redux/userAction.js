@@ -48,7 +48,7 @@ export const setUserSeed = (seed, password) => ({
 });
 
 export const resetUser = (login) => ({
-  type: "POST_USER_RESET_USER_API", 
+  type: "POST_USER_RESET_USER_API",
   login
 });
 

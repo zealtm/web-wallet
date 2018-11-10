@@ -10,7 +10,8 @@ export const getVoucher = (phone, coins, code) => ({
   code
 });
 
-export const verifyCoupon = coupon => ({
+export const verifyCoupon = (coupon, coins) => ({
   type: "GET_COUPON_API",
-  coupon
-})
+  coupon,
+  coins
+});

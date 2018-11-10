@@ -37,7 +37,7 @@ console.log("    `~/  )` ) ,/|                 ~-_~&gt;--&lt;_/-__       __-~ _/
 console.log(" ._-~//( )/ )) `                    ~~-'_/_/ /~~~~~~~__--~  ");
 console.log("  ;'( ')/ ,)(                              ~~~~~~~~~~  ");
 console.log(" ' ') '( (/  ");
-console.log("    '   '  `     ");             
+console.log("    '   '  `     ");
 console.log("                       ");
 console.log("                         ");
 
