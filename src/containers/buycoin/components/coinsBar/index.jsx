@@ -75,8 +75,8 @@ class CoinsBar extends React.Component {
 
     return coinsEnabled.map((val, index) => {
       let coin = coins[val.value.abbreviation];
-
-      if (!coin) return;
+      
+      if (!coin || coins[val.value.abbreviation].status!="active") return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
