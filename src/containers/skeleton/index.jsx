@@ -30,8 +30,8 @@ class Skeleton extends React.Component {
     if (deleteMeta === true || deleteMeta == null) {
       clearAll();
     }
-
-    window.location.reload(true);
+    window.location.href = "/";
+    //window.location.reload(true);
   };
 
   render() {
