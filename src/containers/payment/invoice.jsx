@@ -1,5 +1,4 @@
 import React from "react";
-import i18n from "../../utils/i18n";
 import PropTypes from "prop-types";
 
 // REDUX
@@ -11,6 +10,7 @@ import {
   getInvoice,
   setClearPayment
 } from "./redux/paymentAction";
+import { errorInput } from "../errors/redux/errorAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -28,6 +28,7 @@ import style from "./style.css";
 
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
+import i18n from "../../utils/i18n";
 
 const customStyle = {
   inputRoot: {
@@ -180,25 +181,24 @@ class Invoice extends React.Component {
           assignor: "",
           dueDate: "",
           value: "",
-          description: "",
+          description: ""
         }
-      })
+      });
 
       getInvoice(newValue);
     }
-
   };
 
   handleCpfCnpjChange = event => {
-    const {invoice} = this.state;
+    const { invoice } = this.state;
 
     this.setState({
       invoice: {
         ...invoice,
-        cpfCnpj: event.target.value.replace(/\D/, '')
+        cpfCnpj: event.target.value.replace(/\D/, "")
       }
     });
-  }
+  };
 
   handleInvoiceDefaultChange = name => event => {
     this.setState({
@@ -221,7 +221,7 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { payment, coins } = this.props;
+    const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
@@ -230,8 +230,15 @@ class Invoice extends React.Component {
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
-      address: coins[invoice.coin.abbreviation].address
+      address: coins[invoice.coin.abbreviation]
+        ? coins[invoice.coin.abbreviation].address
+        : undefined
     };
+
+    if (invoiceData.value > coin.value.limit) {
+      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
+      return;
+    }
 
     const invoiceInputs = {};
 
@@ -276,16 +283,25 @@ class Invoice extends React.Component {
     this.setPayment(invoiceData);
     this.openModal();
     this.setDefaultState();
+
+    return;
   };
 
   checkAllInputs = () => {
-    const {invoice, coin} = this.state;
-    const {payment} = this.props;
+    const { invoice, coin } = this.state;
+    const { payment } = this.props;
 
-    return invoice.number && invoice.name && invoice.cpfCnpj && (payment.assignor || invoice.assignor) &&
-      (payment.description || invoice.description) && (payment.dueDate || invoice.dueDate) &&
-      (payment.value || invoice.value) && coin.value;
-  }
+    return (
+      invoice.number &&
+      invoice.name &&
+      invoice.cpfCnpj &&
+      (payment.assignor || invoice.assignor) &&
+      (payment.description || invoice.description) &&
+      (payment.dueDate || invoice.dueDate) &&
+      (payment.value || invoice.value) &&
+      coin.value
+    );
+  };
 
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
@@ -421,7 +437,11 @@ class Invoice extends React.Component {
           style={{ marginTop: "10px" }}
         >
           <button
-            className={this.checkAllInputs() ? style.buttonEnable : style.buttonBorderGreen}
+            className={
+              this.checkAllInputs()
+                ? style.buttonEnable
+                : style.buttonBorderGreen
+            }
             onClick={this.inputValidator}
           >
             {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
@@ -434,7 +454,7 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <Instructions/>
+          <Instructions />
         </Grid>
       </Grid>
     );
@@ -451,7 +471,8 @@ Invoice.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
-  coins: PropTypes.array
+  coins: PropTypes.array,
+  errorInput: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -467,7 +488,8 @@ const mapDispatchToProps = dispatch =>
       getInvoice,
       getCoinsEnabled,
       setPayment,
-      setClearPayment
+      setClearPayment,
+      errorInput
     },
     dispatch
   );

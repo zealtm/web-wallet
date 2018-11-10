@@ -1,15 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { loadWalletInfo } from "../../skeleton/redux/skeletonAction";
 
-import { connect } from "react-redux";
+// UTILS
 import i18n from "../../../utils/i18n";
+
+// STYLE
 import style from "./style.css";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
-
 
 class DoneRecharge extends React.Component {
   constructor(props) {

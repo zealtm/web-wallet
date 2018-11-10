@@ -1,6 +1,12 @@
 import axios from "axios";
-import { internalServerError } from "../containers/errors/statusCodeMessage";
+
+// CONSTANTS
 import { API_HEADER, BASE_URL, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
+// ERROR
+import { internalServerError } from "../containers/errors/statusCodeMessage";
+
+// UTILS
 import { setAuthToken } from "../utils/localStorage";
 class LeasingService {
   async getProfessionalNodes() {
@@ -53,9 +59,9 @@ class LeasingService {
 
   async saveLeaseTransaction(data, coinName, token) {
     try {
-      let endpointUrl = BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
-
-      setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
+      API_HEADER.headers.Authorization = token;
+      let endpointUrl =
+        BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
 
       let transactionData = {
         txID: data.id,
@@ -66,8 +72,9 @@ class LeasingService {
         describe: null
       };
 
-      API_HEADER.headers.Authorization = token;
       let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response;
     } catch (error) {
       internalServerError();

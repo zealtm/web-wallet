@@ -1,5 +1,10 @@
-import { takeLatest, takeEvery } from "redux-saga";
-import { fork } from "redux-saga/effects";
+import {
+  takeLatest,
+  takeEvery
+} from "redux-saga";
+import {
+  fork
+} from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -32,7 +37,9 @@ import {
 import { getVoucher, verifyCoupon } from "../coupons/redux/couponsSaga";
 import {
   getTwoFactorAuth,
-  verifyTwoFactorAuthSettings
+  verifyTwoFactorAuthSettings,
+  getAliases,
+  createAlias
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -70,8 +77,24 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
+
   getNotificationsSaga
 } from "../notifications/redux/notificationsSaga"
+import {
+  setModalStepSaga as setModalStepBuySaga,
+  getBuyCoinsEnabledSaga,
+  getCoinPackageSaga, 
+  getCoinForPaymentSaga,
+  openModalPaySaga,
+  setClearBuySaga,
+  setBuyPackageSaga,
+  setCoinSelectedSaga,
+  setBuySaga,
+  getFeeBuySaga,
+  setFeeBuySaga,
+  confirmBuySaga,
+  getHistoryBuySaga
+} from "../buycoin/redux/buySaga";
 
 export default function* rootSaga() {
   yield [
@@ -125,6 +148,8 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_PAYMENT", setFeePaymentSaga),
     fork(takeLatest, "GET_INVOICE", getInvoiceSaga),
     fork(takeLatest, "GET_HISTORY_PAY", getHistoryPaySaga),
+    fork(takeLatest, "CREATE_ALIAS_ADDRESS_API", createAlias),
+    fork(takeLatest, "GET_ALIAS_ADDRESS_API", getAliases),
 
     // recharge-saga
     fork(takeLatest, "SET_MODAL_RECHARGE_STEP", setModalStepRechargeSaga),
@@ -147,6 +172,20 @@ export default function* rootSaga() {
 
     // notifications-saga
     fork(takeLatest, "GET_NOTIFICATIONS_API", getNotificationsSaga),
+    // buy coins
+    fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
+    fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
+    fork(takeLatest, "GET_COIN_PACKAGE", getCoinPackageSaga),
+    fork(takeLatest, "GET_COIN_FOR_PAYMENT", getCoinForPaymentSaga),
+    fork(takeLatest, "SET_MODAL_OPEN", openModalPaySaga),
+    fork(takeLatest, "SET_CLEAR_BUY", setClearBuySaga),
+    fork(takeLatest, "SET_BUY_PACKAGE", setBuyPackageSaga),
+    fork(takeLatest, "SET_BUY_COIN_PAYMENT", setCoinSelectedSaga),
+    fork(takeLatest, "SET_BUY", setBuySaga),
+    fork(takeLatest, "GET_FEE_BUY", getFeeBuySaga),
+    fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
+    fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
+    fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
 
   ];
 }

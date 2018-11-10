@@ -61,6 +61,32 @@ class LunesTransaction {
 
     return transaction;
   }
+
+  async createAlias(value) {
+    let lunes = await create(value.network.APICONFIG);
+    let seed = await lunes.Seed.fromExistingPhrase(value.seed);
+    let data = {
+      fee: 100000000,
+      alias: value.alias,
+      timestamp: Date.now()
+    };
+
+    let transaction = lunes.API.Node.v1.aliases.createAlias(data, seed.keyPair);
+
+    return transaction;
+  }
+
+  async getAliases(value) {
+    let lunes = await create(value.network.APICONFIG);
+    let transaction = lunes.API.Node.v1.aliases.byAddress(value.address);
+    return transaction;
+  }
+
+  async getAddressByAlias(value) {
+    let lunes = await create(value.network.APICONFIG);
+    let transaction = lunes.API.Node.v1.aliases.byAlias(value.alias);
+    return transaction;
+  }
 }
 
 export default LunesTransaction;

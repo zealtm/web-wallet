@@ -29,6 +29,8 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 
+
+// STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
   img: {
     width: "60%",
@@ -48,6 +50,7 @@ const customStyle = {
   focused: {}
 };
 
+// STYLE DO MATERIAL UI (Permitido)
 const MenuProps = {
   PaperProps: {
     style: {
@@ -185,7 +188,7 @@ class User extends React.Component {
   changeUserPassword = () => {
     const { updateUserPassword, user } = this.props;
     const { password, newPassword, confirmNewPassword } = this.state;
-    console(user);
+
     updateUserPassword(
       user.password,
       password,
@@ -716,7 +719,8 @@ User.propTypes = {
   twoFactor: PropTypes.bool,
   editUserData: PropTypes.func,
   loading: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  updateUserPassword: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch =>

@@ -34,6 +34,28 @@ export function* validateAddress(action) {
       });
 
       return;
+    } else if (response === "error") {
+      let dataAlias = yield call(transactionService.getAddressByAlias, address);
+
+      let response = yield call(
+        coinService.validateAddress,
+        action.coin,
+        dataAlias.address
+      );
+
+      if (!response.error && response !== "error") {
+        yield put({
+          type: "SET_WALLET_MODAL_ADDRESS",
+          address: dataAlias.address
+        });
+
+        yield put({
+          type: "SET_WALLET_MODAL_STEP",
+          step: 1
+        });
+
+        return;
+      }
     }
 
     yield put(modalError(i18n.t("MESSAGE_INVALID_ADDRESS")));
@@ -80,7 +102,10 @@ export function* getWalletSendModalFee(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_WALLET_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_WALLET_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -207,7 +232,11 @@ export function* setWalletTransaction(action) {
 export function* setUtxos(action) {
   try {
     const { address, coin } = action;
-    if (coin.search(/lunes/i) !== -1 || coin.search(/eth/i) !== -1) {
+    if (
+      coin.search(/lunes/i) !== -1 ||
+      coin.search(/eth/i) !== -1 ||
+      coin.search(/usdt/i) !== -1
+    ) {
       yield put({
         type: "SET_WALLET_UTXOS",
         status: "success",
@@ -228,6 +257,7 @@ export function* setUtxos(action) {
     const utxos = yield call(transactionService.utxo, address, coin, token);
 
     let userMessage = "";
+
     if (!utxos) {
       userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
       yield put({
@@ -238,8 +268,9 @@ export function* setUtxos(action) {
       });
       return;
     }
+
     if (utxos && utxos.constructor.name === "Array" && utxos.length < 1) {
-      userMessage = i18n.t("WALLET_UTXOS_EMPTY_2");
+      userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
       yield put({
         type: "SET_WALLET_UTXOS",
         message: userMessage,
@@ -248,6 +279,7 @@ export function* setUtxos(action) {
       });
       return;
     }
+
     //success
     if (utxos && utxos.constructor.name === "Array" && utxos.length > 0) {
       yield put({

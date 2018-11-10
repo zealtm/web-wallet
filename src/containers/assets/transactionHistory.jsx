@@ -45,7 +45,8 @@ class TransactionHistory extends React.Component {
     let { skeleton, assets, reloadAsset } = this.props;
     let { selectedCoin } = assets;
     let address = skeleton.coins.lunes.address;
-    reloadAsset(selectedCoin, address)
+
+    reloadAsset(assets.assets[selectedCoin].assetId, address)
   };
 
   renderEmpty = () => {
@@ -199,7 +200,7 @@ class TransactionHistory extends React.Component {
     let { isTxHistoryLoading } = this.props.assets;
     let { selectedCoin } = this.props.assets;
 
-    if (selectedCoin === 'lunes' || !selectedCoin)
+    if (selectedCoin === undefined)
       return null;
 
     return (

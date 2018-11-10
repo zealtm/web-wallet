@@ -19,6 +19,13 @@ class NotificationList extends React.Component {
       );
     });
   }
+  renderTimes = () => {
+    return [...Array(5).keys()].map((notification, id) => {
+      return (
+        <li><div className= {style.line}></div><div className= {style.radius}></div><div className= {style.line}></div></li>
+      );
+    });
+  }
 
   render() {
     return (
@@ -26,14 +33,7 @@ class NotificationList extends React.Component {
         <Hidden smDown>
           <Grid item sm={3}>
             <ul>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
-              <li>COL-1</li>
+             {this.renderTimes()}
             </ul>
           </Grid>
         </Hidden>

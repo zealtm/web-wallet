@@ -1,6 +1,12 @@
 import axios from "axios";
+
+//CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
+// ERROR
 import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
+
+// UTILS
 import { setAuthToken } from "../utils/localStorage";
 import i18n from "../utils/i18n";
 
@@ -10,13 +16,14 @@ class PaymentService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        `${BASE_URL}/service/pagamento`,
+        BASE_URL + "/service/pagamento",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response.data;
     } catch (error) {
+      console.warn(error);
       return internalServerError();
     }
   }
@@ -26,7 +33,7 @@ class PaymentService {
       API_HEADER.headers.Authorization = token;
 
       const response = await axios.get(
-        `${BASE_URL}/bill/${number}`,
+        BASE_URL + "/bill/" + number,
         API_HEADER
       );
 
@@ -38,11 +45,13 @@ class PaymentService {
 
       return response.data;
     } catch (error) {
+      console.warn(error);
+
       // If the http status = 500
       if (error.response.data.code === 500) {
         return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
       }
-
+      
       return internalServerError();
     }
   }
@@ -58,6 +67,7 @@ class PaymentService {
 
       return response;
     } catch (error) {
+      console.warn(error);
       return internalServerError();
     }
   }
@@ -81,6 +91,7 @@ class PaymentService {
 
       return response.data.data;
     } catch (error) {
+      console.warn(error);
       return internalServerError();
     }
   }
@@ -88,9 +99,9 @@ class PaymentService {
   async sendPay(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
-
+      
       const response = await axios.post(
-        `${BASE_URL}/bill/pay/${payload.barCode}`,
+        BASE_URL + "/bill/pay/" + payload.barCode,
         payload,
         API_HEADER
       );
@@ -98,6 +109,7 @@ class PaymentService {
 
       return response;
     } catch (error) {
+      console.warn(error);
       internalServerError();
       return;
     }

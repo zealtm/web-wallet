@@ -14,3 +14,14 @@
 :local .container {
   margin: 1rem 2rem;
 }
+:local .textInf {
+  font-size: 19px;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  font-weight: bold;
+  text-align: center;
+}
+:local .containerInf{
+  margin: auto;
+  justify-content:center;
+}

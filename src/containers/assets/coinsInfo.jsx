@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-
 // STYLE
 import style from "./style.css";
 
@@ -16,7 +15,6 @@ import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { getAssetInfo } from "../../utils/assets";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
@@ -27,10 +25,6 @@ class CoinsInfo extends React.Component {
       modalReceive: false
     };
   }
-
-  previousStep = () => {
-    return;
-  };
 
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
@@ -43,20 +37,9 @@ class CoinsInfo extends React.Component {
   render() {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
 
-    if (selectedCoin === 'lunes' || !selectedCoin)
-      return null;
-
-    let found = assets.find(asset => asset.assetId === selectedCoin ? true : false);
-
-    if (!found) return null;
-
-    let asset = {
-      ...found,
-      ...getAssetInfo(selectedCoin)
-    }
-    asset.name = asset.tokenName === 'temp' || !asset.tokenName
-    ? 'UNKNOWN' : asset.tokenName;
+    if (selectedCoin === undefined) return null;
 
     return (
       <div>
@@ -64,15 +47,23 @@ class CoinsInfo extends React.Component {
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{asset.name.toUpperCase()}</h3>
+                <h3>{asset.tokenName.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/tokens/" + asset.icon}
+                  src={
+                    asset.image
+                      ? asset.image
+                      : "images/icons/tokens/default.png"
+                  }
                   className={style.iconCoinSelected}
                 />
               </Grid>
             </Grid>
 
-            <Grid item xs={8} className={style.balanceItem+' '+style.floatRight}>
+            <Grid
+              item
+              xs={8}
+              className={style.balanceItem + " " + style.floatRight}
+            >
               <Grid item>
                 <h2>{i18n.t("WALLET_BALANCE")}</h2>
                 <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
@@ -87,19 +78,15 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired,
+  assets: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets,
+  assets: store.assets
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {},
-    dispatch
-  );
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(
   mapSateToProps,

@@ -1,6 +1,12 @@
 import axios from "axios";
+
+// CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
+// ERROS
 import { internalServerError } from "../containers/errors/statusCodeMessage";
+
+// UTILS
 import { setAuthToken } from "../utils/localStorage";
 
 class RechargeService {
@@ -9,7 +15,7 @@ class RechargeService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        `${BASE_URL}/service/recarga`,
+        BASE_URL + "/service/recarga",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -25,7 +31,7 @@ class RechargeService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        `${BASE_URL}/recharge/operators/${ddd}`,
+        BASE_URL + "/recharge/operators/" + ddd,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);

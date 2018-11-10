@@ -28,23 +28,28 @@ class Assets extends React.Component {
     let { getAssetGeneralInfo, skeleton } = this.props;
     let { selectedCoin } = this.props.assets;
     let { address } = skeleton.coins.lunes;
+
     getAssetGeneralInfo(address);
     this.setState({ lastAsset: selectedCoin });
   }
 
   componentDidUpdate() {
-    let { getAssetHistory, skeleton } = this.props;
+    let { assets, getAssetHistory, skeleton } = this.props;
+    let { lastAsset } = this.state; 
     let { selectedCoin } = this.props.assets;
-    if (this.state.lastAsset !== selectedCoin) {
-      getAssetHistory(selectedCoin, skeleton.coins.lunes.address);
+
+    if (lastAsset !== selectedCoin) {
+      getAssetHistory(assets.assets[selectedCoin].assetId, skeleton.coins.lunes.address);
       this.setState({ lastAsset: selectedCoin });
     }
   }
+
   reloadAsset() {
-    let { reloadAsset } = this.props;
+    let { assets, reloadAsset } = this.props;
     let { address } = this.props.skeleton.coins.lunes;
-    reloadAsset(undefined, address);
+    reloadAsset(assets.assets[assets.selectedCoin].assetId, address);
   }
+
   renderEmptyAssets() {
     let { isBalanceLoading } = this.props.assets;
     return (
@@ -75,9 +80,10 @@ class Assets extends React.Component {
     if (!assets || (assets && assets.length < 1))
       return this.renderEmptyAssets();
 
-    if (!selectedCoin || selectedCoin === "lunes") {
-      setSelectedCoin(assets[0].assetId);
+    if (selectedCoin === undefined) {
+      setSelectedCoin(0);
     }
+
     return (
       <div>
         <CoinsBar />
@@ -92,6 +98,7 @@ class Assets extends React.Component {
   render() {
     let { assets } = this.props;
     let { isBalanceLoading, isTxHistoryLoading } = assets;
+
     if (isBalanceLoading || isTxHistoryLoading) {
       return (
         <div>
@@ -99,6 +106,7 @@ class Assets extends React.Component {
         </div>
       );
     }
+    
     return this.renderContent();
   }
 }

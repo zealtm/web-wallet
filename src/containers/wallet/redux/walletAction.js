@@ -108,3 +108,7 @@ export const setUtxos = (coin, address) => ({
   coin,
   address
 })
+
+export const resetModalSend = () => ({
+  type: "RESET_MODAL_SEND"
+})

@@ -15,7 +15,7 @@ import i18n from "../../../utils/i18n";
 import style from "./style.css";
 
 // COMPONENTS
-import ButtonContinue from "./component/buttonContinue";
+import ButtonContinue from "../../../components/buttonContinue";
 
 class SecureRecharge extends React.Component {
   constructor() {
@@ -36,18 +36,19 @@ class SecureRecharge extends React.Component {
     const coin = recharge.coin.abbreviation;
 
     const payload = {
-      coin:           coin,
-      fromAddress:    coins[coin].address,
-      toAddress:      recharge.coin.address,
-      amount:         recharge.amount,
-      fee:            recharge.fee.fee.fee,
-      feePerByte:     recharge.fee.fee.feePerByte,
-      feeLunes:       recharge.fee.fee.feeLunes,
-      price:          coins[coin].price,
-      decimalPoint:   coins[coin].decimalPoint,
-      user:           user.password,
-      recharge:       recharge,
-    }
+      coin: coin,
+      fromAddress: coins[coin].address,
+      toAddress: recharge.coin.address,
+      lunesUserAddress: coins["lunes"].address,
+      amount: recharge.amount,
+      fee: recharge.fee.fee.fee,
+      feePerByte: recharge.fee.fee.feePerByte,
+      feeLunes: recharge.fee.fee.feeLunes,
+      price: coins[coin].price,
+      decimalPoint: coins[coin].decimalPoint,
+      user: user.password,
+      recharge: recharge
+    };
 
     if (user.password === encryptHmacSha512Key(password)) {
       confirmRecharge(payload);
@@ -71,7 +72,9 @@ class SecureRecharge extends React.Component {
         <div>
           <span>{i18n.t("RECHARGE_PASS_CONFIRMATION")}</span>
           <span className={style.totalConfirm}>
-            {' '} {recharge.amount + recharge.fee.fee.fee} {recharge.coin.abbreviation.toUpperCase()}
+            {" "}
+            {recharge.amount + recharge.fee.fee.fee}{" "}
+            {recharge.coin.abbreviation.toUpperCase()}
           </span>
           <span> {i18n.t("RECHARGE_PASS_TO")} </span>
           <span className={style.addressConfirm}>
@@ -92,7 +95,7 @@ class SecureRecharge extends React.Component {
 
         <ButtonContinue
           label={i18n.t("BTN_CONFIRM")}
-          action={()=>this.confirmPassword()}
+          action={() => this.confirmPassword()}
           loading={loading}
         />
       </div>
@@ -101,28 +104,28 @@ class SecureRecharge extends React.Component {
 }
 
 SecureRecharge.propTypes = {
-  recharge:     PropTypes.object.isRequired,
-  loading:      PropTypes.bool.isRequired,
-  user:         PropTypes.object.isRequired,
-  errorInput:   PropTypes.func.isRequired,
-  confirmRecharge:   PropTypes.func.isRequired,
+  recharge: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  confirmRecharge: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
-  recharge:   store.recharge.recharge,
-  loading:    store.recharge.loading,
-  user:       store.user.user,
-  coins:      store.skeleton.coins,
+  recharge: store.recharge.recharge,
+  loading: store.recharge.loading,
+  user: store.user.user,
+  coins: store.skeleton.coins
 });
 
-
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    confirmRecharge,
-    errorInput,
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      confirmRecharge,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
