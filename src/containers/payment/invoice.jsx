@@ -189,6 +189,23 @@ class Invoice extends React.Component {
     }
   };
 
+  normalizeInvoiceNumber = e => {
+    const chars = e.target.value.length;
+    let number = e.target.value;
+    
+    for(let i=0; i<chars; i++){
+      number = number.replace(/\D/, "")
+    }
+    
+    this.setState({
+      ...this.state,
+      invoice: {
+        ...this.state.invoice,
+        number: number
+      }
+    })
+  }
+
   handleCpfCnpjChange = event => {
     const { invoice } = this.state;
 
@@ -324,6 +341,7 @@ class Invoice extends React.Component {
               inputProps={{ maxLength: 48, required: true }}
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
+              onBlur={this.normalizeInvoiceNumber}
               error={errors.includes("number")}
             />
           </div>
