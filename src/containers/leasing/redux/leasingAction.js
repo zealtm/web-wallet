@@ -1,16 +1,16 @@
 export const validateLeasingAddress = (coin, address) => ({
-  type: "VALIDATE_LEASING_ADDRESS_API",
+  type: "GET_LEASING_VALIDATE_ADDRESS_API",
   coin,
   address
 });
 
 export const startNewLeasing = data => ({
-  type: "START_LEASING_API",
+  type: "SET_LEASING_START_API",
   data
 });
 
 export const cancelLeasing = data => ({
-  type: "CANCEL_LEASING_API",
+  type: "SET_LEASING_CANCEL_API",
   data
 });
 
