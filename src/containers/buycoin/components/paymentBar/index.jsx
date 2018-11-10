@@ -59,7 +59,7 @@ class PaymentBar extends React.Component {
 
   render() {
     const { title, img } = this.state;
-    const { classes, coins } = this.props;
+    const { classes, coins, coinsActive } = this.props;
 
     let coinspayment = [];
 
@@ -70,7 +70,7 @@ class PaymentBar extends React.Component {
         title: val.abbreviation.toUpperCase(), 
         value: key,
       };
-      if (val.abbreviation.toLowerCase() != "lunes") {
+      if (val.abbreviation.toLowerCase() != "lunes" && coinsActive[val.abbreviation].status=="active") {
         coinspayment.push(item);
       }
     });
@@ -122,11 +122,13 @@ class PaymentBar extends React.Component {
 PaymentBar.propTypes = {
   classes: PropTypes.object.isRequired,
   setCoinSelected: PropTypes.func.isRequired,
-  coins: PropTypes.array.isRequired
+  coins: PropTypes.array.isRequired,
+  coinsActive: PropTypes.array.isRequired
 };
 
 const mapStateToProps = store => ({
-  coins: store.buy.coinsPayment || []
+  coins: store.buy.coinsPayment || [], 
+  coinsActive: store.skeleton.coins || []
 });
 
 const mapDispatchToProps = dispatch =>
