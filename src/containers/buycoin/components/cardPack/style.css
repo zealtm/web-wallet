@@ -67,7 +67,7 @@
   font-weight: normal;
   font-size: 18px;
   letter-spacing: 2px;
-  width: -webkit-fill-available;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
