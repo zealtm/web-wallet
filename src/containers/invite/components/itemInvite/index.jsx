@@ -41,16 +41,16 @@ class ItemInvite extends React.Component {
             </div>
           </Grid>
           <Grid item xs={5} sm={6}>
-            <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_COUPON")}</span> <br />
+            <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_STATUS")}</span> <br />
             <p className={style.spanSub}>
-              f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543
+              Confirmado
             </p>
           </Grid>
           <Grid item xs={2} sm={1}>
             <img
               onClick = {() => this.copyAddress('f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543')}
               className={style.imgCopy}
-              src="/images/icons/modal-receive/ic_copy@1x.png"
+              src="/images/icons/confirm/confirm-invite@2x.png"
             />
           </Grid>
           <Grid item xs={6} sm={6} id={"hr"}>
