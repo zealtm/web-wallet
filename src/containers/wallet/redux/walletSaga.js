@@ -1,20 +1,12 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import {
   internalServerError,
   modalError
 } from "../../../containers/errors/statusCodeMessage";
 
 import i18n from "../../../utils/i18n";
-import {
-  getAuthToken,
-  getUserSeedWords
-} from "../../../utils/localStorage";
-import {
-  decryptAes
-} from "../../../utils/cryptography";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 
@@ -240,7 +232,11 @@ export function* setWalletTransaction(action) {
 export function* setUtxos(action) {
   try {
     const { address, coin } = action;
-    if (coin.search(/lunes/i) !== -1 || coin.search(/eth/i) !== -1 || coin.search(/usdt/i) !== -1) {
+    if (
+      coin.search(/lunes/i) !== -1 ||
+      coin.search(/eth/i) !== -1 ||
+      coin.search(/usdt/i) !== -1
+    ) {
       yield put({
         type: "SET_WALLET_UTXOS",
         status: "success",
@@ -261,7 +257,7 @@ export function* setUtxos(action) {
     const utxos = yield call(transactionService.utxo, address, coin, token);
 
     let userMessage = "";
-    
+
     if (!utxos) {
       userMessage = i18n.t("WALLET_UTXOS_EMPTY_1");
       yield put({

@@ -134,16 +134,13 @@ class MultiFactorAuth extends React.Component {
                   errors
                     ? style.inputTwoFactorAuthenticatorError
                     : style.inputTwoFactorAuthenticator
-                }/>)
+                }/>) 
             })
           }
         </div>
 
         <div className={style.instructions_2}>
           {i18n.t("2FA_INSTRUCTIONS_2")}
-          <Link className={style.linkWhereToFind} to="#">
-            {i18n.t("2FA_INSTRUCTIONS_LINK_WHERE_TO_FIND")}
-          </Link>
         </div>
 
         <button

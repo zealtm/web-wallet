@@ -83,6 +83,22 @@ import {
   openModalPaySaga as setOpenModalFlowP2P
 } from "../p2p/redux/p2pSaga";
 
+import {
+  setModalStepSaga as setModalStepBuySaga,
+  getBuyCoinsEnabledSaga,
+  getCoinPackageSaga, 
+  getCoinForPaymentSaga,
+  openModalPaySaga,
+  setClearBuySaga,
+  setBuyPackageSaga,
+  setCoinSelectedSaga,
+  setBuySaga,
+  getFeeBuySaga,
+  setFeeBuySaga,
+  confirmBuySaga,
+  getHistoryBuySaga
+} from "../buycoin/redux/buySaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -93,9 +109,9 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
-    fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
-    fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
-    fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
+    fork(takeLatest, "PATH_USER_CONSENTS_API", updateUserConsentsSaga),
+    fork(takeLatest, "PATH_USER_DATA_API", editUserData),
+    fork(takeLatest, "PATH_USER_PASSWORD_API", updateUserPasswordSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
@@ -108,7 +124,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
     fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
-    fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
+    fork(takeLatest, "GET_COIN_ADRESS_API", shareCoinAddress),
     fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction),
     fork(takeEvery, "SET_WALLET_UTXOS_API", setUtxos),
 
@@ -118,14 +134,14 @@ export default function* rootSaga() {
 
     // Coupons
     fork(takeLatest, "GET_VOUCHER_API", getVoucher),
-    fork(takeLatest, "VERIFY_COUPON_API", verifyCoupon),
+    fork(takeLatest, "GET_COUPON_API", verifyCoupon),
 
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),
     fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings),
-    fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
-    fork(takeLatest, "START_LEASING_API", createLeasing),
-    fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
+    fork(takeLatest, "GET_LEASING_VALIDATE_ADDRESS_API", validateLeasingAddress),
+    fork(takeLatest, "SET_LEASING_START_API", createLeasing),
+    fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
 
     //payment-saga
@@ -145,7 +161,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_RECHARGE", setRechargeSaga),
     fork(takeLatest, "GET_FEE_RECHARGE", getFeeRechargeSaga),
     fork(takeLatest, "SET_FEE_RECHARGE", setFeeRechargeSaga),
-    fork(takeLatest, "CONFIRM_RECHARGE", confirmRechargeSaga),
+    fork(takeLatest, "SET_CONFIRM_RECHARGE", confirmRechargeSaga),
     fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
     fork(takeLatest, "GET_RECHARGE_COINS_ENABLED", getRechargeCoinsEnabledSaga),
 
@@ -162,5 +178,21 @@ export default function* rootSaga() {
     fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
     fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
+    
+    // buy coins
+    fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
+    fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
+    fork(takeLatest, "GET_COIN_PACKAGE", getCoinPackageSaga),
+    fork(takeLatest, "GET_COIN_FOR_PAYMENT", getCoinForPaymentSaga),
+    fork(takeLatest, "SET_MODAL_OPEN", openModalPaySaga),
+    fork(takeLatest, "SET_CLEAR_BUY", setClearBuySaga),
+    fork(takeLatest, "SET_BUY_PACKAGE", setBuyPackageSaga),
+    fork(takeLatest, "SET_BUY_COIN_PAYMENT", setCoinSelectedSaga),
+    fork(takeLatest, "SET_BUY", setBuySaga),
+    fork(takeLatest, "GET_FEE_BUY", getFeeBuySaga),
+    fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
+    fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
+    fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+
   ];
 }

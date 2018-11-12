@@ -15,20 +15,29 @@ export const verifyTwoFactorAuthSettings = token => ({
   token
 });
 
-export const createAlias = (coin, address, alias, fee, password) => ({
+export const createAlias = (coin, address, alias, price, password) => ({
   type: "CREATE_ALIAS_ADDRESS_API",
   data: {
     coin,
     address,
     alias,
-    fee,
+    price,
     password
   }
 });
 
-export const getAliases = (address) => ({
+export const getAliases = address => ({
   type: "GET_ALIAS_ADDRESS_API",
   data: {
     address
   }
+});
+
+export const setAliasModal = () => ({
+  type: "SET_WALLET_ALIAS_MODAL_OPEN"
+});
+
+export const setAliasLoading = state => ({
+  type: "SET_WALLET_ALIAS_LOADING",
+  state: state
 });

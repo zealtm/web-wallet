@@ -124,6 +124,11 @@ let p2pSettings = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/p2p")
 });
 
+let buycoin = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../buycoin")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+});
 /* eslint-enable */
 
 class App extends Component {
@@ -157,6 +162,7 @@ class App extends Component {
               <Route path="/assets" component={assets} />
               <Route path="/p2p" component={p2p} />
               <Route path="/setp2p" component={p2pSettings} />
+              <Route path="/coinsale" component={buycoin} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

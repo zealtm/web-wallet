@@ -5,10 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setSelectedCoin,
-} from "./redux/assetsAction";
-import { errorInput } from "../errors/redux/errorAction";
+import { setSelectedCoin } from "./redux/assetsAction";
 
 // COMPONENTS
 import Loading from "../../components/loading.jsx";
@@ -44,7 +41,7 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
-  setCoin = (id) => {
+  setCoin = id => {
     let { setSelectedCoin } = this.props;
     setSelectedCoin(id);
   };
@@ -61,7 +58,11 @@ class CoinsBar extends React.Component {
     let { assets, selectedCoin, isBalanceLoading } = this.props.assets;
 
     if (isBalanceLoading)
-      return <div className={style.infoBarLoading}><Loading/></div>
+      return (
+        <div className={style.infoBarLoading}>
+          <Loading />
+        </div>
+      );
 
     if (!assets) {
       return null;
@@ -72,24 +73,19 @@ class CoinsBar extends React.Component {
       asset.status = index === selectedCoin ? true : false;
 
       return (
-        <div
-          key={index}
-          onClick={ () => this.setCoin(index) }
-        >
-          <div
-            className={
-              asset.status ? style.boxCoinActive : style.boxCoin
-            }
-          >
+        <div key={index} onClick={() => this.setCoin(index)}>
+          <div className={asset.status ? style.boxCoinActive : style.boxCoin}>
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={asset.image ? asset.image : "images/icons/tokens/default.png"}
+                src={
+                  asset.image ? asset.image : "images/icons/tokens/default.png"
+                }
               />
             </div>
             <Hidden smDown>
               <div className={style.boxHiddenContent}>
-                { asset.tokenName.toUpperCase() }
+                {asset.tokenName.toUpperCase()}
               </div>
             </Hidden>
           </div>
@@ -170,7 +166,7 @@ class CoinsBar extends React.Component {
 CoinsBar.propTypes = {
   wallet: PropTypes.object,
   assets: PropTypes.object,
-  setSelectedCoin: PropTypes.func,
+  setSelectedCoin: PropTypes.func
 };
 
 const mapSateToProps = store => ({
@@ -181,8 +177,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setSelectedCoin,
-      errorInput
+      setSelectedCoin
     },
     dispatch
   );

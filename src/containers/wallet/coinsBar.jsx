@@ -76,6 +76,9 @@ class CoinsBar extends React.Component {
 
     return favoritesCoins.map((val, index) => {
       let coin = coins[val];
+
+      if (!coin) return;
+
       let coinBalanceStatus = coin.balance ? true : false;
       let coinAddressStatus = coin.address ? true : false;
       let coinStatus =

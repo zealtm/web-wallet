@@ -10,6 +10,7 @@ import {
   getInvoice,
   setClearPayment
 } from "./redux/paymentAction";
+import { errorInput } from "../errors/redux/errorAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -188,6 +189,23 @@ class Invoice extends React.Component {
     }
   };
 
+  normalizeInvoiceNumber = e => {
+    const chars = e.target.value.length;
+    let number = e.target.value;
+    
+    for(let i=0; i<chars; i++){
+      number = number.replace(/\D/, "")
+    }
+    
+    this.setState({
+      ...this.state,
+      invoice: {
+        ...this.state.invoice,
+        number: number
+      }
+    })
+  }
+
   handleCpfCnpjChange = event => {
     const { invoice } = this.state;
 
@@ -220,7 +238,7 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { payment, coins } = this.props;
+    const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
 
     const invoiceData = {
@@ -233,6 +251,11 @@ class Invoice extends React.Component {
         ? coins[invoice.coin.abbreviation].address
         : undefined
     };
+
+    if (invoiceData.value > coin.value.limit) {
+      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
+      return;
+    }
 
     const invoiceInputs = {};
 
@@ -318,6 +341,7 @@ class Invoice extends React.Component {
               inputProps={{ maxLength: 48, required: true }}
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
+              onBlur={this.normalizeInvoiceNumber}
               error={errors.includes("number")}
             />
           </div>
@@ -465,7 +489,8 @@ Invoice.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
-  coins: PropTypes.array
+  coins: PropTypes.array,
+  errorInput: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -481,7 +506,8 @@ const mapDispatchToProps = dispatch =>
       getInvoice,
       getCoinsEnabled,
       setPayment,
-      setClearPayment
+      setClearPayment,
+      errorInput
     },
     dispatch
   );

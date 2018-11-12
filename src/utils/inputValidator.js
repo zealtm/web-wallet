@@ -142,7 +142,7 @@ export const inputValidator = inputs => {
         }
 
         if (name === "passwordRepeat") {
-          let regex = new RegExp('^[a-zA-z0-9!@#$%^&*(),.?":{}|<>]+$');
+          let regex = new RegExp('^[a-zA-z0-9!@#$%^&*(),.?"\':{}|<>]+$');
 
           if (
             !isLength(trim(value.toString()), { min: 8, max: 64 }) ||
