@@ -9,14 +9,14 @@ import {
   openModal,
   setClearBuy,
   getCoinsEnabled
-} from "./redux/buyAction";
+} from "./redux/coinsaleAction";
 
 // COMPONENTS
 import Modal from "../../components/modal";
 import Tabs from "../../components/tabs";
 import History from "./components/history";
-import Buy from "./components/buy";
-import BuyModal from "./modal/buyModal";
+import Coinsale from "./components/coinsale";
+import CoinsaleModal from "./modal/coinsaleModal";
 import CoinsBar from "./components/coinsBar";
 import Loading from "../../components/loading";
 
@@ -26,7 +26,7 @@ import i18n from "../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-class BuyCoins extends React.Component {
+class Coinsales extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -54,7 +54,7 @@ class BuyCoins extends React.Component {
       i18n.t("COINSALE_PURCHASE_TAB_TITLE"),
       i18n.t("COINSALE_HISTORY_TAB_TITLE")
     ];
-    const contents = [<Buy key={0} />, <History key={1} />];
+    const contents = [<Coinsale key={0} />, <History key={1} />];
 
     if (loading) return <Loading color="wallet" height="80vh" width="100px" />;
 
@@ -71,7 +71,7 @@ class BuyCoins extends React.Component {
 
           <Modal
             title={i18n.t("COINSALE_TITLE")}
-            content={<BuyModal />}
+            content={<CoinsaleModal />}
             show={modalOpen}
             close={
               modalStep === 1 || modalStep === 3 || modalStep === 4
@@ -86,7 +86,7 @@ class BuyCoins extends React.Component {
   }
 }
 
-BuyCoins.propTypes = {
+Coinsales.propTypes = {
   modalStep: PropTypes.number.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
@@ -116,4 +116,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuyCoins);
+)(Coinsales);

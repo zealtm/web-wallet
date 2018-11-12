@@ -11,7 +11,7 @@ import error from "../errors/redux/errorReducer";
 import payment from "../payment/redux/paymentReducer";
 import assets from "../assets/redux/assetsReducer";
 import recharge from "../recharge/redux/rechargeReducer";
-import buy from "../buycoin/redux/buyReducer";
+import buy from "../coinsale/redux/coinsaleReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 

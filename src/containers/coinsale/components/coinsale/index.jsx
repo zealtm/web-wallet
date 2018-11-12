@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setBuy } from "../../redux/buyAction";
+import { setBuy } from "../../redux/coinsaleAction";
 
 // COMPONENTS
 import PaymentBar from "../paymentBar";
@@ -21,7 +21,7 @@ import i18n from "../../../../utils/i18n";
 // STYLES
 import style from "./style.css";
 
-class Buy extends React.Component {
+class Coinsale extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -97,7 +97,7 @@ class Buy extends React.Component {
   }
 }
 
-Buy.propTypes = {
+Coinsale.propTypes = {
   setClearBuy: PropTypes.func.isRequired,
   buypack: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
@@ -122,4 +122,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Buy);
+)(Coinsale);

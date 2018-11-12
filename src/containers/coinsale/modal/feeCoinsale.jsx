@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getFeeBuy, setFeeBuy, setModalStep } from "../redux/buyAction";
+import { getFeeBuy, setFeeBuy, setModalStep } from "../redux/coinsaleAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
@@ -18,7 +18,7 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-class FeeBuy extends React.Component {
+class FeeCoinsale extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,7 +175,7 @@ class FeeBuy extends React.Component {
   }
 }
 
-FeeBuy.propTypes = {
+FeeCoinsale.propTypes = {
   setFeeBuy: PropTypes.func.isRequired,
   getFeeBuy: PropTypes.func.isRequired,
   setModalStep: PropTypes.func.isRequired,
@@ -211,4 +211,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FeeBuy);
+)(FeeCoinsale);

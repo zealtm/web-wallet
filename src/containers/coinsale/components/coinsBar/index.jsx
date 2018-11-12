@@ -10,7 +10,7 @@ import {
   getCoinForPayment,
   getHistoryBuy,
   setClearBuyPack
-} from "../../redux/buyAction";
+} from "../../redux/coinsaleAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";

@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 // COMPONENTS
-import FeeBuy from "./feeBuy";
-import SecureBuy from "./secureBuy";
-import DoneBuy from "./doneBuy";
-import ErrorBuy from "./errorBuy";
+import FeeCoinsale from "./feeCoinsale";
+import SecureCoinsale from "./secureCoinsale";
+import DoneCoinsale from "./doneCoinsale";
+import ErrorCoinsale from "./errorCoinsale";
 
-class BuyModal extends React.Component {
+class CoinsaleModal extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -21,18 +21,18 @@ class BuyModal extends React.Component {
 
     switch (modalStep) {
       case 1:
-        return <FeeBuy />;
+        return <FeeCoinsale />;
       case 2:
-        return <SecureBuy />;
+        return <SecureCoinsale />;
       case 3:
-        return <DoneBuy />;
+        return <DoneCoinsale />;
       case 4:
-        return <ErrorBuy />;
+        return <ErrorCoinsale />;
     }
   }
 }
 
-BuyModal.propTypes = {
+CoinsaleModal.propTypes = {
   modalStep: PropTypes.number.isRequired
 };
 
@@ -45,4 +45,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BuyModal);
+)(CoinsaleModal);

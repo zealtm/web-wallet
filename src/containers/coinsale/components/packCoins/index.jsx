@@ -5,7 +5,7 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setBuyPackage } from "../../redux/buyAction";
+import { setBuyPackage } from "../../redux/coinsaleAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";

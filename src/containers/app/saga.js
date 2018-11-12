@@ -90,7 +90,7 @@ import {
   setFeeBuySaga,
   confirmBuySaga,
   getHistoryBuySaga
-} from "../buycoin/redux/buySaga";
+} from "../coinsale/redux/coinsaleSaga";
 
 export default function* rootSaga() {
   yield [

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { confirmBuy } from "../redux/buyAction";
+import { confirmBuy } from "../redux/coinsaleAction";
 import { errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -17,7 +17,7 @@ import style from "./style.css";
 // COMPONENTS
 import ButtonContinue from "../../../components/buttonContinue";
 
-class SecureBuy extends React.Component {
+class SecureCoinsale extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -102,7 +102,7 @@ class SecureBuy extends React.Component {
   }
 }
 
-SecureBuy.propTypes = {
+SecureCoinsale.propTypes = {
   buypack: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
@@ -130,4 +130,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SecureBuy);
+)(SecureCoinsale);

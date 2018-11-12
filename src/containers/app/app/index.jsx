@@ -114,9 +114,9 @@ let assets = Loadable({
 });
 
 let buycoin = Loadable({
-  loader: () => fakeDelay(0).then(() => import("../../buycoin")),
+  loader: () => fakeDelay(0).then(() => import("../../coinsale")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+  serverSideRequirePath: path.resolve(__dirname, "../../coinsale")
 });
 /* eslint-enable */
 

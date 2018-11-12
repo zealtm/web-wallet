@@ -8,13 +8,13 @@ import { bindActionCreators } from "redux";
 // UTILS
 import i18n from "../../../utils/i18n";
 
+// STYLE
+import style from "./style.css";
+
 // COMPONENTS
 import Loading from "../../../components/loading";
 
-// STYLES
-import style from "./style.css";
-
-class ErrorBuy extends React.Component {
+class DoneCoinsale extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -32,17 +32,23 @@ class ErrorBuy extends React.Component {
       return (
         <div className={style.modalBox}>
           <img
-            src="/images/icons/error/error.png"
+            src="/images/icons/confirm/confirm.png"
             className={style.imageResult}
           />
-          <div>{i18n.t("COINSALE_INFO_ERROR")}</div>
+          <div>
+            {i18n.t("COINSALE_SUCCESS_1")}
+          </div>
+
+          <div className={style.smallDescription}>
+            {i18n.t("PAYMENT_TEXT_HISTORY")}
+          </div>
         </div>
       );
     }
   }
 }
 
-ErrorBuy.propTypes = {
+DoneCoinsale.propTypes = {
   loading: PropTypes.bool.isRequired
 };
 
@@ -55,4 +61,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ErrorBuy);
+)(DoneCoinsale);

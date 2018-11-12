@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setCoinSelected } from "../../redux/buyAction";
+import { setCoinSelected } from "../../redux/coinsaleAction";
 
 // MATERIAL
 import { Grid, Checkbox, FormControlLabel, withStyles } from "@material-ui/core/";
