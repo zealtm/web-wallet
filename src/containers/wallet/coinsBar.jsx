@@ -72,6 +72,7 @@ class CoinsBar extends React.Component {
 
     let favoritesCoins = getFavoritesCrypto();
     favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
+    
     let lunesPosition = favoritesCoins.indexOf("lunes");
     let coin = null;
 
@@ -81,15 +82,17 @@ class CoinsBar extends React.Component {
       coin = coins[favoritesCoins[lunesPosition]];
     }
 
-    let coinBalanceStatus = coin.balance ? true : false;
-    let coinAddressStatus = coin.address ? true : false;
-    let coinStatus =
-      coin.status === "active" && coinBalanceStatus && coinAddressStatus
-        ? true
-        : false;
+    if (coin!=null){
+      let coinBalanceStatus = coin.balance ? true : false;
+      let coinAddressStatus = coin.address ? true : false;
+      let coinStatus =
+        coin.status === "active" && coinBalanceStatus && coinAddressStatus
+          ? true
+          : false;
 
-    if (coinStatus) {
-      this.setCoin(coin.abbreviation, coin.address);
+      if (coinStatus) {
+        this.setCoin(coin.abbreviation, coin.address);
+      }
     }
   };
 
