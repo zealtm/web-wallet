@@ -139,7 +139,6 @@ class Invite extends React.Component {
             <div className={style.copyIcon}>
               <a onClick={() => this.copyAddress(address)}>
                 <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-                <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
               </a>
             </div>
             <div
@@ -147,7 +146,6 @@ class Invite extends React.Component {
               className={style.shareIcon}
             >
               <img src="/images/icons/invite/share@1x.png" />
-              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
