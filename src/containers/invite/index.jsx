@@ -153,10 +153,12 @@ class Invite extends React.Component {
               <button className={style.btnInviteSent}>
                 {i18n.t("INVITE_BUTTON_SEND")}
               </button>
+
               <div className={style.accumulatedBalance}>
                 <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
                 <span className={style.accumulatedLunes}> 50.000 Lunes</span>
               </div>
+
               <button
                 onClick={this.handleModal}
                 className={style.btnInviteSent2}
