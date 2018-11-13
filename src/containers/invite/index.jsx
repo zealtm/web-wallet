@@ -57,6 +57,10 @@ class Invite extends React.Component {
       modalOpen: false
     }
   }
+  componentDidMount = () => {
+    const { getInviteAddress } = this.props;
+    getInviteAddress();
+  }
 
   copyAddress = (address) => {
     let { successRequest } = this.props;
@@ -83,12 +87,17 @@ class Invite extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, address, balance } = this.props;
     const { modalOpen } = this.state;
+    
+    const address_code = address.link; // mock
+    const address_copy = "https://luneswallet.app/invite?=" + address_code; // mock
 
-    const address_code = "12as3d45ads546asd456asd456asd546asd"; // mock
-    const address = "https://luneswallet.app/invite?="+address_code; // mock
-
+    if(address && balance){
+      console.log(address);
+      console.log(balance);
+    }
+  
     return (
       <div>
         <div className={style.header}>
@@ -96,11 +105,11 @@ class Invite extends React.Component {
           <p>{i18n.t("INVITE_TEXT_1")}</p>
         </div>
 
-        <Modal 
-          title="Convites enviados" 
-          content={<InviteSend />} 
-          show={modalOpen} 
-          close={this.handleModal} 
+        <Modal
+          title="Convites enviados"
+          content={<InviteSend />}
+          show={modalOpen}
+          close={this.handleModal}
         />
 
         <Grid container className={style.card}>
@@ -110,29 +119,30 @@ class Invite extends React.Component {
                 <img src="/images/icons/email/email@1x.png" className={style.icon} />
               </Grid>
               <Grid item>
-              <Input placeholder="Lunes@gmail.com" classes={{
-                root: classes.root,
-                underline: classes.cssUnderline,
-                input: classes.cssInput
-              }} />
-            </Grid>
+                <Input placeholder="Lunes@gmail.com" classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }} />
+              </Grid>
             </Grid>
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>{address_code}</p>
+              <p>{address.link}</p>
             </div>
+
             <div className={style.copyIcon}>
-                <a  onClick = {() => this.copyAddress(address) }>
-                  <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-                  <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
-                </a>
+              <a onClick={() => this.copyAddress(address_copy)}>
+                <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+                <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
+              </a>
             </div>
-            <div 
-              onClick={() => this.sendCoinAddressEmail(address)}
+            <div
+              onClick={() => this.sendCoinAddressEmail(address_copy)}
               className={style.shareIcon}
-            >     
+            >
               <img src="/images/icons/invite/share@1x.png" />
               <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
@@ -144,31 +154,36 @@ class Invite extends React.Component {
             </div>
           </Grid>
         </Grid>
-        
+
         <Grid container className={style.card}>
           <Grid item xs={12}>
             <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
           </Grid>
           <Grid item xs={12} className={style.cardInviteConfirmation}>
-            {[1, 2, 3, 4, 5].map(val=>{
+            {[1, 2, 3, 4, 5].map(val => {
               return (<ItemInvite />)
             })
             }
           </Grid>
         </Grid>
-        
-    </div>
+
+      </div>
     )
   }
 }
 
 Invite.propTypes = {
   classes: PropTypes.object.isRequired,
-  invite: PropTypes.object
+  invite: PropTypes.object,
+  getInviteAddress: PropTypes.func,
+  address: PropTypes.object,
+  balance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
-  invite: store.invite
+  invite: store.invite,
+  address: store.invite.address,
+  balance: store.invite.balance
 });
 
 const mapDispatchToProps = dispatch =>
@@ -177,7 +192,7 @@ const mapDispatchToProps = dispatch =>
       setInviteModal,
       getInviteAddress,
       sendMailInvite,
-      getInviteSent,
+      getInviteSent
     },
     dispatch
   );

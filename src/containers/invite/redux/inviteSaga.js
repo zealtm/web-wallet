@@ -1,5 +1,13 @@
-import { put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
+
+// SERVICES
+import InviteService from "../../../services/inviteService";
+
+// UTILS
+import { getAuthToken } from "../../../utils/localStorage";
+
+const inviteService = new InviteService();
 
 export function* getInviteAddressSaga() {
   try {
@@ -8,9 +16,27 @@ export function* getInviteAddressSaga() {
       loading: true
     });
 
+    let token = yield call(getAuthToken);
+    let response = yield call(inviteService.getInvite, token);
+
+    let address = [];
+    if (response) {
+      address = response.data;
+    }
+
     yield put({
       type: "GET_INVITE_ADDRESS_REDUCER",
-      address: "123123123123123" // parametro mockup
+      address: address // parametro mockup
+    });
+
+    let responseBalance = yield call(inviteService.getInviteBalance, token, address);
+    let balance = [];
+    if(responseBalance){
+      balance = responseBalance.data
+    }
+    yield put({
+      type: "GET_INVITE_BALANCE_REDUCER",
+      balance: balance
     });
   } catch (error) {
     yield put(internalServerError());
