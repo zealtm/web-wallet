@@ -132,12 +132,13 @@ class Invite extends React.Component {
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>{address_code}</p>
+              <div className={style.adressSharedBox}>
+                <p className={style.textSharedLink}>{address_code}</p>
+              </div>
             </div>
             <div className={style.copyIcon}>
               <a onClick={() => this.copyAddress(address)}>
                 <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-                <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
               </a>
             </div>
             <div
@@ -145,7 +146,6 @@ class Invite extends React.Component {
               className={style.shareIcon}
             >
               <img src="/images/icons/invite/share@1x.png" />
-              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -153,11 +153,17 @@ class Invite extends React.Component {
               <button className={style.btnInviteSent}>
                 {i18n.t("INVITE_BUTTON_SEND")}
               </button>
+
+              <div className={style.accumulatedBalance}>
+                <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
+                <span className={style.accumulatedLunes}> 50.000 Lunes</span>
+              </div>
+
               <button
                 onClick={this.handleModal}
                 className={style.btnInviteSent2}
               >
-                {i18n.t("INVITE_SEND_INVITATIONS")}
+                {i18n.t("INVITE_TEXT_BUTTON")}
               </button>
             </div>
           </Grid>
