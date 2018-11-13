@@ -126,7 +126,7 @@ class FeeBuy extends React.Component {
           <div>
             <span>{i18n.t("COINSALE_FEE_TEXT_1")}</span>
             <span className={style.totalConfirm}>
-              {buypack.amountPay} {buypack.paycoin.toUpperCase()}
+              {buypack.amountPay.toFixed(8)} {buypack.paycoin.toUpperCase()}
             </span>
           </div>
           <div>
