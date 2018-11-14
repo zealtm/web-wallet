@@ -121,7 +121,8 @@
   padding-left: 30px;
   padding-top: 20px;
   height: 375px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 :local .formBase hr {
