@@ -59,9 +59,25 @@ class Invite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      email: ""
     };
   }
+
+  componentDidMount = ()=>{
+    const { getInviteSent } = this.props;
+    getInviteSent();
+  }
+
+  setEmail = email => {
+    this.setState({ ...this.state, email });
+  };
+
+  handleEmail = () => {
+    let { email } = this.state;
+    let { sendMailInvite } = this.props;
+    sendMailInvite(email);
+  };
 
   copyAddress = address => {
     let { successRequest } = this.props;
@@ -88,11 +104,13 @@ class Invite extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, invite } = this.props;
     const { modalOpen } = this.state;
 
     const address_code = "12as3d45ads546asd456asd456asd546asd"; // mock
     const address = "https://luneswallet.app/invite?=" + address_code; // mock
+
+    let { email } = this.state;
 
     return (
       <div>
@@ -125,6 +143,8 @@ class Invite extends React.Component {
                     underline: classes.cssUnderline,
                     input: classes.cssInput
                   }}
+                  onChange={event => this.setEmail(event.target.value)}
+                  value={email}
                 />
               </Grid>
             </Grid>
@@ -150,7 +170,9 @@ class Invite extends React.Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
-              <button className={style.btnInviteSent}>
+              <button 
+              className={style.btnInviteSent}
+              onClick={() => this.handleEmail()}>
                 {i18n.t("INVITE_BUTTON_SEND")}
               </button>
 
@@ -176,8 +198,8 @@ class Invite extends React.Component {
             </span>
           </Grid>
           <Grid item xs={12} className={style.cardInviteConfirmation}>
-            {[1, 2, 3, 4, 5].map(val => {
-              return <ItemInvite />;
+            {invite.invites.map((email, key)=>{
+            return (<ItemInvite key={key} email={email.receiptEmail}/>)
             })}
           </Grid>
         </Grid>
@@ -188,7 +210,9 @@ class Invite extends React.Component {
 
 Invite.propTypes = {
   classes: PropTypes.object.isRequired,
-  invite: PropTypes.object
+  invite: PropTypes.object,
+  getInviteSent: PropTypes.func,
+  sendMailInvite: PropTypes.func
 };
 
 const mapStateToProps = store => ({

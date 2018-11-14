@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 // STYLE
 import style from "./style.css";
 
+// REDUX
+import { connect } from "react-redux";
+
 // COMPONENTS
 import ItemInvite from "../components/itemInvite";
 
@@ -13,11 +16,12 @@ class InviteSend extends React.Component {
   }
 
   render() {
+    const { invite } = this.props;
     return (
       <div>
         {
-          [1,2,3,4,5].map(val=>{
-            return (<ItemInvite />)
+          invite.invites.map((email, key)=>{
+            return (<ItemInvite key={key} email={email.receiptEmail}/>)
           })
         }
       </div>
@@ -26,7 +30,14 @@ class InviteSend extends React.Component {
 }
 
 InviteSend.propTypes = {
-  //
+  invite: PropTypes.object
 };
 
-export default InviteSend;
+const mapStateToProps = store => ({
+  invite: store.invite
+});
+
+
+export default connect(
+  mapStateToProps,
+)((InviteSend));

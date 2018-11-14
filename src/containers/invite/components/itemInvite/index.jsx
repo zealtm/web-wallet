@@ -37,7 +37,7 @@ class ItemInvite extends React.Component {
           <Grid item xs={5} sm={5}>
             <div>
               <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_EMAIL")}</span> <br />
-              <p className={style.spanSub}>email@email.com</p>
+              <p className={style.spanSub}>{this.props.email}</p>
             </div>
           </Grid>
           <Grid item xs={5} sm={6}>
@@ -63,7 +63,8 @@ class ItemInvite extends React.Component {
 }
 
 ItemInvite.propTypes = {
-  successRequest: PropTypes.func
+  successRequest: PropTypes.func,
+  email: PropTypes.string
 };
 const mapStateToProps = store => ({
 });
