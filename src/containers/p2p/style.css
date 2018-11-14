@@ -86,10 +86,9 @@
 
 :local(.cardProfile) {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
-  border-radius: 10px;
   min-height: 195px;
   width: 97%;
-  margin: 2px 0px 0px 5px;
+  margin: 1px 0px 0px 0px;
   overflow: hidden;
 }
 
@@ -103,10 +102,10 @@
 
 :local(.avatarProfile) {
   margin: 20px 0px 0px 10%;
-  max-width:70px;
-  max-height:70px;
+  max-width: 70px;
+  max-height: 70px;
   border-radius: 50px;
-  box-shadow: 0px 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 :local(.userDescription) {
@@ -128,7 +127,6 @@
 :local(.spanDescription) {
   font-size: 10px;
   composes: textGreen;
-  
 }
 
 :local(.hr) {
@@ -203,13 +201,12 @@
   margin: 15px;
 }
 
-
 :local .baseUserProfile {
-  max-height:490px;
+  max-height: 490px;
   overflow: auto;
 }
 
-:local .online{
+:local .online {
   composes: bgGreenDefault from "../../components/bases/colorBase.css";
   margin-top: 9%;
   margin-left: -3%;
@@ -218,8 +215,8 @@
   height: 10.9px;
   display: inline;
 }
-:local .off{
-  composes: bgGreenDark from "../../components/bases/colorBase.css";  
+:local .off {
+  composes: bgGreenDark from "../../components/bases/colorBase.css";
   margin-top: 9%;
   margin-left: -3%;
   border-radius: 50px;
