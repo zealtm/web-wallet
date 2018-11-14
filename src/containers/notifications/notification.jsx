@@ -22,7 +22,7 @@ class Notification extends React.Component {
   render() {
     return (
       <Grid container direction="row" justify="center">
-        <h1>{i18n.t("NOTIFICATION_NUMBER_OF_NOTIFICATION")} </h1>
+        <h1>{i18n.t("NOTIFICATION_NUMBER_OF_NOTIFICATION")} {" (0)"}</h1>
         <div className={style.hr} />
         <div className={style.containerInf}>
           <img
