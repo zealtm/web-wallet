@@ -31,7 +31,7 @@
 :local .baseWidget {
   position: absolute;
   bottom: 0px;
-  right: 0px;
+  right: 16px;
   max-height: 572px;
   height: 92vh;
   width: 100%;
@@ -44,7 +44,7 @@
 :local .baseWidgetClose {
   position: absolute;
   bottom: -465px;
-  right: 0px;
+  right: 16px;
   max-height: 500px;
   height: 90vh;
   width: 100%;
