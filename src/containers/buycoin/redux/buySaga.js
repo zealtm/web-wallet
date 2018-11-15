@@ -243,8 +243,8 @@ export function* setBuySaga(payload) {
     const amount = payload.payload.amount;
 
     const data = {
-      balance: convertBiggestCoinUnit(balance, 8),
-      amount: convertBiggestCoinUnit(amount, 8),
+      balance: convertBiggestCoinUnit(balance, payload.payload.decimalPoint),
+      amount: convertBiggestCoinUnit(amount, payload.payload.decimalPoint),
       receiveAddress: payload.payload.receiveAddress
     };
 
