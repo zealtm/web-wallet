@@ -15,8 +15,7 @@ import CardOffer from "./components/cardOffer";
 const inputStyle = {
   root: {
     color: colors.messages.info,
-    margin: "0",
-    padding: "9px",
+    padding: "5px",
     width: "95%",
     marginLeft: "auto",
     marginRight: "auto",
