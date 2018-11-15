@@ -1,7 +1,6 @@
 /* BASE */
 :local(.instructions) {
   composes: textDefault from "../../../components/bases/textBase.css";
-  display: block;
   text-align: center;
 }
 
@@ -17,7 +16,11 @@
 }
 
 /* MODAL*/
-:local(.alignInstructions){
+:local(.alignInstructions){  
+  width: 75%;
+  margin-left: 10%;
+  margin-right: 5%;
+  padding: 20px;
   margin-top: 60px;
 }
 :local(.alignInstructions, ol) {
@@ -42,8 +45,9 @@
   color: white;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
   :local(.alignInstructions){
+    padding: 20px;
     margin-top: 40px;
   }
   :local(.alignInstructions, ol li) {
