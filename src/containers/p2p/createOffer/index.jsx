@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 // MATERIAL
 import { Grid, Avatar, Radio, withStyles, FormControlLabel } from "@material-ui/core/";
-import { ArrowForward, ArrowBack } from "@material-ui/icons/";
+import { ArrowForward } from "@material-ui/icons/";
 
 // ICONS 
 import { Lens } from "@material-ui/icons";
@@ -90,7 +90,7 @@ class CreateOffer extends React.Component {
         <div className={style.headerUser}>
           <Grid container>
             <Grid item xs={1}>
-              <ArrowBack className={style.arrowBack} />
+              <div className={style.arrowBack} />
             </Grid>
             <Grid item xs={2}>
               <Avatar
