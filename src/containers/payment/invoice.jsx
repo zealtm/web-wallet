@@ -189,6 +189,23 @@ class Invoice extends React.Component {
     }
   };
 
+  normalizeInvoiceNumber = e => {
+    const chars = e.target.value.length;
+    let number = e.target.value;
+    
+    for(let i=0; i<chars; i++){
+      number = number.replace(/\D/, "")
+    }
+    
+    this.setState({
+      ...this.state,
+      invoice: {
+        ...this.state.invoice,
+        number: number
+      }
+    })
+  }
+
   handleCpfCnpjChange = event => {
     const { invoice } = this.state;
 
@@ -235,8 +252,8 @@ class Invoice extends React.Component {
         : undefined
     };
 
-    if (invoiceData.value > 3000) {
-      errorInput("Valor excede o limite diário de R$ 3.000,00")
+    if (invoiceData.value > coin.value.limit) {
+      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
       return;
     }
 
@@ -324,6 +341,7 @@ class Invoice extends React.Component {
               inputProps={{ maxLength: 48, required: true }}
               value={invoice.number}
               onChange={this.handleInvoiceNumberChange}
+              onBlur={this.normalizeInvoiceNumber}
               error={errors.includes("number")}
             />
           </div>
@@ -472,7 +490,7 @@ Invoice.propTypes = {
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  errorInput: PropTypes.func.isRequired,
+  errorInput: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({

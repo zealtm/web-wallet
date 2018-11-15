@@ -302,7 +302,8 @@ class TransactionService {
       },
       "lunes",
       undefined,
-      "Leasing",
+      undefined,
+      "Create Leasing",
       token
     );
 
@@ -332,6 +333,7 @@ class TransactionService {
           fee: response.fee
         },
         "lunes",
+        undefined,
         undefined,
         "Cancel Leasing",
         token
