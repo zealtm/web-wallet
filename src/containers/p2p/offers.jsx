@@ -57,13 +57,22 @@ class Offers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: ""
+      search: "",
+      tabGiving: true,
+      tabDone:false,
+
     };
   }
-
+  onChangeTab(status){
+    if(status == 1){
+      this.setState({ tabGiving: false, tabDone:true})
+    }else{
+      this.setState({ tabGiving: true, tabDone:false})
+    }
+  }
   render() {
     const { classes } = this.props;
-    const { search } = this.state;
+    const { search, tabGiving,tabDone } = this.state;
 
     return (
       <div>
@@ -79,8 +88,8 @@ class Offers extends React.Component {
         />
 
         <div className={style.tabContent}>
-          <div className={style.itemTabActive}>P2P</div>
-          <div className={style.itemTab}>ESCROOW</div>
+          <div className={tabGiving?style.itemTab:style.itemTabActive} onClick={()=>this.onChangeTab(1)} >andamento</div>
+          <div className={tabDone?style.itemTab:style.itemTabActive} onClick={()=>this.onChangeTab(0)} >concluido</div>
         </div>
 
         <div className={style.content}>
