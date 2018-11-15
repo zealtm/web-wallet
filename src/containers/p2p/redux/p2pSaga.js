@@ -1,17 +1,6 @@
 import { put } from "redux-saga/effects";
-//import { internalServerError } from "../../errors/statusCodeMessage";
 
-// UTILS
-// import { getUserSeedWords } from "../../../utils/localStorage";
-// import { decryptAes } from "../../../utils/cryptography";
-// import { getAuthToken } from "../../../utils/localStorage";
-// import { convertBiggestCoinUnit } from "../../../utils/numbers";
-// import { convertToLocaleDate } from "../../../utils/strings";
-
-
-// SERVICES
-//import P2PService from "../../../services/p2pService";
-//const p2pService = new P2PService();
+import { PeerToPeer } from "../../../services/p2p"
 
 export function* openChat(payload) {
   yield put({
@@ -39,4 +28,36 @@ export function* openModalPaySaga(payload){
     type: "SET_MODAL_OPEN_REDUCER",
     open: payload.open
   });
+}
+
+export function* getPaymentMethodsWhenBuying(payload) {
+  try {
+    let { coin } = payload
+    yield put({type: "BUY_SETTER", data: {paymentMethodLoading: true}})
+
+    let paymentMethods = yield PeerToPeer.getPaymentMethodsWhenBuying(coin)
+      .catch(error => { throw error })
+
+    yield put({type: "BUY_SETTER", data: { paymentMethods }})
+    yield put({type: "BUY_SETTER", data: { paymentMethodLoading: false }})
+  } catch (error) {
+    yield put({type: "FAILED_REQUEST", message: error.message})
+  }
+}
+
+export function* acceptOfferWhenBuying(payload) {
+  try {
+    yield put({type:"BUY_SETTER", data: { isBuyLoading: true }})
+
+    let result = yield PeerToPeer.acceptOfferWhenBuying(payload)
+      .catch(error => { throw error })
+
+    if (!result)
+      throw new Error("Failed to buy this coin")
+
+    yield put({type: "SUCCESS_REQUEST", message: ""})
+    yield put({type:"BUY_SETTER", data: { isBuyLoading: false }})
+  } catch (error) {
+    yield put({type: "FAILED_REQUEST", message: error.message})
+  }
 }

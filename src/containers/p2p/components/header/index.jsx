@@ -18,8 +18,6 @@ import StarVotes from "../starvotes";
 // STYLE
 import style from "./style.css";
 
-
-
 class Header extends React.Component {
     closeChat = () => {
       const { closeChat } = this.props;

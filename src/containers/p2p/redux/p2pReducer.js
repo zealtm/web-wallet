@@ -17,7 +17,7 @@ const initialState = {
       img: "images/icons/coins/lunes.png"
     },
     paymentMethods: [],
-    paymentMethod: undefined
+    paymentMethod: {}
   }
 };
 

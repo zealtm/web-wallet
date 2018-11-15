@@ -8,29 +8,47 @@ import { getAuthToken } from './../utils/localStorage'
 
 import Axios from 'axios'
 
-
+import i18n from "./../utils/i18n"
 
 class PeerToPeerClass {
   async getPaymentMethodsWhenBuying(coin) {
     let { code, data } = await axios.get(`/coin/${coin}/p2p/paymentMethods`)
 
     if (code !== 200)
-      throw new Error("Failed to get payment method to ${coin}")
+      throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"))
 
-    //put this logic inside saga
     let paymentMethods = []
+    let val;
     Object.keys(data).map((key) => {
-      let val = data[key]
+      val = data[key]
       if (val && val.constructor.name !== 'Array') return;
       val.map((obj) => {
         paymentMethods.push({
+          ...obj,
+          type: key,
           title: obj.name,
           img: `images/icons/coins/${obj.abbreviation.toLowerCase()}.png`,
-          status: obj.status
         })
       })
     })
+
+    if (paymentMethods.length < 1)
+      throw new Error(i18n.t("P2P_NO_PAYMENT_METHODS"))
+
     return paymentMethods
+  }
+
+  async acceptOfferWhenBuying(data) {
+    let { coin, txId, txBuyer, addressBuyer } = data
+
+    let { code } = await axios.post(`/coin/${coin}/p2p/buy`, {
+      txId, txBuyer, addressBuyer
+    })
+
+    if (code !== 200)
+      throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"))
+
+    return true
   }
 }
 
@@ -46,10 +64,15 @@ const axios = Axios.create({
     ...HEADER_REQUEST, ...API_HEADER,
     Authorization: getAuthToken()
   },
-  //just for test purposes
+  // adapter is just for test purposes
   adapter: async function(config) {
     let path = config.url.replace(config.baseURL, '')
     switch (path) {
+      case '/coin/lunes/p2p/buy':
+        return {
+          message: "Success", code: 200, type: "info",
+          data: { result: true }
+        }
       case '/coin/lunes/p2p/paymentMethods':
         return {
           "message": "Success",

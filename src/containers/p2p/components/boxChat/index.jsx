@@ -4,7 +4,11 @@
 // REDUX
 import { bindActionCreators } from 'redux'
 import { connect } from "react-redux";
-import { buySetter, setter } from './../../redux/p2pAction'
+import {
+  buySetter,
+  setter,
+  getPaymentMethodsWhenBuying
+} from './../../redux/p2pAction'
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -15,42 +19,21 @@ import Select from "../../../../components/select";
 // STYLE
 import style from "./style.css";
 
-// SERVICES
-import { PeerToPeer } from './../../../../services/p2p'
-
-// const stylesCustom = () => ({
-//     root: {
-//       color: "#68f285",
-//       '&$checked': {
-//         color: "#68f285",
-//       },
-//     },
-//     rootLabel: {
-//       fontSize: "11px",
-//       color: "#fff"
-//     },
-//     checked: {
-//       color: "#68f285",
-//     }
-//   });
-
-
 class boxChat extends React.Component {
   constructor(props) {
     super(props);
     this.buySetter = props.buySetter
     this.setter = props.setter
   }
-  async componentDidMount() {
-    let paymentMethods = await PeerToPeer.getPaymentMethodsWhenBuying('lunes')
-    this.buySetter({paymentMethods})
+  componentDidMount() {
+    console.log(this.props.getPaymentMethodsWhenBuying)
+    this.props.getPaymentMethodsWhenBuying('lunes')
   }
   componentDidUpdate() {
     console.log(this.props.p2p.buy)
   }
   changedAvailableCoinsSelect = (value, title, img) => {
-    console.warn('HELLO WORLDA')
-    this.setState({
+    this.buySetter({
       coinToBuy: {
         title,
         value,
@@ -61,8 +44,7 @@ class boxChat extends React.Component {
 
   changedPaymentMethodsSelect = (name, value, img) => {
     this.buySetter({paymentMethod: {
-      title: name,
-      value,
+      title: value,
       img
     }})
   }
@@ -71,9 +53,9 @@ class boxChat extends React.Component {
     const {
       coinToBuy,
       availableCoinsToBuy,
-      paymentMethods
+      paymentMethods,
+      paymentMethod
     } = this.props.p2p.buy;
-    const { title, img } = coinToBuy
 
     return (
       <div className={style.boxChat}>
@@ -85,8 +67,8 @@ class boxChat extends React.Component {
                   <div className={style.textSmall}>Compra</div>
                   <Select
                     list={availableCoinsToBuy}
-                    title={title}
-                    titleImg={img}
+                    title={coinToBuy.title}
+                    titleImg={coinToBuy.img}
                     selectItem={this.changedAvailableCoinsSelect}
                     error={null}
                     width={"100%"}
@@ -100,8 +82,8 @@ class boxChat extends React.Component {
                   <div className={style.textSmall}>Pagamento</div>
                   <Select
                     list={paymentMethods}
-                    title={title}
-                    titleImg={img}
+                    title={paymentMethod.title}
+                    titleImg={paymentMethod.img}
                     selectItem={this.changedPaymentMethodsSelect}
                     error={null}
                     width={"100%"}
@@ -130,6 +112,7 @@ class boxChat extends React.Component {
 }
 
 boxChat.propTypes = {
+  getPaymentMethodsWhenBuying: PropTypes.func.isRequired,
   buySetter: PropTypes.func.isRequired,
   setter: PropTypes.func.isRequired,
   p2p: PropTypes.object.isRequired
@@ -140,7 +123,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setter,
-    buySetter
+    buySetter,
+    getPaymentMethodsWhenBuying
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(boxChat);

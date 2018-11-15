@@ -77,16 +77,18 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
-  openChat, 
+  openChat,
   closeChat,
   setModalStepSaga as setModalFlowP2P,
-  openModalPaySaga as setOpenModalFlowP2P
+  openModalPaySaga as setOpenModalFlowP2P,
+  getPaymentMethodsWhenBuying,
+  acceptOfferWhenBuying
 } from "../p2p/redux/p2pSaga";
 
 import {
   setModalStepSaga as setModalStepBuySaga,
   getBuyCoinsEnabledSaga,
-  getCoinPackageSaga, 
+  getCoinPackageSaga,
   getCoinForPaymentSaga,
   openModalPaySaga,
   setClearBuySaga,
@@ -178,7 +180,11 @@ export default function* rootSaga() {
     fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
     fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
-    
+    fork(takeLatest, "API_GET_PAYMENT_METHODS_WHEN_BUYING",
+      getPaymentMethodsWhenBuying),
+    fork(takeLatest, "SET_MODAL_OPEN", acceptOfferWhenBuying),
+
+
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
     fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
