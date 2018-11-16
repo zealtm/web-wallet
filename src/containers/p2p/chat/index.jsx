@@ -26,7 +26,7 @@ class Chat extends React.Component {
         <Header />
 
         <div className={style.callChat}>
-         <BoxChat />
+         {/* <BoxChat /> */}
           
         </div>
       </div>

@@ -59,9 +59,9 @@
 
 :local .listItemCoin {
   display: flex;
-  padding: 10px;
+  padding-top: 10px;
 }
-:local .listItemCoin img {
+:local .listItemCoin img{
   margin: 0;
   margin-right: 1rem;
   max-width: 25px;
@@ -71,23 +71,21 @@
 }
 :local .btBuy {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
-  margin-left: auto;
   margin-right: auto;
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 170px;
+  width: 120px;
   
 }
 :local .btEscroow {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
   background-color: dodgerblue;
   margin-left: auto;
-  margin-right: auto;
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 170px;
+  width: 120px;
 }
 :local(.card) {
   composes: bgPurpleClear from "../../../../components/bases/colorBase.css";
@@ -95,6 +93,9 @@
   margin-top: 10px;
   padding: 10px;
   border-radius: 6px;
+}
+:local .arrowUp{
+  composes: colorGreen;
 }
 
 
