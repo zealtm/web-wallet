@@ -16,22 +16,30 @@
 }
 
 /* MODAL*/
-:local(.alignInstructions){  
+/*:local(.alignInstructions){  
   width: 75%;
   margin-left: 10%;
   margin-right: 5%;
   padding: 20px;
   margin-top: 60px;
+}*/
+
+:local(.alignInstructions){  
+  margin-top:10vw;
 }
+
 :local(.alignInstructions, ol) {
   list-style-type: upper-alpha;
   font-size: 14px;
+  padding-left:15%;
+  padding-right:15%;
 }
 
 :local(.alignInstructions, ol li) {
   color: #68f285;
   font-weight: bold;
   padding: 2vh;
+  
 }
 
 :local(.alignInstructions, ol li, span) {
@@ -40,21 +48,27 @@
 }
 
 :local(.infoModal) {
-  width: 90vh;
+  
+  padding-left:10%;
+  padding-right:10%;
   font-size: 14px;
   color: white;
 }
 
+
+
 @media only screen and (max-width: 600px) {
   :local(.alignInstructions){
     padding: 20px;
-    margin-top: 40px;
+    margin-top: 8em;
   }
   :local(.alignInstructions, ol li) {
     font-size: 11px;
   }
   :local(.infoModal) {
     font-size: 11px;
-    width: 40vh;
+    padding-left:3%;
+    padding-right:3%;
+    /*width: 30vh;*/
   }
 }

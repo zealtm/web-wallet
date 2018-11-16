@@ -416,7 +416,7 @@
   "RECHARGE_DETAILS_3": " in credits to recharge the number below: ",
   "RECHARGE_SUCCESS_1": "You have successfully loaded your cell phone!",
   "RECHARGE_SUCCESS_2": "View your refill history on the History tab",
-  "INSTRUCTION_MODAL_PAY_INFO_1": " Network mining fee (Value varies according to the currency network + 20% of the Lunes fee) + (A), (B) or (C) of the service charge.",
+  "INSTRUCTION_MODAL_PAY_INFO_1": " Network mining fee (Value varies according to the currency network + </br> 20% of the Lunes fee) + (A), (B) or (C) of the service charge.",
   "INSTRUCTION_MODAL_PAY_INFO_2": " It varies according to the concessionaire.",
   "INSTRUCTION_MODAL_PAY_INFO_3": " 7 to 20 hours.",
   "INSTRUCTION_MODAL_PAY_INFO_4": "In case of problems with order fulfillment, the sent coins will be automatically returned to the currency's Lunes address.",
