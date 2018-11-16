@@ -85,7 +85,7 @@ class FeeRecharge extends React.Component {
 
     const fromAddress = wallet.coins[recharge.coin.abbreviation].address;
     const toAddress = recharge.coin.address;
-
+    
     getFeeRecharge(
       recharge.coin.abbreviation,
       recharge.amount,
