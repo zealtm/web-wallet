@@ -77,6 +77,11 @@ class Menu extends React.Component {
     return;
   };
 
+  openP2PComponent = () => {
+    const { actionP2PComponent } = this.props;
+    actionP2PComponent();
+  };
+
   renderMenu = () => {
     let { pathname } = this.props.location;
 
@@ -145,14 +150,16 @@ class Menu extends React.Component {
         </Hidden>
         {this.renderMenu()}
         <div className={style.menuP2P}>
-        <NavLink
-          className={style.linkMenuP2P}
-          to={"/p2p"}
-          onClick={() => this.onClickFunction()}
-        >
-          <img src={"../../images/icons/p2p/user-star.png"} className={style.iconP2p} />    
-          <div>{"  "}</div>      
-        </NavLink>
+          <button
+            className={style.linkMenuP2P}
+            onClick={() => this.openP2PComponent()}
+          >
+            <img
+              src={"../../images/icons/p2p/user-star.png"}
+              className={style.iconP2p}
+            />
+            <div>{"  "}</div>
+          </button>
         </div>
       </div>
     );
@@ -165,7 +172,8 @@ Menu.propTypes = {
   actionMenu: PropTypes.func.isRequired,
   actionLogout: PropTypes.func.isRequired,
   errorInput: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  actionP2PComponent: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
