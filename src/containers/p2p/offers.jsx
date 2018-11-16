@@ -12,6 +12,9 @@ import colors from "../../components/bases/colors";
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
 
+// UTILS
+import i18n from "../../utils/i18n";
+
 const inputStyle = {
   root: {
     color: colors.messages.info,
@@ -59,20 +62,19 @@ class Offers extends React.Component {
     this.state = {
       search: "",
       tabGiving: true,
-      tabDone:false,
-
+      tabDone: false
     };
   }
-  onChangeTab(status){
-    if(status == 1){
-      this.setState({ tabGiving: false, tabDone:true})
-    }else{
-      this.setState({ tabGiving: true, tabDone:false})
+  onChangeTab(status) {
+    if (status == 1) {
+      this.setState({ tabGiving: false, tabDone: true });
+    } else {
+      this.setState({ tabGiving: true, tabDone: false });
     }
   }
   render() {
     const { classes } = this.props;
-    const { search, tabGiving,tabDone } = this.state;
+    const { search, tabGiving, tabDone } = this.state;
 
     return (
       <div>
@@ -88,8 +90,18 @@ class Offers extends React.Component {
         />
 
         <div className={style.tabContent}>
-          <div className={tabGiving?style.itemTab:style.itemTabActive} onClick={()=>this.onChangeTab(1)} >andamento</div>
-          <div className={tabDone?style.itemTab:style.itemTabActive} onClick={()=>this.onChangeTab(0)} >concluido</div>
+          <div
+            className={tabGiving ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(1)}
+          >
+            {i18n.t("P2P_STATUS_TEXT_1")}
+          </div>
+          <div
+            className={tabDone ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(0)}
+          >
+            {i18n.t("P2P_STATUS_TEXT_2")}
+          </div>
         </div>
 
         <div className={style.content}>
@@ -97,7 +109,6 @@ class Offers extends React.Component {
             return <CardOffer key={key} />;
           })}
         </div>
-
       </div>
     );
   }
