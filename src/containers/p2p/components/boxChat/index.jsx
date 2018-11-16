@@ -27,11 +27,7 @@ class boxChat extends React.Component {
     this.setter = props.setter
   }
   componentDidMount() {
-    console.log(this.props.getPaymentMethodsWhenBuying)
     this.props.getPaymentMethodsWhenBuying('lunes')
-  }
-  componentDidUpdate() {
-    console.log(this.props.p2p.buy)
   }
   changedAvailableCoinsSelect = (value, title, img) => {
     this.buySetter({
