@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {openChat} from "../../redux/p2pAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { openChat } from "../../redux/p2pAction";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -31,11 +31,11 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = (id) => {
-    const {openChat} = this.props;
-    
+  openChat = id => {
+    const { openChat } = this.props;
+
     openChat(id);
-  }
+  };
 
   render() {
     const { openDetails } = this.state;
@@ -62,6 +62,7 @@ class CardOffer extends React.Component {
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={4} />
+              <button className={style.btnClose}>X</button>
             </div>
             <span className={style.textSmall}>Unid. R$6,00</span>
             <ArrowForward className={style.arrowPrice} />
@@ -85,7 +86,12 @@ class CardOffer extends React.Component {
             <div className={style.textDetails}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
             </div>
-            <button className={style.btContinue} onClick={()=>this.openChat(1)}>Negociar</button>
+            <button
+              className={style.btContinue}
+              onClick={() => this.openChat(1)}
+            >
+              Negociar
+            </button>
           </Grid>
         </Grid>
       </div>
@@ -97,13 +103,12 @@ CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired
 };
 
-const mapStateToProps = store => ({
+const mapStateToProps = store => ({});
 
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ openChat }, dispatch);
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-  {openChat},dispatch
-);
-
-export default connect(mapStateToProps,mapDispatchToProps)(CardOffer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardOffer);
