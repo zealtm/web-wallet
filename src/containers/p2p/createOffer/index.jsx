@@ -2,16 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // MATERIAL
-import { Grid, Avatar, Radio, withStyles, FormControlLabel } from "@material-ui/core/";
+import {
+  Grid,
+  Avatar,
+  Radio,
+  withStyles,
+  FormControlLabel
+} from "@material-ui/core/";
 import { ArrowForward, ArrowBack } from "@material-ui/icons/";
 
-// ICONS 
+// ICONS
 import { Lens } from "@material-ui/icons";
 
-// COMPONENTS 
+// COMPONENTS
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
-import MultiSelect from "../components/multiSelect"
+import MultiSelect from "../components/multiSelect";
 
 // STYLE
 import style from "./style.css";
@@ -19,16 +25,16 @@ import style from "./style.css";
 const stylesCustom = {
   root: {
     color: "#654fa4",
-    '&$checked': {
-      color: "#68f285",
-    },
+    "&$checked": {
+      color: "#68f285"
+    }
   },
   rootLabel: {
     fontSize: "11px",
     color: "#fff"
   },
   checked: {
-    color: "#68f285",
+    color: "#68f285"
   }
 };
 
@@ -45,26 +51,26 @@ class CreateOffer extends React.Component {
           title: "BTC"
         },
         {
-          value:"LTC",
+          value: "LTC",
           img: "images/icons/coins/ltc.png",
           title: "LTC"
         },
         {
-          value:"LUNES",
+          value: "LUNES",
           img: "images/icons/coins/lunes.png",
           title: "Lunes"
-        },
+        }
       ],
-      listCoinSelects:[],
-      selectedValue: ''
+      listCoinSelects: [],
+      selectedValue: ""
     };
   }
-  selectItems = (listCoins) => {
+  selectItems = listCoins => {
     this.setState({
       ...this.state,
       listCoinSelects: listCoins
     });
-  }
+  };
 
   coinSelected = (value, title, img = undefined) => {
     this.setState({
@@ -82,15 +88,14 @@ class CreateOffer extends React.Component {
   };
 
   render() {
-    const {title,img,coinsExample, listCoinSelects} = this.state;
-    const {classes} = this.props;
+    const { title, img, coinsExample, listCoinSelects } = this.state;
+    const { classes } = this.props;
     return (
-      <div className={style.baseUser} >
-
+      <div className={style.baseUser}>
         <div className={style.headerUser}>
           <Grid container>
             <Grid item xs={1}>
-              <ArrowBack className={style.arrowBack} />
+              <div className={style.arrowBack} />
             </Grid>
             <Grid item xs={2}>
               <Avatar
@@ -116,37 +121,45 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>Defina os valores</div>
             <Grid container>
               <Grid item xs={5}>
-                <input type="text" placeholder="0.0000" className={style.inputDefault} />
+                <input
+                  type="text"
+                  placeholder="0.0000"
+                  className={style.inputDefault}
+                />
               </Grid>
               <Grid item xs={2}>
                 <ArrowForward className={style.arrowPrice} />
               </Grid>
               <Grid item xs={5}>
-                <input type="text" placeholder="R$0,00" className={style.inputDefault} />
+                <input
+                  type="text"
+                  placeholder="R$0,00"
+                  className={style.inputDefault}
+                />
               </Grid>
             </Grid>
           </div>
 
-            <div className={style.formGroup}>
-              <div className={style.textSmall}>Moeda desejada</div>
-              <Grid container>
-                <Grid item xs={5}>
-                  <Select
-                    list={coinsExample}
-                    title={title}
-                    titleImg={img}
-                    selectItem={this.coinSelected}
-                    error={null}
-                    width={"100%"}
-                  />
-                </Grid>
-                <Grid item xs={7}>
-                  <MultiSelect
-                    list={coinsExample}
-                    selectItems={this.selectItems}
-                  /> 
-                </Grid>
+          <div className={style.formGroup}>
+            <div className={style.textSmall}>Moeda desejada</div>
+            <Grid container>
+              <Grid item xs={5}>
+                <Select
+                  list={coinsExample}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
+                />
               </Grid>
+              <Grid item xs={7}>
+                <MultiSelect
+                  list={coinsExample}
+                  selectItems={this.selectItems}
+                />
+              </Grid>
+            </Grid>
             <hr />
           </div>
 
@@ -155,27 +168,16 @@ class CreateOffer extends React.Component {
             <FormControlLabel
               value="p2p"
               classes={{ label: classes.rootLabel }}
-              control={<Radio
-                checked={this.state.selectedValue === 'p2p'}
-                icon={<Lens />}
-                checkedIcon={<Lens />}
-                onChange={this.handleChange}
-                classes={{ root: classes.root, checked: classes.checked }}
-              />}
+              control={
+                <Radio
+                  checked={this.state.selectedValue === "p2p"}
+                  icon={<Lens />}
+                  checkedIcon={<Lens />}
+                  onChange={this.handleChange}
+                  classes={{ root: classes.root, checked: classes.checked }}
+                />
+              }
               label="P2P (Peer to Peer)"
-              labelPlacement="end"
-            />
-            <FormControlLabel
-              value="scroow"
-              classes={{ label: classes.rootLabel }}
-              control={<Radio
-                checked={this.state.selectedValue === 'scroow'}
-                icon={<Lens />}
-                checkedIcon={<Lens />}
-                onChange={this.handleChange}
-                classes={{ root: classes.root, checked: classes.checked }}
-              />}
-              label="SCROOW"
               labelPlacement="end"
             />
             <hr />
@@ -183,20 +185,19 @@ class CreateOffer extends React.Component {
 
           <div className={style.formGroup}>
             <div className={style.textSmall}>Endereço Carteira</div>
-            <input type="text" placeholder="aksdlasd6asd5asd5" className={style.inputDefault} />
-          </div>
-          <div className={style.formGroup}>
-            <div className={style.textSmall}>E-mail</div>
-            <input type="text" placeholder="email@email.com" className={style.inputDefault} />
+            <input
+              type="text"
+              placeholder="aksdlasd6asd5asd5"
+              className={style.inputDefault}
+            />
           </div>
           <hr />
           <div className={style.formGroup}>
             <div className={style.textSmall}>Descrição</div>
             <textarea className={style.textArea}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
-              </textarea>
+            </textarea>
             <button className={style.btContinue}>CRIAR OFERTA</button>
-
           </div>
         </div>
       </div>
@@ -205,7 +206,7 @@ class CreateOffer extends React.Component {
 }
 
 CreateOffer.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(stylesCustom)(CreateOffer);

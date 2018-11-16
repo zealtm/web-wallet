@@ -462,5 +462,7 @@
   "COINSALE_CREDIT": "Pagamento",
   "INSTRUCTION_MODAL_COINSALE_INFO_1": "A taxa de uso do serviço é de 5%. Ou seja, a cotação usada como base na carteira é acrescida dos 5% para a manutenção do serviço pela Lunes.",
   "INSTRUCTION_MODAL_COINSALE_INFO_2": "Usando criptomoeda como forma de pagamento, ao finalizar a compra as moedas serão automaticamente descontadas da sua carteira Lunes e a escolhida para comprar será enviada para o endereço da moeda em sua carteira Lunes.",
-  "INSTRUCTION_MODAL_COINSALE_INFO_3": "O tempo da operação varia de acordo com a rede da moeda escolhida como meio de pagamento."
+  "INSTRUCTION_MODAL_COINSALE_INFO_3": "O tempo da operação varia de acordo com a rede da moeda escolhida como meio de pagamento.",
+  "P2P_STATUS_TEXT_1": "Andamento",
+  "P2P_STATUS_TEXT_2": "Concluído"
 }
