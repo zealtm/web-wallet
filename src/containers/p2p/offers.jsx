@@ -18,8 +18,7 @@ import i18n from "../../utils/i18n";
 const inputStyle = {
   root: {
     color: colors.messages.info,
-    margin: "0",
-    padding: "9px",
+    padding: "5px",
     width: "95%",
     marginLeft: "auto",
     marginRight: "auto",
