@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import {
   buySetter,
   setter,
-  getPaymentMethodsWhenBuying
+  getPaymentMethodsWhenBuying,
+  acceptOfferWhenBuying
 } from './../../redux/p2pAction'
 
 // MATERIAL UI
@@ -47,6 +48,15 @@ class boxChat extends React.Component {
       title: value,
       img
     }})
+  }
+
+  handleBuyClick = () => {
+    this.props.acceptOfferWhenBuying({
+      coin: 'lunes',
+      txId: '1',
+      txBuyer: 'Jonas',
+      addressBuyer: '<LUNES_ADDRESS>'
+    })
   }
 
   render() {
@@ -99,12 +109,12 @@ class boxChat extends React.Component {
             <input type="text" placeholder="Endereço carteira" className={style.inputDefault} style={{marginTop: -15}} />
           </Grid>
           <Grid item xs={6}>
-            <button className={style.btContinue}>Vender</button>
+            <button onClick={this.handleBuyClick} className={style.btContinue}>Comprar</button>
           </Grid>
 
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <button className={style.buttonGeneral}>Escroow</button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );
@@ -113,6 +123,7 @@ class boxChat extends React.Component {
 
 boxChat.propTypes = {
   getPaymentMethodsWhenBuying: PropTypes.func.isRequired,
+  acceptOfferWhenBuying: PropTypes.func.isRequired,
   buySetter: PropTypes.func.isRequired,
   setter: PropTypes.func.isRequired,
   p2p: PropTypes.object.isRequired
@@ -124,7 +135,8 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setter,
     buySetter,
-    getPaymentMethodsWhenBuying
+    getPaymentMethodsWhenBuying,
+    acceptOfferWhenBuying
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(boxChat);

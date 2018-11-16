@@ -182,7 +182,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
     fork(takeLatest, "API_GET_PAYMENT_METHODS_WHEN_BUYING",
       getPaymentMethodsWhenBuying),
-    fork(takeLatest, "SET_MODAL_OPEN", acceptOfferWhenBuying),
+    fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
 
 
     // buy coins

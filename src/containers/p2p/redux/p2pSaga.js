@@ -49,11 +49,8 @@ export function* acceptOfferWhenBuying(payload) {
   try {
     yield put({type:"BUY_SETTER", data: { isBuyLoading: true }})
 
-    let result = yield PeerToPeer.acceptOfferWhenBuying(payload)
+    yield PeerToPeer.acceptOfferWhenBuying(payload.data)
       .catch(error => { throw error })
-
-    if (!result)
-      throw new Error("Failed to buy this coin")
 
     yield put({type: "SUCCESS_REQUEST", message: ""})
     yield put({type:"BUY_SETTER", data: { isBuyLoading: false }})
