@@ -95,7 +95,7 @@ class CreateOffer extends React.Component {
         <div className={style.headerUser}>
           <Grid container>
             <Grid item xs={1}>
-              <ArrowBack className={style.arrowBack} />
+              <div className={style.arrowBack} />
             </Grid>
             <Grid item xs={2}>
               <Avatar
