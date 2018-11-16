@@ -8,7 +8,8 @@ import {
   buySetter,
   setter,
   getPaymentMethodsWhenBuying,
-  acceptOfferWhenBuying
+  acceptOfferWhenBuying,
+  createOfferWhenSelling
 } from './../../redux/p2pAction'
 
 // MATERIAL UI
@@ -20,23 +21,30 @@ import Select from "../../../../components/select";
 // STYLE
 import style from "./style.css";
 
+//UTILS
+import i18n from "./../../../../utils/i18n"
+import { getDecodedAuthToken } from "./../../../../utils/localStorage"
+
 class boxChat extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      myId: undefined
+    }
     this.buySetter = props.buySetter
     this.setter = props.setter
+    this.getPaymentMethodsWhenBuying = this.props.getPaymentMethodsWhenBuying
+    this.createOfferWhenSelling = this.props.createOfferWhenSelling
   }
   componentDidMount() {
-    this.props.getPaymentMethodsWhenBuying('lunes')
+    this.getPaymentMethodsWhenBuying('lunes')
   }
   changedAvailableCoinsSelect = (value, title, img) => {
-    this.buySetter({
-      coinToBuy: {
-        title,
-        value,
-        img,
-      }
-    })
+    this.buySetter({coinToBuy: {
+      title,
+      value,
+      img,
+    }})
   }
 
   changedPaymentMethodsSelect = (name, value, img) => {
@@ -60,8 +68,11 @@ class boxChat extends React.Component {
       coinToBuy,
       availableCoinsToBuy,
       paymentMethods,
-      paymentMethod
+      paymentMethod,
     } = this.props.p2p.buy;
+    const { currentOrder } = this.props.p2p
+
+    let { orderId, ownerId } = currentOrder
 
     return (
       <div className={style.boxChat}>
@@ -70,7 +81,7 @@ class boxChat extends React.Component {
             <Grid item xs={6}>
               <div className={style.buy}>
                 <div className={style.card}>
-                  <div className={style.textSmall}>Compra</div>
+                  <div className={style.textSmall}>{i18n.t("P2P_TO_BUY")}</div>
                   <Select
                     list={availableCoinsToBuy}
                     title={coinToBuy.title}
@@ -85,7 +96,7 @@ class boxChat extends React.Component {
             <Grid item xs={6}>
               <div className={style.payment}>
                 <div className={style.card}>
-                  <div className={style.textSmall}>Pagamento</div>
+                  <div className={style.textSmall}>{i18n.t("P2P_PAYMENT_METHOD")}</div>
                   <Select
                     list={paymentMethods}
                     title={paymentMethod.title}
@@ -101,11 +112,11 @@ class boxChat extends React.Component {
         </div>
         <Grid container>
           <Grid item xs={12}>
-            <input type="text" placeholder="Descrição" className={style.inputDefault} />
-            <input type="text" placeholder="Endereço carteira" className={style.inputDefault} style={{marginTop: -15}} />
+            {/*<input type="text" placeholder="Descrição" className={style.inputDefault} />*/}
+            <input type="text" placeholder={i18n.t("P2P_INPUT_PUT_YOUR_ADDRESS")} className={style.inputDefault} style={{marginTop: -15}} />
           </Grid>
           <Grid item xs={6}>
-            <button onClick={this.handleBuyClick} className={style.btContinue}>Comprar</button>
+            <button onClick={this.handleBuyClick} className={style.btContinue}>{i18n.t("P2P_BUY_BTN")}</button>
           </Grid>
 
           {/* <Grid item xs={6}>
@@ -120,19 +131,23 @@ class boxChat extends React.Component {
 boxChat.propTypes = {
   getPaymentMethodsWhenBuying: PropTypes.func.isRequired,
   acceptOfferWhenBuying: PropTypes.func.isRequired,
+  createOfferWhenSelling: PropTypes.func.isRequired,
   buySetter: PropTypes.func.isRequired,
   setter: PropTypes.func.isRequired,
-  p2p: PropTypes.object.isRequired
+  p2p: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 const mapStateToProps = (state) => ({
   p2p: state.p2p,
+  user: state.user,
 })
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setter,
     buySetter,
     getPaymentMethodsWhenBuying,
-    acceptOfferWhenBuying
+    acceptOfferWhenBuying,
+    createOfferWhenSelling
   }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(boxChat);

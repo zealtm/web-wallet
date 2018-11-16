@@ -58,3 +58,17 @@ export function* acceptOfferWhenBuying(payload) {
     yield put({type: "FAILED_REQUEST", message: error.message})
   }
 }
+
+export function* createOfferWhenSelling(payload) {
+  try {
+    // yield put({type: "BUY_SETTER", data: { loading: false }})
+
+    yield PeerToPeer.createOfferWhenSelling(payload.data)
+      .catch(error => { throw error })
+
+    // yield put({type: "SUCCESS_REQUEST", message: "Foi"})
+    // yield put({type: "BUY_SETTER", data: { loading: false }})
+  } catch (error) {
+    yield put({type: "FAILED_REQUEST", message: error.message})
+  }
+}

@@ -82,7 +82,8 @@ import {
   setModalStepSaga as setModalFlowP2P,
   openModalPaySaga as setOpenModalFlowP2P,
   getPaymentMethodsWhenBuying,
-  acceptOfferWhenBuying
+  acceptOfferWhenBuying,
+  createOfferWhenSelling,
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -183,6 +184,7 @@ export default function* rootSaga() {
     fork(takeLatest, "API_GET_PAYMENT_METHODS_WHEN_BUYING",
       getPaymentMethodsWhenBuying),
     fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
+    fork(takeLatest, "API_CREATE_OFFER_WHEN_SELLING", createOfferWhenSelling),
 
 
     // buy coins

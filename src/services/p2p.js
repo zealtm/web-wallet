@@ -39,15 +39,27 @@ class PeerToPeerClass {
   }
 
   async acceptOfferWhenBuying(data) {
-    let { coin, txId, txBuyer, addressBuyer } = data
+    let { coin, orderId } = data
 
     let { code } = await axios.post(`/coin/${coin}/p2p/buy`, {
-      txId, txBuyer, addressBuyer
+      orderId
     })
 
     if (code !== 200)
       throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"))
 
+    return true
+  }
+
+  async createOfferWhenSelling(data) {
+    let { coin, txId, txBuyer, addressBuyer } = data
+
+    let { code } = await axios.post(`/coin/${coin}/p2p/order`, {
+      txId, txBuyer, addressBuyer
+    })
+
+    if (code !== 200)
+      throw new Error("Failed to create this offer")
     return true
   }
 }
@@ -68,6 +80,11 @@ const axios = Axios.create({
   adapter: async function(config) {
     let path = config.url.replace(config.baseURL, '')
     switch (path) {
+      case '/coin/lunes/p2p/order':
+        return {
+          message: "Success", code: 200, type: "info",
+          data: { result: true }
+        }
       case '/coin/lunes/p2p/buy':
         return {
           message: "Success", code: 200, type: "info",

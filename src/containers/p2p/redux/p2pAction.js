@@ -36,3 +36,7 @@ export const acceptOfferWhenBuying = data => ({
   type: "API_ACCEPT_OFFER_WHEN_BUYING",
   data
 })
+export const createOfferWhenSelling = data => ({
+  type: "API_CREATE_OFFER_WHEN_SELLING",
+  data
+})
