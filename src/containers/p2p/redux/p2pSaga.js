@@ -1,17 +1,18 @@
-import { put } from "redux-saga/effects";
-//import { internalServerError } from "../../errors/statusCodeMessage";
+import { put, call } from "redux-saga/effects";
+import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
 // import { getUserSeedWords } from "../../../utils/localStorage";
 // import { decryptAes } from "../../../utils/cryptography";
-// import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken } from "../../../utils/localStorage";
 // import { convertBiggestCoinUnit } from "../../../utils/numbers";
 // import { convertToLocaleDate } from "../../../utils/strings";
 
 
 // SERVICES
-//import P2PService from "../../../services/p2pService";
-//const p2pService = new P2PService();
+import P2pService from "../../../services/p2pService";
+
+const p2pService = new P2pService();
 
 export function* openChat(payload) {
   yield put({
@@ -19,7 +20,6 @@ export function* openChat(payload) {
     iduser: payload.iduser
   });
 }
-
 
 export function* closeChat() {
   yield put({
@@ -39,4 +39,46 @@ export function* openModalPaySaga(payload){
     type: "SET_MODAL_OPEN_REDUCER",
     open: payload.open
   });
+}
+
+export function* getP2PMyOrdersSaga(coin){
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getMyOrders, token, coin);
+
+    yield put({
+      type: "GET_MY_ORDERS_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* getP2PHistorySaga(coin){
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getHistory, token, coin);
+
+    yield put({
+      type: "GET_HISTORY_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* getP2PFilterSaga(coin, typeOrder, coinBuy){
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
+
+    yield put({
+      type: "GET_FILTER_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
 }
