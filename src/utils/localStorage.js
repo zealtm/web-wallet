@@ -1,7 +1,6 @@
 import { encryptAes } from "./cryptography";
 const authToken = "auth.token";
 const userObj = "user.object";
-import base64 from 'base-64'
 
 export const setAuthToken = token => {
   if (!token) return;
@@ -9,15 +8,6 @@ export const setAuthToken = token => {
 };
 
 export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
-
-export const getDecodedAuthToken = () => {
-  let token = getAuthToken()
-  token = token.split('.')
-  return {
-    head: JSON.parse(base64.decode(token[0])),
-    payload: JSON.parse(base64.decode(token[1]))
-  }
-}
 
 export const setUserSeedWords = (seed, password) => {
   setUserData({ secretWord: encryptAes(seed, password) });

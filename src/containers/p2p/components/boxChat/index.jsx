@@ -23,7 +23,6 @@ import style from "./style.css";
 
 //UTILS
 import i18n from "./../../../../utils/i18n"
-import { getDecodedAuthToken } from "./../../../../utils/localStorage"
 
 class boxChat extends React.Component {
   constructor(props) {
@@ -33,11 +32,9 @@ class boxChat extends React.Component {
     }
     this.buySetter = props.buySetter
     this.setter = props.setter
-    this.getPaymentMethodsWhenBuying = this.props.getPaymentMethodsWhenBuying
-    this.createOfferWhenSelling = this.props.createOfferWhenSelling
   }
   componentDidMount() {
-    this.getPaymentMethodsWhenBuying('lunes')
+    this.props.getPaymentMethodsWhenBuying('lunes')
   }
   changedAvailableCoinsSelect = (value, title, img) => {
     this.buySetter({coinToBuy: {
@@ -57,9 +54,7 @@ class boxChat extends React.Component {
   handleBuyClick = () => {
     this.props.acceptOfferWhenBuying({
       coin: 'lunes',
-      txId: '1',
-      txBuyer: 'Jonas',
-      addressBuyer: '<LUNES_ADDRESS>'
+      orderId: '1'
     })
   }
 
@@ -129,9 +124,9 @@ class boxChat extends React.Component {
 }
 
 boxChat.propTypes = {
-  getPaymentMethodsWhenBuying: PropTypes.func.isRequired,
-  acceptOfferWhenBuying: PropTypes.func.isRequired,
-  createOfferWhenSelling: PropTypes.func.isRequired,
+  getPaymentMethodsWhenBuying: PropTypes.func,
+  acceptOfferWhenBuying: PropTypes.func,
+  createOfferWhenSelling: PropTypes.func,
   buySetter: PropTypes.func.isRequired,
   setter: PropTypes.func.isRequired,
   p2p: PropTypes.object.isRequired,
@@ -141,6 +136,7 @@ const mapStateToProps = (state) => ({
   p2p: state.p2p,
   user: state.user,
 })
+
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({
     setter,
