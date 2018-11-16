@@ -16,14 +16,6 @@
 }
 
 /* MODAL*/
-/*:local(.alignInstructions){  
-  width: 75%;
-  margin-left: 10%;
-  margin-right: 5%;
-  padding: 20px;
-  margin-top: 60px;
-}*/
-
 :local(.alignInstructions){  
   margin-top:10vw;
 }
