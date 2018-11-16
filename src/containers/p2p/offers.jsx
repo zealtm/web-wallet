@@ -80,7 +80,6 @@ class Offers extends React.Component {
 
         <div className={style.tabContent}>
           <div className={style.itemTabActive}>P2P</div>
-          <div className={style.itemTab}>ESCROOW</div>
         </div>
 
         <div className={style.content}>
