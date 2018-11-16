@@ -89,6 +89,7 @@ class Offers extends React.Component {
         />
 
         <div className={style.tabContent}>
+
           <div
             className={tabGiving ? style.itemTab : style.itemTabActive}
             onClick={() => this.onChangeTab(1)}
@@ -101,6 +102,7 @@ class Offers extends React.Component {
           >
             {i18n.t("P2P_STATUS_TEXT_2")}
           </div>
+
         </div>
 
         <div className={style.content}>
