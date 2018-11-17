@@ -113,7 +113,6 @@ class P2P extends React.Component {
               </div>
             )
         }
-        <Header />
       </div>
     );
   }
