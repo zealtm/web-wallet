@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep, openModal } from "../../p2p/redux/p2pAction";
+import { getSignatures } from "../../settings/redux/settingsAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -27,15 +28,19 @@ class P2P extends React.Component {
     setModalStep(1);
   }
 
+  componentDidMount = () => {
+    const { getSignatures } = this.props;
+    getSignatures();
+  };
   render() {
-    const {modalOpen, openModal} = this.props;
-    
+    const { modalOpen, openModal, signatures } = this.props;
+    console.log(this.props);
     return (
       <div>
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          close={() => this.closeModal() }         
+          close={() => this.closeModal()}
         />
 
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -73,7 +78,7 @@ class P2P extends React.Component {
 
         <Grid container className={style.p2pContainer}>
           <Grid item>
-            <div className={style.cardP2p} onClick={()=>openModal(true)}>
+            <div className={style.cardP2p} onClick={() => openModal(true)}>
               <h1>Plano básico</h1>
               <img
                 src="/images/icons/p2p/card.png"
@@ -177,21 +182,26 @@ P2P.propTypes = {
   modalStep: PropTypes.number.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired
-}
+  openModal: PropTypes.func.isRequired,
+  getSignatures: PropTypes.func,
+  signatures: PropTypes.object
+};
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
   modalOpen: store.p2p.modalOpen,
+  signatures: store.signatures
 });
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    setModalStep, 
-    openModal
-  }, 
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep,
+      openModal,
+      getSignatures
+    },
+    dispatch
+  );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
-) (P2P);
+)(P2P);
