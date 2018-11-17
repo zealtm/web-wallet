@@ -1,6 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  getMyOrders,
+  getHistory,
+  getFilter
+} from "./redux/p2pAction"
+
+
 // MATERIA UI
 import { Grid, Input } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -62,8 +72,10 @@ class Offers extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, getHistory,getMyOrders, getFilter, orders } = this.props;
     const { search } = this.state;
+
+    getMyOrders("lunes");
 
     return (
       <div>
@@ -95,7 +107,25 @@ class Offers extends React.Component {
 }
 
 Offers.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
-export default withStyles(inputStyle)(Offers);
+const mapStateToProps = store => ({
+  orders: store.p2p.orders,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getMyOrders,
+      getHistory,
+      getFilter
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(inputStyle)(Offers));

@@ -18,6 +18,7 @@ class P2pService {
         BASE_URL + "/coin/" + coin + "/p2p/myorder",
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if (response.data.code !== 200) {
@@ -39,6 +40,7 @@ class P2pService {
         BASE_URL + "/coin/" + coin + "/p2p/history",
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if (response.data.code !== 200) {
@@ -60,6 +62,7 @@ class P2pService {
         BASE_URL + "/coin/" + coin + "/p2p/order/"+type+"/"+coinBuy,
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if (response.data.code !== 200) {

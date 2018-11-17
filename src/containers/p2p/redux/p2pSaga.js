@@ -2,12 +2,7 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
-// import { getUserSeedWords } from "../../../utils/localStorage";
-// import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken } from "../../../utils/localStorage";
-// import { convertBiggestCoinUnit } from "../../../utils/numbers";
-// import { convertToLocaleDate } from "../../../utils/strings";
-
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -41,10 +36,10 @@ export function* openModalPaySaga(payload){
   });
 }
 
-export function* getP2PMyOrdersSaga(coin){
+export function* getP2PMyOrdersSaga(payload){
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getMyOrders, token, coin);
+    let response = yield call(p2pService.getMyOrders, token, payload.coin);
 
     yield put({
       type: "GET_MY_ORDERS_REDUCER", 
@@ -55,10 +50,10 @@ export function* getP2PMyOrdersSaga(coin){
   }
 }
 
-export function* getP2PHistorySaga(coin){
+export function* getP2PHistorySaga(payload){
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getHistory, token, coin);
+    let response = yield call(p2pService.getHistory, token, payload.coin);
 
     yield put({
       type: "GET_HISTORY_REDUCER", 
