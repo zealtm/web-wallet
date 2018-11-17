@@ -130,7 +130,7 @@ class CreateOffer extends React.Component {
             <div className={style.formGroup}>
               <div className={style.textSmall}>Moeda desejada</div>
               <Grid container>
-                <Grid item xs={5}>
+                <Grid item xs={5} className={style.singleSelect}>
                   <Select
                     list={coinsExample}
                     title={title}
@@ -140,7 +140,7 @@ class CreateOffer extends React.Component {
                     width={"100%"}
                   />
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item xs={5} className={style.multiSelect}>
                   <MultiSelect
                     list={coinsExample}
                     selectItems={this.selectItems}

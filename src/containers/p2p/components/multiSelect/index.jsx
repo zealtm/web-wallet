@@ -133,7 +133,7 @@ class MultiSelect extends React.Component {
         const { listOpen } = this.state;
 
         const wrapperStyle = {
-            width: width ? width : "180px",
+            width: width ? width : "50px",
             borderBottom: `1px solid ${error ? "#f44336" : "#42227d"}`
         };
 
