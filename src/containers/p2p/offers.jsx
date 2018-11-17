@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 // MATERIA UI
 import { Grid, Input } from "@material-ui/core";
@@ -11,7 +14,7 @@ import colors from "../../components/bases/colors";
 
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
-
+import Select from "../../components/select";
 // UTILS
 import i18n from "../../utils/i18n";
 
@@ -61,9 +64,24 @@ class Offers extends React.Component {
     this.state = {
       search: "",
       tabGiving: true,
-      tabDone: false
+      tabDone: false,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }
     };
   }
+  coinSelected = (value, title, img = undefined) => {
+    this.setState({
+      ...this.state,
+      coin: {
+        name: title,
+        value,
+        img
+      }
+    });
+  };
   onChangeTab(status) {
     if (status == 1) {
       this.setState({ tabGiving: false, tabDone: true });
@@ -72,21 +90,37 @@ class Offers extends React.Component {
     }
   }
   render() {
-    const { classes } = this.props;
-    const { search, tabGiving, tabDone } = this.state;
-
+    const { coins,coinsRedux } = this.props;
+    const { tabGiving, tabDone, coin } = this.state;
+    const title = coin.name || "Select a coin..";
+    const img = coin.img || "";
+    console.log(JSON.stringify("Coinnsns : "+coinsRedux))
     return (
+
       <div>
-        <Input
-          classes={{
-            root: classes.root,
-            underline: classes.cssUnderline,
-            input: classes.cssInput
-          }}
-          value={search}
-          id="find"
-          onChange={e => this.setState({ search: e.target.value })}
-        />
+        <div className={style.headerActionFilter}>
+          <Grid container>
+            <Grid item xs={7}>
+            <div className={style.headerSelect}>
+              <Select
+                list={coinsRedux}
+                title={title}
+                titleImg={img}
+                selectItem={this.coinSelected}
+                error={null}
+                width={"100%"}
+              />
+              </div>
+            </Grid>
+            <Grid item xs={5}>
+              <button
+                className={style.buttonEnable }               
+              >
+                {'Meus Anúncios'}
+              </button>
+            </Grid>
+          </Grid>
+        </div>
 
         <div className={style.tabContent}>
 
@@ -116,7 +150,21 @@ class Offers extends React.Component {
 }
 
 Offers.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  coins: PropTypes.array, 
+  coinsRedux: PropTypes.array.isRequired
 };
+const mapStateToProps = store => ({
+  coins: store.skeleton.coins,
+  coinsRedux: store.payment.coins,
+});
 
-export default withStyles(inputStyle)(Offers);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {},
+    dispatch
+  );
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(inputStyle)(Offers));
