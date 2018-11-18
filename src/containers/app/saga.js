@@ -80,7 +80,8 @@ import {
   openChat, 
   closeChat,
   setModalStepSaga as setModalFlowP2P,
-  openModalPaySaga as setOpenModalFlowP2P
+  openModalPaySaga as setOpenModalFlowP2P,
+  setP2POrdersCancelSaga
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -178,6 +179,7 @@ export default function* rootSaga() {
     fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
     fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
+    fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),    
     
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
