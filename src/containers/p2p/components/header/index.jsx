@@ -9,6 +9,7 @@ import { closeChat } from "../../redux/p2pAction";
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+
 import { Star, FavoriteBorder, ArrowForward } from "@material-ui/icons/";
 import { ArrowBack } from "@material-ui/icons/";
 import { KeyboardArrowDown } from "@material-ui/icons";
@@ -128,3 +129,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Header);
+

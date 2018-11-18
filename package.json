@@ -79,6 +79,7 @@
     "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "base-64": "^0.1.0",
     "biggystring": "^3.0.2",
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",

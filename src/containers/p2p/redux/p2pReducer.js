@@ -6,10 +6,40 @@ const initialState = {
   loading: false,
   modalStep: 1,
   modalOpen: false,
+  currentOrder: { //this should come from the API
+    orderId: '1',
+    isOwner: false
+  },
+  buy: {
+    availableCoinsToBuy: [
+      { title: 'LUNES', img: 'images/icons/coins/lunes.png' },
+      { title: 'BTC', img: 'images/icons/coins/btc.png' },
+      { title: 'DASH', img: 'images/icons/coins/dash.png' }
+    ],
+    coinToBuy: {
+      title: 'Lunes',
+      img: "images/icons/coins/lunes.png"
+    },
+    paymentMethods: [],
+    paymentMethod: {}
+  }
 };
 
 const p2p = (state = initialState, action) => {
   switch (action.type) {
+    case "SETTER":
+      return {
+        ...state,
+        ...action.data
+      }
+    case "BUY_SETTER":
+      return {
+        ...state,
+        buy: {
+          ...state.buy,
+          ...action.data
+        }
+      }
     case "OPEN_CHAT_P2P_REDUCER":
       return {
         ...state,
