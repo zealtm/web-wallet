@@ -4,12 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  getMyOrders,
-  getHistory,
-  getFilter
-} from "./redux/p2pAction"
-
+import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
 
 // MATERIA UI
 import { Grid, Input } from "@material-ui/core";
@@ -21,12 +16,15 @@ import colors from "../../components/bases/colors";
 
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
+import Select from "../../components/select";
+
+// UTILS
+import i18n from "../../utils/i18n";
 
 const inputStyle = {
   root: {
     color: colors.messages.info,
-    margin: "0",
-    padding: "9px",
+    padding: "5px",
     width: "95%",
     marginLeft: "auto",
     marginRight: "auto",
@@ -51,11 +49,9 @@ const inputStyle = {
   },
   cssUnderline: {
     "&:before, &:after": {
-      //borderBottomColor: colors.purple.dark
       borderBottom: "none"
     },
     "&:hover:not($disabled):not($error):not($focused):before": {
-      //borderBottomColor: `${colors.purple.dark} !important`
       borderBottom: "none"
     }
   },
@@ -67,32 +63,84 @@ class Offers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: ""
+      search: "",
+      tabGiving: true,
+      tabDone: false,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }
     };
   }
-
+  coinSelected = (value, title, img = undefined) => {
+    this.setState({
+      ...this.state,
+      coin: {
+        name: title,
+        value,
+        img
+      }
+    });
+  };
+  onChangeTab(status) {
+    if (status == 1) {
+      this.setState({ tabGiving: false, tabDone: true });
+    } else {
+      this.setState({ tabGiving: true, tabDone: false });
+    }
+  }
   render() {
-    const { classes, getHistory,getMyOrders, getFilter, orders } = this.props;
-    const { search } = this.state;
+    const {
+      coins,
+      coinsRedux,
+      classes,
+      getHistory,
+      getMyOrders,
+      getFilter,
+      orders
+    } = this.props;
+    const { tabGiving, tabDone, coin, search } = this.state;
+    const title = coin.name || "Select a coin..";
+    const img = coin.img || "";
 
     getMyOrders("lunes");
 
     return (
       <div>
-        <Input
-          classes={{
-            root: classes.root,
-            underline: classes.cssUnderline,
-            input: classes.cssInput
-          }}
-          value={search}
-          id="find"
-          onChange={e => this.setState({ search: e.target.value })}
-        />
+        <div className={style.headerActionFilter}>
+          <Grid container>
+            <Grid item xs={7}>
+              <div className={style.headerSelect}>
+                <Select
+                  list={coinsRedux}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={5}>
+              <button className={style.buttonEnable}>{"Meus Anúncios"}</button>
+            </Grid>
+          </Grid>
+        </div>
 
         <div className={style.tabContent}>
-          <div className={style.itemTabActive}>P2P</div>
-          <div className={style.itemTab}>ESCROOW</div>
+          <div
+            className={tabGiving ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(1)}
+          >
+            {i18n.t("P2P_STATUS_TEXT_1")}
+          </div>
+          <div
+            className={tabDone ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(0)}
+          >
+            {i18n.t("P2P_STATUS_TEXT_2")}
+          </div>
         </div>
 
         <div className={style.content}>
@@ -100,7 +148,6 @@ class Offers extends React.Component {
             return <CardOffer key={key} />;
           })}
         </div>
-
       </div>
     );
   }
@@ -109,10 +156,14 @@ class Offers extends React.Component {
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
+  coins: PropTypes.array,
+  coinsRedux: PropTypes.array.isRequired
 };
 
 const mapStateToProps = store => ({
-  orders: store.p2p.orders,
+  coins: store.skeleton.coins,
+  coinsRedux: store.payment.coins,
+  orders: store.p2p.orders
 });
 
 const mapDispatchToProps = dispatch =>

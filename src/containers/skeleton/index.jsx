@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // COMPONENTS
 import Header from "./header";
 import Menu from "./menu";
+import P2P from "../p2p/index";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -17,11 +18,15 @@ import { clearAll, getDefinitionMetadata } from "../../utils/localStorage";
 class Skeleton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { openMenu: false };
+    this.state = { openMenu: false, openP2PComponent: false };
   }
 
   toggleMenu = () => {
     this.setState({ ...this.state, openMenu: !this.state.openMenu });
+  };
+
+  toggleP2PComponent = () => {
+    return this.setState({ openP2PComponent: !this.state.openP2PComponent });
   };
 
   logout = () => {
@@ -46,12 +51,14 @@ class Skeleton extends React.Component {
               openMenu={openMenu}
               actionMenu={this.toggleMenu}
               actionLogout={this.logout}
-            />                  
+              actionP2PComponent={this.toggleP2PComponent}
+            />
           </Grid>
-          
+
           <Grid item xs={12} lg={10} xl={11}>
             <div className={style.colContainer}>{children}</div>
           </Grid>
+          {this.state.openP2PComponent && <P2P />}
         </Grid>
       </div>
     );

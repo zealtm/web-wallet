@@ -112,12 +112,6 @@ let assets = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
 
-let p2p = Loadable({
-  loader: () => fakeDelay(0).then(()=>import("../../p2p")),
-  loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../p2p"),
-});
-
 let p2pSettings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/p2p")),
   loading: loading,
@@ -160,7 +154,6 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
-              <Route path="/p2p" component={p2p} />
               <Route path="/setp2p" component={p2pSettings} />
               <Route path="/coinsale" component={buycoin} />
 

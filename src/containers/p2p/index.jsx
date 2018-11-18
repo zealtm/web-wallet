@@ -21,6 +21,8 @@ import UserProfile from "./userProfile";
 
 import HeaderDetails  from "./components/headerdetails/index";
 
+import Header  from "./components/header"
+
 import MultiSelect from "./components/multiSelect";
 //STYLE
 import style from "./style.css";
