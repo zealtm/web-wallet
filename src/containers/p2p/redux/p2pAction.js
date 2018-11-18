@@ -33,3 +33,33 @@ export const getFilter = (coin, typeOrder, coinBuy) => ({
   typeOrder, 
   coinBuy
 });
+
+export const setter = data => ({
+  type: "SETTER",
+  data
+});
+
+export const buySetter = data => ({
+  type: "BUY_SETTER",
+  data
+});
+
+export const getPaymentMethodsWhenBuying = coin => ({
+  type: "API_GET_PAYMENT_METHODS_WHEN_BUYING",
+  coin
+});
+
+export const acceptOfferWhenBuying = data => ({
+  type: "API_ACCEPT_OFFER_WHEN_BUYING",
+  data
+});
+
+export const createOfferWhenSelling = data => ({
+  type: "API_CREATE_OFFER_WHEN_SELLING",
+  data
+});
+
+export const setCancelOrder = orderId => ({
+  type: "SET_P2P_CANCEL_ORDERS",
+  orderId
+});

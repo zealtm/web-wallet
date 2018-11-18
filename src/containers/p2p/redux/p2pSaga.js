@@ -19,7 +19,7 @@ export function* openChat(payload) {
 export function* closeChat() {
   yield put({
     type: "CLOSE_CHAT_P2P_REDUCER"
-  })
+  });
 }
 
 export function* setModalStepSaga(payload) {
@@ -29,7 +29,7 @@ export function* setModalStepSaga(payload) {
   });
 }
 
-export function* openModalPaySaga(payload){
+export function* openModalPaySaga(payload) {
   yield put({
     type: "SET_MODAL_OPEN_REDUCER",
     open: payload.open
@@ -50,6 +50,25 @@ export function* getP2PMyOrdersSaga(payload){
   }
 }
 
+export function* getPaymentMethodsWhenBuying(payload) {
+  try {
+    let { coin } = payload;
+    yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: true } });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      p2pService.getPaymentMethodsWhenBuying,
+      token,
+      coin
+    );
+
+    yield put({ type: "BUY_SETTER", data: { response } });
+    yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getP2PHistorySaga(payload){
   try {
     let token = yield call(getAuthToken);
@@ -60,6 +79,20 @@ export function* getP2PHistorySaga(payload){
       orders: response.data.data
     });
   }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* acceptOfferWhenBuying(payload) {
+  try {
+    yield put({ type: "BUY_SETTER", data: { isBuyLoading: true } });
+    let token = yield call(getAuthToken);
+
+    yield call(p2pService.acceptOfferWhenBuying, token, payload.data);
+
+    yield put({ type: "SUCCESS_REQUEST", message: "" });
+    yield put({ type: "BUY_SETTER", data: { isBuyLoading: false } });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -76,6 +109,35 @@ export function* getP2PFilterSaga(payload){
       orders: response.data.data
     });
   }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* createOfferWhenSelling(payload) {
+  try {
+    yield p2pService.createOfferWhenSelling(payload.data).catch(error => {
+      throw error;
+    });
+  } catch (error) {
+    yield put({ type: "FAILED_REQUEST", message: error.message });
+  }
+}
+
+export function* setP2POrdersCancelSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    let response = yield call(
+      p2pService.setCancelOrder,
+      token,
+      payload.orderId
+    );
+
+    yield put({
+      type: "SET_P2P_CANCEL_ORDERS_REDUCE",
+      isCancel: response
+    });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
