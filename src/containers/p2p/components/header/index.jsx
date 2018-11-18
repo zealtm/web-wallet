@@ -18,6 +18,7 @@ import { KeyboardArrowDown } from "@material-ui/icons";
 import StarVotes from "../starvotes";
 import HeaderDetails from "../headerdetails/index";
 
+import UserProfile from "../../userProfile"
 // STYLE
 import style from "./style.css";
 
@@ -26,8 +27,12 @@ class Header extends React.Component {
     super(props);
     this.state = {
       showHeaderDetails: false,
-      arrowDown: true
+      arrowDown: true,
+      showPerfil: false
     };
+  }
+  onClickPerfil(){
+    this.setState({ showPerfil: !this.state.showPerfil });
   }
   closeChat = () => {
     const { closeChat } = this.props;
@@ -40,8 +45,16 @@ class Header extends React.Component {
       arrowDown: !this.state.arrowDown
     });
   };
-
+  renderPerfil(){
+    return (<UserProfile />);
+  }
   render() {
+    let {showPerfil} = this.state;
+    if(showPerfil){
+      return (
+        this.renderPerfil()
+      );
+    } 
     return (
       <div className={style.topBar}>
         <div className={style.header}>
@@ -57,7 +70,7 @@ class Header extends React.Component {
               />
             </Grid>
             <Grid item xl={4}>
-              <span className={style.textGreen}>Ricardo Lopez</span>
+              <span className={style.textGreen} onClick={()=>this.onClickPerfil()} >Ricardo Lopez</span>
               <span className={style.textSmall}>00/00/2018</span>
             </Grid>
             <Grid item xl={4} style={{ paddingLeft: 10 }}>
