@@ -29,6 +29,7 @@
 }
 
 :local .baseWidget {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
   position: absolute;
   bottom: 0px;
   right: 16px;
