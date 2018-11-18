@@ -46,6 +46,8 @@ class P2pService {
         throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
       }
 
+      console.log("MOEDAS", response);
+
       return response.data.data;
     } catch (error) {
       return internalServerError();
@@ -141,12 +143,12 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      if (response.data.code !== 200) {
-        return internalServerError();
-      }
-
-      return response.data.data;
+      
+      // if (response.data.code !== "200") {
+      //   return internalServerError();
+      // }
+      
+      return response.data.data.orders;
     } catch (error) {
       return internalServerError();
     }

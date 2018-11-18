@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
 
 // MATERIA UI
-import { Grid, Input } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // STYLE
@@ -66,8 +66,8 @@ class Offers extends React.Component {
       search: "",
       tabGiving: true,
       tabDone: false,
-      coin: {
-        name: undefined,
+      coinSelect: {
+        name: "Select a coin",
         value: undefined,
         img: undefined
       }
@@ -76,7 +76,7 @@ class Offers extends React.Component {
   coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
-      coin: {
+      coinSelect: {
         name: title,
         value,
         img
@@ -92,21 +92,20 @@ class Offers extends React.Component {
   }
 
   componentDidMount = () => {
-    const {getFilter} = this.props;
+    const {getFilter,getHistory} = this.props;
     getFilter("lunes", "p2p", "");
   }
+
+  renderOders = () => {
+    const {orders} = this.props;
+    return orders.map((val, key) => {
+      return <CardOffer key={key} order={val} />;
+    })
+  }
+
   render() {
-    const {
-      coins,
-      coinsRedux,
-      classes,
-      getHistory,
-      getMyOrders,
-      orders
-    } = this.props;
-    const { tabGiving, tabDone, coin, search } = this.state;
-    const title = coin.name || "Select a coin..";
-    const img = coin.img || "";
+    const { coinsEnabled } = this.props;
+    const { tabGiving, tabDone, coin, search, coinSelect } = this.state;
 
     return (
       <div>
@@ -115,9 +114,9 @@ class Offers extends React.Component {
             <Grid item xs={7}>
               <div className={style.headerSelect}>
                 <Select
-                  list={coinsRedux}
-                  title={title}
-                  titleImg={img}
+                  list={coinsEnabled}
+                  title={coinSelect.name}
+                  titleImg={coinSelect.img}
                   selectItem={this.coinSelected}
                   error={null}
                   width={"100%"}
@@ -146,9 +145,7 @@ class Offers extends React.Component {
         </div>
 
         <div className={style.content}>
-          {[1, 2, 3].map((val, key) => {
-            return <CardOffer key={key} />;
-          })}
+          {this.renderOders()}
         </div>
       </div>
     );
@@ -158,14 +155,12 @@ class Offers extends React.Component {
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
-  coins: PropTypes.array,
-  coinsRedux: PropTypes.array.isRequired
+  coinsEnabled: PropTypes.array.isRequired
 };
 
 const mapStateToProps = store => ({
-  coins: store.skeleton.coins,
-  coinsRedux: store.payment.coins,
-  orders: store.p2p.orders
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders || []
 });
 
 const mapDispatchToProps = dispatch =>

@@ -7,6 +7,7 @@ const initialState = {
   modalStep: 1,
   modalOpen: false,
   orders: [],
+  coinsEnabled: [],
   currentOrder: { //this should come from the API
     orderId: '1',
     isOwner: false

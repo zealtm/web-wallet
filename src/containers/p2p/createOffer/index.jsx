@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { createOfferWhenSelling } from "../redux/p2pAction";
+
 // MATERIAL
 import {
   Grid,
@@ -62,9 +67,19 @@ class CreateOffer extends React.Component {
         }
       ],
       listCoinSelects: [],
-      selectedValue: ""
+      selectedValue: "",
+
+      order: {
+        coin: "",
+        type: "",
+        paymentMethodId: "",
+        amount: "",
+        amountPayment: "",
+        addressSeller: ""
+      }
     };
   }
+
   selectItems = listCoins => {
     this.setState({
       ...this.state,
@@ -84,7 +99,67 @@ class CreateOffer extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
+    this.setState({
+      ...this.state,
+      order: {
+        ...this.state.order,
+        type: event.target.value
+      },
+      selectedValue: event.target.value
+    });
+  };
+
+  handleFields = e => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "coin":
+        this.setState({
+          ...this.state,
+          coin: value
+        });
+        break;
+      case "type":
+        this.setState({
+          ...this.state,
+          type: value
+        });
+        break;
+      case "paymentMethodId":
+        this.setState({
+          ...this.state,
+          paymentMethodId: value
+        });
+        break;
+      case "amount":
+        this.setState({
+          ...this.state,
+          amount: value
+        });
+        break;
+      case "amountPayment":
+        this.setState({
+          ...this.state,
+          amountPayment: value
+        });
+        break;
+      case "addressSeller":
+        this.setState({
+          ...this.state,
+          addressSeller: value
+        });
+        break;
+    }
+  };
+
+  validateForm = () => {
+    const {createOfferWhenSelling} = this.props;
+    const {order} = this.state;
+
+    // validate the order fields 
+
+    // create
+    // createOfferWhenSelling(order);
   };
 
   render() {
@@ -110,7 +185,7 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
-                <StarVotes votes={4} />
+                <StarVotes votes={0} />
               </div>
             </Grid>
           </Grid>
@@ -123,8 +198,11 @@ class CreateOffer extends React.Component {
               <Grid item xs={5}>
                 <input
                   type="text"
+                  name="amount"
                   placeholder="0.0000"
                   className={style.inputDefault}
+                  value={this.state.order.amount}
+                  onChange={e => this.handleFields(e)}
                 />
               </Grid>
               <Grid item xs={2}>
@@ -133,8 +211,11 @@ class CreateOffer extends React.Component {
               <Grid item xs={5}>
                 <input
                   type="text"
+                  name="amountPayment"
                   placeholder="R$0,00"
                   className={style.inputDefault}
+                  value={this.state.order.amountPayment}
+                  onChange={e => this.handleFields(e)}
                 />
               </Grid>
             </Grid>
@@ -187,17 +268,26 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>Endereço Carteira</div>
             <input
               type="text"
+              name="addressSeller"
               placeholder="aksdlasd6asd5asd5"
               className={style.inputDefault}
+              value={this.state.order.addressSeller}
+              onChange={e => this.handleFields(e)}
             />
           </div>
           <hr />
           <div className={style.formGroup}>
             <div className={style.textSmall}>Descrição</div>
-            <textarea className={style.textArea}>
-              Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
+            <textarea
+              className={style.textArea}
+              name="description"
+              onChange={e => this.handleFields(e)}
+            >
+              {this.state.order.description}
             </textarea>
-            <button className={style.btContinue}>CRIAR OFERTA</button>
+            <button className={style.btContinue} onClick={this.validateForm}>
+              CRIAR OFERTA
+            </button>
           </div>
         </div>
       </div>
@@ -209,4 +299,19 @@ CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(stylesCustom)(CreateOffer);
+const mapStateToProps = store => ({
+  //
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      createOfferWhenSelling
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(stylesCustom)(CreateOffer));
