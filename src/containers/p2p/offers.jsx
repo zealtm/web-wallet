@@ -90,6 +90,11 @@ class Offers extends React.Component {
       this.setState({ tabGiving: true, tabDone: false });
     }
   }
+
+  componentDidMount = () => {
+    const {getFilter} = this.props;
+    getFilter("lunes", "p2p", "");
+  }
   render() {
     const {
       coins,
@@ -97,14 +102,11 @@ class Offers extends React.Component {
       classes,
       getHistory,
       getMyOrders,
-      getFilter,
       orders
     } = this.props;
     const { tabGiving, tabDone, coin, search } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
-
-    getMyOrders("lunes");
 
     return (
       <div>

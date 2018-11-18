@@ -64,11 +64,13 @@ export function* getP2PHistorySaga(payload){
   }
 }
 
-export function* getP2PFilterSaga(coin, typeOrder, coinBuy){
+export function* getP2PFilterSaga(payload){
+  const {coin, typeOrder, coinBuy} = payload;
+  
   try {
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
-
+ 
     yield put({
       type: "GET_FILTER_REDUCER", 
       orders: response.data.data
