@@ -15,9 +15,7 @@ class Chat extends React.Component {
   render() {
     return (
       <div className={style.baseChat} >
-
         <Header />
-
         <div className={style.callChat}>
           <BoxChat />
         </div>

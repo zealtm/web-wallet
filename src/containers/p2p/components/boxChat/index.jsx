@@ -1,8 +1,8 @@
- import React from "react";
- import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
 // REDUX
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import {
   buySetter,
@@ -10,7 +10,7 @@ import {
   getPaymentMethodsWhenBuying,
   acceptOfferWhenBuying,
   createOfferWhenSelling
-} from './../../redux/p2pAction'
+} from "./../../redux/p2pAction";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -22,57 +22,60 @@ import Select from "../../../../components/select";
 import style from "./style.css";
 
 //UTILS
-import i18n from "./../../../../utils/i18n"
-import { getDecodedAuthToken } from "./../../../../utils/localStorage"
+import i18n from "./../../../../utils/i18n";
 
-class boxChat extends React.Component {
+class BoxChat extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       myId: undefined
-    }
-    this.buySetter = props.buySetter
-    this.setter = props.setter
-    this.getPaymentMethodsWhenBuying = this.props.getPaymentMethodsWhenBuying
-    this.createOfferWhenSelling = this.props.createOfferWhenSelling
+    };
+    this.buySetter = props.buySetter;
+    this.setter = props.setter;
+    this.getPaymentMethodsWhenBuying = this.props.getPaymentMethodsWhenBuying;
+    this.createOfferWhenSelling = this.props.createOfferWhenSelling;
   }
   componentDidMount() {
-    this.getPaymentMethodsWhenBuying('lunes')
+    this.getPaymentMethodsWhenBuying("lunes");
   }
   changedAvailableCoinsSelect = (value, title, img) => {
-    this.buySetter({coinToBuy: {
-      title,
-      value,
-      img,
-    }})
-  }
+    this.buySetter({
+      coinToBuy: {
+        title,
+        value,
+        img
+      }
+    });
+  };
 
   changedPaymentMethodsSelect = (name, value, img) => {
-    this.buySetter({paymentMethod: {
-      title: value,
-      img
-    }})
-  }
+    this.buySetter({
+      paymentMethod: {
+        title: value,
+        img
+      }
+    });
+  };
 
   handleBuyClick = () => {
     this.props.acceptOfferWhenBuying({
-      coin: 'lunes',
-      txId: '1',
-      txBuyer: 'Jonas',
-      addressBuyer: '<LUNES_ADDRESS>'
-    })
-  }
+      coin: "lunes",
+      txId: "1",
+      txBuyer: "Jonas",
+      addressBuyer: "<LUNES_ADDRESS>"
+    });
+  };
 
   render() {
     const {
       coinToBuy,
       availableCoinsToBuy,
       paymentMethods,
-      paymentMethod,
+      paymentMethod
     } = this.props.p2p.buy;
-    const { currentOrder } = this.props.p2p
+    const { currentOrder } = this.props.p2p;
 
-    let { orderId, ownerId } = currentOrder
+    let { orderId, ownerId } = currentOrder;
 
     return (
       <div className={style.boxChat}>
@@ -96,7 +99,9 @@ class boxChat extends React.Component {
             <Grid item xs={6}>
               <div className={style.payment}>
                 <div className={style.card}>
-                  <div className={style.textSmall}>{i18n.t("P2P_PAYMENT_METHOD")}</div>
+                  <div className={style.textSmall}>
+                    {i18n.t("P2P_PAYMENT_METHOD")}
+                  </div>
                   <Select
                     list={paymentMethods}
                     title={paymentMethod.title}
@@ -112,23 +117,25 @@ class boxChat extends React.Component {
         </div>
         <Grid container>
           <Grid item xs={12}>
-            {/*<input type="text" placeholder="Descrição" className={style.inputDefault} />*/}
-            <input type="text" placeholder={i18n.t("P2P_INPUT_PUT_YOUR_ADDRESS")} className={style.inputDefault} style={{marginTop: -15}} />
+            <input
+              type="text"
+              placeholder={i18n.t("P2P_INPUT_PUT_YOUR_ADDRESS")}
+              className={style.inputDefault}
+              style={{ marginTop: -15 }}
+            />
           </Grid>
           <Grid item xs={6}>
-            <button onClick={this.handleBuyClick} className={style.btContinue}>{i18n.t("P2P_BUY_BTN")}</button>
+            <button onClick={this.handleBuyClick} className={style.btContinue}>
+              {i18n.t("P2P_BUY_BTN")}
+            </button>
           </Grid>
-
-          {/* <Grid item xs={6}>
-            <button className={style.buttonGeneral}>Escroow</button>
-          </Grid> */}
         </Grid>
       </div>
     );
   }
 }
 
-boxChat.propTypes = {
+BoxChat.propTypes = {
   getPaymentMethodsWhenBuying: PropTypes.func.isRequired,
   acceptOfferWhenBuying: PropTypes.func.isRequired,
   createOfferWhenSelling: PropTypes.func.isRequired,
@@ -136,18 +143,26 @@ boxChat.propTypes = {
   setter: PropTypes.func.isRequired,
   p2p: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
-}
-const mapStateToProps = (state) => ({
-  p2p: state.p2p,
-  user: state.user,
-})
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({
-    setter,
-    buySetter,
-    getPaymentMethodsWhenBuying,
-    acceptOfferWhenBuying,
-    createOfferWhenSelling
-  }, dispatch)
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(boxChat);
+const mapStateToProps = state => ({
+  p2p: state.p2p,
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setter,
+      buySetter,
+      getPaymentMethodsWhenBuying,
+      acceptOfferWhenBuying,
+      createOfferWhenSelling
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BoxChat);
