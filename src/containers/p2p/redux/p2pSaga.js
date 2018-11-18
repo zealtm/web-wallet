@@ -36,6 +36,20 @@ export function* openModalPaySaga(payload) {
   });
 }
 
+export function* getP2PMyOrdersSaga(payload){
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getMyOrders, token, payload.coin);
+
+    yield put({
+      type: "GET_MY_ORDERS_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
 export function* getPaymentMethodsWhenBuying(payload) {
   try {
     let { coin } = payload;
@@ -55,6 +69,20 @@ export function* getPaymentMethodsWhenBuying(payload) {
   }
 }
 
+export function* getP2PHistorySaga(payload){
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getHistory, token, payload.coin);
+
+    yield put({
+      type: "GET_HISTORY_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
 export function* acceptOfferWhenBuying(payload) {
   try {
     yield put({ type: "BUY_SETTER", data: { isBuyLoading: true } });
@@ -65,6 +93,22 @@ export function* acceptOfferWhenBuying(payload) {
     yield put({ type: "SUCCESS_REQUEST", message: "" });
     yield put({ type: "BUY_SETTER", data: { isBuyLoading: false } });
   } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getP2PFilterSaga(payload){
+  const {coin, typeOrder, coinBuy} = payload;
+  
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
+ 
+    yield put({
+      type: "GET_FILTER_REDUCER", 
+      orders: response.data.data
+    });
+  }catch(error){
     yield put(internalServerError());
   }
 }

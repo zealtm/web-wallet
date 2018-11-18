@@ -11,6 +11,27 @@ import { setAuthToken } from "../utils/localStorage";
 import i18n from "../utils/i18n";
 
 class P2pService {
+  async getMyOrders(token, coin) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        BASE_URL + "/coin/" + coin + "/p2p/myorder",
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
+      return response.data.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
   async getPaymentMethodsWhenBuying(token, coin) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -23,6 +44,27 @@ class P2pService {
 
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
+      }
+
+      return response.data.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async getHistory(token, coin) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        BASE_URL + "/coin/" + coin + "/p2p/history",
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
       }
 
       return response.data.data;
@@ -45,6 +87,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
@@ -83,6 +126,27 @@ class P2pService {
       }
 
       return true;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async getFilter(token, coin, type, coinBuy) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        BASE_URL + "/coin/" + coin + "/p2p/order/" + type + "/" + coinBuy,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
+      return response.data.data;
     } catch (error) {
       return internalServerError();
     }

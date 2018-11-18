@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
 
 // MATERIA UI
 import { Grid, Input } from "@material-ui/core";
@@ -15,6 +17,7 @@ import colors from "../../components/bases/colors";
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
+
 // UTILS
 import i18n from "../../utils/i18n";
 
@@ -46,11 +49,9 @@ const inputStyle = {
   },
   cssUnderline: {
     "&:before, &:after": {
-      //borderBottomColor: colors.purple.dark
       borderBottom: "none"
     },
     "&:hover:not($disabled):not($error):not($focused):before": {
-      //borderBottomColor: `${colors.purple.dark} !important`
       borderBottom: "none"
     }
   },
@@ -89,41 +90,47 @@ class Offers extends React.Component {
       this.setState({ tabGiving: true, tabDone: false });
     }
   }
+
+  componentDidMount = () => {
+    const {getFilter} = this.props;
+    getFilter("lunes", "p2p", "");
+  }
   render() {
-    const { coins,coinsRedux } = this.props;
-    const { tabGiving, tabDone, coin } = this.state;
+    const {
+      coins,
+      coinsRedux,
+      classes,
+      getHistory,
+      getMyOrders,
+      orders
+    } = this.props;
+    const { tabGiving, tabDone, coin, search } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
-    console.log(JSON.stringify("Coinnsns : "+coinsRedux))
-    return (
 
+    return (
       <div>
         <div className={style.headerActionFilter}>
           <Grid container>
             <Grid item xs={7}>
-            <div className={style.headerSelect}>
-              <Select
-                list={coinsRedux}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={null}
-                width={"100%"}
-              />
+              <div className={style.headerSelect}>
+                <Select
+                  list={coinsRedux}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
+                />
               </div>
             </Grid>
             <Grid item xs={5}>
-              <button
-                className={style.buttonEnable }               
-              >
-                {'Meus Anúncios'}
-              </button>
+              <button className={style.buttonEnable}>{"Meus Anúncios"}</button>
             </Grid>
           </Grid>
         </div>
 
         <div className={style.tabContent}>
-
           <div
             className={tabGiving ? style.itemTab : style.itemTabActive}
             onClick={() => this.onChangeTab(1)}
@@ -136,7 +143,6 @@ class Offers extends React.Component {
           >
             {i18n.t("P2P_STATUS_TEXT_2")}
           </div>
-
         </div>
 
         <div className={style.content}>
@@ -151,19 +157,27 @@ class Offers extends React.Component {
 
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
-  coins: PropTypes.array, 
+  openModal: PropTypes.func.isRequired,
+  coins: PropTypes.array,
   coinsRedux: PropTypes.array.isRequired
 };
+
 const mapStateToProps = store => ({
   coins: store.skeleton.coins,
   coinsRedux: store.payment.coins,
+  orders: store.p2p.orders
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    {},
+    {
+      getMyOrders,
+      getHistory,
+      getFilter
+    },
     dispatch
   );
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

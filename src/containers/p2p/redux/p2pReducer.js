@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   modalStep: 1,
   modalOpen: false,
+  orders: [],
   currentOrder: { //this should come from the API
     orderId: '1',
     isOwner: false
@@ -71,6 +72,24 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         isCancel: action.isCancel
+      };
+
+    case "GET_MY_ORDERS_REDUCER":
+      return {
+        ...state,
+        orders: action.orders
+      };
+
+    case "GET_HISTORY_REDUCER":
+      return {
+        ...state,
+        orders: action.orders
+      };
+      
+    case "GET_FILTER_REDUCER":
+      return {
+        ...state,
+        orders: action.orders
       };
 
     default: {
