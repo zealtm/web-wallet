@@ -1,17 +1,17 @@
-import { put } from "redux-saga/effects";
-//import { internalServerError } from "../../errors/statusCodeMessage";
+import { put,call } from "redux-saga/effects";
+import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
 // import { getUserSeedWords } from "../../../utils/localStorage";
 // import { decryptAes } from "../../../utils/cryptography";
-// import { getAuthToken } from "../../../utils/localStorage";
+ import { getAuthToken } from "../../../utils/localStorage";
 // import { convertBiggestCoinUnit } from "../../../utils/numbers";
 // import { convertToLocaleDate } from "../../../utils/strings";
 
 
 // SERVICES
-//import P2PService from "../../../services/p2pService";
-//const p2pService = new P2PService();
+import P2PService from "../../../services/p2pService";
+const p2pService = new P2PService();
 
 export function* openChat(payload) {
   yield put({
@@ -39,4 +39,20 @@ export function* openModalPaySaga(payload){
     type: "SET_MODAL_OPEN_REDUCER",
     open: payload.open
   });
+}
+
+export function* setP2POrdersCancelSaga(payload){
+  try {
+    let token = yield call(getAuthToken);
+  
+    let response = yield call(p2pService.setCancelOrder, token, payload.orderId);
+    
+    yield put({
+      type: "SET_P2P_CANCEL_ORDERS_REDUCE", 
+      isCancel: response
+    });
+  }catch(error){
+    yield put(internalServerError());
+  }
+
 }

@@ -37,6 +37,11 @@ const p2p = (state = initialState, action) => {
         ...state,
         modalOpen: action.open
       };
+    case "SET_P2P_CANCEL_ORDERS_REDUCE":
+      return {
+        ...state,
+        isCancel: action.isCancel
+      };
 
     default: {
       return {
