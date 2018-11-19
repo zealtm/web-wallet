@@ -80,11 +80,7 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
-            <input
-              type="text"
-              placeholder="DESCRIÇÃO"
-              className={style.inputDefault}
-            />
+            <div className={style.boxDescription}>Descrição</div>
           </Grid>
         </Grid>
         <Grid container>
@@ -99,12 +95,8 @@ class HeaderDetails extends React.Component {
         </Grid>
         <Grid container>
           <Grid item xs={3} />
-          <Grid item xs={4}>
-            <button className={style.btBuy}>Vender</button>
-          </Grid>
-          <Grid item xs={1} />
-          <Grid item xs={4}>
-            <button className={style.btEscroow}>Escroow</button>
+          <Grid item xs={9}>
+            <button className={style.btBuy}>Comprar</button>
           </Grid>
         </Grid>
         <Grid
@@ -123,7 +115,7 @@ class HeaderDetails extends React.Component {
   }
 }
 HeaderDetails.propTypes = {
- showHeaderDetails: PropTypes.func
+  showHeaderDetails: PropTypes.func
 };
 const mapStateToProps = store => ({});
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
