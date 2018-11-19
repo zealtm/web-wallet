@@ -17,6 +17,7 @@ import colors from "../../components/bases/colors";
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
+import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -63,16 +64,17 @@ class Offers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
       tabGiving: true,
       tabDone: false,
       coinSelect: {
-        name: "Select a coin",
-        value: undefined,
-        img: undefined
-      }
+        name: "Lunes",
+        value: "lunes",
+        img: "lunes",
+      },
+      myOrders: false
     };
   }
+
   coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
@@ -83,29 +85,55 @@ class Offers extends React.Component {
       }
     });
   };
+
   onChangeTab(status) {
     if (status == 1) {
-      this.setState({ tabGiving: false, tabDone: true });
+      this.setState({ ...this.state, tabGiving: false, tabDone: true });
     } else {
-      this.setState({ tabGiving: true, tabDone: false });
+      this.setState({ ...this.state, tabGiving: true, tabDone: false });
     }
   }
 
   componentDidMount = () => {
-    const {getFilter,getHistory} = this.props;
-    getFilter("lunes", "p2p", "");
-  }
+    const { getFilter } = this.props;
+    const { coinSelect } = this.state;
+
+    getFilter(coinSelect.value, "p2p", "");
+  };
 
   renderOders = () => {
-    const {orders} = this.props;
+    const { orders, loading } = this.props;
+
+    if (loading) return <Loading />;
+
     return orders.map((val, key) => {
       return <CardOffer key={key} order={val} />;
-    })
-  }
+    });
+  };
+
+  filterMyOrders = () => {
+    const { getMyOrders } = this.props;
+    const { coinSelect, myOrders } = this.state;
+
+    if (myOrders) {
+      getFilter(coinSelect.value, "p2p", "");
+    } else {
+      getMyOrders(coinSelect.value);
+    }
+
+    this.setState({
+      ...this.state,
+      myOrders: !myOrders
+    });
+  };
 
   render() {
     const { coinsEnabled } = this.props;
-    const { tabGiving, tabDone, coin, search, coinSelect } = this.state;
+    const { tabGiving, tabDone, coinSelect, myOrders } = this.state;
+
+    const activeButton = myOrders
+      ? style.buttonEnable
+      : style.buttonBorderGreen;
 
     return (
       <div>
@@ -124,7 +152,12 @@ class Offers extends React.Component {
               </div>
             </Grid>
             <Grid item xs={5}>
-              <button className={style.buttonEnable}>{"Meus Anúncios"}</button>
+              <button
+                className={activeButton}
+                onClick={() => this.filterMyOrders}
+              >
+                {"Meus Anúncios"}
+              </button>
             </Grid>
           </Grid>
         </div>
@@ -144,9 +177,7 @@ class Offers extends React.Component {
           </div>
         </div>
 
-        <div className={style.content}>
-          {this.renderOders()}
-        </div>
+        <div className={style.content}>{this.renderOders()}</div>
       </div>
     );
   }
@@ -155,12 +186,17 @@ class Offers extends React.Component {
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
-  coinsEnabled: PropTypes.array.isRequired
+  coinsEnabled: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired,
+  getFilter: PropTypes.func,
+  getMyOrders: PropTypes.func, 
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
-  orders: store.p2p.orders || []
+  orders: store.p2p.orders || [], 
+  loading: store.p2p.loading
 });
 
 const mapDispatchToProps = dispatch =>

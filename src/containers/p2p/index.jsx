@@ -110,7 +110,8 @@ class P2P extends React.Component {
 }
 
 P2P.propTypes = {
-  p2pStore: PropTypes.object.isRequired
+  p2pStore: PropTypes.object.isRequired, 
+  getPaymentMethodsWhenBuying: PropTypes.func,
 };
 
 const mapStateToProps = store => ({

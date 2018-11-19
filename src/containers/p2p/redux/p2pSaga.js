@@ -38,6 +38,8 @@ export function* openModalPaySaga(payload) {
 
 export function* getP2PMyOrdersSaga(payload){
   try {
+    yield put({type:"SET_LOADING_P2P",loading:true});
+    
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getMyOrders, token, payload.coin);
 
@@ -98,12 +100,14 @@ export function* acceptOfferWhenBuying(payload) {
 }
 
 export function* getP2PFilterSaga(payload){
-  const {coin, typeOrder, coinBuy} = payload;
-  
   try {
+    yield put({type:"SET_LOADING_P2P",loading:true});
+
+    const {coin, typeOrder, coinBuy} = payload;
+
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
-    console.log(response);
+    
     yield put({
       type: "GET_FILTER_REDUCER", 
       orders: response

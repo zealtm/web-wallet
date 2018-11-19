@@ -4,6 +4,7 @@ const initialState = {
   },
   chatOpened: false,
   loading: false,
+  loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
   orders: [],
@@ -78,7 +79,8 @@ const p2p = (state = initialState, action) => {
     case "GET_MY_ORDERS_REDUCER":
       return {
         ...state,
-        orders: action.orders
+        orders: action.orders, 
+        loading: false
       };
 
     case "GET_HISTORY_REDUCER":
@@ -90,7 +92,14 @@ const p2p = (state = initialState, action) => {
     case "GET_FILTER_REDUCER":
       return {
         ...state,
-        orders: action.orders
+        orders: action.orders, 
+        loading: false
+      };
+    
+    case "SET_LOADING_P2P":
+      return {
+        ...state,
+        loading: action.loading
       };
 
     default: {
