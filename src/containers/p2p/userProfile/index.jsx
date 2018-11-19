@@ -13,6 +13,9 @@ import StarVotes from "../components/starvotes";
 import style from "../style.css";
 import colors from "../../../components/bases/colors";
 
+// UTILS
+import i18n from "../../../utils/i18n";
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -47,13 +50,13 @@ class UserProfile extends React.Component {
                   <StarVotes votes={4} />
                 </div>
                 <span className={style.textSmall}>
-                  Usuário desde 12/10/1998
+                  {i18n.t("P2P_PROFILE_USER_DATE")} 12/10/1998
                 </span>{" "}
               </p>{" "}
               <br />
             </div>
             <div className={style.userDescription}>
-              <span className={style.spanDescription}>Descrição</span>
+              <span className={style.spanDescription}>{i18n.t("P2P_PROFILE_DESCRIPTION")}</span>
               <div className={style.textDescription}>
                 <p>3º maior Node da rede e faço negociação na plataforma desde 2015.</p>
               </div>
@@ -64,12 +67,12 @@ class UserProfile extends React.Component {
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.data}>
-              <span className={style.spanDescription}>Dados</span>
+              <span className={style.spanDescription}>{i18n.t("P2P_PROFILE_DATA")}</span>
               <div className={style.hr} />
             </div>
 
             <div className={style.bars}>
-              <span className={style.spanBars}>Negociações</span>
+              <span className={style.spanBars}>{i18n.t("P2P_PROFILE_NEGOTIATIONS")}</span>
               
               <div className={style.barsNumbers}>
                 <span>+500</span>
@@ -78,7 +81,7 @@ class UserProfile extends React.Component {
             <LinearProgress className={style.bar} classes={{ colorPrimary: classes.colorPrimary, barColorPrimary: classes.barColorPrimary }} value={100} variant="determinate"/>
 
             <div className={style.bars}>
-              <span className={style.spanBars}>Concluídas</span>
+              <span className={style.spanBars}>{i18n.t("P2P_PROFILE_CONCLUDED")}</span>
               
               <div className={style.barsNumbers}>
                 <span>50%</span>
@@ -91,7 +94,7 @@ class UserProfile extends React.Component {
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.data}>
-              <span className={style.spanDescription}>Feedback</span>
+              <span className={style.spanDescription}>{i18n.t("P2P_PROFILE_FEEDBACK")}</span>
               <div className={style.hr} />
             </div>
 
