@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
 
 // MATERIA UI
-import { Grid, Input } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // STYLE
@@ -17,6 +17,7 @@ import colors from "../../components/bases/colors";
 // COMPONENTS
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
+import Loading from "../../components/loading";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -63,73 +64,91 @@ class Offers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
       tabGiving: true,
       tabDone: false,
-      coin: {
-        name: undefined,
-        value: undefined,
-        img: undefined
-      }
+      coinSelect: {
+        name: "Lunes",
+        value: "lunes",
+        img: "images/icons/coins/lunes.png",
+      },
+      myOrders: false
     };
+
+    this.filterMyOrders = this.filterMyOrders.bind(this);
   }
+
   coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
-      coin: {
+      coinSelect: {
         name: title,
         value,
         img
       }
     });
+
+    this.filterMyOrders(false);
   };
+
   onChangeTab(status) {
     if (status == 1) {
-      this.setState({ tabGiving: false, tabDone: true });
+      this.setState({ ...this.state, tabGiving: false, tabDone: true });
     } else {
-      this.setState({ tabGiving: true, tabDone: false });
+      this.setState({ ...this.state, tabGiving: true, tabDone: false });
     }
   }
 
   componentDidMount = () => {
-    const {getFilter} = this.props;
-    getFilter("lunes", "p2p", "");
-  }
-  render() {
-    const {
-      coins,
-      coinsRedux,
-      classes,
-      getHistory,
-      getMyOrders,
-      orders
-    } = this.props;
-    const { tabGiving, tabDone, coin, search } = this.state;
-    const title = coin.name || "Select a coin..";
-    const img = coin.img || "";
+    const { getFilter, getHistory, type } = this.props;
+    const { coinSelect } = this.state;
 
-    return (
-      <div>
-        <div className={style.headerActionFilter}>
-          <Grid container>
-            <Grid item xs={7}>
-              <div className={style.headerSelect}>
-                <Select
-                  list={coinsRedux}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={null}
-                  width={"100%"}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={5}>
-              <button className={style.buttonEnable}>{"Meus Anúncios"}</button>
-            </Grid>
-          </Grid>
-        </div>
+    if(type==="myhistory"){
+      getHistory(coinSelect.value);
+    }else{
+      getFilter(coinSelect.value, "p2p", "");
+    }
+  };
 
+  renderOders = () => {
+    const { orders, loading } = this.props;
+
+    if (loading) return <Loading />;
+
+    if (orders.length<=0) return <h1>Nenhuma ordem</h1>;
+
+    return orders.map((val, key) => {
+      return <CardOffer key={key} order={val} />;
+    });
+  };
+
+  filterMyOrders = (filtermyorder) => {
+    const { getMyOrders, getHistory, type } = this.props;
+    const { coinSelect, myOrders } = this.state;
+
+    if (myOrders==false) {
+      getMyOrders(coinSelect.value);
+    } else {
+      if(type!="myhistory"){
+        getFilter(coinSelect.value, "p2p", "");
+      }else{
+        getHistory(coinSelect.value);
+      }
+    }
+
+    if(filtermyorder){
+      this.setState({
+        ...this.state,
+        myOrders: !myOrders
+      });
+    }
+  };
+
+  renderFilters = () => {
+    const {type} = this.props;
+    const { tabGiving, tabDone } = this.state;
+
+    if(type==="myhistory"){
+      return (
         <div className={style.tabContent}>
           <div
             className={tabGiving ? style.itemTab : style.itemTabActive}
@@ -144,12 +163,50 @@ class Offers extends React.Component {
             {i18n.t("P2P_STATUS_TEXT_2")}
           </div>
         </div>
+      );
+    }
 
-        <div className={style.content}>
-          {[1, 2, 3].map((val, key) => {
-            return <CardOffer key={key} />;
-          })}
+    return;
+  }
+
+  render() {
+    const { coinsEnabled } = this.props;
+    const { coinSelect, myOrders } = this.state;
+
+    const activeButton = myOrders
+      ? style.buttonEnable
+      : style.buttonBorderGreen;
+
+    return (
+      <div>
+        <div className={style.headerActionFilter}>
+          <Grid container>
+            <Grid item xs={7}>
+              <div className={style.headerSelect}>
+                <Select
+                  list={coinsEnabled}
+                  title={coinSelect.name}
+                  titleImg={coinSelect.img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={5}>
+              <button
+                className={activeButton}
+                onClick={()=>this.filterMyOrders(true)}
+              >
+                {"Meus Anúncios"}
+              </button>
+            </Grid>
+          </Grid>
         </div>
+
+        {this.renderFilters()}
+
+        <div className={style.content}>{this.renderOders()}</div>
       </div>
     );
   }
@@ -158,14 +215,19 @@ class Offers extends React.Component {
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
-  coins: PropTypes.array,
-  coinsRedux: PropTypes.array.isRequired
+  coinsEnabled: PropTypes.array.isRequired,
+  orders: PropTypes.array.isRequired,
+  getFilter: PropTypes.func,
+  getMyOrders: PropTypes.func, 
+  getHistory: PropTypes.func, 
+  loading: PropTypes.bool, 
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({
-  coins: store.skeleton.coins,
-  coinsRedux: store.payment.coins,
-  orders: store.p2p.orders
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders, 
+  loading: store.p2p.loading
 });
 
 const mapDispatchToProps = dispatch =>

@@ -222,6 +222,7 @@
   height: 10.9px;
   display: inline;
 }
+
 :local .off {
   composes: bgGreenDark from "../../components/bases/colorBase.css";
   margin-top: 9%;
@@ -231,15 +232,22 @@
   height: 10.9px;
   display: inline;
 }
+
 :local .buttonEnable {
   composes: buttonEnable from "../../components/bases/buttonBase.css";
 }
+
+:local .buttonBorderGreen {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+}
+
 :local .headerSelect {
   composes: bgPurpleClear from "../../components/bases/colorBase.css";  
   padding: 5px;
   margin-right: 5px;
   border-radius: 10px;
 }
+
 :local .headerActionFilter{
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";  
   padding: 10px;

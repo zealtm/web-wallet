@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 //REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {getPaymentMethodsWhenBuying} from "./redux/p2pAction";
 
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
@@ -66,16 +68,21 @@ class P2P extends React.Component {
     const { tabIcon } = this.state;
 
     const contents = [
-      <Offers key={1} />,
-      <Offers key={2} />,
-      <UserProfile key={3} />,
+      <Offers key={1} type="general" />,
+      <Offers key={2} type="myhistory" />,
+      //<UserProfile key={3} />,
       <CreateOffer key={4} />
     ];
     return contents[tabIcon];
   };
 
+  componentDidMount = () => {
+    const {getPaymentMethodsWhenBuying} = this.props;
+    getPaymentMethodsWhenBuying("lunes");
+  }
+
   render() {
-    const contentTabIcons = ["tag", "user-star", "newoffer", "user"];
+    const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
     const { chatOpened } = this.props.p2pStore;
     const { openP2P } = this.state;
 
@@ -103,11 +110,20 @@ class P2P extends React.Component {
 }
 
 P2P.propTypes = {
-  p2pStore: PropTypes.object.isRequired
+  p2pStore: PropTypes.object.isRequired, 
+  getPaymentMethodsWhenBuying: PropTypes.func,
 };
 
 const mapStateToProps = store => ({
   p2pStore: store.p2p
 });
 
-export default connect(mapStateToProps)(P2P);
+const mapDispatchToProps = dispatch => 
+bindActionCreators(
+  {
+    getPaymentMethodsWhenBuying
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(P2P);
