@@ -473,6 +473,12 @@
   "P2P_CREATE_OFFER_NEGOTIATION": "Método de negociação",
   "P2P_CREATE_OFFER_COIN_ANNOUNCED": "Moeda anunciada",
   "P2P_CREATE_OFFER_COIN_PAYMENT": "Moeda de pagamento",
-  "P2P_CREATE_OFFER_COIN_VALUES": "Entre com a quantidade a vender e a quantidade a receber"
+  "P2P_CREATE_OFFER_COIN_VALUES": "Entre com a quantidade a vender e a quantidade a receber",
+  "P2P_PROFILE_USER_DATE": "Usuário desde",
+  "P2P_PROFILE_DESCRIPTION": "Descrição",
+  "P2P_PROFILE_NEGOTIATIONS": "Negociações",
+  "P2P_PROFILE_DATA": "Dados",
+  "P2P_PROFILE_CONCLUDED": "Positivas",
+  "P2P_PROFILE_FEEDBACK": "Avaliações"
 
 }
