@@ -41,7 +41,8 @@ const p2p = (state = initialState, action) => {
         buy: {
           ...state.buy,
           ...action.data
-        }
+        }, 
+        coinsEnabled: action.data
       }
     case "OPEN_CHAT_P2P_REDUCER":
       return {
@@ -86,7 +87,8 @@ const p2p = (state = initialState, action) => {
     case "GET_HISTORY_REDUCER":
       return {
         ...state,
-        orders: action.orders
+        orders: action.orders, 
+        loading: false
       };
       
     case "GET_FILTER_REDUCER":

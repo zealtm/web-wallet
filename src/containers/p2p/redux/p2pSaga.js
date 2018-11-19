@@ -43,10 +43,17 @@ export function* getP2PMyOrdersSaga(payload){
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getMyOrders, token, payload.coin);
 
-    yield put({
-      type: "GET_MY_ORDERS_REDUCER", 
-      orders: response.data.data
-    });
+    if(response.errorMessage){
+      yield put({
+        type: "GET_MY_ORDERS_REDUCER", 
+        orders: []
+      });
+    }else{
+      yield put({
+        type: "GET_MY_ORDERS_REDUCER", 
+        orders: response.data.orders
+      });
+    }
   }catch(error){
     yield put(internalServerError());
   }
@@ -64,8 +71,17 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    yield put({ type: "BUY_SETTER", data: { response } });
-    yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
+    let cripto = [{title: "Lunes", img: `images/icons/coins/lunes.png`, value: "lunes"}];
+    if(response.cripto){
+      response.cripto.forEach(val=>{
+        if(val.status=="active"){
+          cripto.push({title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+        }
+      });
+    }
+
+    yield put({ type: "BUY_SETTER", data: cripto });
+    //yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
   } catch (error) {
     yield put(internalServerError());
   }
@@ -73,13 +89,23 @@ export function* getPaymentMethodsWhenBuying(payload) {
 
 export function* getP2PHistorySaga(payload){
   try {
+    yield put({type:"SET_LOADING_P2P",loading:true});
+
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getHistory, token, payload.coin);
 
-    yield put({
-      type: "GET_HISTORY_REDUCER", 
-      orders: response.data.data
-    });
+    if(response.errorMessage){
+      yield put({
+        type: "GET_HISTORY_REDUCER", 
+        orders: []
+      });
+    }else{
+      yield put({
+        type: "GET_HISTORY_REDUCER", 
+        orders: response.data.orders
+      });
+    }
+
   }catch(error){
     yield put(internalServerError());
   }

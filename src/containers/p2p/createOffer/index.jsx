@@ -22,7 +22,6 @@ import { Lens } from "@material-ui/icons";
 // COMPONENTS
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
-import MultiSelect from "../components/multiSelect";
 
 // STYLE
 import style from "./style.css";
@@ -49,24 +48,7 @@ class CreateOffer extends React.Component {
     this.state = {
       title: "Lunes",
       img: "images/icons/coins/lunes.png",
-      coinsExample: [
-        {
-          value: "BTC",
-          img: "images/icons/coins/btc.png",
-          title: "BTC"
-        },
-        {
-          value: "LTC",
-          img: "images/icons/coins/ltc.png",
-          title: "LTC"
-        },
-        {
-          value: "LUNES",
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
-        }
-      ],
-      listCoinSelects: [],
+
       selectedValue: "",
 
       order: {
@@ -78,14 +60,9 @@ class CreateOffer extends React.Component {
         addressSeller: ""
       }
     };
-  }
 
-  selectItems = listCoins => {
-    this.setState({
-      ...this.state,
-      listCoinSelects: listCoins
-    });
-  };
+    this.handleFields = this.handleFields.bind(this);
+  }
 
   coinSelected = (value, title, img = undefined) => {
     this.setState({
@@ -116,55 +93,81 @@ class CreateOffer extends React.Component {
       case "coin":
         this.setState({
           ...this.state,
-          coin: value
+          order: {
+            ...this.state.order,
+            coin: value
+          }
         });
         break;
       case "type":
         this.setState({
           ...this.state,
-          type: value
+          order: {
+            ...this.state.order,
+            type: value
+          }
         });
         break;
       case "paymentMethodId":
         this.setState({
           ...this.state,
-          paymentMethodId: value
+          order: {
+            ...this.state.order,
+            paymentMethodId: value
+          }
         });
         break;
       case "amount":
         this.setState({
           ...this.state,
-          amount: value
+          order: {
+            ...this.state.order,
+            amount: value
+          }
         });
         break;
       case "amountPayment":
         this.setState({
           ...this.state,
-          amountPayment: value
+          order: {
+            ...this.state.order,
+            amountPayment: value
+          }
         });
         break;
       case "addressSeller":
         this.setState({
           ...this.state,
-          addressSeller: value
+          order: {
+            ...this.state.order,
+            addressSeller: value
+          }
         });
         break;
     }
   };
 
   validateForm = () => {
-    const {createOfferWhenSelling} = this.props;
-    const {order} = this.state;
+    const { createOfferWhenSelling } = this.props;
+    const { order } = this.state;
 
-    // validate the order fields 
+    console.log("ORDER", order);
+    // validate the order fields
 
     // create
     // createOfferWhenSelling(order);
   };
 
+  componentDidMount = () => {
+    const { user } = this.props;
+    console.log("user", user);
+  };
+
   render() {
-    const { title, img, coinsExample, listCoinSelects } = this.state;
-    const { classes } = this.props;
+    const { title, img } = this.state;
+    const { classes, coinsEnabled, user } = this.props;
+
+    const username = user.name + " " + user.surname;
     return (
       <div className={style.baseUser}>
         <div className={style.headerUser}>
@@ -175,13 +178,13 @@ class CreateOffer extends React.Component {
             <Grid item xs={2}>
               <Avatar
                 alt="avatar"
-                src="https://loremflickr.com/40/40"
+                src={user.profilePicture}
                 className={style.avatar}
               />
             </Grid>
             <Grid item xs={5}>
-              <span className={style.name}>Nome Usuario</span>
-              <span className={style.textSmall}>00/00/2018</span>
+              <span className={style.name}>{username}</span>
+              <span className={style.textSmall}>00/00/0000</span>
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -226,7 +229,7 @@ class CreateOffer extends React.Component {
             <Grid container>
               <Grid item xs={5}>
                 <Select
-                  list={coinsExample}
+                  list={coinsEnabled}
                   title={title}
                   titleImg={img}
                   selectItem={this.coinSelected}
@@ -235,9 +238,13 @@ class CreateOffer extends React.Component {
                 />
               </Grid>
               <Grid item xs={7}>
-                <MultiSelect
-                  list={coinsExample}
-                  selectItems={this.selectItems}
+                <Select
+                  list={coinsEnabled}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
                 />
               </Grid>
             </Grid>
@@ -300,7 +307,8 @@ CreateOffer.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  //
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>

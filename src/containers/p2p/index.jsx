@@ -68,9 +68,9 @@ class P2P extends React.Component {
     const { tabIcon } = this.state;
 
     const contents = [
-      <Offers key={1} />,
-      <Offers key={2} />,
-      <UserProfile key={3} />,
+      <Offers key={1} type="general" />,
+      <Offers key={2} type="myhistory" />,
+      //<UserProfile key={3} />,
       <CreateOffer key={4} />
     ];
     return contents[tabIcon];
@@ -82,7 +82,7 @@ class P2P extends React.Component {
   }
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "newoffer", "user"];
+    const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
     const { chatOpened } = this.props.p2pStore;
     const { openP2P } = this.state;
 

@@ -21,12 +21,9 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+      console.log("minhas", response);
 
-      if (response.data.code !== 200) {
-        return internalServerError();
-      }
-
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return internalServerError();
     }
@@ -42,11 +39,11 @@ class P2pService {
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if (response.data.code !== 200) {
-        throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
-      }
+      // if (response.status !== 200) {
+      //   throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
+      // }
 
-      console.log("MOEDAS", response);
+      console.log("MOEDAS", response.data.data);
 
       return response.data.data;
     } catch (error) {
@@ -64,12 +61,9 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+      console.log("historico", response);
 
-      if (response.data.code !== 200) {
-        return internalServerError();
-      }
-
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return internalServerError();
     }
