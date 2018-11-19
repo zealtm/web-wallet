@@ -49,8 +49,14 @@ class CreateOffer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Lunes",
-      img: "images/icons/coins/lunes.png",
+      coinSell: {
+        name: "Select",
+        img: "",
+      },
+      coinBuy: {
+        name: "Select",
+        img: "",
+      },
 
       selectedValue: "",
 
@@ -60,20 +66,48 @@ class CreateOffer extends React.Component {
         paymentMethodId: "",
         amount: "",
         amountPayment: "",
-        addressSeller: ""
+        addressSeller: "", 
+        description: "",
       }
     };
 
     this.handleFields = this.handleFields.bind(this);
   }
 
-  coinSelected = (value, title, img = undefined) => {
+  coinSelectedSell = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
-      coin: {
+      coinSell: {
         name: title,
         value,
         img
+      },
+      order: {
+        ...this.state.order,
+        coin: value
+      }
+    });
+  };
+
+  coinSelectedBuy = (value, title, img = undefined) => {
+    const {coinsEnabled} = this.props;
+    let idMethod = 0;
+    coinsEnabled.map(val=>{
+      if(val.value==value){
+        idMethod = val.id;
+      }
+    });
+
+    this.setState({
+      ...this.state,
+      coinBuy: {
+        name: title,
+        value,
+        img
+      },
+      order: {
+        ...this.state.order,
+        paymentMethodId: idMethod
       }
     });
   };
@@ -147,27 +181,73 @@ class CreateOffer extends React.Component {
           }
         });
         break;
+      case "description":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            description: value
+          }
+        });
+        break;
     }
   };
 
   validateForm = () => {
     const { createOfferWhenSelling } = this.props;
-    const { order } = this.state;
+    const {order} = this.state;
+    const {
+      coin,
+      type,
+      paymentMethodId,
+      amount,
+      amountPayment,
+      addressSeller,
+      description 
+    } = this.state.order;
+    let error = [];
 
     console.log("ORDER", order);
     // validate the order fields
+    if(type==""){
+      error.push("Escolha o tipo");
+    }
+    if(coin==""){
+      error.push("Informe a moeda de venda");
+    }
+    if(paymentMethodId==""){
+      error.push("Informe a moeda de pagamento");
+    }
+    if(amount==""){
+      error.push("Informe a quantidade");
+    }
+    if(amountPayment==""){
+      error.push("Informe o valor");
+    }
+    if(addressSeller==""){
+      error.push("Informe o endereço de recebimento");
+    }
+    if(description==""){
+      error.push("Informe uma breve descrição");
+    }
 
-    // create
-    // createOfferWhenSelling(order);
+    if(error.length>0){
+      error.map(val=>{
+        alert("Erro: "+val);
+      });
+    }else{
+      createOfferWhenSelling(order);
+      // trocar de tela
+    }
+
   };
 
   componentDidMount = () => {
-    const { user } = this.props;
-    console.log("user", user);
+    //const { user } = this.props;
   };
 
   render() {
-    const { title, img } = this.state;
+    const { coinBuy, coinSell } = this.state;
     const { classes, coinsEnabled, user } = this.props;
 
     const username = user.name + " " + user.surname;
@@ -234,9 +314,9 @@ class CreateOffer extends React.Component {
                <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}</div>
                 <Select
                   list={coinsEnabled}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
+                  title={coinSell.name}
+                  titleImg={coinSell.img}
+                  selectItem={this.coinSelectedSell}
                   error={null}
                   width={"100%"}
                 />
@@ -246,9 +326,9 @@ class CreateOffer extends React.Component {
               <div className={style.textSmallCoinPayment}>{i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}</div>
                 <Select
                   list={coinsEnabled}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
+                  title={coinBuy.name}
+                  titleImg={coinBuy.img}
+                  selectItem={this.coinSelectedBuy}
                   error={null}
                   width={"100%"}
                 />
@@ -311,7 +391,9 @@ class CreateOffer extends React.Component {
 }
 
 CreateOffer.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired, 
+  coinsEnabled: PropTypes.array, 
+  user:PropTypes.object,
 };
 
 const mapStateToProps = store => ({
