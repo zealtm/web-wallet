@@ -112,3 +112,7 @@ export const getProfile = profile => ({
 export const clearUserProfile = () => ({
   type: "CLEAR_USER_PROFILE"
 });
+export const setRatingOrder = data => ({
+  type: "SET_P2P_RATING_ORDER",
+  data
+});
