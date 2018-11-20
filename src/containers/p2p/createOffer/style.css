@@ -131,9 +131,9 @@
 }
 
 :local .formBase {
-  padding-left: 30px;
+  padding-left: 0px;
   padding-top: 20px;
-  height: 375px;
+  height: 300px;
 }
 
 :local .formBase hr {
