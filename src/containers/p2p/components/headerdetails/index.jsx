@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { openDeposit, acceptOfferWhenBuying } from "../../redux/p2pAction";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -10,9 +11,11 @@ import { KeyboardArrowUp } from "@material-ui/icons";
 
 // COMPONENTS
 import Select from "../../../../components/select";
+import DepositModal from "../../modal/deposit";
 
 // STYLE
 import style from "./style.css";
+import Modal from "../../../../components/modal";
 
 class HeaderDetails extends React.Component {
   constructor(props) {
@@ -47,8 +50,19 @@ class HeaderDetails extends React.Component {
     });
   };
 
+  handleClick = () => {
+    const { order } = this.props;
+    this.props.acceptOfferWhenBuying({
+      coin: "lunes",
+      orderId: order.id
+    });
+    const { openDeposit } = this.props;
+    openDeposit(order);
+  };
+
   render() {
     const { title, img, coinsExample } = this.state;
+    const { order } = this.props;
     return (
       <div>
         <Grid container>
@@ -57,8 +71,8 @@ class HeaderDetails extends React.Component {
             <div className={style.formGroup}>
               <div className={style.textSmall}>Compra</div>
               <div className={style.listItemCoin}>
-                <img src={img} alt={title} />
-                {title}
+                <img src={`images/icons/coins/${order.buy.coin}.png`} />
+                {order.buy.coin}
               </div>
             </div>
           </Grid>
@@ -66,14 +80,10 @@ class HeaderDetails extends React.Component {
           <Grid item xs={4}>
             <div className={style.formGroup}>
               <div className={style.textSmall}>Pagamento</div>
-              <Select
-                list={coinsExample}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={null}
-                width={"100%"}
-              />
+              <div className={style.listItemCoin}>
+                <img src={`images/icons/coins/${order.sell.coin}.png`} />
+                {order.sell.coin}
+              </div>
             </div>
           </Grid>
         </Grid>
@@ -100,7 +110,9 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={4}>
-            <button className={style.btBuy}>Vender</button>
+            <button className={style.btBuy} onClick={this.handleClick}>
+              Vender
+            </button>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={4}>
@@ -123,10 +135,14 @@ class HeaderDetails extends React.Component {
   }
 }
 HeaderDetails.propTypes = {
- showHeaderDetails: PropTypes.func
+  showHeaderDetails: PropTypes.func,
+  order: PropTypes.object,
+  acceptOfferWhenBuying: PropTypes.func,
+  openDeposit: PropTypes.func
 };
-const mapStateToProps = store => ({});
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapStateToProps = store => ({ order: store.p2p.chat.iduser });
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ openDeposit, acceptOfferWhenBuying }, dispatch);
 export default connect(
   mapStateToProps,
   mapDispatchToProps

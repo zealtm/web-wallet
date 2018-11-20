@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { closeChat } from "../../redux/p2pAction";
 
+// UTILS
+import { formatDate } from "../../../../utils/numbers";
+
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
@@ -18,7 +21,7 @@ import { KeyboardArrowDown } from "@material-ui/icons";
 import StarVotes from "../starvotes";
 import HeaderDetails from "../headerdetails/index";
 
-import UserProfile from "../../userProfile"
+import UserProfile from "../../userProfile";
 // STYLE
 import style from "./style.css";
 
@@ -31,7 +34,7 @@ class Header extends React.Component {
       showPerfil: false
     };
   }
-  onClickPerfil(){
+  onClickPerfil() {
     this.setState({ showPerfil: !this.state.showPerfil });
   }
   closeChat = () => {
@@ -45,16 +48,16 @@ class Header extends React.Component {
       arrowDown: !this.state.arrowDown
     });
   };
-  renderPerfil(){
-    return (<UserProfile />);
+  renderPerfil() {
+    return <UserProfile />;
   }
   render() {
-    let {showPerfil} = this.state;
-    if(showPerfil){
-      return (
-        this.renderPerfil()
-      );
-    } 
+    const { order } = this.props;
+    const dateCreate = formatDate(order.createdAt, "DM");
+    let { showPerfil } = this.state;
+    if (showPerfil) {
+      return this.renderPerfil();
+    }
     return (
       <div className={style.topBar}>
         <div className={style.header}>
@@ -70,8 +73,13 @@ class Header extends React.Component {
               />
             </Grid>
             <Grid item xl={4}>
-              <span className={style.textGreen} onClick={()=>this.onClickPerfil()} >Ricardo Lopez</span>
-              <span className={style.textSmall}>00/00/2018</span>
+              <span
+                className={style.textGreen}
+                onClick={() => this.onClickPerfil()}
+              >
+                {order.sell.user.name} {order.sell.user.surname}
+              </span>
+              <span className={style.textSmall}>{dateCreate}</span>
             </Grid>
             <Grid item xl={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -108,7 +116,10 @@ class Header extends React.Component {
             </Grid>
           </Grid>
           {this.state.showHeaderDetails && (
-            <HeaderDetails showHeaderDetails={this.showHeaderDetails} />
+            <HeaderDetails
+              showHeaderDetails={this.showHeaderDetails}
+              order={order}
+            />
           )}
         </div>
       </div>
@@ -117,10 +128,13 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  closeChat: PropTypes.func.isRequired
+  closeChat: PropTypes.func.isRequired,
+  order: PropTypes.object
 };
 
-const mapStateToProps = store => ({});
+const mapStateToProps = store => ({
+  order: store.p2p.chat.iduser
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ closeChat }, dispatch);
@@ -129,4 +143,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Header);
-
