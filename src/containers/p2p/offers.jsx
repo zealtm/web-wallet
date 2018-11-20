@@ -122,9 +122,9 @@ class Offers extends React.Component {
   };
 
   filterMyOrders = filtermyorder => {
-    const { getMyOrders, getHistory, type } = this.props;
+    const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
-
+    console.log("fez :" + myOrders)
     if (myOrders == false) {
       getMyOrders(coinSelect.value);
     } else {
@@ -132,7 +132,7 @@ class Offers extends React.Component {
         getFilter(coinSelect.value, "p2p", "");
       } else {
         getHistory(coinSelect.value);
-      }
+     }
     }
 
     if (filtermyorder) {
@@ -198,6 +198,7 @@ class Offers extends React.Component {
                 className={activeButton}
                 onClick={() => this.filterMyOrders(true)}
               >
+
                 {"Meus Anúncios"}
               </button>
             </Grid>
