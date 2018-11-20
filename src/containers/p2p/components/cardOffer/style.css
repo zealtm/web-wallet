@@ -18,6 +18,7 @@
   composes: textGreen;
   font-size: 16px;
   display: block;
+  padding-bottom: 3px;
 }
 
 :local .textSmall {
@@ -75,6 +76,12 @@
   border: none;
   color: #fff;
   cursor: pointer;
+  padding: 0;
+}
+
+:local .btnCloseImg {
+  width: 20px;
+  display: block;
 }
 
 :local .offerText {

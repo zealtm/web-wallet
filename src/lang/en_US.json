@@ -474,5 +474,21 @@
   "P2P_PAYMENT_METHOD": "Payment method",
   "P2P_TO_BUY": "To buy",
   "P2P_STATUS_TEXT_1": "Progress",
-  "P2P_STATUS_TEXT_2": "Completed"
+  "P2P_STATUS_TEXT_2": "Completed",
+  "P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER": "Enter additional info about the ad that potential buyers need to know.",
+  "P2P_CREATE_OFFER_BUTTON_CONFIRMATION": "CREATE AD",
+  "P2P_CREATE_OFFER_DESCRIPTION": "Description",
+  "P2P_CREATE_OFFER_ADDRESS_PLACEHOLDER": "Address",
+  "P2P_CREATE_OFFER_ADDRESS": "Payment address",
+  "P2P_CREATE_OFFER_NEGOTIATION": "Negotiation type",
+  "P2P_CREATE_OFFER_COIN_ANNOUNCED": "Coin announced",
+  "P2P_CREATE_OFFER_COIN_PAYMENT": "Coin accepted",
+  "P2P_CREATE_OFFER_COIN_VALUES": "Enter the amount to sell and the amount to receive",
+  "P2P_PROFILE_USER_DATE": "User since",
+  "P2P_PROFILE_DESCRIPTION": "Description",
+  "P2P_PROFILE_NEGOTIATIONS": "Negotiations",
+  "P2P_PROFILE_DATA": "Data",
+  "P2P_PROFILE_CONCLUDED": "Positive",
+  "P2P_PROFILE_FEEDBACK": "Feedback"
+  
 }

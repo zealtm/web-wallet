@@ -23,6 +23,9 @@ import { Lens } from "@material-ui/icons";
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
 
+// UTILS
+import i18n from "../../../utils/i18n";
+
 // STYLE
 import style from "./style.css";
 
@@ -172,9 +175,6 @@ class CreateOffer extends React.Component {
       <div className={style.baseUser}>
         <div className={style.headerUser}>
           <Grid container>
-            <Grid item xs={1}>
-              <div className={style.arrowBack} />
-            </Grid>
             <Grid item xs={2}>
               <Avatar
                 alt="avatar"
@@ -182,7 +182,7 @@ class CreateOffer extends React.Component {
                 className={style.avatar}
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <span className={style.name}>{username}</span>
               <span className={style.textSmall}>00/00/0000</span>
             </Grid>
@@ -196,7 +196,7 @@ class CreateOffer extends React.Component {
 
         <div className={style.formBase}>
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Defina os valores</div>
+            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_VALUES")}</div>
             <Grid container>
               <Grid item xs={5}>
                 <input
@@ -224,10 +224,10 @@ class CreateOffer extends React.Component {
             </Grid>
           </div>
 
-          <div className={style.formGroup}>
-            <div className={style.textSmall}>Moeda desejada</div>
-            <Grid container>
-              <Grid item xs={5}>
+          <div className={style.formGroup}>            
+            <Grid container >
+              <Grid item xs={4}>
+               <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}</div>
                 <Select
                   list={coinsEnabled}
                   title={title}
@@ -237,7 +237,9 @@ class CreateOffer extends React.Component {
                   width={"100%"}
                 />
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={2}></Grid>
+              <Grid item xs={5} >
+              <div className={style.textSmallCoinPayment}>{i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}</div>
                 <Select
                   list={coinsEnabled}
                   title={title}
@@ -246,15 +248,17 @@ class CreateOffer extends React.Component {
                   error={null}
                   width={"100%"}
                 />
+
               </Grid>
             </Grid>
             <hr />
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Método de negociação</div>
+            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_NEGOTIATION")}</div>
             <FormControlLabel
               value="p2p"
+              className={style.labelRadio}
               classes={{ label: classes.rootLabel }}
               control={
                 <Radio
@@ -272,11 +276,11 @@ class CreateOffer extends React.Component {
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Endereço Carteira</div>
+            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_ADDRESS")}</div>
             <input
               type="text"
               name="addressSeller"
-              placeholder="aksdlasd6asd5asd5"
+              placeholder={i18n.t("P2P_CREATE_OFFER_ADDRESS_PLACEHOLDER")}
               className={style.inputDefault}
               value={this.state.order.addressSeller}
               onChange={e => this.handleFields(e)}
@@ -284,16 +288,17 @@ class CreateOffer extends React.Component {
           </div>
           <hr />
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Descrição</div>
+            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}</div>
             <textarea
               className={style.textArea}
               name="description"
+              placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
             >
               {this.state.order.description}
             </textarea>
             <button className={style.btContinue} onClick={this.validateForm}>
-              CRIAR OFERTA
+              {i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")}
             </button>
           </div>
         </div>
