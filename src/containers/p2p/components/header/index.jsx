@@ -29,8 +29,8 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showHeaderDetails: false,
-      arrowDown: true,
+      showHeaderDetails: true,
+      arrowDown: false,
       showPerfil: false
     };
   }
@@ -55,6 +55,9 @@ class Header extends React.Component {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
     let { showPerfil } = this.state;
+
+    const total = order.unitValue.brl * order.sell.amount;
+
     if (showPerfil) {
       return this.renderPerfil();
     }
@@ -83,7 +86,7 @@ class Header extends React.Component {
             </Grid>
             <Grid item xl={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
-                <StarVotes votes={3} />
+                <StarVotes votes={order.sell.user.rating} />
               </div>
             </Grid>
 
@@ -93,13 +96,13 @@ class Header extends React.Component {
 
             <Grid item xs={3} />
             <Grid item xs={4}>
-              <div className={style.card}>200.00000</div>
+              <div className={style.card}>{order.sell.amount}</div>
             </Grid>
             <Grid item xs={1}>
               <ArrowForward className={style.arrowPrice} />
             </Grid>
             <Grid item xs={4}>
-              <div className={style.card}>R$650,00</div>
+              <div className={style.card}>R${total.toFixed(2)}</div>
             </Grid>
             <Grid
               container
