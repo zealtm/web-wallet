@@ -484,7 +484,7 @@
   "P2P_CREATE_OFFER_COIN_ANNOUNCED": "Coin announced",
   "P2P_CREATE_OFFER_COIN_PAYMENT": "Coin accepted",
   "P2P_CREATE_OFFER_COIN_VALUES": "Enter the amount to sell and the amount to receive",
-  "P2P_NO_ORDER": "No offer",
+  "P2P_NO_ORDER": "No listing found",
   "P2P_PROFILE_USER_DATE": "User since",
   "P2P_PROFILE_DESCRIPTION": "Description",
   "P2P_PROFILE_NEGOTIATIONS": "Negotiations",
