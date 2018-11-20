@@ -79,6 +79,13 @@ export function* getPaymentMethodsWhenBuying(payload) {
         }
       });
     }
+    if(response.fiat){
+      response.fiat.forEach(val=>{
+        if(val.status=="active"){
+          cripto.push({id: val.id, title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+        }
+      });
+    }
 
     yield put({ type: "BUY_SETTER", data: cripto});
     //yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
