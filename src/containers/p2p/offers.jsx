@@ -112,14 +112,14 @@ class Offers extends React.Component {
   };
 
   renderOders = () => {
-    const { orders, loading } = this.props;
+    const { orders, loading, type } = this.props;
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     if (orders.length <= 0 || orders == undefined) return <h1>Nenhuma ordem</h1>;
 
     return orders.map((val, key) => {
-      return <CardOffer key={key} order={val} />;
+      return <CardOffer key={key} order={val} type={type} />;
     });
   };
 
