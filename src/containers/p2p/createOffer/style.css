@@ -3,7 +3,7 @@
   padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -27,6 +27,23 @@
   composes: textGreen;
   font-size: 11px;
   display: block;
+}
+
+:local .textReturn {
+  font-size: 16px;
+  text-align:center;
+  display:block;
+  padding-top:140px;
+}
+
+:local .textError {
+  composes: textReturn;
+  composes: clError from "../../../components/bases/colorBase.css";
+}
+
+:local .textSuccess {
+  composes: textReturn;
+  composes: clSuccess from "../../../components/bases/colorBase.css";
 }
 
 :local .textSmallCoinPayment {

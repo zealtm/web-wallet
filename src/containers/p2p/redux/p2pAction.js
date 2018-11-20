@@ -64,6 +64,10 @@ export const setCancelOrder = orderId => ({
   orderId
 });
 
+export const clearOffer = () => ({
+  type: "CREATE_OFFER_CLEAR"
+});
+
 export const openDeposit = iduser => ({
   type: "OPEN_DEPOSIT_P2P",
   iduser
