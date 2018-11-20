@@ -6,6 +6,7 @@
 
 3. IMAGES/UI
 
+4. BUTTONS
 
 */
 
@@ -99,7 +100,6 @@
   margin: 1px 0px 0px 0px;
   overflow: hidden;
 }
-
 
 :local(.userInfo) {
   display: flex;
@@ -210,8 +210,6 @@
   margin: 15px;
 }
 
-
-
 :local .online {
   composes: bgGreenDefault from "../../components/bases/colorBase.css";
   margin-top: 9%;
@@ -241,13 +239,22 @@
 }
 
 :local .headerSelect {
-  composes: bgPurpleClear from "../../components/bases/colorBase.css";  
+  composes: bgPurpleClear from "../../components/bases/colorBase.css";
   padding: 5px;
-  margin-right: 5px;
-  border-radius: 10px;
+  margin-right: 15px;
+  border-radius: 6px;
 }
 
-:local .headerActionFilter{
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";  
+:local .headerActionFilter {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   padding: 10px;
 }
+
+/* BUTTONS */
+
+:local(.btAdvertisement) {
+  height: 47.5px;
+  font-size: 13px;
+  composes: buttonBorderGreen;
+}
+

@@ -33,7 +33,7 @@
   composes: textGreen;
   font-size: 11px;
   display: block;
-  padding-left:10px;
+  padding-left: 10px;
 }
 
 :local .numberText {
