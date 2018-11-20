@@ -8,6 +8,7 @@ import { openChat } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
+import i18n from "./../../../../utils/i18n";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -41,7 +42,7 @@ class CardOffer extends React.Component {
   };
 
   render() {
-    const { order, userEmail } = this.props;
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const total = order.unitValue.brl * order.sell.amount;
@@ -62,7 +63,7 @@ class CardOffer extends React.Component {
             </span>
             <span className={style.textSmall}>{dateCreate}</span>
             <span className={style.numberText}>{order.sell.amount}</span>
-            <span className={style.textSmall}>Oferta</span>
+            <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.sell.coin}.png`} />
               {order.sell.coin.toUpperCase()}
@@ -82,11 +83,11 @@ class CardOffer extends React.Component {
               ) : null}
             </div>
             <span className={style.textSmall}>
-              Unid. R$ {order.unitValue.brl.toFixed(2)}
+              {i18n.t("P2P_VALUE_UNITY")} {order.unitValue.brl.toFixed(2)}
             </span>
             <ArrowForward className={style.arrowPrice} />
             <span className={style.numberText}>R${total.toFixed(2)}</span>
-            <span className={style.textSmall}>Vende</span>
+            <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
               {order.buy.coin.toUpperCase()}
@@ -101,12 +102,12 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {userEmail != order.sell.user.email ? (
+            {(userEmail != order.sell.user.email && type != "myhistory") ? (
             <button
               className={style.btContinue}
               onClick={() => this.openChat(order)}
             >
-              Negociar
+              {i18n.t("P2P_BUTTON_NEGOTIATE")}
             </button> ) : null}
           </Grid>
         </Grid>
@@ -118,7 +119,8 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  userEmail: PropTypes.string
+  userEmail: PropTypes.string, 
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({

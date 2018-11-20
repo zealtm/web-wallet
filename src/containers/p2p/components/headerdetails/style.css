@@ -24,6 +24,8 @@
   border: none;
   position: none;
   margin-top: 7px;
+  font-size: 12px;
+  text-align: center;
 }
 
 :local .inputCenter {
@@ -35,6 +37,8 @@
   border: none;
   position: none;
   margin-top: 7px;
+  font-size: 12px;
+  text-align: center;
 }
 
 :local .textSmall {
