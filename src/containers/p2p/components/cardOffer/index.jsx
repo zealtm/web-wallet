@@ -34,17 +34,18 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = id => {
+  openChat = order => {
     const { openChat } = this.props;
 
-    openChat(id);
+    openChat(order);
   };
 
   render() {
-    const {order} = this.props;
+    const { order } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const total = order.unitValue.brl * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
@@ -56,7 +57,9 @@ class CardOffer extends React.Component {
             />
           </Grid>
           <Grid item xs={5}>
-            <span className={style.name}>{order.sell.user.name} {order.sell.user.surname}</span>
+            <span className={style.name}>
+              {order.sell.user.name} {order.sell.user.surname}
+            </span>
             <span className={style.textSmall}>{dateCreate}</span>
             <span className={style.numberText}>{order.sell.amount}</span>
             <span className={style.textSmall}>Oferta</span>
@@ -70,7 +73,9 @@ class CardOffer extends React.Component {
               <StarVotes votes={0} />
               <button className={style.btnClose}><img className={style.btnCloseImg} src="images/icons/p2p/btn-CloseP2p.png" alt="closep2p"/></button>
             </div>
-            <span className={style.textSmall}>Unid. R$ {order.unitValue.brl.toFixed(2)}</span>
+            <span className={style.textSmall}>
+              Unid. R$ {order.unitValue.brl.toFixed(2)}
+            </span>
             <ArrowForward className={style.arrowPrice} />
             <span className={style.numberText}>R${total.toFixed(2)}</span>
             <span className={style.textSmall}>Vende</span>
@@ -91,7 +96,7 @@ class CardOffer extends React.Component {
             </div>
             <button
               className={style.btContinue}
-              onClick={() => this.openChat(1)}
+              onClick={() => this.openChat(order)}
             >
               Negociar
             </button>
@@ -103,7 +108,8 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired
+  openChat: PropTypes.func.isRequired,
+  order: PropTypes.object
 };
 
 const mapStateToProps = store => ({});
