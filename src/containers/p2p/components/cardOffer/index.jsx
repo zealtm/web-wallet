@@ -103,7 +103,8 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired
+  openChat: PropTypes.func.isRequired, 
+  order: PropTypes.object
 };
 
 const mapStateToProps = store => ({});

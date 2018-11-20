@@ -113,7 +113,6 @@ class Offers extends React.Component {
     const { orders, loading } = this.props;
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
-    
 
     if (orders.length <= 0) return <h1>Nenhuma ordem</h1>;
 
@@ -196,7 +195,7 @@ class Offers extends React.Component {
             </Grid>
             <Grid item xs={5}>
               <button
-                className={style.btAdvertisement}
+                className={activeButton}
                 onClick={() => this.filterMyOrders(true)}
               >
                 {"Meus Anúncios"}
