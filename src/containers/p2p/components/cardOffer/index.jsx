@@ -64,7 +64,7 @@ class CardOffer extends React.Component {
             <span className={style.textSmall}>Oferta</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.sell.coin}.png`} />
-              {order.sell.coin}
+              {order.sell.coin.toUpperCase()}
             </div>
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
@@ -88,6 +88,7 @@ class CardOffer extends React.Component {
             <span className={style.textSmall}>Vende</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
+              {order.buy.coin.toUpperCase()}
             </div>
             <span className={style.hours}>00:00 am</span>
           </Grid>
@@ -99,12 +100,13 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
+            {userEmail != order.sell.user.email ? (
             <button
               className={style.btContinue}
               onClick={() => this.openChat(1)}
             >
               Negociar
-            </button>
+            </button> ) : null}
           </Grid>
         </Grid>
       </div>

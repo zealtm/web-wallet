@@ -164,7 +164,6 @@ export function* createOfferWhenSelling(payload) {
 
   } catch (error) {
     yield put(internalServerError());
-    //yield put({ type: "FAILED_REQUEST", message: error.message });
   }
 }
 

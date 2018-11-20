@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createOfferWhenSelling } from "../redux/p2pAction";
+import { createOfferWhenSelling, clearOffer } from "../redux/p2pAction";
 
 // MATERIAL
 import {
@@ -14,7 +14,7 @@ import {
   withStyles,
   FormControlLabel
 } from "@material-ui/core/";
-import { ArrowForward, ArrowBack } from "@material-ui/icons/";
+import { ArrowForward } from "@material-ui/icons/";
 
 // ICONS
 import { Lens } from "@material-ui/icons";
@@ -52,11 +52,11 @@ class CreateOffer extends React.Component {
     this.state = {
       coinSell: {
         name: "Select",
-        img: "",
+        img: ""
       },
       coinBuy: {
         name: "Select",
-        img: "",
+        img: ""
       },
 
       selectedValue: "",
@@ -67,8 +67,8 @@ class CreateOffer extends React.Component {
         paymentMethodId: "",
         amount: "",
         amountPayment: "",
-        addressSeller: "", 
-        description: "",
+        addressSeller: "",
+        description: ""
       }
     };
 
@@ -91,10 +91,10 @@ class CreateOffer extends React.Component {
   };
 
   coinSelectedBuy = (value, title, img = undefined) => {
-    const {coinsEnabled} = this.props;
+    const { coinsEnabled } = this.props;
     let idMethod = 0;
-    coinsEnabled.map(val=>{
-      if(val.value==value){
+    coinsEnabled.map(val => {
+      if (val.value == value) {
         idMethod = val.id;
       }
     });
@@ -196,7 +196,7 @@ class CreateOffer extends React.Component {
 
   validateForm = () => {
     const { createOfferWhenSelling } = this.props;
-    const {order} = this.state;
+    const { order } = this.state;
     const {
       coin,
       type,
@@ -204,53 +204,75 @@ class CreateOffer extends React.Component {
       amount,
       amountPayment,
       addressSeller,
-      description 
+      description
     } = this.state.order;
     let error = [];
 
-    // validate the order fields
-    if(type==""){
+    if (type == "") {
       error.push("Escolha o tipo");
     }
-    if(coin==""){
+    if (coin == "") {
       error.push("Informe a moeda de venda");
     }
-    if(paymentMethodId==""){
+    if (paymentMethodId == "") {
       error.push("Informe a moeda de pagamento");
     }
-    if(amount==""){
+    if (amount == "") {
       error.push("Informe a quantidade");
     }
-    if(amountPayment==""){
+    if (amountPayment == "") {
       error.push("Informe o valor");
     }
-    if(addressSeller==""){
+    if (addressSeller == "") {
       error.push("Informe o endereço de recebimento");
     }
-    if(description==""){
+    if (description == "") {
       error.push("Informe uma breve descrição");
     }
 
-    if(error.length>0){
-      error.map(val=>{
-        alert("Erro: "+val);
+    if (error.length > 0) {
+      error.map(val => {
+        alert("Erro: " + val);
       });
-    }else{
+    } else {
       createOfferWhenSelling(order);
-      // trocar de tela
     }
-
-  };
-
-  componentDidMount = () => {
-    //const { user } = this.props;
   };
 
   render() {
     const { coinBuy, coinSell } = this.state;
-    const { classes, coinsEnabled, user, loadingCreateOrder } = this.props;
+    const {
+      classes,
+      coinsEnabled,
+      user,
+      loadingCreateOrder,
+      createDone,
+      createError,
+      clearOffer
+    } = this.props;
 
     const username = user.name + " " + user.surname;
+
+    if (createDone)
+      return (
+        <div>
+          Criado com sucesso{" "}
+          <button className={style.btContinue} onClick={() => clearOffer}>
+            Concluir e voltar
+          </button>
+        </div>
+      );
+
+    if (createError)
+      return (
+        <div>
+          Ocorreu um erro{" "}
+          <button className={style.btContinue} onClick={() => clearOffer}>
+            Tentar novamente
+          </button>
+        </div>
+      );
+
     return (
       <div className={style.baseUser}>
         <div className={style.headerUser}>
@@ -276,7 +298,9 @@ class CreateOffer extends React.Component {
 
         <div className={style.formBase}>
           <div className={style.formGroup}>
-            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_VALUES")}</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_COIN_VALUES")}
+            </div>
             <Grid container>
               <Grid item xs={5}>
                 <input
@@ -304,10 +328,12 @@ class CreateOffer extends React.Component {
             </Grid>
           </div>
 
-          <div className={style.formGroup}>            
-            <Grid container >
+          <div className={style.formGroup}>
+            <Grid container>
               <Grid item xs={4}>
-               <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}</div>
+                <div className={style.textSmall}>
+                  {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
+                </div>
                 <Select
                   list={coinsEnabled}
                   title={coinSell.name}
@@ -317,9 +343,11 @@ class CreateOffer extends React.Component {
                   width={"100%"}
                 />
               </Grid>
-              <Grid item xs={2}></Grid>
-              <Grid item xs={5} >
-              <div className={style.textSmallCoinPayment}>{i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}</div>
+              <Grid item xs={2} />
+              <Grid item xs={5}>
+                <div className={style.textSmallCoinPayment}>
+                  {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
+                </div>
                 <Select
                   list={coinsEnabled}
                   title={coinBuy.name}
@@ -328,14 +356,15 @@ class CreateOffer extends React.Component {
                   error={null}
                   width={"100%"}
                 />
-
               </Grid>
             </Grid>
             <hr />
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_NEGOTIATION")}</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_NEGOTIATION")}
+            </div>
             <FormControlLabel
               value="p2p"
               className={style.labelRadio}
@@ -356,7 +385,9 @@ class CreateOffer extends React.Component {
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_ADDRESS")}</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_ADDRESS")}
+            </div>
             <input
               type="text"
               name="addressSeller"
@@ -368,7 +399,9 @@ class CreateOffer extends React.Component {
           </div>
           <hr />
           <div className={style.formGroup}>
-            <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
+            </div>
             <textarea
               className={style.textArea}
               name="description"
@@ -378,7 +411,11 @@ class CreateOffer extends React.Component {
               {this.state.order.description}
             </textarea>
             <button className={style.btContinue} onClick={this.validateForm}>
-              {loadingCreateOrder ? <Loading /> : i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")}
+              {loadingCreateOrder ? (
+                <Loading />
+              ) : (
+                i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
+              )}
             </button>
           </div>
         </div>
@@ -388,21 +425,29 @@ class CreateOffer extends React.Component {
 }
 
 CreateOffer.propTypes = {
-  classes: PropTypes.object.isRequired, 
-  coinsEnabled: PropTypes.array, 
-  user:PropTypes.object,
+  classes: PropTypes.object.isRequired,
+  coinsEnabled: PropTypes.array,
+  user: PropTypes.object,
+  loadingCreateOrder: PropTypes.bool,
+  createDone: PropTypes.bool,
+  createError: PropTypes.bool,
+  clearOffer: PropTypes.func,
+  createOfferWhenSelling: PropTypes.func
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
-  user: store.user.user, 
-  loadingCreateOrder: store.p2p.loadingCreateOrder
+  user: store.user.user,
+  loadingCreateOrder: store.p2p.loadingCreateOrder,
+  createDone: store.p2p.createDone,
+  createError: store.p2p.createError
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      createOfferWhenSelling
+      createOfferWhenSelling,
+      clearOffer
     },
     dispatch
   );
