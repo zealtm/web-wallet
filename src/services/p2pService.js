@@ -136,12 +136,10 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      if (response.data.code !== "200" || response.data.data == undefined ) {
-      //   return internalServerError();
-        return [];
-      }
-
+      
+      if (response.data.data == undefined) {
+      return [];
+     }
       return response.data.data.orders;
     } catch (error) {
       return internalServerError();
