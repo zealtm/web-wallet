@@ -253,6 +253,7 @@
 :local(.btAdvertisement) {
   height: 47.5px;
   font-size: 13px;
+  padding: 0;
   composes: buttonBorderGreen;
 }
 
