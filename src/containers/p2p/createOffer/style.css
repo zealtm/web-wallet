@@ -33,7 +33,7 @@
   composes: textGreen;
   font-size: 11px;
   display: block;
-  padding-left:10px;
+  padding-left: 10px;
 }
 
 :local .numberText {
@@ -131,9 +131,9 @@
 }
 
 :local .formBase {
-  padding-left: 30px;
+  padding-left: 0px;
   padding-top: 20px;
-  height: 375px;
+  height: 300px;
 }
 
 :local .formBase hr {
@@ -146,5 +146,14 @@
 
 :local .headerUser {
   padding-bottom: 10px;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  border-bottom: solid 1px rgba(0,0,0,.2);
 }
+
+:local .singleSelect {
+  margin-left: -10px !important;
+}
+
+:local .multiSelect {
+  margin-left: 40px !important;
+}
+

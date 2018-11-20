@@ -68,7 +68,7 @@ class CardOffer extends React.Component {
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={0} />
-              <button className={style.btnClose}>X</button>
+              <button className={style.btnClose}><img className={style.btnCloseImg} src="images/icons/p2p/btn-CloseP2p.png" alt="closep2p"/></button>
             </div>
             <span className={style.textSmall}>Unid. R$ {order.unitValue.brl.toFixed(2)}</span>
             <ArrowForward className={style.arrowPrice} />
