@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // UTILS
-import i18n from "../../../utils/i18n";
+import i18n from "./../../../../utils/i18n";
 
 // REDUX
 import { connect } from "react-redux";
