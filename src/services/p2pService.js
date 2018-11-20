@@ -152,6 +152,7 @@ class P2pService {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/coin/lunes/p2p/order/cancel/${orderId}`,
+        {},
         API_HEADER
       );
 
