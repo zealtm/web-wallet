@@ -171,3 +171,17 @@ export function* setP2POrdersCancelSaga(payload) {
     yield put(internalServerError());
   }
 }
+export function* setP2PRatingOrderSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(
+      p2pService.setRatingOrder,
+      token,
+      payload.data
+    );
+
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

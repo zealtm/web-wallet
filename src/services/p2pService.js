@@ -21,7 +21,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.log("minhas", response);
+      //console.log("minhas", response);
 
       return response.data;
     } catch (error) {
@@ -43,7 +43,7 @@ class P2pService {
       //   throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
       // }
 
-      console.log("MOEDAS", response.data.data);
+      //console.log("MOEDAS", response.data.data);
 
       return response.data.data;
     } catch (error) {
@@ -61,7 +61,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.log("historico", response);
+      //console.log("historico", response);
 
       return response.data;
     } catch (error) {
@@ -164,6 +164,31 @@ class P2pService {
       }
 
       return true;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+  async setRatingOrder(token, data) {
+    try {
+      let { value,description, orderId } = data;
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/rating/${orderId}`,
+        {
+          value,
+          description
+        },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
+
     } catch (error) {
       return internalServerError();
     }

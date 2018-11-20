@@ -63,3 +63,8 @@ export const setCancelOrder = orderId => ({
   type: "SET_P2P_CANCEL_ORDERS",
   orderId
 });
+
+export const setRatingOrder = data => ({
+  type: "SET_P2P_RATING_ORDER",
+  data
+});
