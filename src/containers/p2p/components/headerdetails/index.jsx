@@ -20,7 +20,9 @@ import Modal from "../../../../components/modal";
 class HeaderDetails extends React.Component {
   constructor(props) {
     super(props);
-   
+    this.state = {
+      addressBuyer: ""
+    }
   }
   coinSelected = (value, title, img = undefined) => {
     this.setState({
@@ -34,13 +36,29 @@ class HeaderDetails extends React.Component {
   };
 
   handleClick = () => {
-    const { order } = this.props;
-    this.props.acceptOfferWhenBuying({
+    const { order,acceptOfferWhenBuying,openDeposit } = this.props;
+    const {addressBuyer} = this.state;
+
+    acceptOfferWhenBuying({
       coin: "lunes",
-      orderId: order.id
+      orderId: order.id, 
+      addressBuyer: addressBuyer
     });
-    const { openDeposit } = this.props;
+
     openDeposit(order);
+  };
+
+  handleFields = e => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "addressBuyer":
+        this.setState({
+          ...this.state,
+          addressBuyer: value
+        });
+        break;
+    }
   };
 
   render() {
@@ -72,7 +90,7 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
-            <div className={style.boxDescription}>Descrição</div>
+            <div className={style.boxDescription}>{order.description}</div>
           </Grid>
         </Grid>
         <Grid container>
@@ -80,12 +98,16 @@ class HeaderDetails extends React.Component {
           <Grid item xs={9}>
             <input
               type="text"
-              placeholder="aksdlasd6asd5asd5"
+              placeholder="address to sent"
               className={style.inputCenter}
+              value={this.state.addressBuyer}
+              name="addressBuyer"
+              onChange={e => this.handleFields(e)}
             />
           </Grid>
         </Grid>
         <Grid container>
+          <Grid item xs={3} />
           <Grid item xs={9}>
             <button className={style.btBuy} onClick={this.handleClick}>Comprar</button>
           </Grid>
