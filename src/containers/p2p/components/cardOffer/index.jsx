@@ -2,9 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {openChat} from "../../redux/p2pAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { openChat } from "../../redux/p2pAction";
+
+// UTILS
+import { formatDate } from "../../../../utils/numbers";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -31,49 +34,50 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = (id) => {
-    const {openChat} = this.props;
-    
+  openChat = id => {
+    const { openChat } = this.props;
+
     openChat(id);
-  }
+  };
 
   render() {
+    const {order} = this.props;
     const { openDetails } = this.state;
+    const dateCreate = formatDate(order.createdAt, "DM");
+    
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src="https://loremflickr.com/40/40"
+              src="images/lunio/lunio-user@100x100.jpg"
               className={style.avatar}
             />
           </Grid>
           <Grid item xs={5}>
-            <span className={style.name}>Nome Usuario</span>
-            <span className={style.textSmall}>00/00/2018</span>
-            <span className={style.numberText}>20.00000000</span>
+            <span className={style.name}>{order.sell.user.name} {order.sell.user.surname}</span>
+            <span className={style.textSmall}>{dateCreate}</span>
+            <span className={style.numberText}>{order.sell.amount}</span>
             <span className={style.textSmall}>Oferta</span>
             <div className={style.offerText}>
-              <img src="images/icons/coins/lunes.png" />
-              Lunes
+              <img src={`images/icons/coins/${order.sell.coin}.png`} />
+              {order.sell.coin}
             </div>
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
-              <StarVotes votes={4} />
+              <StarVotes votes={0} />
+              <button className={style.btnClose}>X</button>
             </div>
-            <span className={style.textSmall}>Unid. R$6,00</span>
+            <span className={style.textSmall}>Unid. R$ {order.unitValue.brl.toFixed(2)}</span>
             <ArrowForward className={style.arrowPrice} />
             <span className={style.numberText}>R$650,00</span>
             <span className={style.textSmall}>Vende</span>
             <div className={style.offerText}>
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
+              <img src={`images/icons/coins/${order.buy.coin}.png`} />
             </div>
-            <span className={style.hours}>11:23 am</span>
+            <span className={style.hours}>00:00 am</span>
           </Grid>
           <Grid item xs={2} />
           <Grid
@@ -85,7 +89,12 @@ class CardOffer extends React.Component {
             <div className={style.textDetails}>
               Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
             </div>
-            <button className={style.btContinue} onClick={()=>this.openChat(1)}>Negociar</button>
+            <button
+              className={style.btContinue}
+              onClick={() => this.openChat(1)}
+            >
+              Negociar
+            </button>
           </Grid>
         </Grid>
       </div>
@@ -97,13 +106,12 @@ CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired
 };
 
-const mapStateToProps = store => ({
+const mapStateToProps = store => ({});
 
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ openChat }, dispatch);
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-  {openChat},dispatch
-);
-
-export default connect(mapStateToProps,mapDispatchToProps)(CardOffer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardOffer);

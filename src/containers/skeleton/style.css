@@ -333,7 +333,7 @@
 :local(body) {
   background-color: #42227d;
 }
-:local(.menuP2P){
+:local(.menuP2P) {
   align-items: center;
   justify-content: center;
   margin-left: 40%;
@@ -348,7 +348,9 @@
   position: absolute;
   top: 100%;
   margin-top: -100px;
-  opacity: .5;
+  opacity: 0.5;
+  background-color: transparent;
+  border: none;
 }
 
 :local .linkMenuP2P:hover {

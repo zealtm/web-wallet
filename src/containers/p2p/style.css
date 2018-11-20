@@ -6,6 +6,7 @@
 
 3. IMAGES/UI
 
+4. BUTTONS
 
 */
 
@@ -29,16 +30,16 @@
 }
 
 :local .baseWidget {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
   position: absolute;
   bottom: 0px;
   right: 16px;
-  max-height: 572px;
+  max-height: 650px;
   height: 92vh;
   width: 100%;
   max-width: 414px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
-  overflow: auto;
 }
 
 :local .baseWidgetClose {
@@ -76,12 +77,20 @@
   opacity: 0.5;
   flex: 1;
   border-left: solid 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 :local .itemTabActive {
   composes: itemTabBase;
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   flex: 1;
+  cursor: pointer;
+  border-left: solid 1px rgba(0, 0, 0, 0.3);
+}
+
+:local .baseUserProfile {
+  max-height: 490px;
+  overflow: auto;
 }
 
 :local(.cardProfile) {
@@ -201,11 +210,6 @@
   margin: 15px;
 }
 
-:local .baseUserProfile {
-  max-height: 490px;
-  overflow: auto;
-}
-
 :local .online {
   composes: bgGreenDefault from "../../components/bases/colorBase.css";
   margin-top: 9%;
@@ -215,6 +219,7 @@
   height: 10.9px;
   display: inline;
 }
+
 :local .off {
   composes: bgGreenDark from "../../components/bases/colorBase.css";
   margin-top: 9%;
@@ -224,3 +229,32 @@
   height: 10.9px;
   display: inline;
 }
+
+:local .buttonEnable {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+}
+
+:local .buttonBorderGreen {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+}
+
+:local .headerSelect {
+  composes: bgPurpleClear from "../../components/bases/colorBase.css";
+  padding: 5px;
+  margin-right: 15px;
+  border-radius: 6px;
+}
+
+:local .headerActionFilter {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  padding: 10px;
+}
+
+/* BUTTONS */
+
+:local(.btAdvertisement) {
+  height: 47.5px;
+  font-size: 13px;
+  composes: buttonBorderGreen;
+}
+

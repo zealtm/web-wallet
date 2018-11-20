@@ -2,6 +2,7 @@
   composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
   padding: 20px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 :local .avatar {
@@ -67,6 +68,13 @@
 :local .btContinue {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
   width: 240px;
+}
+
+:local(.btnClose) {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
 }
 
 :local .offerText {

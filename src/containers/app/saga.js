@@ -77,16 +77,23 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
-  openChat, 
+  openChat,
   closeChat,
   setModalStepSaga as setModalFlowP2P,
-  openModalPaySaga as setOpenModalFlowP2P
+  openModalPaySaga as setOpenModalFlowP2P, 
+  getP2PMyOrdersSaga,
+  getP2PHistorySaga,
+  getP2PFilterSaga,
+  getPaymentMethodsWhenBuying,
+  acceptOfferWhenBuying,
+  createOfferWhenSelling,
+  setP2POrdersCancelSaga
 } from "../p2p/redux/p2pSaga";
 
 import {
   setModalStepSaga as setModalStepBuySaga,
   getBuyCoinsEnabledSaga,
-  getCoinPackageSaga, 
+  getCoinPackageSaga,
   getCoinForPaymentSaga,
   openModalPaySaga,
   setClearBuySaga,
@@ -178,6 +185,13 @@ export default function* rootSaga() {
     fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
     fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
+    fork(takeLatest, "GET_P2P_MY_ORDERS", getP2PMyOrdersSaga),
+    fork(takeLatest, "GET_P2P_HISTORY", getP2PHistorySaga),
+    fork(takeLatest, "GET_P2P_FILTER", getP2PFilterSaga),
+    fork(takeLatest, "API_GET_PAYMENT_METHODS_WHEN_BUYING", getPaymentMethodsWhenBuying),
+    fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
+    fork(takeLatest, "API_CREATE_OFFER_WHEN_SELLING", createOfferWhenSelling),
+    fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),    
     
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
