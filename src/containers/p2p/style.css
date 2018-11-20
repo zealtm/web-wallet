@@ -131,6 +131,14 @@
   padding: 10px;
 }
 
+:local(.noOrder) {
+  composes: textGreen;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 35px;
+
+}
+
 :local(.spanDescription) {
   font-size: 10px;
   composes: textGreen;
@@ -253,6 +261,7 @@
 :local(.btAdvertisement) {
   height: 47.5px;
   font-size: 13px;
+  padding: 0;
   composes: buttonBorderGreen;
 }
 

@@ -114,7 +114,9 @@ class Offers extends React.Component {
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (orders.length <= 0) return <h1>Nenhuma ordem</h1>;
+    if (orders.length <= 0) return (<div className={style.noOrder}>
+      <h1>{i18n.t("P2P_NO_ORDER")}</h1>
+    </div> );
 
     return orders.map((val, key) => {
       return <CardOffer key={key} order={val} type={type} />;
@@ -189,7 +191,7 @@ class Offers extends React.Component {
                   titleImg={coinSelect.img}
                   selectItem={this.coinSelected}
                   error={null}
-                  width={"100%"}
+                  width={"89%"}
                 />
               </div>
             </Grid>
@@ -198,8 +200,7 @@ class Offers extends React.Component {
                 className={activeButton}
                 onClick={() => this.filterMyOrders(true)}
               >
-
-                {"Meus Anúncios"}
+                {i18n.t("P2P_MY_LISTING")}
               </button>
             </Grid>
           </Grid>
