@@ -71,10 +71,13 @@ const p2p = (state = initialState, action) => {
         ...state,
         modalOpen: action.open
       };
-    case "SET_P2P_CANCEL_ORDERS_REDUCE":
+    case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
-        isCancel: action.isCancel
+        currentOrder: {
+          ...state,
+          orderId: action.orderId
+        }
       };
 
     case "GET_MY_ORDERS_REDUCER":

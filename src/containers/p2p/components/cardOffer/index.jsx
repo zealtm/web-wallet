@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openChat } from "../../redux/p2pAction";
+import { openChat, setCancelOrder } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -40,6 +40,12 @@ class CardOffer extends React.Component {
     openChat(id);
   };
 
+  handleCancelOrder = e => {
+    e.stopPropagation();
+    const { setCancelOrder, order } = this.props;
+    setCancelOrder(order.id);
+  };
+
   render() {
     const { order, userEmail } = this.props;
     const { openDetails } = this.state;
@@ -71,7 +77,10 @@ class CardOffer extends React.Component {
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
               {userEmail == order.sell.user.email ? (
-                <button className={style.btnClose}>
+                <button
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
+                >
                   <img
                     className={style.btnCloseImg}
                     src="images/icons/p2p/btn-CloseP2p.png"
@@ -123,7 +132,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat }, dispatch);
+  bindActionCreators({ openChat, setCancelOrder }, dispatch);
 
 export default connect(
   mapStateToProps,

@@ -179,8 +179,8 @@ export function* setP2POrdersCancelSaga(payload) {
     );
 
     yield put({
-      type: "SET_P2P_CANCEL_ORDERS_REDUCE",
-      isCancel: response
+      type: "SET_P2P_CANCEL_ORDERS_REDUCER",
+      orderId: response
     });
   } catch (error) {
     yield put(internalServerError());

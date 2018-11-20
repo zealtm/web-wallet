@@ -96,7 +96,7 @@ class P2pService {
         paymentMethodId,
         amount,
         amountPayment,
-        addressSeller, 
+        addressSeller,
         description
       } = data;
       API_HEADER.headers.Authorization = token;
@@ -108,7 +108,7 @@ class P2pService {
           paymentMethodId,
           amount,
           amountPayment,
-          addressSeller, 
+          addressSeller,
           description
         },
         API_HEADER
@@ -152,7 +152,6 @@ class P2pService {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/coin/lunes/p2p/order/cancel/${orderId}`,
-        null,
         API_HEADER
       );
 
@@ -162,7 +161,7 @@ class P2pService {
         return false;
       }
 
-      return true;
+      return response;
     } catch (error) {
       return internalServerError();
     }
