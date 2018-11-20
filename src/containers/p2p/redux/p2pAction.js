@@ -63,3 +63,8 @@ export const setCancelOrder = orderId => ({
   type: "SET_P2P_CANCEL_ORDERS",
   orderId
 });
+
+export const createSignature = data => ({
+  type: "API_P2P_CREATE_CREATE_SIGNATURE",
+  data
+});

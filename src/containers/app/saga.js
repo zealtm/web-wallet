@@ -87,7 +87,8 @@ import {
   getPaymentMethodsWhenBuying,
   acceptOfferWhenBuying,
   createOfferWhenSelling,
-  setP2POrdersCancelSaga
+  setP2POrdersCancelSaga,
+  createSignatureSaga
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -192,6 +193,8 @@ export default function* rootSaga() {
     fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
     fork(takeLatest, "API_CREATE_OFFER_WHEN_SELLING", createOfferWhenSelling),
     fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),    
+    fork(takeLatest, "API_P2P_CREATE_CREATE_SIGNATURE", createSignatureSaga),    
+    
     
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),

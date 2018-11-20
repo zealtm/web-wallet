@@ -171,3 +171,17 @@ export function* setP2POrdersCancelSaga(payload) {
     yield put(internalServerError());
   }
 }
+export function* createSignatureSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
