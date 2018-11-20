@@ -103,6 +103,18 @@ const p2p = (state = initialState, action) => {
         ...state,
         loading: action.loading
       };
+    
+    case "SET_LOADING_CREATE_OFFER":
+      return {
+        ...state,
+        loadingCreateOrder: action.loading
+      }
+    
+    case "CREATE_OFFER_DONE":
+      return {
+        ...state,
+        loadingCreateOrder: false
+      }
 
     default: {
       return {

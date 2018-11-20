@@ -22,6 +22,7 @@ import { Lens } from "@material-ui/icons";
 // COMPONENTS
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
+import Loading from "../../../components/loading";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -207,7 +208,6 @@ class CreateOffer extends React.Component {
     } = this.state.order;
     let error = [];
 
-    console.log("ORDER", order);
     // validate the order fields
     if(type==""){
       error.push("Escolha o tipo");
@@ -248,7 +248,7 @@ class CreateOffer extends React.Component {
 
   render() {
     const { coinBuy, coinSell } = this.state;
-    const { classes, coinsEnabled, user } = this.props;
+    const { classes, coinsEnabled, user, loadingCreateOrder } = this.props;
 
     const username = user.name + " " + user.surname;
     return (
@@ -378,7 +378,7 @@ class CreateOffer extends React.Component {
               {this.state.order.description}
             </textarea>
             <button className={style.btContinue} onClick={this.validateForm}>
-              {i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")}
+              {loadingCreateOrder ? <Loading /> : i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")}
             </button>
           </div>
         </div>
@@ -395,7 +395,8 @@ CreateOffer.propTypes = {
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
-  user: store.user.user
+  user: store.user.user, 
+  loadingCreateOrder: store.p2p.loadingCreateOrder
 });
 
 const mapDispatchToProps = dispatch =>

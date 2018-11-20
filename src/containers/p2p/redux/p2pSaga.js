@@ -145,11 +145,26 @@ export function* getP2PFilterSaga(payload){
 
 export function* createOfferWhenSelling(payload) {
   try {
-    yield p2pService.createOfferWhenSelling(payload.data).catch(error => {
-      throw error;
-    });
+
+    yield put({type:"SET_LOADING_CREATE_OFFER",loading:true});
+
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.createOfferWhenSelling, token, payload.data);
+    
+    if(response.data.data.orderId){
+      yield put({
+        type: "CREATE_OFFER_DONE", 
+        offer: response.data.data.orderId
+      });
+    }else{
+      yield put({
+        type: "CREATE_OFFER_ERROR",
+      });
+    }
+
   } catch (error) {
-    yield put({ type: "FAILED_REQUEST", message: error.message });
+    yield put(internalServerError());
+    //yield put({ type: "FAILED_REQUEST", message: error.message });
   }
 }
 
