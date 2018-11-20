@@ -75,7 +75,7 @@ class HeaderDetails extends React.Component {
               <div className={style.textSmall}>{i18n.t("P2P_HEADER_BUY")}</div>
               <div className={style.listItemCoin}>
                 <img src={`images/icons/coins/${order.buy.coin}.png`} />
-                {order.buy.coin}
+                {order.buy.coin.toUpperCase()}
               </div>
             </div>
           </Grid>
@@ -85,7 +85,7 @@ class HeaderDetails extends React.Component {
               <div className={style.textSmall}>{i18n.t("P2P_HEADER_PAYMENT")}</div>
               <div className={style.listItemCoin}>
                 <img src={`images/icons/coins/${order.sell.coin}.png`} />
-                {order.sell.coin}
+                {order.sell.coin.toUpperCase()}
               </div>
             </div>
           </Grid>

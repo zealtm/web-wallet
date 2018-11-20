@@ -9,6 +9,7 @@ import { openChat } from "../../redux/p2pAction";
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
 import i18n from "./../../../../utils/i18n";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -45,7 +46,11 @@ class CardOffer extends React.Component {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
-    const total = order.unitValue.brl * order.sell.amount;
+    const hourCreate = formatDate(order.createdAt, "HM");
+
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
 
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
@@ -83,16 +88,16 @@ class CardOffer extends React.Component {
               ) : null}
             </div>
             <span className={style.textSmall}>
-              {i18n.t("P2P_VALUE_UNITY")} {order.unitValue.brl.toFixed(2)}
+              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat} {parseFloat(unitValue).toFixed(2)}
             </span>
             <ArrowForward className={style.arrowPrice} />
-            <span className={style.numberText}>R${total.toFixed(2)}</span>
+            <span className={style.numberText}>{defaultFiat} {parseFloat(total).toFixed(2)}</span>
             <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
               {order.buy.coin.toUpperCase()}
             </div>
-            <span className={style.hours}>00:00 am</span>
+            <span className={style.hours}>{hourCreate}</span>
           </Grid>
           <Grid item xs={2} />
           <Grid
