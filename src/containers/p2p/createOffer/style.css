@@ -143,6 +143,12 @@
   width: calc(100% - 30px);
 }
 
+:local .textErrorSmall{
+  composes: clError from "../../../components/bases/colorBase.css";
+  line-height:1.8em;
+  font-size:12px;
+}
+
 :local .labelRadio {
   margin-bottom: 0;
 }

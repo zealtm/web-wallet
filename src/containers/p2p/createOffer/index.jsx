@@ -254,7 +254,7 @@ class CreateOffer extends React.Component {
     return Object.keys(errors).map((value, key) => {
       if (errors[key]) {
         return (
-          <div>
+          <div className={style.textErrorSmall}>
             <ClearIcon
               className={style.iconListValid}
               style={{ color: "red" }}
@@ -437,6 +437,7 @@ class CreateOffer extends React.Component {
             >
               {this.state.order.description}
             </textarea>
+            {this.renderErros()}
             <button className={style.btContinue} onClick={this.validateForm}>
               {loadingCreateOrder ? (
                 <Loading />
@@ -444,7 +445,7 @@ class CreateOffer extends React.Component {
                   i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
                 )}
             </button>
-            {this.renderErros()}
+            
           </div>
         </div>
       </div>
