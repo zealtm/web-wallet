@@ -37,14 +37,14 @@ class ConfirmModal extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>{"You are sending "}</span>
+          <span>{i18n.t("P2P_TEXT_10")}</span>
           <span className={style.totalConfirm}>{"542.59359739 LUNES"}</span>
           <br />
-          <span>{"for payment platform P2P "}</span>
+          <span>{i18n.t("P2P_TEXT_11")}</span>
         </div>
 
         <div className={style.confirmFee}>
-          <div>{"Your transaction fee on the network LUNES is"}</div>
+          <div>{i18n.t("P2P_TEXT_12")}</div>
           <div className={style.txtamount}>{"0"}</div>
         </div>
 
@@ -63,7 +63,7 @@ class ConfirmModal extends React.Component {
           className={style.btGreen}
           onClick={() => this.hendlerContinue()}
         >
-          {"Confirmar"}
+          {i18n.t("P2P_BUTTON_CONFIRM")}
         </button>
       </div>
     );

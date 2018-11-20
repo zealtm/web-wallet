@@ -198,7 +198,7 @@ class Offers extends React.Component {
                 className={activeButton}
                 onClick={() => this.filterMyOrders(true)}
               >
-                {"Meus Anúncios"}
+                {i18n.t("P2P_MY_LISTING")}
               </button>
             </Grid>
           </Grid>
