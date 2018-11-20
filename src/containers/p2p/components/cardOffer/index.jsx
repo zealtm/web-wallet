@@ -40,7 +40,20 @@ class CardOffer extends React.Component {
 
     openChat(order);
   };
-
+  renderBtClose = () => {
+    const { order, userEmail } = this.props;
+    if (userEmail == order.sell.user.email && order.status != "confirmed") {
+      return (
+        <button className={style.btnClose}>
+          <img
+            className={style.btnCloseImg}
+            src="images/icons/p2p/btn-CloseP2p.png"
+            alt="closep2p"
+          />
+        </button>
+      );
+    }
+  }
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
@@ -72,15 +85,7 @@ class CardOffer extends React.Component {
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              {userEmail == order.sell.user.email ? (
-                <button className={style.btnClose}>
-                  <img
-                    className={style.btnCloseImg}
-                    src="images/icons/p2p/btn-CloseP2p.png"
-                    alt="closep2p"
-                  />
-                </button>
-              ) : null}
+              {this.renderBtClose()}
             </div>
             <span className={style.textSmall}>
               {i18n.t("P2P_VALUE_UNITY")} {order.unitValue.brl.toFixed(2)}
@@ -103,12 +108,12 @@ class CardOffer extends React.Component {
           >
             <div className={style.textDetails}>{order.description}</div>
             {(userEmail != order.sell.user.email && type != "myhistory") ? (
-            <button
-              className={style.btContinue}
-              onClick={() => this.openChat(order)}
-            >
-              {i18n.t("P2P_BUTTON_NEGOTIATE")}
-            </button> ) : null}
+              <button
+                className={style.btContinue}
+                onClick={() => this.openChat(order)}
+              >
+                {i18n.t("P2P_BUTTON_NEGOTIATE")}
+              </button>) : null}
           </Grid>
         </Grid>
       </div>
@@ -119,7 +124,7 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  userEmail: PropTypes.string, 
+  userEmail: PropTypes.string,
   type: PropTypes.string
 };
 
