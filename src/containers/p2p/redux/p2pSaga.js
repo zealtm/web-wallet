@@ -163,6 +163,9 @@ export function* createOfferWhenSelling(payload) {
     }
 
   } catch (error) {
+    yield put({
+      type: "CREATE_OFFER_ERROR",
+    });
     yield put(internalServerError());
   }
 }

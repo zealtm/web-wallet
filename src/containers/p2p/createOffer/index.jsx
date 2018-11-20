@@ -256,8 +256,8 @@ class CreateOffer extends React.Component {
     if (createDone)
       return (
         <div>
-          Criado com sucesso{" "}
-          <button className={style.btContinue} onClick={() => clearOffer}>
+          <span className={style.textSuccess}>Criado com sucesso</span>
+          <button className={style.btContinue} onClick={clearOffer}>
             Concluir e voltar
           </button>
         </div>
@@ -266,8 +266,8 @@ class CreateOffer extends React.Component {
     if (createError)
       return (
         <div>
-          Ocorreu um erro{" "}
-          <button className={style.btContinue} onClick={() => clearOffer}>
+          <span className={style.textError}>Ocorreu um erro</span>
+          <button className={style.btContinue} onClick={clearOffer}>
             Tentar novamente
           </button>
         </div>
@@ -319,7 +319,7 @@ class CreateOffer extends React.Component {
                 <input
                   type="text"
                   name="amountPayment"
-                  placeholder="R$0,00"
+                  placeholder="0.0000"
                   className={style.inputDefault}
                   value={this.state.order.amountPayment}
                   onChange={e => this.handleFields(e)}
