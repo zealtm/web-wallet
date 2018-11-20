@@ -124,7 +124,6 @@ class Offers extends React.Component {
   filterMyOrders = filtermyorder => {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
-    console.log("fez :" + myOrders)
     if (myOrders == false) {
       getMyOrders(coinSelect.value);
     } else {
