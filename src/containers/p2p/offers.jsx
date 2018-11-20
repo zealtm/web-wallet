@@ -78,6 +78,7 @@ class Offers extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
+    const {getFilter} = this.props;
     this.setState({
       ...this.state,
       coinSelect: {
@@ -86,8 +87,9 @@ class Offers extends React.Component {
         img
       }
     });
-
-    this.filterMyOrders(false);
+    console.log("Selecionado : "+ value)
+    getFilter("lunes", "p2p", value);
+    //this.filterMyOrders(false);
   };
 
   onChangeTab(status) {
@@ -114,7 +116,7 @@ class Offers extends React.Component {
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (orders.length <= 0) return <h1>Nenhuma ordem</h1>;
+    if (orders.length <= 0 || orders == undefined) return <h1>Nenhuma ordem</h1>;
 
     return orders.map((val, key) => {
       return <CardOffer key={key} order={val} />;

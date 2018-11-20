@@ -115,7 +115,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-console.log(response);
+//console.log(response);
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
@@ -137,9 +137,10 @@ console.log(response);
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      // if (response.data.code !== "200") {
+      if (response.data.code !== "200" || response.data.data == undefined ) {
       //   return internalServerError();
-      // }
+        return [];
+      }
 
       return response.data.data.orders;
     } catch (error) {
