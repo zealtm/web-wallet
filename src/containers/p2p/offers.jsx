@@ -96,6 +96,7 @@ class Offers extends React.Component {
     } else {
       this.setState({ ...this.state, tabGiving: true, tabDone: false });
     }
+    this.filterMyOrders();
   }
 
   componentDidMount = () => {
@@ -110,12 +111,24 @@ class Offers extends React.Component {
   };
 
   renderOders = () => {
-    const { orders, loading } = this.props;
-
+    const { orders, loading, type } = this.props;
+    const { tabGiving } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     if (orders.length <= 0) return <h1>Nenhuma ordem</h1>;
-
+    
+    if (type == "myhistory") {
+      return orders.map((val, key) => {
+        if(tabGiving){
+          if(val.status == "confirmed")
+          return <CardOffer key={key} order={val} />;
+        }
+        if(!tabGiving){
+          if(val.status != "confirmed")
+          return <CardOffer key={key} order={val} />;
+        }
+      });
+    }
     return orders.map((val, key) => {
       return <CardOffer key={key} order={val} />;
     });
@@ -124,7 +137,6 @@ class Offers extends React.Component {
   filterMyOrders = filtermyorder => {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
-    console.log("fez :" + myOrders)
     if (myOrders == false) {
       getMyOrders(coinSelect.value);
     } else {
