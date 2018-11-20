@@ -112,7 +112,8 @@ class Offers extends React.Component {
   renderOders = () => {
     const { orders, loading } = this.props;
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
+    
 
     if (orders.length <= 0) return <h1>Nenhuma ordem</h1>;
 
