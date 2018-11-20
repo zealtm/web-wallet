@@ -35,17 +35,18 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = id => {
+  openChat = order => {
     const { openChat } = this.props;
 
-    openChat(id);
+    openChat(order);
   };
 
   render() {
-    const { order, userEmail } = this.props;
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const total = order.unitValue.brl * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
@@ -101,10 +102,10 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {userEmail != order.sell.user.email ? (
+            {(userEmail != order.sell.user.email && type != "myhistory") ? (
             <button
               className={style.btContinue}
-              onClick={() => this.openChat(1)}
+              onClick={() => this.openChat(order)}
             >
               {i18n.t("P2P_BUTTON_NEGOTIATE")}
             </button> ) : null}
@@ -118,7 +119,8 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  userEmail: PropTypes.string
+  userEmail: PropTypes.string, 
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({

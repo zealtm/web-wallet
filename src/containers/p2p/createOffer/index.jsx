@@ -256,8 +256,8 @@ class CreateOffer extends React.Component {
     if (createDone)
       return (
         <div>
-          {i18n.t("P2P_TEXT_1")}{" "}
-          <button className={style.btContinue} onClick={() => clearOffer}>
+          <span className={style.textSuccess}>{i18n.t("P2P_TEXT_1")}</span>
+          <button className={style.btContinue} onClick={clearOffer}>
             {i18n.t("P2P_TEXT_2")}
           </button>
         </div>
@@ -266,8 +266,8 @@ class CreateOffer extends React.Component {
     if (createError)
       return (
         <div>
-          {i18n.t("P2P_ERROR")}{" "}
-          <button className={style.btContinue} onClick={() => clearOffer}>
+          <span className={style.textError}>{i18n.t("P2P_ERROR")}{" "}</span>
+          <button className={style.btContinue} onClick={clearOffer}>
             {i18n.t("P2P_TRY_AGAIN")}
           </button>
         </div>
@@ -286,7 +286,7 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <span className={style.name}>{username}</span>
-              <span className={style.textSmall}>00/00/0000</span>
+              
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -319,7 +319,7 @@ class CreateOffer extends React.Component {
                 <input
                   type="text"
                   name="amountPayment"
-                  placeholder="R$0,00"
+                  placeholder="0.0000"
                   className={style.inputDefault}
                   value={this.state.order.amountPayment}
                   onChange={e => this.handleFields(e)}
