@@ -20,24 +20,7 @@ import Modal from "../../../../components/modal";
 class HeaderDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "Lunes",
-      img: "images/icons/coins/lunes.png",
-      coinsExample: [
-        {
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
-        },
-        {
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
-        },
-        {
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
-        }
-      ]
-    };
+   
   }
   coinSelected = (value, title, img = undefined) => {
     this.setState({
@@ -61,7 +44,6 @@ class HeaderDetails extends React.Component {
   };
 
   render() {
-    const { title, img, coinsExample } = this.state;
     const { order } = this.props;
     return (
       <div>
@@ -105,7 +87,7 @@ class HeaderDetails extends React.Component {
         </Grid>
         <Grid container>
           <Grid item xs={9}>
-            <button className={style.btBuy}>Comprar</button>
+            <button className={style.btBuy} onClick={this.handleClick}>Comprar</button>
           </Grid>
         </Grid>
         <Grid
