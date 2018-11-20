@@ -34,17 +34,18 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = id => {
+  openChat = order => {
     const { openChat } = this.props;
 
-    openChat(id);
+    openChat(order);
   };
 
   render() {
-    const {order} = this.props;
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
-    
+    const total = order.unitValue.brl * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
@@ -56,26 +57,39 @@ class CardOffer extends React.Component {
             />
           </Grid>
           <Grid item xs={5}>
-            <span className={style.name}>{order.sell.user.name} {order.sell.user.surname}</span>
+            <span className={style.name}>
+              {order.sell.user.name} {order.sell.user.surname}
+            </span>
             <span className={style.textSmall}>{dateCreate}</span>
             <span className={style.numberText}>{order.sell.amount}</span>
             <span className={style.textSmall}>Oferta</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.sell.coin}.png`} />
-              {order.sell.coin}
+              {order.sell.coin.toUpperCase()}
             </div>
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
-              <StarVotes votes={0} />
-              <button className={style.btnClose}>X</button>
+              <StarVotes votes={order.sell.user.rating} />
+              {userEmail == order.sell.user.email ? (
+                <button className={style.btnClose}>
+                  <img
+                    className={style.btnCloseImg}
+                    src="images/icons/p2p/btn-CloseP2p.png"
+                    alt="closep2p"
+                  />
+                </button>
+              ) : null}
             </div>
-            <span className={style.textSmall}>Unid. R$ {order.unitValue.brl.toFixed(2)}</span>
+            <span className={style.textSmall}>
+              Unid. R$ {order.unitValue.brl.toFixed(2)}
+            </span>
             <ArrowForward className={style.arrowPrice} />
-            <span className={style.numberText}>R$650,00</span>
+            <span className={style.numberText}>R${total.toFixed(2)}</span>
             <span className={style.textSmall}>Vende</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
+              {order.buy.coin.toUpperCase()}
             </div>
             <span className={style.hours}>00:00 am</span>
           </Grid>
@@ -86,15 +100,14 @@ class CardOffer extends React.Component {
             className={style.boxDetails}
             style={openDetails ? { display: "block" } : null}
           >
-            <div className={style.textDetails}>
-              Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
-            </div>
+            <div className={style.textDetails}>{order.description}</div>
+            {(userEmail != order.sell.user.email && type != "myhistory") ? (
             <button
               className={style.btContinue}
-              onClick={() => this.openChat(1)}
+              onClick={() => this.openChat(order)}
             >
               Negociar
-            </button>
+            </button> ) : null}
           </Grid>
         </Grid>
       </div>
@@ -103,10 +116,15 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired
+  openChat: PropTypes.func.isRequired,
+  order: PropTypes.object,
+  userEmail: PropTypes.string, 
+  type: PropTypes.string
 };
 
-const mapStateToProps = store => ({});
+const mapStateToProps = store => ({
+  userEmail: store.user.user.email
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ openChat }, dispatch);

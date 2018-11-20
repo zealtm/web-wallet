@@ -21,7 +21,6 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
 
       return response.data;
     } catch (error) {
@@ -43,8 +42,6 @@ class P2pService {
       //   throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
       // }
 
-      
-
       return response.data.data;
     } catch (error) {
       return internalServerError();
@@ -61,7 +58,6 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
 
       return response.data;
     } catch (error) {
@@ -100,7 +96,8 @@ class P2pService {
         paymentMethodId,
         amount,
         amountPayment,
-        addressSeller
+        addressSeller, 
+        description
       } = data;
       API_HEADER.headers.Authorization = token;
 
@@ -111,17 +108,19 @@ class P2pService {
           paymentMethodId,
           amount,
           amountPayment,
-          addressSeller
+          addressSeller, 
+          description
         },
         API_HEADER
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
+
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
 
-      return true;
+      return response;
     } catch (error) {
       return internalServerError();
     }
@@ -137,11 +136,11 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       // if (response.data.code !== "200") {
       //   return internalServerError();
       // }
-      
+
       return response.data.data.orders;
     } catch (error) {
       return internalServerError();
