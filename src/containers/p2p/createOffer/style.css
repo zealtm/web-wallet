@@ -173,4 +173,10 @@
 :local .multiSelect {
   margin-left: 40px !important;
 }
+:local(.iconListValid) {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+}
 

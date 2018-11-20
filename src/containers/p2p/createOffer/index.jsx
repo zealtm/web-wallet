@@ -15,6 +15,7 @@ import {
   FormControlLabel
 } from "@material-ui/core/";
 import { ArrowForward } from "@material-ui/icons/";
+import ClearIcon from "@material-ui/icons/Clear";
 
 // ICONS
 import { Lens } from "@material-ui/icons";
@@ -69,7 +70,8 @@ class CreateOffer extends React.Component {
         amountPayment: "",
         addressSeller: "",
         description: ""
-      }
+      },
+      errors: []
     };
 
     this.handleFields = this.handleFields.bind(this);
@@ -231,14 +233,39 @@ class CreateOffer extends React.Component {
     }
 
     if (error.length > 0) {
-      error.map(val => {
-        alert("Erro: " + val);
+      this.setState({
+        ...this.state,
+        errors: error
       });
+      /*error.map(val => {
+        alert("Erro: " + val);
+      });*/
     } else {
+      this.setState({
+        ...this.state,
+        errors: []
+      });
       createOfferWhenSelling(order);
     }
   };
+  renderErros = () => {
+    let { errors } = this.state;
+    console.log(errors);
+    return Object.keys(errors).map((value, key) => {
+      if (errors[key]) {
+        return (
+          <div>
+            <ClearIcon
+              className={style.iconListValid}
+              style={{ color: "red" }}
+            />
+            {errors[key]}
+          </div>
+        );
+      }
+    });
 
+  }
   render() {
     const { coinBuy, coinSell } = this.state;
     const {
@@ -414,9 +441,10 @@ class CreateOffer extends React.Component {
               {loadingCreateOrder ? (
                 <Loading />
               ) : (
-                i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
-              )}
+                  i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
+                )}
             </button>
+            {this.renderErros()}
           </div>
         </div>
       </div>
