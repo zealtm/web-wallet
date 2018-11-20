@@ -8,12 +8,13 @@ import { closeChat } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 
-import { Star, FavoriteBorder, ArrowForward } from "@material-ui/icons/";
+import { FavoriteBorder, ArrowForward } from "@material-ui/icons/";
 import { ArrowBack } from "@material-ui/icons/";
 import { KeyboardArrowDown } from "@material-ui/icons";
 
@@ -56,11 +57,14 @@ class Header extends React.Component {
     const dateCreate = formatDate(order.createdAt, "DM");
     let { showPerfil } = this.state;
 
-    const total = order.unitValue.brl * order.sell.amount;
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
 
     if (showPerfil) {
       return this.renderPerfil();
     }
+
     return (
       <div className={style.topBar}>
         <div className={style.header}>
@@ -102,7 +106,7 @@ class Header extends React.Component {
               <ArrowForward className={style.arrowPrice} />
             </Grid>
             <Grid item xs={4}>
-              <div className={style.card}>R${total.toFixed(2)}</div>
+              <div className={style.card}>{defaultFiat} {total.toFixed(2)}</div>
             </Grid>
             <Grid
               container
