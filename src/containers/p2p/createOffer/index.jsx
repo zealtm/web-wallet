@@ -175,9 +175,6 @@ class CreateOffer extends React.Component {
       <div className={style.baseUser}>
         <div className={style.headerUser}>
           <Grid container>
-            <Grid item xs={1}>
-              <div className={style.arrowBack} />
-            </Grid>
             <Grid item xs={2}>
               <Avatar
                 alt="avatar"
@@ -185,7 +182,7 @@ class CreateOffer extends React.Component {
                 className={style.avatar}
               />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <span className={style.name}>{username}</span>
               <span className={style.textSmall}>00/00/0000</span>
             </Grid>
@@ -227,8 +224,7 @@ class CreateOffer extends React.Component {
             </Grid>
           </div>
 
-          <div className={style.formGroup}>
-            
+          <div className={style.formGroup}>            
             <Grid container >
               <Grid item xs={4}>
                <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}</div>
