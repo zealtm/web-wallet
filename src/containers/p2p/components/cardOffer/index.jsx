@@ -34,10 +34,10 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = id => {
+  openChat = order => {
     const { openChat } = this.props;
 
-    openChat(id);
+    openChat(order);
   };
 
   render() {
@@ -45,6 +45,7 @@ class CardOffer extends React.Component {
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const total = order.unitValue.brl * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
@@ -103,7 +104,7 @@ class CardOffer extends React.Component {
             {userEmail != order.sell.user.email ? (
             <button
               className={style.btContinue}
-              onClick={() => this.openChat(1)}
+              onClick={() => this.openChat(order)}
             >
               Negociar
             </button> ) : null}
