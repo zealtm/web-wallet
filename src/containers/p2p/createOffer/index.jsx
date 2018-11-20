@@ -248,6 +248,7 @@ class CreateOffer extends React.Component {
                   error={null}
                   width={"100%"}
                 />
+
               </Grid>
             </Grid>
             <hr />
