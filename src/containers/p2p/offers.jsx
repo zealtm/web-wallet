@@ -190,7 +190,7 @@ class Offers extends React.Component {
                   titleImg={coinSelect.img}
                   selectItem={this.coinSelected}
                   error={null}
-                  width={"100%"}
+                  width={"89%"}
                 />
               </div>
             </Grid>
