@@ -489,6 +489,7 @@
   "P2P_PROFILE_NEGOTIATIONS": "Negotiations",
   "P2P_PROFILE_DATA": "Data",
   "P2P_PROFILE_CONCLUDED": "Positive",
-  "P2P_PROFILE_FEEDBACK": "Feedback"
+  "P2P_PROFILE_FEEDBACK": "Feedback",
+  "P2P_OFFER": "Offer"
   
 }

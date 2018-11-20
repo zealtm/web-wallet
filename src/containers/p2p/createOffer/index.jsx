@@ -209,30 +209,30 @@ class CreateOffer extends React.Component {
     let error = [];
 
     if (type == "") {
-      error.push("Escolha o tipo");
+      error.push(i18n.t("P2P_ERROR_1"));
     }
     if (coin == "") {
-      error.push("Informe a moeda de venda");
+      error.push(i18n.t("P2P_ERROR_2"));
     }
     if (paymentMethodId == "") {
-      error.push("Informe a moeda de pagamento");
+      error.push(i18n.t("P2P_ERROR_3"));
     }
     if (amount == "") {
-      error.push("Informe a quantidade");
+      error.push(i18n.t("P2P_ERROR_4"));
     }
     if (amountPayment == "") {
-      error.push("Informe o valor");
+      error.push(i18n.t("P2P_ERROR_5"));
     }
     if (addressSeller == "") {
-      error.push("Informe o endereço de recebimento");
+      error.push(i18n.t("P2P_ERROR_6"));
     }
     if (description == "") {
-      error.push("Informe uma breve descrição");
+      error.push(i18n.t("P2P_ERROR_7"));
     }
 
     if (error.length > 0) {
       error.map(val => {
-        alert("Erro: " + val);
+        alert(i18n("P2P_ERROR") + val);
       });
     } else {
       createOfferWhenSelling(order);
@@ -256,9 +256,9 @@ class CreateOffer extends React.Component {
     if (createDone)
       return (
         <div>
-          Criado com sucesso{" "}
+          {i18n.t("P2P_TEXT_1")}{" "}
           <button className={style.btContinue} onClick={() => clearOffer}>
-            Concluir e voltar
+            {i18n.t("P2P_TEXT_2")}
           </button>
         </div>
       );
@@ -266,9 +266,9 @@ class CreateOffer extends React.Component {
     if (createError)
       return (
         <div>
-          Ocorreu um erro{" "}
+          {i18n.t("P2P_ERROR")}{" "}
           <button className={style.btContinue} onClick={() => clearOffer}>
-            Tentar novamente
+            {i18n.t("P2P_TRY_AGAIN")}
           </button>
         </div>
       );

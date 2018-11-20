@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+//UTILS
+import i18n from "./../../../../utils/i18n";
+
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import { KeyboardArrowUp } from "@material-ui/icons";
@@ -55,7 +58,7 @@ class HeaderDetails extends React.Component {
           <Grid item xs={3} />
           <Grid item xs={4}>
             <div className={style.formGroup}>
-              <div className={style.textSmall}>Compra</div>
+              <div className={style.textSmall}>{i18n.t("P2P_HEADER_BUY")}</div>
               <div className={style.listItemCoin}>
                 <img src={img} alt={title} />
                 {title}
@@ -65,7 +68,7 @@ class HeaderDetails extends React.Component {
           <Grid item xs={1} />
           <Grid item xs={4}>
             <div className={style.formGroup}>
-              <div className={style.textSmall}>Pagamento</div>
+              <div className={style.textSmall}>{i18n.t("P2P_HEADER_PAYMENT")}</div>
               <Select
                 list={coinsExample}
                 title={title}
@@ -80,7 +83,7 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
-            <div className={style.boxDescription}>Descrição</div>
+            <div className={style.boxDescription}>{i18n.t("P2P_HEADER_DESCRIPTION")}</div>
           </Grid>
         </Grid>
         <Grid container>
@@ -96,7 +99,7 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
-            <button className={style.btBuy}>Comprar</button>
+            <button className={style.btBuy}>{i18n.t("P2P_HEADER_BUY_2")}</button>
           </Grid>
         </Grid>
         <Grid

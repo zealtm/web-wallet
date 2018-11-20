@@ -7,13 +7,13 @@ class DepositModal extends React.Component {
   render(){
     return <div className={style.depositContainer}>
         <div className={style.textDeposit}>
-          Utilize o QR CODE ou endereço da carteira abaixo para realizar o deposito
+          {i18n.t("P2P_TEXT_4")}
         </div>
         <img src="/images/modal/Group 323.png" className={style.imgQrCodeDeposit} />
         <div className={style.inputCopyBtnDeposit}>
           <input className={style.inputDeposit}></input>
-          <button className={style.copyCodeDeposit}>Copiar Código</button>
-          <button className={style.btnDeposit}>Concluir</button>
+          <button className={style.copyCodeDeposit}>{i18n.t("P2P_TEXT_5")}</button>
+          <button className={style.btnDeposit}>{i18n.t("P2P_TEXT_6")}</button>
         </div>
       </div>;
   }
