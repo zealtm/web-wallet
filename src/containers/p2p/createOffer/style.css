@@ -29,6 +29,14 @@
   display: block;
 }
 
+:local .counterDescription {
+  font-size: 11px;
+  display: block;
+  float:right;
+  opacity: .5;
+  margin-top:-15px;
+}
+
 :local .textReturn {
   font-size: 16px;
   text-align:center;

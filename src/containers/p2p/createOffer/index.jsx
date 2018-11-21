@@ -71,7 +71,8 @@ class CreateOffer extends React.Component {
         addressSeller: "",
         description: ""
       },
-      errors: []
+      errors: [], 
+      descriptionTotal: 250
     };
 
     this.handleFields = this.handleFields.bind(this);
@@ -189,7 +190,7 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            description: value
+            description: value, 
           }
         });
         break;
@@ -237,9 +238,6 @@ class CreateOffer extends React.Component {
         ...this.state,
         errors: error
       });
-      /*error.map(val => {
-        alert("Erro: " + val);
-      });*/
     } else {
       this.setState({
         ...this.state,
@@ -250,7 +248,6 @@ class CreateOffer extends React.Component {
   };
   renderErros = () => {
     let { errors } = this.state;
-    console.log(errors);
     return Object.keys(errors).map((value, key) => {
       if (errors[key]) {
         return (
@@ -429,11 +426,13 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>
               {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
             </div>
+            <span className={style.counterDescription}>{this.state.order.description.length} / {this.state.descriptionTotal}</span>
             <textarea
               className={style.textArea}
               name="description"
               placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
+              maxLength={this.state.descriptionTotal}
             >
               {this.state.order.description}
             </textarea>
