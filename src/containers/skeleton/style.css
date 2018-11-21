@@ -333,3 +333,35 @@
 :local(body) {
   background-color: #42227d;
 }
+:local(.menuP2P) {
+  align-items: center;
+  justify-content: center;
+  margin-left: 40%;
+  margin-top: 100px;
+  margin-bottom: 50%;
+}
+:local .iconP2p {
+  width: 32px;
+  height: 32px;
+}
+:local(.linkMenuP2P) {
+  position: absolute;
+  top: 100%;
+  margin-top: -100px;
+  opacity: 0.5;
+  background-color: transparent;
+  border: none;
+}
+
+:local .linkMenuP2P:hover {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.linkMenuP2P) {
+    position: static;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    opacity: 1;
+  }
+}
