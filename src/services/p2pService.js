@@ -141,10 +141,6 @@ class P2pService {
         return [];
       }
 
-      // if (response.data.code !== "200") {
-      //   return internalServerError();
-      // }
-
       return response.data.data.orders;
     } catch (error) {
       return internalServerError();
