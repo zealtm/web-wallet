@@ -72,14 +72,14 @@ class Header extends React.Component {
             <Grid item xs={1}>
               <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1} sm={2}>
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
                 src={"images/lunio/lunio-user@100x100.jpg"}
               />
             </Grid>
-            <Grid item xl={4}>
+            <Grid item xl={5}>
               <span
                 className={style.textGreen}
                 onClick={() => this.onClickPerfil()}
