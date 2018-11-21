@@ -81,7 +81,6 @@ export function* getPaymentMethodsWhenBuying(payload) {
     }
 
     yield put({ type: "BUY_SETTER", data: cripto});
-    //yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
   } catch (error) {
     yield put(internalServerError());
   }
@@ -164,12 +163,13 @@ export function* createOfferWhenSelling(payload) {
 
   } catch (error) {
     yield put(internalServerError());
-    //yield put({ type: "FAILED_REQUEST", message: error.message });
   }
 }
 
 export function* setP2POrdersCancelSaga(payload) {
   try {
+    yield put({type:"SET_LOADING_P2P",loading:true});
+    
     let token = yield call(getAuthToken);
 
     let response = yield call(

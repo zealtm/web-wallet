@@ -74,10 +74,7 @@ const p2p = (state = initialState, action) => {
     case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
-        currentOrder: {
-          ...state,
-          orderId: action.orderId
-        }
+        loading:false, 
       };
 
     case "GET_MY_ORDERS_REDUCER":
