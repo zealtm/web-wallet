@@ -63,3 +63,7 @@ export const setCancelOrder = orderId => ({
   type: "SET_P2P_CANCEL_ORDERS",
   orderId
 });
+
+export const clearCancel = () => ({
+  type: "CLEAR_CANCEL_P2P"
+});
