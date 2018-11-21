@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openChat } from "../../redux/p2pAction";
+import { openChat, setCancelOrder } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -41,6 +41,13 @@ class CardOffer extends React.Component {
 
     openChat(order);
   };
+
+  handleCancelOrder = e => {
+    e.stopPropagation();
+    const { setCancelOrder, order } = this.props;
+    setCancelOrder(order.id);
+  };
+
   renderBtClose = () => {
     const { order, userEmail } = this.props;
     if (userEmail == order.sell.user.email && order.status != "confirmed") {
@@ -55,6 +62,7 @@ class CardOffer extends React.Component {
       );
     }
   }
+  
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
@@ -90,7 +98,18 @@ class CardOffer extends React.Component {
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              {this.renderBtClose()}
+              {(userEmail == order.sell.user.email && order.status != "confirmed") ? (
+                <button
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
+                >
+                  <img
+                    className={style.btnCloseImg}
+                    src="images/icons/p2p/btn-CloseP2p.png"
+                    alt="closep2p"
+                  />
+                </button>
+              ) : null}
             </div>
             <span className={style.textSmall}>
               {i18n.t("P2P_VALUE_UNITY")} {defaultFiat} {parseFloat(unitValue).toFixed(2)}
@@ -129,6 +148,7 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
+  setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
   type: PropTypes.string
 };
@@ -138,7 +158,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat }, dispatch);
+  bindActionCreators({ openChat, setCancelOrder }, dispatch);
 
 export default connect(
   mapStateToProps,

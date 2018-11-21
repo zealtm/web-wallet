@@ -203,6 +203,19 @@
   display: block;
 }
 
+:local .textReturn {
+  font-size: 16px;
+  text-align:center;
+  display:block;
+  padding-top:140px;
+  padding-bottom: 40px;
+}
+
+:local .textSuccess {
+  composes: textReturn;
+  composes: clSuccess from "../../components/bases/colorBase.css";
+}
+
 :local .barsNumbers {
   width: 100%;
   text-align: right;
