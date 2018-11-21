@@ -8,6 +8,8 @@ import { openChat, setCancelOrder } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
+import i18n from "./../../../../utils/i18n";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -34,10 +36,10 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = id => {
+  openChat = order => {
     const { openChat } = this.props;
 
-    openChat(id);
+    openChat(order);
   };
 
   handleCancelOrder = e => {
@@ -46,11 +48,31 @@ class CardOffer extends React.Component {
     setCancelOrder(order.id);
   };
 
-  render() {
+  renderBtClose = () => {
     const { order, userEmail } = this.props;
+    if (userEmail == order.sell.user.email && order.status != "confirmed") {
+      return (
+        <button className={style.btnClose}>
+          <img
+            className={style.btnCloseImg}
+            src="images/icons/p2p/btn-CloseP2p.png"
+            alt="closep2p"
+          />
+        </button>
+      );
+    }
+  }
+  
+  render() {
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
-    const total = order.unitValue.brl * order.sell.amount;
+    const hourCreate = formatDate(order.createdAt, "HM");
+
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
@@ -67,16 +89,16 @@ class CardOffer extends React.Component {
             </span>
             <span className={style.textSmall}>{dateCreate}</span>
             <span className={style.numberText}>{order.sell.amount}</span>
-            <span className={style.textSmall}>Oferta</span>
+            <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.sell.coin}.png`} />
-              {order.sell.coin}
+              {order.sell.coin.toUpperCase()}
             </div>
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              {userEmail == order.sell.user.email ? (
+              {(userEmail == order.sell.user.email && order.status != "confirmed") ? (
                 <button
                   className={style.btnClose}
                   onClick={this.handleCancelOrder}
@@ -90,15 +112,16 @@ class CardOffer extends React.Component {
               ) : null}
             </div>
             <span className={style.textSmall}>
-              Unid. R$ {order.unitValue.brl.toFixed(2)}
+              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat} {parseFloat(unitValue).toFixed(2)}
             </span>
             <ArrowForward className={style.arrowPrice} />
-            <span className={style.numberText}>R${total.toFixed(2)}</span>
-            <span className={style.textSmall}>Vende</span>
+            <span className={style.numberText}>{defaultFiat} {parseFloat(total).toFixed(2)}</span>
+            <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
+              {order.buy.coin.toUpperCase()}
             </div>
-            <span className={style.hours}>00:00 am</span>
+            <span className={style.hours}>{hourCreate}</span>
           </Grid>
           <Grid item xs={2} />
           <Grid
@@ -108,12 +131,13 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            <button
-              className={style.btContinue}
-              onClick={() => this.openChat(1)}
-            >
-              Negociar
-            </button>
+            {(userEmail != order.sell.user.email && type != "myhistory") ? (
+              <button
+                className={style.btContinue}
+                onClick={() => this.openChat(order)}
+              >
+                {i18n.t("P2P_BUTTON_NEGOTIATE")}
+              </button>) : null}
           </Grid>
         </Grid>
       </div>
@@ -124,8 +148,9 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  userEmail: PropTypes.string, 
   setCancelOrder: PropTypes.func,
+  userEmail: PropTypes.string,
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({

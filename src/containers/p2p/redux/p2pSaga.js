@@ -162,6 +162,9 @@ export function* createOfferWhenSelling(payload) {
     }
 
   } catch (error) {
+    yield put({
+      type: "CREATE_OFFER_ERROR",
+    });
     yield put(internalServerError());
   }
 }
@@ -185,4 +188,17 @@ export function* setP2POrdersCancelSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
+}
+
+export function* openDeposit(payload) {
+  yield put({
+    type: "OPEN_DEPOSIT_P2P_REDUCER",
+    iduser: payload.iduser
+  });
+}
+
+export function* closeDeposit() {
+  yield put({
+    type: "CLOSE_DEPOSIT_P2P_REDUCER"
+  });
 }

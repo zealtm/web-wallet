@@ -28,14 +28,14 @@ class P2P extends React.Component {
   }
 
   render() {
-    const {modalOpen, openModal} = this.props;
-    
+    const { modalOpen, openModal } = this.props;
+
     return (
       <div>
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          close={() => this.closeModal() }         
+          close={() => this.closeModal()}
         />
 
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -65,31 +65,28 @@ class P2P extends React.Component {
         </Grid>
 
         <Grid container>
-          <Grid item className={style.plansDescription}>
+          <Grid item xs={9} className={style.plansDescription}>
             <h1>P2P</h1>
-            <p>lorem ipsum</p>
+            <p>{i18n.t("P2P_PLANS_DESCRIPTION")}</p>
           </Grid>
         </Grid>
 
         <Grid container className={style.p2pContainer}>
           <Grid item>
-            <div className={style.cardP2p} onClick={()=>openModal(true)}>
-              <h1>Plano básico</h1>
+            <div className={style.cardP2p}>
+              <h1>{i18n.t("P2P_MONTHLY_SIGNATURE")}</h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
+                <p>{i18n.t("P2P_MONTHLY_SIGNATURE_DESCRIPTION")}</p>
               </div>
               <div className={style.valueCard}>
                 <span className={style.dollarSign}>R$</span>{" "}
                 <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
+                  <span className={style.value}>00</span>{" "}
                   <span className={style.decimals}>,00</span>
                 </div>
               </div>
@@ -98,22 +95,19 @@ class P2P extends React.Component {
 
           <Grid item>
             <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
+              <h1>{i18n.t("P2P_QUARTERLY_SIGNATURE")}</h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
+                <p>{i18n.t("P2P_QUARTERLY_SIGNATURE_DESCRIPTION")}</p>
               </div>
               <div className={style.valueCard}>
                 <span className={style.dollarSign}>R$</span>{" "}
                 <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
+                  <span className={style.value}>00</span>{" "}
                   <span className={style.decimals}>,00</span>
                 </div>
               </div>
@@ -122,22 +116,19 @@ class P2P extends React.Component {
 
           <Grid item>
             <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
+              <h1>{i18n.t("P2P_SEMESTER_SIGNATURE")}</h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
+                <p>{i18n.t("P2P_SEMESTER_SIGNATURE_DESCRIPTION")}</p>
               </div>
               <div className={style.valueCard}>
                 <span className={style.dollarSign}>R$</span>{" "}
                 <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
+                  <span className={style.value}>00</span>{" "}
                   <span className={style.decimals}>,00</span>
                 </div>
               </div>
@@ -146,22 +137,19 @@ class P2P extends React.Component {
 
           <Grid item>
             <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
+              <h1>{i18n.t("P2P_YEARLY_SIGNATURE")}</h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
+                <p>{i18n.t("P2P_YEARLY_SIGNATURE_DESCRIPTION")}</p>
               </div>
               <div className={style.valueCard}>
                 <span className={style.dollarSign}>R$</span>{" "}
                 <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
+                  <span className={style.value}>00</span>{" "}
                   <span className={style.decimals}>,00</span>
                 </div>
               </div>
@@ -178,20 +166,21 @@ P2P.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired
-}
+};
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
-  modalOpen: store.p2p.modalOpen,
+  modalOpen: store.p2p.modalOpen
 });
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    setModalStep, 
-    openModal
-  }, 
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalStep,
+      openModal
+    },
+    dispatch
+  );
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
-) (P2P);
+)(P2P);

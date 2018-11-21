@@ -29,6 +29,23 @@
   display: block;
 }
 
+:local .textReturn {
+  font-size: 16px;
+  text-align:center;
+  display:block;
+  padding-top:140px;
+}
+
+:local .textError {
+  composes: textReturn;
+  composes: clError from "../../../components/bases/colorBase.css";
+}
+
+:local .textSuccess {
+  composes: textReturn;
+  composes: clSuccess from "../../../components/bases/colorBase.css";
+}
+
 :local .textSmallCoinPayment {
   composes: textGreen;
   font-size: 11px;
@@ -126,6 +143,12 @@
   width: calc(100% - 30px);
 }
 
+:local .textErrorSmall{
+  composes: clError from "../../../components/bases/colorBase.css";
+  line-height:1.8em;
+  font-size:12px;
+}
+
 :local .labelRadio {
   margin-bottom: 0;
 }
@@ -155,5 +178,11 @@
 
 :local .multiSelect {
   margin-left: 40px !important;
+}
+:local(.iconListValid) {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
 }
 
