@@ -96,7 +96,7 @@ class P2pService {
         paymentMethodId,
         amount,
         amountPayment,
-        addressSeller, 
+        addressSeller,
         description
       } = data;
       API_HEADER.headers.Authorization = token;
@@ -108,14 +108,14 @@ class P2pService {
           paymentMethodId,
           amount,
           amountPayment,
-          addressSeller, 
+          addressSeller,
           description
         },
         API_HEADER
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-//console.log(response);
+      //console.log(response);
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
@@ -134,12 +134,12 @@ class P2pService {
         BASE_URL + "/coin/" + coin + "/p2p/order/" + type + "/" + coinBuy,
         API_HEADER
       );
-
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       if (response.data.data == undefined) {
-      return [];
-     }
+        return [];
+      }
+      
       return response.data.data.orders;
     } catch (error) {
       return internalServerError();

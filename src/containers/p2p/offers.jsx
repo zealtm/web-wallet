@@ -87,14 +87,8 @@ class Offers extends React.Component {
         img
       }
     });
-    console.log("Selecionado : "+ value)
-    if(value == "lunes"){
-      this.filterMyOrders(false);
-    }else{
-      getFilter("lunes", "p2p", value);
-    }
-    
-    //this.filterMyOrders(false);
+   
+    getFilter(value, "p2p", "");
   };
 
   onChangeTab(status) {
