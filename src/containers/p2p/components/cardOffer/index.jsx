@@ -43,7 +43,7 @@ class CardOffer extends React.Component {
   };
 
   render() {
-    const { order, userEmail, type } = this.props;
+    const { order, userEmail, type, profilePicture } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const hourCreate = formatDate(order.createdAt, "HM");
@@ -58,7 +58,7 @@ class CardOffer extends React.Component {
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src="images/lunio/lunio-user@100x100.jpg"
+              src={profilePicture}
               className={style.avatar}
             />
           </Grid>
@@ -125,11 +125,13 @@ CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
   userEmail: PropTypes.string, 
-  type: PropTypes.string
+  type: PropTypes.string,
+  profilePicture: PropTypes.string
 };
 
 const mapStateToProps = store => ({
-  userEmail: store.user.user.email
+  userEmail: store.user.user.email,
+  profilePicture:  store.user.user.profilePicture,
 });
 
 const mapDispatchToProps = dispatch =>
