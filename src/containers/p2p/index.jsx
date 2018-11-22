@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Helmet } from 'react-helmet'
 
 //REDUX
 import {connect} from "react-redux";
@@ -73,7 +74,7 @@ class P2P extends React.Component {
 
   renderContent = () => {
     const { tabIcon } = this.state;
-    
+
     const contents = [
       <Offers key={1} />,
       <Offers key={2} />,
@@ -106,9 +107,7 @@ class P2P extends React.Component {
                 <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
               </div>
             ) : (
-              <div>
-                <Chat />
-              </div>
+              <Chat/>
             )
         }
       </div>
@@ -127,4 +126,3 @@ const mapStateToProps = store => ({
 export default connect(
   mapStateToProps
 )(P2P);
-
