@@ -89,7 +89,9 @@ import {
   createOfferWhenSelling,
   setP2POrdersCancelSaga,
   openDeposit,
-  closeDeposit
+  closeDeposit,
+  openAvaliation,
+  closeAvaliation
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -196,6 +198,8 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),    
     fork(takeLatest, "OPEN_DEPOSIT_P2P", openDeposit),
     fork(takeLatest, "CLOSE_DEPOSIT_P2P", closeDeposit),
+    fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
+    fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
     
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
