@@ -201,7 +201,7 @@
   "PLACEHOLDER_USERNAME_EMAIL": "Usuário ou E-mail",
   "PLACEHOLDER_EMAIL": "E-mail",
   "BTN_RECEIVE_EMAIL": "E-mail",
-  "PLACEHOLDER_SEED": "Seed Words",
+  "PLACEHOLDER_SEED": "Anote a seed que você gerou (12 palavras em inglês) em um local bem seguro. Somente você tem acesso a ela e através das 12 palavras que é possível acessar sua carteira na blockchain.",
   "BTN_IMPORT_SEED": "Importar",
   "BTN_NEW_SEED": "GERAR NOVA SEED",
   "SEED_INSERT_SEED": "Insira suas SeedWords",
