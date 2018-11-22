@@ -65,7 +65,6 @@ class CardOffer extends React.Component {
   }
   rederPictureGravatar(email){
     return "https://www.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=100";
-
   }
   render() {
     const { order, userEmail, type } = this.props;
