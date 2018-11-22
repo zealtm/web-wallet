@@ -248,6 +248,7 @@ class CreateOffer extends React.Component {
       createOfferWhenSelling(order);
     }
   };
+  
   renderErros = () => {
     let { errors } = this.state;
     console.log(errors);
