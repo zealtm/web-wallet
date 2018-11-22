@@ -364,7 +364,7 @@ class CreateOffer extends React.Component {
                   titleImg={coinSell.img}
                   selectItem={this.coinSelectedSell}
                   error={null}
-                  width={"100%"}
+                  width={"120%"}
                 />
               </Grid>
               <Grid item xs={2} />
