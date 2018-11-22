@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openChat } from "../../redux/p2pAction";
+import { openChat, setCancelOrder } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
 import i18n from "./../../../../utils/i18n";
 import { getDefaultFiat } from "../../../../utils/localStorage";
+import { encryptMd5 } from "../../../../utils/cryptography";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -42,8 +43,32 @@ class CardOffer extends React.Component {
     openChat(order);
   };
 
+  handleCancelOrder = e => {
+    e.stopPropagation();
+    const { setCancelOrder, order } = this.props;
+    setCancelOrder(order.id);
+  };
+
+  renderBtClose = () => {
+    const { order, userEmail } = this.props;
+    if (userEmail == order.sell.user.email && order.status != "confirmed") {
+      return (
+        <button className={style.btnClose}>
+          <img
+            className={style.btnCloseImg}
+            src="images/icons/p2p/btn-CloseP2p.png"
+            alt="closep2p"
+          />
+        </button>
+      );
+    }
+  }
+  rederPictureGravatar(email){
+    return "https://www.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=100";
+
+  }
   render() {
-    const { order, userEmail, type, profilePicture } = this.props;
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const hourCreate = formatDate(order.createdAt, "HM");
@@ -58,7 +83,7 @@ class CardOffer extends React.Component {
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src={profilePicture}
+              src={this.rederPictureGravatar(order.sell.user.email)}
               className={style.avatar}
             />
           </Grid>
@@ -77,8 +102,11 @@ class CardOffer extends React.Component {
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              {userEmail == order.sell.user.email ? (
-                <button className={style.btnClose}>
+              {(userEmail == order.sell.user.email && order.status != "confirmed") ? (
+                <button
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
+                >
                   <img
                     className={style.btnCloseImg}
                     src="images/icons/p2p/btn-CloseP2p.png"
@@ -108,12 +136,12 @@ class CardOffer extends React.Component {
           >
             <div className={style.textDetails}>{order.description}</div>
             {(userEmail != order.sell.user.email && type != "myhistory") ? (
-            <button
-              className={style.btContinue}
-              onClick={() => this.openChat(order)}
-            >
-              {i18n.t("P2P_BUTTON_NEGOTIATE")}
-            </button> ) : null}
+              <button
+                className={style.btContinue}
+                onClick={() => this.openChat(order)}
+              >
+                {i18n.t("P2P_BUTTON_NEGOTIATE")}
+              </button>) : null}
           </Grid>
         </Grid>
       </div>
@@ -124,18 +152,17 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  userEmail: PropTypes.string, 
-  type: PropTypes.string,
-  profilePicture: PropTypes.string
+  setCancelOrder: PropTypes.func,
+  userEmail: PropTypes.string,
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({
-  userEmail: store.user.user.email,
-  profilePicture:  store.user.user.profilePicture,
+  userEmail: store.user.user.email
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat }, dispatch);
+  bindActionCreators({ openChat, setCancelOrder }, dispatch);
 
 export default connect(
   mapStateToProps,

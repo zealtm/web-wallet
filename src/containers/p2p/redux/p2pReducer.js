@@ -27,7 +27,8 @@ const initialState = {
     },
     paymentMethods: [],
     paymentMethod: {}
-  }
+  }, 
+  cancelDone:false,
 };
 
 const p2p = (state = initialState, action) => {
@@ -73,11 +74,19 @@ const p2p = (state = initialState, action) => {
         ...state,
         modalOpen: action.open
       };
-    case "SET_P2P_CANCEL_ORDERS_REDUCE":
+
+    case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
-        isCancel: action.isCancel
+        loading:false, 
+        cancelDone: true,
       };
+
+    case "CLEAR_CANCEL_P2P":
+      return {
+        ...state,
+        cancelDone: false
+      }
 
     case "GET_MY_ORDERS_REDUCER":
       return {

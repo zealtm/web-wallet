@@ -13,8 +13,8 @@
 }
 
 :local .imgQrCodeDeposit{
-  width: 35%;
   margin-top: 4vh;
+  border: solid 6px #ffffff;
 }
 
 :local .inputDeposit{

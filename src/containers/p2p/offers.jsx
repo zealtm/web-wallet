@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
+import { getMyOrders, getHistory, getFilter, clearCancel } from "./redux/p2pAction";
 
 // MATERIA UI
 import { Grid } from "@material-ui/core";
@@ -89,6 +89,15 @@ class Offers extends React.Component {
 
     this.filterMyOrders(false);
   };
+
+  clearCancel = () => {
+    const {clearCancel,getFilter} = this.props;
+    const { coinSelect } = this.state;
+
+    clearCancel();
+
+    getFilter(coinSelect.value, "p2p", "");
+  }
 
   onChangeTab(status) {
     if (status == 1) {
@@ -184,12 +193,22 @@ class Offers extends React.Component {
   };
 
   render() {
-    const { coinsEnabled } = this.props;
+    const { coinsEnabled, cancelDone } = this.props;
     const { coinSelect, myOrders } = this.state;
 
     const activeButton = myOrders
       ? style.buttonEnable
       : style.buttonBorderGreen;
+
+    if (cancelDone)
+      return (
+        <div>
+          <span className={style.textSuccess}>Cancel done!</span>
+          <button className={style.buttonEnable} onClick={this.clearCancel}>
+            {i18n.t("P2P_TEXT_2")}
+          </button>
+        </div>
+      );
 
     return (
       <div>
@@ -235,13 +254,16 @@ Offers.propTypes = {
   getMyOrders: PropTypes.func,
   getHistory: PropTypes.func,
   loading: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string, 
+  clearCancel: PropTypes.fund,
+  cancelDone: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
   orders: store.p2p.orders,
-  loading: store.p2p.loading
+  loading: store.p2p.loading, 
+  cancelDone: store.p2p.cancelDone
 });
 
 const mapDispatchToProps = dispatch =>
@@ -249,7 +271,8 @@ const mapDispatchToProps = dispatch =>
     {
       getMyOrders,
       getHistory,
-      getFilter
+      getFilter, 
+      clearCancel
     },
     dispatch
   );
