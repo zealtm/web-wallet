@@ -1,21 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// COMPONENTS
+// LOCAL COMPONENTS
 import Header from "../components/header";
-import BoxChat from "../components/boxChat";
 import DepositModal from "../modal/deposit";
 
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
+// GLOBAL COMPONENTS
+import Loading from '../../../components/loading'
+
 // STYLE
 import style from "./style.css";
+
+//FUNCTIONS
+import { getChatBundle } from './functions'
 
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    getChatBundle()
   }
 
   render() {
@@ -25,8 +34,9 @@ class Chat extends React.Component {
         {openDeposit == false ? (
           <div className={style.baseChat}>
             <Header />
-            <div className={style.callChat}>
-              <BoxChat />
+            <div className={style.chatTarget} id={"chatTarget"}>
+              <Loading/>
+              {/*Chat will be rendered here when component mounts*/}
             </div>
           </div>
         ) : (

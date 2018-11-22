@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Helmet } from 'react-helmet'
 
 //REDUX
 import { connect } from "react-redux";
@@ -94,23 +95,26 @@ class P2P extends React.Component {
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
 
-        {chatOpened == false ? (
-          <div>
-            <div className={style.baseContent}>{this.renderContent()}</div>
-            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-          </div>
-        ) : (
-          <div>
-            <Chat />
-          </div>
-        )}
+        {
+          (chatOpened==false)?
+            (
+              <div>
+                <div className={style.baseContent}>
+                  {this.renderContent()}
+                </div>
+                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+              </div>
+            ) : (
+              <Chat/>
+            )
+        }
       </div>
     );
   }
 }
 
 P2P.propTypes = {
-  p2pStore: PropTypes.object.isRequired, 
+  p2pStore: PropTypes.object.isRequired,
   getPaymentMethodsWhenBuying: PropTypes.func,
 };
 
@@ -118,12 +122,12 @@ const mapStateToProps = store => ({
   p2pStore: store.p2p
 });
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-  {
-    getPaymentMethodsWhenBuying
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getPaymentMethodsWhenBuying
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(P2P);
