@@ -246,6 +246,7 @@ class CreateOffer extends React.Component {
       createOfferWhenSelling(order);
     }
   };
+  
   renderErros = () => {
     let { errors } = this.state;
     return Object.keys(errors).map((value, key) => {
