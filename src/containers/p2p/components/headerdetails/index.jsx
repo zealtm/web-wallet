@@ -43,7 +43,7 @@ class HeaderDetails extends React.Component {
     let error = [];
 
     if (addressBuyer == "") {
-      error.push("Preencha o endereço para recebimento");
+      error.push(i18n.t("P2P_CHANGE_ADDRESS"));
     }
 
     if (error.length > 0) {
