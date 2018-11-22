@@ -77,7 +77,7 @@ class HeaderDetails extends React.Component {
                 <img src={`images/icons/coins/${order.buy.coin}.png`} />
                 {order.buy.coin.toUpperCase()}
               </div>
-            </div>
+            </div> 
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={4}>
@@ -112,7 +112,8 @@ class HeaderDetails extends React.Component {
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
-            <button className={style.btBuy} onClick={this.handleClick}>{i18n.t("P2P_HEADER_BUY_2")}</button>
+          {order.status != "confirmed"?<button className={style.btBuy} onClick={this.handleClick}>{i18n.t("P2P_HEADER_BUY_2")}</button>:null}
+            
           </Grid>
         </Grid>
         <Grid
