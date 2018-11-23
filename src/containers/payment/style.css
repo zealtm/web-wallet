@@ -25,6 +25,7 @@
 }
 
 :local(.row) {
+  display: flex;
   margin: 0.5rem 0 1rem 0;
 }
 
@@ -83,4 +84,9 @@
 ::-webkit-scrollbar-thumb        {
   background-color: #654fa4;
   border-radius: 6px;
+}
+
+/* 5. ICONS */
+:local .cameraIcon {
+  margin-top: 1.5rem;
 }

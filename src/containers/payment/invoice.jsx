@@ -22,6 +22,7 @@ import { DateMask, MoneyBrlMask } from "../../components/inputMask";
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
 
 // STYLES
 import style from "./style.css";
@@ -50,7 +51,7 @@ const customStyle = {
   },
   inputCssCenter: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "16px",
+    fontSize: "12px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
@@ -192,19 +193,19 @@ class Invoice extends React.Component {
   normalizeInvoiceNumber = e => {
     const chars = e.target.value.length;
     let number = e.target.value;
-    
-    for(let i=0; i<chars; i++){
-      number = number.replace(/\D/, "")
+
+    for (let i = 0; i < chars; i++) {
+      number = number.replace(/\D/, "");
     }
-    
+
     this.setState({
       ...this.state,
       invoice: {
         ...this.state.invoice,
         number: number
       }
-    })
-  }
+    });
+  };
 
   handleCpfCnpjChange = event => {
     const { invoice } = this.state;
@@ -321,7 +322,7 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment } = this.props;
+    const { classes, loading, coinsRedux, payment, scannerModal } = this.props;
     const { coin, invoice, errors } = this.state;
 
     const title = coin.name || "Select a coin..";
@@ -331,19 +332,28 @@ class Invoice extends React.Component {
       <Grid container direction="row" justify="center">
         <Grid item xs={12} className={style.box}>
           <div className={style.row}>
-            <Input
-              classes={{
-                root: classes.inputRoot,
-                underline: classes.inputCssUnderline,
-                input: classes.inputCssCenter
-              }}
-              placeholder="237933802350009031431630033330944400000001000000"
-              inputProps={{ maxLength: 48, required: true }}
-              value={invoice.number}
-              onChange={this.handleInvoiceNumberChange}
-              onBlur={this.normalizeInvoiceNumber}
-              error={errors.includes("number")}
-            />
+            <Grid item xs={11} md={12}>
+              <Input
+                classes={{
+                  root: classes.inputRoot,
+                  underline: classes.inputCssUnderline,
+                  input: classes.inputCssCenter
+                }}
+                placeholder="237933802350009031431630033330944400000001000000"
+                inputProps={{ maxLength: 48, required: true }}
+                value={invoice.number}
+                onChange={this.handleInvoiceNumberChange}
+                onBlur={this.normalizeInvoiceNumber}
+                error={errors.includes("number")}
+              />
+            </Grid>
+            <Hidden smUp>
+              <Grid item xs={1}>
+                <div onClick={() => scannerModal()} className={style.cameraIcon}>
+                  <img src="images/icons/camera/camera.png" alt="Camera" />
+                </div>
+              </Grid>
+            </Hidden>
           </div>
 
           <Grid container>
@@ -490,7 +500,8 @@ Invoice.propTypes = {
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  errorInput: PropTypes.func.isRequired
+  errorInput: PropTypes.func.isRequired,
+  scannerModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
