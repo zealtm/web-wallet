@@ -434,6 +434,7 @@ class CreateOffer extends React.Component {
               placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
               maxLength={this.state.descriptionTotal}
+              value={this.state.order.description}
             >
               {this.state.order.description}
             </textarea>
@@ -455,7 +456,7 @@ class CreateOffer extends React.Component {
 
 CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired,
-  coinsEnabled: PropTypes.array,
+  coinsEnabled: PropTypes.any,
   user: PropTypes.object,
   loadingCreateOrder: PropTypes.bool,
   createDone: PropTypes.bool,

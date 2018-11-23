@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getMyOrders, getHistory, getFilter, clearCancel } from "./redux/p2pAction";
+import {
+  getMyOrders,
+  getHistory,
+  getFilter,
+  clearCancel
+} from "./redux/p2pAction";
 
 // MATERIA UI
 import { Grid } from "@material-ui/core";
@@ -91,13 +96,13 @@ class Offers extends React.Component {
   };
 
   clearCancel = () => {
-    const {clearCancel,getFilter} = this.props;
+    const { clearCancel, getFilter } = this.props;
     const { coinSelect } = this.state;
 
     clearCancel();
 
     getFilter(coinSelect.value, "p2p", "");
-  }
+  };
 
   onChangeTab(status) {
     if (status == 1) {
@@ -124,19 +129,22 @@ class Offers extends React.Component {
     const { tabGiving } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (orders.length <= 0) return (<div className={style.noOrder}>
-      <h1>{i18n.t("P2P_NO_ORDER")}</h1>
-    </div> );
-    
+    if (orders.length <= 0)
+      return (
+        <div className={style.noOrder}>
+          <h1>{i18n.t("P2P_NO_ORDER")}</h1>
+        </div>
+      );
+
     if (type == "myhistory") {
       return orders.map((val, key) => {
-        if(tabGiving){
-          if(val.status == "confirmed")
-          return <CardOffer key={key} order={val} />;
+        if (tabGiving) {
+          if (val.status == "confirmed")
+            return <CardOffer key={key} order={val} />;
         }
-        if(!tabGiving){
-          if(val.status != "confirmed")
-          return <CardOffer key={key} order={val} />;
+        if (!tabGiving) {
+          if (val.status != "confirmed")
+            return <CardOffer key={key} order={val} />;
         }
       });
     }
@@ -155,7 +163,7 @@ class Offers extends React.Component {
         getFilter(coinSelect.value, "p2p", "");
       } else {
         getHistory(coinSelect.value);
-     }
+      }
     }
 
     if (filtermyorder) {
@@ -247,22 +255,22 @@ class Offers extends React.Component {
 
 Offers.propTypes = {
   classes: PropTypes.object.isRequired,
-  openModal: PropTypes.func.isRequired,
-  coinsEnabled: PropTypes.array.isRequired,
+  coinsEnabled: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    .isRequired,
   orders: PropTypes.array.isRequired,
   getFilter: PropTypes.func,
   getMyOrders: PropTypes.func,
   getHistory: PropTypes.func,
   loading: PropTypes.bool,
-  type: PropTypes.string, 
-  clearCancel: PropTypes.fund,
+  type: PropTypes.string,
+  clearCancel: PropTypes.func,
   cancelDone: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
   orders: store.p2p.orders,
-  loading: store.p2p.loading, 
+  loading: store.p2p.loading,
   cancelDone: store.p2p.cancelDone
 });
 
@@ -271,7 +279,7 @@ const mapDispatchToProps = dispatch =>
     {
       getMyOrders,
       getHistory,
-      getFilter, 
+      getFilter,
       clearCancel
     },
     dispatch
