@@ -1,4 +1,5 @@
 :local .chatTarget {
   height: 100%;
   overflow: hidden;
+  height: 430px;
 }
