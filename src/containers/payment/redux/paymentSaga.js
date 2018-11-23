@@ -87,12 +87,13 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
+    const decimalPoint = payload.pay.decimalPoint;
 
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
-      balance: convertBiggestCoinUnit(balance, 8),
-      amount: convertBiggestCoinUnit(amount, 8),
+      balance: convertBiggestCoinUnit(balance, decimalPoint),
+      amount: convertBiggestCoinUnit(amount, decimalPoint),
       value: value,
       assignor: payload.pay.assignor,
       name: payload.pay.name,

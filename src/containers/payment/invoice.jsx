@@ -247,6 +247,7 @@ class Invoice extends React.Component {
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
+      decimalPoint: coins[invoice.coin.abbreviation].decimalPoint,
       address: coins[invoice.coin.abbreviation]
         ? coins[invoice.coin.abbreviation].address
         : undefined
