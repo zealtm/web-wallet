@@ -64,7 +64,8 @@ class CardOffer extends React.Component {
     }
   }
   rederPictureGravatar(email){
-    return "https://www.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=100";
+    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
   }
   render() {
     const { order, userEmail, type } = this.props;
