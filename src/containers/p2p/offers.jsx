@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getMyOrders, getHistory, getFilter } from "./redux/p2pAction";
+import { getMyOrders, getHistory, getFilter, clearCancel } from "./redux/p2pAction";
 
 // MATERIA UI
 import { Grid } from "@material-ui/core";
@@ -69,7 +69,7 @@ class Offers extends React.Component {
       coinSelect: {
         name: "Lunes",
         value: "lunes",
-        img: "images/icons/coins/lunes.png",
+        img: "images/icons/coins/lunes.png"
       },
       myOrders: false
     };
@@ -90,52 +90,75 @@ class Offers extends React.Component {
     this.filterMyOrders(false);
   };
 
+  clearCancel = () => {
+    const {clearCancel,getFilter} = this.props;
+    const { coinSelect } = this.state;
+
+    clearCancel();
+
+    getFilter(coinSelect.value, "p2p", "");
+  }
+
   onChangeTab(status) {
     if (status == 1) {
       this.setState({ ...this.state, tabGiving: false, tabDone: true });
     } else {
       this.setState({ ...this.state, tabGiving: true, tabDone: false });
     }
+    this.filterMyOrders();
   }
 
   componentDidMount = () => {
     const { getFilter, getHistory, type } = this.props;
     const { coinSelect } = this.state;
 
-    if(type==="myhistory"){
+    if (type === "myhistory") {
       getHistory(coinSelect.value);
-    }else{
+    } else {
       getFilter(coinSelect.value, "p2p", "");
     }
   };
 
   renderOders = () => {
-    const { orders, loading } = this.props;
+    const { orders, loading, type } = this.props;
+    const { tabGiving } = this.state;
+    if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (loading) return <Loading />;
-
-    if (orders.length<=0) return <h1>Nenhuma ordem</h1>;
-
+    if (orders.length <= 0) return (<div className={style.noOrder}>
+      <h1>{i18n.t("P2P_NO_ORDER")}</h1>
+    </div> );
+    
+    if (type == "myhistory") {
+      return orders.map((val, key) => {
+        if(tabGiving){
+          if(val.status == "confirmed")
+          return <CardOffer key={key} order={val} />;
+        }
+        if(!tabGiving){
+          if(val.status != "confirmed")
+          return <CardOffer key={key} order={val} />;
+        }
+      });
+    }
     return orders.map((val, key) => {
-      return <CardOffer key={key} order={val} />;
+      return <CardOffer key={key} order={val} type={type} />;
     });
   };
 
-  filterMyOrders = (filtermyorder) => {
-    const { getMyOrders, getHistory, type } = this.props;
+  filterMyOrders = filtermyorder => {
+    const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
-
-    if (myOrders==false) {
+    if (myOrders == false) {
       getMyOrders(coinSelect.value);
     } else {
-      if(type!="myhistory"){
+      if (type != "myhistory") {
         getFilter(coinSelect.value, "p2p", "");
-      }else{
+      } else {
         getHistory(coinSelect.value);
-      }
+     }
     }
 
-    if(filtermyorder){
+    if (filtermyorder) {
       this.setState({
         ...this.state,
         myOrders: !myOrders
@@ -144,10 +167,10 @@ class Offers extends React.Component {
   };
 
   renderFilters = () => {
-    const {type} = this.props;
+    const { type } = this.props;
     const { tabGiving, tabDone } = this.state;
 
-    if(type==="myhistory"){
+    if (type === "myhistory") {
       return (
         <div className={style.tabContent}>
           <div
@@ -167,15 +190,25 @@ class Offers extends React.Component {
     }
 
     return;
-  }
+  };
 
   render() {
-    const { coinsEnabled } = this.props;
+    const { coinsEnabled, cancelDone } = this.props;
     const { coinSelect, myOrders } = this.state;
 
     const activeButton = myOrders
       ? style.buttonEnable
       : style.buttonBorderGreen;
+
+    if (cancelDone)
+      return (
+        <div>
+          <span className={style.textSuccess}>Cancel done!</span>
+          <button className={style.buttonEnable} onClick={this.clearCancel}>
+            {i18n.t("P2P_TEXT_2")}
+          </button>
+        </div>
+      );
 
     return (
       <div>
@@ -189,16 +222,16 @@ class Offers extends React.Component {
                   titleImg={coinSelect.img}
                   selectItem={this.coinSelected}
                   error={null}
-                  width={"100%"}
+                  width={"89%"}
                 />
               </div>
             </Grid>
             <Grid item xs={5}>
               <button
                 className={activeButton}
-                onClick={()=>this.filterMyOrders(true)}
+                onClick={() => this.filterMyOrders(true)}
               >
-                {"Meus Anúncios"}
+                {i18n.t("P2P_MY_LISTING")}
               </button>
             </Grid>
           </Grid>
@@ -218,16 +251,19 @@ Offers.propTypes = {
   coinsEnabled: PropTypes.array.isRequired,
   orders: PropTypes.array.isRequired,
   getFilter: PropTypes.func,
-  getMyOrders: PropTypes.func, 
-  getHistory: PropTypes.func, 
-  loading: PropTypes.bool, 
-  type: PropTypes.string
+  getMyOrders: PropTypes.func,
+  getHistory: PropTypes.func,
+  loading: PropTypes.bool,
+  type: PropTypes.string, 
+  clearCancel: PropTypes.fund,
+  cancelDone: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
-  orders: store.p2p.orders, 
-  loading: store.p2p.loading
+  orders: store.p2p.orders,
+  loading: store.p2p.loading, 
+  cancelDone: store.p2p.cancelDone
 });
 
 const mapDispatchToProps = dispatch =>
@@ -235,7 +271,8 @@ const mapDispatchToProps = dispatch =>
     {
       getMyOrders,
       getHistory,
-      getFilter
+      getFilter, 
+      clearCancel
     },
     dispatch
   );

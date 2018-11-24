@@ -90,9 +90,10 @@ class P2P extends React.Component {
 
     return (
       <div className={showBox}>
-        <Hidden smDown>
-          <div className={style.headerP2P}>{this.renderArrow()}</div>
-        </Hidden>
+        {/* <Hidden smDown>
+          
+        </Hidden> */}
+        <div className={style.headerP2P}>{this.renderArrow()}</div>
 
         {chatOpened == false ? (
           <div>

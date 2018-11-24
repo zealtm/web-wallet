@@ -1,26 +1,87 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import QrCode from "qrcode.react";
+
+// UTILS
+import i18n from "../../../../utils/i18n";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  acceptOfferWhenBuying,
+  closeChat,
+  closeDeposit
+} from "../../redux/p2pAction";
+import { successRequest } from "../../../errors/redux/errorAction";
+
 import style from "./style.css";
 
 class DepositModal extends React.Component {
-  render(){
-    return <div className={style.depositContainer}>
+  cleanChat = () => {
+    const { closeChat, closeDeposit } = this.props;
+    closeChat();
+    closeDeposit();
+  };
+
+  copyCoinAddress = () => {
+    let { order, successRequest } = this.props;
+    const element = document.createElement("textarea");
+    element.value = order.sell.address;
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+    successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
+  };
+
+  render() {
+    const { order } = this.props;
+    return (
+      <div className={style.depositContainer}>
         <div className={style.textDeposit}>
-          Utilize o QR CODE ou endereço da carteira abaixo para realizar o deposito
+          {i18n.t("P2P_TEXT_4")}
         </div>
-        <img src="/images/modal/Group 323.png" className={style.imgQrCodeDeposit} />
+        <QrCode
+            className={style.imgQrCodeDeposit}
+            value={order.sell.address}
+            size={176}
+            bgColor={"#fff"}
+            fgColor={"#000"}
+            level={"L"}
+            renderAs="svg"
+          />
         <div className={style.inputCopyBtnDeposit}>
-          <input className={style.inputDeposit}></input>
-          <button className={style.copyCodeDeposit}>Copiar Código</button>
-          <button className={style.btnDeposit}>Concluir</button>
+          <input className={style.inputDeposit} value={order.sell.address} />
+          <button className={style.copyCodeDeposit} onClick={() => this.copyCoinAddress()}>{i18n.t("P2P_TEXT_5")}</button>
+          <button className={style.btnDeposit} onClick={this.cleanChat}>
+            {i18n.t("P2P_TEXT_6")}
+          </button>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
 DepositModal.propTypes = {
-  
-}
+  closeChat: PropTypes.func,
+  closeDeposit: PropTypes.func, 
+  order: PropTypes.object, 
+  successRequest: PropTypes.func
+};
 
-export default DepositModal;
+const mapStateToProps = store => ({
+  order: store.p2p.chat.iduser
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { acceptOfferWhenBuying, closeChat, closeDeposit,successRequest },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DepositModal);

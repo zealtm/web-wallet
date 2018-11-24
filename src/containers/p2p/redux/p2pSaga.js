@@ -75,13 +75,12 @@ export function* getPaymentMethodsWhenBuying(payload) {
     if(response.cripto){
       response.cripto.forEach(val=>{
         if(val.status=="active"){
-          cripto.push({title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+          cripto.push({id: val.id, title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
         }
       });
     }
 
-    yield put({ type: "BUY_SETTER", data: cripto });
-    //yield put({ type: "BUY_SETTER", data: { paymentMethodLoading: false } });
+    yield put({ type: "BUY_SETTER", data: cripto});
   } catch (error) {
     yield put(internalServerError());
   }
@@ -145,16 +144,35 @@ export function* getP2PFilterSaga(payload){
 
 export function* createOfferWhenSelling(payload) {
   try {
-    yield p2pService.createOfferWhenSelling(payload.data).catch(error => {
-      throw error;
-    });
+
+    yield put({type:"SET_LOADING_CREATE_OFFER",loading:true});
+
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.createOfferWhenSelling, token, payload.data);
+    
+    if(response.data.data.orderId){
+      yield put({
+        type: "CREATE_OFFER_DONE", 
+        offer: response.data.data.orderId
+      });
+    }else{
+      yield put({
+        type: "CREATE_OFFER_ERROR",
+      });
+    }
+
   } catch (error) {
-    yield put({ type: "FAILED_REQUEST", message: error.message });
+    yield put({
+      type: "CREATE_OFFER_ERROR",
+    });
+    yield put(internalServerError());
   }
 }
 
 export function* setP2POrdersCancelSaga(payload) {
   try {
+    yield put({type:"SET_LOADING_P2P",loading:true});
+    
     let token = yield call(getAuthToken);
 
     let response = yield call(
@@ -164,13 +182,14 @@ export function* setP2POrdersCancelSaga(payload) {
     );
 
     yield put({
-      type: "SET_P2P_CANCEL_ORDERS_REDUCE",
-      isCancel: response
+      type: "SET_P2P_CANCEL_ORDERS_REDUCER",
+      orderId: response
     });
   } catch (error) {
     yield put(internalServerError());
   }
 }
+
 export function* createSignatureSaga(payload) {
   try {
     let token = yield call(getAuthToken);
@@ -184,4 +203,17 @@ export function* createSignatureSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
+}
+
+export function* openDeposit(payload) {
+  yield put({
+    type: "OPEN_DEPOSIT_P2P_REDUCER",
+    iduser: payload.iduser
+  });
+}
+
+export function* closeDeposit() {
+  yield put({
+    type: "CLOSE_DEPOSIT_P2P_REDUCER"
+  });
 }
