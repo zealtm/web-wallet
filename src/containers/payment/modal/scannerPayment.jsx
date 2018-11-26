@@ -32,17 +32,17 @@ class ScannerModal extends React.Component {
         inputStream: {
           type: "LiveStream",
           constraints: {
-            facingMode: "environment" // or user
+            facingMode: "environment"
           }
         },
         locator: { halfSample: true, patchSize: "large" },
         numOfWorkers: navigator.hardwareConcurrency,
         frequency: 5,
         decoder: {
-          readers: [{ format: "code_128_reader", config: {} }],
+          readers: [{ format: "i2of5_reader", config: {} }],
           multiple: false
         },
-        locate: false,
+        locate: true,
         debug: false
       },
       function(err) {
@@ -88,7 +88,7 @@ class ScannerModal extends React.Component {
             result.line,
             { x: "x", y: "y" },
             drawingCtx,
-            { color: "red", lineWidth: 3 }
+            { color: "green", lineWidth: 3 }
           );
         }
       }
@@ -113,7 +113,7 @@ class ScannerModal extends React.Component {
 
   render() {
     return (
-      <div id="interactive" className="viewport">
+      <div id="interactive" className="viewport" width="500" height="100">
         <video
           className="videoCamera"
           autoPlay={true}
