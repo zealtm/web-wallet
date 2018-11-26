@@ -76,8 +76,7 @@ class CardOffer extends React.Component {
             <span className={style.textSmall}>Vende</span>
             <div className={style.offerText}>
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
-            </div>
-            <span className={style.hours}>00:00 am</span>
+            </div>  
           </Grid>
           <Grid item xs={2} />
           <Grid

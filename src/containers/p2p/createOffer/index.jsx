@@ -226,7 +226,7 @@ class CreateOffer extends React.Component {
 
           <div className={style.formGroup}>            
             <Grid container >
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                <div className={style.textSmall}>{i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}</div>
                 <Select
                   list={coinsEnabled}
@@ -237,7 +237,7 @@ class CreateOffer extends React.Component {
                   width={"100%"}
                 />
               </Grid>
-              <Grid item xs={2}></Grid>
+              <Grid item xs={1}></Grid>
               <Grid item xs={5} >
               <div className={style.textSmallCoinPayment}>{i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}</div>
                 <Select

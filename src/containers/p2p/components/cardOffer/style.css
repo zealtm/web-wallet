@@ -42,15 +42,6 @@
   max-width: 14px;
 }
 
-:local .hours {
-  font-size: 9px;
-  opacity: 0.5;
-  display: block;
-  text-align: right;
-  margin-top: 10px;
-  width: 85px;
-}
-
 :local .boxDetails {
   position: relative;
   padding-top: 20px;
