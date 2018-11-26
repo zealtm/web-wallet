@@ -33,7 +33,7 @@ class ConfirmModal extends React.Component {
 
         <Grid item xs={12}>
           <div className={style.avaliation}>
-            <span className={style.spanTitle}>Classifique o vendedor</span>
+            <span className={style.spanTitle}>{i18n.t("P2P_TEXT_3")}</span>
           <div className={style.starVotes}>
               <Starvotes  /> 
           </div>
@@ -45,7 +45,7 @@ class ConfirmModal extends React.Component {
 
         <Grid item xs={12}>
           <div className={style.btnConfirm}>
-            <button className={style.buttonCard}>Confirmar</button>
+            <button className={style.buttonCard}>{i18n.t("P2P_BUTTON_CONFIRM")}</button>
           </div>
         </Grid>
       </Grid>

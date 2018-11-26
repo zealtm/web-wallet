@@ -7,13 +7,12 @@ class InterestModal extends React.Component {
         <img src="/images/modal/chat@2x.png" className={style.modalImgChat} />
         <div className={style.openChat}>
         <p className={style.textOpenChat}>
-            Um Player se interessou pela sua oferta e quer abrir um chat com
-            você!
+            {i18n.t("P2P_TEXT_7")}
           </p>
         </div>
         <div className={style.btnChat}>
-          <button className={style.btnTalkChat}>Conversar</button>
-          <button className={style.btnNotTalkChat}>Agora não</button>
+          <button className={style.btnTalkChat}>{i18n.t("P2P_TEXT_8")}</button>
+          <button className={style.btnNotTalkChat}>{i18n.t("P2P_TEXT_9")}</button>
         </div>
       </div>
       

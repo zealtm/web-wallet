@@ -19,11 +19,12 @@
   composes: inputTextDefault from "../../../../components/bases/inputBase.css";
   padding: 5px;
   width: calc(100% - 10px);
-  height: 24px;
   margin: 0px;
   border: none;
   position: none;
   margin-top: 7px;
+  font-size: 12px;
+  text-align: center;
 }
 
 :local .inputCenter {
@@ -35,6 +36,8 @@
   border: none;
   position: none;
   margin-top: 7px;
+  font-size: 12px;
+  text-align: center;
 }
 
 :local .textSmall {
@@ -81,4 +84,18 @@
 }
 :local .arrowUp {
   composes: colorGreen;
+}
+
+:local .textErrorSmall {
+  composes: clError from "../../../../components/bases/colorBase.css";
+  line-height: 1.8em;
+  font-size: 12px;
+}
+
+:local .iconListValid {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+  color: red;
 }
