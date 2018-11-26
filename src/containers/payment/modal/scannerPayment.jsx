@@ -21,33 +21,21 @@ class ScannerModal extends React.Component {
   }
 
   quaggaScript() {
-    let constraints = (window.constraints = {
-      audio: false,
-      video: {
-        facingMode: "user"
-      }
-    });
-
     if (
       navigator.mediaDevices &&
       typeof navigator.mediaDevices.getUserMedia === "function"
     ) {
-      navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(console.warn("FOI"))
-        .catch(console.error("Não Foi"));
+      Quagga.CameraAccess.getActiveStreamLabel();
     }
     Quagga.init(
       {
         inputStream: {
           type: "LiveStream",
           constraints: {
-            width: window.innerWidth / 2,
-            aspectRatio: { min: 1, max: 100 },
             facingMode: "environment" // or user
           }
         },
-        locator: { halfSample: true, patchSize: "medium" },
+        locator: { halfSample: true, patchSize: "large" },
         numOfWorkers: navigator.hardwareConcurrency,
         frequency: 5,
         decoder: {
@@ -117,6 +105,7 @@ class ScannerModal extends React.Component {
     const barcode = bb.digit.getVDBank(result, true);
     console.warn("Barcode: ", barcode);
     this.setState({ barcode });
+    alert("FOI");
     scannerModal();
 
     return;
