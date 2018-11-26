@@ -44,7 +44,7 @@ class ScannerModal extends React.Component {
         numOfWorkers: navigator.hardwareConcurrency,
         frequency: 5,
         decoder: {
-          readers: [{ format: "i2of5_reader", config: {} }],
+          readers: ["code_128_reader, i2of5_reader, 2of5_reader"],
           multiple: false
         },
         locate: true,
