@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {getPaymentMethodsWhenBuying} from "./redux/p2pAction";
+import { getPaymentMethodsWhenBuying } from "./redux/p2pAction";
 
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
@@ -13,7 +13,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
-import UserProfile from "./userProfile";
+import ConfirmModal from "./modal/confirm";
 
 //STYLE
 import style from "./style.css";
@@ -77,17 +77,16 @@ class P2P extends React.Component {
   };
 
   componentDidMount = () => {
-    const {getPaymentMethodsWhenBuying} = this.props;
+    const { getPaymentMethodsWhenBuying } = this.props;
     getPaymentMethodsWhenBuying("lunes");
-  }
+  };
 
   render() {
     const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
-    const { chatOpened } = this.props.p2pStore;
+    const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
-
     return (
       <div className={showBox}>
         <Hidden smDown>
@@ -99,6 +98,8 @@ class P2P extends React.Component {
             <div className={style.baseContent}>{this.renderContent()}</div>
             <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
           </div>
+        ) : openAvaliation == true ? (
+          <ConfirmModal />
         ) : (
           <div>
             <Chat />
@@ -110,20 +111,23 @@ class P2P extends React.Component {
 }
 
 P2P.propTypes = {
-  p2pStore: PropTypes.object.isRequired, 
-  getPaymentMethodsWhenBuying: PropTypes.func,
+  p2pStore: PropTypes.object.isRequired,
+  getPaymentMethodsWhenBuying: PropTypes.func
 };
 
 const mapStateToProps = store => ({
   p2pStore: store.p2p
 });
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-  {
-    getPaymentMethodsWhenBuying
-  },
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getPaymentMethodsWhenBuying
+    },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(P2P);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(P2P);

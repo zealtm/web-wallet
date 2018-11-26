@@ -42,7 +42,8 @@ class CardOffer extends React.Component {
   };
 
   handleClick = () => {
-    if (this.props.type == undefined) {
+    const { order } = this.props;
+    if (this.props.type == undefined && order.status == "confirmed") {
       this.openAvaliation();
     } else {
       this.handleDetails();
@@ -55,8 +56,9 @@ class CardOffer extends React.Component {
   };
 
   openAvaliation = () => {
-    const { openAvaliation } = this.props;
+    const { openAvaliation, openChat } = this.props;
     openAvaliation();
+    openChat();
   };
 
   handleCancelOrder = e => {

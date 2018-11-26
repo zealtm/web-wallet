@@ -20,13 +20,11 @@ class Chat extends React.Component {
   }
 
   render() {
-    const { openDeposit, openAvaliation } = this.props.p2pStore;
+    const { openDeposit } = this.props.p2pStore;
     return (
       <div>
         {openDeposit == true ? (
           <DepositModal />
-        ) : openAvaliation == true ? (
-          <ConfirmModal />
         ) : (
           <div className={style.baseChat}>
             <Header />
