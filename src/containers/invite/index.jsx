@@ -64,10 +64,10 @@ class Invite extends React.Component {
     };
   }
 
-  componentDidMount = ()=>{
+  componentDidMount = () => {
     const { getInviteSent } = this.props;
     getInviteSent();
-  }
+  };
 
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -103,15 +103,26 @@ class Invite extends React.Component {
     });
   };
 
+  renderInvite = () => {
+    const { invite } = this.props;
+    return (
+      <div>
+        {invite.invites &&
+          invite.invites.map((email, key) => {
+            return <ItemInvite key={key} email={email.receiptEmail} />;
+          })}
+      </div>
+    );
+  };
+
   render() {
-    const { classes, invite } = this.props;
+    const { classes } = this.props;
     const { modalOpen } = this.state;
 
     const address_code = "12as3d45ads546asd456asd456asd546asd"; // mock
     const address = "https://luneswallet.app/invite?=" + address_code; // mock
 
     let { email } = this.state;
-
     return (
       <div>
         <div className={style.header}>
@@ -170,9 +181,10 @@ class Invite extends React.Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
-              <button 
-              className={style.btnInviteSent}
-              onClick={() => this.handleEmail()}>
+              <button
+                className={style.btnInviteSent}
+                onClick={() => this.handleEmail()}
+              >
                 {i18n.t("INVITE_BUTTON_SEND")}
               </button>
 
@@ -198,9 +210,7 @@ class Invite extends React.Component {
             </span>
           </Grid>
           <Grid item xs={12} className={style.cardInviteConfirmation}>
-            {invite.invites.map((email, key)=>{
-            return (<ItemInvite key={key} email={email.receiptEmail}/>)
-            })}
+            {this.renderInvite()}
           </Grid>
         </Grid>
       </div>
@@ -216,7 +226,7 @@ Invite.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  invite: store.invite
+  invite: store.invite.invites
 });
 
 const mapDispatchToProps = dispatch =>

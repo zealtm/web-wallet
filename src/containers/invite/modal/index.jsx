@@ -19,13 +19,12 @@ class InviteSend extends React.Component {
     const { invite } = this.props;
     return (
       <div>
-        {
-          invite.invites.map((email, key)=>{
-            return (<ItemInvite key={key} email={email.receiptEmail}/>)
-          })
-        }
+        {invite.invites &&
+          invite.invites.map((email, key) => {
+            return <ItemInvite key={key} email={email.receiptEmail} />;
+          })}
       </div>
-    )
+    );
   }
 }
 
@@ -34,10 +33,7 @@ InviteSend.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  invite: store.invite
+  invite: store.invite.invites
 });
 
-
-export default connect(
-  mapStateToProps,
-)((InviteSend));
+export default connect(mapStateToProps)(InviteSend);
