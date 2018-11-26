@@ -75,7 +75,15 @@ export function* getPaymentMethodsWhenBuying(payload) {
     if(response.cripto){
       response.cripto.forEach(val=>{
         if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+        }
+      });
+    }
+
+    if(response.fiat){
+      response.fiat.forEach(val=>{
+        if(val.status=="active"){
+          cripto.push({id:val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
         }
       });
     }
