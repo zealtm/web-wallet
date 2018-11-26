@@ -242,6 +242,17 @@ const user = (state = initialState, action) => {
         }
       };
 
+    case "CLEAR_USER_DATA":
+      return {
+        ...state,
+        loading: false,
+        user: {
+          ...user,
+          seed: null,
+          password: null
+        }
+      };
+
     default: {
       return {
         ...state
