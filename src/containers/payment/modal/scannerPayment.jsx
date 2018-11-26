@@ -30,9 +30,9 @@ class ScannerModal extends React.Component {
           name: "Live",
           type: "LiveStream",
           constraints: {
-            width: window.innerWidth,
-            height: window.innerHeight,
-            facingMode: "environment" // or user
+            width: 400,
+            height: 100,
+            facingMode: "environment" // or user to frontal camera
           }
         },
         locator: {
@@ -41,7 +41,7 @@ class ScannerModal extends React.Component {
         },
         numOfWorkers: 2,
         decoder: {
-          readers: ["code_128_reader"]
+          readers: ["code_128_reader", "i2of5"]
         },
         locate: true
       },
@@ -101,7 +101,7 @@ class ScannerModal extends React.Component {
 
   _onDetected(result) {
     const { scannerModal } = this.props;
-    console.warn("result", result)
+    console.warn("result", result);
     const barcode = bb.digit.getVDBank(result, true);
     console.warn("Barcode: ", barcode);
     scannerModal();

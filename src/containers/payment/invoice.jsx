@@ -349,8 +349,15 @@ class Invoice extends React.Component {
             </Grid>
             <Hidden smUp>
               <Grid item xs={1}>
-                <div onClick={() => scannerModal()} className={style.cameraIcon}>
-                  <img src="images/icons/camera/camera.png" alt="Camera" />
+                <div
+                  onClick={() => scannerModal()}
+                  className={style.cameraIconMargin}
+                >
+                  <img
+                    className={style.cameraIcon}
+                    src="images/icons/camera/camera-white.png"
+                    alt="Camera"
+                  />
                 </div>
               </Grid>
             </Hidden>

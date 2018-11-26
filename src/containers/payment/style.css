@@ -87,6 +87,11 @@
 }
 
 /* 5. ICONS */
-:local .cameraIcon {
+:local .cameraIconMargin {
   margin-top: 1.5rem;
 }
+
+:local .cameraIcon {
+  width: 18px;
+}
+
