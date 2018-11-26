@@ -85,7 +85,6 @@ class CardOffer extends React.Component {
     const { openDetails } = this.state;
     const dateCreate = formatDate(order.createdAt, "DM");
     const hourCreate = formatDate(order.createdAt, "HM");
-    const { openAvaliation } = this.props.p2pStore;
 
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
@@ -93,80 +92,76 @@ class CardOffer extends React.Component {
 
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
-        {openAvaliation == true ? (
-          <ConfirmModal />
-        ) : (
-          <Grid container>
-            <Grid item xs={2}>
-              <Avatar
-                alt="avatar"
-                src="images/lunio/lunio-user@100x100.jpg"
-                className={style.avatar}
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <span className={style.name}>
-                {order.sell.user.name} {order.sell.user.surname}
-              </span>
-              <span className={style.textSmall}>{dateCreate}</span>
-              <span className={style.numberText}>{order.sell.amount}</span>
-              <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
-              <div className={style.offerText}>
-                <img src={`images/icons/coins/${order.sell.coin}.png`} />
-                {order.sell.coin.toUpperCase()}
-              </div>
-            </Grid>
-            <Grid item xs={5} style={{ paddingLeft: 10 }}>
-              <div className={style.boxStar}>
-                <StarVotes votes={order.sell.user.rating} />
-                {userEmail == order.sell.user.email &&
-                order.status != "confirmed" ? (
-                  <button
-                    className={style.btnClose}
-                    onClick={this.handleCancelOrder}
-                  >
-                    <img
-                      className={style.btnCloseImg}
-                      src="images/icons/p2p/btn-CloseP2p.png"
-                      alt="closep2p"
-                    />
-                  </button>
-                ) : null}
-              </div>
-              <span className={style.textSmall}>
-                {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
-                {parseFloat(unitValue).toFixed(2)}
-              </span>
-              <ArrowForward className={style.arrowPrice} />
-              <span className={style.numberText}>
-                {defaultFiat} {parseFloat(total).toFixed(2)}
-              </span>
-              <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
-              <div className={style.offerText}>
-                <img src={`images/icons/coins/${order.buy.coin}.png`} />
-                {order.buy.coin.toUpperCase()}
-              </div>
-              <span className={style.hours}>{hourCreate}</span>
-            </Grid>
-            <Grid item xs={2} />
-            <Grid
-              item
-              xs={10}
-              className={style.boxDetails}
-              style={openDetails ? { display: "block" } : null}
-            >
-              <div className={style.textDetails}>{order.description}</div>
-              {userEmail != order.sell.user.email && type != "myhistory" ? (
+        <Grid container>
+          <Grid item xs={2}>
+            <Avatar
+              alt="avatar"
+              src="images/lunio/lunio-user@100x100.jpg"
+              className={style.avatar}
+            />
+          </Grid>
+          <Grid item xs={5}>
+            <span className={style.name}>
+              {order.sell.user.name} {order.sell.user.surname}
+            </span>
+            <span className={style.textSmall}>{dateCreate}</span>
+            <span className={style.numberText}>{order.sell.amount}</span>
+            <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
+            <div className={style.offerText}>
+              <img src={`images/icons/coins/${order.sell.coin}.png`} />
+              {order.sell.coin.toUpperCase()}
+            </div>
+          </Grid>
+          <Grid item xs={5} style={{ paddingLeft: 10 }}>
+            <div className={style.boxStar}>
+              <StarVotes votes={order.sell.user.rating} />
+              {userEmail == order.sell.user.email &&
+              order.status != "confirmed" ? (
                 <button
-                  className={style.btContinue}
-                  onClick={() => this.openChat(order)}
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
                 >
-                  {i18n.t("P2P_BUTTON_NEGOTIATE")}
+                  <img
+                    className={style.btnCloseImg}
+                    src="images/icons/p2p/btn-CloseP2p.png"
+                    alt="closep2p"
+                  />
                 </button>
               ) : null}
-            </Grid>
+            </div>
+            <span className={style.textSmall}>
+              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
+              {parseFloat(unitValue).toFixed(2)}
+            </span>
+            <ArrowForward className={style.arrowPrice} />
+            <span className={style.numberText}>
+              {defaultFiat} {parseFloat(total).toFixed(2)}
+            </span>
+            <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
+            <div className={style.offerText}>
+              <img src={`images/icons/coins/${order.buy.coin}.png`} />
+              {order.buy.coin.toUpperCase()}
+            </div>
+            <span className={style.hours}>{hourCreate}</span>
           </Grid>
-        )}
+          <Grid item xs={2} />
+          <Grid
+            item
+            xs={10}
+            className={style.boxDetails}
+            style={openDetails ? { display: "block" } : null}
+          >
+            <div className={style.textDetails}>{order.description}</div>
+            {userEmail != order.sell.user.email && type != "myhistory" ? (
+              <button
+                className={style.btContinue}
+                onClick={() => this.openChat(order)}
+              >
+                {i18n.t("P2P_BUTTON_NEGOTIATE")}
+              </button>
+            ) : null}
+          </Grid>
+        </Grid>
       </div>
     );
   }
