@@ -201,7 +201,7 @@
   "PLACEHOLDER_USERNAME_EMAIL": "Username or Email",
   "PLACEHOLDER_EMAIL": "Email",
   "BTN_RECEIVE_EMAIL": "E-mail",
-  "PLACEHOLDER_SEED": " Write down the seed you have generated (12 words in English) in a safe place. Only you have access to it and through the 12 words you can access your wallet in blockchain.",
+  "PLACEHOLDER_SEED": "Write down the seed you have generated (12 words in English) in a safe place. Only you have access to it and through the 12 words you can access your wallet in blockchain.",
   "BTN_IMPORT_SEED": "Import",
   "BTN_NEW_SEED": "GENERATE NEW SEED",
   "SEED_INSERT_SEED": "Insert your SeedWords",
