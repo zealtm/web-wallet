@@ -20,7 +20,7 @@ const invite = (state = initialState, action) => {
                 ...state,
                 loadingAddress: action.loading
             };
-        
+
         case "SET_LOADING_INVITES":
             return {
                 ...state,
@@ -33,11 +33,24 @@ const invite = (state = initialState, action) => {
                 loadingSent: action.loading
             };
 
+        case "SET_LOADING_INVITE_BALANCE":
+            return {
+                ...state,
+                loadingInviteBalance: action.loading
+            };
+
         case "GET_INVITE_ADDRESS_REDUCER":
             return {
                 ...state,
-                address: action.address, 
+                address: action.address,
                 loadingAddress: false
+            };
+
+        case "GET_INVITE_BALANCE_REDUCER":
+            return {
+                ...state,
+                balance: action.balance,
+                loading: false
             };
 
         case "SEND_MAIL_INVITE_REDUCER":
@@ -46,7 +59,7 @@ const invite = (state = initialState, action) => {
                 email: action.email,
                 loadingSent: false
             };
-        
+
         case "GET_INVITE_SENT_REDUCER":
             return {
                 ...state,
@@ -56,7 +69,7 @@ const invite = (state = initialState, action) => {
 
         default: {
             return {
-              ...state
+                ...state
             };
         }
     }

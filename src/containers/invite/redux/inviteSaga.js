@@ -16,9 +16,31 @@ export function* getInviteAddressSaga() {
       loading: true
     });
 
+    let token = yield call(getAuthToken);
+    let response = yield call(inviteService.getInvite, token);
+
+    let address = [];
+    if (response) {
+      address = response.data;
+    }
+
     yield put({
       type: "GET_INVITE_ADDRESS_REDUCER",
-      address: "123123123123123" // parametro mockup
+      address: address
+    });
+
+    let responseBalance = yield call(
+      inviteService.getInviteBalance,
+      token,
+      address
+    );
+    let balance = [];
+    if (responseBalance) {
+      balance = responseBalance.data;
+    }
+    yield put({
+      type: "GET_INVITE_BALANCE_REDUCER",
+      balance: balance
     });
   } catch (error) {
     yield put(internalServerError());
@@ -57,7 +79,7 @@ export function* getInviteSentSaga() {
 
     yield put({
       type: "GET_INVITE_SENT_REDUCER",
-      invites: invites.data// parametro mockup
+      invites: invites.data
     });
   } catch (error) {
     yield put(internalServerError());

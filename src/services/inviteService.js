@@ -47,6 +47,45 @@ class InviteService {
             return internalServerError();
         }
     }
+
+  async getInvite(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(BASE_URL + "/invite/consult", API_HEADER);
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
+      return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async getInviteBalance(token, address) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/invite/balance/${address.link}`,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
+      return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
 }
 
 export default InviteService;
