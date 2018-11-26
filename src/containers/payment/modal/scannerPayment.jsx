@@ -21,19 +21,24 @@ class ScannerModal extends React.Component {
   }
 
   quaggaScript() {
+    const platform = navigator.platform;
     if (
       navigator.mediaDevices &&
       typeof navigator.mediaDevices.getUserMedia === "function"
     ) {
       Quagga.CameraAccess.getActiveStreamLabel();
     }
+
+    const constraints =
+      platform === "iPhone" || platform === "MacInterl"
+        ? { facingMode: "environment" }
+        : { width: 400, height: 100, facingMode: "environment" };
+
     Quagga.init(
       {
         inputStream: {
           type: "LiveStream",
-          constraints: {
-            facingMode: "environment"
-          }
+          constraints: constraints
         },
         locator: { halfSample: true, patchSize: "large" },
         numOfWorkers: navigator.hardwareConcurrency,
@@ -123,14 +128,7 @@ class ScannerModal extends React.Component {
           muted={true}
           playsInline={true}
         />
-        <canvas
-          className="drawingBuffer"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0
-          }}
-        />
+        <canvas />
         Barcode: {this.state.barcode}
       </div>
     );
