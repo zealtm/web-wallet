@@ -21,38 +21,41 @@ class ScannerModal extends React.Component {
   }
 
   quaggaScript() {
-    navigator.getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia;
+    let constraints = (window.constraints = {
+      audio: false,
+      video: {
+        facingMode: "user"
+      }
+    });
 
     if (
       navigator.mediaDevices &&
       typeof navigator.mediaDevices.getUserMedia === "function"
     ) {
-      // safely access `navigator.mediaDevices.getUserMedia`
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(console.warn("FOI"))
+        .catch(console.error("Não Foi"));
     }
     Quagga.init(
       {
         inputStream: {
-          name: "Live",
           type: "LiveStream",
           constraints: {
-            width: 400,
-            height: 100,
-            facingMode: "environment" // or user to frontal camera
+            width: window.innerWidth / 2,
+            aspectRatio: { min: 1, max: 100 },
+            facingMode: "environment" // or user
           }
         },
-        locator: {
-          patchSize: "large",
-          halfSample: true
-        },
-        numOfWorkers: 2,
+        locator: { halfSample: true, patchSize: "medium" },
+        numOfWorkers: navigator.hardwareConcurrency,
+        frequency: 5,
         decoder: {
-          readers: ["code_128_reader", "i2of5_reader"]
+          readers: [{ format: "code_128_reader", config: {} }],
+          multiple: false
         },
-        locate: true
+        locate: false,
+        debug: false
       },
       function(err) {
         if (err) {
@@ -126,6 +129,7 @@ class ScannerModal extends React.Component {
           className="videoCamera"
           autoPlay={true}
           preload="auto"
+          controls={true}
           src=""
           muted={true}
           playsInline={true}
