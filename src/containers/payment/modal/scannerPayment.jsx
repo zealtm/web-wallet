@@ -30,21 +30,23 @@ class ScannerModal extends React.Component {
     }
 
     const constraints =
-      platform === "iPhone" || platform === "MacInterl"
+      platform === "iPhone" || platform === "MacIntel"
         ? { facingMode: "environment" }
-        : { width: 400, height: 100, facingMode: "environment" };
+        : { width: 100, height: 400, facingMode: "environment" };
 
     Quagga.init(
       {
         inputStream: {
+          name: "Live",
           type: "LiveStream",
+          size: 400,
           constraints: constraints
         },
-        locator: { halfSample: true, patchSize: "large" },
+        halfSample: false,
+        patchSize: "large",
         numOfWorkers: navigator.hardwareConcurrency,
-        frequency: 5,
         decoder: {
-          readers: ["code_128_reader, i2of5_reader, 2of5_reader"],
+          readers: ["code_128_reader"],
           multiple: false
         },
         locate: true,
@@ -118,17 +120,15 @@ class ScannerModal extends React.Component {
 
   render() {
     return (
-      <div id="interactive" className="viewport" width="500" height="100">
+      <div id="interactive" className="viewport" width="100" height="400">
         <video
           className="videoCamera"
           autoPlay={true}
           preload="auto"
-          controls={true}
-          src=""
+          controls={false}
           muted={true}
           playsInline={true}
         />
-        <canvas />
         Barcode: {this.state.barcode}
       </div>
     );
