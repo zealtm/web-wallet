@@ -184,7 +184,7 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <span className={style.name}>{username}</span>
-              <span className={style.textSmall}>00/00/0000</span>
+              <span className={style.textSmall}></span>
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
