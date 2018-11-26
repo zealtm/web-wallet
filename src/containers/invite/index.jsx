@@ -109,6 +109,7 @@ class Invite extends React.Component {
 
   renderInvite = () => {
     const { invite } = this.props;
+    if(invite.invites.length<=0) return;
     return (
       <div>
         {invite.invites &&
@@ -181,7 +182,6 @@ class Invite extends React.Component {
 
               <a onClick={() => this.copyAddress(address_copy)}>
                 <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-                <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
               </a>
             </div>
             <div

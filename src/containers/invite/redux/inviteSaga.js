@@ -73,13 +73,13 @@ export function* getInviteSentSaga() {
     let response = yield call(inviteService.getInviteHistory, token);
 
     let invites = [];
-    if(response){
-      invites = response
+    if(response.data.invites && response.data.invites.length>0){
+      invites = response.data.invites
     }
 
     yield put({
       type: "GET_INVITE_SENT_REDUCER",
-      invites: invites.data
+      invites: invites
     });
   } catch (error) {
     yield put(internalServerError());
