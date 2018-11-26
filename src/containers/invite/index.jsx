@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setInviteModal, getInviteAddress, sendMailInvite, getInviteSent } from "./redux/inviteAction";
+import {
+  setInviteModal,
+  getInviteAddress,
+  sendMailInvite,
+  getInviteSent
+} from "./redux/inviteAction";
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -12,12 +17,12 @@ import { Grid, withStyles, Input } from "@material-ui/core";
 // UTILS
 import i18n from "../../utils/i18n";
 
-//COMPONENTS 
+//COMPONENTS
 import ItemInvite from "./components/itemInvite";
 import Modal from "../../components/modal";
 import InviteSend from "./modal";
 
-//STYLE 
+//STYLE
 import style from "./style.css";
 import colors from "../../components/bases/colors";
 
@@ -55,14 +60,14 @@ class Invite extends React.Component {
     super(props);
     this.state = {
       modalOpen: false
-    }
+    };
   }
   componentDidMount = () => {
     const { getInviteAddress } = this.props;
     getInviteAddress();
   }
 
-  copyAddress = (address) => {
+  copyAddress = address => {
     let { successRequest } = this.props;
     const element = document.createElement("textarea");
     element.value = address;
@@ -73,7 +78,7 @@ class Invite extends React.Component {
     successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
   };
 
-  sendCoinAddressEmail = (address) => {
+  sendCoinAddressEmail = address => {
     const base_email = "email@..."; // mock
     return (window.location.href = "mailto:" + base_email + "?body=" + address);
   };
@@ -84,7 +89,7 @@ class Invite extends React.Component {
       ...this.state,
       modalOpen: !modalOpen
     });
-  }
+  };
 
   render() {
     const { classes, address, balance } = this.props;
@@ -97,7 +102,7 @@ class Invite extends React.Component {
       console.log(address);
       console.log(balance);
     }
-  
+
     return (
       <div>
         <div className={style.header}>
@@ -116,14 +121,22 @@ class Invite extends React.Component {
           <Grid item xs={12} sm={8}>
             <Grid container spacing={8} alignItems="flex-end">
               <Grid item>
-                <img src="/images/icons/email/email@1x.png" className={style.icon} />
+                <img
+                  src="/images/icons/email/email@1x.png"
+                  className={style.icon}
+                />
               </Grid>
               <Grid item>
-                <Input placeholder="Lunes@gmail.com" classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline,
-                  input: classes.cssInput
-                }} />
+
+                <Input
+                  placeholder="Lunes@gmail.com"
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
@@ -134,6 +147,7 @@ class Invite extends React.Component {
             </div>
 
             <div className={style.copyIcon}>
+
               <a onClick={() => this.copyAddress(address_copy)}>
                 <img src="/images/icons/modal-receive/ic_copy@1x.png" />
                 <p>{i18n.t("INVITE_COPY_BUTTON")}</p>
@@ -144,20 +158,34 @@ class Invite extends React.Component {
               className={style.shareIcon}
             >
               <img src="/images/icons/invite/share@1x.png" />
-              <p>{i18n.t("INVITE_SHARE_BUTTON")}</p>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
-              <button className={style.btnInviteSent}>{i18n.t("INVITE_BUTTON_SEND")}</button>
-              <button onClick={this.handleModal} className={style.btnInviteSent2}>{i18n.t("INVITE_SEND_INVITATIONS")}</button>
+              <button className={style.btnInviteSent}>
+                {i18n.t("INVITE_BUTTON_SEND")}
+              </button>
+
+              <div className={style.accumulatedBalance}>
+                <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
+                <span className={style.accumulatedLunes}> 50.000 Lunes</span>
+              </div>
+
+              <button
+                onClick={this.handleModal}
+                className={style.btnInviteSent2}
+              >
+                {i18n.t("INVITE_TEXT_BUTTON")}
+              </button>
             </div>
           </Grid>
         </Grid>
 
         <Grid container className={style.card}>
           <Grid item xs={12}>
-            <span className={style.label}>{i18n.t("INVITE_CONFIRMED_INVITATIONS")}</span>
+            <span className={style.label}>
+              {i18n.t("INVITE_CONFIRMED_INVITATIONS")}
+            </span>
           </Grid>
           <Grid item xs={12} className={style.cardInviteConfirmation}>
             {[1, 2, 3, 4, 5].map(val => {
@@ -169,6 +197,7 @@ class Invite extends React.Component {
 
       </div>
     )
+
   }
 }
 

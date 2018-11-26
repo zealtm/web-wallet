@@ -46,12 +46,12 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
+  margin-top: -20px;
 }
 
 :local .cardInviteConfirmation {
   overflow-y: scroll;
-  height: 240px; 
+  height: 240px;
 }
 :local .cardInviteConfirmation::-webkit-scrollbar-thumb {
   background-color: #68f285;
@@ -63,16 +63,45 @@
   border-radius: 6px;
 }
 
+:local(.adressSharedBox) {
+  width: 70%;
+  height: 50px;
+  border-radius: 10px;
+  margin-top: 18px;
+  background-color: #42227d;
+}
+
+@media screen and (max-width: 599px) {
+  :local .adressSharedBox {
+    width: 100%;
+  }
+}
 /* 2. TEXT */
 
 :local(.linkTitle) {
-  margin-top: 20px;
+  margin-top: 30px;
   composes: textDefault from "../../components/bases/textBase.css";
 }
 
 :local(.adressShared) {
   composes: linkDefault from "../../components/bases/textBase.css";
   margin-bottom: 25px;
+}
+
+:local(.textSharedLink) {
+  text-align: center;
+  padding-top: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:local(.accumulatedBalance) {
+  width: 100%;
+}
+
+:local(.accumulatedLunes) {
+  color: #68f285;
 }
 
 /* 3. BUTTONS */
@@ -136,6 +165,12 @@
 :local .icon {
   margin-right: 15px;
   height: 30px;
+}
+
+@media screen and (max-width: 599px) {
+  :local .icon {
+    margin-right: -15px;
+  }
 }
 
 :local .label {

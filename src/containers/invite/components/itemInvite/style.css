@@ -14,12 +14,12 @@
 #hr hr {
   height: 0;
   border: solid 1px #42227d;
-  width: 170%;
+  width: 188%;
 }
 
 @media screen and (max-width: 1024px) {
   #hr hr {
-    width: 185%;
+    width: 190%;
   }
 }
 
@@ -42,16 +42,12 @@
 
 /* 3. IMAGES */
 :local(.imgCopy) {
-  opacity: 0.15;
   cursor: pointer;
-}
-
-:local .imgCopy:hover {
-  opacity: 1;
+  margin-top: 15px;
 }
 
 @media screen and (max-width: 1024px) {
   :local(.imgCopy) {
-    margin: 4px 0px 0px 5px;
+    margin: 15px 0px 0px 5px;
   }
 }
