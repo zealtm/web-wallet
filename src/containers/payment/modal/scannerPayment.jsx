@@ -11,6 +11,9 @@ import { setModalStep } from "../redux/paymentAction";
 class ScannerModal extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      barcode: "Vazio"
+    };
   }
 
   componentDidMount() {
@@ -36,12 +39,12 @@ class ScannerModal extends React.Component {
           }
         },
         locator: {
-          patchSize: "medium",
+          patchSize: "large",
           halfSample: true
         },
         numOfWorkers: 2,
         decoder: {
-          readers: ["code_128_reader", "i2of5"]
+          readers: ["code_128_reader", "i2of5_reader"]
         },
         locate: true
       },
@@ -104,6 +107,7 @@ class ScannerModal extends React.Component {
     console.warn("result", result);
     const barcode = bb.digit.getVDBank(result, true);
     console.warn("Barcode: ", barcode);
+    this.setState({ barcode });
     scannerModal();
 
     return;
@@ -128,6 +132,7 @@ class ScannerModal extends React.Component {
             left: 0
           }}
         />
+        Barcode: {this.state.barcode}
       </div>
     );
   }
