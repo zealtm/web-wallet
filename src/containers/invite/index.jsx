@@ -59,13 +59,29 @@ class Invite extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      email: ""
     };
   }
   componentDidMount = () => {
     const { getInviteAddress } = this.props;
     getInviteAddress();
   }
+
+  componentDidMount = () => {
+    const { getInviteSent } = this.props;
+    getInviteSent();
+  };
+
+  setEmail = email => {
+    this.setState({ ...this.state, email });
+  };
+
+  handleEmail = () => {
+    let { email } = this.state;
+    let { sendMailInvite } = this.props;
+    sendMailInvite(email);
+  };
 
   copyAddress = address => {
     let { successRequest } = this.props;
@@ -91,6 +107,18 @@ class Invite extends React.Component {
     });
   };
 
+  renderInvite = () => {
+    const { invite } = this.props;
+    return (
+      <div>
+        {invite.invites &&
+          invite.invites.map((email, key) => {
+            return <ItemInvite key={key} email={email.receiptEmail} />;
+          })}
+      </div>
+    );
+  };
+
   render() {
     const { classes, address, balance } = this.props;
     const { modalOpen } = this.state;
@@ -103,6 +131,7 @@ class Invite extends React.Component {
       console.log(balance);
     }
 
+    let { email } = this.state;
     return (
       <div>
         <div className={style.header}>
@@ -135,6 +164,8 @@ class Invite extends React.Component {
                     underline: classes.cssUnderline,
                     input: classes.cssInput
                   }}
+                  onChange={event => this.setEmail(event.target.value)}
+                  value={email}
                 />
 
               </Grid>
@@ -162,7 +193,10 @@ class Invite extends React.Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
-              <button className={style.btnInviteSent}>
+              <button
+                className={style.btnInviteSent}
+                onClick={() => this.handleEmail()}
+              >
                 {i18n.t("INVITE_BUTTON_SEND")}
               </button>
 
@@ -188,10 +222,7 @@ class Invite extends React.Component {
             </span>
           </Grid>
           <Grid item xs={12} className={style.cardInviteConfirmation}>
-            {[1, 2, 3, 4, 5].map(val => {
-              return (<ItemInvite />)
-            })
-            }
+            {this.renderInvite()}
           </Grid>
         </Grid>
 
@@ -206,7 +237,9 @@ Invite.propTypes = {
   invite: PropTypes.object,
   getInviteAddress: PropTypes.func,
   address: PropTypes.object,
-  balance: PropTypes.object
+  balance: PropTypes.object, 
+  getInviteSent: PropTypes.func,
+  sendMailInvite: PropTypes.func
 };
 
 const mapStateToProps = store => ({

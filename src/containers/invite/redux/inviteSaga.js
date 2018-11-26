@@ -53,6 +53,9 @@ export function* sendMailInviteSaga(email) {
     loading: true
   });
 
+  let token = yield call(getAuthToken);
+  yield call(inviteService.sendEmail, token, email);
+
   yield put({
     type: "SEND_MAIL_INVITE_REDUCER",
     email
@@ -66,9 +69,17 @@ export function* getInviteSentSaga() {
       loading: true
     });
 
+    let token = yield call(getAuthToken);
+    let response = yield call(inviteService.getInviteHistory, token);
+
+    let invites = [];
+    if(response){
+      invites = response
+    }
+
     yield put({
       type: "GET_INVITE_SENT_REDUCER",
-      invites: [1, 2, 3, 4] // parametro mockup
+      invites: invites.data
     });
   } catch (error) {
     yield put(internalServerError());
