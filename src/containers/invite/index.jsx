@@ -38,7 +38,7 @@ const inputStyle = {
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "17px",
+    fontSize: "20px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
@@ -157,8 +157,8 @@ class Invite extends React.Component {
                 />
               </Grid>
               <Grid item>
-
-                <Input
+              <div className={style.inviteInput}>
+                <Input 
                   placeholder="Lunes@gmail.com"
                   classes={{
                     root: classes.root,
@@ -168,7 +168,7 @@ class Invite extends React.Component {
                   onChange={event => this.setEmail(event.target.value)}
                   value={email}
                 />
-
+              </div>
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
