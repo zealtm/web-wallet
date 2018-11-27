@@ -66,7 +66,7 @@ class Invite extends React.Component {
   componentDidMount = () => {
     const { getInviteAddress } = this.props;
     getInviteAddress();
-  }
+  };
 
   componentDidMount = () => {
     const { getInviteSent } = this.props;
@@ -109,7 +109,7 @@ class Invite extends React.Component {
 
   renderInvite = () => {
     const { invite } = this.props;
-    if(invite.invites.length<=0) return;
+    if (invite.invites.length <= 0) return;
     return (
       <div>
         {invite.invites &&
@@ -123,11 +123,11 @@ class Invite extends React.Component {
   render() {
     const { classes, address, balance } = this.props;
     const { modalOpen } = this.state;
-    
+
     const address_code = address.link; // mock
     const address_copy = "https://luneswallet.app/invite?=" + address_code; // mock
 
-    if(address && balance){
+    if (address && balance) {
       console.log(address);
       console.log(balance);
     }
@@ -157,7 +157,6 @@ class Invite extends React.Component {
                 />
               </Grid>
               <Grid item>
-
                 <Input
                   placeholder="Lunes@gmail.com"
                   classes={{
@@ -168,7 +167,6 @@ class Invite extends React.Component {
                   onChange={event => this.setEmail(event.target.value)}
                   value={email}
                 />
-
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
@@ -178,17 +176,18 @@ class Invite extends React.Component {
               <p>{address.link}</p>
             </div>
 
-            <div className={style.copyIcon}>
-
-              <a onClick={() => this.copyAddress(address_copy)}>
-                <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-              </a>
-            </div>
-            <div
-              onClick={() => this.sendCoinAddressEmail(address_copy)}
-              className={style.shareIcon}
-            >
-              <img src="/images/icons/invite/share@1x.png" />
+            <div className={style.sharedBox}>
+              <div className={style.copyIcon}>
+                <a onClick={() => this.copyAddress(address_copy)}>
+                  <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+                </a>
+              </div>
+              <div
+                onClick={() => this.sendCoinAddressEmail(address_copy)}
+                className={style.shareIcon}
+              >
+                <img src="/images/icons/invite/share@1x.png" />
+              </div>
             </div>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -225,10 +224,8 @@ class Invite extends React.Component {
             {this.renderInvite()}
           </Grid>
         </Grid>
-
       </div>
-    )
-
+    );
   }
 }
 
@@ -237,7 +234,7 @@ Invite.propTypes = {
   invite: PropTypes.object,
   getInviteAddress: PropTypes.func,
   address: PropTypes.object,
-  balance: PropTypes.object, 
+  balance: PropTypes.object,
   getInviteSent: PropTypes.func,
   sendMailInvite: PropTypes.func
 };
