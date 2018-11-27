@@ -64,14 +64,10 @@ class Invite extends React.Component {
     };
   }
   componentDidMount = () => {
-    const { getInviteAddress } = this.props;
+    const { getInviteAddress, getInviteSent } = this.props;
     getInviteAddress();
-  }
-
-  componentDidMount = () => {
-    const { getInviteSent } = this.props;
     getInviteSent();
-  };
+  }
 
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -202,7 +198,7 @@ class Invite extends React.Component {
 
               <div className={style.accumulatedBalance}>
                 <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
-                <span className={style.accumulatedLunes}> 50.000 Lunes</span>
+                <p className={style.accumulatedLunes}>{balance && balance.totalBalance} Lunes</p>
               </div>
 
               <button
