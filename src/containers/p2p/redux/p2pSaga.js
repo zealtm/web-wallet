@@ -71,11 +71,11 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "Lunes", img: `images/icons/coins/lunes.png`, value: "lunes"}];
+    let cripto = [{title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes"}];
     if(response.cripto){
       response.cripto.forEach(val=>{
         if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+          cripto.push({title: val.name.toUpperCase(), img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
         }
       });
     }
