@@ -27,7 +27,7 @@ import {
 
 // UTILS
 import i18n from "../../../../utils/i18n";
-import { getDefaultFiat, getDefaultCrypto } from "../../../../utils/localStorage";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // STYLE
 import style from "./style.css";
@@ -45,36 +45,7 @@ class CoinsBar extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
-  setCoinDefault() {
-    const { coins, coinsEnabled } = this.props;
-    let cryptoDefault = getDefaultCrypto();
-    cryptoDefault = cryptoDefault ? cryptoDefault : "lunes";
 
-    coinsEnabled.forEach(val => {
-      let coin = coins[val.value.abbreviation];
-      if (!coin || coins[val.value.abbreviation].status != "active") return;
-      if (val.value.abbreviation != cryptoDefault) return;
-
-      this.setCoin(
-        val.value.id,
-        val.value.abbreviation,
-        val.value.address
-      );      
-      return;
-    });
-    /* return coinsEnabled.map((val, index) => {
-      let coin = coins[val.value.abbreviation];
-      if (!coin || coins[val.value.abbreviation].status!="active") return;
-      if(val.value.abbreviation != cryptoDefault ) return;
-      console.log("Achou");
-      this.setCoin(
-        val.value.id,
-        val.value.abbreviation,
-        val.value.address
-      );
-      return;
-    });    */
-  }
   setCoin = (id, coin, address) => {
     const {
       getCoinPackage,
@@ -96,9 +67,7 @@ class CoinsBar extends React.Component {
       return <ArrowDropUp className={style.arrowPercentUp} />;
     }
   };
-  componentDidMount() {
-    this.setCoinDefault();
-  }
+
   renderCoins = () => {
     const { coinsEnabled, coins, selected } = this.props;
 
