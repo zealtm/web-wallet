@@ -85,3 +85,17 @@
 :local .arrowUp {
   composes: colorGreen;
 }
+
+:local .textErrorSmall {
+  composes: clError from "../../../../components/bases/colorBase.css";
+  line-height: 1.8em;
+  font-size: 12px;
+}
+
+:local .iconListValid {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+  color: red;
+}

@@ -72,7 +72,7 @@ class Select extends React.Component {
 
     const wrapperStyle = {
       width: width ? width : "180px",
-      borderBottom: error ? '1px solid #f44336' : 'none',
+      borderBottom: error ? "1px solid #f44336" : "none"
     };
 
     return (
@@ -101,7 +101,7 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.object).isRequired,
+  list: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   title: PropTypes.string.isRequired,
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,

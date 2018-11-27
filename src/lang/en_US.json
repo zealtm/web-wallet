@@ -535,5 +535,6 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
-  "P2P_MY_LISTING": "My listings"
+  "P2P_MY_LISTING": "My listings", 
+  "P2P_CHANGE_ADDRESS": "Fill the address for receive"
 }

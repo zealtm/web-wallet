@@ -10,6 +10,7 @@ import { openChat, setCancelOrder } from "../../redux/p2pAction";
 import { formatDate } from "../../../../utils/numbers";
 import i18n from "./../../../../utils/i18n";
 import { getDefaultFiat } from "../../../../utils/localStorage";
+import { encryptMd5 } from "../../../../utils/cryptography";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -62,7 +63,10 @@ class CardOffer extends React.Component {
       );
     }
   }
-  
+  rederPictureGravatar(email){
+    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+  }
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
@@ -79,7 +83,7 @@ class CardOffer extends React.Component {
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src="images/lunio/lunio-user@100x100.jpg"
+              src={this.rederPictureGravatar(order.sell.user.email)}
               className={style.avatar}
             />
           </Grid>
