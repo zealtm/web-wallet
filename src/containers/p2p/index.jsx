@@ -82,7 +82,7 @@ class P2P extends React.Component {
   }
 
   render() {
-    const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
+  const contentTabIcons = ["tag", "user-star", "newoffer", /*"user"*/];
     const { chatOpened } = this.props.p2pStore;
     const { openP2P } = this.state;
 
@@ -90,9 +90,10 @@ class P2P extends React.Component {
 
     return (
       <div className={showBox}>
-        <Hidden smDown>
-          <div className={style.headerP2P}>{this.renderArrow()}</div>
-        </Hidden>
+        {/* <Hidden smDown>
+          
+        </Hidden> */}
+        <div className={style.headerP2P}>{this.renderArrow()}</div>
 
         {chatOpened == false ? (
           <div>

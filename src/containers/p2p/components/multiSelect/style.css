@@ -2,19 +2,21 @@
     cursor: pointer;
     padding: 10px 10px 0px 10px;
     position: relative;
+    
   }
   
   :local .header {
     display: flex;
     justify-content: space-between;
+    
   }
   
   :local .title {
     display: flex;
   }
   :local .ico {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-right: 5px;  
     border-radius: 50%;    
     composes: bgPurpleClear from "../../../../components/bases/colorBase.css";
@@ -47,4 +49,6 @@
   
   :local .icon img {
     margin: 0;
+    width: 40px;
+
   }

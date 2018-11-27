@@ -10,6 +10,16 @@
   height: 30px;
 }
 
+@media only screen and (max-width: 599px) {
+  :local .avatar {
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    margin-top:0px;
+  }
+}
+
 :local .textGreen {
   composes: clGreenDefault from "../../../../components/bases/colorBase.css";
 }
@@ -18,7 +28,10 @@
   composes: textGreen;
   font-size: 16px;
   display: block;
+  padding-bottom: 3px;
 }
+
+
 
 :local .textSmall {
   composes: textGreen;
@@ -32,6 +45,7 @@
   margin-bottom: 8px;
   margin-top: 4px;
 }
+
 
 :local .arrowPrice {
   composes: textGreen;
@@ -63,7 +77,9 @@
   margin-bottom: 15px;
   border-radius: 6px;
   font-size: 11px;
+  word-wrap: break-word;
 }
+
 
 :local .btContinue {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
@@ -75,6 +91,12 @@
   border: none;
   color: #fff;
   cursor: pointer;
+  padding: 0;
+}
+
+:local .btnCloseImg {
+  width: 20px;
+  display: block;
 }
 
 :local .offerText {
@@ -107,6 +129,33 @@
 :local .starActive {
   color: yellow;
   opacity: 1;
+}
+
+
+@media only screen and (max-width: 599px) {
+  :local .name {
+    font-size: 12px;
+  }
+
+  :local .numberText {
+    font-size: 12px;
+  }
+
+  :local .hours {
+    display: none;
+  }
+
+  :local .textDetails {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    font-size: 10px;
+  }
+
+  :local .btContinue {
+    width: 100%;
+  }
 }
 
 /* . SCROLLBAR */
