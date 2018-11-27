@@ -470,5 +470,7 @@
   "INVITE_BUTTON_SEND": "Enviar",
   "INVITE_TEXT_BUTTON": "Sacar",
   "INVITE_CONFIRMED_INVITATIONS": "Convites confirmados",
-  "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado"
+  "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado", 
+  "INVITE_ERROR_1": "Preencha o e-mail destino", 
+  "INVITE_ERROR_2": "Aguarde o endereço carregar"
 } 

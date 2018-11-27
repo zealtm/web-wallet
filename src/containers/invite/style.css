@@ -197,3 +197,9 @@
   text-align: center;
   font-size: 12px;
 }
+
+:local .errorLabel {
+  color: red;
+  font-size: 12px;
+  display: block;
+}
