@@ -67,6 +67,13 @@ const invite = (state = initialState, action) => {
         loadingInvites: false
       };
 
+      case "SEND_WITHDRAW_INVITE_REDUCER":
+      return {
+        ...state,
+        address: action.address,
+        loadingSent: false
+      };
+
     default: {
       return {
         ...state

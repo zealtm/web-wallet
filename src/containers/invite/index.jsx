@@ -8,7 +8,8 @@ import {
   setInviteModal,
   getInviteAddress,
   sendMailInvite,
-  getInviteSent
+  getInviteSent,
+  sendWithdraw
 } from "./redux/inviteAction";
 import { successRequest } from "../errors/redux/errorAction";
 
@@ -69,7 +70,7 @@ class Invite extends React.Component {
     const { getInviteAddress, getInviteSent } = this.props;
     getInviteAddress();
     getInviteSent();
-  }
+  };
 
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -79,6 +80,11 @@ class Invite extends React.Component {
     let { email } = this.state;
     let { sendMailInvite } = this.props;
     sendMailInvite(email);
+  };
+
+  handleWithdraw = address => {
+    const { sendWithdraw } = this.props;
+    sendWithdraw(address);
   };
 
   copyAddress = address => {
@@ -201,7 +207,6 @@ class Invite extends React.Component {
                 </div>
               </div>
             ) : null}
-
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
@@ -219,11 +224,13 @@ class Invite extends React.Component {
 
               <div className={style.accumulatedBalance}>
                 <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
-                <p className={style.accumulatedLunes}>{balance && balance.totalBalance} Lunes</p>
+                <p className={style.accumulatedLunes}>
+                  {balance && balance.totalBalance} Lunes
+                </p>
               </div>
 
               <button
-                onClick={this.handleModal}
+                onClick={() => this.handleWithdraw(address)}
                 className={style.btnInviteSent2}
               >
                 {i18n.t("INVITE_TEXT_BUTTON")}
@@ -258,7 +265,8 @@ Invite.propTypes = {
   successRequest: PropTypes.func,
   loadingList: PropTypes.bool,
   loadingSent: PropTypes.bool,
-  loadingAddress: PropTypes.bool
+  loadingAddress: PropTypes.bool,
+  sendWithdraw: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -277,7 +285,8 @@ const mapDispatchToProps = dispatch =>
       getInviteAddress,
       sendMailInvite,
       getInviteSent,
-      successRequest
+      successRequest,
+      sendWithdraw
     },
     dispatch
   );

@@ -85,3 +85,18 @@ export function* getInviteSentSaga() {
     yield put(internalServerError());
   }
 }
+
+export function* sendWithdrawSaga(address) {
+  yield put({
+    type: "SET_LOADING_SENT",
+    loading: true
+  });
+
+  let token = yield call(getAuthToken);
+  yield call(inviteService.sendWithdraw, token, address);
+
+  yield put({
+    type: "SEND_WITHDRAW_INVITE_REDUCER",
+    address
+  });
+}

@@ -10,43 +10,47 @@ import { internalServerError } from "../containers/errors/statusCodeMessage";
 import { setAuthToken } from "../utils/localStorage";
 
 class InviteService {
-    async getInviteHistory(token) {
-        try {
-            API_HEADER.headers.Authorization = token;
+  async getInviteHistory(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
 
-            let response = await axios.get(BASE_URL + "/invite/history", API_HEADER);
+      let response = await axios.get(BASE_URL + "/invite/history", API_HEADER);
 
-            setAuthToken(response.headers[HEADER_RESPONSE]);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
-            if (response.data.code !== 200) {
-                return internalServerError();
-            }
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
 
-            return response.data;
-        } catch (error) {
-            return internalServerError();
-        }
+      return response.data;
+    } catch (error) {
+      return internalServerError();
     }
+  }
 
-    async sendEmail(token, email) {
-        try {
-            API_HEADER.headers.Authorization = token;
+  async sendEmail(token, email) {
+    try {
+      API_HEADER.headers.Authorization = token;
 
-            let response = await axios.post(BASE_URL + "/invite/email", {
-                email: email.email
-            }, API_HEADER);
+      let response = await axios.post(
+        BASE_URL + "/invite/email",
+        {
+          email: email.email
+        },
+        API_HEADER
+      );
 
-            setAuthToken(response.headers[HEADER_RESPONSE]);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
-            if (response.data.code !== 200) {
-                return internalServerError();
-            }
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
 
-            return response.data;
-        } catch (error) {
-            return internalServerError();
-        }
+      return response.data;
+    } catch (error) {
+      return internalServerError();
     }
+  }
 
   async getInvite(token) {
     try {
@@ -72,6 +76,30 @@ class InviteService {
 
       let response = await axios.get(
         `${BASE_URL}/invite/balance/${address.link}`,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return internalServerError();
+      }
+
+      return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async sendWithdraw(token, address) {
+    try {
+      API_HEADER.headers.Authorization = token;
+     
+      let response = await axios.post(
+        BASE_URL + "/invite/withdraw",
+        {
+          address: address.address.link
+        },
         API_HEADER
       );
 

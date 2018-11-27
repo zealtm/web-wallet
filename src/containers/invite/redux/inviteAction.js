@@ -24,3 +24,8 @@ export const getInviteSent = () => ({
 export const clearState = () => ({
   type: "CLEAR_INVITE_STATE"
 });
+
+export const sendWithdraw = address => ({
+  type: "SEND_WITHDRAW_INVITE",
+  address
+});
