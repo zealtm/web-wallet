@@ -3,3 +3,8 @@
   overflow: hidden;
   height: 430px;
 }
+@media (min-width: 960px) {
+  :local .chatTarget {
+    height: 392px;
+  }
+}
