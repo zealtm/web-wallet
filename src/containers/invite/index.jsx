@@ -10,6 +10,7 @@ import {
   sendMailInvite,
   getInviteSent
 } from "./redux/inviteAction";
+import { successRequest } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -64,12 +65,8 @@ class Invite extends React.Component {
     };
   }
   componentDidMount = () => {
-    const { getInviteAddress } = this.props;
+    const { getInviteAddress, getInviteSent } = this.props;
     getInviteAddress();
-  }
-
-  componentDidMount = () => {
-    const { getInviteSent } = this.props;
     getInviteSent();
   };
 
@@ -109,7 +106,7 @@ class Invite extends React.Component {
 
   renderInvite = () => {
     const { invite } = this.props;
-    if(invite.invites.length<=0) return;
+    if (invite.invites.length <= 0) return;
     return (
       <div>
         {invite.invites &&
@@ -121,18 +118,11 @@ class Invite extends React.Component {
   };
 
   render() {
-    const { classes, address, balance } = this.props;
+    const { classes, address } = this.props;
     const { modalOpen } = this.state;
-    
-    const address_code = address.link; // mock
-    const address_copy = "https://luneswallet.app/invite?=" + address_code; // mock
-
-    if(address && balance){
-      console.log(address);
-      console.log(balance);
-    }
-
+    const address_copy = "https://luneswallet.app/invite?=" + address.link;
     let { email } = this.state;
+
     return (
       <div>
         <div className={style.header}>
@@ -157,7 +147,6 @@ class Invite extends React.Component {
                 />
               </Grid>
               <Grid item>
-
                 <Input
                   placeholder="Lunes@gmail.com"
                   classes={{
@@ -168,18 +157,16 @@ class Invite extends React.Component {
                   onChange={event => this.setEmail(event.target.value)}
                   value={email}
                 />
-
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>{address.link}</p>
+              <p>{address && address.link}</p>
             </div>
 
             <div className={style.copyIcon}>
-
               <a onClick={() => this.copyAddress(address_copy)}>
                 <img src="/images/icons/modal-receive/ic_copy@1x.png" />
               </a>
@@ -225,10 +212,8 @@ class Invite extends React.Component {
             {this.renderInvite()}
           </Grid>
         </Grid>
-
       </div>
-    )
-
+    );
   }
 }
 
@@ -236,10 +221,11 @@ Invite.propTypes = {
   classes: PropTypes.object.isRequired,
   invite: PropTypes.object,
   getInviteAddress: PropTypes.func,
-  address: PropTypes.object,
-  balance: PropTypes.object, 
+  address: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  balance: PropTypes.object,
   getInviteSent: PropTypes.func,
-  sendMailInvite: PropTypes.func
+  sendMailInvite: PropTypes.func,
+  successRequest: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -254,7 +240,8 @@ const mapDispatchToProps = dispatch =>
       setInviteModal,
       getInviteAddress,
       sendMailInvite,
-      getInviteSent
+      getInviteSent,
+      successRequest
     },
     dispatch
   );

@@ -19,7 +19,7 @@ class ItemInvite extends React.Component {
   constructor(props) {
     super(props);
   }
-  copyAddress = (address) => {
+  copyAddress = address => {
     let { successRequest } = this.props;
     const element = document.createElement("textarea");
     element.value = address;
@@ -36,19 +36,25 @@ class ItemInvite extends React.Component {
         <Grid container>
           <Grid item xs={5} sm={5}>
             <div>
-              <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_EMAIL")}</span> <br />
+              <span className={style.spanTitle}>
+                {i18n.t("INVITE_TITLE_EMAIL")}
+              </span>{" "}
+              <br />
               <p className={style.spanSub}>{this.props.email}</p>
             </div>
           </Grid>
           <Grid item xs={5} sm={6}>
-            <span className={style.spanTitle}>{i18n.t("INVITE_TITLE_STATUS")}</span> <br />
-            <p className={style.spanSub}>
-              Confirmado
-            </p>
+            <span className={style.spanTitle}>
+              {i18n.t("INVITE_TITLE_STATUS")}
+            </span>{" "}
+            <br />
+            <p className={style.spanSub}>Confirmado</p>
           </Grid>
           <Grid item xs={2} sm={1}>
             <img
-              onClick = {() => this.copyAddress('f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543')}
+              onClick={() =>
+                this.copyAddress("f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543")
+              }
               className={style.imgCopy}
               src="/images/icons/confirm/confirm-invite@2x.png"
             />
@@ -66,12 +72,11 @@ ItemInvite.propTypes = {
   successRequest: PropTypes.func,
   email: PropTypes.string
 };
-const mapStateToProps = store => ({
-});
+const mapStateToProps = store => ({});
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ successRequest }, dispatch);
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-) (ItemInvite);
+)(ItemInvite);
