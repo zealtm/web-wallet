@@ -185,7 +185,7 @@ class Invite extends React.Component {
             </div>
 
             {!loadingAddress ? (
-              <div>
+              <div className={style.sharedBox}>
                 <div className={style.copyIcon}>
                   <a onClick={() => this.copyAddress(address_copy)}>
                     <img src="/images/icons/modal-receive/ic_copy@1x.png" />
@@ -199,6 +199,7 @@ class Invite extends React.Component {
                 </div>
               </div>
             ) : null}
+
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
