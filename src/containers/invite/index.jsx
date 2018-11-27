@@ -10,6 +10,7 @@ import {
   sendMailInvite,
   getInviteSent
 } from "./redux/inviteAction";
+import { successRequest } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -141,6 +142,7 @@ class Invite extends React.Component {
     }
 
     let { email } = this.state;
+
     return (
       <div>
         <div className={style.header}>
@@ -249,10 +251,11 @@ Invite.propTypes = {
   classes: PropTypes.object.isRequired,
   invite: PropTypes.object,
   getInviteAddress: PropTypes.func,
-  address: PropTypes.object,
+  address: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   balance: PropTypes.object,
   getInviteSent: PropTypes.func,
   sendMailInvite: PropTypes.func,
+  successRequest: PropTypes.func,
   loadingList: PropTypes.bool,
   loadingSent: PropTypes.bool,
   loadingAddress: PropTypes.bool
@@ -273,7 +276,8 @@ const mapDispatchToProps = dispatch =>
       setInviteModal,
       getInviteAddress,
       sendMailInvite,
-      getInviteSent
+      getInviteSent,
+      successRequest
     },
     dispatch
   );

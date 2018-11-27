@@ -29,7 +29,7 @@ class InviteSend extends React.Component {
 }
 
 InviteSend.propTypes = {
-  invite: PropTypes.object
+  invite: PropTypes.array
 };
 
 const mapStateToProps = store => ({

@@ -73,8 +73,8 @@ export function* getInviteSentSaga() {
     let response = yield call(inviteService.getInviteHistory, token);
 
     let invites = [];
-    if(response.data.invites && response.data.invites.length>0){
-      invites = response.data.invites
+    if (response.data.invites && response.data.invites.length > 0) {
+      invites = response.data.invites;
     }
 
     yield put({
