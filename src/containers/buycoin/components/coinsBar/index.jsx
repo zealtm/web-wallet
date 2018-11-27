@@ -45,7 +45,8 @@ class CoinsBar extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
-  setCoinDefault() {
+  setCoinDefault() { 
+    
     const { coins, coinsEnabled } = this.props;
     let cryptoDefault = getDefaultCrypto();
     cryptoDefault = cryptoDefault ? cryptoDefault : "lunes";
