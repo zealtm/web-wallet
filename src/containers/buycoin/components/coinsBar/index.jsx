@@ -63,18 +63,6 @@ class CoinsBar extends React.Component {
       );      
       return;
     });
-    /* return coinsEnabled.map((val, index) => {
-      let coin = coins[val.value.abbreviation];
-      if (!coin || coins[val.value.abbreviation].status!="active") return;
-      if(val.value.abbreviation != cryptoDefault ) return;
-      console.log("Achou");
-      this.setCoin(
-        val.value.id,
-        val.value.abbreviation,
-        val.value.address
-      );
-      return;
-    });    */
   }
   setCoin = (id, coin, address) => {
     const {
