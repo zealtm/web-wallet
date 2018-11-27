@@ -21,6 +21,7 @@ import i18n from "../../utils/i18n";
 import ItemInvite from "./components/itemInvite";
 import Modal from "../../components/modal";
 import InviteSend from "./modal";
+import Loading from "../../components/loading";
 
 //STYLE
 import style from "./style.css";
@@ -104,8 +105,13 @@ class Invite extends React.Component {
   };
 
   renderInvite = () => {
-    const { invite } = this.props;
-    if(invite.invites.length<=0) return;
+    const { invite, loadingList } = this.props;
+
+    if (loadingList)
+      return <Loading color="lunes" height="100px" width="24px" />;
+
+    if (invite.invites.length <= 0) return;
+
     return (
       <div>
         {invite.invites &&
@@ -117,13 +123,19 @@ class Invite extends React.Component {
   };
 
   render() {
-    const { classes, address, balance } = this.props;
+    const {
+      classes,
+      address,
+      balance,
+      loadingSent,
+      loadingAddress
+    } = this.props;
     const { modalOpen } = this.state;
-    
-    const address_code = address.link; // mock
-    const address_copy = "https://luneswallet.app/invite?=" + address_code; // mock
 
-    if(address && balance){
+    const address_code = address.link;
+    const address_copy = "https://luneswallet.app/invite?=" + address_code;
+
+    if (address && balance) {
       console.log(address);
       console.log(balance);
     }
@@ -153,7 +165,6 @@ class Invite extends React.Component {
                 />
               </Grid>
               <Grid item>
-
                 <Input
                   placeholder="Lunes@gmail.com"
                   classes={{
@@ -164,36 +175,43 @@ class Invite extends React.Component {
                   onChange={event => this.setEmail(event.target.value)}
                   value={email}
                 />
-
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
               <p>{i18n.t("INVITE_LINK_SHARE")}</p>
             </div>
             <div className={style.adressShared}>
-              <p>{address.link}</p>
+              <p>{loadingAddress ? <Loading color="lunes" /> : address.link}</p>
             </div>
 
-            <div className={style.copyIcon}>
-
-              <a onClick={() => this.copyAddress(address_copy)}>
-                <img src="/images/icons/modal-receive/ic_copy@1x.png" />
-              </a>
-            </div>
-            <div
-              onClick={() => this.sendCoinAddressEmail(address_copy)}
-              className={style.shareIcon}
-            >
-              <img src="/images/icons/invite/share@1x.png" />
-            </div>
+            {!loadingAddress ? (
+              <div>
+                <div className={style.copyIcon}>
+                  <a onClick={() => this.copyAddress(address_copy)}>
+                    <img src="/images/icons/modal-receive/ic_copy@1x.png" />
+                  </a>
+                </div>
+                <div
+                  onClick={() => this.sendCoinAddressEmail(address_copy)}
+                  className={style.shareIcon}
+                >
+                  <img src="/images/icons/invite/share@1x.png" />
+                </div>
+              </div>
+            ) : null}
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
+              {loadingSent}
               <button
                 className={style.btnInviteSent}
                 onClick={() => this.handleEmail()}
               >
-                {i18n.t("INVITE_BUTTON_SEND")}
+                {loadingSent ? (
+                  <Loading color="lunes" />
+                ) : (
+                  i18n.t("INVITE_BUTTON_SEND")
+                )}
               </button>
 
               <div className={style.accumulatedBalance}>
@@ -221,10 +239,8 @@ class Invite extends React.Component {
             {this.renderInvite()}
           </Grid>
         </Grid>
-
       </div>
-    )
-
+    );
   }
 }
 
@@ -233,15 +249,21 @@ Invite.propTypes = {
   invite: PropTypes.object,
   getInviteAddress: PropTypes.func,
   address: PropTypes.object,
-  balance: PropTypes.object, 
+  balance: PropTypes.object,
   getInviteSent: PropTypes.func,
-  sendMailInvite: PropTypes.func
+  sendMailInvite: PropTypes.func,
+  loadingList: PropTypes.bool,
+  loadingSent: PropTypes.bool,
+  loadingAddress: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   invite: store.invite,
   address: store.invite.address,
-  balance: store.invite.balance
+  balance: store.invite.balance,
+  loadingList: store.invite.loadingInvites,
+  loadingSent: store.invite.loadingSent,
+  loadingAddress: store.invite.loadingAddress
 });
 
 const mapDispatchToProps = dispatch =>

@@ -49,7 +49,7 @@ export function* getInviteAddressSaga() {
 
 export function* sendMailInviteSaga(email) {
   yield put({
-    type: "SET_LOADING_INVITES",
+    type: "SET_LOADING_SENT",
     loading: true
   });
 
@@ -65,7 +65,7 @@ export function* sendMailInviteSaga(email) {
 export function* getInviteSentSaga() {
   try {
     yield put({
-      type: "SET_LOADING_SENT",
+      type: "SET_LOADING_INVITES",
       loading: true
     });
 
