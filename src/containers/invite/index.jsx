@@ -158,7 +158,7 @@ class Invite extends React.Component {
               </Grid>
               <Grid item>
               <div className={style.inviteInput}>
-                <Input 
+                <Input
                   placeholder="Lunes@gmail.com"
                   classes={{
                     root: classes.root,
