@@ -1,11 +1,13 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
+import {successRequest,errorInput} from "../../errors/redux/errorAction";
 
 // SERVICES
 import InviteService from "../../../services/inviteService";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 const inviteService = new InviteService();
 
@@ -54,12 +56,19 @@ export function* sendMailInviteSaga(email) {
   });
 
   let token = yield call(getAuthToken);
-  yield call(inviteService.sendEmail, token, email);
-
+  const response = yield call(inviteService.sendEmail, token, email);
+  
   yield put({
     type: "SEND_MAIL_INVITE_REDUCER",
     email
   });
+
+  if(response.code!=200){
+    yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+  }else{
+    yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+  }
+
 }
 
 export function* getInviteSentSaga() {
