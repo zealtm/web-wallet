@@ -8,9 +8,10 @@ import {
   setInviteModal,
   getInviteAddress,
   sendMailInvite,
-  getInviteSent
+  getInviteSent,
+  sendWithdraw
 } from "./redux/inviteAction";
-import { successRequest } from "../errors/redux/errorAction";
+import { successRequest, errorInput } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -69,7 +70,7 @@ class Invite extends React.Component {
     const { getInviteAddress, getInviteSent } = this.props;
     getInviteAddress();
     getInviteSent();
-  }
+  };
 
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -79,6 +80,15 @@ class Invite extends React.Component {
     let { email } = this.state;
     let { sendMailInvite } = this.props;
     sendMailInvite(email);
+  };
+
+  handleWithdraw = () => {
+    const { sendWithdraw, address, balance, errorInput } = this.props;
+    if (!balance || balance.totalBalance <= 0) {
+      errorInput(i18n.t("INVITE_NO_BALANCE"));
+    } else {
+      sendWithdraw(address);
+    }
   };
 
   copyAddress = address => {
@@ -129,7 +139,8 @@ class Invite extends React.Component {
       address,
       balance,
       loadingSent,
-      loadingAddress
+      loadingAddress,
+      loadingWithdraw
     } = this.props;
     const { modalOpen } = this.state;
 
@@ -207,7 +218,6 @@ class Invite extends React.Component {
                 </div>
               </div>
             ) : null}
-
           </Grid>
           <Grid item xs={12} sm={4}>
             <div className={style.boxButtons}>
@@ -225,14 +235,20 @@ class Invite extends React.Component {
 
               <div className={style.accumulatedBalance}>
                 <span>{i18n.t("INVITE_ACCUMULATED_BALANCE")} </span>
-                <p className={style.accumulatedLunes}>{balance && balance.totalBalance} Lunes</p>
+                <p className={style.accumulatedLunes}>
+                  {balance && balance.totalBalance} Lunes
+                </p>
               </div>
 
               <button
-                onClick={this.handleModal}
-                className={style.btnInviteSent2}
+                className={style.btnInviteSent}
+                onClick={() => this.handleWithdraw()}
               >
-                {i18n.t("INVITE_TEXT_BUTTON")}
+                {loadingWithdraw ? (
+                  <Loading color="lunes" />
+                ) : (
+                  i18n.t("INVITE_TEXT_BUTTON")
+                )}
               </button>
             </div>
           </Grid>
@@ -262,9 +278,12 @@ Invite.propTypes = {
   getInviteSent: PropTypes.func,
   sendMailInvite: PropTypes.func,
   successRequest: PropTypes.func,
+  errorInput: PropTypes.func,
   loadingList: PropTypes.bool,
   loadingSent: PropTypes.bool,
-  loadingAddress: PropTypes.bool
+  loadingAddress: PropTypes.bool,
+  sendWithdraw: PropTypes.func,
+  loadingWithdraw: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
@@ -273,7 +292,8 @@ const mapStateToProps = store => ({
   balance: store.invite.balance,
   loadingList: store.invite.loadingInvites,
   loadingSent: store.invite.loadingSent,
-  loadingAddress: store.invite.loadingAddress
+  loadingAddress: store.invite.loadingAddress,
+  loadingWithdraw: store.invite.loadingWithdraw
 });
 
 const mapDispatchToProps = dispatch =>
@@ -283,7 +303,9 @@ const mapDispatchToProps = dispatch =>
       getInviteAddress,
       sendMailInvite,
       getInviteSent,
-      successRequest
+      successRequest,
+      sendWithdraw,
+      errorInput
     },
     dispatch
   );
