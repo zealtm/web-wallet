@@ -11,7 +11,7 @@ import {
   getInviteSent,
   sendWithdraw
 } from "./redux/inviteAction";
-import { successRequest } from "../errors/redux/errorAction";
+import { successRequest, errorInput } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import { Grid, withStyles, Input } from "@material-ui/core";
@@ -82,9 +82,13 @@ class Invite extends React.Component {
     sendMailInvite(email);
   };
 
-  handleWithdraw = address => {
-    const { sendWithdraw } = this.props;
-    sendWithdraw(address);
+  handleWithdraw = () => {
+    const { sendWithdraw, address, balance, errorInput } = this.props;
+    if (!balance || balance.totalBalance <= 0) {
+      errorInput(i18n.t("INVITE_NO_BALANCE"));
+    } else {
+      sendWithdraw(address);
+    }
   };
 
   copyAddress = address => {
@@ -135,7 +139,8 @@ class Invite extends React.Component {
       address,
       balance,
       loadingSent,
-      loadingAddress
+      loadingAddress,
+      loadingWithdraw
     } = this.props;
     const { modalOpen } = this.state;
 
@@ -230,10 +235,14 @@ class Invite extends React.Component {
               </div>
 
               <button
-                onClick={() => this.handleWithdraw(address)}
-                className={style.btnInviteSent2}
+                className={style.btnInviteSent}
+                onClick={() => this.handleWithdraw()}
               >
-                {i18n.t("INVITE_TEXT_BUTTON")}
+                {loadingWithdraw ? (
+                  <Loading color="lunes" />
+                ) : (
+                  i18n.t("INVITE_TEXT_BUTTON")
+                )}
               </button>
             </div>
           </Grid>
@@ -263,10 +272,12 @@ Invite.propTypes = {
   getInviteSent: PropTypes.func,
   sendMailInvite: PropTypes.func,
   successRequest: PropTypes.func,
+  errorInput: PropTypes.func,
   loadingList: PropTypes.bool,
   loadingSent: PropTypes.bool,
   loadingAddress: PropTypes.bool,
-  sendWithdraw: PropTypes.func
+  sendWithdraw: PropTypes.func,
+  loadingWithdraw: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
@@ -275,7 +286,8 @@ const mapStateToProps = store => ({
   balance: store.invite.balance,
   loadingList: store.invite.loadingInvites,
   loadingSent: store.invite.loadingSent,
-  loadingAddress: store.invite.loadingAddress
+  loadingAddress: store.invite.loadingAddress,
+  loadingWithdraw: store.invite.loadingWithdraw
 });
 
 const mapDispatchToProps = dispatch =>
@@ -286,7 +298,8 @@ const mapDispatchToProps = dispatch =>
       sendMailInvite,
       getInviteSent,
       successRequest,
-      sendWithdraw
+      sendWithdraw,
+      errorInput
     },
     dispatch
   );
