@@ -1,5 +1,5 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import { internalServerError, modalError } from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getUserSeedWords } from "../../../utils/localStorage";
@@ -236,6 +236,33 @@ export function* getHistoryPaySaga() {
     yield put({
       type: "GET_HISTORY_PAY_REDUCER",
       history: data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* uploadBarcodeSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+
+    let response = yield call(paymentService.getBarcode, payload.image);
+
+    if (!response) {
+      yield put(modalError("Imagem inválida"));
+    }
+
+    yield put({
+      type: "GET_PAYMENT_DATA_REDUCER",
+      number: response
+    });
+
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
     });
   } catch (error) {
     yield put(internalServerError());
