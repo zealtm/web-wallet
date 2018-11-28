@@ -7,7 +7,7 @@ export const getInviteAddress = () => ({
   type: "GET_INVITE_ADDRESS"
 });
 
-export const getInviteBalance = (address) => ({
+export const getInviteBalance = address => ({
   type: "GET_INVITE_BALANCE",
   address
 });
@@ -24,4 +24,3 @@ export const getInviteSent = () => ({
 export const clearState = () => ({
   type: "CLEAR_INVITE_STATE"
 });
-
