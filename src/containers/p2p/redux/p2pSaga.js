@@ -71,7 +71,7 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "Lunes", img: `images/icons/coins/lunes.png`, value: "lunes"}];
+    let cripto = [{title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes"}];
     if(response.cripto){
       response.cripto.forEach(val=>{
         if(val.status=="active"){
@@ -83,7 +83,7 @@ export function* getPaymentMethodsWhenBuying(payload) {
     if(response.fiat){
       response.fiat.forEach(val=>{
         if(val.status=="active"){
-          cripto.push({id:val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
+          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
         }
       });
     }
