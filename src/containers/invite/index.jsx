@@ -63,7 +63,8 @@ class Invite extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
-      email: ""
+      email: "", 
+      errors: []
     };
   }
   componentDidMount = () => {
@@ -78,8 +79,21 @@ class Invite extends React.Component {
 
   handleEmail = () => {
     let { email } = this.state;
-    let { sendMailInvite } = this.props;
-    sendMailInvite(email);
+    let { sendMailInvite, address } = this.props;
+    let error = [];
+    
+    if(email==""){
+      error.push(i18n.t("INVITE_ERROR_1"));
+    }
+    
+    if(address.link == ""){
+      error.push(i18n.t("INVITE_ERROR_2"));
+    }
+    if(error.length<=0){
+      sendMailInvite(email); 
+    }
+
+    this.setState({...this.state, errors: error});
   };
 
   handleWithdraw = () => {
@@ -133,6 +147,13 @@ class Invite extends React.Component {
     );
   };
 
+  renderErrors = () => {
+    const {errors} = this.state;
+    return errors.map((val,key)=>{
+      return <span className={style.errorLabel} key={key}>{val}</span>
+    });
+  }
+
   render() {
     const {
       classes,
@@ -146,7 +167,7 @@ class Invite extends React.Component {
 
     const address_code = address.link;
     const address_copy = "https://luneswallet.app/invite?=" + address_code;
-    
+
     let { email } = this.state;
 
     return (
@@ -186,6 +207,7 @@ class Invite extends React.Component {
                   onChange={event => this.setEmail(event.target.value)}
                   value={email}
                 />
+                {this.renderErrors()}
 
               </div>
 
