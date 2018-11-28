@@ -146,12 +146,7 @@ class Invite extends React.Component {
 
     const address_code = address.link;
     const address_copy = "https://luneswallet.app/invite?=" + address_code;
-
-    if (address && balance) {
-      console.log(address);
-      console.log(balance);
-    }
-
+    
     let { email } = this.state;
 
     return (
