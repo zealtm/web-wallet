@@ -2,6 +2,7 @@ const initialState = {
   loadingAddress: false,
   loadingInvites: false,
   loadingSent: false,
+  loadingWithdraw: false,
   modalOpen: false,
   address: "",
   invites: []
@@ -39,6 +40,12 @@ const invite = (state = initialState, action) => {
         loadingInviteBalance: action.loading
       };
 
+    case "SET_LOADING_WITHDRAW":
+      return {
+        ...state,
+        loadingWithdraw: action.loading
+      };
+
     case "GET_INVITE_ADDRESS_REDUCER":
       return {
         ...state,
@@ -65,6 +72,12 @@ const invite = (state = initialState, action) => {
         ...state,
         invites: action.invites,
         loadingInvites: false
+      };
+
+    case "SEND_WITHDRAW_INVITE_REDUCER":
+      return {
+        ...state,
+        loadingWithdraw: false
       };
 
     default: {
