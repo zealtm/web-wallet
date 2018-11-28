@@ -86,6 +86,11 @@
   margin-top: -5px;
   color: #54d467;
 }
+:local(.valueCoin) {
+  font-size: 14px;
+  margin-top: -5px;
+  color: #54d467;
+}
 
 :local(.decimals) {
   font-size: 20px;
