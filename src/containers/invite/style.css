@@ -84,6 +84,13 @@
 }
 /* 2. TEXT */
 
+@media screen and (min-width: 768px) {
+  :local .inviteInput {
+  width: 155%;
+  text-align: center;
+  }   
+}
+
 :local(.linkTitle) {
   margin-top: 30px;
   composes: textDefault from "../../components/bases/textBase.css";
