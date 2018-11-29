@@ -480,5 +480,9 @@
   "SEND_MAIL_INVITE_ERROR": "Error on send",
   "INVITE_NO_BALANCE": "No balance available",
   "INVITE_WITHDRAW": "You have successfully completed the withdraw!", 
-  "ACCEPT_INVITE_LABEL": "You were invited by "
+  "ACCEPT_INVITE_LABEL": "You were invited by ", 
+  "INVITE_STATUS_SENT": "Sent",
+  "INVITE_STATUS_REGISTERED": "Registered",
+  "INVITE_STATUS_TRANSACTED": "Transacted",
+  "INVITE_STATUS_REDEEMED": "Redeemed"
 }

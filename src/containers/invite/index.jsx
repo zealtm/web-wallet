@@ -63,7 +63,7 @@ class Invite extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
-      email: "", 
+      email: "",
       errors: []
     };
   }
@@ -81,19 +81,19 @@ class Invite extends React.Component {
     let { email } = this.state;
     let { sendMailInvite, address } = this.props;
     let error = [];
-    
-    if(email==""){
+
+    if (email == "") {
       error.push(i18n.t("INVITE_ERROR_1"));
     }
-    
-    if(address.link == ""){
+
+    if (address.link == "") {
       error.push(i18n.t("INVITE_ERROR_2"));
     }
-    if(error.length<=0){
-      sendMailInvite(email); 
+    if (error.length <= 0) {
+      sendMailInvite(email);
     }
 
-    this.setState({...this.state, errors: error});
+    this.setState({ ...this.state, errors: error });
   };
 
   handleWithdraw = () => {
@@ -129,6 +129,39 @@ class Invite extends React.Component {
     });
   };
 
+  returnStatus = obj => {
+    const { sent, registered, transacted, redeemed } = obj;
+    let lastDate = new Date("0000-00-00");
+    let statusList = "sent";
+
+    const sentDate = new Date(sent);
+    const registeredDate = new Date(registered);
+    const transactedDate = new Date(transacted);
+    const redeemedDate = new Date(redeemed);
+
+    if (sent != null && sentDate > lastDate) {
+      lastDate = sentDate;
+      statusList = "sent";
+    }
+
+    if (registered != null && registeredDate > lastDate) {
+      lastDate = registeredDate;
+      statusList = "registered";
+    }
+
+    if (transacted != null && transactedDate > lastDate) {
+      lastDate = transactedDate;
+      statusList = "transacted";
+    }
+
+    if (redeemed != null && redeemedDate > lastDate) {
+      lastDate = redeemedDate;
+      statusList = "redeemed";
+    }
+
+    return statusList.toUpperCase();
+  };
+
   renderInvite = () => {
     const { invite, loadingList } = this.props;
 
@@ -141,18 +174,29 @@ class Invite extends React.Component {
       <div>
         {invite.invites &&
           invite.invites.map((email, key) => {
-            return <ItemInvite key={key} email={email.receiptEmail} />;
+            const status = this.returnStatus(email);
+            return (
+              <ItemInvite
+                key={key}
+                email={email.receiptEmail}
+                status={status}
+              />
+            );
           })}
       </div>
     );
   };
 
   renderErrors = () => {
-    const {errors} = this.state;
-    return errors.map((val,key)=>{
-      return <span className={style.errorLabel} key={key}>{val}</span>
+    const { errors } = this.state;
+    return errors.map((val, key) => {
+      return (
+        <span className={style.errorLabel} key={key}>
+          {val}
+        </span>
+      );
     });
-  }
+  };
 
   render() {
     const {
@@ -194,23 +238,19 @@ class Invite extends React.Component {
                 />
               </Grid>
               <Grid item>
-
-              <div className={style.inviteInput}>
-
-                <Input
-                  placeholder="Lunes@gmail.com"
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                  onChange={event => this.setEmail(event.target.value)}
-                  value={email}
-                />
-                {this.renderErrors()}
-
-              </div>
-
+                <div className={style.inviteInput}>
+                  <Input
+                    placeholder="Lunes@gmail.com"
+                    classes={{
+                      root: classes.root,
+                      underline: classes.cssUnderline,
+                      input: classes.cssInput
+                    }}
+                    onChange={event => this.setEmail(event.target.value)}
+                    value={email}
+                  />
+                  {this.renderErrors()}
+                </div>
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
@@ -331,4 +371,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(inputStyle)(Invite));
-
