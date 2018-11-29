@@ -50,6 +50,7 @@ class CreateUserTerms extends React.Component {
     let { loading, createUser, clearMessage, errorInput, user } = this.props;
     let { inputs } = this.state;
     let { messageError, errors } = inputValidator(inputs);
+    let link = 'linkteste' //mock
 
     if (
       errors.length > 0 ||
@@ -70,7 +71,8 @@ class CreateUserTerms extends React.Component {
         user.user.name,
         user.user.surname,
         user.user.email,
-        user.user.password
+        user.user.password,
+        link
       );
     }
     return;
