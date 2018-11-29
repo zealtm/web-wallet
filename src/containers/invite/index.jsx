@@ -331,3 +331,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(inputStyle)(Invite));
+
