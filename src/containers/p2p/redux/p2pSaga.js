@@ -3,6 +3,8 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import { decodeToken } from "../../../utils/cryptography"
+
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -39,18 +41,18 @@ export function* openModalPaySaga(payload) {
 export function* getP2PMyOrdersSaga(payload){
   try {
     yield put({type:"SET_LOADING_P2P",loading:true});
-    
+
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getMyOrders, token, payload.coin);
 
     if(response.errorMessage){
       yield put({
-        type: "GET_MY_ORDERS_REDUCER", 
+        type: "GET_MY_ORDERS_REDUCER",
         orders: []
       });
     }else{
       yield put({
-        type: "GET_MY_ORDERS_REDUCER", 
+        type: "GET_MY_ORDERS_REDUCER",
         orders: response.data.orders
       });
     }
@@ -95,12 +97,12 @@ export function* getP2PHistorySaga(payload){
 
     if(response.errorMessage){
       yield put({
-        type: "GET_HISTORY_REDUCER", 
+        type: "GET_HISTORY_REDUCER",
         orders: []
       });
     }else{
       yield put({
-        type: "GET_HISTORY_REDUCER", 
+        type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
       });
     }
@@ -132,9 +134,9 @@ export function* getP2PFilterSaga(payload){
 
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
-    
+
     yield put({
-      type: "GET_FILTER_REDUCER", 
+      type: "GET_FILTER_REDUCER",
       orders: response
     });
   }catch(error){
@@ -149,10 +151,10 @@ export function* createOfferWhenSelling(payload) {
 
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.createOfferWhenSelling, token, payload.data);
-    
+
     if(response.data.data.orderId){
       yield put({
-        type: "CREATE_OFFER_DONE", 
+        type: "CREATE_OFFER_DONE",
         offer: response.data.data.orderId
       });
     }else{
@@ -172,7 +174,7 @@ export function* createOfferWhenSelling(payload) {
 export function* setP2POrdersCancelSaga(payload) {
   try {
     yield put({type:"SET_LOADING_P2P",loading:true});
-    
+
     let token = yield call(getAuthToken);
 
     let response = yield call(
@@ -201,4 +203,10 @@ export function* closeDeposit() {
   yield put({
     type: "CLOSE_DEPOSIT_P2P_REDUCER"
   });
+}
+
+export function* setUserId() {
+  let token = decodeToken(getAuthToken())
+  let id = token.payload.id
+  yield put({type: 'SET_USER_ID', id})
 }

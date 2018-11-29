@@ -44,7 +44,7 @@ class HeaderDetails extends React.Component {
 
     acceptOfferWhenBuying({
       coin: "lunes",
-      orderId: order.id, 
+      orderId: order.id,
       addressBuyer: addressBuyer
     });
 
@@ -123,7 +123,7 @@ class HeaderDetails extends React.Component {
         >
           <KeyboardArrowUp
             onClick={() => this.props.showHeaderDetails()}
-            className={style.arrowUp}
+            className={style.arrowUp+' showHeaderDetails'}
           />
         </Grid>
       </div>

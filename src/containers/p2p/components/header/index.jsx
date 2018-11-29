@@ -66,7 +66,7 @@ class Header extends React.Component {
     }
 
     return (
-      <div className={style.topBar}>
+      <div className={style.topBar+' chatHeader'}>
         <div className={style.header}>
           <Grid container>
             <Grid item xs={1}>

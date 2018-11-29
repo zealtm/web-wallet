@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {getPaymentMethodsWhenBuying} from "./redux/p2pAction";
+import {getPaymentMethodsWhenBuying, setUserId} from "./redux/p2pAction";
 
 //MATERIAL
 import { Hidden } from "@material-ui/core/";
@@ -77,7 +77,8 @@ class P2P extends React.Component {
   };
 
   componentDidMount = () => {
-    const {getPaymentMethodsWhenBuying} = this.props;
+    const {getPaymentMethodsWhenBuying, setUserId} = this.props;
+    setUserId()
     getPaymentMethodsWhenBuying("lunes");
   }
 
@@ -89,7 +90,7 @@ class P2P extends React.Component {
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
-      <div className={showBox}>
+      <div className={showBox+' p2pContainer'}>
         <Hidden smDown>
           <div className={style.headerP2P}>{this.renderArrow()}</div>
         </Hidden>
@@ -115,6 +116,7 @@ class P2P extends React.Component {
 P2P.propTypes = {
   p2pStore: PropTypes.object.isRequired,
   getPaymentMethodsWhenBuying: PropTypes.func,
+  setUserId: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -124,7 +126,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPaymentMethodsWhenBuying
+      getPaymentMethodsWhenBuying,
+      setUserId
     },
     dispatch
   );

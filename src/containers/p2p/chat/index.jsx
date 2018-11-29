@@ -21,10 +21,26 @@ import { getChatBundle } from './functions'
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    this.callChatBundle()
   }
-
-  componentDidMount() {
-    getChatBundle()
+  callChatBundle = () => {
+    let { userId: buyerId, chat } = this.props.p2pStore
+    let { iduser: ad } = chat
+    let { id: adId } = ad
+    let { id: adOwnerId } = ad.sell.user
+    getChatBundle({adId, adOwnerId, buyerId})
+    // let typeOfChatUser; //eslint-disable-line
+    // if (buyerId === adOwnerId)
+    //   typeOfChatUser = 'buyer'
+    // else
+    //   typeOfChatUser = 'seller'
+    // if (typeOfChatUser === 'buyer') {
+    //   getChatBundle({adId, adOwnerId, buyerId})
+    // } else if (typeOfChatUser === 'seller') {
+    //   getChatBundle({adId, adOwnerId, buyerId})
+    // } else {
+    //   alert('Whe need a buyer or a seller id at least')
+    // }
   }
 
   render() {
@@ -34,9 +50,9 @@ class Chat extends React.Component {
         {openDeposit == false ? (
           <div className={style.baseChat}>
             <Header />
-            <div className={style.chatTarget} id={"chatTarget"}>
+            <div className={style.chatTarget+' chatTarget'} id={"chatTarget"}>
               <Loading/>
-              {/*Chat will be rendered here when component mounts*/}
+              {/*Chat will be rendered here, and loading will be removed*/}
             </div>
           </div>
         ) : (

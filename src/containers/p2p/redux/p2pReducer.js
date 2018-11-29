@@ -1,4 +1,5 @@
 const initialState = {
+  userId: undefined,
   chat: {
     iduser: null
   },
@@ -27,12 +28,17 @@ const initialState = {
     },
     paymentMethods: [],
     paymentMethod: {}
-  }, 
+  },
   cancelDone:false,
 };
 
 const p2p = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_USER_ID":
+      return {
+        ...state,
+        userId: action.id
+      }
     case "SETTER":
       return {
         ...state,
@@ -78,7 +84,7 @@ const p2p = (state = initialState, action) => {
     case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
-        loading:false, 
+        loading:false,
         cancelDone: true,
       };
 
@@ -114,27 +120,27 @@ const p2p = (state = initialState, action) => {
         ...state,
         loading: action.loading
       };
-    
+
     case "SET_LOADING_CREATE_OFFER":
       return {
         ...state,
         loadingCreateOrder: action.loading
       }
-    
+
     case "CREATE_OFFER_DONE":
       return {
         ...state,
-        loadingCreateOrder: false, 
+        loadingCreateOrder: false,
         createDone: true
       }
-    
+
     case "CREATE_OFFER_ERROR":
       return {
         ...state,
-        loadingCreateOrder: false, 
+        loadingCreateOrder: false,
         createError: true
       }
-    
+
     case "CREATE_OFFER_CLEAR":
       return {
         ...state,

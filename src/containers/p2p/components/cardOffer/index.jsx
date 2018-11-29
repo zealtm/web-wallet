@@ -62,7 +62,7 @@ class CardOffer extends React.Component {
       );
     }
   }
-  
+
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
@@ -131,7 +131,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {(userEmail != order.sell.user.email && type != "myhistory") ? (
+            {(/*userEmail != order.sell.user.email && type != "myhistory"*/ true) ? (
               <button
                 className={style.btContinue}
                 onClick={() => this.openChat(order)}
