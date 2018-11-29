@@ -174,15 +174,21 @@
 :local .btnInviteSent2 {
   composes: button;
 }
-
+:local .iconContent {   
+  float: left;
+  height: 100%;
+  align-items: center;
+  position: relative;
+}
 :local .icon {
+  margin-top: 20px; 
   margin-right: 15px;
   height: 30px;
 }
 
 @media screen and (max-width: 599px) {
   :local .icon {
-    margin-right: -15px;
+    margin-right: 1px;
   }
 }
 
