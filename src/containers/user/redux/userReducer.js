@@ -14,12 +14,7 @@ const initialState = {
     username: undefined,
     email: undefined,
     password: undefined,
-    seed: undefined, 
-    invite: {
-      loading: false,
-      link: undefined,
-      user: undefined
-    }
+    seed: undefined
   },
   twoFactor: false,
   pages: {
@@ -28,7 +23,12 @@ const initialState = {
     reset: 0
   },
   loading: false,
-  errors: []
+  errors: [], 
+  invite: {
+    loading: false,
+    link: undefined,
+    user: undefined
+  }
 };
 
 const user = (state = initialState, action) => {
@@ -250,25 +250,19 @@ const user = (state = initialState, action) => {
     case "INVITE_VALIDATE_LOADING":
       return {
         ...state,
-        user: {
-          ...state.user,
-          invite: {
-            ...state.user.invite,
-            loading: action.loading
-          }
+        invite: {
+          ...state.invite,
+          loading: action.loading
         }
       };
     
     case "INVITE_VALIDATE_REDUCER":
       return {
         ...state,
-        user: {
-          ...state.user,
-          invite: {
-            link: action.link, 
-            user: action.user,
-            loading: false
-          }
+        invite: {
+          link: action.link, 
+          user: action.user,
+          loading: false
         }
       };
 

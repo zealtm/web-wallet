@@ -117,7 +117,7 @@ class CreateUser extends React.Component {
   }
 
   renderInvite = () => {
-    const {invite} = this.props.user.user;
+    const {invite} = this.props.user;
 
     if(invite.loading) return <Loading color="lunes" />;
 
