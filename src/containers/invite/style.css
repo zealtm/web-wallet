@@ -67,7 +67,7 @@
   width: 70%;
   height: 50px;
   border-radius: 10px;
-  margin-top: 18px;
+  margin-top: -5px !important;
   background-color: #42227d;
 }
 
@@ -86,7 +86,7 @@
 
 @media screen and (min-width: 768px) {
   :local .inviteInput {
-  width: 155%;
+  width: 140%;
   text-align: center;
   }   
 }
@@ -110,10 +110,12 @@
 }
 
 :local(.accumulatedBalance) {
+  margin-top: 10px;
   width: 100%;
 }
 
 :local(.accumulatedLunes) {
+  margin-top: 5px;
   color: #68f285;
 }
 
@@ -169,6 +171,7 @@
 
 :local .btnInviteSent {
   composes: button;
+  
 }
 
 :local .btnInviteSent2 {
