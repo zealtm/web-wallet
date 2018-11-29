@@ -67,6 +67,7 @@ export function* sendMailInviteSaga(email) {
     yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
   }else{
     yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    yield call(getInviteSentSaga);
   }
 
 }
