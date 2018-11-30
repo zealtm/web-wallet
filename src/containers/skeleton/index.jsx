@@ -1,19 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// COMPONENTS
+import { connect } from "react-redux";
 import Header from "./header";
 import Menu from "./menu";
 import P2P from "../p2p/index";
-
-// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-
-// STYLE
 import style from "./style.css";
-
-//UTILS
+import { clearUserData } from "../user/redux/userAction";
 import { clearAll, getDefinitionMetadata } from "../../utils/localStorage";
+import { bindActionCreators } from "redux";
 
 class Skeleton extends React.Component {
   constructor(props) {
@@ -30,13 +25,14 @@ class Skeleton extends React.Component {
   };
 
   logout = () => {
+    const { clearUserData } = this.props;
     let deleteMeta = JSON.parse(getDefinitionMetadata());
 
     if (deleteMeta === true || deleteMeta == null) {
       clearAll();
     }
 
-    window.location.reload(true);
+    clearUserData();
   };
 
   render() {
@@ -66,7 +62,19 @@ class Skeleton extends React.Component {
 }
 
 Skeleton.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  clearUserData: PropTypes.func
 };
 
-export default Skeleton;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clearUserData
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Skeleton);
