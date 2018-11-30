@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Header from "./header";
 import Menu from "./menu";
 import P2P from "../p2p/index";
@@ -74,7 +75,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(Skeleton);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(Skeleton)
+);
