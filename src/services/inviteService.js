@@ -114,6 +114,19 @@ class InviteService {
       return internalServerError();
     }
   }
+
+  async verifyInvite(hash){
+    try {
+      let response = await axios.get(
+        `${BASE_URL}/invite/verify/${hash}`,
+        API_HEADER
+      );
+      
+      return response.data;
+    }catch(error){
+      return internalServerError();
+    }
+  }
 }
 
 export default InviteService;

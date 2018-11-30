@@ -20,8 +20,11 @@ import i18n from "../../../utils/i18n";
 // Services
 import AuthService from "../../../services/authService";
 import UserService from "../../../services/userService";
+import InviteService from "../../../services/inviteService";
+
 const authService = new AuthService();
 const userService = new UserService();
+const inviteService = new InviteService();
 const changeLoadingState = "CHANGE_LOADING_STATE";
 
 export function* authenticateUser(action) {
@@ -380,6 +383,34 @@ export function* updateUserPasswordSaga(action) {
     yield put({
       type: changeLoadingState
     });
+    yield put(internalServerError());
+  }
+}
+
+export function* verifyInviteSaga(data){
+  try {
+    yield put({
+      type: "INVITE_VALIDATE_LOADING",
+      loading: true
+    });
+
+    const response = yield call(inviteService.verifyInvite, data.hash);
+
+    if (response.code === 200) {
+      yield put({
+        type: "INVITE_VALIDATE_REDUCER",
+        link: data.hash,
+        user: response.data.userName 
+      });
+    }else{
+      yield put({
+        type: "INVITE_VALIDATE_LOADING",
+        loading: false
+      });
+    }
+
+    return;
+  } catch (error) {
     yield put(internalServerError());
   }
 }

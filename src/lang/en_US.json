@@ -479,7 +479,7 @@
   "INVITE_ERROR_3": "Email invalid",
   "SEND_MAIL_INVITE_SUCCESS": "Sent with success",
   "SEND_MAIL_INVITE_ERROR": "Error on send",
-  "INVITE_CONFIRMED_INVITATIONS": "Confirmed invitations",
   "INVITE_NO_BALANCE": "No balance available",
-  "INVITE_WITHDRAW": "You have successfully completed the withdraw!"
+  "INVITE_WITHDRAW": "You have successfully completed the withdraw!", 
+  "ACCEPT_INVITE_LABEL": "You were invited by "
 }

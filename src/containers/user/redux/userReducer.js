@@ -23,7 +23,12 @@ const initialState = {
     reset: 0
   },
   loading: false,
-  errors: []
+  errors: [], 
+  invite: {
+    loading: false,
+    link: undefined,
+    user: undefined
+  }
 };
 
 const user = (state = initialState, action) => {
@@ -239,6 +244,25 @@ const user = (state = initialState, action) => {
           login: 0,
           create: 0,
           reset: 0
+        }
+      };
+
+    case "INVITE_VALIDATE_LOADING":
+      return {
+        ...state,
+        invite: {
+          ...state.invite,
+          loading: action.loading
+        }
+      };
+    
+    case "INVITE_VALIDATE_REDUCER":
+      return {
+        ...state,
+        invite: {
+          link: action.link, 
+          user: action.user,
+          loading: false
         }
       };
 

@@ -31,13 +31,14 @@ export const getCreateUserInfoPassword = password => ({
   password
 });
 
-export const createUser = (name, surname, email, password) => ({
+export const createUser = (name, surname, email, password, link) => ({
   type: "POST_USER_CREATE_USER_API",
   user: {
     name,
     surname,
     email,
-    password
+    password,
+    link
   }
 });
 
@@ -73,3 +74,8 @@ export const updateUserPassword = (oldPassword, confirmOldPassword, newPassword,
   newPassword,
   confirmNewPassword
 });
+
+export const verifyInvite = hash => ({
+  type: "VERIFY_INVITE_SAGA", 
+  hash
+})

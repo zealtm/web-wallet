@@ -25,7 +25,8 @@ class UserService {
           name: userInfo.name,
           surname: userInfo.surname,
           email: userInfo.email,
-          password: encryptMd5(userInfo.password)
+          password: encryptMd5(userInfo.password),
+          link: userInfo.link
         },
         API_HEADER
       );
