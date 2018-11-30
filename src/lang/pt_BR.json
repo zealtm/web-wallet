@@ -473,6 +473,8 @@
   "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado", 
   "INVITE_ERROR_1": "Preencha o e-mail destino", 
   "INVITE_ERROR_2": "Aguarde o endereço carregar",
+  "INVITE_ERROR_3": "E-mail inválido",
+  "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado",
   "SEND_MAIL_INVITE_SUCCESS": "Enviado com sucesso",
   "SEND_MAIL_INVITE_ERROR": "Erro ao enviar",
   "INVITE_NO_BALANCE": "Saldo indisponível",
