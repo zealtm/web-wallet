@@ -79,6 +79,6 @@ export const updateUserPassword = (
   confirmNewPassword
 });
 
-export const clearUserData = async () => ({
+export const clearUserData = () => ({
   type: "CLEAR_USER_DATA"
 });
