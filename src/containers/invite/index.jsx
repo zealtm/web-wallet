@@ -228,10 +228,10 @@ class Invite extends React.Component {
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
-              <p>{i18n.t("INVITE_LINK_SHARE")}</p>
+              {i18n.t("INVITE_LINK_SHARE")}
             </div>
             <div className={style.adressShared}>
-              <p>{loadingAddress ? <Loading color="lunes" /> : address.link}</p>
+              {loadingAddress ? <Loading color="lunes" /> : address.link}
             </div>
 
             {!loadingAddress ? (
