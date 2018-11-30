@@ -352,27 +352,6 @@ class Invoice extends React.Component {
                 error={errors.includes("number")}
               />
             </Grid>
-            <Grid item xs={1}>
-              <div className={style.cameraIconMargin}>
-                <label
-                  htmlFor="file-upload"
-                  className={style.labelCameraUpload}
-                >
-                  <img
-                    className={style.cameraIcon}
-                    src="images/icons/camera/camera-white.png"
-                    alt="Camera"
-                  />
-                </label>
-                <input
-                  id="file-upload"
-                  className={style.cameraInput}
-                  type="file"
-                  accept="image/*"
-                  onChange={this.fileUpload}
-                />
-              </div>
-            </Grid>
           </div>
 
           <Grid container>
