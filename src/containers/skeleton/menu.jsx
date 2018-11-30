@@ -110,8 +110,10 @@ class Menu extends React.Component {
   };
 
   render() {
-    const { openMenu, user, actionLogout, actionMenu } = this.props;
+    const { openMenu, user, actionLogout, actionMenu, activeP2p } = this.props;
 
+    const p2pStyleMenu = activeP2p ? style.linkMenuP2P : style.linkMenuP2PActive;
+    
     return (
       <div
         className={style.colMenu}
@@ -151,7 +153,7 @@ class Menu extends React.Component {
         {this.renderMenu()}
         <div className={style.menuP2P}>
           <button
-            className={style.linkMenuP2P}
+            className={p2pStyleMenu}
             onClick={() => this.openP2PComponent()}
           >
             <img
@@ -177,7 +179,8 @@ Menu.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  user: store.user.user
+  user: store.user.user, 
+  activeP2p: store.p2p.chatOpened
 });
 
 const mapDispatchToProps = dispatch =>
