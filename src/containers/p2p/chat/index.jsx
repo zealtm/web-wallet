@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Header from "../components/header";
 import BoxChat from "../components/boxChat";
 import DepositModal from "../modal/deposit";
+import ConfirmModal from "../modal/confirm";
 
 //REDUX
 import { connect } from "react-redux";
@@ -22,15 +23,15 @@ class Chat extends React.Component {
     const { openDeposit } = this.props.p2pStore;
     return (
       <div>
-        {openDeposit == false ? (
+        {openDeposit == true ? (
+          <DepositModal />
+        ) : (
           <div className={style.baseChat}>
             <Header />
             <div className={style.callChat}>
               <BoxChat />
             </div>
           </div>
-        ) : (
-          <DepositModal />
         )}
       </div>
     );
