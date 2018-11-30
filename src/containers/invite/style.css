@@ -99,6 +99,7 @@
 :local(.adressShared) {
   composes: linkDefault from "../../components/bases/textBase.css";
   margin-bottom: 25px;
+  margin-top:10px;
 }
 
 :local(.textSharedLink) {
@@ -115,7 +116,7 @@
 }
 
 :local(.accumulatedLunes) {
-  margin-top: 5px;
+  margin-top: 8px;
   color: #68f285;
 }
 
