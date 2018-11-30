@@ -473,7 +473,6 @@
   "INVITE_TEXT_1": "Invite your friends and family to register on Lunes",
   "INVITE_BUTTON_SEND": "Send",
   "INVITE_SEND_INVITATIONS": "Sent invitations",
-  "INVITE_CONFIRMED_INVITATIONS": "Confirmed invitations", 
   "INVITE_ERROR_1": "Change e-mail", 
   "INVITE_ERROR_2": "Await address loaded",
   "SEND_MAIL_INVITE_SUCCESS": "Sent with success",

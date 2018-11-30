@@ -18,7 +18,9 @@ import style from "./style.css";
 class ItemInvite extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { status: "Confirmado" };
   }
+
   copyAddress = address => {
     let { successRequest } = this.props;
     const element = document.createElement("textarea");
@@ -30,7 +32,37 @@ class ItemInvite extends React.Component {
     successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
   };
 
+  renderIcon = status => {
+    if (status === "Confirmado") {
+      return (
+        <div>
+          <img
+            onClick={() => this.copyAddress("Confirmado")}
+            className={style.imgCopy}
+            src="/images/icons/confirm/confirm-invite@2x.png"
+          />
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img
+          onClick={() => this.copyAddress("Pendente")}
+          className={style.imgCopy}
+          src="/images/icons/invite/pending-invite.png"
+        />
+        <span className={style.invitePendingResend}>Reenviar</span>
+      </div>
+    );
+  };
+  renderStatus(status) {
+    if (status !== "Confirmado") {
+      return <span className={style.invitePending}>Pendente</span>;
+    }
+    return <span>Confirmado</span>;
+  }
   render() {
+    const { status } = this.state;
     return (
       <div>
         <Grid container>
@@ -48,16 +80,12 @@ class ItemInvite extends React.Component {
               {i18n.t("INVITE_TITLE_STATUS")}
             </span>{" "}
             <br />
-            <p className={style.spanSub}>Confirmado</p>
+            <p className={style.spanSub}>
+              {this.renderStatus(status)}
+            </p>
           </Grid>
           <Grid item xs={2} sm={1}>
-            <img
-              onClick={() =>
-                this.copyAddress("f5234s3f5v4sd3fg54v3df5g43d5fg43dsf53543")
-              }
-              className={style.imgCopy}
-              src="/images/icons/confirm/confirm-invite@2x.png"
-            />
+            {this.renderIcon(status)}
           </Grid>
           <Grid item xs={6} sm={6} id={"hr"}>
             <hr />
