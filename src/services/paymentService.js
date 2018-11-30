@@ -1,5 +1,4 @@
 import axios from "axios";
-import bb from "brazilian-barcode";
 
 //CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
@@ -128,36 +127,9 @@ class PaymentService {
         image.target.files[0].name
       );
 
-      const responseFirst = await axios.post(
-        "https://wabr.inliteresearch.com/barcodes",
-        formData
-      );
-
-      formData.append("sr", 0);
-      formData.append("azspeed", 2);
-      formData.append("MAX_FILE_SIZE", 10485760);
-
-      const responseLast = await axios.post(
-        "https://reader.datasymbol.com/cgi-bin/brcgi",
-        formData,
-        {
-          crossdomain: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Headers": "",
-            "Access-Control-Allow-Origin": ""
-          }
-        }
-      );
-
-      let barcode =
-        responseFirst.data.Barcodes[0].Text.substring(0, 2) +
-        responseLast.data.substring(2, responseLast.data.length - 1);
-
-      if (barcode.charAt(0) !== "8")
-        barcode = bb.digit.getVDBank(barcode, true);
-
-      return barcode;
+      const barcode = await axios.post("http://104.248.184.169/", formData);
+      console.warn(barcode);
+      return barcode.data;
     } catch (error) {
       console.warn(error);
       internalServerError();
