@@ -1,10 +1,14 @@
 import axios from "axios";
+import bb from "brazilian-barcode";
 
 //CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 
 // ERROR
-import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
+import {
+  internalServerError,
+  forbidden
+} from "../containers/errors/statusCodeMessage";
 
 // UTILS
 import { setAuthToken } from "../utils/localStorage";
@@ -51,7 +55,7 @@ class PaymentService {
       if (error.response.data.code === 500) {
         return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
       }
-      
+
       return internalServerError();
     }
   }
@@ -85,8 +89,8 @@ class PaymentService {
         };
       }
 
-      if (response.data.code !== 200 ) {
-        return 'ERRO';
+      if (response.data.code !== 200) {
+        return "ERRO";
       }
 
       return response.data.data;
@@ -99,7 +103,7 @@ class PaymentService {
   async sendPay(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
-      
+
       const response = await axios.post(
         BASE_URL + "/bill/pay/" + payload.barCode,
         payload,
@@ -108,6 +112,52 @@ class PaymentService {
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return;
+    }
+  }
+
+  async getBarcode(image) {
+    try {
+      const formData = new FormData();
+      formData.append(
+        "fupload1",
+        image.target.files[0],
+        image.target.files[0].name
+      );
+
+      const responseFirst = await axios.post(
+        "https://wabr.inliteresearch.com/barcodes",
+        formData
+      );
+
+      formData.append("sr", 0);
+      formData.append("azspeed", 2);
+      formData.append("MAX_FILE_SIZE", 10485760);
+
+      const responseLast = await axios.post(
+        "https://reader.datasymbol.com/cgi-bin/brcgi",
+        formData,
+        {
+          crossdomain: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Headers": "",
+            "Access-Control-Allow-Origin": ""
+          }
+        }
+      );
+
+      let barcode =
+        responseFirst.data.Barcodes[0].Text.substring(0, 2) +
+        responseLast.data.substring(2, responseLast.data.length - 1);
+
+      if (barcode.charAt(0) !== "8")
+        barcode = bb.digit.getVDBank(barcode, true);
+
+      return barcode;
     } catch (error) {
       console.warn(error);
       internalServerError();

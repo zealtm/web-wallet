@@ -1,5 +1,5 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import { internalServerError, modalError } from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getUserSeedWords } from "../../../utils/localStorage";
@@ -87,12 +87,13 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
+    const decimalPoint = payload.pay.decimalPoint;
 
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
-      balance: convertBiggestCoinUnit(balance, 8),
-      amount: convertBiggestCoinUnit(amount, 8),
+      balance: convertBiggestCoinUnit(balance, decimalPoint),
+      amount: convertBiggestCoinUnit(amount, decimalPoint),
       value: value,
       assignor: payload.pay.assignor,
       name: payload.pay.name,
@@ -235,6 +236,33 @@ export function* getHistoryPaySaga() {
     yield put({
       type: "GET_HISTORY_PAY_REDUCER",
       history: data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* uploadBarcodeSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+
+    let response = yield call(paymentService.getBarcode, payload.image);
+
+    if (!response) {
+      yield put(modalError("Imagem inválida"));
+    }
+
+    yield put({
+      type: "GET_PAYMENT_DATA_REDUCER",
+      number: response
+    });
+
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
     });
   } catch (error) {
     yield put(internalServerError());
