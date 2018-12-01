@@ -327,12 +327,28 @@ class Invoice extends React.Component {
     return;
   };
 
+  currentDateTransform(value) {
+    let str_date = value ? value.replace(/[^\d]+/g, "") : "";
+    if (value == undefined || value == "") return undefined;
+    let day = str_date.substring(0, 2);
+    let month = str_date.substring(2, 4);
+    let yaar = str_date.substring(4, 8);
+    var num_day = Number(day);
+    if (num_day < 9)
+      day = "0" + (num_day + 1);
+    else
+      day = (num_day + 1);
+
+    return ( day + "/" + month + "/" + yaar);
+  }
+
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
-
+    payment.dueDate = this.currentDateTransform(payment.dueDate);
+    invoice.dueDate = this.currentDateTransform(invoice.dueDate);
     return (
       <Grid container direction="row" justify="center">
         <Grid item xs={12} className={style.box}>
