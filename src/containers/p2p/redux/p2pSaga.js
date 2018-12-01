@@ -1,8 +1,9 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import { internalServerError, modalSuccess } from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -206,14 +207,20 @@ export function* setP2POrdersCancelSaga(payload) {
 }
 export function* setP2PRatingOrderSaga(payload) {
   try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
 
-    yield call(
+    let response = yield call(
       p2pService.setRatingOrder,
       token,
       payload.data
     );
-
+    if(!response){
+      yield put(internalServerError());
+    }else{
+      yield put(modalSuccess(i18n.t("MODAL_SEND_INFO_SUCCESS")));
+      
+    }
   } catch (error) {
     yield put(internalServerError());
   }
