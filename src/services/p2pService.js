@@ -41,7 +41,6 @@ class P2pService {
       // if (response.status !== 200) {
       //   throw new Error(i18n.t("P2P_FAILED_GET_PAYMENT_METHOD"));
       // }
-
       return response.data.data;
     } catch (error) {
       return internalServerError();
@@ -163,6 +162,31 @@ class P2pService {
       }
 
       return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+  async setRatingOrder(token, data) {
+    try {
+      let { value,description, orderId } = data;
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/rating/${orderId}`,
+        {
+          value,
+          description
+        },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
+
     } catch (error) {
       return internalServerError();
     }
