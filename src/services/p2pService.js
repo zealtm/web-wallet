@@ -209,7 +209,7 @@ class P2pService {
   }
   async setRatingOrder(token, data) {
     try {
-      let { value,description, orderId } = data;
+      let { value, description, orderId } = data;
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/coin/lunes/p2p/rating/${orderId}`,
@@ -221,7 +221,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      
       if (response.data.code !== 200) {
         return false;
       }

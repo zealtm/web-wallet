@@ -1,8 +1,9 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import { internalServerError, modalSuccess } from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -127,7 +128,7 @@ export function* getP2PHistorySaga(payload) {
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
-      }); 
+      });
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
@@ -229,6 +230,7 @@ export function* setP2POrdersCancelSaga(payload) {
 
 export function* createSignatureSaga(payload) {
   try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
 
     yield call(
@@ -236,7 +238,12 @@ export function* createSignatureSaga(payload) {
       token,
       payload.data
     );
+    if(!response){
+      yield put(internalServerError());
+    }else{
+      yield put(modalSuccess(i18n.t("MODAL_SEND_INFO_SUCCESS")));
 
+    }
   } catch (error) {
     yield put(internalServerError());
   }
