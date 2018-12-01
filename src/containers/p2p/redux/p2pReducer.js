@@ -29,7 +29,8 @@ const initialState = {
     paymentMethods: [],
     paymentMethod: {}
   },
-  cancelDone: false
+  cancelDone: false,
+  order : []
 };
 
 const p2p = (state = initialState, action) => {
@@ -163,7 +164,8 @@ const p2p = (state = initialState, action) => {
     case "OPEN_AVALIATION_P2P_REDUCER":
       return {
         ...state,
-        openAvaliation: true
+        openAvaliation: true,
+        order : action.order
       };
 
     case "CLOSE_AVALIATION_P2P_REDUCER":

@@ -81,8 +81,9 @@ export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
 });
 
-export const openAvaliation = () => ({
-  type: "OPEN_AVALIATION_P2P"
+export const openAvaliation = order => ({
+  type: "OPEN_AVALIATION_P2P",
+  order : order
 });
 
 export const closeAvaliation = () => ({

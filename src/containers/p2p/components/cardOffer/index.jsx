@@ -57,8 +57,8 @@ class CardOffer extends React.Component {
   };
 
   openAvaliation = () => {
-    const { openAvaliation, openChat } = this.props;
-    openAvaliation();
+    const { openAvaliation, openChat , order} = this.props;
+    openAvaliation(order);
     openChat();
   };
 
@@ -83,7 +83,7 @@ class CardOffer extends React.Component {
     }
   };
 
-  rederPictureGravatar(email){
+  renderPictureGravatar(email){
     const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
     return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
   }
@@ -104,7 +104,7 @@ class CardOffer extends React.Component {
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src={this.rederPictureGravatar(order.sell.user.email)}
+              src={this.renderPictureGravatar(order.sell.user.email)}
               className={style.avatar}
             />
           </Grid>

@@ -218,9 +218,10 @@ export function* closeDeposit() {
   });
 }
 
-export function* openAvaliation() {
+export function* openAvaliation(payload) {
   yield put({
-    type: "OPEN_AVALIATION_P2P_REDUCER"
+    type: "OPEN_AVALIATION_P2P_REDUCER",
+    order : payload.order
   });
 }
 

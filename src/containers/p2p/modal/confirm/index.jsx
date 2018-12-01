@@ -11,7 +11,7 @@ import { bindActionCreators } from "redux";
 import { closeAvaliation, closeChat } from "../../redux/p2pAction";
 // UTILS
 import i18n from "../../../../utils/i18n";
-
+import { encryptMd5 } from "../../../../utils/cryptography";
 // STYLE
 import style from "./style.css";
 
@@ -24,18 +24,24 @@ class ConfirmModal extends React.Component {
     closeAvaliation();
     closeChat();
   };
-
+  renderPictureGravatar(email){
+    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+  }
   render() {
+    const { order } = this.props;
     return (
       <Grid container>
         <Grid item xs={12}>
           <div className={style.profile}>
             <Avatar
-              src={"images/lunio/lunio-user@100x100.jpg"}
+              src={this.renderPictureGravatar(order.sell.user.email)}
               className={style.avatar}
             />
             <div className={style.userName}>
-              <span className={style.name}>Felipe Mendes</span>
+              <span className={style.name}> 
+                {order.sell.user.name} {order.sell.user.surname}
+              </span>
             </div>
             <div className={style.hr} />
           </div>
@@ -65,9 +71,13 @@ class ConfirmModal extends React.Component {
   }
 }
 
-ConfirmModal.propTypes = {};
+ConfirmModal.propTypes = {
+  order: PropTypes.object
+};
 
-const mapStateToProps = store => ({});
+const mapStateToProps = store => ({
+  order : store.p2p.order
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ closeAvaliation, closeChat }, dispatch);
