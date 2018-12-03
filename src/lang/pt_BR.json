@@ -479,5 +479,9 @@
   "SEND_MAIL_INVITE_ERROR": "Erro ao enviar",
   "INVITE_NO_BALANCE": "Saldo indisponível",
   "INVITE_WITHDRAW": "Você realizou o saque com sucesso!", 
-  "ACCEPT_INVITE_LABEL": "Você foi convidado por "
+  "ACCEPT_INVITE_LABEL": "Você foi convidado por ", 
+  "INVITE_STATUS_SENT": "Enviado",
+  "INVITE_STATUS_REGISTERED": "Registrado",
+  "INVITE_STATUS_TRANSACTED": "Transacionado",
+  "INVITE_STATUS_REDEEMED": "Resgatado"
 } 
