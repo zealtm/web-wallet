@@ -471,11 +471,20 @@
   "INVITE_BUTTON_SEND": "Enviar",
   "INVITE_TEXT_BUTTON": "Sacar",
   "INVITE_CONFIRMED_INVITATIONS": "Convites confirmados",
+  "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado", 
+  "INVITE_ERROR_1": "Preencha o e-mail destino", 
+  "INVITE_ERROR_2": "Aguarde o endereço carregar",
+  "INVITE_ERROR_3": "E-mail inválido",
   "INVITE_ACCUMULATED_BALANCE": "Saldo acumulado",
   "INVITE_ERROR_1": "Preencha o e-mail destino",
   "INVITE_ERROR_2": "Aguarde o endereço carregar",
   "SEND_MAIL_INVITE_SUCCESS": "Enviado com sucesso",
   "SEND_MAIL_INVITE_ERROR": "Erro ao enviar",
   "INVITE_NO_BALANCE": "Saldo indisponível",
-  "INVITE_WITHDRAW": "Você realizou o saque com sucesso!"
+  "INVITE_WITHDRAW": "Você realizou o saque com sucesso!", 
+  "ACCEPT_INVITE_LABEL": "Você foi convidado por ", 
+  "INVITE_STATUS_SENT": "Enviado",
+  "INVITE_STATUS_REGISTERED": "Registrado",
+  "INVITE_STATUS_TRANSACTED": "Transacionado",
+  "INVITE_STATUS_REDEEMED": "Resgatado"
 } 

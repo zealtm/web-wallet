@@ -475,9 +475,14 @@
   "INVITE_SEND_INVITATIONS": "Sent invitations",
   "INVITE_ERROR_1": "Change e-mail", 
   "INVITE_ERROR_2": "Await address loaded",
+  "INVITE_ERROR_3": "Email invalid",
   "SEND_MAIL_INVITE_SUCCESS": "Sent with success",
   "SEND_MAIL_INVITE_ERROR": "Error on send",
-  "INVITE_CONFIRMED_INVITATIONS": "Confirmed invitations",
   "INVITE_NO_BALANCE": "No balance available",
-  "INVITE_WITHDRAW": "You have successfully completed the withdraw!"
+  "INVITE_WITHDRAW": "You have successfully completed the withdraw!", 
+  "ACCEPT_INVITE_LABEL": "You were invited by ", 
+  "INVITE_STATUS_SENT": "Sent",
+  "INVITE_STATUS_REGISTERED": "Registered",
+  "INVITE_STATUS_TRANSACTED": "Transacted",
+  "INVITE_STATUS_REDEEMED": "Redeemed"
 }

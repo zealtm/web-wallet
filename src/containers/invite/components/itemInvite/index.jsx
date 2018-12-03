@@ -62,7 +62,12 @@ class ItemInvite extends React.Component {
     return <span>Confirmado</span>;
   }
   render() {
+    // esta mockado o status em state para teste
     const { status } = this.state;
+    
+    // deve usar o status vindo de props
+    const {status} = this.props;
+
     return (
       <div>
         <Grid container>
@@ -80,9 +85,15 @@ class ItemInvite extends React.Component {
               {i18n.t("INVITE_TITLE_STATUS")}
             </span>{" "}
             <br />
+            
+            {/*
             <p className={style.spanSub}>
               {this.renderStatus(status)}
             </p>
+            */}
+            
+            <p className={style.spanSub}>{i18n.t(`INVITE_STATUS_${status}`)}</p>
+
           </Grid>
           <Grid item xs={2} sm={1}>
             {this.renderIcon(status)}
@@ -98,7 +109,8 @@ class ItemInvite extends React.Component {
 
 ItemInvite.propTypes = {
   successRequest: PropTypes.func,
-  email: PropTypes.string
+  email: PropTypes.string, 
+  status: PropTypes.string,
 };
 const mapStateToProps = store => ({});
 const mapDispatchToProps = dispatch =>
