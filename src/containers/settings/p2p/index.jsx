@@ -32,9 +32,32 @@ class P2P extends React.Component {
     const { getSignatures } = this.props;
     getSignatures();
   };
+
+  renderPlans = () => {
+    const { signatures, openModal } = this.props;
+    if (signatures.plans) {
+      return signatures.plans.map((val, key) => (
+        <Grid item key={key}>
+          <div className={style.cardP2p} onClick={() => openModal(true)}>
+            <h1>{val.status}</h1>
+            <img src="/images/icons/p2p/card.png" className={style.cardIcon} />
+            <div className={style.hrCard} />
+            <div className={style.cardTitle}>
+              <p>
+                O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                por um mês
+              </p>
+            </div>
+            <div className={style.valueCard}>
+              <span className={style.dollarSign}>{val.coinValue}</span>
+            </div>
+          </div>
+        </Grid>
+      ));
+    }
+  };
   render() {
-    const { modalOpen, openModal, signatures } = this.props;
-    console.log(this.props);
+    const { modalOpen } = this.props;
     return (
       <div>
         <Modal
@@ -77,101 +100,7 @@ class P2P extends React.Component {
         </Grid>
 
         <Grid container className={style.p2pContainer}>
-          <Grid item>
-            <div className={style.cardP2p} onClick={() => openModal(true)}>
-              <h1>Plano básico</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>Plano básico</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>15</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
+          {this.renderPlans()}
         </Grid>
       </div>
     );
@@ -189,7 +118,7 @@ P2P.propTypes = {
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
   modalOpen: store.p2p.modalOpen,
-  signatures: store.signatures
+  signatures: store.settings.signatures
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
