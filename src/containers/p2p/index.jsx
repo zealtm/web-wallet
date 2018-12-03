@@ -84,7 +84,8 @@ class P2P extends React.Component {
 
   render() {
     const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
-    const { chatOpened } = this.props.p2pStore;
+    const { chatDetails } = this.props.p2pStore;
+    const { open: openChat } = chatDetails
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
@@ -96,7 +97,7 @@ class P2P extends React.Component {
         </Hidden>
 
         {
-          (chatOpened==false)?
+          (openChat==false)?
             (
               <div>
                 <div className={style.baseContent}>

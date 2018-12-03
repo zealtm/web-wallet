@@ -427,7 +427,7 @@
   "INSTRUCTION_MODAL_PAY_2": "From R$1.000,01 to R$3.000,00 - 5%",
   "INSTRUCTION_MODAL_PAY_3": "Above de R$3.000,01 - 4,5%",
   "INSTRUCTION_MODAL_PAY__BTC_0": "Bitcoin (BTC), Litecoin (LTC), Bitcoin Cash (BCH), Dash (DASH), Tether (USDT) e Ethereum (ETH)",
-  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%", 
+  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "From R$1.000,01 to R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Above de R$3.000,01 - 2,5%",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining fee (Value varies according to the currency network + 20% of the Lunes fee) + 5% of the service charge.",
@@ -535,5 +535,9 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
-  "P2P_MY_LISTING": "My listings"
+  "P2P_MY_LISTING": "My listings",
+  "P2P_CHAT_SELECT_AN_USER": "Select an user",
+  "P2P_FAILED_TO_FIND_ORDER": "Failed to find order",
+  "P2P_CHAT_FAILED_TO_OPEN_CHAT": "Failed to open chat",
+  "P2P_NO_USER_ORDERS": "You don't have any orders or an error has occurred"
 }

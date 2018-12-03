@@ -66,13 +66,13 @@ class DepositModal extends React.Component {
 
 DepositModal.propTypes = {
   closeChat: PropTypes.func,
-  closeDeposit: PropTypes.func, 
-  order: PropTypes.object, 
+  closeDeposit: PropTypes.func,
+  order: PropTypes.object,
   successRequest: PropTypes.func
 };
 
 const mapStateToProps = store => ({
-  order: store.p2p.chat.iduser
+  order: store.p2p.chatDetails.currentOrder
 });
 
 const mapDispatchToProps = dispatch =>

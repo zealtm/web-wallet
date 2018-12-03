@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openChat, setCancelOrder } from "../../redux/p2pAction";
+import { prepareOrOpenChat, setCancelOrder } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -36,10 +36,9 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = order => {
-    const { openChat } = this.props;
-
-    openChat(order);
+  prepareOrOpenChat = order => {
+    const { prepareOrOpenChat } = this.props;
+    prepareOrOpenChat(order);
   };
 
   handleCancelOrder = e => {
@@ -134,7 +133,7 @@ class CardOffer extends React.Component {
             {(/*userEmail != order.sell.user.email && type != "myhistory"*/ true) ? (
               <button
                 className={style.btContinue}
-                onClick={() => this.openChat(order)}
+                onClick={() => this.prepareOrOpenChat(order)}
               >
                 {i18n.t("P2P_BUTTON_NEGOTIATE")}
               </button>) : null}
@@ -146,7 +145,7 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired,
+  prepareOrOpenChat: PropTypes.func.isRequired,
   order: PropTypes.object,
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
@@ -158,7 +157,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat, setCancelOrder }, dispatch);
+  bindActionCreators({ prepareOrOpenChat, setCancelOrder }, dispatch);
 
 export default connect(
   mapStateToProps,

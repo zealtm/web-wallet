@@ -77,7 +77,8 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
-  openChat,
+  openChatToTheSeller,
+  prepareOrOpenChat,
   closeChat,
   setModalStepSaga as setModalFlowP2P,
   openModalPaySaga as setOpenModalFlowP2P,
@@ -184,8 +185,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
 
     // p2pchat
-    fork(takeLatest, "OPEN_CHAT_P2P", openChat),
-    fork(takeLatest, "CLOSE_CHAT_P2P", closeChat),
+    fork(takeLatest, "SAGA_PREPARE_OR_OPEN_CHAT", prepareOrOpenChat),
+    fork(takeLatest, "SAGA_OPEN_CHAT_TO_THE_SELLER", openChatToTheSeller),
+    fork(takeLatest, "SAGA_CLOSE_CHAT", closeChat),
     fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
     fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
     fork(takeLatest, "GET_P2P_MY_ORDERS", getP2PMyOrdersSaga),

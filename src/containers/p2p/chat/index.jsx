@@ -21,26 +21,32 @@ import { getChatBundle } from './functions'
 class Chat extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      chatTargetContent: undefined,
+      bundleCalled: false
+    }
+    let { chatDetails } = props.p2pStore
+    let { typeOfUser } = chatDetails
+    if (typeOfUser === 'buyer')
+      this.callChatBundle()
+  }
+  componentDidUpdate() {
     this.callChatBundle()
   }
+  chatTargetContent = (chatTargetContent) => {
+    this.setState({chatTargetContent})
+  }
   callChatBundle = () => {
-    let { userId: buyerId, chat } = this.props.p2pStore
-    let { iduser: ad } = chat
-    let { id: adId } = ad
-    let { id: adOwnerId } = ad.sell.user
+    if (this.state.bundleCalled) return;
+    let { chatDetails } = this.props.p2pStore
+    let { seller, buyer, currentOrder } = chatDetails
+    if (!buyer || (buyer && !buyer.id)) return;
+    let { id: buyerId } = buyer
+    let { id: adOwnerId } = seller
+    let { id: adId } = currentOrder
     getChatBundle({adId, adOwnerId, buyerId})
-    // let typeOfChatUser; //eslint-disable-line
-    // if (buyerId === adOwnerId)
-    //   typeOfChatUser = 'buyer'
-    // else
-    //   typeOfChatUser = 'seller'
-    // if (typeOfChatUser === 'buyer') {
-    //   getChatBundle({adId, adOwnerId, buyerId})
-    // } else if (typeOfChatUser === 'seller') {
-    //   getChatBundle({adId, adOwnerId, buyerId})
-    // } else {
-    //   alert('Whe need a buyer or a seller id at least')
-    // }
+    this.setState({bundleCalled: true})
+    this.chatTargetContent(<Loading/>)
   }
 
   render() {
@@ -51,7 +57,6 @@ class Chat extends React.Component {
           <div className={style.baseChat}>
             <Header />
             <div className={style.chatTarget+' chatTarget'} id={"chatTarget"}>
-              <Loading/>
               {/*Chat will be rendered here, and loading will be removed*/}
             </div>
           </div>

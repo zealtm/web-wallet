@@ -140,7 +140,7 @@ Header.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  order: store.p2p.chat.iduser
+  order: store.p2p.chatDetails.currentOrder
 });
 
 const mapDispatchToProps = dispatch =>

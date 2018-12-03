@@ -2,26 +2,80 @@ import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
 // UTILS
-import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n"
 import { decodeToken } from "../../../utils/cryptography"
-
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
 
 const p2pService = new P2pService();
 
-export function* openChat(payload) {
-  yield put({
-    type: "OPEN_CHAT_P2P_REDUCER",
-    iduser: payload.iduser
-  });
+//prepare to the seller, open to the buyer
+export function* prepareOrOpenChat(payload) {
+  try {
+    let { order } = payload
+
+    let state = window.store.getState()
+    let { orders: myOrders } = state.p2p
+    if (!myOrders) {
+      yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_NO_USER_ORDERS")})
+      return;
+    }
+    order = myOrders.find(o => o.id === order.id ? true : false)
+    if (!order) {
+      yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_FAILED_TO_FIND_ORDER")})
+      return;
+    }
+    let seller = order.sell.user
+    seller.id = parseInt(seller.id)
+
+    let decodedToken = getDecodedAuthToken()
+    let myId = decodedToken.payload.id | 0
+    let typeOfUser; //eslint-disable-line
+    typeOfUser = myId === seller.id ? 'seller' : 'buyer'
+    if (typeOfUser === 'seller') {
+      yield put({type: "CHAT_DETAILS_SETTER", payload: {
+        myId,
+        currentOrder: order,
+        open: true, //chat doesnt open to the seller
+        seller,
+        typeOfUser,
+        //buyer is going to be defined when the seller select who he's going to chat
+      }})
+    } else { //chat opens to the buyer
+      let buyer = { id: myId }
+      yield put({type: "CHAT_DETAILS_SETTER", payload: {
+        myId,
+        currentOrder: order,
+        open: true, //TODO pay attention
+        seller,
+        buyer,
+        typeOfUser,
+        currentRoom: undefined
+      }})
+    }
+  } catch (err) {
+    yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_CHAT_FAILED_TO_OPEN_CHAT")})
+  }
 }
 
+export function* openChatToTheSeller(payload) {
+  let { buyer } = payload
+  yield put({type: "CHAT_DETAILS_SETTER", payload: {
+    open: true,
+    buyer,
+  }})
+}
 export function* closeChat() {
-  yield put({
-    type: "CLOSE_CHAT_P2P_REDUCER"
-  });
+  yield put({type: "CHAT_DETAILS_SETTER", payload: {
+    currentOrder: undefined,
+    open: false,
+    seller: undefined,
+    buyer: undefined,
+    typeOfUser: undefined,
+    currentRoom: undefined
+  }})
 }
 
 export function* setModalStepSaga(payload) {
