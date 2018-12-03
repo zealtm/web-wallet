@@ -8,7 +8,8 @@ import {
   getCoinsEnabled,
   setPayment,
   getInvoice,
-  setClearPayment
+  setClearPayment,
+  uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
 
@@ -22,7 +23,6 @@ import { DateMask, MoneyBrlMask } from "../../components/inputMask";
 // MATERIAL
 import { Grid, Input, InputAdornment } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
 
 // STYLES
 import style from "./style.css";
@@ -152,15 +152,14 @@ class Invoice extends React.Component {
     });
   };
 
-  handleInvoiceNumberChange = event => {
+  handleInvoiceNumberChange = value => {
     const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
-
-    const newValue = event.target.value.replace(/\D/, "");
+    const newValue = value.replace(/\D/, "");
 
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length == 48,
+      disableNumberInput: newValue.length === 48,
       invoice: {
         ...invoice,
         number: newValue
@@ -241,7 +240,6 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
-
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
@@ -322,10 +320,15 @@ class Invoice extends React.Component {
     );
   };
 
-  render() {
-    const { classes, loading, coinsRedux, payment, scannerModal } = this.props;
-    const { coin, invoice, errors } = this.state;
+  fileUpload = e => {
+    const { uploadBarcode } = this.props;
+    uploadBarcode(e);
+    return;
+  };
 
+  render() {
+    const { classes, loading, coinsRedux, payment } = this.props;
+    const { coin, invoice, errors } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
 
@@ -342,26 +345,34 @@ class Invoice extends React.Component {
                 }}
                 placeholder="237933802350009031431630033330944400000001000000"
                 inputProps={{ maxLength: 48, required: true }}
-                value={invoice.number}
-                onChange={this.handleInvoiceNumberChange}
+                value={payment.number || invoice.number}
+                onChange={e => this.handleInvoiceNumberChange(e.target.value)}
                 onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}
               />
             </Grid>
-            <Hidden smUp>
-              <Grid item xs={1}>
-                <div
-                  onClick={() => scannerModal()}
-                  className={style.cameraIconMargin}
+            <Grid item xs={1}>
+              <div className={style.cameraIconMargin}>
+                <label
+                  htmlFor="file-upload"
+                  className={style.labelCameraUpload}
                 >
                   <img
                     className={style.cameraIcon}
                     src="images/icons/camera/camera-white.png"
                     alt="Camera"
                   />
-                </div>
-              </Grid>
-            </Hidden>
+                  <span>Max. 2MB</span> 
+                </label>
+                <input
+                  id="file-upload"
+                  className={style.cameraInput}
+                  type="file"
+                  accept="image/*"
+                  onChange={this.fileUpload}
+                />
+              </div>
+            </Grid>
           </div>
 
           <Grid container>
@@ -509,7 +520,7 @@ Invoice.propTypes = {
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
   errorInput: PropTypes.func.isRequired,
-  scannerModal: PropTypes.func.isRequired
+  uploadBarcode: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -526,7 +537,8 @@ const mapDispatchToProps = dispatch =>
       getCoinsEnabled,
       setPayment,
       setClearPayment,
-      errorInput
+      errorInput,
+      uploadBarcode
     },
     dispatch
   );
