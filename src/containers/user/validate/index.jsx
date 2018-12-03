@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Footer from "../footer";
+import Error from "./components/error";
 
 // STYLE
 import style from "../style.css";
@@ -13,7 +14,7 @@ class Validate extends React.Component {
   render() {
     return (
       <div className={style.contGeneral}>
-        <div>CONTEUDO VALIDACAO</div>
+        <Error />
         <Footer />
       </div>
     );

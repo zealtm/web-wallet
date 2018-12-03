@@ -1,0 +1,17 @@
+:local .baseMessage {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+
+:local .icon {
+  margin:0px;
+}
+
+:local .messageError {
+  font-size:16px;
+}
+
+:local .buttonEnable {
+  background:greenyellow;
+}
