@@ -1,7 +1,12 @@
 import axios from "axios";
 
 //CONSTANTS
-import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+import {
+  BASE_URL,
+  API_HEADER,
+  HEADER_RESPONSE,
+  HEADER_REQUEST
+} from "../constants/apiBaseUrl";
 
 // ERROR
 import {
@@ -122,13 +127,23 @@ class PaymentService {
     try {
       const formData = new FormData();
       formData.append(
-        "fupload1",
+        "file",
         image.target.files[0],
         image.target.files[0].name
       );
 
-      const barcode = await axios.post("http://104.248.184.169/", formData);
-      console.warn(barcode);
+      if (image.target.files[0].size > 2097152) {
+        return { message: i18n.t("PAYMENT_FILE_SIZE") };
+      }
+
+      const barcode = await axios.post(
+        "http://104.248.184.169:3303",
+        formData,
+        HEADER_REQUEST
+      );
+
+      if (barcode.data.data.charAt(0) === "8") return;
+
       return barcode.data;
     } catch (error) {
       console.warn(error);

@@ -240,7 +240,6 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
-
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
@@ -363,6 +362,7 @@ class Invoice extends React.Component {
                     src="images/icons/camera/camera-white.png"
                     alt="Camera"
                   />
+                  <span>Max. 2MB</span> 
                 </label>
                 <input
                   id="file-upload"
