@@ -18,6 +18,7 @@ import { Grid, withStyles, Input } from "@material-ui/core";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { inputValidator } from "../../utils/inputValidator";
 
 //COMPONENTS
 import ItemInvite from "./components/itemInvite";
@@ -73,7 +74,7 @@ class Invite extends React.Component {
     getInviteSent();
   };
 
-  setEmail = email => {
+  setEmail = email => {    
     this.setState({ ...this.state, email });
   };
 
@@ -86,7 +87,18 @@ class Invite extends React.Component {
       error.push(i18n.t("INVITE_ERROR_1"));
     }
 
-    if (address.link == "") {
+    let input = {
+      type: "email",
+      name: "email",
+      value: email,
+      required: true
+    };
+    let { errors } = inputValidator({ inputs: input });
+    if (errors.length > 0) {
+      error.push(i18n.t("INVITE_ERROR_3"));
+    }
+    
+    if(address.link == ""){
       error.push(i18n.t("INVITE_ERROR_2"));
     }
     if (error.length <= 0) {
@@ -230,12 +242,15 @@ class Invite extends React.Component {
 
         <Grid container className={style.card}>
           <Grid item xs={12} sm={8}>
-            <Grid container spacing={8} alignItems="flex-end">
+            <Grid container spacing={8}>
               <Grid item>
+                <div className={style.iconContent}>
                 <img
                   src="/images/icons/email/email@1x.png"
                   className={style.icon}
                 />
+                </div>
+                
               </Grid>
               <Grid item>
                 <div className={style.inviteInput}>
@@ -254,10 +269,10 @@ class Invite extends React.Component {
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
-              <p>{i18n.t("INVITE_LINK_SHARE")}</p>
+              {i18n.t("INVITE_LINK_SHARE")}
             </div>
             <div className={style.adressShared}>
-              <p>{loadingAddress ? <Loading color="lunes" /> : address.link}</p>
+              {loadingAddress ? <Loading color="lunes" /> : address.link}
             </div>
 
             {!loadingAddress ? (
