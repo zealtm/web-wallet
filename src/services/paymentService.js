@@ -131,10 +131,6 @@ class PaymentService {
       const formData = new FormData();
       formData.append("file", compressed, compressed.name);
 
-      if (compressed.size > 20971520) {
-        return { message: i18n.t("PAYMENT_FILE_SIZE") };
-      }
-
       const barcode = await axios.post(
         "https://solucti.com.br:3303",
         formData,
