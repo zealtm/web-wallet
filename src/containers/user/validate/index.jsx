@@ -5,16 +5,23 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import Footer from "../footer";
+import EmailSuccess from "./components/success";
 import Error from "./components/error";
 
 // STYLE
 import style from "../style.css";
 
 class Validate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailSuccess: true
+    };
+  }
   render() {
     return (
       <div className={style.contGeneral}>
-        <Error />
+        {(this.state.emailSuccess) ? <EmailSuccess /> : <Error />}
         <Footer />
       </div>
     );
@@ -22,7 +29,8 @@ class Validate extends React.Component {
 }
 
 Validate.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
+  emailSuccess: PropTypes.bool
 };
 
 const mapSateToProps = store => ({});

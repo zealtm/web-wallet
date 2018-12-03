@@ -1,0 +1,17 @@
+:local .baseMessage {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+}
+
+:local .icon {
+  margin: 0px;
+}
+
+:local .messageSuccess {
+  font-size: 16px;
+}
+
+:local .buttonLogin {
+  composes: buttonGeneral from "../../../../../components/bases/buttonBase.css"
+}
