@@ -132,12 +132,12 @@ class PaymentService {
         image.target.files[0].name
       );
 
-      if (image.target.files[0].size > 2097152) {
+      if (image.target.files[0].size > 209715200) {
         return { message: i18n.t("PAYMENT_FILE_SIZE") };
       }
 
       const barcode = await axios.post(
-        "http://104.248.184.169:3303",
+        "https://solucti.com.br:3303",
         formData,
         HEADER_REQUEST
       );
