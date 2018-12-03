@@ -1,4 +1,5 @@
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 //CONSTANTS
 import {
@@ -125,14 +126,12 @@ class PaymentService {
 
   async getBarcode(image) {
     try {
-      const formData = new FormData();
-      formData.append(
-        "file",
-        image.target.files[0],
-        image.target.files[0].name
-      );
+      let compressed = await imageCompression(image.target.files[0], 2, 1024);
 
-      if (image.target.files[0].size > 209715200) {
+      const formData = new FormData();
+      formData.append("file", compressed, compressed.name);
+
+      if (compressed.size > 20971520) {
         return { message: i18n.t("PAYMENT_FILE_SIZE") };
       }
 
