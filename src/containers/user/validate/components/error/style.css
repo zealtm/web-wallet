@@ -36,6 +36,9 @@
 :local .messageError {
   composes: textDefault from "../../../../../components/bases/textBase.css";
   font-size: 14px;
+  text-align:center;
+  margin-top:40px;
+  margin-bottom:40px;
 }
 
 :local .baseMessage a {
