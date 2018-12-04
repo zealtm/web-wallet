@@ -98,7 +98,7 @@
   "PAYMENT_TERMS_ERROR": "Você deve concordar com os Termos GDPR para continuar",
   "PAYMENT_AMOUNT_ERROR": "Seu saldo é insuficiente para realizar o pagamento",
   "PAYMENT_MESSAGE_BARCODE": "Não foi possível identificar o código de barras. Insira os números manualmente",
-  "PAYMENT_FILE_SIZE": "O tamanho do arquivo ultrapassa o limite estabelecido (2MB)",
+  "PAYMENT_FILE_SIZE": "O tamanho do arquivo ultrapassa o limite estabelecido (3MB)",
   "MODAL_SEND_INFO_ERROR": "Procedimento de envio falhou",
   "MODAL_LEASING_MESSAGE_SUCCESS": "Leasing iniciado!",
   "SETTINGS_CHANGE_PASSWORD_SUCCESS": "Troca de senha efetuada com sucesso!",
