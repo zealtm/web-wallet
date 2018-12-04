@@ -26,9 +26,9 @@
 /* 2. IMAGES */
 
 :local .icon {
-  margin:0px;
-  margin-bottom: 20px;
-  
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: 20%;
 }
 
 /* 3. TEXTS */
@@ -53,10 +53,10 @@
 /* 4. BUTTONS */
 
 :local .buttonEnable {
-  composes: buttonBorderGreen from "../../../../../components/bases/buttonBase.css";
   padding: 0px;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  text-decoration: none;
+  text-align: center;
 }
-
