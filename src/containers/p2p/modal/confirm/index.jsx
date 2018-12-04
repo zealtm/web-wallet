@@ -35,7 +35,7 @@ class ConfirmModal extends React.Component {
               className={style.avatar}
             />
             <div className={style.userName}>
-              <span className={style.name}>Felipe Mendes</span>
+              <span className={style.name}>{i18n.t("P2P_COMING_SOON")}</span>
             </div>
             <div className={style.hr} />
           </div>
