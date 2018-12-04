@@ -382,6 +382,7 @@
   opacity: 0.5;
   color: white;
   font-size: 17px;
+  padding-bottom: 40px;
 }
 
 :local(.inputTextAreaError) {

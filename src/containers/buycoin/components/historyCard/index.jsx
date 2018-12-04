@@ -36,7 +36,7 @@ class HistoryCard extends React.Component {
     return localCurrency(val, currency)
   }
   convertStatus = (status) => {
-    return i18n.t(`BUYCOINS_STATUS_${status.toUpperCase()}`)
+    return i18n.t(`COINSALE_STATUS_${status.toUpperCase()}`)
   }
   convertAmount = (amount) => {
     return convertBiggestCoinUnit(amount, 8)
@@ -86,7 +86,7 @@ class HistoryCard extends React.Component {
             </Grid>
 
             <Grid direction="row" className={style.maginText}>
-              <span className={style.text}>{i18n.t("BUY_CREDIT")}</span>
+              <span className={style.text}>{i18n.t("COINSALE_CREDIT")}</span>
             </Grid>
 
             <Grid direction="row" className={style.maginText}>

@@ -35,12 +35,12 @@ class Buy extends React.Component {
 
     let errors = [];
 
-    if (buypack.idpack == "") errors.push(`${i18n.t("BUY_ERROR_PACK")} / `);
+    if (buypack.idpack == "") errors.push(`${i18n.t("COINSALE_ERROR_PACK")} / `);
 
     if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
-      errors.push(`${i18n.t("BUY_ERROR_COIN")} / `);
+      errors.push(`${i18n.t("COINSALE_ERROR_COIN")} / `);
 
-    if (buypack.paycoin == "") errors.push(`${i18n.t("BUY_ERROR_COIN_PAY")}`);
+    if (buypack.paycoin == "") errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
 
     if (errors.length > 0) {
       this.setState({
@@ -56,12 +56,14 @@ class Buy extends React.Component {
       let defaultCoin = "BRL";
       let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
       const amountPay = buypack.amountFiat / coinPrice;
+      let decimalPoint = coins[buypack.paycoin].decimalPoint;
       
       const data = {
-        amount: convertSmallerCoinUnit(amountPay,8),
+        amount: convertSmallerCoinUnit(amountPay,decimalPoint),
         coin: buypack.paycoin,
         address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "", 
         receiveAddress: coins[buypack.coin.abbreviation] ? coins[buypack.coin.abbreviation].address : "",
+        decimalPoint: decimalPoint
       };
      
       setBuy(data);
@@ -85,7 +87,7 @@ class Buy extends React.Component {
             className={style.buttonBorderGreen}
             onClick={() => this.validateModal()}
           >
-            {loading ? <Loading /> : i18n.t("BUY_BT_INIT")}
+            {loading ? <Loading /> : i18n.t("COINSALE_BT_INIT")}
           </button>
         </div>
 
