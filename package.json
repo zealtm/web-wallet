@@ -84,6 +84,7 @@
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
     "brazilian-barcode": "^0.0.2",
+    "browser-image-compression": "0.0.3",
     "coinselect": "^3.1.11",
     "crypto-js": "^3.1.9-1",
     "cryptocurrency-address-validator": "^0.1.3",

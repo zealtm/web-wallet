@@ -153,6 +153,7 @@ class Invoice extends React.Component {
   };
 
   handleInvoiceNumberChange = value => {
+    console.warn(value)
     const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
     const newValue = value.replace(/\D/, "");
@@ -240,7 +241,6 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
-
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
@@ -346,7 +346,7 @@ class Invoice extends React.Component {
                 }}
                 placeholder="237933802350009031431630033330944400000001000000"
                 inputProps={{ maxLength: 48, required: true }}
-                value={payment.number || invoice.number}
+                value={invoice.number || payment.number}
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
                 onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}

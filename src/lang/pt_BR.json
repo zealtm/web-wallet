@@ -97,6 +97,8 @@
   "WALLET_UTXOS_UNKNOWN_ERROR": "Há um problema desconhecido com a UTXOS",
   "PAYMENT_TERMS_ERROR": "Você deve concordar com os Termos GDPR para continuar",
   "PAYMENT_AMOUNT_ERROR": "Seu saldo é insuficiente para realizar o pagamento",
+  "PAYMENT_MESSAGE_BARCODE": "Não foi possível identificar o código de barras. Insira os números manualmente",
+  "PAYMENT_FILE_SIZE": "O tamanho do arquivo ultrapassa o limite estabelecido (3MB)",
   "MODAL_SEND_INFO_ERROR": "Procedimento de envio falhou",
   "MODAL_LEASING_MESSAGE_SUCCESS": "Leasing iniciado!",
   "SETTINGS_CHANGE_PASSWORD_SUCCESS": "Troca de senha efetuada com sucesso!",
@@ -491,7 +493,7 @@
   "P2P_BUTTON_NEGOTIATE": "Negociar",
   "P2P_VALUE_UNITY": "Unid. ",
   "P2P_HEADER_BUY": "Compra",
-  "P2P_HEADER_PAYMENT": "Ṕagamento",
+  "P2P_HEADER_PAYMENT": "Pagamento",
   "P2P_HEADER_DESCRIPTION": "Descrição",
   "P2P_HEADER_BUY_2": "Comprar",
   "P2P_ERROR": "Erro",
@@ -514,7 +516,7 @@
   "P2P_TEXT_10": "Você está mandando",
   "P2P_TEXT_11": "Para pagamento na plataforma P2P",
   "P2P_TEXT_12": "O fee da sua transação na rede Lunes é",
-  "P2P_BUTTON_CONFIRM": "Confirmar",
+  "P2P_BUTTON_CONFIRM": "Voltar",
   "P2P_TRY_AGAIN": "Tentar novamente",
   "P2P_MONTHLY_SIGNATURE": "Mensal",
   "P2P_QUARTERLY_SIGNATURE": "Trimestral",
@@ -525,5 +527,7 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por três meses.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por seis meses.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
-  "P2P_MY_LISTING": "Meus anúncios"
+  "P2P_MY_LISTING": "Meus anúncios",
+  "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
+  "P2P_COMING_SOON": "Avaliação em breve disponível !"
 }

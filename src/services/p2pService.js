@@ -137,7 +137,7 @@ class P2pService {
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if(response.data.data ==undefined){
+      if(response.data.data == undefined){
         return [];
       }
 
