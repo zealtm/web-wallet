@@ -94,7 +94,7 @@ class PackCoins extends React.Component {
     if (packages.length < 1) {
       return (
         <h2 style={{ textAlign: "center", margin: 40 }}>
-          {i18n.t("BUY_SEL_COIN")}
+          {i18n.t("COINSALE_SEL_COIN")}
         </h2>
       );
     }

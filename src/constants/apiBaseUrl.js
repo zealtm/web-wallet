@@ -17,7 +17,9 @@ export const HEADER_REQUEST = {
 
 export const HEADER_REQUEST_FORM = {
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Origin": "*"
   }
 };
 

@@ -44,7 +44,7 @@ export const setFeeRecharge = fee => ({
 });
 
 export const confirmRecharge = recharge => ({
-  type: "CONFIRM_RECHARGE",
+  type: "SET_CONFIRM_RECHARGE",
   recharge
 });
 

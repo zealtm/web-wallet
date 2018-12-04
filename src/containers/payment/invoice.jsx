@@ -8,7 +8,8 @@ import {
   getCoinsEnabled,
   setPayment,
   getInvoice,
-  setClearPayment
+  setClearPayment,
+  uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
 
@@ -50,7 +51,7 @@ const customStyle = {
   },
   inputCssCenter: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "16px",
+    fontSize: "12px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
@@ -151,15 +152,15 @@ class Invoice extends React.Component {
     });
   };
 
-  handleInvoiceNumberChange = event => {
+  handleInvoiceNumberChange = value => {
+    console.warn(value)
     const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
-
-    const newValue = event.target.value.replace(/\D/, "");
+    const newValue = value.replace(/\D/, "");
 
     this.setState({
       ...this.state,
-      disableNumberInput: newValue.length == 48,
+      disableNumberInput: newValue.length === 48,
       invoice: {
         ...invoice,
         number: newValue
@@ -187,6 +188,23 @@ class Invoice extends React.Component {
 
       getInvoice(newValue);
     }
+  };
+
+  normalizeInvoiceNumber = e => {
+    const chars = e.target.value.length;
+    let number = e.target.value;
+
+    for (let i = 0; i < chars; i++) {
+      number = number.replace(/\D/, "");
+    }
+
+    this.setState({
+      ...this.state,
+      invoice: {
+        ...this.state.invoice,
+        number: number
+      }
+    });
   };
 
   handleCpfCnpjChange = event => {
@@ -223,13 +241,13 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
-
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
+      decimalPoint: coins[invoice.coin.abbreviation].decimalPoint,
       address: coins[invoice.coin.abbreviation]
         ? coins[invoice.coin.abbreviation].address
         : undefined
@@ -303,10 +321,15 @@ class Invoice extends React.Component {
     );
   };
 
+  fileUpload = e => {
+    const { uploadBarcode } = this.props;
+    uploadBarcode(e);
+    return;
+  };
+
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
-
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
 
@@ -314,18 +337,43 @@ class Invoice extends React.Component {
       <Grid container direction="row" justify="center">
         <Grid item xs={12} className={style.box}>
           <div className={style.row}>
-            <Input
-              classes={{
-                root: classes.inputRoot,
-                underline: classes.inputCssUnderline,
-                input: classes.inputCssCenter
-              }}
-              placeholder="237933802350009031431630033330944400000001000000"
-              inputProps={{ maxLength: 48, required: true }}
-              value={invoice.number}
-              onChange={this.handleInvoiceNumberChange}
-              error={errors.includes("number")}
-            />
+            <Grid item xs={11} md={12}>
+              <Input
+                classes={{
+                  root: classes.inputRoot,
+                  underline: classes.inputCssUnderline,
+                  input: classes.inputCssCenter
+                }}
+                placeholder="237933802350009031431630033330944400000001000000"
+                inputProps={{ maxLength: 48, required: true }}
+                value={invoice.number || payment.number}
+                onChange={e => this.handleInvoiceNumberChange(e.target.value)}
+                onBlur={this.normalizeInvoiceNumber}
+                error={errors.includes("number")}
+              />
+            </Grid>
+            <Grid item xs={1}>
+              <div className={style.cameraIconMargin}>
+                <label
+                  htmlFor="file-upload"
+                  className={style.labelCameraUpload}
+                >
+                  <img
+                    className={style.cameraIcon}
+                    src="images/icons/camera/camera-white.png"
+                    alt="Camera"
+                  />
+                  <span>Max. 3MB</span> 
+                </label>
+                <input
+                  id="file-upload"
+                  className={style.cameraInput}
+                  type="file"
+                  accept="image/*"
+                  onChange={this.fileUpload}
+                />
+              </div>
+            </Grid>
           </div>
 
           <Grid container>
@@ -472,7 +520,8 @@ Invoice.propTypes = {
   setPayment: PropTypes.func.isRequired,
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  errorInput: PropTypes.func.isRequired
+  errorInput: PropTypes.func.isRequired,
+  uploadBarcode: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -489,7 +538,8 @@ const mapDispatchToProps = dispatch =>
       getCoinsEnabled,
       setPayment,
       setClearPayment,
-      errorInput
+      errorInput,
+      uploadBarcode
     },
     dispatch
   );
