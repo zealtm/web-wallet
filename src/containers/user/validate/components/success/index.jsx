@@ -14,10 +14,15 @@ class EmailSuccess extends React.Component {
   render() {
     return (
       <div className={style.baseMessage}>
-        <img src="../../images/logo.svg" className={style.icon} />
-        <p className={style.messageSuccess}>{i18n.t("INVITE_SUCCESS_EMAIL")}</p>
-        <Link to="/login" className={style.buttonLogin}>
-          {i18n.t("BTN_LOGIN")}
+        <img
+          src="../../images/icons/confirm/confirm@2x.png"
+          className={style.icon}
+        />
+        <p className={style.messageSuccess}>
+          {i18n.t("INVITE_SUCCESS_EMAIL")}
+        </p>
+        <Link to="/login">
+          <button className={style.buttonLogin}>{i18n.t("BTN_LOGIN")}</button>
         </Link>
       </div>
     );
