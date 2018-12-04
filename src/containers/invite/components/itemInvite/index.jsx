@@ -18,7 +18,6 @@ import style from "./style.css";
 class ItemInvite extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { status: "Confirmado" };
   }
 
   copyAddress = address => {
@@ -33,7 +32,7 @@ class ItemInvite extends React.Component {
   };
 
   renderIcon = status => {
-    if (status === "Confirmado") {
+    if (status === "registered") {
       return (
         <div>
           <img
@@ -62,10 +61,6 @@ class ItemInvite extends React.Component {
     return <span>Confirmado</span>;
   }
   render() {
-    // esta mockado o status em state para teste
-    const { status } = this.state;
-    
-    // deve usar o status vindo de props
     const {status} = this.props;
 
     return (

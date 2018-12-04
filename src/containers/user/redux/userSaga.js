@@ -414,3 +414,26 @@ export function* verifyInviteSaga(data){
     yield put(internalServerError());
   }
 }
+
+export function* verifyEmailSaga(data){
+  try {
+    yield put({
+      type: "VERIFY_EMAIL_LOADING",
+    });
+
+    const response = yield call(userService.verifyEmail, data.hash);
+    //console.log(response);
+    if (response.code === 200) {
+      yield put({
+        type: "VERIFY_EMAIL_SUCCESS",
+      });
+    }else{
+      yield put({
+        type: "VERIFY_EMAIL_ERROR",
+      });
+    }
+    return;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
