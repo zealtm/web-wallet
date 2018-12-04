@@ -78,4 +78,9 @@ export const updateUserPassword = (oldPassword, confirmOldPassword, newPassword,
 export const verifyInvite = hash => ({
   type: "VERIFY_INVITE_SAGA", 
   hash
-})
+});
+
+export const verifyEmail = hash => ({
+  type: "VERIFY_EMAIL_SAGA",
+  hash
+});

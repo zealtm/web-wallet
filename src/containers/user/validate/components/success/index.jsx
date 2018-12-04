@@ -19,9 +19,9 @@ class EmailSuccess extends React.Component {
           className={style.icon}
         />
         <p className={style.messageSuccess}>
-          {i18n.t("SETTINGS_USER_EMAIL_VERIFIED")}
+          {i18n.t("INVITE_SUCCESS_EMAIL")}
         </p>
-        <Link to="/wallet">
+        <Link to="/login">
           <button className={style.buttonLogin}>{i18n.t("BTN_LOGIN")}</button>
         </Link>
       </div>
