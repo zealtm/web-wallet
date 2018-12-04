@@ -139,6 +139,19 @@ class UserService {
       return internalServerError();
     }
   }
+
+  async verifyEmail(hash){
+    try {
+      let response = await axios.get(
+        `${BASE_URL}/user/email-verify/${hash}`,
+        API_HEADER
+      );
+      
+      return response.data;
+    }catch(error){
+      return internalServerError();
+    }
+  }
 }
 
 export default UserService;

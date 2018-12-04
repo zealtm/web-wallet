@@ -16,7 +16,8 @@ import {
   updateUserConsentsSaga,
   editUserData,
   updateUserPasswordSaga, 
-  verifyInviteSaga
+  verifyInviteSaga,
+  verifyEmailSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -114,6 +115,7 @@ export default function* rootSaga() {
     fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
     fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
     fork(takeLatest, "VERIFY_INVITE_SAGA", verifyInviteSaga),
+    fork(takeLatest, "VERIFY_EMAIL_SAGA", verifyEmailSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
