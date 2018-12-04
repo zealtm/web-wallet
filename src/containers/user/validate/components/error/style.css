@@ -1,17 +1,59 @@
+/*
+
+1. BASES 
+
+2. IMAGES
+ 
+3. TEXTS
+
+4. BUTTONS
+
+
+*/
+/* -------------------------------------- */
+
+
+
+/* 1. BASES */
+
 :local .baseMessage {
   display: flex;
   align-content: center;
   flex-direction: column;
+  margin-top: 20px;
 }
+
+/* 2. IMAGES */
 
 :local .icon {
   margin:0px;
+  margin-bottom: 20px;
+  
 }
+
+/* 3. TEXTS */
 
 :local .messageError {
-  font-size:16px;
+  composes: textDefault from "../../../../../components/bases/textBase.css";
+  font-size: 14px;
 }
 
-:local .buttonEnable {
-  background:greenyellow;
+:local .baseMessage a {
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center 
 }
+
+
+/* 4. BUTTONS */
+
+:local .buttonEnable {
+  composes: buttonBorderGreen from "../../../../../components/bases/buttonBase.css";
+  padding: 0px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
