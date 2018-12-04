@@ -5,13 +5,16 @@
 }
 
 :local .icon {
-  margin: 0px;
+  margin: 0% 0% 0% 40%;
+  width: 20%;
 }
 
 :local .messageSuccess {
   font-size: 16px;
+  text-align: center;
 }
 
 :local .buttonLogin {
-  composes: buttonGeneral from "../../../../../components/bases/buttonBase.css"
+  composes: buttonEnable from "../../../../../components/bases/buttonBase.css";
+  margin: 20% 0% 0% 0%;
 }
