@@ -526,7 +526,7 @@
   "P2P_TEXT_10": "You are sending",
   "P2P_TEXT_11": "To pay for a P2P transaction",
   "P2P_TEXT_12": "The fee of your transaction on the Lunes network is",
-  "P2P_BUTTON_CONFIRM": "Confirm",
+  "P2P_BUTTON_CONFIRM": "Return",
   "P2P_TRY_AGAIN": "Try again",
   "P2P_MONTHLY_SIGNATURE": "Monthly",
   "P2P_QUARTERLY_SIGNATURE": "Quarterly",
@@ -537,5 +537,7 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
-  "P2P_MY_LISTING": "My listings"
+  "P2P_MY_LISTING": "My listings", 
+  "P2P_CHANGE_ADDRESS": "Fill the address for receive",
+  "P2P_COMING_SOON": "Rating coming soon !"
 }

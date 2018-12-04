@@ -5,6 +5,10 @@ import PropTypes from "prop-types";
 import { Grid, Input } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { closeAvaliation, closeChat } from "../../redux/p2pAction";
 // UTILS
 import i18n from "../../../../utils/i18n";
 
@@ -12,9 +16,15 @@ import i18n from "../../../../utils/i18n";
 import style from "./style.css";
 
 //COMPONENTS
-import Starvotes from "../../components/starvotes"
+import Starvotes from "../../components/starvotes";
 
 class ConfirmModal extends React.Component {
+  close = () => {
+    const { closeAvaliation, closeChat } = this.props;
+    closeAvaliation();
+    closeChat();
+  };
+
   render() {
     return (
       <Grid container>
@@ -25,7 +35,7 @@ class ConfirmModal extends React.Component {
               className={style.avatar}
             />
             <div className={style.userName}>
-              <span className={style.name}>Felipe Mendes</span>
+              <span className={style.name}>{i18n.t("P2P_COMING_SOON")}</span>
             </div>
             <div className={style.hr} />
           </div>
@@ -34,9 +44,9 @@ class ConfirmModal extends React.Component {
         <Grid item xs={12}>
           <div className={style.avaliation}>
             <span className={style.spanTitle}>{i18n.t("P2P_TEXT_3")}</span>
-          <div className={style.starVotes}>
-              <Starvotes  /> 
-          </div>
+            <div className={style.starVotes}>
+              <Starvotes />
+            </div>
             <div>
               <Input className={style.comment} />
             </div>
@@ -45,7 +55,9 @@ class ConfirmModal extends React.Component {
 
         <Grid item xs={12}>
           <div className={style.btnConfirm}>
-            <button className={style.buttonCard}>{i18n.t("P2P_BUTTON_CONFIRM")}</button>
+            <button className={style.buttonCard} onClick={this.close}>
+              {i18n.t("P2P_BUTTON_CONFIRM")}
+            </button>
           </div>
         </Grid>
       </Grid>
@@ -55,6 +67,14 @@ class ConfirmModal extends React.Component {
 
 ConfirmModal.propTypes = {};
 
-export default ConfirmModal;
+const mapStateToProps = store => ({});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ closeAvaliation, closeChat }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmModal);
 
 //Criar um container para centralizar os itens
