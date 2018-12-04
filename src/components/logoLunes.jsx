@@ -37,7 +37,7 @@ class LogoLunes extends React.Component {
         >
           <p>
             Lun
-            <p>e</p>s
+            <span>e</span>s
           </p>
         </div>
       </div>

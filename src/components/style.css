@@ -84,8 +84,6 @@
   font-family: "Offside";
 }
 
-:local .logoLunes p p {
+:local .logoLunes p span {
   color: #4cd566;
-  margin: 0;
-  display: inline;
 }
