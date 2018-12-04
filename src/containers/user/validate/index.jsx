@@ -17,6 +17,7 @@ import style from "../style.css";
 class Validate extends React.Component {
   constructor(props) {
     super(props);
+    
   }
 
   componentDidMount = () => {
@@ -42,8 +43,8 @@ class Validate extends React.Component {
   render() {
     return (
       <div className={style.contGeneral}>
-        {this.renderValidate}
-        <Footer />
+        {this.renderValidate()}
+        {/* <Footer /> */}
       </div>
     );
   }

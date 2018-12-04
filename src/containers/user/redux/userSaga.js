@@ -422,8 +422,12 @@ export function* verifyEmailSaga(data){
     });
 
     const response = yield call(userService.verifyEmail, data.hash);
-    //console.log(response);
+    
     if (response.code === 200) {
+      yield put({
+        type: "VERIFY_EMAIL_SUCCESS",
+      });
+    }else if(response.code === 405){
       yield put({
         type: "VERIFY_EMAIL_SUCCESS",
       });
