@@ -31,9 +31,9 @@ export const blockexplorer = {
   lunes: TESTNET
     ? "https://blockexplorer-testnet.lunes.io/tx/"
     : "https://blockexplorer.lunes.io/tx/",
-  btc: "https://live.blockcypher.com/btc/tx/",
-  ltc: "https://live.blockcypher.com/ltc/tx/",
+  btc: TESTNET ? "https://live.blockcypher.com/btc-testnet/block/" : "https://live.blockcypher.com/btc/tx/",
+  ltc: TESTNET ? "https://chain.so/tx/LTCTEST/" : "https://live.blockcypher.com/ltc/tx/",
   bch: "https://live.blockcypher.com/bch/tx/",
   dash: "https://chainz.cryptoid.info/dash/search.dws?q=",
-  eth: "https://etherscan.io/tx/"
+  eth: TESTNET ? "https://ropsten.etherscan.io/address/" : "https://etherscan.io/tx/"
 };
