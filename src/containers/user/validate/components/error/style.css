@@ -5,13 +5,22 @@
 }
 
 :local .icon {
-  margin:0px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  width: 20%;
 }
 
 :local .messageError {
-  font-size:16px;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 :local .buttonEnable {
-  background:greenyellow;
+  composes: buttonBorderGreen from "../../../../../components/bases/buttonBase.css";
+  composes: bgPurpleDefault from "../../../../../components/bases/colorBase.css";
+  width: 90%;
+  height: 24px;
+  text-decoration: none;
+  text-align: center;
 }

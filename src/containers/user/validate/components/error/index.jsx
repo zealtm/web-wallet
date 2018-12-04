@@ -13,7 +13,7 @@ class Error extends React.Component {
   render() {
     return (
       <div className={style.baseMessage}>
-        <img src="../../images/logo.svg" className={style.icon} />
+        <img src="../../images/icons/error/imgMessageErro.png" className={style.icon} />
         <p className={style.messageError}>Seu e-mail nao foi verificado, por favor tente novamente clicando no botão abaixo.</p>
         <a href="#" className={style.buttonEnable} >Reenviar confirmação</a>
       </div>

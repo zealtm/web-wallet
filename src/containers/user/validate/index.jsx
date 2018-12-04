@@ -15,7 +15,7 @@ class Validate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emailSuccess: true
+      emailSuccess: false
     };
   }
   render() {
