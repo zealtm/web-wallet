@@ -364,7 +364,6 @@ class Invoice extends React.Component {
                 inputProps={{ maxLength: 48, required: true }}
                 value={payment.number || invoice.number}
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
-                onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}
               />
             </Grid>
