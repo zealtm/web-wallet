@@ -126,8 +126,8 @@ class PaymentService {
 
   async getBarcode(image) {
     try {
-      let compressed = await imageCompression(image.target.files[0], 2, 1024);
-
+      let compressed = await imageCompression(image.target.files[0], 3, 1600);
+      console.warn(compressed);
       const formData = new FormData();
       formData.append("file", compressed, compressed.name);
 
@@ -141,6 +141,7 @@ class PaymentService {
 
       return barcode.data;
     } catch (error) {
+      alert(error);
       console.warn(error);
       internalServerError();
       return;
