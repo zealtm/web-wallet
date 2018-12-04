@@ -24,6 +24,9 @@ import DepositModal from "../../modal/deposit";
 import style from "./style.css";
 import Modal from "../../../../components/modal";
 
+//FUNCTIONS
+import { getChatBundle } from "../../chat/functions"
+
 class HeaderDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -94,7 +97,7 @@ class HeaderDetails extends React.Component {
   };
 
   handleJoinRoom = event => {
-    const { chatDetailsSetter } = this.props
+    const { chatDetailsSetter, chatDetails } = this.props
     let key = event.target.value
     if (!key) return;
     this.setState({joinedRoom: key})
@@ -106,6 +109,10 @@ class HeaderDetails extends React.Component {
       },
       currentRoom: room.roomHashId
     })
+    let { seller, currentOrder } = chatDetails
+    let { id: adOwnerId } = seller
+    let { id: adId } = currentOrder
+    getChatBundle({adOwnerId, buyerId: room.userId, adId})
   }
 
   render() {

@@ -5,6 +5,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
 import i18n from "../../../utils/i18n"
 import { decodeToken } from "../../../utils/cryptography"
+import { getChatBundle } from "../chat/functions"
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -38,7 +39,7 @@ export function* prepareOrOpenChat(payload) {
       yield put({type: "CHAT_DETAILS_SETTER", payload: {
         myId,
         currentOrder: order,
-        open: true, //chat doesnt open to the seller
+        open: true, //"chat" opens to the seller, but the bundle wont
         seller,
         typeOfUser,
         //buyer is going to be defined when the seller select who he's going to chat
@@ -48,7 +49,7 @@ export function* prepareOrOpenChat(payload) {
       yield put({type: "CHAT_DETAILS_SETTER", payload: {
         myId,
         currentOrder: order,
-        open: true, //TODO pay attention
+        open: true,
         seller,
         buyer,
         typeOfUser,
@@ -62,10 +63,18 @@ export function* prepareOrOpenChat(payload) {
 
 export function* openChatToTheSeller(payload) {
   let { buyer } = payload
+  if (!buyer)
+    throw new Error("Failed to open chat")
+  let { seller, currentOrder } = window.store.getState().p2p.chatDetails
+  let { id: adId } = currentOrder
+  let { id: adOwnerId } = seller
+  let { id: buyerId } = buyer || {}
+  console.warn({payload})
   yield put({type: "CHAT_DETAILS_SETTER", payload: {
     open: true,
     buyer,
   }})
+  getChatBundle({adOwnerId, adId, buyerId})
 }
 export function* closeChat() {
   yield put({type: "CHAT_DETAILS_SETTER", payload: {
