@@ -272,7 +272,7 @@ class Invite extends React.Component {
               {i18n.t("INVITE_LINK_SHARE")}
             </div>
             <div className={style.adressShared}>
-              {loadingAddress ? <Loading color="lunes" /> : address.link}
+              {loadingAddress ? <Loading color="lunes" /> : address_copy}
             </div>
 
             {!loadingAddress ? (
