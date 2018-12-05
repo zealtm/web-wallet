@@ -1,12 +1,14 @@
+import i18n from "./../../utils/i18n";
 const type = "REQUEST_FAILED";
 const typeSuccess = "REQUEST_SUCCESS";
 
 export const internalServerError = () => ({
   type,
   message:
-    "Your request could not be completed. Check your connection or try again later"
-});
+    (i18n.t("ASSETS_SERVER_ERROR"))
 
+});
+ 
 export const unauthorized = message => ({
   error: {
     type,

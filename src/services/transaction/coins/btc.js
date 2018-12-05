@@ -17,55 +17,80 @@ class BtcTransaction {
 
   async createTransaction(data) {
     try {
+      let usdt = false;
+      let broadcastResult = undefined;
+      let txb = undefined;
+      let txHex = undefined;
+
+      if (data.coin === "usdt") usdt = true;
+
       const transService = new TransactionService();
+
       const utxos = await transService.utxo(
-        data.toAddress,
-        data.coin,
+        data.fromAddress,
+        usdt ? "btc" : data.coin,
         data.token
       );
 
-      console.warn(data, utxos);
-
       const targets = [
-        {
-          address: data.lunesWallet.address,
-          value: data.feeLunes
-        },
         {
           address: data.toAddress,
           value: data.amount
         }
       ];
 
-      let { inputs, outputs } = coinSelect(utxos, targets, data.feePerByte);
+      if (data.lunesWallet.address && data.feeLunes) {
+        targets.push({
+          address: data.lunesWallet.address,
+          value: data.feeLunes
+        });
+      }
 
-      let tx = new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
-      console.warn("inputs, outputs", inputs, outputs);
-      outputs.forEach(output => {
-        if (!output.address) {
-          output.address = data.fromAddress;
-        }
-
-        tx.addOutput(output.address, output.value);
-      });
-
-      inputs.forEach(input => {
-        tx.addInput(input.txId, input.vout);
-      });
+      let { inputs, outputs } = coinSelect(
+        utxos,
+        targets,
+        data.feePerByte <= 2 ? 3 : data.feePerByte
+      );
 
       let keyPair = this.getKeyPair(data.seed, data.network);
 
-      tx = this.sign(tx, keyPair);
+      let tx = usdt
+        ? await this.usdtTransaction(data, keyPair)
+        : new bitcoin.TransactionBuilder(data.network.bitcoinjsNetwork);
 
-      const txHex = tx.build().toHex();
-      // return;
-      const broadcastResult = await transService.broadcast(
+      if (usdt) {
+        txb = bitcoin.TransactionBuilder.fromTransaction(tx);
+        for (let i = 0; i < tx.ins.length; i++) {
+          txb.sign(i, keyPair);
+        }
+        txHex = txb.build().toHex();
+      } else {
+        outputs.forEach(output => {
+          if (!output.address) {
+            output.address = data.fromAddress;
+          }
+
+          tx.addOutput(output.address, output.value);
+        });
+
+        inputs.forEach(input => {
+          tx.addInput(input.txId, input.vout);
+        });
+
+        tx = this.sign(tx, keyPair);
+        txHex = tx.build().toHex();
+      }
+
+      if (usdt) {
+        broadcastResult = await transService.pushTx(txHex);
+        return broadcastResult.tx
+      }
+
+      broadcastResult = await transService.broadcast(
         txHex,
-        data.coin,
+        usdt ? "btc" : data.coin,
         data.token
       );
-
-      console.warn("broadcastResult", broadcastResult);
 
       return broadcastResult.data.data.txId;
     } catch (error) {
@@ -77,6 +102,31 @@ class BtcTransaction {
   sign(tx, keyPair) {
     _.times(tx.inputs.length, i => tx.sign(i, keyPair));
     return tx;
+  }
+
+  async usdtTransaction(data, keyPair) {
+    try {
+      let pubKey = keyPair.getPublicKeyBuffer().toString("hex");
+      let params = new URLSearchParams();
+
+      params.append("transaction_version", 1);
+      params.append("currency_identifier", 31);
+      params.append("fee", data.fee);
+      params.append("testnet", data.network.testnet);
+      params.append("pubkey", pubKey);
+      params.append("amount_to_transfer", data.amount);
+      params.append("transaction_from", data.fromAddress);
+      params.append("transaction_to", data.toAddress);
+
+      let transService = new TransactionService();
+      let response = await transService.getUnsigned(params);
+      let tx = bitcoin.Transaction.fromHex(response.unsignedhex);
+
+      return tx;
+    } catch (error) {
+      console.warn(error);
+      return error;
+    }
   }
 }
 

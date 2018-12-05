@@ -25,6 +25,7 @@
 }
 
 :local(.row) {
+  display: flex;
   margin: 0.5rem 0 1rem 0;
 }
 
@@ -67,6 +68,9 @@
   background-color: transparent;
 }
 
+:local .buttonEnable {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+}
 
 /* 4. SCROLLBAR */
 ::-webkit-scrollbar              {
@@ -81,3 +85,23 @@
   background-color: #654fa4;
   border-radius: 6px;
 }
+
+/* 5. ICONS */
+:local .cameraIconMargin {
+  font-size: 8px;
+}
+
+:local .cameraIcon {
+  width: 18px;
+}
+
+:local .labelCameraUpload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+:local .cameraInput {
+  display: none;
+}
+

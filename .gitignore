@@ -29,4 +29,5 @@ package-lock.json
 .eslintcache
 
 # testnet
-src/constants/
+/src/constants/apiBaseUrl.js
+budo

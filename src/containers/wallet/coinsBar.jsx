@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -19,13 +20,13 @@ import { getFavoritesCrypto, getDefaultFiat } from "../../utils/localStorage";
 import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
+import { AddCircle, Close } from "@material-ui/icons";
 
 // MATERIAL ICONS
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
-import Close from "@material-ui/icons/Close";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -75,6 +76,9 @@ class CoinsBar extends React.Component {
 
     return favoritesCoins.map((val, index) => {
       let coin = coins[val];
+
+      if (!coin) return;
+
       let coinBalanceStatus = coin.balance ? true : false;
       let coinAddressStatus = coin.address ? true : false;
       let coinStatus =
@@ -107,7 +111,7 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/icons/coins/${coin.abbreviation}.png`}
+                src={"images/icons/coins/" + coin.abbreviation + ".png"}
               />
             </div>
             <Hidden smDown>
@@ -189,6 +193,9 @@ class CoinsBar extends React.Component {
           <Grid item xs={12} sm={10}>
             <Slider ref={c => (this.slider = c)} {...settings}>
               {this.renderCoins()}
+              <Link to="/wallet-settings" className={style.addFavorites}>
+                <AddCircle />
+              </Link>
             </Slider>
           </Grid>
 

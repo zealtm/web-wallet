@@ -93,7 +93,7 @@ export const clearWalletState = () => ({
 });
 
 export const shareCoinAddress = (name, address) => ({
-  type: "SHARE_COIN_ADRESS_API",
+  type: "GET_COIN_ADRESS_API",
   name,
   address
 });
@@ -102,3 +102,13 @@ export const getCoinFeeValue = coinType => ({
   type: "GET_COIN_FEE_API",
   coinType
 });
+
+export const setUtxos = (coin, address) => ({
+  type: "SET_WALLET_UTXOS_API",
+  coin,
+  address
+})
+
+export const resetModalSend = () => ({
+  type: "SET_RESET_MODAL_SEND"
+})

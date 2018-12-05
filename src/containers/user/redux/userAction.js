@@ -47,8 +47,9 @@ export const setUserSeed = (seed, password) => ({
   password
 });
 
-export const resetUser = () => ({
-  type: "POST_USER_RESET_USER_API"
+export const resetUser = login => ({
+  type: "POST_USER_RESET_USER_API",
+  login
 });
 
 export const loading = () => ({
@@ -56,11 +57,28 @@ export const loading = () => ({
 });
 
 export const updateUserConsents = consents => ({
-  type: "UPDATE_USER_CONSENTS_API",
+  type: "PATH_USER_CONSENTS_API",
   consents
 });
 
 export const editUserData = data => ({
-  type: "EDIT_USER_DATA_API",
+  type: "PATH_USER_DATA_API",
   data
+});
+
+export const updateUserPassword = (
+  oldPassword,
+  confirmOldPassword,
+  newPassword,
+  confirmNewPassword
+) => ({
+  type: "PATH_USER_PASSWORD_API",
+  oldPassword,
+  confirmOldPassword,
+  newPassword,
+  confirmNewPassword
+});
+
+export const clearUserData = () => ({
+  type: "CLEAR_USER_DATA"
 });

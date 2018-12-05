@@ -1,7 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
+// REDUX
+import { connect } from "react-redux";
 
 //MATERIAL UI
 import Avatar from "@material-ui/core/Avatar";
@@ -32,7 +34,7 @@ class UserControl extends React.Component {
     if (openBox) {
       setTimeout(() => {
         this.setState({ ...this.state, openBox: false });
-      }, 10000);
+      }, 3000);
 
       return (
         <div className={style.menuUser}>
@@ -48,7 +50,6 @@ class UserControl extends React.Component {
             {i18n.t("MENU_SETTING")}
           </Link>
 
-          {/* <Link to="/" className={style.linkPopMenu}> */}
           <a
             href="mailto:support@lunes.io"
             className={style.linkPopMenu}

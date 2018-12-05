@@ -11,7 +11,7 @@ class InternalError extends React.Component {
   constructor() {
     super();
     this.state = {
-      timer: 10
+      timer: 3
     };
   }
 

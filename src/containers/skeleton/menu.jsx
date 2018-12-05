@@ -7,6 +7,8 @@ import i18n from "../../utils/i18n";
 
 // REDUX
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { errorInput } from "../errors/redux/errorAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -34,25 +36,25 @@ const menuItens = [
     label: i18n.t("MENU_LEASING"),
     icon: "../../images/icons/general/leasing@1x.png"
   },
-  // {
-  //   link: "/assets",
-  //   label: i18n.t("MENU_ASSETS"),
-  //   icon: "../../images/icons/general/wallet@1x.png"
-  // },
-  // {
-  //   link: "/recharge",
-  //   label: i18n.t("MENU_RECHARGE"),
-  //   icon: "../../images/icons/general/recharge@1x.png"
-  // },
   {
-    link: "/payment",
+    link: "/assets",
+    label: i18n.t("MENU_ASSETS"),
+    icon: "../../images/icons/general/assets@1x.png"
+  },
+  {
+    link: "/coinsale",
+    label: i18n.t("MENU_COINSALE"),
+    icon: "../../images/icons/general/buycoin@1x.png"
+  },
+  {
+    link: "/invoices",
     label: i18n.t("MENU_PAY"),
     icon: "../../images/icons/general/pay@1x.png"
   },
   {
     link: "/recharge",
     label: i18n.t("MENU_RECHARGE"),
-    icon: "../../images/icons/general/pay@1x.png"
+    icon: "../../images/icons/general/recharge@1x.png"
   },
   {
     link: "/coupons",
@@ -66,9 +68,22 @@ class Menu extends React.Component {
     super(props);
   }
 
+  onClickFunction = error => {
+    const { actionMenu, errorInput } = this.props;
+    actionMenu();
+    if (error) {
+      errorInput("Service Unavailable. Try again later.");
+    }
+    return;
+  };
+
+  openP2PComponent = () => {
+    const { actionP2PComponent } = this.props;
+    actionP2PComponent();
+  };
+
   renderMenu = () => {
     let { pathname } = this.props.location;
-    const { actionMenu } = this.props;
 
     return menuItens.map((item, key) => {
       let classStyle = style.linkMenu;
@@ -80,13 +95,15 @@ class Menu extends React.Component {
       return (
         <NavLink
           className={classStyle}
-          activeClassName={style.linkMenuActive}
-          to={item.link}
+          activeClassName={item.error ? style.linkMenu : style.linkMenuActive}
+          to={item.error ? "/home" : item.link}
           key={key}
-          onClick={actionMenu}
+          onClick={() => this.onClickFunction(item.error)}
         >
           <img src={item.icon} className={style.iconMenu} />
-          <div onClick={actionMenu}>{item.label}</div>
+          <div onClick={() => this.onClickFunction(item.error)}>
+            {item.label}
+          </div>
         </NavLink>
       );
     });
@@ -102,12 +119,18 @@ class Menu extends React.Component {
       >
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
-            <Grid item xs={4} align="center">
+            <Grid item xs={4} className={style.boxAvatarUser}>
               <Avatar alt="Avatar" src={user.profilePicture} />
             </Grid>
-            <Grid item xs={8}>
+
+            <Grid item xs={8} className={style.boxNameUser}>
               <span className={style.userName}>{user.name}</span>
               <br />
+            </Grid>
+
+            <Grid item xs={4} />
+
+            <Grid item xs={8}>
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
@@ -126,6 +149,18 @@ class Menu extends React.Component {
           </Grid>
         </Hidden>
         {this.renderMenu()}
+        <div className={style.menuP2P}>
+          <button
+            className={style.linkMenuP2P}
+            onClick={() => this.openP2PComponent()}
+          >
+            <img
+              src={"../../images/icons/general/p2p@3x.png"}
+              className={style.iconP2p}
+            />
+            <div>{"  "}</div>
+          </button>
+        </div>
       </div>
     );
   }
@@ -136,14 +171,24 @@ Menu.propTypes = {
   openMenu: PropTypes.bool.isRequired,
   actionMenu: PropTypes.func.isRequired,
   actionLogout: PropTypes.func.isRequired,
-  user: PropTypes.object
+  errorInput: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  actionP2PComponent: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      errorInput
+    },
+    dispatch
+  );
+
 export default connect(
   mapSateToProps,
-  null
+  mapDispatchToProps
 )(withRouter(Menu));

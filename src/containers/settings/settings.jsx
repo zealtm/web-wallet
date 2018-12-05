@@ -1,13 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
-
-// STYLE
 import style from "./style.css";
-
-// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
-
-// UTILS
 import i18n from "../../utils/i18n";
 
 class Settings extends React.Component {
@@ -50,6 +44,13 @@ class Settings extends React.Component {
                 <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_5")}</Grid>
               </Link>
             </Grid>
+            
+            <Grid item xs={12} sm={3} className={style.cardsSettings}>
+              <Link to="/setp2p">
+                <Grid className={style.cards}>{i18n.t("SETTINGS_CARD_6")}</Grid>
+              </Link>
+            </Grid>
+
           </Grid>
         </Grid>
       </div>

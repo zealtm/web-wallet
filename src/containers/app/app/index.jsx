@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Loadable from "react-loadable";
 import path from "path";
 import PropTypes from "prop-types";
+import Loadable from "react-loadable";
+import React, { Component } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
+// REDUX
+import { connect } from "react-redux";
 
 // COMPONENTS
 import fakeDelay from "../../../components/fakeDelay";
@@ -13,6 +15,7 @@ import ModalBar from "../../../components/modalBar";
 
 function loading({ error }) {
   if (error) {
+    console.warn(error);
     return "Error!";
   } else {
     return <Loading color="wallet" height="80vh" width="100px" />;
@@ -80,7 +83,7 @@ let consent = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
-let payment = Loadable({
+let invoices = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../payment")
@@ -91,7 +94,6 @@ let recharge = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
-
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -108,6 +110,18 @@ let assets = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../assets")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
+});
+
+let p2pSettings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/p2p")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/p2p")
+});
+
+let buycoin = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../buycoin")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
 });
 /* eslint-enable */
 
@@ -136,9 +150,12 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
-              <Route path="/payment" component={payment} />
+
+              <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/setp2p" component={p2pSettings} />
+              <Route path="/coinsale" component={buycoin} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

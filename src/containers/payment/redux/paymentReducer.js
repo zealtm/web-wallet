@@ -1,6 +1,7 @@
 const initialState = {
   coins: [],
   payment: {
+    error: false,
     fee: "",
     number: "",
     coin: {
@@ -51,7 +52,10 @@ const payment = (state = initialState, action) => {
     case "GET_PAYMENT_DATA_REDUCER":
       return {
         ...state,
-        number: action.number
+        payment: {
+          ...state.payment,
+          number: action.number
+        }
       };
 
     case "SET_PAYMENT_REDUCER":
@@ -106,6 +110,15 @@ const payment = (state = initialState, action) => {
         history: [],
         loading: false,
         modalStep: 1
+      };
+
+    case "SET_PAYMENT_INVOICE_ERROR":
+      return {
+        ...state,
+        payment: {
+          ...state.payment,
+          error: true
+        }
       };
 
     default: {

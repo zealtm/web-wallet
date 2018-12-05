@@ -14,6 +14,9 @@ import i18n from "../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
+// COMPONENTS
+import ButtonContinue from "./component/buttonContinue";
+
 class SecurePayment extends React.Component {
   constructor() {
     super();
@@ -28,10 +31,27 @@ class SecurePayment extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, payment, confirmPay, errorInput } = this.props;
+    let { user, errorInput, payment, coins, confirmPay } = this.props;
+
+    const coin = payment.coin.abbreviation.toLowerCase();
+
+    const payload = {
+      coin: coin,
+      fromAddress: coins[coin].address,
+      toAddress: payment.coin.address,
+      lunesUserAddress: coins["lunes"].address,
+      amount: payment.amount,
+      fee: payment.fee.fee.fee,
+      feePerByte: payment.fee.fee.feePerByte,
+      feeLunes: payment.fee.fee.feeLunes,
+      price: coins[coin].price,
+      decimalPoint: coins[coin].decimalPoint,
+      user: user.password,
+      payment: payment
+    };
 
     if (user.password === encryptHmacSha512Key(password)) {
-      confirmPay(payment);
+      confirmPay(payload);
       return;
     }
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
@@ -40,7 +60,7 @@ class SecurePayment extends React.Component {
 
   render() {
     let { password } = this.state;
-    let { payment } = this.props;
+    let { payment, loading } = this.props;
 
     return (
       <div className={style.modalBox}>
@@ -51,7 +71,7 @@ class SecurePayment extends React.Component {
         <div>
           <span>{i18n.t("PAYMENT_PASS_CONFIRMATION")}</span>
           <span className={style.totalConfirm}>
-            {payment.amount + payment.fee} {payment.coin.abbreviation}
+            {payment.amount + payment.fee.fee.fee} {payment.coin.abbreviation}
           </span>
           <span> {i18n.t("PAYMENT_PASS_TO")} </span>
           <span className={style.addressConfirm}>
@@ -70,38 +90,39 @@ class SecurePayment extends React.Component {
           />
         </div>
 
-        <button
-          className={style.btContinue}
-          onClick={() => this.confirmPassword()}
-        >
-          {i18n.t("BTN_CONFIRM")}
-        </button>
+        <ButtonContinue
+          label={i18n.t("BTN_CONFIRM")}
+          action={() => this.confirmPassword()}
+          loading={loading}
+        />
       </div>
     );
   }
 }
 
 SecurePayment.propTypes = {
-  payment:      PropTypes.object.isRequired,
-  loading:      PropTypes.bool.isRequired,
-  user:         PropTypes.object.isRequired,
-  confirmPay:   PropTypes.func.isRequired,
-  errorInput:   PropTypes.func.isRequired
+  payment: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+  errorInput: PropTypes.func.isRequired,
+  confirmPay: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
-  payment:    store.payment.payment,
-  loading:    store.payment.loading,
-  user:       store.user.user
+  payment: store.payment.payment,
+  loading: store.payment.loading,
+  user: store.user.user,
+  coins: store.skeleton.coins
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  { 
-    confirmPay, 
-    errorInput 
-  }, 
-  dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      confirmPay,
+      errorInput
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

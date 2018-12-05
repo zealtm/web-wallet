@@ -9,16 +9,16 @@ import {
   cancelLeasing,
   getLeasingInfo
 } from "../leasing/redux/leasingAction";
+
+// MATERIAL UI
 import Grid from "@material-ui/core/Grid";
+
+// UTILS
 import { formatDate } from "../../utils/numbers";
+import i18n from "../../utils/i18n";
 
 // STYLES
 import style from "./style.css";
-
-// UTILS
-import i18n from "../../utils/i18n";
-
-const blockexplorer = "https://blockexplorer.lunes.io/tx/";
 
 class LeasingHistory extends React.Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class LeasingHistory extends React.Component {
   cancelLeasing(txId) {
     let {
       coinFee,
-      decimalPoint,
       cancelLeasing,
       user,
       coins,
@@ -61,7 +60,6 @@ class LeasingHistory extends React.Component {
     cancelLeasing({
       txId,
       coinFee,
-      decimalPoint,
       password: user.password,
       coinName: coins.lunes.abbreviation
     });
@@ -72,7 +70,8 @@ class LeasingHistory extends React.Component {
       getLeasingInfo(
         coins.lunes.abbreviation,
         coins.lunes.address,
-        coins.lunes.decimalPoint
+        coins.lunes.decimalPoint,
+        user.password
       );
     }, 5000);
 
@@ -143,7 +142,10 @@ class LeasingHistory extends React.Component {
               <Grid item xs={12} className={style.itemDataHistorico}>
                 <Grid item xs={12} className={style.descriptionHistory}>
                   <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
-                  <a href={blockexplorer + value.txID} target="blank">
+                  <a
+                    href={"https://blockexplorer.lunes.io/tx/" + value.txID}
+                    target="blank"
+                  >
                     {value.txID}
                   </a>
                 </Grid>
@@ -167,7 +169,9 @@ class LeasingHistory extends React.Component {
   };
 
   render() {
-    let { balance, leasingBalance } = this.props;
+    const { coins, leasingBalance } = this.props;
+    const balance = coins.lunes ? coins.lunes.balance.available : "0";
+
     return (
       <div>
         <Grid container className={style.containerTransactions}>
@@ -221,24 +225,20 @@ class LeasingHistory extends React.Component {
 LeasingHistory.propTypes = {
   openModal: PropTypes.func,
   coins: PropTypes.array.isRequired,
-  balance: PropTypes.number,
   history: PropTypes.object,
   setLeasingLoading: PropTypes.func,
   leasingBalance: PropTypes.number,
   cancelLeasing: PropTypes.func,
   getLeasingInfo: PropTypes.func,
   coinFee: PropTypes.number,
-  decimalPoint: PropTypes.number,
   user: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   coins: store.skeleton.coins,
-  balance: store.skeleton.coins.lunes.balance.available,
   history: store.leasing.history.data,
-  leasingBalance: store.leasing.balance,
+  leasingBalance: store.leasing.leasingBalance,
   coinFee: store.leasing.coinFee.low,
-  decimalPoint: store.skeleton.coins.lunes.decimalPoint,
   user: store.user.user
 });
 

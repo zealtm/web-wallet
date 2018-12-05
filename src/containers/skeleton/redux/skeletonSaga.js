@@ -1,19 +1,19 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
-
-// UTILS
 import {
   setAuthToken,
   getAuthToken,
-  getUserSeedWords
+  getUserSeedWords,
+  getDefaultCrypto
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
-
-// Services
 import CoinService from "../../../services/coinService";
 import UserService from "../../../services/userService";
+import TransactionService from "../../../services/transaction/transactionService";
+
 const coinService = new CoinService();
 const userService = new UserService();
+const transactionService = new TransactionService();
 
 export function* loadGeneralInfo(action) {
   try {
@@ -34,6 +34,20 @@ export function* loadGeneralInfo(action) {
 
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
+
+    let responseAlias = yield call(
+      transactionService.getAliases,
+      responseCoins.lunes.address
+    );
+
+    if (responseAlias.length > 0) {
+      let firstAlias = responseAlias[0].split(":")[2];
+
+      yield put({
+        type: "SET_SKELETON_ALIAS_ADDRESS",
+        alias: firstAlias
+      });
+    }
 
     yield put({
       type: "SET_USER_INFO",
@@ -65,15 +79,19 @@ export function* loadGeneralInfo(action) {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
 
 export function* loadWalletInfo(action) {
   try {
-    let token = yield call(getAuthToken);
-    let seed = yield call(getUserSeedWords);
+    const token = yield call(getAuthToken);
+    const seed = yield call(getUserSeedWords);
+    const defaultCrypto = yield call(getDefaultCrypto);
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -83,9 +101,21 @@ export function* loadWalletInfo(action) {
     setAuthToken(responseCoins.token);
     delete responseCoins.token;
 
+    let responseCoinHistory = yield call(
+      coinService.getCoinHistory,
+      defaultCrypto,
+      responseCoins[defaultCrypto].address,
+      token
+    );
+
     yield put({
       type: "GET_GENERAL_INFO",
       coins: responseCoins
+    });
+
+    yield put({
+      type: "SET_WALLET_HISTORY",
+      history: responseCoinHistory
     });
 
     yield put({
@@ -97,11 +127,14 @@ export function* loadWalletInfo(action) {
     });
     yield put({
       type: "SET_ASSET_LOADING"
-    })
+    });
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -109,7 +142,7 @@ export function* loadWalletInfo(action) {
 export function* availableCoins() {
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(coinService.getAvaliableCoins, token);
+    let response = yield call(coinService.getAvailableCoins, token);
 
     yield put({
       type: "GET_AVAILABLE_COINS",
@@ -118,7 +151,10 @@ export function* availableCoins() {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -133,7 +169,10 @@ export function* balanceCoins() {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -148,7 +187,10 @@ export function* createCoinsAddress() {
 
     return;
   } catch (error) {
-    yield put({ type: "CHANGE_SKELETON_ERROR_STATE", state: true });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }

@@ -11,6 +11,8 @@ import error from "../errors/redux/errorReducer";
 import payment from "../payment/redux/paymentReducer";
 import assets from "../assets/redux/assetsReducer";
 import recharge from "../recharge/redux/rechargeReducer";
+import p2p from "../p2p/redux/p2pReducer";
+import buy from "../buycoin/redux/buyReducer";
 
 const sagaMiddleware = new createSagaMiddleware();
 
@@ -25,12 +27,16 @@ const Store = createStore(
     payment,
     error,
     assets,
-    recharge
+    recharge, 
+    p2p,
+    buy
   }),
 
   applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(rootSaga);
+
+window.store = Store;
 
 export default Store;

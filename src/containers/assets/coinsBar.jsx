@@ -5,15 +5,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setSelectedCoin,
-  getWalletCoinHistory,
-  setWalletCoinHistoryLoading
-} from "./redux/assetsAction";
-import { clearMessage, errorInput } from "../errors/redux/errorAction";
+import { setSelectedCoin } from "./redux/assetsAction";
 
-// UTILS
-import { getFavoritesCrypto, getDefaultFiat } from "../../utils/localStorage";
+// COMPONENTS
+import Loading from "../../components/loading.jsx";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -25,7 +20,6 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
-import Close from "@material-ui/icons/Close";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -47,15 +41,9 @@ class CoinsBar extends React.Component {
     else this.slider.slickNext();
   };
 
-  setCoin = (coin, address) => {
-    let {
-      setSelectedCoin,
-      getWalletCoinHistory,
-      setWalletCoinHistoryLoading
-    } = this.props;
-    setWalletCoinHistoryLoading(true);
-    getWalletCoinHistory(coin, address);
-    setSelectedCoin(coin);
+  setCoin = id => {
+    let { setSelectedCoin } = this.props;
+    setSelectedCoin(id);
   };
 
   renderArrowPercent = val => {
@@ -67,71 +55,37 @@ class CoinsBar extends React.Component {
   };
 
   renderCoins = () => {
-    let { wallet } = this.props;
-    let { coins } = this.props.skeleton;
-    let defaultFiat = getDefaultFiat();
-    let favoritesCoins = getFavoritesCrypto();
-    favoritesCoins = favoritesCoins ? favoritesCoins : ["lunes"];
+    let { assets, selectedCoin, isBalanceLoading } = this.props.assets;
 
-    return favoritesCoins.map((val, index) => {
-      let coin = coins[val];
-      let coinBalanceStatus = coin.balance ? true : false;
-      let coinAddressStatus = coin.address ? true : false;
-      let coinStatus =
-        coin.status === "active" && coinBalanceStatus && coinAddressStatus
-          ? true
-          : false;
-      let coinBalance = coinStatus ? coin.balance.available : 0;
-      let coinFiatBalance = coinStatus
-        ? (coinBalance * coin.price[defaultFiat].price).toFixed(2)
-        : 0;
-      let coinPercent = coinStatus ? coin.price.percent : 0;
+    if (isBalanceLoading)
+      return (
+        <div className={style.infoBarLoading}>
+          <Loading />
+        </div>
+      );
+
+    if (!assets) {
+      return null;
+    }
+
+    return assets.map((asset, index) => {
+      asset = assets[index];
+      asset.status = index === selectedCoin ? true : false;
 
       return (
-        <div
-          className={coinStatus ? null : style.boxCoinDisabled}
-          key={index}
-          onClick={
-            coinPercent
-              ? () => this.setCoin(coin.abbreviation, coin.address)
-              : null
-          }
-        >
-          <div
-            className={
-              wallet.selectedCoin === coin.abbreviation
-                ? style.boxCoinActive
-                : style.boxCoin
-            }
-          >
+        <div key={index} onClick={() => this.setCoin(index)}>
+          <div className={asset.status ? style.boxCoinActive : style.boxCoin}>
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={`images/icons/coins/${coin.abbreviation}.png`}
+                src={
+                  asset.image ? asset.image : "images/icons/tokens/default.png"
+                }
               />
             </div>
             <Hidden smDown>
-              {coinStatus ? (
-                <div className={style.boxLabelCoin}>
-                  {coin.price[defaultFiat].symbol + coinFiatBalance} <br />
-                  <div className={style.labelPercent}>
-                    {this.renderArrowPercent(coinPercent)}
-                    {coinPercent}
-                  </div>
-                </div>
-              ) : (
-                <div className={style.boxLabelCoinDisabled}>
-                  {i18n.t("TEXT_UNAVAILABLE")}
-                </div>
-              )}
-            </Hidden>
-            <Hidden mdUp>
-              <div className={style.boxArrowPercent}>
-                {coinStatus ? (
-                  this.renderArrowPercent(coinPercent)
-                ) : (
-                  <Close className={style.arrowPercentDisabled} />
-                )}
+              <div className={style.boxHiddenContent}>
+                {asset.tokenName.toUpperCase()}
               </div>
             </Hidden>
           </div>
@@ -211,25 +165,19 @@ class CoinsBar extends React.Component {
 
 CoinsBar.propTypes = {
   wallet: PropTypes.object,
-  skeleton: PropTypes.object,
-  setSelectedCoin: PropTypes.func,
-  getWalletCoinHistory: PropTypes.func,
-  setWalletCoinHistoryLoading: PropTypes.func
+  assets: PropTypes.object,
+  setSelectedCoin: PropTypes.func
 };
 
 const mapSateToProps = store => ({
   wallet: store.wallet,
-  skeleton: store.skeleton
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setWalletCoinHistoryLoading,
-      getWalletCoinHistory,
-      setSelectedCoin,
-      clearMessage,
-      errorInput
+      setSelectedCoin
     },
     dispatch
   );
