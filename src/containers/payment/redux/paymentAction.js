@@ -49,3 +49,8 @@ export const confirmPay = payment => ({
   type: "CONFIRM_PAY",
   payment
 });
+
+export const uploadBarcode = image => ({
+  type: "POST_UPLOAD_BARCODE_API",
+  image
+});

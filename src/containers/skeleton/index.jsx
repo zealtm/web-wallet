@@ -1,37 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// COMPONENTS
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import Header from "./header";
 import Menu from "./menu";
-
-// MATERIAL UI
+import P2P from "../p2p/index";
 import Grid from "@material-ui/core/Grid";
-
-// STYLE
 import style from "./style.css";
-
-//UTILS
+import { clearUserData } from "../user/redux/userAction";
 import { clearAll, getDefinitionMetadata } from "../../utils/localStorage";
+import { bindActionCreators } from "redux";
 
 class Skeleton extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { openMenu: false };
+    this.state = { openMenu: false, openP2PComponent: false };
   }
 
   toggleMenu = () => {
     this.setState({ ...this.state, openMenu: !this.state.openMenu });
   };
 
+  toggleP2PComponent = () => {
+    return this.setState({ openP2PComponent: !this.state.openP2PComponent });
+  };
+
   logout = () => {
+    const { clearUserData } = this.props;
     let deleteMeta = JSON.parse(getDefinitionMetadata());
 
     if (deleteMeta === true || deleteMeta == null) {
       clearAll();
     }
 
-    window.location.reload(true);
+    clearUserData();
   };
 
   render() {
@@ -46,11 +48,14 @@ class Skeleton extends React.Component {
               openMenu={openMenu}
               actionMenu={this.toggleMenu}
               actionLogout={this.logout}
+              actionP2PComponent={this.toggleP2PComponent}
             />
           </Grid>
+
           <Grid item xs={12} lg={10} xl={11}>
             <div className={style.colContainer}>{children}</div>
           </Grid>
+          {this.state.openP2PComponent && <P2P />}
         </Grid>
       </div>
     );
@@ -58,7 +63,21 @@ class Skeleton extends React.Component {
 }
 
 Skeleton.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  clearUserData: PropTypes.func
 };
 
-export default Skeleton;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clearUserData
+    },
+    dispatch
+  );
+
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(Skeleton)
+);
