@@ -327,19 +327,19 @@ class Invoice extends React.Component {
     return;
   };
 
-  currentDateTransform(value) {
-    let str_date = value ? value.replace(/[^\d]+/g, "") : "";
+  currentDateTransform = value => {
+    let strDate = value ? value.replace(/[^\d]+/g, "") : "";
     if (value == undefined || value == "") return undefined;
-    let day = str_date.substring(0, 2);
-    let month = str_date.substring(2, 4);
-    let yaar = str_date.substring(4, 8);
-    var num_day = Number(day);
-    if (num_day < 9)
+    let day = strDate.substring(0, 2);
+    let month = strDate.substring(2, 4);
+    let year = strDate.substring(4, 8);
+    let numDay = Number(day);
+    if (numDay < 9)
       day = "0" + (num_day + 1);
     else
       day = (num_day + 1);
 
-    return ( day + "/" + month + "/" + yaar);
+    return ( day + "/" + month + "/" + year);
   }
 
   render() {
