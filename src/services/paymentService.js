@@ -1,4 +1,5 @@
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 //CONSTANTS
 import {
@@ -125,19 +126,18 @@ class PaymentService {
 
   async getBarcode(image) {
     try {
-      const formData = new FormData();
-      formData.append(
-        "file",
-        image.target.files[0],
-        image.target.files[0].name
-      );
-
-      if (image.target.files[0].size > 2097152) {
-        return { message: i18n.t("PAYMENT_FILE_SIZE") };
+      let compressed = await imageCompression(image.target.files[0], 3, 1600);
+      
+      if(compressed.size > 8388608) {
+        return { message: i18n.t("PAYMENT_FILE_SIZE")};
       }
+      
+      const formData = new FormData();
+
+      formData.append("file", compressed, compressed.name);
 
       const barcode = await axios.post(
-        "http://104.248.184.169:3303",
+        "https://solucti.com.br:3303",
         formData,
         HEADER_REQUEST
       );

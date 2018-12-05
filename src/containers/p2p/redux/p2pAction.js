@@ -64,7 +64,6 @@ export const setCancelOrder = orderId => ({
   orderId
 });
 
-
 export const clearCancel = () => ({
   type: "CLEAR_CANCEL_P2P"
 });
@@ -80,4 +79,12 @@ export const openDeposit = iduser => ({
 
 export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
+});
+
+export const openAvaliation = () => ({
+  type: "OPEN_AVALIATION_P2P"
+});
+
+export const closeAvaliation = () => ({
+  type: "CLOSE_AVALIATION_P2P"
 });
