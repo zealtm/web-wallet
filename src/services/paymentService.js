@@ -1,8 +1,13 @@
 import axios from "axios";
-import bb from "brazilian-barcode";
+import imageCompression from "browser-image-compression";
 
 //CONSTANTS
-import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+import {
+  BASE_URL,
+  API_HEADER,
+  HEADER_RESPONSE,
+  HEADER_REQUEST
+} from "../constants/apiBaseUrl";
 
 // ERROR
 import {
@@ -121,43 +126,25 @@ class PaymentService {
 
   async getBarcode(image) {
     try {
+      let compressed = await imageCompression(image.target.files[0], 3, 1600);
+      
+      if(compressed.size > 8388608) {
+        return { message: i18n.t("PAYMENT_FILE_SIZE")};
+      }
+      
       const formData = new FormData();
-      formData.append(
-        "fupload1",
-        image.target.files[0],
-        image.target.files[0].name
-      );
 
-      const responseFirst = await axios.post(
-        "https://wabr.inliteresearch.com/barcodes",
-        formData
-      );
+      formData.append("file", compressed, compressed.name);
 
-      formData.append("sr", 0);
-      formData.append("azspeed", 2);
-      formData.append("MAX_FILE_SIZE", 10485760);
-
-      const responseLast = await axios.post(
-        "https://reader.datasymbol.com/cgi-bin/brcgi",
+      const barcode = await axios.post(
+        "https://solucti.com.br:3303",
         formData,
-        {
-          crossdomain: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Headers": "",
-            "Access-Control-Allow-Origin": ""
-          }
-        }
+        HEADER_REQUEST
       );
 
-      let barcode =
-        responseFirst.data.Barcodes[0].Text.substring(0, 2) +
-        responseLast.data.substring(2, responseLast.data.length - 1);
+      if (barcode.data.data.charAt(0) === "8") return;
 
-      if (barcode.charAt(0) !== "8")
-        barcode = bb.digit.getVDBank(barcode, true);
-
-      return barcode;
+      return barcode.data;
     } catch (error) {
       console.warn(error);
       internalServerError();

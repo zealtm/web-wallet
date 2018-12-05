@@ -88,7 +88,7 @@
 
 /* 5. ICONS */
 :local .cameraIconMargin {
-  margin-top: 1.5rem;
+  font-size: 8px;
 }
 
 :local .cameraIcon {
