@@ -36,9 +36,6 @@ class HeaderDetails extends React.Component {
       joinedRoom: -1
     }
   }
-  convert = () => {
-    this.convertRooms()
-  }
   convertRooms = () => {
     let { currentOrder: order } = this.props.chatDetails
     if (!order || (order && !order.chat)) return;
@@ -162,8 +159,6 @@ class HeaderDetails extends React.Component {
               onChange={e => this.handleFields(e)}
             />
           </Grid>
-        </Grid>
-        <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
             <button className={style.btBuy} onClick={this.handleClick}>{i18n.t("P2P_HEADER_BUY_2")}</button>

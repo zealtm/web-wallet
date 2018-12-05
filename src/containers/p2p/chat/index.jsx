@@ -29,32 +29,26 @@ class Chat extends React.Component {
     }
   }
   componentDidMount() {
-    console.warn("ESTOU CHAMANDO O BUNDLE")
     this.callChatBundle()
   }
   componentDidUpdate() {
-    let { typeOfUser,  buyer} = this.props.p2pStore.chatDetails
-    if ((typeOfUser === 'seller' && buyer) && this.state.bundleAlreadyCalled === false) {
-      console.warn("COMPONENT DID UPDATE", this.props.p2pStore.chatDetails)
-      this.setState({bundleAlreadyCalled: true})
-      this.callChatBundle()
-    }
   }
   callChatBundle = () => {
     let { chatDetails } = this.props.p2pStore
     let { typeOfUser } = chatDetails
     let { seller, buyer, currentOrder } = chatDetails
-    if (!buyer || (buyer && !buyer.id)) return;
-    let { id: buyerId } = buyer
+    // if (!buyer || (buyer && !buyer.id)) return;
+    let { id: buyerId } = buyer || {}
     let { id: adOwnerId } = seller
     let { id: adId } = currentOrder
+    console.warn({typeOfUser})
     if (typeOfUser === 'buyer') {
       getChatBundle({adId, adOwnerId, buyerId})
       this.setState({chatTargetContent: <Loading/>})
     } else {
       console.warn('SELLER <<<<')
       //TODO i18n
-      this.setState({chatTargetContent: <h1>Select an user above</h1>})
+      this.setState({chatTargetContent: (<h1>Select an user above</h1>) })
     }
   }
 
