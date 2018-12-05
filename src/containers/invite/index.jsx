@@ -42,7 +42,7 @@ const inputStyle = {
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "20px",
+    fontSize: "17px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
