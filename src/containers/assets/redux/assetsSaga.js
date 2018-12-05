@@ -93,14 +93,13 @@ export function* reloadAsset(action) {
 
 export function* setAssetModalStep(payload) {
   yield put({
-    type: "SET_ASSET_MODAL_STEP",
+    type: "SET_ASSET_MODAL_STEP_REDUCE",
     step: payload.step
   });
 }
 
-export function* setAssetSendModalOpen(payload){
+export function* setAssetSendModalOpen(){
   yield put({
-    type: "SET_ASSET_MODAL_OPEN",
-    open: payload.open
+    type: "SET_ASSET_MODAL_OPEN_REDUCE"
   });
 }

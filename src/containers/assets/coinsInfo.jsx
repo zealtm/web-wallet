@@ -41,10 +41,7 @@ class CoinsInfo extends React.Component {
     }
     return;
   };
-  handleSendModalOpen = () => {
-    let { setAssetSendModalOpen } = this.props;
-    setAssetSendModalOpen();
-  }
+ 
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -53,20 +50,32 @@ class CoinsInfo extends React.Component {
     }
   };
 
+  handleModalSendClose = () => {
+    let { setAssetSendModalOpen } = this.props;
+    setAssetSendModalOpen();
+   // let step = this.props.wallet.modal.step;
+   // return () => setAssetSendModalOpen();
+  }
+  handleSendModalOpen = () => {
+    let { setAssetSendModalOpen, setAssetModalStep} = this.props;
+    setAssetModalStep(0);
+    setAssetSendModalOpen();
+  }
+
   render() {
-    let { asset: assetsRoute } = this.props;
+    let { asset: assetsRoute} = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let token = assets[selectedCoin];
     let modal = this.props.asset.modal;
     if (selectedCoin === undefined) return null;
-    
+    console.log("step : "+ modal.step);
     return (
       <div>
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
           show={modal.open}
-          close={this.handleSendModalOpen}
+          close={()=>this.handleModalSendClose()}
           back={
             modal.step === 0 || modal.step === 4 || modal.step === 5
               ? null
@@ -104,9 +113,7 @@ class CoinsInfo extends React.Component {
             <div className={style.centerSend}>
               <button
                 className={style.sentButton}
-                onClick={() => {
-                  this.handleSendModalOpen();
-                }}
+                onClick={()=>this.handleSendModalOpen()}
               >
                 {i18n.t("BTN_SEND")}
               </button>

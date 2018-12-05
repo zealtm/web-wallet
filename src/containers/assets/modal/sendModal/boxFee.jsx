@@ -31,9 +31,8 @@ class BoxFee extends React.Component {
   };
 
   confirmFee = () => {
-    
+      let {  setAssetModalStep } = this.props;
       setAssetModalStep(3);
-
       return;
    
   };

@@ -68,7 +68,7 @@ const asset = (state = initialState, action) => {
         loading: false
       };
 
-    case "SET_ASSET_MODAL_STEP":
+    case "SET_ASSET_MODAL_STEP_REDUCE":
       return {
         ...state,
         modal: {
@@ -86,7 +86,7 @@ const asset = (state = initialState, action) => {
           loading: !state.modal.loading
         }
       };
-    case "SET_ASSET_MODAL_OPEN":
+    case "SET_ASSET_MODAL_OPEN_REDUCE":
       return {
         ...state,
         modal: {
