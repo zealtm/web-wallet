@@ -159,6 +159,12 @@
   }
 }
 
+@media screen and (min-width: 1367px) {
+  :local(.shareIcon) {
+    display: none;
+  }
+}
+
 /*3. BUTTONS*/
 
 :local .button {
