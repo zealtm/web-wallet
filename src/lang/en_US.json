@@ -386,6 +386,7 @@
   "ASSETS_NO_TX_HISTORY_3": "You dont have any history to be shown up.",
   "ASSETS_HISTORY_TX_TIME": "Time:",
   "PAGE_ERROR_500": "Your session has expired, please sign in again",
+  "EMAIL_NOT_VERIFIED": "Email not verified, please check your emailbox",
   "CARD_HOME_DESCRIPTION_1": "The Lunes wallet is the safest way to store your crypto coins. Import wallets, see your history, transfer, receive, check out quotes and more.",
   "CARD_HOME_DESCRIPTION_2": "Make the low risk investment that returns you up to 5% per year. Have total security and control of your coins, with a better income than savings.",
   "CARD_HOME_DESCRIPTION_3": "Recharge your cell phone, anywhere, anytime, using the available cryptomedas in the Lunes wallet, quickly, easily and safely.",
