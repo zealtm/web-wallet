@@ -45,7 +45,7 @@ class Chat extends React.Component {
     let { id: buyerId } = buyer || {}
     let { id: adOwnerId } = seller
     let { id: adId } = currentOrder
-    console.warn({typeOfUser})
+    console.warn('chat/index.js Chat.callChatBundle'{typeOfUser, currentOrder, buyer, seller})
     if (typeOfUser === 'buyer') {
       getChatBundle({adId, adOwnerId, buyerId})
       this.setState({chatTargetContent: <Loading/>})

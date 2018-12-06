@@ -7,7 +7,8 @@ import { bindActionCreators } from "redux";
 import {
   openChat,
   setCancelOrder,
-  openAvaliation
+  openAvaliation,
+  prepareOrOpenChat
 } from "../../redux/p2pAction";
 
 // UTILS
@@ -164,7 +165,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {userEmail != order.sell.user.email && type != "myhistory" ? (
+            {/*userEmail != order.sell.user.email && type != "myhistory"*/ true ? (
               <button
                 className={style.btContinue}
                 onClick={() => this.prepareOrOpenChat(order)}
@@ -193,7 +194,12 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat, setCancelOrder, openAvaliation }, dispatch);
+  bindActionCreators({
+    openChat,
+    setCancelOrder,
+    openAvaliation,
+    prepareOrOpenChat
+  }, dispatch);
 
 export default connect(
   mapStateToProps,
