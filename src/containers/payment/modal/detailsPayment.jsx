@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserConsents } from "../../user/redux/userAction";
 import { setModalStep } from "../redux/paymentAction";
+import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -19,8 +20,8 @@ import Hidden from "@material-ui/core/Hidden";
 import Grid from "@material-ui/core/Grid";
 
 // COMPONENTS
-import CustomSwitch from "./component/customSwitch";
-import ButtonContinue from "./component/buttonContinue";
+import CustomSwitch from "../../../components/customSwitch";
+import ButtonContinue from "../../../components/buttonContinue";
 import ModalBar from "../../../components/modalBar";
 import Loading from "../../../components/loading";
 
@@ -35,32 +36,17 @@ class DetailsPayment extends React.Component {
     };
   }
 
-  openError = message => {
-    this.setState({
-      ...this.state,
-      error: true,
-      errorMsg: message
-    });
-
-    setTimeout(() => {
-      this.setState({
-        ...this.state,
-        error: false,
-        errorMsg: ""
-      });
-    }, 4100); // 100ms a mais que os 4000ms do timer nocomponente ModalBar
-  };
-
   validateForm = () => {
-    const { setModalStep } = this.props;
+    const { setModalStep, errorInput, clearMessage } = this.props;
     const { user } = this.state;
 
     if (user.terms === "unread") {
-      this.openError(i18n.t("PAYMENT_TERMS_ERROR"));
+      errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
 
     setModalStep(2);
+    clearMessage();
   };
 
   toogleSwitch = () => {
@@ -98,7 +84,8 @@ class DetailsPayment extends React.Component {
           {i18n.t("PAYMENT_DETAILS_TEXT_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
             <span className={style.textGreen}>
-              {payment.amount.toFixed(8)} {payment.coin.abbreviation.toUpperCase()}
+              {payment.amount.toFixed(8)}{" "}
+              {payment.coin.abbreviation.toUpperCase()}
             </span>
             {i18n.t("PAYMENT_DETAILS_TEXT_2")}
             <span className={style.textGreen}>R$ {payment.value}</span>
@@ -167,7 +154,9 @@ DetailsPayment.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   setModalStep: PropTypes.func.isRequired,
-  updateUserConsents: PropTypes.func.isRequired
+  updateUserConsents: PropTypes.func.isRequired,
+  clearMessage: PropTypes.func,
+  errorInput: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -180,7 +169,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateUserConsents,
-      setModalStep
+      setModalStep,
+      clearMessage,
+      errorInput
     },
     dispatch
   );
