@@ -9,7 +9,8 @@ import {
   getInviteAddress,
   sendMailInvite,
   getInviteSent,
-  sendWithdraw
+  sendWithdraw,
+  clearState
 } from "./redux/inviteAction";
 import { successRequest, errorInput } from "../errors/redux/errorAction";
 
@@ -63,15 +64,24 @@ class Invite extends React.Component {
     super(props);
     this.state = {
       modalOpen: false,
-      email: "", 
+      email: "",
       errors: []
     };
   }
   componentDidMount = () => {
+    this.mounted = true;
     const { getInviteAddress, getInviteSent } = this.props;
     getInviteAddress();
     getInviteSent();
+
   };
+
+  componentWillUnmount = () => {
+    const { clearState } = this.props;
+    this.state = {};
+    clearState();
+    this.mounted = false;
+  }
 
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -81,19 +91,19 @@ class Invite extends React.Component {
     let { email } = this.state;
     let { sendMailInvite, address } = this.props;
     let error = [];
-    
-    if(email==""){
+
+    if (email == "") {
       error.push(i18n.t("INVITE_ERROR_1"));
     }
-    
-    if(address.link == ""){
+
+    if (address.link == "") {
       error.push(i18n.t("INVITE_ERROR_2"));
     }
-    if(error.length<=0){
-      sendMailInvite(email); 
+    if (error.length <= 0) {
+      sendMailInvite(email);
     }
 
-    this.setState({...this.state, errors: error});
+    this.setState({ ...this.state, errors: error });
   };
 
   handleWithdraw = () => {
@@ -148,8 +158,8 @@ class Invite extends React.Component {
   };
 
   renderErrors = () => {
-    const {errors} = this.state;
-    return errors.map((val,key)=>{
+    const { errors } = this.state;
+    return errors.map((val, key) => {
       return <span className={style.errorLabel} key={key}>{val}</span>
     });
   }
@@ -195,29 +205,29 @@ class Invite extends React.Component {
               </Grid>
               <Grid item>
 
-              <div className={style.inviteInput}>
+                <div className={style.inviteInput}>
 
-                <Input
-                  placeholder="Lunes@gmail.com"
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                  onChange={event => this.setEmail(event.target.value)}
-                  value={email}
-                />
-                {this.renderErrors()}
+                  <Input
+                    placeholder="Lunes@gmail.com"
+                    classes={{
+                      root: classes.root,
+                      underline: classes.cssUnderline,
+                      input: classes.cssInput
+                    }}
+                    onChange={event => this.setEmail(event.target.value)}
+                    value={email}
+                  />
+                  {this.renderErrors()}
 
-              </div>
+                </div>
 
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
-              <p>{i18n.t("INVITE_LINK_SHARE")}</p>
+              {i18n.t("INVITE_LINK_SHARE")}
             </div>
             <div className={style.adressShared}>
-              <p>{loadingAddress ? <Loading color="lunes" /> : address.link}</p>
+              {loadingAddress ? <Loading color="lunes" /> : address.link}
             </div>
 
             {!loadingAddress ? (
@@ -246,8 +256,8 @@ class Invite extends React.Component {
                 {loadingSent ? (
                   <Loading color="lunes" />
                 ) : (
-                  i18n.t("INVITE_BUTTON_SEND")
-                )}
+                    i18n.t("INVITE_BUTTON_SEND")
+                  )}
               </button>
 
               <div className={style.accumulatedBalance}>
@@ -264,8 +274,8 @@ class Invite extends React.Component {
                 {loadingWithdraw ? (
                   <Loading color="lunes" />
                 ) : (
-                  i18n.t("INVITE_TEXT_BUTTON")
-                )}
+                    i18n.t("INVITE_TEXT_BUTTON")
+                  )}
               </button>
             </div>
           </Grid>
@@ -300,7 +310,8 @@ Invite.propTypes = {
   loadingSent: PropTypes.bool,
   loadingAddress: PropTypes.bool,
   sendWithdraw: PropTypes.func,
-  loadingWithdraw: PropTypes.bool
+  loadingWithdraw: PropTypes.bool,
+  clearState: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -322,7 +333,8 @@ const mapDispatchToProps = dispatch =>
       getInviteSent,
       successRequest,
       sendWithdraw,
-      errorInput
+      errorInput,
+      clearState
     },
     dispatch
   );
