@@ -75,7 +75,7 @@ class Invite extends React.Component {
     getInviteSent();
   };
 
-  setEmail = email => {    
+  setEmail = email => {
     this.setState({ ...this.state, email });
   };
 
@@ -98,7 +98,7 @@ class Invite extends React.Component {
     if (errors.length > 0) {
       error.push(i18n.t("INVITE_ERROR_3"));
     }
-    
+
     if(address.link == ""){
       error.push(i18n.t("INVITE_ERROR_2"));
     }
@@ -251,12 +251,12 @@ class Invite extends React.Component {
                   className={style.icon}
                 />
                 </div>
-                
+
               </Grid>
               <Grid item>
                 <div className={style.inviteInput}>
                   <Input
-                    placeholder="Lunes@gmail.com"
+                    placeholder={i18n.t("EXAMPLE_EMAIL")}
                     classes={{
                       root: classes.root,
                       underline: classes.cssUnderline,
