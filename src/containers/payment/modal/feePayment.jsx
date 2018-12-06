@@ -99,7 +99,7 @@ class FeePayment extends React.Component {
 
   render() {
     const { loading, payment, fee } = this.props;
-    const { payAmount, feeSelect, error, errorMsg } = this.state;
+    const { feeSelect, error, errorMsg } = this.state;
 
     if (loading) {
       return (
