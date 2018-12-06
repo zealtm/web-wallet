@@ -229,3 +229,10 @@ export function* closeAvaliation() {
     type: "CLOSE_AVALIATION_P2P_REDUCER"
   });
 }
+
+export function* setTabIconSaga(payload) {
+  yield put({
+    type: "SET_TAB_ICON_REDUCER",
+    tabIcon: payload.tabIcon
+  });
+}

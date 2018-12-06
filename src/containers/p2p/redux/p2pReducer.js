@@ -29,7 +29,8 @@ const initialState = {
     paymentMethods: [],
     paymentMethod: {}
   },
-  cancelDone: false
+  cancelDone: false,
+  tabIcon: 0
 };
 
 const p2p = (state = initialState, action) => {
@@ -169,7 +170,14 @@ const p2p = (state = initialState, action) => {
     case "CLOSE_AVALIATION_P2P_REDUCER":
       return {
         ...state,
-        openAvaliation: false
+        openAvaliation: false,
+        tabIcon:1
+      };
+
+    case "SET_TAB_ICON_REDUCER":
+      return {
+        ...state,
+        tabIcon: action.tabIcon
       };
 
     default: {
