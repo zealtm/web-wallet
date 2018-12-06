@@ -275,7 +275,7 @@
   "MENU_PRIVACY": "Privacidade",
   "WALLET_UTXOS_EMPTY": "Há um problema: no UTXOS, código 1",
   "WALLET_UTXOS_EMPTY_plural": "There's a problem: no UTXOS, code 2",
-  "MODAL_RECEIVE_MESSAGE": "Endereço copiado",
+  "MODAL_RECEIVE_MESSAGE": "Convite reenviado",
   "BTN_RECEIVE_COPY": "Copiar",
   "BTN_RECEIVE_PRINT": "Print",
   "BTN_RECEIVE_SHARE": "Compartilhar",
