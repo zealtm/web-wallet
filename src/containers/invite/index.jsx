@@ -144,31 +144,21 @@ class Invite extends React.Component {
 
   returnStatus = obj => {
     const { sent, registered, transacted, redeemed } = obj;
-    let lastDate = new Date("0000-00-00");
     let statusList = "sent";
 
-    const sentDate = new Date(sent);
-    const registeredDate = new Date(registered);
-    const transactedDate = new Date(transacted);
-    const redeemedDate = new Date(redeemed);
-
-    if (sent != null && sentDate > lastDate) {
-      lastDate = sentDate;
+    if (sent != null) {
       statusList = "sent";
     }
 
-    if (registered != null && registeredDate > lastDate) {
-      lastDate = registeredDate;
+    if (registered != null) {
       statusList = "registered";
     }
 
-    if (transacted != null && transactedDate > lastDate) {
-      lastDate = transactedDate;
+    if (transacted != null) {
       statusList = "transacted";
     }
 
-    if (redeemed != null && redeemedDate > lastDate) {
-      lastDate = redeemedDate;
+    if (redeemed != null) {
       statusList = "redeemed";
     }
 

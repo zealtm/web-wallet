@@ -86,7 +86,7 @@ export function* getInviteSentSaga() {
     if (response.data.invites && response.data.invites.length > 0) {
       invites = response.data.invites;
     }
-
+   
     yield put({
       type: "GET_INVITE_SENT_REDUCER",
       invites: invites
