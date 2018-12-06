@@ -32,34 +32,30 @@ class ItemInvite extends React.Component {
   };
 
   renderIcon = status => {
-    if (status === "registered") {
+    if (status === "SENT") {
       return (
         <div>
           <img
-            onClick={() => this.copyAddress("Confirmado")}
-            className={style.imgCopy}
-            src="/images/icons/confirm/confirm-invite@2x.png"
+            onClick={() => this.copyAddress("Pendente")}
+            className={style.imgResend}
+            src="/images/icons/invite/pending-invite.png"
           />
+          <span className={style.invitePendingResend}>Reenviar</span>
         </div>
       );
     }
+
     return (
       <div>
         <img
-          onClick={() => this.copyAddress("Pendente")}
-          className={style.imgResend}
-          src="/images/icons/invite/pending-invite.png"
+          onClick={() => this.copyAddress("Confirmado")}
+          className={style.imgDone}
+          src="/images/icons/confirm/confirm-invite@2x.png"
         />
-        <span className={style.invitePendingResend}>Reenviar</span>
       </div>
     );
   };
-  renderStatus(status) {
-    if (status !== "Confirmado") {
-      return <span className={style.invitePending}>Pendente</span>;
-    }
-    return <span>Confirmado</span>;
-  }
+
   render() {
     const {status} = this.props;
 
@@ -80,13 +76,7 @@ class ItemInvite extends React.Component {
               {i18n.t("INVITE_TITLE_STATUS")}
             </span>{" "}
             <br />
-            
-            {/*
-            <p className={style.spanSub}>
-              {this.renderStatus(status)}
-            </p>
-            */}
-            
+      
             <p className={style.spanSub}>{i18n.t(`INVITE_STATUS_${status}`)}</p>
 
           </Grid>
