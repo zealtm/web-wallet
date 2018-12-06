@@ -24,7 +24,7 @@ class ScannerModal extends React.Component {
       </div>
     );
   }
-  teste(file) {
+  teste() {
     return;
   }
 }

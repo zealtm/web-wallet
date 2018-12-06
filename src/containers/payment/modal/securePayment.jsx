@@ -105,7 +105,8 @@ SecurePayment.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
-  confirmPay: PropTypes.func.isRequired
+  confirmPay: PropTypes.func.isRequired,
+  coins: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = store => ({

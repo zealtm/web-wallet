@@ -9,7 +9,7 @@ import { setCoinSelected } from "../../redux/buyAction";
 // MATERIAL
 import { Grid, Checkbox, FormControlLabel, withStyles } from "@material-ui/core/";
 
-// ICONS 
+// ICONS
 import {Lens} from "@material-ui/icons";
 
 // COMPONENTS
@@ -21,7 +21,7 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-const stylesCustom = theme => ({
+const stylesCustom = () => ({
   root: {
     color: "#654fa4",
     "&$checked": {
@@ -67,7 +67,7 @@ class PaymentBar extends React.Component {
       const val = coins[key];
       let item = {
         img: `images/icons/coins/${val.abbreviation}.png`,
-        title: val.abbreviation.toUpperCase(), 
+        title: val.abbreviation.toUpperCase(),
         value: key,
       };
       if (val.abbreviation.toLowerCase() != "lunes" && coinsActive[val.abbreviation].status=="active") {
@@ -90,7 +90,7 @@ class PaymentBar extends React.Component {
                   <Checkbox
                     checked="true"
                     color="primary"
-                    icon={<Lens />} 
+                    icon={<Lens />}
                     checkedIcon={<Lens />}
                     classes={{ root: classes.root, checked: classes.checked }}
                   />
@@ -127,7 +127,7 @@ PaymentBar.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  coins: store.buy.coinsPayment || [], 
+  coins: store.buy.coinsPayment || [],
   coinsActive: store.skeleton.coins || []
 });
 

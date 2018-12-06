@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 import { getPaymentMethodsWhenBuying } from "./redux/p2pAction";
 
 //MATERIAL
-import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
@@ -87,11 +86,11 @@ class P2P extends React.Component {
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
-    
+
     return (
       <div className={showBox}>
         {/* <Hidden smDown>
-          
+
         </Hidden> */}
         <div className={style.headerP2P}>{this.renderArrow()}</div>
 

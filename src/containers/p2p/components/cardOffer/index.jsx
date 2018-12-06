@@ -22,7 +22,6 @@ import { ArrowForward } from "@material-ui/icons/";
 
 // COMPONENTS
 import StarVotes from "../starvotes";
-import ConfirmModal from "../../modal/confirm";
 
 // STYLE
 import style from "./style.css";
@@ -180,7 +179,8 @@ CardOffer.propTypes = {
   order: PropTypes.object,
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  openAvaliation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
