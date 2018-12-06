@@ -47,7 +47,7 @@ class ItemInvite extends React.Component {
       <div>
         <img
           onClick={() => this.copyAddress("Pendente")}
-          className={style.imgCopy}
+          className={style.imgResend}
           src="/images/icons/invite/pending-invite.png"
         />
         <span className={style.invitePendingResend}>Reenviar</span>
