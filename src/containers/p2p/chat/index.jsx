@@ -18,6 +18,9 @@ import style from "./style.css";
 //FUNCTIONS
 import { getChatBundle } from './functions'
 
+//UTILS
+import i18n from "./../../../utils/i18n"
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -46,9 +49,8 @@ class Chat extends React.Component {
       getChatBundle({adId, adOwnerId, buyerId})
       this.setState({chatTargetContent: <Loading/>})
     } else {
-      console.warn('SELLER <<<<')
       //TODO i18n
-      this.setState({chatTargetContent: (<h1>Select an user above</h1>) })
+      this.setState({chatTargetContent: (<h1>{i18n.t("P2P_CHAT_SELECT_AN_USER_TO_CHAT")}</h1>) })
     }
   }
 
