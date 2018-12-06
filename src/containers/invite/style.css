@@ -86,7 +86,7 @@
 
 @media screen and (min-width: 768px) {
   :local .inviteInput {
-  width: 140%;
+  width: 150%;
   text-align: center;
   }   
 }

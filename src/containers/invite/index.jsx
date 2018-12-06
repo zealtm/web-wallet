@@ -34,6 +34,7 @@ const inputStyle = {
   root: {
     color: colors.messages.info,
     margin: "0",
+    marginTop:"15px",
     padding: "5px",
     width: "calc(100% - 20px)",
     "&:hover:before": {
@@ -42,7 +43,7 @@ const inputStyle = {
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "20px",
+    fontSize: "17px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
