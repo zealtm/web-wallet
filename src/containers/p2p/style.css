@@ -277,3 +277,28 @@
   padding: 0;
   composes: buttonBorderGreen;
 }
+
+@media only screen and (max-width: 599px) {
+  :local .baseWidget {
+    bottom: 0px;
+    right: 0px;
+    height: 90vh;
+    width: 100%;
+  }
+
+  :local .baseWidgetClose {
+    position: absolute;
+    bottom: calc(-100vh -40px);
+    right: 0px;
+    height: 100vh;
+    transition: 0.3s;
+  }
+
+  :local .buttonEnable {
+    font-size: 12px;
+  }
+
+  :local .buttonBorderGreen {
+    font-size: 12px;
+  }
+}

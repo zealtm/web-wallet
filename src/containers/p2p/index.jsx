@@ -13,7 +13,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
-import UserProfile from "./userProfile";
+import ConfirmModal from "./modal/confirm";
 
 //STYLE
 import style from "./style.css";
@@ -80,11 +80,11 @@ class P2P extends React.Component {
     const {getPaymentMethodsWhenBuying, setUserId} = this.props;
     setUserId()
     getPaymentMethodsWhenBuying("lunes");
-  }
+  };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", /*"newoffer",*/ "user"];
-    const { chatDetails } = this.props.p2pStore;
+    const contentTabIcons = ["tag", "user-star", "newoffer", /*"user"*/];
+    const { chatDetails, openAvaliation } = this.props.p2pStore;
     const { open: openChat } = chatDetails
     const { openP2P } = this.state;
 
@@ -92,23 +92,19 @@ class P2P extends React.Component {
 
     return (
       <div className={showBox+' p2pContainer'}>
-        <Hidden smDown>
-          <div className={style.headerP2P}>{this.renderArrow()}</div>
-        </Hidden>
+        {/* <Hidden smDown>
 
-        {
-          (openChat==false)?
-            (
-              <div>
-                <div className={style.baseContent}>
-                  {this.renderContent()}
-                </div>
-                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-              </div>
-            ) : (
-              <Chat/>
-            )
-        }
+        </Hidden> */}
+        <div className={style.headerP2P}>{this.renderArrow()}</div>
+
+        <div>
+        {openChat == false ? (
+          <React.Fragment>
+            <div className={style.baseContent}>{this.renderContent()}</div>
+            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+          </React.Fragment>
+        ) : openAvaliation == true ? <ConfirmModal /> : <Chat />}
+        </div>
       </div>
     );
   }
@@ -133,4 +129,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(P2P);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(P2P);

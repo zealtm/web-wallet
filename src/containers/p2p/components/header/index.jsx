@@ -9,6 +9,7 @@ import { closeChat } from "../../redux/p2pAction";
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
+import { encryptMd5 } from "../../../../utils/cryptography";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -52,6 +53,10 @@ class Header extends React.Component {
   renderPerfil() {
     return <UserProfile />;
   }
+  rederPictureGravatar(email){
+    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+  }
   render() {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
@@ -64,7 +69,7 @@ class Header extends React.Component {
     if (showPerfil) {
       return this.renderPerfil();
     }
-
+    
     return (
       <div className={style.topBar+' chatHeader'}>
         <div className={style.header}>
@@ -72,14 +77,14 @@ class Header extends React.Component {
             <Grid item xs={1}>
               <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1} sm={2}>
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
-                src={"images/lunio/lunio-user@100x100.jpg"}
+                src={this.rederPictureGravatar(order.sell.user.email)}
               />
             </Grid>
-            <Grid item xl={4}>
+            <Grid item xl={5}>
               <span
                 className={style.textGreen}
                 onClick={() => this.onClickPerfil()}

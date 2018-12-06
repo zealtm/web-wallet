@@ -141,12 +141,13 @@ export function* setRechargeSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
+    const decimalPoint = payload.recharge.decimalPoint;
 
     const data = {
       number: payload.recharge.number,
       coin: payload.recharge.coin,
-      balance: convertBiggestCoinUnit(balance, 8),
-      amount: convertBiggestCoinUnit(amount, 8),
+      balance: convertBiggestCoinUnit(balance, decimalPoint),
+      amount: convertBiggestCoinUnit(amount, decimalPoint),
       value: payload.recharge.value,
       operator: {
         id: payload.recharge.operatorId,
