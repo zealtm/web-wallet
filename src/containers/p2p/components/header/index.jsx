@@ -77,7 +77,7 @@ class Header extends React.Component {
             <Grid item xs={1}>
               <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
             </Grid>
-            <Grid item xs={1} sm={2}>
+            <Grid item xs={2} sm={2}>
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
@@ -98,10 +98,9 @@ class Header extends React.Component {
                 <StarVotes votes={order.sell.user.rating} />
               </div>
             </Grid>
-
-            <Grid item xs={1}>
-              <FavoriteBorder className={style.fav} />
             </Grid>
+
+            <Grid container>          
 
             <Grid item xs={3} />
             <Grid item xs={4}>
