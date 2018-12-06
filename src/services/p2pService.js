@@ -126,12 +126,12 @@ class P2pService {
     }
   }
 
-  async getFilter(token, coin, type, coinBuy) {
+  async getFilter(token, type, coinBuy) {
     try {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/p2p/order/" + type + "/" + coinBuy,
+        BASE_URL + "/coin/lunes/p2p/order/" + type + "/" + coinBuy,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);

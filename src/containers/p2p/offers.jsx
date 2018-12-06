@@ -93,7 +93,7 @@ class Offers extends React.Component {
       }
     });
    
-    getFilter(value, "p2p", "");
+    getFilter("p2p", value);
   };
 
   clearCancel = () => {
@@ -102,7 +102,7 @@ class Offers extends React.Component {
 
     clearCancel();
 
-    getFilter(coinSelect.value, "p2p", "");
+    getFilter("p2p", "");
   };
 
   onChangeTab(status) {
@@ -121,7 +121,7 @@ class Offers extends React.Component {
     if (type === "myhistory") {
       getHistory(coinSelect.value);
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
     }
   };
 
@@ -158,7 +158,7 @@ class Offers extends React.Component {
     }else if(type == "myhistory"){
       getHistory(coinSelect.value);
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
 
     }
 

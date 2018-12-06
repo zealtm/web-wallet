@@ -135,13 +135,12 @@ export function* getP2PFilterSaga(payload) {
   try {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
-    const { coin, typeOrder, coinBuy } = payload;
+    const { typeOrder, coinBuy } = payload;
 
     let token = yield call(getAuthToken);
     let response = yield call(
       p2pService.getFilter,
       token,
-      coin,
       typeOrder,
       coinBuy
     );
