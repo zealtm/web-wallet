@@ -155,7 +155,7 @@ class Menu extends React.Component {
             onClick={() => this.openP2PComponent()}
           >
             <img
-              src={"../../images/icons/p2p/user-star.png"}
+              src={"../../images/icons/general/p2p@3x.png"}
               className={style.iconP2p}
             />
             <div>{"  "}</div>

@@ -15,6 +15,7 @@ import {
   FormControlLabel
 } from "@material-ui/core/";
 import { ArrowForward } from "@material-ui/icons/";
+import ClearIcon from "@material-ui/icons/Clear";
 
 // ICONS
 import { Lens } from "@material-ui/icons";
@@ -69,7 +70,9 @@ class CreateOffer extends React.Component {
         amountPayment: "",
         addressSeller: "",
         description: ""
-      }
+      },
+      errors: [], 
+      descriptionTotal: 250
     };
 
     this.handleFields = this.handleFields.bind(this);
@@ -187,7 +190,7 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            description: value
+            description: value, 
           }
         });
         break;
@@ -209,36 +212,58 @@ class CreateOffer extends React.Component {
     let error = [];
 
     if (type == "") {
-      error.push("Escolha o tipo");
+      error.push(i18n.t("P2P_ERROR_1"));
     }
     if (coin == "") {
-      error.push("Informe a moeda de venda");
+      error.push(i18n.t("P2P_ERROR_2"));
     }
     if (paymentMethodId == "") {
-      error.push("Informe a moeda de pagamento");
+      error.push(i18n.t("P2P_ERROR_3"));
     }
     if (amount == "") {
-      error.push("Informe a quantidade");
+      error.push(i18n.t("P2P_ERROR_4"));
     }
     if (amountPayment == "") {
-      error.push("Informe o valor");
+      error.push(i18n.t("P2P_ERROR_5"));
     }
     if (addressSeller == "") {
-      error.push("Informe o endereço de recebimento");
+      error.push(i18n.t("P2P_ERROR_6"));
     }
     if (description == "") {
-      error.push("Informe uma breve descrição");
+      error.push(i18n.t("P2P_ERROR_7"));
     }
 
     if (error.length > 0) {
-      error.map(val => {
-        alert("Erro: " + val);
+      this.setState({
+        ...this.state,
+        errors: error
       });
     } else {
+      this.setState({
+        ...this.state,
+        errors: []
+      });
       createOfferWhenSelling(order);
     }
   };
+  
+  renderErros = () => {
+    let { errors } = this.state;
+    return Object.keys(errors).map((value, key) => {
+      if (errors[key]) {
+        return (
+          <div className={style.textErrorSmall}>
+            <ClearIcon
+              className={style.iconListValid}
+              style={{ color: "red" }}
+            />
+            {errors[key]}
+          </div>
+        );
+      }
+    });
 
+  }
   render() {
     const { coinBuy, coinSell } = this.state;
     const {
@@ -256,9 +281,9 @@ class CreateOffer extends React.Component {
     if (createDone)
       return (
         <div>
-          <span className={style.textSuccess}>Criado com sucesso</span>
+          <span className={style.textSuccess}>{i18n.t("P2P_TEXT_1")}</span>
           <button className={style.btContinue} onClick={clearOffer}>
-            Concluir e voltar
+            {i18n.t("P2P_TEXT_2")}
           </button>
         </div>
       );
@@ -266,9 +291,9 @@ class CreateOffer extends React.Component {
     if (createError)
       return (
         <div>
-          <span className={style.textError}>Ocorreu um erro</span>
+          <span className={style.textError}>{i18n.t("P2P_ERROR")}{" "}</span>
           <button className={style.btContinue} onClick={clearOffer}>
-            Tentar novamente
+            {i18n.t("P2P_TRY_AGAIN")}
           </button>
         </div>
       );
@@ -286,7 +311,7 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <span className={style.name}>{username}</span>
-              <span className={style.textSmall}>00/00/0000</span>
+              
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -340,7 +365,7 @@ class CreateOffer extends React.Component {
                   titleImg={coinSell.img}
                   selectItem={this.coinSelectedSell}
                   error={null}
-                  width={"100%"}
+                  width={"120%"}
                 />
               </Grid>
               <Grid item xs={2} />
@@ -402,21 +427,26 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>
               {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
             </div>
+            <span className={style.counterDescription}>{this.state.order.description.length} / {this.state.descriptionTotal}</span>
             <textarea
               className={style.textArea}
               name="description"
               placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
+              maxLength={this.state.descriptionTotal}
+              value={this.state.order.description}
             >
               {this.state.order.description}
             </textarea>
+            {this.renderErros()}
             <button className={style.btContinue} onClick={this.validateForm}>
               {loadingCreateOrder ? (
                 <Loading />
               ) : (
-                i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
-              )}
+                  i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
+                )}
             </button>
+            
           </div>
         </div>
       </div>
@@ -426,7 +456,7 @@ class CreateOffer extends React.Component {
 
 CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired,
-  coinsEnabled: PropTypes.array,
+  coinsEnabled: PropTypes.any,
   user: PropTypes.object,
   loadingCreateOrder: PropTypes.bool,
   createDone: PropTypes.bool,

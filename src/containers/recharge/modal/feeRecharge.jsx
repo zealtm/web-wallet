@@ -85,12 +85,14 @@ class FeeRecharge extends React.Component {
 
     const fromAddress = wallet.coins[recharge.coin.abbreviation].address;
     const toAddress = recharge.coin.address;
+    const decimalPoint = wallet.coins[recharge.coin.abbreviation].decimalPoint;
 
     getFeeRecharge(
       recharge.coin.abbreviation,
       recharge.amount,
       fromAddress,
-      toAddress
+      toAddress,
+      decimalPoint
     );
   };
 
@@ -119,7 +121,7 @@ class FeeRecharge extends React.Component {
           <div>
             <span>{i18n.t("RECHARGE_FEE_TEXT_1")}</span>
             <span className={style.totalConfirm}>
-              {recharge.amount} {recharge.coin.abbreviation.toUpperCase()}
+              {recharge.amount.toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
             </span>
           </div>
           <div>

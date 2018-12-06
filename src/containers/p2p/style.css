@@ -131,6 +131,14 @@
   padding: 10px;
 }
 
+:local(.noOrder) {
+  composes: textGreen;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 35px;
+
+}
+
 :local(.spanDescription) {
   font-size: 10px;
   composes: textGreen;
@@ -195,6 +203,19 @@
   display: block;
 }
 
+:local .textReturn {
+  font-size: 16px;
+  text-align:center;
+  display:block;
+  padding-top:140px;
+  padding-bottom: 40px;
+}
+
+:local .textSuccess {
+  composes: textReturn;
+  composes: clSuccess from "../../components/bases/colorBase.css";
+}
+
 :local .barsNumbers {
   width: 100%;
   text-align: right;
@@ -253,6 +274,31 @@
 :local(.btAdvertisement) {
   height: 47.5px;
   font-size: 13px;
+  padding: 0;
   composes: buttonBorderGreen;
 }
 
+@media only screen and (max-width: 599px) {
+  :local .baseWidget {
+    bottom: 0px;
+    right: 0px;
+    height: 90vh;
+    width: 100%;
+  }
+  
+  :local .baseWidgetClose {
+    position: absolute;
+    bottom: calc(-100vh -40px);
+    right: 0px;
+    height: 100vh;
+    transition: 0.3s;
+  }
+
+  :local .buttonEnable {
+    font-size: 12px;
+  }
+
+  :local .buttonBorderGreen {
+    font-size: 12px;
+  }
+}

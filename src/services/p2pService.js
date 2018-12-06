@@ -115,7 +115,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      //console.log(response);
+      
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
@@ -136,10 +136,10 @@ class P2pService {
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if (response.data.data == undefined) {
+      if(response.data.data == undefined){
         return [];
       }
-      
+
       return response.data.data.orders;
     } catch (error) {
       return internalServerError();
@@ -151,7 +151,7 @@ class P2pService {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/coin/lunes/p2p/order/cancel/${orderId}`,
-        null,
+        {},
         API_HEADER
       );
 
@@ -161,7 +161,7 @@ class P2pService {
         return false;
       }
 
-      return true;
+      return response;
     } catch (error) {
       return internalServerError();
     }

@@ -56,12 +56,14 @@ class Buy extends React.Component {
       let defaultCoin = "BRL";
       let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
       const amountPay = buypack.amountFiat / coinPrice;
+      let decimalPoint = coins[buypack.paycoin].decimalPoint;
       
       const data = {
-        amount: convertSmallerCoinUnit(amountPay,8),
+        amount: convertSmallerCoinUnit(amountPay,decimalPoint),
         coin: buypack.paycoin,
         address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "", 
         receiveAddress: coins[buypack.coin.abbreviation] ? coins[buypack.coin.abbreviation].address : "",
+        decimalPoint: decimalPoint
       };
      
       setBuy(data);

@@ -8,12 +8,14 @@ import { closeChat } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
+import { getDefaultFiat } from "../../../../utils/localStorage";
+import { encryptMd5 } from "../../../../utils/cryptography";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 
-import { Star, FavoriteBorder, ArrowForward } from "@material-ui/icons/";
+import { FavoriteBorder, ArrowForward } from "@material-ui/icons/";
 import { ArrowBack } from "@material-ui/icons/";
 import { KeyboardArrowDown } from "@material-ui/icons";
 
@@ -51,16 +53,23 @@ class Header extends React.Component {
   renderPerfil() {
     return <UserProfile />;
   }
+  rederPictureGravatar(email){
+    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+  }
   render() {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
     let { showPerfil } = this.state;
 
-    const total = order.unitValue.brl * order.sell.amount;
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
 
     if (showPerfil) {
       return this.renderPerfil();
     }
+    
     return (
       <div className={style.topBar}>
         <div className={style.header}>
@@ -68,14 +77,14 @@ class Header extends React.Component {
             <Grid item xs={1}>
               <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1} sm={2}>
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
-                src={"images/lunio/lunio-user@100x100.jpg"}
+                src={this.rederPictureGravatar(order.sell.user.email)}
               />
             </Grid>
-            <Grid item xl={4}>
+            <Grid item xl={5}>
               <span
                 className={style.textGreen}
                 onClick={() => this.onClickPerfil()}
@@ -102,7 +111,7 @@ class Header extends React.Component {
               <ArrowForward className={style.arrowPrice} />
             </Grid>
             <Grid item xs={4}>
-              <div className={style.card}>R${total.toFixed(2)}</div>
+              <div className={style.card}>{defaultFiat} {total.toFixed(2)}</div>
             </Grid>
             <Grid
               container

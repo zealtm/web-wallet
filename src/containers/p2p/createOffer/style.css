@@ -29,11 +29,19 @@
   display: block;
 }
 
+:local .counterDescription {
+  font-size: 11px;
+  display: block;
+  float:right;
+  opacity: .5;
+  margin-top:-15px;
+}
+
 :local .textReturn {
   font-size: 16px;
-  text-align:center;
-  display:block;
-  padding-top:140px;
+  text-align: center;
+  display: block;
+  padding-top: 140px;
 }
 
 :local .textError {
@@ -143,6 +151,12 @@
   width: calc(100% - 30px);
 }
 
+:local .textErrorSmall {
+  composes: clError from "../../../components/bases/colorBase.css";
+  line-height: 1.8em;
+  font-size: 12px;
+}
+
 :local .labelRadio {
   margin-bottom: 0;
 }
@@ -163,7 +177,7 @@
 
 :local .headerUser {
   padding-bottom: 10px;
-  border-bottom: solid 1px rgba(0,0,0,.2);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
 }
 
 :local .singleSelect {
@@ -173,4 +187,9 @@
 :local .multiSelect {
   margin-left: 40px !important;
 }
-
+:local(.iconListValid) {
+  margin: 0;
+  margin-bottom: -8px;
+  margin-right: 10px;
+  width: 14px;
+}
