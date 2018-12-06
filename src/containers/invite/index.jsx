@@ -222,7 +222,7 @@ class Invite extends React.Component {
     const { modalOpen } = this.state;
 
     const address_code = address.link;
-    const address_copy = "https://luneswallet.app/invite?=" + address_code;
+    const address_copy = "https://luneswallet.app/create?=" + address_code;
 
     let { email } = this.state;
 
