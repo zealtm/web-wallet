@@ -19,11 +19,13 @@ class Loading extends Component {
       style = {
         ...style,
         position: 'fixed',
+        top: '0px',
+        left: '0px',
         width: '100vw',
         height: '100vh',
         flexFlow: 'wrap',
         background: '#473088',
-        zIndex: '999'
+        zIndex: '999',
       }
     if (!color) color = "white";
     if (!width) width = "20px";
