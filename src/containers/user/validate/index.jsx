@@ -24,7 +24,7 @@ class Validate extends React.Component {
 
     const url_hash = new URL(window.location.href);
     const hash = url_hash.searchParams.get("hash");
-    
+
     if(hash!=null && hash!=undefined && hash != ""){
       verifyEmail(hash);
     }
@@ -32,8 +32,10 @@ class Validate extends React.Component {
 
   renderValidate = () => {
     const {loading, success} = this.props.verify;
-    if(loading){ 
-      return <Loading color="wallet" />
+    if(loading){
+      return (
+        <Loading color="wallet" width="100px"/>
+      )
     }else{
       return (success) ? <EmailSuccess /> : <Error />;
     }
