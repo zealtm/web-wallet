@@ -281,7 +281,8 @@ export function* confirmBuySaga(payload) {
       feePerByte: payload.buy.feePerByte,
       feeLunes: payload.buy.feeLunes,
       price: payload.buy.price,
-      decimalPoint: payload.buy.decimalPoint
+      decimalPoint: payload.buy.decimalPoint,
+      describe: "Lunes - Coin sale"
     };
 
     try {
