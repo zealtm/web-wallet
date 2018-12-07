@@ -40,7 +40,7 @@ class ItemInvite extends React.Component {
             className={style.imgResend}
             src="/images/icons/invite/pending-invite.png"
           />
-          <span className={style.invitePendingResend}>Reenviar</span>
+          <span className={style.invitePendingResend}>{i18n.t("BTN_INVITE_ERROR_SEND_CONFIRM")}</span>
         </div>
       );
     }
@@ -55,7 +55,6 @@ class ItemInvite extends React.Component {
       </div>
     );
   };
-
   render() {
     const {status} = this.props;
 
@@ -94,10 +93,10 @@ class ItemInvite extends React.Component {
 
 ItemInvite.propTypes = {
   successRequest: PropTypes.func,
-  email: PropTypes.string, 
+  email: PropTypes.string,
   status: PropTypes.string,
 };
-const mapStateToProps = store => ({});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ successRequest }, dispatch);
 
