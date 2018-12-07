@@ -34,7 +34,7 @@ class Validate extends React.Component {
     const {loading, success} = this.props.verify;
     if(loading){
       return (
-        <Loading color="wallet" width="100px" fullWidth />
+        <Loading color="wallet" width="100px"/>
       )
     }else{
       return (success) ? <EmailSuccess /> : <Error />;
