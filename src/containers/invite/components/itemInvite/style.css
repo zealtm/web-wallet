@@ -56,3 +56,8 @@
   padding-left: 10px;
   width: 19px;
 }
+
+:local .imgDone {
+  margin-top:10px;
+  margin-left:10px;
+}

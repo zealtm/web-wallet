@@ -75,6 +75,7 @@ class ItemInvite extends React.Component {
               {i18n.t("INVITE_TITLE_STATUS")}
             </span>{" "}
             <br />
+      
             <p className={style.spanSub}>{i18n.t(`INVITE_STATUS_${status}`)}</p>
 
           </Grid>
