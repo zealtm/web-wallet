@@ -55,6 +55,7 @@
   cursor: pointer;
   padding-left: 10px;
   width: 19px;
+  margin-top:1em;
 }
 
 :local .imgDone {

@@ -36,11 +36,13 @@ class ItemInvite extends React.Component {
       return (
         <div>
           <img
-            onClick={() => this.copyAddress("Pendente")}
+            onClick=""
             className={style.imgResend}
             src="/images/icons/invite/pending-invite.png"
           />
-          <span className={style.invitePendingResend}>{i18n.t("BTN_INVITE_ERROR_SEND_CONFIRM")}</span>
+          
+
+          <span className={style.invitePendingResend}>{i18n.t("BTN_INVITE_RESEND")}</span>
         </div>
       );
     }
@@ -48,7 +50,6 @@ class ItemInvite extends React.Component {
     return (
       <div>
         <img
-          onClick={() => this.copyAddress("Confirmado")}
           className={style.imgDone}
           src="/images/icons/confirm/confirm-invite@2x.png"
         />
