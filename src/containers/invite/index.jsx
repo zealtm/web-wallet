@@ -82,7 +82,7 @@ class Invite extends React.Component {
     clearState();
     this.mounted = false;
   }
-
+  
   setEmail = email => {
     this.setState({ ...this.state, email });
   };
