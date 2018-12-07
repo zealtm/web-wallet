@@ -36,7 +36,7 @@ class DoneBuy extends React.Component {
             className={style.imageResult}
           />
           <div>
-            {i18n.t("BUYCOINS_SUCCESS_1")}
+            {i18n.t("COINSALE_SUCCESS_1")}
           </div>
 
           <div className={style.smallDescription}>

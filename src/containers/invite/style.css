@@ -67,7 +67,7 @@
   width: 70%;
   height: 50px;
   border-radius: 10px;
-  margin-top: 18px;
+  margin-top: -5px !important;
   background-color: #42227d;
 }
 
@@ -86,7 +86,7 @@
 
 @media screen and (min-width: 768px) {
   :local .inviteInput {
-  width: 155%;
+  width: 150%;
   text-align: center;
   }   
 }
@@ -99,6 +99,7 @@
 :local(.adressShared) {
   composes: linkDefault from "../../components/bases/textBase.css";
   margin-bottom: 25px;
+  margin-top:10px;
 }
 
 :local(.textSharedLink) {
@@ -110,10 +111,12 @@
 }
 
 :local(.accumulatedBalance) {
+  margin-top: 10px;
   width: 100%;
 }
 
 :local(.accumulatedLunes) {
+  margin-top: 8px;
   color: #68f285;
 }
 
@@ -156,6 +159,12 @@
   }
 }
 
+@media screen and (min-width: 992px) {
+  :local(.shareIcon) {
+    display: none;
+  }
+}
+
 /*3. BUTTONS*/
 
 :local .button {
@@ -169,20 +178,27 @@
 
 :local .btnInviteSent {
   composes: button;
+  
 }
 
 :local .btnInviteSent2 {
   composes: button;
 }
-
+:local .iconContent {   
+  float: left;
+  height: 100%;
+  align-items: center;
+  position: relative;
+}
 :local .icon {
+  margin-top: 20px; 
   margin-right: 15px;
   height: 30px;
 }
 
 @media screen and (max-width: 599px) {
   :local .icon {
-    margin-right: -15px;
+    margin-right: 1px;
   }
 }
 

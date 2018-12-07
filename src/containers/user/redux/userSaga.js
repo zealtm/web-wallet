@@ -45,6 +45,10 @@ export function* authenticateUser(action) {
       return;
     }
 
+    if (response.data.errorMessage) {
+      yield put(modalError(i18n.t("EMAIL_NOT_VERIFIED")));
+    }
+
     if (username !== action.username) {
       yield call(clearAll);
     }
@@ -387,7 +391,7 @@ export function* updateUserPasswordSaga(action) {
   }
 }
 
-export function* verifyInviteSaga(data){
+export function* verifyInviteSaga(data) {
   try {
     yield put({
       type: "INVITE_VALIDATE_LOADING",
@@ -400,15 +404,42 @@ export function* verifyInviteSaga(data){
       yield put({
         type: "INVITE_VALIDATE_REDUCER",
         link: data.hash,
-        user: response.data.userName 
+        user: response.data.userName
       });
-    }else{
+    } else {
       yield put({
         type: "INVITE_VALIDATE_LOADING",
         loading: false
       });
     }
 
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* verifyEmailSaga(data) {
+  try {
+    yield put({
+      type: "VERIFY_EMAIL_LOADING"
+    });
+
+    const response = yield call(userService.verifyEmail, data.hash);
+
+    if (response.code === 200) {
+      yield put({
+        type: "VERIFY_EMAIL_SUCCESS"
+      });
+    } else if (response.code === 405) {
+      yield put({
+        type: "VERIFY_EMAIL_SUCCESS"
+      });
+    } else {
+      yield put({
+        type: "VERIFY_EMAIL_ERROR"
+      });
+    }
     return;
   } catch (error) {
     yield put(internalServerError());

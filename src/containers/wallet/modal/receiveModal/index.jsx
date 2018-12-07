@@ -83,7 +83,10 @@ class Receive extends React.Component {
                 className={style.buttonReceive}
                 onClick={() => shareCoinAddress(coinName, coinAddress)}
               >
-                <img src="/images/icons/modal-receive/ic_shared@1x.png" />
+                <img
+                  src="/images/icons/modal-receive/ic_shared@1x.png"
+                  className={style.buttonReceiveImgShare}
+                />
                 <p>
                   <span className={style.spanShared}>
                     {i18n.t("BTN_RECEIVE_SHARE")}

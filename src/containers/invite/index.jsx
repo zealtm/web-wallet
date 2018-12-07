@@ -19,6 +19,7 @@ import { Grid, withStyles, Input } from "@material-ui/core";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { inputValidator } from "../../utils/inputValidator";
 
 //COMPONENTS
 import ItemInvite from "./components/itemInvite";
@@ -34,6 +35,7 @@ const inputStyle = {
   root: {
     color: colors.messages.info,
     margin: "0",
+    marginTop:"15px",
     padding: "5px",
     width: "calc(100% - 20px)",
     "&:hover:before": {
@@ -42,7 +44,7 @@ const inputStyle = {
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "20px",
+    fontSize: "17px",
     letterSpacing: "0.5px",
     textAlign: "center"
   },
@@ -81,7 +83,7 @@ class Invite extends React.Component {
     this.state = {};
     clearState();
     this.mounted = false;
-  }
+  };
   
   setEmail = email => {
     this.setState({ ...this.state, email });
@@ -96,7 +98,18 @@ class Invite extends React.Component {
       error.push(i18n.t("INVITE_ERROR_1"));
     }
 
-    if (address.link == "") {
+    let input = {
+      type: "email",
+      name: "email",
+      value: email,
+      required: true
+    };
+    let { errors } = inputValidator({ inputs: input });
+    if (errors.length > 0) {
+      error.push(i18n.t("INVITE_ERROR_3"));
+    }
+    
+    if(address.link == ""){
       error.push(i18n.t("INVITE_ERROR_2"));
     }
     if (error.length <= 0) {
@@ -139,6 +152,29 @@ class Invite extends React.Component {
     });
   };
 
+  returnStatus = obj => {
+    const { sent, registered, transacted, redeemed } = obj;
+    let statusList = "sent";
+
+    if (sent != null) {
+      statusList = "sent";
+    }
+
+    if (registered != null) {
+      statusList = "registered";
+    }
+
+    if (transacted != null) {
+      statusList = "transacted";
+    }
+
+    if (redeemed != null) {
+      statusList = "redeemed";
+    }
+
+    return statusList.toUpperCase();
+  };
+
   renderInvite = () => {
     const { invite, loadingList } = this.props;
 
@@ -151,7 +187,14 @@ class Invite extends React.Component {
       <div>
         {invite.invites &&
           invite.invites.map((email, key) => {
-            return <ItemInvite key={key} email={email.receiptEmail} />;
+            const status = this.returnStatus(email);
+            return (
+              <ItemInvite
+                key={key}
+                email={email.receiptEmail}
+                status={status}
+              />
+            );
           })}
       </div>
     );
@@ -160,9 +203,13 @@ class Invite extends React.Component {
   renderErrors = () => {
     const { errors } = this.state;
     return errors.map((val, key) => {
-      return <span className={style.errorLabel} key={key}>{val}</span>
+      return (
+        <span className={style.errorLabel} key={key}>
+          {val}
+        </span>
+      );
     });
-  }
+  };
 
   render() {
     const {
@@ -176,7 +223,7 @@ class Invite extends React.Component {
     const { modalOpen } = this.state;
 
     const address_code = address.link;
-    const address_copy = "https://luneswallet.app/invite?=" + address_code;
+    const address_copy = "https://luneswallet.app/create?=" + address_code;
 
     let { email } = this.state;
 
@@ -196,17 +243,18 @@ class Invite extends React.Component {
 
         <Grid container className={style.card}>
           <Grid item xs={12} sm={8}>
-            <Grid container spacing={8} alignItems="flex-end">
+            <Grid container spacing={8}>
               <Grid item>
+                <div className={style.iconContent}>
                 <img
                   src="/images/icons/email/email@1x.png"
                   className={style.icon}
                 />
+                </div>
+                
               </Grid>
-              <Grid item>
-
-                <div className={style.inviteInput}>
-
+              <Grid item>                
+                <div className={style.inviteInput}>                  
                   <Input
                     placeholder="Lunes@gmail.com"
                     classes={{
@@ -217,17 +265,15 @@ class Invite extends React.Component {
                     onChange={event => this.setEmail(event.target.value)}
                     value={email}
                   />
-                  {this.renderErrors()}
-
+                  {this.renderErrors()}                  
                 </div>
-
               </Grid>
             </Grid>
             <div className={style.linkTitle}>
               {i18n.t("INVITE_LINK_SHARE")}
             </div>
-            <div className={style.adressShared}>
-              {loadingAddress ? <Loading color="lunes" /> : address.link}
+            <div className={style.adressShared}>                    
+              {loadingAddress ? <Loading color="lunes" /> : address_copy}
             </div>
 
             {!loadingAddress ? (
@@ -343,4 +389,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(inputStyle)(Invite));
-

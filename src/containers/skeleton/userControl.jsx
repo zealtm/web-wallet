@@ -34,7 +34,7 @@ class UserControl extends React.Component {
     if (openBox) {
       setTimeout(() => {
         this.setState({ ...this.state, openBox: false });
-      }, 10000);
+      }, 3000);
 
       return (
         <div className={style.menuUser}>

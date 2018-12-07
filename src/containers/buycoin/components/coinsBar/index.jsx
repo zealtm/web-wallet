@@ -76,7 +76,9 @@ class CoinsBar extends React.Component {
     return coinsEnabled.map((val, index) => {
       let coin = coins[val.value.abbreviation];
 
-      if (!coin) return;
+      if (val.value.abbreviation.toUpperCase()=="LUNES") return;
+      
+      if (!coin || coins[val.value.abbreviation].status!="active") return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
@@ -119,7 +121,7 @@ class CoinsBar extends React.Component {
     if (coinsEnabled.length < 1)
       return (
         <div style={{ marginTop: 40, marginBottom: 40 }}>
-          {i18n.t("BUY_ERROR_RELOAD")}
+          {i18n.t("COINSALE_ERROR_RELOAD")}
         </div>
       );
 

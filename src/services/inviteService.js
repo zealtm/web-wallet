@@ -14,8 +14,7 @@ class InviteService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let response = await axios.get(BASE_URL + "/invite/history", API_HEADER);
-
+      let response = await axios.get(BASE_URL + "/invite/history?page=1&size=100", API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if (response.data.code !== 200) {

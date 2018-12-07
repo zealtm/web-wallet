@@ -28,6 +28,10 @@ const initialState = {
     loading: false,
     link: undefined,
     user: undefined
+  }, 
+  verifyEmail: {
+    loading: true,
+    success: false
   }
 };
 
@@ -263,6 +267,48 @@ const user = (state = initialState, action) => {
           link: action.link, 
           user: action.user,
           loading: false
+        }
+      };
+
+    case "VERIFY_EMAIL_LOADING":
+      return {
+        ...state,
+        verifyEmail: {
+          ...state.verifyEmail,
+          loading: true
+        }
+      };
+    
+    case "VERIFY_EMAIL_SUCCESS":
+      return {
+        ...state,
+        verifyEmail: {
+          success:true,
+          loading: false,
+        }
+      };
+
+    case "VERIFY_EMAIL_ERROR":
+      return {
+        ...state,
+        verifyEmail: {
+          success:false,
+          loading: false,
+        }
+      };
+
+    case "CLEAR_USER_DATA":
+      return {
+        ...state,
+        loading: false,
+        pages: {
+          login: 0,
+          create: 0,
+          reset: 0
+        },
+        user: {
+          seed: null,
+          password: null
         }
       };
 

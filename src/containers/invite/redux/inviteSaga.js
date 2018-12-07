@@ -67,6 +67,7 @@ export function* sendMailInviteSaga(email) {
     yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
   }else{
     yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    yield call(getInviteSentSaga);
   }
 
 }
@@ -85,7 +86,7 @@ export function* getInviteSentSaga() {
     if (response.data.invites && response.data.invites.length > 0) {
       invites = response.data.invites;
     }
-
+   
     yield put({
       type: "GET_INVITE_SENT_REDUCER",
       invites: invites
