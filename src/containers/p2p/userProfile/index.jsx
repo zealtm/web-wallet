@@ -20,6 +20,7 @@ import colors from "../../../components/bases/colors";
 
 // UTILS
 import i18n from "../../../utils/i18n";
+import { formatDate } from "../../../utils/numbers";
 
 const styles = {
   root: {
@@ -40,15 +41,12 @@ class UserProfile extends React.Component {
   componentDidMount = () => {
     const { getProfile } = this.props;
     getProfile();
-    console.log(getProfile());
   };
 
   render() {
     const { classes } = this.props;
-    const { order } = this.props;
-
-    console.log(order);
-
+    const { userProfile } = this.props;
+    const dateCreate = formatDate(userProfile.createdAt);
     return (
       <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
@@ -60,12 +58,15 @@ class UserProfile extends React.Component {
               />
               <div className={style.online} />
               <p className={style.userName}>
-                Felipe Mendes <br />{" "}
+                {userProfile.name} {userProfile.surname}
+                <br />{" "}
                 <div className={style.boxStar}>
-                  <StarVotes votes={4} />
+                  {userProfile.rating && (
+                    <StarVotes votes={userProfile.rating.average} />
+                  )}
                 </div>
                 <span className={style.textSmall}>
-                  {i18n.t("P2P_PROFILE_USER_DATE")} 12/10/1998
+                  {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
                 </span>{" "}
               </p>{" "}
               <br />
@@ -75,10 +76,7 @@ class UserProfile extends React.Component {
                 {i18n.t("P2P_PROFILE_DESCRIPTION")}
               </span>
               <div className={style.textDescription}>
-                <p>
-                  3º maior Node da rede e faço negociação na plataforma desde
-                  2015.
-                </p>
+                <p>{userProfile.description}</p>
               </div>
             </div>
           </div>
@@ -158,10 +156,12 @@ class UserProfile extends React.Component {
   }
 }
 UserProfile.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  getProfile: PropTypes.func,
+  userProfile: PropTypes.object
 };
 const mapStateToProps = store => ({
-  order: store.p2p.orders
+  userProfile: store.p2p.userProfile
 });
 
 const mapDispatchToProps = dispatch =>

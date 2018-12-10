@@ -71,19 +71,31 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes"}];
-    if(response.cripto){
-      response.cripto.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+    let cripto = [
+      { title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes" }
+    ];
+    if (response.cripto) {
+      response.cripto.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/coins/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
 
-    if(response.fiat){
-      response.fiat.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
+    if (response.fiat) {
+      response.fiat.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/fiat/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
@@ -240,13 +252,11 @@ export function* setTabIconSaga(payload) {
 export function* getProfileSaga(payload) {
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getProfile, token, payload);
-
-      yield put({
-        type: "GET_PROFILE_REDUCER",
-        userProfile: response.data
-      });
-   
+    let response = yield call(p2pService.getProfile, token, payload.userProfile);
+    yield put({
+      type: "GET_PROFILE_REDUCER",
+      userProfile: response.data
+    });
   } catch (error) {
     yield put(internalServerError());
   }
