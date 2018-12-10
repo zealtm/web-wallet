@@ -445,6 +445,20 @@ msgid "RECHARGE_AMOUNT"
 msgstr "Seu saldo é insuficiente para realizar essa recarga"
 
 msgctxt "ERROR"
+msgid "BUYCOINS_INFO"
+msgstr "Procedimento de compra falhou"
+
+msgctxt "ERROR"
+msgid "INVITE"
+msgid_plural "INVITE"
+msgstr[0] "E-mail inválido"
+msgstr[1] "Preencha o e-mail destino"
+msgstr[2] "Aguarde o endereço carregar"
+
+msgctxt "ERROR"
+msgid "SEND_MAIL_INVITE"
+msgstr "Erro ao enviar"
+
 msgid "COINSALE_INFO"
 msgstr "Procedimento de compra falhou"
 
@@ -485,6 +499,10 @@ msgid "COINSALE"
 msgid_plural "COINSALE"
 msgstr[0] "Você realizou a compra com sucesso!"
 msgstr[1] "Visualize seu histórico de compras na a Histórico"
+
+msgctxt "SUCCESS"
+msgid "SEND_MAIL_INVITE"
+msgstr "Enviado com sucesso"
 
 msgctxt "CUPON"
 msgid "INSTRUCTION_MODAL"
@@ -572,6 +590,16 @@ msgid "RECHARGE"
 msgstr "Recarga de Celular"
 
 msgctxt "TITLE"
+msgid "BUYCOINS"
+msgstr "COMPRAR CRIPTOMOEDAS"
+
+msgctxt "TITLE"
+msgid "BUYCOINS_PURCHASE_TAB"
+msgstr "Comprar moedas"
+
+msgctxt "TITLE"
+msgid "BUYCOINS_HISTORY_TAB"
+msgctxt "TITLE"
 msgid "COINSALE"
 msgstr "COMPRAR CRIPTOMOEDAS"
 
@@ -615,6 +643,10 @@ msgstr "Status"
 msgctxt "STATUS"
 msgid "LEASING_TITLE"
 msgstr "Status "
+
+msgctxt "STATUS"
+msgid "INVITE_TITLE"
+msgstr "Status"
 
 msgctxt "VERIFIED"
 msgid "SETTINGS_USER_ACCOUNT"
@@ -915,6 +947,10 @@ msgctxt "EMAIL"
 msgid "BTN_RECEIVE"
 msgstr "E-mail"
 
+msgctxt "EMAIL"
+msgid "INVITE_TITLE"
+msgstr "E-mail"
+
 msgctxt "SEED"
 msgid "PLACEHOLDER"
 msgstr "Seed Words"
@@ -946,6 +982,10 @@ msgstr "Enviar"
 msgctxt "SEND"
 msgid "MODAL_TO_SEND"
 msgstr " Você está enviando "
+
+msgctxt "SEND"
+msgid "INVITE_BUTTON"
+msgstr "Enviar"
 
 msgctxt "DISABLED"
 msgid "BTN"
@@ -1227,6 +1267,10 @@ msgctxt "SHARE"
 msgid "BTN_RECEIVE"
 msgstr "Compartilhar"
 
+msgctxt "SHARE"
+msgid "INVITE_LINK"
+msgstr "Link de compartilhamento"
+
 msgctxt "BALANCE"
 msgid "WALLET"
 msgstr "Saldo"
@@ -1234,6 +1278,14 @@ msgstr "Saldo"
 msgctxt "BALANCE"
 msgid "LEASING"
 msgstr "Saldo Total Lunes"
+
+msgctxt "BALANCE"
+msgid "INVITE_ACCUMULATED"
+msgstr "Saldo acumulado"
+
+msgctxt "BALANCE"
+msgid "INVITE_NO"
+msgstr "Saldo indisponível"
 
 msgctxt "TEXT"
 msgid "LEASING_HELP"
@@ -1268,6 +1320,10 @@ msgid_plural "COINSALE_FEE"
 msgstr[0] "Você está enviando "
 msgstr[1] " para "
 
+msgctxt "TEXT"
+msgid "INVITE"
+msgstr "Convide seus amigos e familiares para se cadastrar na Lunes"
+
 msgctxt "START"
 msgid "LEASING_BT"
 msgstr "INICIAR LEASING"
@@ -1295,6 +1351,18 @@ msgstr "Node"
 msgctxt "BUTTON"
 msgid "VOUCHER"
 msgstr "Resgatar"
+
+msgctxt "BUTTON"
+msgid "INVITE_COPY"
+msgstr "Copiar"
+
+msgctxt "BUTTON"
+msgid "INVITE_SHARE"
+msgstr "Compartilhar"
+
+msgctxt "BUTTON"
+msgid "INVITE_TEXT"
+msgstr "Sacar"
 
 msgctxt "INFO"
 msgid "SETTINGS_HEADER"
@@ -1552,6 +1620,40 @@ msgid "MENU"
 msgstr "Comprar"
 
 msgctxt "PREFIX"
+msgid "BUYCOINS_PACK_TEXT"
+msgstr "Você está comprando "
+
+msgctxt "SUFIX"
+msgid "BUYCOINS_PACK_TEXT"
+msgstr " e receberá"
+
+msgctxt "PACK"
+msgid "BUY_ERROR"
+msgstr "Selecione um pacote"
+
+msgctxt "RELOAD"
+msgid "BUY_ERROR"
+msgstr "Erro. Tente recarregar a página."
+
+msgctxt "CREDIT"
+msgid "BUY"
+msgstr "Pagamento"
+
+msgctxt "INVITE"
+msgid "MENU"
+msgstr "Convites"
+
+msgctxt "INVITE"
+msgid "INVITE_TITLE"
+msgstr "Convites"
+
+msgctxt "INVITATIONS"
+msgid "INVITE_CONFIRMED"
+msgstr "Convites confirmados"
+
+msgctxt "WITHDRAW"
+msgid "INVITE"
+msgstr "Você realizou o saque com sucesso!"
 msgid "COINSALE_PACK_TEXT"
 msgstr "Você está comprando "
 
