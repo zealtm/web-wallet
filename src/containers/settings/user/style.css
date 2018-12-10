@@ -176,6 +176,21 @@
   margin: 0;
 }
 
+:local(.marginUserContact) {
+  float: left;
+  width: 25%;
+}
+
+:local(.pUserStatus_1) {
+  composes: textDefault;
+  margin: 1rem 0 0 0;
+}
+
+:local(.pUserStatus_2) {
+  composes: textDefault;
+  margin-top: 0;
+}
+
 @media screen and (min-width: 599px) {
   :local(.header p) {
     text-align: left;
@@ -265,13 +280,6 @@ input::-webkit-inner-spin-button {
   font-size: 10px;
 }
 
-/* ------------------------------------------------------------------------- */
-
-:local(.marginUserContact) {
-  float: left;
-  width: 25%;
-}
-
 :local(.inputUserContact) {
   composes: inputTextDefault;
   width: 60%;
@@ -282,12 +290,4 @@ input::-webkit-inner-spin-button {
   width: 63%;
 }
 
-:local(.pUserStatus_1) {
-  composes: textDefault;
-  margin: 1rem 0 0 0;
-}
-
-:local(.pUserStatus_2) {
-  composes: textDefault;
-  margin-top: 0;
-}
+/* ------------------------------------------------------------------------- */
