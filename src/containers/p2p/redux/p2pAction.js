@@ -93,3 +93,8 @@ export const setTabIcon = tabIcon => ({
   type: "SET_TAB_ICON",
   tabIcon
 });
+
+export const getProfile = userProfile => ({
+  type: "GET_PROFILE",
+  userProfile
+});

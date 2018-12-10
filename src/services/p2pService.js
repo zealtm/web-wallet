@@ -167,6 +167,23 @@ class P2pService {
       return internalServerError();
     }
   }
+
+  async getProfile(token, userId) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/coin/lunes/p2p/profile?userId=${userId}`,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
 }
 
 export default P2pService;

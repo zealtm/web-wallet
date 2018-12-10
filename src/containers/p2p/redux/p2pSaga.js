@@ -236,3 +236,18 @@ export function* setTabIconSaga(payload) {
     tabIcon: payload.tabIcon
   });
 }
+
+export function* getProfileSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getProfile, token, payload);
+
+      yield put({
+        type: "GET_PROFILE_REDUCER",
+        userProfile: response.data
+      });
+   
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

@@ -30,7 +30,8 @@ const initialState = {
     paymentMethod: {}
   },
   cancelDone: false,
-  tabIcon: 0
+  tabIcon: 0,
+  userProfile:[]
 };
 
 const p2p = (state = initialState, action) => {
@@ -171,13 +172,19 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         openAvaliation: false,
-        tabIcon:1
+        tabIcon: 1
       };
 
     case "SET_TAB_ICON_REDUCER":
       return {
         ...state,
         tabIcon: action.tabIcon
+      };
+
+    case "GET_PROFILE_REDUCER":
+      return {
+        ...state,
+        userProfile: action.userProfile,
       };
 
     default: {

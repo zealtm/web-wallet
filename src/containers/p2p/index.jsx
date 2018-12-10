@@ -13,6 +13,7 @@ import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
 
 //STYLE
@@ -67,7 +68,7 @@ class P2P extends React.Component {
     const contents = [
       <Offers key={1} type="general" />,
       <Offers key={2} type="myhistory" />,
-      //<UserProfile key={3} />,
+      <UserProfile key={3} />,
       <CreateOffer key={4} />
     ];
     return contents[tabIcon];
@@ -79,7 +80,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "newoffer" /*"user"*/];
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
     const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
