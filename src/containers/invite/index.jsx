@@ -110,11 +110,11 @@ class Invite extends React.Component {
   };
 
   handleWithdraw = () => {
-    const { sendWithdraw, address, balance, errorInput } = this.props;
+    const { sendWithdraw, balance, errorInput, userWalletLunes } = this.props;
     if (!balance || balance.totalBalance <= 0) {
       errorInput(i18n.t("INVITE_NO_BALANCE"));
     } else {
-      sendWithdraw(address);
+      sendWithdraw(userWalletLunes);
     }
   };
 
@@ -346,7 +346,8 @@ Invite.propTypes = {
   loadingSent: PropTypes.bool,
   loadingAddress: PropTypes.bool,
   sendWithdraw: PropTypes.func,
-  loadingWithdraw: PropTypes.bool
+  loadingWithdraw: PropTypes.bool, 
+  userWalletLunes: PropTypes.string
 };
 
 const mapStateToProps = store => ({
@@ -356,7 +357,8 @@ const mapStateToProps = store => ({
   loadingList: store.invite.loadingInvites,
   loadingSent: store.invite.loadingSent,
   loadingAddress: store.invite.loadingAddress,
-  loadingWithdraw: store.invite.loadingWithdraw
+  loadingWithdraw: store.invite.loadingWithdraw, 
+  userWalletLunes: store.skeleton.coins.lunes.address
 });
 
 const mapDispatchToProps = dispatch =>

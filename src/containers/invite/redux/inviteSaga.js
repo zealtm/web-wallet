@@ -104,8 +104,8 @@ export function* sendWithdrawSaga(address) {
 
   let token = yield call(getAuthToken);
   const response = yield call(inviteService.sendWithdraw, token, address);
-
-  if (response.data !== 200) {
+  
+  if (response.data != 200) {
     yield put(errorInput(i18n.t("INVITE_NO_BALANCE")));
   }
   else{
