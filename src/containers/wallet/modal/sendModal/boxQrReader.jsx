@@ -20,11 +20,6 @@ class BoxQrReader extends Component {
     };
   }
 
-  componentDidCatch(error, info) {
-    alert(error);
-    alert(info.componentStack);
-  }
-
   handleScan = data => {
     let {
       coin,
@@ -47,7 +42,8 @@ class BoxQrReader extends Component {
 
   render() {
     let { result, delay } = this.state;
-
+    alert(navigator.userAgent);
+    alert(navigator.platform);
     return (
       <div>
         <QrReader
