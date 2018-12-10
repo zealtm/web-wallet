@@ -139,7 +139,7 @@ class App extends Component {
           <Skeleton>
             <Switch>
               {/* INSIDE ROUTES */}
-              <Route exact path="/" component={home} />
+              {/* <Route exact path="/" component={home} /> */}
               <Route path="/home" component={home} />
               <Route path="/wallet" component={wallet} />
               <Route path="/coupons" component={coupons} />

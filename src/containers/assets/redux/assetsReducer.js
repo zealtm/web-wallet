@@ -3,7 +3,7 @@ const initialState = {
   isBalanceLoading: false,
   isTxHistoryLoading: false,
   assets: [],
-  history: [],
+  history: []
 };
 
 const asset = (state = initialState, action) => {
@@ -14,14 +14,14 @@ const asset = (state = initialState, action) => {
         isBalanceLoading: action.isBalanceLoading,
         isTxHistoryLoading: action.isTxHistoryLoading,
         assets: action.assets ? action.assets : state.assets
-      }
+      };
 
     case "SET_ASSET_HISTORY":
       return {
         ...state,
         isTxHistoryLoading: action.isTxHistoryLoading,
         history: action.history ? action.history : []
-      }
+      };
 
     case "ASSETS_SET_SELECTED_COIN":
       return {

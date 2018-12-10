@@ -1,4 +1,5 @@
 import React from "react";
+
 import i18n from "../../utils/i18n";
 
 // MATERIAL UI
@@ -15,24 +16,24 @@ class InternalError extends React.Component {
     };
   }
 
+  componentDidMount() {
+    setInterval(() => this.counter(), 1000);
+  }
+
   counter = () => {
     let { timer } = this.state;
+
     if (timer > 0) {
       this.setState({
         ...this.state,
         timer: this.state.timer - 1
       });
-    } else if (timer <= 0) {
-      location.reload();
     }
   };
 
-  componentDidMount() {
-    setInterval(() => this.counter(), 1000);
-  }
-
   render() {
     let { timer } = this.state;
+
     return (
       <Grid item xs={12}>
         <Grid className={style.alignMainError}>

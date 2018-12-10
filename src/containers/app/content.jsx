@@ -20,7 +20,8 @@ class Content extends Component {
     super();
     this.state = {
       content: undefined,
-      type: undefined
+      type: undefined,
+      hasError: false
     };
   }
 
