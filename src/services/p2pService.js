@@ -167,6 +167,7 @@ class P2pService {
       return internalServerError();
     }
   }
+  
   async createSignature(token, data) {
     try {
       let { planId, txID } = data;

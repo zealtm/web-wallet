@@ -88,7 +88,7 @@ import {
   acceptOfferWhenBuying,
   createOfferWhenSelling,
   setP2POrdersCancelSaga,
-  createSignatureSaga
+  createSignatureSaga,
   openDeposit,
   closeDeposit
 } from "../p2p/redux/p2pSaga";
