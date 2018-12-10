@@ -1,11 +1,9 @@
-
 /*
   1. HEADER SETTINGS
   2. BASE
   3. TEXT
   4. AVATAR
 */
-
 
 /* ------------------------------------------------------------------------- */
 :local(body) {
@@ -23,7 +21,7 @@
   justify-content: center;
 }
 
-:local(.headerSettingsDefault) { 
+:local(.headerSettingsDefault) {
   display: flex;
 }
 
@@ -40,7 +38,7 @@
   padding-right: 15px;
 }
 
-#hr hr{
+#hr hr {
   border: 0;
   width: 100%;
   border-bottom: 2px dotted #654fa4;
@@ -67,7 +65,7 @@
   :local(.headerSettingsDefault h3) {
     font-size: 9px;
   }
-  :local(.headerSettingsDefault) { 
+  :local(.headerSettingsDefault) {
     display: block;
   }
   #hr hr {
@@ -100,12 +98,12 @@
 
 :local(.row) {
   composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
-  margin: 1rem .5rem !important;
+  margin: 1rem 0.5rem !important;
   padding: 0.25rem;
   border-radius: 5px;
 }
 
-:local(.rowAdress){
+:local(.rowAdress) {
   composes: row;
   padding: 6px;
   display: flex;
@@ -141,7 +139,7 @@
 }
 
 @media screen and (max-width: 599px) {
-  :local(.rowAdress){
+  :local(.rowAdress) {
     display: block;
   }
 }
@@ -232,7 +230,7 @@
   cursor: pointer;
   margin-top: -2.5rem;
   padding: 0;
-  box-shadow: 0px 3px 6px 0px rgba(0,0,0,.3);
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (min-width: 599px) {
@@ -265,4 +263,31 @@ input::-webkit-inner-spin-button {
 
 :local(.inputTextDefault::placeholder) {
   font-size: 10px;
+}
+
+/* ------------------------------------------------------------------------- */
+
+:local(.marginUserContact) {
+  float: left;
+  width: 25%;
+}
+
+:local(.inputUserContact) {
+  composes: inputTextDefault;
+  width: 60%;
+}
+
+:local(.inputUserNumber) {
+  composes: inputTextDefault;
+  width: 63%;
+}
+
+:local(.pUserStatus_1) {
+  composes: textDefault;
+  margin: 1rem 0 0 0;
+}
+
+:local(.pUserStatus_2) {
+  composes: textDefault;
+  margin-top: 0;
 }

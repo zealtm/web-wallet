@@ -349,10 +349,7 @@ class User extends React.Component {
                       : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
                 </p>
-                <p
-                  className={style.textDefault}
-                  style={{ margin: "1rem 0 0 0" }}
-                >
+                <p className={style.pUserStatus_1}>
                   {emailVerified ? (
                     <React.Fragment>
                       <Done className={style.successDefault} />
@@ -369,7 +366,7 @@ class User extends React.Component {
                     </React.Fragment>
                   )}
                 </p>
-                <p className={style.textDefault} style={{ marginTop: "0" }}>
+                <p className={style.pUserStatus_2}>
                   {twoFactor ? (
                     <React.Fragment>
                       <Done className={style.successDefault} />
@@ -582,14 +579,13 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div style={{ float: "left", width: "25%" }}>
+                      <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
-                          className={style.inputTextDefault}
-                          style={{ width: "60%" }}
+                          className={style.inputUserContact}
                           onChange={event =>
                             this.handleSelectChange(
                               "direct",
@@ -603,9 +599,8 @@ class User extends React.Component {
                         {i18n.t("SETTINGS_USER_NUMBER")}
                       </div>
                       <input
-                        className={style.inputTextDefault}
+                        className={style.inputUserNumber}
                         maxLength="9"
-                        style={{ width: "63%" }}
                         onChange={event =>
                           this.handleSelectChange("phone", event.target.value)
                         }
@@ -620,14 +615,13 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div style={{ float: "left", width: "25%" }}>
+                      <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
-                          className={style.inputTextDefault}
-                          style={{ width: "60%" }}
+                          className={style.inputUserContact}
                           onChange={event =>
                             this.handleSelectChange(
                               "direct",
@@ -641,9 +635,8 @@ class User extends React.Component {
                         {i18n.t("SETTINGS_USER_NUMBER")}
                       </div>
                       <input
-                        className={style.inputTextDefault}
+                        className={style.inputUserNumber}
                         maxLength="9"
-                        style={{ width: "63%" }}
                         onChange={event =>
                           this.handleSelectChange("phone", event.target.value)
                         }
