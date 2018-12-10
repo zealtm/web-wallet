@@ -21,8 +21,8 @@ class BoxQrReader extends Component {
   }
 
   componentDidCatch(error, info) {
-    alert(error.toString());
-    alert(info.toString());
+    alert(error);
+    alert(info.componentStack);
   }
 
   handleScan = data => {
