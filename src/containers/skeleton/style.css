@@ -350,6 +350,7 @@
   opacity: 0.5;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 :local .linkMenuP2PActive {
@@ -358,6 +359,7 @@
   opacity: 1;
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 :local .linkMenuP2P:hover {

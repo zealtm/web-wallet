@@ -66,6 +66,9 @@ const menuItens = [
 class Menu extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeP2p: false,
+    }
   }
 
   onClickFunction = error => {
@@ -80,6 +83,11 @@ class Menu extends React.Component {
   openP2PComponent = () => {
     const { actionP2PComponent } = this.props;
     actionP2PComponent();
+
+    this.setState({
+      ...this.state,
+      activeP2p: !this.state.activeP2p,
+    })
   };
 
   renderMenu = () => {
@@ -110,7 +118,8 @@ class Menu extends React.Component {
   };
 
   render() {
-    const { openMenu, user, actionLogout, actionMenu, activeP2p } = this.props;
+    const { openMenu, user, actionLogout, actionMenu } = this.props;
+    const {activeP2p} = this.state;
 
     const p2pStyleMenu = activeP2p ? style.linkMenuP2P : style.linkMenuP2PActive;
     
@@ -160,7 +169,6 @@ class Menu extends React.Component {
               src={"../../images/icons/p2p/user-star.png"}
               className={style.iconP2p}
             />
-            <div>{"  "}</div>
           </button>
         </div>
       </div>
@@ -179,8 +187,7 @@ Menu.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  user: store.user.user, 
-  activeP2p: store.p2p.chatOpened
+  user: store.user.user
 });
 
 const mapDispatchToProps = dispatch =>
