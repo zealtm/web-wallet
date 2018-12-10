@@ -42,8 +42,7 @@ class BoxQrReader extends Component {
 
   render() {
     let { result, delay } = this.state;
-    alert(navigator.userAgent);
-    alert(navigator.platform);
+
     return (
       <div>
         <QrReader
