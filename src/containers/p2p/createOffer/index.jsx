@@ -71,7 +71,8 @@ class CreateOffer extends React.Component {
         addressSeller: "",
         description: ""
       },
-      errors: []
+      errors: [],
+      descriptionTotal: 250
     };
 
     this.handleFields = this.handleFields.bind(this);
@@ -189,7 +190,7 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            description: value
+            description: value,
           }
         });
         break;
@@ -210,36 +211,19 @@ class CreateOffer extends React.Component {
     } = this.state.order;
     let error = [];
 
-    if (type == "") {
-      error.push(i18n.t("P2P_ERROR_1"));
-    }
-    if (coin == "") {
-      error.push(i18n.t("P2P_ERROR_2"));
-    }
-    if (paymentMethodId == "") {
-      error.push(i18n.t("P2P_ERROR_3"));
-    }
-    if (amount == "") {
-      error.push(i18n.t("P2P_ERROR_4"));
-    }
-    if (amountPayment == "") {
-      error.push(i18n.t("P2P_ERROR_5"));
-    }
-    if (addressSeller == "") {
-      error.push(i18n.t("P2P_ERROR_6"));
-    }
-    if (description == "") {
-      error.push(i18n.t("P2P_ERROR_7"));
-    }
+    if (!type) error.push(i18n.t("P2P_ERROR_1"));
+    if (!coin) error.push(i18n.t("P2P_ERROR_2"));
+    if (!paymentMethodId) error.push(i18n.t("P2P_ERROR_3"));
+    if (!amount) error.push(i18n.t("P2P_ERROR_4"));
+    if (!amountPayment) error.push(i18n.t("P2P_ERROR_5"));
+    if (!addressSeller) error.push(i18n.t("P2P_ERROR_6"));
+    if (!description) error.push(i18n.t("P2P_ERROR_7"));
 
     if (error.length > 0) {
       this.setState({
         ...this.state,
         errors: error
       });
-      /*error.map(val => {
-        alert("Erro: " + val);
-      });*/
     } else {
       this.setState({
         ...this.state,
@@ -248,9 +232,9 @@ class CreateOffer extends React.Component {
       createOfferWhenSelling(order);
     }
   };
+
   renderErros = () => {
     let { errors } = this.state;
-    console.log(errors);
     return Object.keys(errors).map((value, key) => {
       if (errors[key]) {
         return (
@@ -313,7 +297,7 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <span className={style.name}>{username}</span>
-              
+
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -367,7 +351,7 @@ class CreateOffer extends React.Component {
                   titleImg={coinSell.img}
                   selectItem={this.coinSelectedSell}
                   error={null}
-                  width={"100%"}
+                  width={"120%"}
                 />
               </Grid>
               <Grid item xs={2} />
@@ -408,6 +392,22 @@ class CreateOffer extends React.Component {
               label="P2P (Peer to Peer)"
               labelPlacement="end"
             />
+            <FormControlLabel
+              value="escroow"
+              className={style.labelRadio}
+              classes={{ label: classes.rootLabel }}
+              control={
+                <Radio
+                  checked={this.state.selectedValue === "escroow"}
+                  icon={<Lens />}
+                  checkedIcon={<Lens />}
+                  onChange={this.handleChange}
+                  classes={{ root: classes.root, checked: classes.checked }}
+                />
+              }
+              label="Escroow"
+              labelPlacement="end"
+            />
             <hr />
           </div>
 
@@ -429,14 +429,15 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>
               {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
             </div>
+            <span className={style.counterDescription}>{this.state.order.description.length} / {this.state.descriptionTotal}</span>
             <textarea
               className={style.textArea}
               name="description"
               placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
-            >
-              {this.state.order.description}
-            </textarea>
+              maxLength={this.state.descriptionTotal}
+              defaultValue={this.state.order.description}
+            ></textarea>
             {this.renderErros()}
             <button className={style.btContinue} onClick={this.validateForm}>
               {loadingCreateOrder ? (
@@ -445,7 +446,7 @@ class CreateOffer extends React.Component {
                   i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
                 )}
             </button>
-            
+
           </div>
         </div>
       </div>
