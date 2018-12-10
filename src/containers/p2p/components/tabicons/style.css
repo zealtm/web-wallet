@@ -16,6 +16,7 @@
   flex-grow: 1;
   align-self: center;
   opacity: 0.2;
+  cursor: pointer;
 }
 
 :local .itemTab img {

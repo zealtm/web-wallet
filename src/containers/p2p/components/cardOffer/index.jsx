@@ -2,9 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // REDUX
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {openChat} from "../../redux/p2pAction";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { openChat, setCancelOrder } from "../../redux/p2pAction";
+
+// UTILS
+import { formatDate } from "../../../../utils/numbers";
+import i18n from "./../../../../utils/i18n";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // MATERIAL
 import { Grid, Avatar } from "@material-ui/core/";
@@ -31,49 +36,92 @@ class CardOffer extends React.Component {
     });
   };
 
-  openChat = (id) => {
-    const {openChat} = this.props;
-    
-    openChat(id);
-  }
+  openChat = order => {
+    const { openChat } = this.props;
 
+    openChat(order);
+  };
+
+  handleCancelOrder = e => {
+    e.stopPropagation();
+    const { setCancelOrder, order } = this.props;
+    setCancelOrder(order.id);
+  };
+
+  renderBtClose = () => {
+    const { order, userEmail } = this.props;
+    if (userEmail == order.sell.user.email && order.status != "confirmed") {
+      return (
+        <button className={style.btnClose}>
+          <img
+            className={style.btnCloseImg}
+            src="images/icons/p2p/btn-CloseP2p.png"
+            alt="closep2p"
+          />
+        </button>
+      );
+    }
+  }
+  
   render() {
+    const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
+    const dateCreate = formatDate(order.createdAt, "DM");
+    const hourCreate = formatDate(order.createdAt, "HM");
+
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
+
     return (
       <div className={style.baseUser} onClick={this.handleDetails}>
         <Grid container>
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src="https://loremflickr.com/40/40"
+              src="images/lunio/lunio-user@100x100.jpg"
               className={style.avatar}
             />
           </Grid>
           <Grid item xs={5}>
-            <span className={style.name}>Nome Usuario</span>
-            <span className={style.textSmall}>00/00/2018</span>
-            <span className={style.numberText}>20.00000000</span>
-            <span className={style.textSmall}>Oferta</span>
+            <span className={style.name}>
+              {order.sell.user.name} {order.sell.user.surname}
+            </span>
+            <span className={style.textSmall}>{dateCreate}</span>
+            <span className={style.numberText}>{order.sell.amount}</span>
+            <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
             <div className={style.offerText}>
-              <img src="images/icons/coins/lunes.png" />
-              Lunes
+              <img src={`images/icons/coins/${order.sell.coin}.png`} />
+              {order.sell.coin.toUpperCase()}
             </div>
           </Grid>
           <Grid item xs={5} style={{ paddingLeft: 10 }}>
             <div className={style.boxStar}>
-              <StarVotes votes={4} />
+              <StarVotes votes={order.sell.user.rating} />
+              {(userEmail == order.sell.user.email && order.status != "confirmed") ? (
+                <button
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
+                >
+                  <img
+                    className={style.btnCloseImg}
+                    src="images/icons/p2p/btn-CloseP2p.png"
+                    alt="closep2p"
+                  />
+                </button>
+              ) : null}
             </div>
-            <span className={style.textSmall}>Unid. R$6,00</span>
+            <span className={style.textSmall}>
+              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat} {parseFloat(unitValue).toFixed(2)}
+            </span>
             <ArrowForward className={style.arrowPrice} />
-            <span className={style.numberText}>R$650,00</span>
-            <span className={style.textSmall}>Vende</span>
+            <span className={style.numberText}>{defaultFiat} {parseFloat(total).toFixed(2)}</span>
+            <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
-              <img src="images/icons/coins/lunes.png" />
+              <img src={`images/icons/coins/${order.buy.coin}.png`} />
+              {order.buy.coin.toUpperCase()}
             </div>
-            <span className={style.hours}>11:23 am</span>
+            <span className={style.hours}>{hourCreate}</span>
           </Grid>
           <Grid item xs={2} />
           <Grid
@@ -82,10 +130,14 @@ class CardOffer extends React.Component {
             className={style.boxDetails}
             style={openDetails ? { display: "block" } : null}
           >
-            <div className={style.textDetails}>
-              Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
-            </div>
-            <button className={style.btContinue} onClick={()=>this.openChat(1)}>Negociar</button>
+            <div className={style.textDetails}>{order.description}</div>
+            {(userEmail != order.sell.user.email && type != "myhistory") ? (
+              <button
+                className={style.btContinue}
+                onClick={() => this.openChat(order)}
+              >
+                {i18n.t("P2P_BUTTON_NEGOTIATE")}
+              </button>) : null}
           </Grid>
         </Grid>
       </div>
@@ -94,16 +146,21 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired
+  openChat: PropTypes.func.isRequired,
+  order: PropTypes.object,
+  setCancelOrder: PropTypes.func,
+  userEmail: PropTypes.string,
+  type: PropTypes.string
 };
 
 const mapStateToProps = store => ({
-
+  userEmail: store.user.user.email
 });
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-  {openChat},dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ openChat, setCancelOrder }, dispatch);
 
-export default connect(mapStateToProps,mapDispatchToProps)(CardOffer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardOffer);

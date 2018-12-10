@@ -1,91 +1,152 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX 
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {closeChat} from "../../redux/p2pAction";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { closeChat } from "../../redux/p2pAction";
+
+// UTILS
+import { formatDate } from "../../../../utils/numbers";
+import { getDefaultFiat } from "../../../../utils/localStorage";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import { Star,FavoriteBorder, ArrowForward  } from "@material-ui/icons/";
+
+import { FavoriteBorder, ArrowForward } from "@material-ui/icons/";
 import { ArrowBack } from "@material-ui/icons/";
+import { KeyboardArrowDown } from "@material-ui/icons";
 
-// COMPONENTS 
+// COMPONENTS
 import StarVotes from "../starvotes";
+import HeaderDetails from "../headerdetails/index";
 
+import UserProfile from "../../userProfile";
 // STYLE
 import style from "./style.css";
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showHeaderDetails: true,
+      arrowDown: false,
+      showPerfil: false
+    };
+  }
+  onClickPerfil() {
+    this.setState({ showPerfil: !this.state.showPerfil });
+  }
+  closeChat = () => {
+    const { closeChat } = this.props;
+    closeChat();
+  };
 
-    closeChat = () => {
-        const {closeChat} = this.props;
-        closeChat();
+  showHeaderDetails = () => {
+    this.setState({
+      showHeaderDetails: !this.state.showHeaderDetails,
+      arrowDown: !this.state.arrowDown
+    });
+  };
+  renderPerfil() {
+    return <UserProfile />;
+  }
+  render() {
+    const { order } = this.props;
+    const dateCreate = formatDate(order.createdAt, "DM");
+    let { showPerfil } = this.state;
+
+    let defaultFiat = getDefaultFiat();
+    const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total =  unitValue * order.sell.amount;
+
+    if (showPerfil) {
+      return this.renderPerfil();
     }
 
-    render() {
-        return (
-            <div className={style.topBar} >
-                <div className={style.header}>
-                    <Grid container>
-                        <Grid item xs={1}>
-                            <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Avatar
-                                alt="Avatar"
-                                className={style.avatar}
-                                src={"images/lunio/lunio-user@100x100.jpg"}
-                            />
-                        </Grid>
-                        <Grid item xl={4}>
-                            <span className={style.textGreen}>Ricardo Lopez</span>
-                            <span className={style.textSmall}>00/00/2018</span>
-                            
-                        </Grid>
-                        <Grid item xl={4} style={{ paddingLeft: 10 }}>
-                            <div className={style.boxStar}>
-                                <StarVotes votes={3} />
-                            </div>   
-                        </Grid>   
-                        
-                        <Grid item xs={1}>
-                            <FavoriteBorder className={style.fav} /> 
-                        </Grid>  
+    return (
+      <div className={style.topBar}>
+        <div className={style.header}>
+          <Grid container>
+            <Grid item xs={1}>
+              <ArrowBack className={style.arrowBack} onClick={this.closeChat} />
+            </Grid>
+            <Grid item xs={1} sm={2}>
+              <Avatar
+                alt="Avatar"
+                className={style.avatar}
+                src={"images/lunio/lunio-user@100x100.jpg"}
+              />
+            </Grid>
+            <Grid item xl={5}>
+              <span
+                className={style.textGreen}
+                onClick={() => this.onClickPerfil()}
+              >
+                {order.sell.user.name} {order.sell.user.surname}
+              </span>
+              <span className={style.textSmall}>{dateCreate}</span>
+            </Grid>
+            <Grid item xl={4} style={{ paddingLeft: 10 }}>
+              <div className={style.boxStar}>
+                <StarVotes votes={order.sell.user.rating} />
+              </div>
+            </Grid>
 
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={4}>
-                            <div className={style.card}>200.00000</div>
-                        </Grid>
-                        <Grid item xs={1}>
-                            <ArrowForward className={style.arrowPrice} />
-                        </Grid>
-                        <Grid item xs={4}>
-                            <div className={style.card}>R$650,00</div>
-                        </Grid>
+            <Grid item xs={1}>
+              <FavoriteBorder className={style.fav} />
+            </Grid>
 
-                    </Grid>           
-                            
-                </div>
-                
-            </div>
-        );
-    }
+            <Grid item xs={3} />
+            <Grid item xs={4}>
+              <div className={style.card}>{order.sell.amount}</div>
+            </Grid>
+            <Grid item xs={1}>
+              <ArrowForward className={style.arrowPrice} />
+            </Grid>
+            <Grid item xs={4}>
+              <div className={style.card}>{defaultFiat} {total.toFixed(2)}</div>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-end"
+            >
+              {this.state.arrowDown && (
+                <KeyboardArrowDown
+                  onClick={this.showHeaderDetails}
+                  className={style.arrowDown}
+                />
+              )}
+            </Grid>
+          </Grid>
+          {this.state.showHeaderDetails && (
+            <HeaderDetails
+              showHeaderDetails={this.showHeaderDetails}
+              order={order}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 Header.propTypes = {
-    closeChat: PropTypes.func.isRequired
-}
+  closeChat: PropTypes.func.isRequired,
+  order: PropTypes.object
+};
 
 const mapStateToProps = store => ({
-
+  order: store.p2p.chat.iduser
 });
 
-const mapDispatchToProps = dispatch => 
-bindActionCreators(
-    {closeChat},dispatch
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ closeChat }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

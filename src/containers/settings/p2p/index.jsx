@@ -57,7 +57,8 @@ class P2P extends React.Component {
     }
   };
   render() {
-    const { modalOpen } = this.props;
+    const { modalOpen, openModal } = this.props;
+        
     return (
       <div>
         <Modal
@@ -93,9 +94,9 @@ class P2P extends React.Component {
         </Grid>
 
         <Grid container>
-          <Grid item className={style.plansDescription}>
+          <Grid item xs={9} className={style.plansDescription}>
             <h1>P2P</h1>
-            <p>lorem ipsum</p>
+            <p>{i18n.t("P2P_PLANS_DESCRIPTION")}</p>
           </Grid>
         </Grid>
 
@@ -115,11 +116,13 @@ P2P.propTypes = {
   getSignatures: PropTypes.func,
   signatures: PropTypes.object
 };
+
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
   modalOpen: store.p2p.modalOpen,
   signatures: store.settings.signatures
 });
+      
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {

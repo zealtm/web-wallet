@@ -1,17 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// MATERIAL
-import { Grid, Avatar, Radio, withStyles, FormControlLabel } from "@material-ui/core/";
-import { ArrowForward, ArrowBack } from "@material-ui/icons/";
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { createOfferWhenSelling, clearOffer } from "../redux/p2pAction";
 
-// ICONS 
+// MATERIAL
+import {
+  Grid,
+  Avatar,
+  Radio,
+  withStyles,
+  FormControlLabel
+} from "@material-ui/core/";
+import { ArrowForward } from "@material-ui/icons/";
+import ClearIcon from "@material-ui/icons/Clear";
+
+// ICONS
 import { Lens } from "@material-ui/icons";
 
-// COMPONENTS 
+// COMPONENTS
 import Select from "../../../components/select";
 import StarVotes from "../components/starvotes";
-import MultiSelect from "../components/multiSelect"
+import Loading from "../../../components/loading";
+
+// UTILS
+import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
@@ -19,16 +34,16 @@ import style from "./style.css";
 const stylesCustom = {
   root: {
     color: "#654fa4",
-    '&$checked': {
-      color: "#68f285",
-    },
+    "&$checked": {
+      color: "#68f285"
+    }
   },
   rootLabel: {
     fontSize: "11px",
     color: "#fff"
   },
   checked: {
-    color: "#68f285",
+    color: "#68f285"
   }
 };
 
@@ -36,76 +51,271 @@ class CreateOffer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Lunes",
-      img: "images/icons/coins/lunes.png",
-      coinsExample: [
-        {
-          value: "BTC",
-          img: "images/icons/coins/btc.png",
-          title: "BTC"
-        },
-        {
-          value:"LTC",
-          img: "images/icons/coins/ltc.png",
-          title: "LTC"
-        },
-        {
-          value:"LUNES",
-          img: "images/icons/coins/lunes.png",
-          title: "Lunes"
-        },
-      ],
-      listCoinSelects:[],
-      selectedValue: ''
+      coinSell: {
+        name: "Select",
+        img: ""
+      },
+      coinBuy: {
+        name: "Select",
+        img: ""
+      },
+
+      selectedValue: "",
+
+      order: {
+        coin: "",
+        type: "",
+        paymentMethodId: "",
+        amount: "",
+        amountPayment: "",
+        addressSeller: "",
+        description: ""
+      },
+      errors: [], 
+      descriptionTotal: 250
     };
-  }
-  selectItems = (listCoins) => {
-    this.setState({
-      ...this.state,
-      listCoinSelects: listCoins
-    });
+
+    this.handleFields = this.handleFields.bind(this);
   }
 
-  coinSelected = (value, title, img = undefined) => {
+  coinSelectedSell = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
-      coin: {
+      coinSell: {
         name: title,
         value,
         img
+      },
+      order: {
+        ...this.state.order,
+        coin: value
+      }
+    });
+  };
+
+  coinSelectedBuy = (value, title, img = undefined) => {
+    const { coinsEnabled } = this.props;
+    let idMethod = 0;
+    coinsEnabled.map(val => {
+      if (val.value == value) {
+        idMethod = val.id;
+      }
+    });
+
+    this.setState({
+      ...this.state,
+      coinBuy: {
+        name: title,
+        value,
+        img
+      },
+      order: {
+        ...this.state.order,
+        paymentMethodId: idMethod
       }
     });
   };
 
   handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
+    this.setState({
+      ...this.state,
+      order: {
+        ...this.state.order,
+        type: event.target.value
+      },
+      selectedValue: event.target.value
+    });
   };
 
-  render() {
-    const {title,img,coinsExample, listCoinSelects} = this.state;
-    const {classes} = this.props;
-    return (
-      <div className={style.baseUser} >
+  handleFields = e => {
+    const { name, value } = e.target;
 
+    switch (name) {
+      case "coin":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            coin: value
+          }
+        });
+        break;
+      case "type":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            type: value
+          }
+        });
+        break;
+      case "paymentMethodId":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            paymentMethodId: value
+          }
+        });
+        break;
+      case "amount":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            amount: value
+          }
+        });
+        break;
+      case "amountPayment":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            amountPayment: value
+          }
+        });
+        break;
+      case "addressSeller":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            addressSeller: value
+          }
+        });
+        break;
+      case "description":
+        this.setState({
+          ...this.state,
+          order: {
+            ...this.state.order,
+            description: value, 
+          }
+        });
+        break;
+    }
+  };
+
+  validateForm = () => {
+    const { createOfferWhenSelling } = this.props;
+    const { order } = this.state;
+    const {
+      coin,
+      type,
+      paymentMethodId,
+      amount,
+      amountPayment,
+      addressSeller,
+      description
+    } = this.state.order;
+    let error = [];
+
+    if (type == "") {
+      error.push(i18n.t("P2P_ERROR_1"));
+    }
+    if (coin == "") {
+      error.push(i18n.t("P2P_ERROR_2"));
+    }
+    if (paymentMethodId == "") {
+      error.push(i18n.t("P2P_ERROR_3"));
+    }
+    if (amount == "") {
+      error.push(i18n.t("P2P_ERROR_4"));
+    }
+    if (amountPayment == "") {
+      error.push(i18n.t("P2P_ERROR_5"));
+    }
+    if (addressSeller == "") {
+      error.push(i18n.t("P2P_ERROR_6"));
+    }
+    if (description == "") {
+      error.push(i18n.t("P2P_ERROR_7"));
+    }
+
+    if (error.length > 0) {
+      this.setState({
+        ...this.state,
+        errors: error
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        errors: []
+      });
+      createOfferWhenSelling(order);
+    }
+  };
+  
+  renderErros = () => {
+    let { errors } = this.state;
+    return Object.keys(errors).map((value, key) => {
+      if (errors[key]) {
+        return (
+          <div className={style.textErrorSmall}>
+            <ClearIcon
+              className={style.iconListValid}
+              style={{ color: "red" }}
+            />
+            {errors[key]}
+          </div>
+        );
+      }
+    });
+
+  }
+  render() {
+    const { coinBuy, coinSell } = this.state;
+    const {
+      classes,
+      coinsEnabled,
+      user,
+      loadingCreateOrder,
+      createDone,
+      createError,
+      clearOffer
+    } = this.props;
+
+    const username = user.name + " " + user.surname;
+
+    if (createDone)
+      return (
+        <div>
+          <span className={style.textSuccess}>{i18n.t("P2P_TEXT_1")}</span>
+          <button className={style.btContinue} onClick={clearOffer}>
+            {i18n.t("P2P_TEXT_2")}
+          </button>
+        </div>
+      );
+
+    if (createError)
+      return (
+        <div>
+          <span className={style.textError}>{i18n.t("P2P_ERROR")}{" "}</span>
+          <button className={style.btContinue} onClick={clearOffer}>
+            {i18n.t("P2P_TRY_AGAIN")}
+          </button>
+        </div>
+      );
+
+    return (
+      <div className={style.baseUser}>
         <div className={style.headerUser}>
           <Grid container>
-            <Grid item xs={1}>
-              <ArrowBack className={style.arrowBack} />
-            </Grid>
             <Grid item xs={2}>
               <Avatar
                 alt="avatar"
-                src="https://loremflickr.com/40/40"
+                src={user.profilePicture}
                 className={style.avatar}
               />
             </Grid>
-            <Grid item xs={5}>
-              <span className={style.name}>Nome Usuario</span>
-              <span className={style.textSmall}>00/00/2018</span>
+            <Grid item xs={6}>
+              <span className={style.name}>{username}</span>
+              
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
-                <StarVotes votes={4} />
+                <StarVotes votes={0} />
               </div>
             </Grid>
           </Grid>
@@ -113,90 +323,129 @@ class CreateOffer extends React.Component {
 
         <div className={style.formBase}>
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Defina os valores</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_COIN_VALUES")}
+            </div>
             <Grid container>
               <Grid item xs={5}>
-                <input type="text" placeholder="0.0000" className={style.inputDefault} />
+                <input
+                  type="text"
+                  name="amount"
+                  placeholder="0.0000"
+                  className={style.inputDefault}
+                  value={this.state.order.amount}
+                  onChange={e => this.handleFields(e)}
+                />
               </Grid>
               <Grid item xs={2}>
                 <ArrowForward className={style.arrowPrice} />
               </Grid>
               <Grid item xs={5}>
-                <input type="text" placeholder="R$0,00" className={style.inputDefault} />
+                <input
+                  type="text"
+                  name="amountPayment"
+                  placeholder="0.0000"
+                  className={style.inputDefault}
+                  value={this.state.order.amountPayment}
+                  onChange={e => this.handleFields(e)}
+                />
               </Grid>
             </Grid>
           </div>
 
-            <div className={style.formGroup}>
-              <div className={style.textSmall}>Moeda desejada</div>
-              <Grid container>
-                <Grid item xs={5}>
-                  <Select
-                    list={coinsExample}
-                    title={title}
-                    titleImg={img}
-                    selectItem={this.coinSelected}
-                    error={null}
-                    width={"100%"}
-                  />
-                </Grid>
-                <Grid item xs={7}>
-                  <MultiSelect
-                    list={coinsExample}
-                    selectItems={this.selectItems}
-                  /> 
-                </Grid>
+          <div className={style.formGroup}>
+            <Grid container>
+              <Grid item xs={4}>
+                <div className={style.textSmall}>
+                  {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
+                </div>
+                <Select
+                  list={coinsEnabled}
+                  title={coinSell.name}
+                  titleImg={coinSell.img}
+                  selectItem={this.coinSelectedSell}
+                  error={null}
+                  width={"120%"}
+                />
               </Grid>
+              <Grid item xs={2} />
+              <Grid item xs={5}>
+                <div className={style.textSmallCoinPayment}>
+                  {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
+                </div>
+                <Select
+                  list={coinsEnabled}
+                  title={coinBuy.name}
+                  titleImg={coinBuy.img}
+                  selectItem={this.coinSelectedBuy}
+                  error={null}
+                  width={"100%"}
+                />
+              </Grid>
+            </Grid>
             <hr />
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Método de negociação</div>
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_NEGOTIATION")}
+            </div>
             <FormControlLabel
               value="p2p"
+              className={style.labelRadio}
               classes={{ label: classes.rootLabel }}
-              control={<Radio
-                checked={this.state.selectedValue === 'p2p'}
-                icon={<Lens />}
-                checkedIcon={<Lens />}
-                onChange={this.handleChange}
-                classes={{ root: classes.root, checked: classes.checked }}
-              />}
+              control={
+                <Radio
+                  checked={this.state.selectedValue === "p2p"}
+                  icon={<Lens />}
+                  checkedIcon={<Lens />}
+                  onChange={this.handleChange}
+                  classes={{ root: classes.root, checked: classes.checked }}
+                />
+              }
               label="P2P (Peer to Peer)"
               labelPlacement="end"
             />
-            <FormControlLabel
-              value="scroow"
-              classes={{ label: classes.rootLabel }}
-              control={<Radio
-                checked={this.state.selectedValue === 'scroow'}
-                icon={<Lens />}
-                checkedIcon={<Lens />}
-                onChange={this.handleChange}
-                classes={{ root: classes.root, checked: classes.checked }}
-              />}
-              label="SCROOW"
-              labelPlacement="end"
-            />
             <hr />
           </div>
 
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Endereço Carteira</div>
-            <input type="text" placeholder="aksdlasd6asd5asd5" className={style.inputDefault} />
-          </div>
-          <div className={style.formGroup}>
-            <div className={style.textSmall}>E-mail</div>
-            <input type="text" placeholder="email@email.com" className={style.inputDefault} />
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_ADDRESS")}
+            </div>
+            <input
+              type="text"
+              name="addressSeller"
+              placeholder={i18n.t("P2P_CREATE_OFFER_ADDRESS_PLACEHOLDER")}
+              className={style.inputDefault}
+              value={this.state.order.addressSeller}
+              onChange={e => this.handleFields(e)}
+            />
           </div>
           <hr />
           <div className={style.formGroup}>
-            <div className={style.textSmall}>Descrição</div>
-            <textarea className={style.textArea}>
-              Pagamento em Real pelo BANCO INTER, SANTANDER OU NUBANK
-              </textarea>
-            <button className={style.btContinue}>CRIAR OFERTA</button>
-
+            <div className={style.textSmall}>
+              {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
+            </div>
+            <span className={style.counterDescription}>{this.state.order.description.length} / {this.state.descriptionTotal}</span>
+            <textarea
+              className={style.textArea}
+              name="description"
+              placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
+              onChange={e => this.handleFields(e)}
+              maxLength={this.state.descriptionTotal}
+            >
+              {this.state.order.description}
+            </textarea>
+            {this.renderErros()}
+            <button className={style.btContinue} onClick={this.validateForm}>
+              {loadingCreateOrder ? (
+                <Loading />
+              ) : (
+                  i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
+                )}
+            </button>
+            
           </div>
         </div>
       </div>
@@ -206,6 +455,33 @@ class CreateOffer extends React.Component {
 
 CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired,
+  coinsEnabled: PropTypes.array,
+  user: PropTypes.object,
+  loadingCreateOrder: PropTypes.bool,
+  createDone: PropTypes.bool,
+  createError: PropTypes.bool,
+  clearOffer: PropTypes.func,
+  createOfferWhenSelling: PropTypes.func
 };
 
-export default withStyles(stylesCustom)(CreateOffer);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  user: store.user.user,
+  loadingCreateOrder: store.p2p.loadingCreateOrder,
+  createDone: store.p2p.createDone,
+  createError: store.p2p.createError
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      createOfferWhenSelling,
+      clearOffer
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(stylesCustom)(CreateOffer));
