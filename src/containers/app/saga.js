@@ -88,7 +88,8 @@ import {
   closeDeposit,
   openAvaliation,
   closeAvaliation,
-  setTabIconSaga
+  setTabIconSaga,
+  getProfileSaga
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -207,6 +208,7 @@ export default function* rootSaga() {
     fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
     fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
     fork(takeLatest, "SET_TAB_ICON", setTabIconSaga),
+    fork(takeLatest, "GET_PROFILE", getProfileSaga),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
