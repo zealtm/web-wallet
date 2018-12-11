@@ -30,7 +30,7 @@
 }
 
 :local .baseWidget {
-  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  composes: bgPurpleDark from "../../components/bases/colorBase.css";
   position: absolute;
   bottom: 0px;
   right: 16px;
@@ -261,11 +261,15 @@
   composes: bgPurpleClear from "../../components/bases/colorBase.css";
   padding: 5px;
   margin-right: 15px;
-  border-radius: 6px;
+  border-radius: 6px; 
 }
 
 :local .headerActionFilter {
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom: 1px solid #6351a8;
   padding: 10px;
 }
 
