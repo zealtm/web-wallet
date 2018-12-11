@@ -603,5 +603,7 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
   "P2P_MY_LISTING": "My listings",
   "P2P_CHANGE_ADDRESS": "Fill the address for receive",
-  "P2P_COMING_SOON": "Rating coming soon !"
+  "P2P_COMING_SOON": "Rating coming soon !",
+  "P2P_TAB_PURCHASE": "Purchase",
+  "P2P_TAB_SALE": "Sale"
 }

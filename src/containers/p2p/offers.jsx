@@ -23,6 +23,7 @@ import colors from "../../components/bases/colors";
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
+import Tabs from "../../components/tabs";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -235,13 +236,13 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title, img = undefined) => {
+  selectTypeP2P = (value, title) => {
     this.setState({
       ...this.state,
       typeP2P: title
     });
   };
-  selectTypeFilter = (value, title, img = undefined) => {
+  selectTypeFilter = (value, title) => {
     this.setState({
       ...this.state,
       typeFlter: title
@@ -249,8 +250,8 @@ class Offers extends React.Component {
     this.filterMyOrders(true);
   };
 
-  render() {
-    const { coinsEnabled, cancelDone } = this.props;
+  renderMenu = () => {
+    const { type, coinsEnabled } = this.props;
     const {
       coinSelect,
       listTypeP2P,
@@ -258,6 +259,51 @@ class Offers extends React.Component {
       typeP2P,
       typeFlter
     } = this.state;
+    const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
+
+    return type !== "myhistory" ? (
+      <Grid className={style.headerActionFilter} container>
+        <Grid item xs={3} style={{ textAlign: "center" }}>
+          <Select
+            list={coinsEnabled}
+            titleImg={coinSelect.img}
+            selectItem={this.coinSelected}
+            error={null}
+            width={"75%"}
+          />
+        </Grid>
+        <Grid item xs={3} style={{ textAlign: "center" }}>
+          <Select
+            list={listTypeFilter}
+            title={typeFlter}
+            selectItem={this.selectTypeFilter}
+            error={null}
+            width={"80%"}
+          />
+        </Grid>
+        <Grid item xs={3} style={{ textAlign: "center" }}>
+          <Select
+            list={listTypeP2P}
+            title={typeP2P}
+            selectItem={this.selectTypeP2P}
+            error={null}
+            width={"80%"}
+          />
+        </Grid>
+        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
+          <a href="#">
+            <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
+          </a>
+        </Grid>
+      </Grid>
+    ) : (
+      <Grid container>
+        <Tabs tabTitles={titles} tabContents={[]} justify="center" />
+      </Grid>
+    );
+  };
+  render() {
+    const { cancelDone } = this.props;
 
     if (cancelDone)
       return (
@@ -271,49 +317,8 @@ class Offers extends React.Component {
 
     return (
       <div>
-        <div className={style.headerActionFilter}>
-          <Grid container>
-            <Grid item xs={3} style={{ textAlign: "center" }}>
-              <Select
-                list={coinsEnabled}
-                titleImg={coinSelect.img}
-                selectItem={this.coinSelected}
-                error={null}
-                width={"75%"}
-              />
-            </Grid>
-            <Grid item xs={3} style={{ textAlign: "center" }}>
-              <Select
-                list={listTypeFilter}
-                title={typeFlter}
-                selectItem={this.selectTypeFilter}
-                error={null}
-                width={"80%"}
-              />
-            </Grid>
-            <Grid item xs={3} style={{ textAlign: "center" }}>
-              <Select
-                list={listTypeP2P}
-                title={typeP2P}
-                selectItem={this.selectTypeP2P}
-                error={null}
-                width={"80%"}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={3}
-              style={{ marginTop: "10px", textAlign: "center" }}
-            >
-              <a href="#">
-                <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
-              </a>
-            </Grid>
-          </Grid>
-        </div>
-
+        {this.renderMenu()}
         {this.renderFilters()}
-
         <div className={style.content}>{this.renderOders()}</div>
       </div>
     );
