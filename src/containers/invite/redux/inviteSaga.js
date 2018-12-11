@@ -110,6 +110,9 @@ export function* sendWithdrawSaga(address) {
   }
   else{
     yield put(successRequest(i18n.t("INVITE_WITHDRAW")));
+    yield put({
+      type: "GET_INVITE_ADDRESS"
+    });
   }
 
   yield put({
