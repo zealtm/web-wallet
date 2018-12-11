@@ -124,7 +124,11 @@ class CardOffer extends React.Component {
           <Grid item xs={5}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              <span className={style.cancelOffer}> </span>
+              <img 
+                className={style.cancelOffer}
+                src="images/icons/close/close.png"
+                > 
+                </img>
               {userEmail == order.sell.user.email &&
               order.status != "confirmed" ? (
                 <button
