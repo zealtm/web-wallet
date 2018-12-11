@@ -74,6 +74,13 @@ class P2P extends React.Component {
   };
 
   componentDidMount = () => {
+    let { errors } = this.props.skeleton;
+    if (errors) {
+      this.setState({
+        ...this.state,
+        openP2P: false
+      });
+    }
     const { getPaymentMethodsWhenBuying } = this.props;
     getPaymentMethodsWhenBuying("lunes");
   };
@@ -116,7 +123,8 @@ P2P.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  skeleton: store.skeleton
 });
 
 const mapDispatchToProps = dispatch =>
