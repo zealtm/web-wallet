@@ -13,7 +13,7 @@
 
 :local .starActive {
   composes: star;
-  color: #fad04d;
+  color: #62D884;
   opacity: 1;
 }
 
