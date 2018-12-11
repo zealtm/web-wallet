@@ -28,6 +28,9 @@
   "SETTINGS_USER_NEW_PASSWORD": "New password",
   "SETTINGS_USER_CONFIRM_NEW_PASSWORD": "Confirm new password",
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
+
+  "SETTINGS_P2P": "P2P signatures",
+
   "MESSAGE_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD": "Password",
   "MESSAGE_SELECT_FEE": "Select a Fee",
@@ -427,7 +430,7 @@
   "INSTRUCTION_MODAL_PAY_2": "From R$1.000,01 to R$3.000,00 - 5%",
   "INSTRUCTION_MODAL_PAY_3": "Above de R$3.000,01 - 4,5%",
   "INSTRUCTION_MODAL_PAY__BTC_0": "Bitcoin (BTC), Litecoin (LTC), Bitcoin Cash (BCH), Dash (DASH), Tether (USDT) e Ethereum (ETH)",
-  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%", 
+  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "From R$1.000,01 to R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Above de R$3.000,01 - 2,5%",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining fee (Value varies according to the currency network + 20% of the Lunes fee) + 5% of the service charge.",
@@ -535,6 +538,6 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
-  "P2P_MY_LISTING": "My listings", 
+  "P2P_MY_LISTING": "My listings",
   "P2P_CHANGE_ADDRESS": "Fill the address for receive"
 }
