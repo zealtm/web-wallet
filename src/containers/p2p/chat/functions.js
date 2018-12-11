@@ -33,15 +33,16 @@ export const awaitChatLoadUp = () => {
     }, 500)
   })
 }
-export const appendFinalMessage = async (timestamp) => {
+export const appendFinalMessage = async (timestamp, cancelled = false) => {
   await awaitChatLoadUp()
+  let type = cancelled ? 'CANCELED' : 'FINISHED'
   let time = convertISO8601(timestamp)
   let baseEL = document.querySelector('.base')
   let line = document.createElement('div')
   line.className = style.line
   let message = document.createElement('div')
   message.className = style.message
-  message.textContent = i18n.t("P2P_CHAT_NEGOTIATION_FINISHED_AT") + time.date
+  message.textContent = i18n.t(`P2P_CHAT_NEGOTIATION_${type}_AT`) + time.date
   let finalMessage = document.createElement('div')
   finalMessage.className = style.finalMessage
   finalMessage.appendChild(line)

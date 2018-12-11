@@ -412,11 +412,11 @@
   "INSTRUCTION_MODAL_PAY_INFO_3": " 7:00 às 20:00 horas.",
   "INSTRUCTION_MODAL_PAY_INFO_4": "Em caso de problemas com o atendimento do pedido, as moedas enviadas serão automaticamente devolvidas ao endereço Lunes da moeda.",
   "INSTRUCTION_MODAL_PAY_0": "Lunes (LUNES)",
-  "INSTRUCTION_MODAL_PAY_1": "Até R$1.000,00 - 6%", 
+  "INSTRUCTION_MODAL_PAY_1": "Até R$1.000,00 - 6%",
   "INSTRUCTION_MODAL_PAY_2": "De R$1.000,01 a R$3.000,00 - 5%",
   "INSTRUCTION_MODAL_PAY_3": "Acima de R$3.000,01 - 4,5%",
   "INSTRUCTION_MODAL_PAY__BTC_0": "Bitcoin (BTC), Litecoin (LTC), Bitcoin Cash (BCH), Dash (DASH), Tether (USDT) e Ethereum (ETH)",
-  "INSTRUCTION_MODAL_PAY__BTC_1": "Até R$1.000,00 - 3,5%", 
+  "INSTRUCTION_MODAL_PAY__BTC_1": "Até R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "De R$1.000,01 a R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Acima de R$3.000,01 - 2,5%",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Taxa de mineração de rede (O valor varia de acordo com a rede da moeda + 20% da taxa Lunes) + 5% da taxa de serviço.",
@@ -525,5 +525,7 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por três meses.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por seis meses.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
-  "P2P_MY_LISTING": "Meus anúncios"
+  "P2P_MY_LISTING": "Meus anúncios",
+  "P2P_CHAT_NEGOTIATION_FINISHED_AT": "Essa negociação foi finalizada em ",
+  "P2P_CHAT_NEGOTIATION_CANCELED_AT": "Essa negociação foi cancelada em "
 }

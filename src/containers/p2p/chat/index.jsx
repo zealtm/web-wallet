@@ -16,7 +16,7 @@ import Loading from '../../../components/loading'
 import style from "./style.css";
 
 //FUNCTIONS
-import { getChatBundle } from './functions'
+import { getChatBundle, appendFinalMessage } from './functions'
 
 //UTILS
 import i18n from "./../../../utils/i18n"
@@ -33,6 +33,16 @@ class Chat extends React.Component {
   }
   componentDidMount() {
     this.callChatBundle()
+    let { chatDetails } = this.props
+    let { currentOrder } = chatDetails;
+    let { status, updatedAt } = currentOrder
+    if (status === 'confirmed') {
+      appendFinalMessage(updatedAt)
+    } else if (status === 'canceled') {
+      appendFinalMessage(updatedAt, true)
+    } else {
+      alert('I DUNNO WHAT TO DO')
+    }
   }
   componentDidUpdate() {
   }
@@ -75,11 +85,13 @@ class Chat extends React.Component {
 }
 
 Chat.propTypes = {
-  p2pStore: PropTypes.object.isRequired
+  p2pStore: PropTypes.object.isRequired,
+  chatDetails: PropTypes.object.isRequired
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  chatDetails: store.p2p.chatDetails
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
