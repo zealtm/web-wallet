@@ -185,7 +185,8 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         tabIcon: 2,
-        userProfile: action.userProfile
+        userProfile: action.userProfile, 
+        chatOpened: false,
        };
 
     case "GET_PROFILE_REDUCER":
@@ -194,6 +195,12 @@ const p2p = (state = initialState, action) => {
         userProfile: action.userProfile,
         loading: false
       };
+
+    case "CLEAR_USER_PROFILE":
+      return {
+        ...state,
+        userProfile: []
+      }
 
     default: {
       return {

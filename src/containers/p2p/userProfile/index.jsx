@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUserProfile, getProfile } from "../redux/p2pAction";
+import { setUserProfile, getProfile, clearUserProfile } from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -40,9 +40,18 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getProfile } = this.props;
-    getProfile();
+    const { getProfile,userProfile } = this.props;
+    if(userProfile.id){
+      getProfile(userProfile.id);
+    }else{
+      getProfile();
+    }
   };
+
+  componentWillUnmount = () => {
+    const {clearUserProfile} = this.props;
+    clearUserProfile();
+  }
 
   render() {
     const { classes, loading } = this.props;
@@ -165,6 +174,7 @@ UserProfile.propTypes = {
   getProfile: PropTypes.func,
   userProfile: PropTypes.object,
   setUserProfile: PropTypes.func,
+  clearUserProfile: PropTypes.func,
   loading: PropTypes.bool
 };
 
@@ -178,7 +188,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfile,
-      setUserProfile
+      setUserProfile,
+      clearUserProfile
     },
     dispatch
   );

@@ -103,3 +103,7 @@ export const getProfile = userProfile => ({
   type: "GET_PROFILE",
   userProfile
 });
+
+export const clearUserProfile = () => ({
+  type: "CLEAR_USER_PROFILE"
+});

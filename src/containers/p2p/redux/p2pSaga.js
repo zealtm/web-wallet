@@ -251,6 +251,7 @@ export function* setTabIconSaga(payload) {
 
 export function* getProfileSaga(payload) {
   try {
+    
     yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
     let response = yield call(
