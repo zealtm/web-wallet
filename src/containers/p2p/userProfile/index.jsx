@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-//REDUX
+// REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfile } from "../redux/p2pAction";
+import { setUserProfile, getProfile, clearUserProfile } from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -40,9 +40,18 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getProfile } = this.props;
-    getProfile();
+    const { getProfile,userProfile } = this.props;
+    if(userProfile.id){
+      getProfile(userProfile.id);
+    }else{
+      getProfile();
+    }
   };
+
+  componentWillUnmount = () => {
+    const {clearUserProfile} = this.props;
+    clearUserProfile();
+  }
 
   render() {
     const { classes, loading } = this.props;
@@ -50,6 +59,7 @@ class UserProfile extends React.Component {
     const dateCreate = formatDate(userProfile.createdAt);
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
+    
     return (
       <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
@@ -158,21 +168,28 @@ class UserProfile extends React.Component {
     );
   }
 }
+
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   getProfile: PropTypes.func,
   userProfile: PropTypes.object,
+  setUserProfile: PropTypes.func,
+  clearUserProfile: PropTypes.func,
   loading: PropTypes.bool
 };
+
 const mapStateToProps = store => ({
   userProfile: store.p2p.userProfile,
+  userEmail: store.user.user.email,
   loading: store.p2p.loading
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getProfile
+      getProfile,
+      setUserProfile,
+      clearUserProfile
     },
     dispatch
   );

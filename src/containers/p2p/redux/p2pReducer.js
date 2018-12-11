@@ -31,7 +31,7 @@ const initialState = {
   },
   cancelDone: false,
   tabIcon: 0,
-  userProfile:[]
+  userProfile: []
 };
 
 const p2p = (state = initialState, action) => {
@@ -181,12 +181,26 @@ const p2p = (state = initialState, action) => {
         tabIcon: action.tabIcon
       };
 
+    case "SET_USER_PROFILE_REDUCER":
+      return {
+        ...state,
+        tabIcon: 2,
+        userProfile: action.userProfile, 
+        chatOpened: false,
+       };
+
     case "GET_PROFILE_REDUCER":
       return {
         ...state,
         userProfile: action.userProfile,
         loading: false
       };
+
+    case "CLEAR_USER_PROFILE":
+      return {
+        ...state,
+        userProfile: []
+      }
 
     default: {
       return {

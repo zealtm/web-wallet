@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { closeChat } from "../../redux/p2pAction";
+import { closeChat,setUserProfile } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -15,7 +15,7 @@ import { encryptMd5 } from "../../../../utils/cryptography";
 import { Grid } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 
-import { FavoriteBorder, ArrowForward } from "@material-ui/icons/";
+import { ArrowForward } from "@material-ui/icons/";
 import { ArrowBack } from "@material-ui/icons/";
 import { KeyboardArrowDown } from "@material-ui/icons";
 
@@ -23,7 +23,6 @@ import { KeyboardArrowDown } from "@material-ui/icons";
 import StarVotes from "../starvotes";
 import HeaderDetails from "../headerdetails/index";
 
-import UserProfile from "../../userProfile";
 // STYLE
 import style from "./style.css";
 
@@ -32,12 +31,14 @@ class Header extends React.Component {
     super(props);
     this.state = {
       showHeaderDetails: true,
-      arrowDown: false,
-      showPerfil: false
+      arrowDown: false
     };
   }
   onClickPerfil() {
-    this.setState({ showPerfil: !this.state.showPerfil });
+    const { order, setUserProfile } = this.props;
+    setUserProfile(order.sell.user);
+    console.log("teste");
+    console.log(order);
   }
   closeChat = () => {
     const { closeChat } = this.props;
@@ -50,25 +51,19 @@ class Header extends React.Component {
       arrowDown: !this.state.arrowDown
     });
   };
-  renderPerfil() {
-    return <UserProfile />;
-  }
+  
   rederPictureGravatar(email){
     const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
     return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
   }
+
   render() {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
-    let { showPerfil } = this.state;
 
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total =  unitValue * order.sell.amount;
-
-    if (showPerfil) {
-      return this.renderPerfil();
-    }
     
     return (
       <div className={style.topBar}>
@@ -140,7 +135,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
   closeChat: PropTypes.func.isRequired,
-  order: PropTypes.object
+  order: PropTypes.object, 
+  setUserProfile: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -148,7 +144,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ closeChat }, dispatch);
+  bindActionCreators({ closeChat,setUserProfile }, dispatch);
 
 export default connect(
   mapStateToProps,
