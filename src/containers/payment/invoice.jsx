@@ -352,7 +352,6 @@ class Invoice extends React.Component {
                 error={errors.includes("number")}
               />
             </Grid>
-
           </div>
 
           <Grid container>

@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --hot",
     "build": "webpack",
     "start:production": "webpack-dev-server --hot --config webpack.config.prod.js",
-    "build:production": "rm -rf ./public/scripts/* && webpack --config webpack.config.prod.js",
+    "build:production": "rm -rf ./public/scripts/* && webpack --config webpack.config.prod.js && node ./public/js/versionUpdate.js",
     "clear": "sudo rm -rf ./public/scripts/* && rm -rf ./build && rm -rf ./node_modules && rm -rf yarn.lock && npm install",
     "lint": "eslint ./ --cache --ignore-pattern .gitignore",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
