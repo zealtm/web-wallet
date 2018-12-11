@@ -76,7 +76,11 @@ class Offers extends React.Component {
         value: "lunes",
         img: "images/icons/coins/lunes.png"
       },
-      myOrders: false
+      listTypeP2P: [{ title: "Escrow", value: undefined, img: undefined }, { title: "P2P", value: undefined, img: undefined }],
+      listTypeFilter: [{ title: "Todos", value: undefined, img: undefined }, { title: "Meus", value: undefined, img: undefined }],
+      myOrders: false,
+      typeP2P: "Escrow",
+      typeFlter:"Todos"
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -131,12 +135,12 @@ class Offers extends React.Component {
 
     if (orders.length <= 0) return (<div className={style.noOrder}>
       <h1>{i18n.t("P2P_NO_ORDER")}</h1>
-    </div> );
+    </div>);
     if (type == "myhistory") {
       return orders.map((val, key) => {
-        if(!tabDone){
-          if(val.status == "confirmed")
-          return <CardOffer key={key} order={val} />;
+        if (!tabDone) {
+          if (val.status == "confirmed")
+            return <CardOffer key={key} order={val} />;
         }
         if (!tabGiving) {
           if (val.status != "confirmed")
@@ -154,7 +158,7 @@ class Offers extends React.Component {
     const { coinSelect, myOrders } = this.state;
     if (myOrders == false && type != "myhistory") {
       getMyOrders(coinSelect.value);
-    }else if(type == "myhistory"){
+    } else if (type == "myhistory") {
       getHistory(coinSelect.value);
     } else {
       getFilter(coinSelect.value, "p2p", "");
@@ -190,13 +194,26 @@ class Offers extends React.Component {
           </div>
         </div>
       );
-    }    
+    }
     return;
   };
+  selectTypeP2P = (value, title, img = undefined) => {
+    this.setState({
+      ...this.state,
+      typeP2P: title
+    });
+  }
+  selectTypeFilter = (value, title, img = undefined) => {
+    this.setState({
+      ...this.state,
+      typeFlter: title
+    });
+    this.filterMyOrders(true)
+  }
 
   render() {
     const { coinsEnabled, cancelDone } = this.props;
-    const { coinSelect, myOrders } = this.state;
+    const { coinSelect, myOrders, listTypeP2P, listTypeFilter, typeP2P, typeFlter } = this.state;
 
     const activeButton = myOrders
       ? style.buttonEnable
@@ -216,25 +233,37 @@ class Offers extends React.Component {
       <div>
         <div className={style.headerActionFilter}>
           <Grid container>
-            <Grid item xs={7}>
-              <div className={style.headerSelect}>
-                <Select
-                  list={coinsEnabled}
-                  title={coinSelect.name}
-                  titleImg={coinSelect.img}
-                  selectItem={this.coinSelected}
-                  error={null}
-                  width={"89%"}
-                />
-              </div>
+            <Grid item xs={3} style={{textAlign: "center"}}>
+              <Select
+                list={coinsEnabled}
+                titleImg={coinSelect.img}
+                selectItem={this.coinSelected}
+                error={null}
+                width={"75%"}
+              />
             </Grid>
-            <Grid item xs={5}>
-              <button
-                className={activeButton}
-                onClick={() => this.filterMyOrders(true)}
-              >
-                {i18n.t("P2P_MY_LISTING")}
-              </button>
+            <Grid item xs={3} style={{textAlign: "center"}}>
+              <Select
+                list={listTypeFilter}
+                title={typeFlter}
+                selectItem={this.selectTypeFilter}
+                error={null}
+                width={"80%"}
+              />
+            </Grid>
+            <Grid item xs={3} style={{ textAlign: "center"}}>
+              <Select
+                list={listTypeP2P}
+                title={typeP2P}
+                selectItem={this.selectTypeP2P}
+                error={null}
+                width={"80%"}
+              />
+            </Grid>
+            <Grid item xs={3} style={{marginTop: "10px",textAlign: "center"}}>
+              <a href="#">
+                <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
+              </a>
             </Grid>
           </Grid>
         </div>
