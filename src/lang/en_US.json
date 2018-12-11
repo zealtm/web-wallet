@@ -536,7 +536,6 @@
   "INSTRUCTION_MODAL_COINSALE_INFO_2": "If you are using cryptocurrency as the payment form, when finishing your purchase, the coin used for the payment will be automatically debited of your Lunes Wallet and the coin chosen to purchase will be sent to your address on the Lunes Wallet.",
   "INSTRUCTION_MODAL_COINSALE_INFO_3": "The time to complete the operation varies according to the network confirmation time of the coin chosen as payment.",
 
-
   "P2P_FAILED_GET_PAYMENT_METHOD": "Failed to get payment method to this coin",
   "P2P_NO_PAYMENT_METHODS": "Application error. There's no payment methods to be used",
   "P2P_FAILED_TO_BUY_COIN": "Failed to buy this coin, try again later or contact us",
@@ -546,6 +545,7 @@
   "P2P_TO_BUY": "To buy",
   "P2P_STATUS_TEXT_1": "Progress",
   "P2P_STATUS_TEXT_2": "Completed",
+  "P2P_STATUS_TEXT_3": "Canceled",
   "P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER": "Enter additional info about the ad that potential buyers need to know.",
   "P2P_CREATE_OFFER_BUTTON_CONFIRMATION": "CREATE AD",
   "P2P_CREATE_OFFER_DESCRIPTION": "Description",

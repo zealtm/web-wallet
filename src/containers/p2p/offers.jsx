@@ -71,16 +71,23 @@ class Offers extends React.Component {
     this.state = {
       tabGiving: true,
       tabDone: false,
+      tabCanceled: false,
       coinSelect: {
         name: "Lunes",
         value: "lunes",
         img: "images/icons/coins/lunes.png"
       },
-      listTypeP2P: [{ title: "Escrow", value: undefined, img: undefined }, { title: "P2P", value: undefined, img: undefined }],
-      listTypeFilter: [{ title: "Todos", value: undefined, img: undefined }, { title: "Meus", value: undefined, img: undefined }],
+      listTypeP2P: [
+        { title: "Escrow", value: undefined, img: undefined },
+        { title: "P2P", value: undefined, img: undefined }
+      ],
+      listTypeFilter: [
+        { title: "Todos", value: undefined, img: undefined },
+        { title: "Meus", value: undefined, img: undefined }
+      ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFlter:"Todos"
+      typeFlter: "Todos"
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -110,10 +117,28 @@ class Offers extends React.Component {
 
   onChangeTab(status) {
     if (status == 1) {
-      this.setState({ ...this.state, tabGiving: false, tabDone: true });
+      this.setState({
+        ...this.state,
+        tabGiving: true,
+        tabDone: false,
+        tabCanceled: false
+      });
+    } else if (status == 2) {
+      this.setState({
+        ...this.state,
+        tabGiving: false,
+        tabDone: true,
+        tabCanceled: false
+      });
     } else {
-      this.setState({ ...this.state, tabGiving: true, tabDone: false });
+      this.setState({
+        ...this.state,
+        tabGiving: false,
+        tabDone: false,
+        tabCanceled: true
+      });
     }
+
     this.filterMyOrders(false);
   }
 
@@ -130,21 +155,28 @@ class Offers extends React.Component {
 
   renderOders = () => {
     const { orders, loading, type } = this.props;
-    const { tabGiving, tabDone } = this.state;
+    const { tabGiving, tabDone, tabCanceled } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (orders.length <= 0) return (<div className={style.noOrder}>
-      <h1>{i18n.t("P2P_NO_ORDER")}</h1>
-    </div>);
+    if (orders.length <= 0)
+      return (
+        <div className={style.noOrder}>
+          <h1>{i18n.t("P2P_NO_ORDER")}</h1>
+        </div>
+      );
     if (type == "myhistory") {
       return orders.map((val, key) => {
-        if (!tabDone) {
-          if (val.status == "confirmed")
-            return <CardOffer key={key} order={val} />;
+        if (tabGiving && val.status == "confirmed") {
+          return <CardOffer key={key} order={val} />;
         }
-        if (!tabGiving) {
-          if (val.status != "confirmed")
-            return <CardOffer key={key} order={val} />;
+
+        if (tabDone && val.status == "confirmed") {
+          return <CardOffer key={key} order={val} />;
+        }
+
+        if (tabCanceled && val.status === "canceled") {
+          console.warn(val.status);
+          return <CardOffer key={key} order={val} />;
         }
       });
     }
@@ -156,13 +188,13 @@ class Offers extends React.Component {
   filterMyOrders = filtermyorder => {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
+
     if (myOrders == false && type != "myhistory") {
       getMyOrders(coinSelect.value);
     } else if (type == "myhistory") {
       getHistory(coinSelect.value);
     } else {
       getFilter(coinSelect.value, "p2p", "");
-
     }
 
     if (filtermyorder) {
@@ -175,22 +207,28 @@ class Offers extends React.Component {
 
   renderFilters = () => {
     const { type } = this.props;
-    const { tabGiving, tabDone } = this.state;
+    const { tabGiving, tabDone, tabCanceled } = this.state;
 
     if (type === "myhistory") {
       return (
         <div className={style.tabContent}>
           <div
-            className={tabGiving ? style.itemTab : style.itemTabActive}
+            className={!tabGiving ? style.itemTab : style.itemTabActive}
             onClick={() => this.onChangeTab(1)}
           >
             {i18n.t("P2P_STATUS_TEXT_1")}
           </div>
           <div
-            className={tabDone ? style.itemTab : style.itemTabActive}
-            onClick={() => this.onChangeTab(0)}
+            className={!tabDone ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(2)}
           >
             {i18n.t("P2P_STATUS_TEXT_2")}
+          </div>
+          <div
+            className={!tabCanceled ? style.itemTab : style.itemTabActive}
+            onClick={() => this.onChangeTab(3)}
+          >
+            {i18n.t("P2P_STATUS_TEXT_3")}
           </div>
         </div>
       );
@@ -202,22 +240,24 @@ class Offers extends React.Component {
       ...this.state,
       typeP2P: title
     });
-  }
+  };
   selectTypeFilter = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
       typeFlter: title
     });
-    this.filterMyOrders(true)
-  }
+    this.filterMyOrders(true);
+  };
 
   render() {
     const { coinsEnabled, cancelDone } = this.props;
-    const { coinSelect, myOrders, listTypeP2P, listTypeFilter, typeP2P, typeFlter } = this.state;
-
-    const activeButton = myOrders
-      ? style.buttonEnable
-      : style.buttonBorderGreen;
+    const {
+      coinSelect,
+      listTypeP2P,
+      listTypeFilter,
+      typeP2P,
+      typeFlter
+    } = this.state;
 
     if (cancelDone)
       return (
@@ -233,7 +273,7 @@ class Offers extends React.Component {
       <div>
         <div className={style.headerActionFilter}>
           <Grid container>
-            <Grid item xs={3} style={{textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={coinsEnabled}
                 titleImg={coinSelect.img}
@@ -242,7 +282,7 @@ class Offers extends React.Component {
                 width={"75%"}
               />
             </Grid>
-            <Grid item xs={3} style={{textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={listTypeFilter}
                 title={typeFlter}
@@ -251,7 +291,7 @@ class Offers extends React.Component {
                 width={"80%"}
               />
             </Grid>
-            <Grid item xs={3} style={{ textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={listTypeP2P}
                 title={typeP2P}
@@ -260,7 +300,11 @@ class Offers extends React.Component {
                 width={"80%"}
               />
             </Grid>
-            <Grid item xs={3} style={{marginTop: "10px",textAlign: "center"}}>
+            <Grid
+              item
+              xs={3}
+              style={{ marginTop: "10px", textAlign: "center" }}
+            >
               <a href="#">
                 <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
               </a>
