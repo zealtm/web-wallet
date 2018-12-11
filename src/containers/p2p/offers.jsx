@@ -76,11 +76,17 @@ class Offers extends React.Component {
         value: "lunes",
         img: "images/icons/coins/lunes.png"
       },
-      listTypeP2P: [{ title: "Escrow", value: undefined, img: undefined }, { title: "P2P", value: undefined, img: undefined }],
-      listTypeFilter: [{ title: "Todos", value: undefined, img: undefined }, { title: "Meus", value: undefined, img: undefined }],
+      listTypeP2P: [
+        { title: "Escrow", value: undefined, img: undefined },
+        { title: "P2P", value: undefined, img: undefined }
+      ],
+      listTypeFilter: [
+        { title: "Todos", value: undefined, img: undefined },
+        { title: "Meus", value: undefined, img: undefined }
+      ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFlter:"Todos"
+      typeFlter: "Todos"
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -133,9 +139,12 @@ class Offers extends React.Component {
     const { tabGiving, tabDone } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (orders.length <= 0) return (<div className={style.noOrder}>
-      <h1>{i18n.t("P2P_NO_ORDER")}</h1>
-    </div>);
+    if (orders.length <= 0)
+      return (
+        <div className={style.noOrder}>
+          <h1>{i18n.t("P2P_NO_ORDER")}</h1>
+        </div>
+      );
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (!tabDone) {
@@ -162,7 +171,6 @@ class Offers extends React.Component {
       getHistory(coinSelect.value);
     } else {
       getFilter(coinSelect.value, "p2p", "");
-
     }
 
     if (filtermyorder) {
@@ -202,22 +210,25 @@ class Offers extends React.Component {
       ...this.state,
       typeP2P: title
     });
-  }
+  };
+
   selectTypeFilter = (value, title, img = undefined) => {
+    this.filterMyOrders(true);
+
     this.setState({
-      ...this.state,
       typeFlter: title
     });
-    this.filterMyOrders(true)
-  }
+  };
 
   render() {
     const { coinsEnabled, cancelDone } = this.props;
-    const { coinSelect, myOrders, listTypeP2P, listTypeFilter, typeP2P, typeFlter } = this.state;
-
-    const activeButton = myOrders
-      ? style.buttonEnable
-      : style.buttonBorderGreen;
+    const {
+      coinSelect,
+      listTypeP2P,
+      listTypeFilter,
+      typeP2P,
+      typeFlter
+    } = this.state;
 
     if (cancelDone)
       return (
@@ -233,7 +244,7 @@ class Offers extends React.Component {
       <div>
         <div className={style.headerActionFilter}>
           <Grid container>
-            <Grid item xs={3} style={{textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={coinsEnabled}
                 titleImg={coinSelect.img}
@@ -242,7 +253,7 @@ class Offers extends React.Component {
                 width={"75%"}
               />
             </Grid>
-            <Grid item xs={3} style={{textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={listTypeFilter}
                 title={typeFlter}
@@ -251,7 +262,7 @@ class Offers extends React.Component {
                 width={"80%"}
               />
             </Grid>
-            <Grid item xs={3} style={{ textAlign: "center"}}>
+            <Grid item xs={3} style={{ textAlign: "center" }}>
               <Select
                 list={listTypeP2P}
                 title={typeP2P}
@@ -260,7 +271,11 @@ class Offers extends React.Component {
                 width={"80%"}
               />
             </Grid>
-            <Grid item xs={3} style={{marginTop: "10px",textAlign: "center"}}>
+            <Grid
+              item
+              xs={3}
+              style={{ marginTop: "10px", textAlign: "center" }}
+            >
               <a href="#">
                 <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
               </a>
