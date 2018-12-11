@@ -7,7 +7,8 @@ import { bindActionCreators } from "redux";
 import {
   openChat,
   setCancelOrder,
-  openAvaliation
+  openAvaliation,
+  setUserProfile
 } from "../../redux/p2pAction";
 
 // UTILS
@@ -62,6 +63,12 @@ class CardOffer extends React.Component {
     openChat();
   };
 
+  openUserProfile = e => {
+    e.stopPropagation();
+    const { order, setUserProfile } = this.props;
+    setUserProfile(order.sell.user);
+  };
+
   handleCancelOrder = e => {
     e.stopPropagation();
     const { setCancelOrder, order } = this.props;
@@ -83,9 +90,16 @@ class CardOffer extends React.Component {
     }
   };
 
-  rederPictureGravatar(email){
-    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
-    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+  rederPictureGravatar(email) {
+    const defaultImg =
+      "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return (
+      "https://s.gravatar.com/avatar/" +
+      encryptMd5(email.toLowerCase()) +
+      "?s=300" +
+      "&d=" +
+      defaultImg
+    );
   }
 
   render() {
@@ -106,10 +120,11 @@ class CardOffer extends React.Component {
               alt="avatar"
               src={this.rederPictureGravatar(order.sell.user.email)}
               className={style.avatar}
+              onClick={this.openUserProfile}
             />
           </Grid>
           <Grid item xs={5}>
-            <span className={style.name}>
+            <span className={style.name} onClick={this.openUserProfile}>
               {order.sell.user.name} {order.sell.user.surname}
             </span>
             <span className={style.textSmall}>{dateCreate}</span>
@@ -180,7 +195,8 @@ CardOffer.propTypes = {
   order: PropTypes.object,
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  setUserProfile: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -189,7 +205,10 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openChat, setCancelOrder, openAvaliation }, dispatch);
+  bindActionCreators(
+    { openChat, setCancelOrder, openAvaliation, setUserProfile },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

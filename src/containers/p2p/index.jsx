@@ -80,7 +80,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+    const contentTabIcons = ["tag", "user-star","user", "newoffer" ];
     const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
