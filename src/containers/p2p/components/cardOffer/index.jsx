@@ -127,7 +127,8 @@ class CardOffer extends React.Component {
             <span className={style.name} onClick={this.openUserProfile}>
               {order.sell.user.name} {order.sell.user.surname}
             </span>
-            <span className={style.textSmall}>{dateCreate}</span>
+            <span className={style.dateCreate}>{dateCreate}</span>
+            <span className={style.hourCreate}>{hourCreate}</span>
             <span className={style.numberText}>{order.sell.amount}</span>
             <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
             <div className={style.offerText}>
@@ -135,9 +136,14 @@ class CardOffer extends React.Component {
               {order.sell.coin.toUpperCase()}
             </div>
           </Grid>
-          <Grid item xs={5} style={{ paddingLeft: 10 }}>
+          <Grid item xs={5}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
+              <img 
+                className={style.cancelOffer}
+                src="images/icons/close/close.png"
+                > 
+                </img>
               {userEmail == order.sell.user.email &&
               order.status != "confirmed" ? (
                 <button
@@ -152,8 +158,10 @@ class CardOffer extends React.Component {
                 </button>
               ) : null}
             </div>
-            <span className={style.textSmall}>
-              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
+            <span className={style.defaultFiat}>
+            {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
+            </span>
+            <span className={style.unit}>
               {parseFloat(unitValue).toFixed(2)}
             </span>
             <ArrowForward className={style.arrowPrice} />
@@ -165,7 +173,7 @@ class CardOffer extends React.Component {
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
               {order.buy.coin.toUpperCase()}
             </div>
-            <span className={style.hours}>{hourCreate}</span>
+
           </Grid>
           <Grid item xs={2} />
           <Grid
