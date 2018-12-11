@@ -13,6 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 // COMPONENTS
 import StarVotes from "../components/starvotes";
+import Loading from "../../../components/loading";
 
 // styles
 import style from "../style.css";
@@ -44,9 +45,11 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
     const { userProfile } = this.props;
     const dateCreate = formatDate(userProfile.createdAt);
+
+    if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
     return (
       <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
@@ -65,9 +68,9 @@ class UserProfile extends React.Component {
                     <StarVotes votes={userProfile.rating.average} />
                   )}
                 </div>
-                <span className={style.textSmall}>
+               { userProfile && <span className={style.textSmall}>
                   {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
-                </span>{" "}
+                </span>}
               </p>{" "}
               <br />
             </div>
@@ -158,10 +161,12 @@ class UserProfile extends React.Component {
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   getProfile: PropTypes.func,
-  userProfile: PropTypes.object
+  userProfile: PropTypes.object,
+  loading: PropTypes.bool
 };
 const mapStateToProps = store => ({
-  userProfile: store.p2p.userProfile
+  userProfile: store.p2p.userProfile,
+  loading: store.p2p.loading
 });
 
 const mapDispatchToProps = dispatch =>

@@ -185,6 +185,7 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         userProfile: action.userProfile,
+        loading: false
       };
 
     default: {
