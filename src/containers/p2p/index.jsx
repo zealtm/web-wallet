@@ -103,7 +103,7 @@ class P2P extends React.Component {
           <ConfirmModal />
         ) : (
           <div>
-            <SellConfirmModal />
+            <Chat />
           </div>
         )}
       </div>
