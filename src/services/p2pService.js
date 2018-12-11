@@ -115,7 +115,7 @@ class P2pService {
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      
+
       if (response.data.code !== 200) {
         throw new Error(i18n.t("P2P_FAILED_TO_BUY_COIN"));
       }
@@ -137,7 +137,7 @@ class P2pService {
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if(response.data.data == undefined){
+      if (response.data.data == undefined) {
         return [];
       }
 
@@ -163,6 +163,23 @@ class P2pService {
       }
 
       return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async getProfile(token, userId) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const request = userId
+        ? `${BASE_URL}/coin/lunes/p2p/profile?userId=${userId}`
+        : `${BASE_URL}/coin/lunes/p2p/profile`;
+
+      let response = await axios.get(request, API_HEADER);
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return response.data;
     } catch (error) {
       return internalServerError();
     }

@@ -71,19 +71,31 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes"}];
-    if(response.cripto){
-      response.cripto.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+    let cripto = [
+      { title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes" }
+    ];
+    if (response.cripto) {
+      response.cripto.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/coins/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
 
-    if(response.fiat){
-      response.fiat.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
+    if (response.fiat) {
+      response.fiat.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/fiat/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
@@ -228,4 +240,29 @@ export function* closeAvaliation() {
   yield put({
     type: "CLOSE_AVALIATION_P2P_REDUCER"
   });
+}
+
+export function* setTabIconSaga(payload) {
+  yield put({
+    type: "SET_TAB_ICON_REDUCER",
+    tabIcon: payload.tabIcon
+  });
+}
+
+export function* getProfileSaga(payload) {
+  try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      p2pService.getProfile,
+      token,
+      payload.userProfile
+    );
+    yield put({
+      type: "GET_PROFILE_REDUCER",
+      userProfile: response.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
 }

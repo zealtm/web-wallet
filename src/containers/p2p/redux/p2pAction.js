@@ -88,3 +88,13 @@ export const openAvaliation = () => ({
 export const closeAvaliation = () => ({
   type: "CLOSE_AVALIATION_P2P"
 });
+
+export const setTabIcon = tabIcon => ({
+  type: "SET_TAB_ICON",
+  tabIcon
+});
+
+export const getProfile = userProfile => ({
+  type: "GET_PROFILE",
+  userProfile
+});
