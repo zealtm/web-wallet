@@ -8,3 +8,18 @@
     height: 392px;
   }
 }
+:local .finalMessage {
+  width: 100%;
+  text-align: center;
+}
+:local .finalMessage > .line {
+  width: 40%;
+  height: 1px;
+  background: white;
+  display: block;
+  margin: 20px auto 10px auto;
+}
+/* .finalMessage > .message (cant compose in this way)*/
+:local .message {
+  composes: textDefault from './../../../components/bases/textBase.css'
+}

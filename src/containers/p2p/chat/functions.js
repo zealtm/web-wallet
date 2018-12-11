@@ -1,4 +1,6 @@
 import i18n from "./../../../utils/i18n"
+import style from "./style.css"
+import { convertISO8601 } from "./../../../utils/numbers.js"
 
 export const getChatBundle = (data = {}) => {
   try {
@@ -17,4 +19,32 @@ export const getChatBundle = (data = {}) => {
     console.error(err)
     window.store.dispatch({type:"REQUEST_FAILED",message: i18n.t("P2P_CHAT_FAILED_TO_OPEN")})
   }
+}
+
+export const awaitChatLoadUp = () => {
+  return new Promise((resolve) => { //eslint-disable-line
+    let interval = setInterval(() => {
+      let chatBodyEL = document.querySelector(".chatBody")
+      if (!chatBodyEL) return;
+      let baseEL = chatBodyEL.querySelector('.base')
+      if (!baseEL) return;
+      resolve(true)
+      clearInterval(interval)
+    }, 500)
+  })
+}
+export const appendFinalMessage = async (timestamp) => {
+  await awaitChatLoadUp()
+  let time = convertISO8601(timestamp)
+  let baseEL = document.querySelector('.base')
+  let line = document.createElement('div')
+  line.className = style.line
+  let message = document.createElement('div')
+  message.className = style.message
+  message.textContent = i18n.t("P2P_CHAT_NEGOTIATION_FINISHED_AT") + time.date
+  let finalMessage = document.createElement('div')
+  finalMessage.className = style.finalMessage
+  finalMessage.appendChild(line)
+  finalMessage.appendChild(message)
+  baseEL.appendChild(finalMessage)
 }
