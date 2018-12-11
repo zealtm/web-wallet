@@ -186,6 +186,13 @@ const p2p = (state = initialState, action) => {
         ...state,
         tabIcon: 2,
         userProfile: action.userProfile
+       };
+
+    case "GET_PROFILE_REDUCER":
+      return {
+        ...state,
+        userProfile: action.userProfile,
+        loading: false
       };
 
     default: {

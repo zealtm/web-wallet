@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUserProfile } from "../redux/p2pAction";
+import { setUserProfile, getProfile } from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -13,6 +13,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 // COMPONENTS
 import StarVotes from "../components/starvotes";
+import Loading from "../../../components/loading";
 
 // styles
 import style from "../style.css";
@@ -20,6 +21,7 @@ import colors from "../../../components/bases/colors";
 
 // UTILS
 import i18n from "../../../utils/i18n";
+import { formatDate } from "../../../utils/numbers";
 
 const styles = {
   root: {
@@ -36,8 +38,19 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount = () => {
+    const { getProfile } = this.props;
+    getProfile();
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
+    const { userProfile } = this.props;
+    const dateCreate = formatDate(userProfile.createdAt);
+
+    if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
+    
     return (
       <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
@@ -49,13 +62,16 @@ class UserProfile extends React.Component {
               />
               <div className={style.online} />
               <p className={style.userName}>
-                Felipe Mendes <br />{" "}
+                {userProfile.name} {userProfile.surname}
+                <br />{" "}
                 <div className={style.boxStar}>
-                  <StarVotes votes={4} />
+                  {userProfile.rating && (
+                    <StarVotes votes={userProfile.rating.average} />
+                  )}
                 </div>
-                <span className={style.textSmall}>
-                  {i18n.t("P2P_PROFILE_USER_DATE")} 12/10/1998
-                </span>{" "}
+               { userProfile && <span className={style.textSmall}>
+                  {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
+                </span>}
               </p>{" "}
               <br />
             </div>
@@ -64,10 +80,7 @@ class UserProfile extends React.Component {
                 {i18n.t("P2P_PROFILE_DESCRIPTION")}
               </span>
               <div className={style.textDescription}>
-                <p>
-                  3º maior Node da rede e faço negociação na plataforma desde
-                  2015.
-                </p>
+                <p>{userProfile.description}</p>
               </div>
             </div>
           </div>
@@ -146,18 +159,29 @@ class UserProfile extends React.Component {
     );
   }
 }
+
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
-  setUserProfile: PropTypes.func
+  getProfile: PropTypes.func,
+  userProfile: PropTypes.object,
+  setUserProfile: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
+  userProfile: store.p2p.userProfile,
   userEmail: store.user.user.email,
-  userProfile: store.p2p.userProfile
+  loading: store.p2p.loading
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setUserProfile }, dispatch);
+  bindActionCreators(
+    {
+      getProfile,
+      setUserProfile
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
