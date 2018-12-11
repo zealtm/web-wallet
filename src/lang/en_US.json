@@ -429,7 +429,7 @@
   "INSTRUCTION_MODAL_PAY_2": "From R$1.000,01 to R$3.000,00 - 5%",
   "INSTRUCTION_MODAL_PAY_3": "Above de R$3.000,01 - 4,5%",
   "INSTRUCTION_MODAL_PAY__BTC_0": "Bitcoin (BTC), Litecoin (LTC), Bitcoin Cash (BCH), Dash (DASH), Tether (USDT) e Ethereum (ETH)",
-  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%", 
+  "INSTRUCTION_MODAL_PAY__BTC_1": "Up to R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "From R$1.000,01 to R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Above de R$3.000,01 - 2,5%",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Network mining fee (Value varies according to the currency network + 20% of the Lunes fee) + 5% of the service charge.",
@@ -471,7 +471,6 @@
   "INSTRUCTION_MODAL_COINSALE_INFO_1": "Our service fee is 5%. That is, the value used as the base price in your wallet is increased by 5% as our service fee.",
   "INSTRUCTION_MODAL_COINSALE_INFO_2": "If you are using cryptocurrency as the payment form, when finishing your purchase, the coin used for the payment will be automatically debited of your Lunes Wallet and the coin chosen to purchase will be sent to your address on the Lunes Wallet.",
   "INSTRUCTION_MODAL_COINSALE_INFO_3": "The time to complete the operation varies according to the network confirmation time of the coin chosen as payment.",
-
 
   "P2P_FAILED_GET_PAYMENT_METHOD": "Failed to get payment method to this coin",
   "P2P_NO_PAYMENT_METHODS": "Application error. There's no payment methods to be used",
@@ -526,6 +525,7 @@
   "P2P_TEXT_10": "You are sending",
   "P2P_TEXT_11": "To pay for a P2P transaction",
   "P2P_TEXT_12": "The fee of your transaction on the Lunes network is",
+  "P2P_TEXT_13": "Congratulations, you just made a sale! Once you make sure the deposit was successful, confirm the transaction.",
   "P2P_BUTTON_CONFIRM": "Return",
   "P2P_TRY_AGAIN": "Try again",
   "P2P_MONTHLY_SIGNATURE": "Monthly",
@@ -537,7 +537,8 @@
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
-  "P2P_MY_LISTING": "My listings", 
+  "P2P_MY_LISTING": "My listings",
   "P2P_CHANGE_ADDRESS": "Fill the address for receive",
-  "P2P_COMING_SOON": "Rating coming soon !"
+  "P2P_COMING_SOON": "Rating coming soon !",
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt"
 }

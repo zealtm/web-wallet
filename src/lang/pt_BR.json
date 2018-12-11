@@ -414,11 +414,11 @@
   "INSTRUCTION_MODAL_PAY_INFO_3": " 7:00 às 20:00 horas.",
   "INSTRUCTION_MODAL_PAY_INFO_4": "Em caso de problemas com o atendimento do pedido, as moedas enviadas serão automaticamente devolvidas ao endereço Lunes da moeda.",
   "INSTRUCTION_MODAL_PAY_0": "Lunes (LUNES)",
-  "INSTRUCTION_MODAL_PAY_1": "Até R$1.000,00 - 6%", 
+  "INSTRUCTION_MODAL_PAY_1": "Até R$1.000,00 - 6%",
   "INSTRUCTION_MODAL_PAY_2": "De R$1.000,01 a R$3.000,00 - 5%",
   "INSTRUCTION_MODAL_PAY_3": "Acima de R$3.000,01 - 4,5%",
   "INSTRUCTION_MODAL_PAY__BTC_0": "Bitcoin (BTC), Litecoin (LTC), Bitcoin Cash (BCH), Dash (DASH), Tether (USDT) e Ethereum (ETH)",
-  "INSTRUCTION_MODAL_PAY__BTC_1": "Até R$1.000,00 - 3,5%", 
+  "INSTRUCTION_MODAL_PAY__BTC_1": "Até R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "De R$1.000,01 a R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Acima de R$3.000,01 - 2,5%",
   "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Taxa de mineração de rede (O valor varia de acordo com a rede da moeda + 20% da taxa Lunes) + 5% da taxa de serviço.",
@@ -516,6 +516,7 @@
   "P2P_TEXT_10": "Você está mandando",
   "P2P_TEXT_11": "Para pagamento na plataforma P2P",
   "P2P_TEXT_12": "O fee da sua transação na rede Lunes é",
+  "P2P_TEXT_13": "Parabéns, você acaba de fazer uma venda. Assim que você se certificar que o depósito foi realizado, confirme que a transação foi um sucesso!",
   "P2P_BUTTON_CONFIRM": "Voltar",
   "P2P_TRY_AGAIN": "Tentar novamente",
   "P2P_MONTHLY_SIGNATURE": "Mensal",
@@ -529,5 +530,6 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
   "P2P_MY_LISTING": "Meus anúncios",
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
-  "P2P_COMING_SOON": "Avaliação em breve disponível !"
+  "P2P_COMING_SOON": "Avaliação em breve disponível !",
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento"
 }

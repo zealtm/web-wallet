@@ -15,6 +15,7 @@ import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
+import SellConfirmModal from "./modal/sellConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -102,7 +103,7 @@ class P2P extends React.Component {
           <ConfirmModal />
         ) : (
           <div>
-            <Chat />
+            <SellConfirmModal />
           </div>
         )}
       </div>
