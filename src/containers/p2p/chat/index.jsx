@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // LOCAL COMPONENTS
 import Header from "../components/header";
 import DepositModal from "../modal/deposit";
+import Rooms from "./rooms.jsx"
 
 //REDUX
 import { connect } from "react-redux";
@@ -65,15 +66,17 @@ class Chat extends React.Component {
   }
 
   render() {
-    const { openDeposit } = this.props.p2pStore;
+    const { openDeposit, chatDetails } = this.props.p2pStore;
+    const { typeOfUser } = chatDetails;
+    const { rooms } = chatDetails.currentOrder.chat
     return (
       <div>
         {openDeposit == false ? (
           <div className={style.baseChat}>
             <Header />
             <div className={style.chatTarget+' chatTarget'} id={"chatTarget"}>
-              {this.state.chatTargetContent}
-              {/*Chat will be rendered here, and loading will be removed*/}
+              { typeOfUser === 'seller' ? <Rooms rooms={rooms}/> : this.state.chatTargetContent}
+              {/*Chat will be rendered here, and this content will be removed*/}
             </div>
           </div>
         ) : (

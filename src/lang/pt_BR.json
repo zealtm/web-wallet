@@ -527,5 +527,6 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
   "P2P_MY_LISTING": "Meus anúncios",
   "P2P_CHAT_NEGOTIATION_FINISHED_AT": "Essa negociação foi finalizada em ",
-  "P2P_CHAT_NEGOTIATION_CANCELED_AT": "Essa negociação foi cancelada em "
+  "P2P_CHAT_NEGOTIATION_CANCELED_AT": "Essa negociação foi cancelada em ",
+  "P2P_CHAT_STATIC_BUYER_MESSAGE": "Olá, eu vi sua oferta, e gostaria de conversar."
 }

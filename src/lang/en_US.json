@@ -543,5 +543,7 @@
   "P2P_CHAT_FAILED_TO_OPEN": "Failed to open chat, try again",
   "P2P_CHAT_SELECT_AN_USER_TO_CHAT": "Select an user above to chat with",
   "P2P_CHAT_NEGOTIATION_FINISHED_AT": "This negotitation was ended at ",
-  "P2P_CHAT_NEGOTIATION_CANCELED_AT": "This negotitation was canceled at "
+  "P2P_CHAT_NEGOTIATION_CANCELED_AT": "This negotitation was canceled at ",
+  "P2P_CHAT_STATIC_BUYER_MESSAGE": "Hello, I saw your offer, and I'd want to talk with you",
+  "P2P2P_CHAT_ROOM_LOADING": "Hold on"
 }
