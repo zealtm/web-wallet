@@ -90,12 +90,13 @@ class Definitions extends React.Component {
     }
 
     if (currencyDefault === null) setDefaultFiat("USD");
-
     if (cryptoDefault === null) setDefaultCrypto("LUNES");
 
-    this.setState({ switchBoxA: metadata });
-    this.setState({ coinValue: cryptoDefault.toUpperCase() });
-    this.setState({ currencyValue: currencyDefault.toUpperCase() });
+    this.setState({
+      switchBoxA: metadata,
+      coinValue: cryptoDefault.toUpperCase(),
+      currencyValue: currencyDefault.toUpperCase()
+    });
   }
 
   handleSwitchBoxA = () => {
