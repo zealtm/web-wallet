@@ -51,11 +51,9 @@ class Chat extends React.Component {
     let { chatDetails } = this.props.p2pStore
     let { typeOfUser } = chatDetails
     let { seller, buyer, currentOrder } = chatDetails
-    // if (!buyer || (buyer && !buyer.id)) return;
     let { id: buyerId } = buyer || {}
     let { id: adOwnerId } = seller
     let { id: adId } = currentOrder
-    console.warn({typeOfUser})
     if (typeOfUser === 'buyer') {
       getChatBundle({adId, adOwnerId, buyerId})
       this.setState({chatTargetContent: <Loading/>})
