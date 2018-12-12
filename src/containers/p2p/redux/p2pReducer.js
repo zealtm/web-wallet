@@ -14,6 +14,7 @@ const initialState = {
     currentRoom: undefined
   },
   openDeposit: false,
+  openAvaliation: false,
   loading: false,
   loadingCreateOrder: false,
   modalStep: 1,
@@ -38,7 +39,13 @@ const initialState = {
     paymentMethods: [],
     paymentMethod: {}
   },
+<<<<<<< HEAD
   cancelDone:false,
+=======
+  cancelDone: false,
+  tabIcon: 0,
+  userProfile: []
+>>>>>>> devp2p
 };
 
 const p2p = (state = initialState, action) => {
@@ -101,15 +108,20 @@ const p2p = (state = initialState, action) => {
     case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
+<<<<<<< HEAD
         loading:false,
         cancelDone: true,
+=======
+        loading: false,
+        cancelDone: true
+>>>>>>> devp2p
       };
 
     case "CLEAR_CANCEL_P2P":
       return {
         ...state,
         cancelDone: false
-      }
+      };
 
     case "GET_MY_ORDERS_REDUCER":
       return {
@@ -142,29 +154,41 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         loadingCreateOrder: action.loading
+<<<<<<< HEAD
       }
+=======
+      };
+>>>>>>> devp2p
 
     case "CREATE_OFFER_DONE":
       return {
         ...state,
         loadingCreateOrder: false,
         createDone: true
+<<<<<<< HEAD
       }
+=======
+      };
+>>>>>>> devp2p
 
     case "CREATE_OFFER_ERROR":
       return {
         ...state,
         loadingCreateOrder: false,
         createError: true
+<<<<<<< HEAD
       }
+=======
+      };
+>>>>>>> devp2p
 
     case "CREATE_OFFER_CLEAR":
       return {
         ...state,
         loadingCreateOrder: false,
         createDone: false,
-        createError: false,
-      }
+        createError: false
+      };
 
     case "OPEN_DEPOSIT_P2P_REDUCER":
       return {
@@ -176,11 +200,51 @@ const p2p = (state = initialState, action) => {
         }
       };
 
-      case "CLOSE_DEPOSIT_P2P_REDUCER":
+    case "CLOSE_DEPOSIT_P2P_REDUCER":
       return {
         ...state,
         openDeposit: false
       };
+
+    case "OPEN_AVALIATION_P2P_REDUCER":
+      return {
+        ...state,
+        openAvaliation: true
+      };
+
+    case "CLOSE_AVALIATION_P2P_REDUCER":
+      return {
+        ...state,
+        openAvaliation: false,
+        tabIcon: 1
+      };
+
+    case "SET_TAB_ICON_REDUCER":
+      return {
+        ...state,
+        tabIcon: action.tabIcon
+      };
+
+    case "SET_USER_PROFILE_REDUCER":
+      return {
+        ...state,
+        tabIcon: 2,
+        userProfile: action.userProfile, 
+        chatOpened: false,
+       };
+
+    case "GET_PROFILE_REDUCER":
+      return {
+        ...state,
+        userProfile: action.userProfile,
+        loading: false
+      };
+
+    case "CLEAR_USER_PROFILE":
+      return {
+        ...state,
+        userProfile: []
+      }
 
     default: {
       return {

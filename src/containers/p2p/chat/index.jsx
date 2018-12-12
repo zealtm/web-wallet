@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Header from "../components/header";
 import DepositModal from "../modal/deposit";
 import Rooms from "./rooms.jsx"
+import ConfirmModal from "../modal/confirm";
 
 //REDUX
 import { connect } from "react-redux";
@@ -69,7 +70,9 @@ class Chat extends React.Component {
     const { rooms } = chatDetails.currentOrder.chat
     return (
       <div>
-        {openDeposit == false ? (
+        {openDeposit == true ? (
+          <DepositModal />
+        ) : (
           <div className={style.baseChat}>
             <Header />
             <div className={style.chatTarget+' chatTarget'} id={"chatTarget"}>
@@ -77,8 +80,6 @@ class Chat extends React.Component {
               {/*Chat will be rendered here, and this content will be removed*/}
             </div>
           </div>
-        ) : (
-          <DepositModal />
         )}
       </div>
     );

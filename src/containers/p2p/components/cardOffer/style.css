@@ -10,6 +10,16 @@
   height: 30px;
 }
 
+@media only screen and (max-width: 599px) {
+  :local .avatar {
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    margin-top:0px;
+  }
+}
+
 :local .textGreen {
   composes: clGreenDefault from "../../../../components/bases/colorBase.css";
 }
@@ -21,9 +31,42 @@
   padding-bottom: 3px;
 }
 
+:local .dateCreate {
+  opacity: 0.5;
+  font-size: 8px;
+  display: inline-block;
+}
+
+:local .hourCreate {
+  opacity: 0.5;
+  font-size: 8px;
+  margin-left: 10px;
+
+}
+
+:local .cancelOffer {
+  display: inline;
+  width: 9.7px;
+  height: 9.7px;
+  
+}
+
+:local .unit {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 8px;
+}
+
+:local .defaultFiat {
+  display: inline-block;
+  composes: textGreen;
+  font-size: 8px;
+}
+
 :local .textSmall {
   composes: textGreen;
-  font-size: 11px;
+  font-size: 8px;
+  margin-right: 10px;
   display: block;
 }
 
@@ -34,21 +77,13 @@
   margin-top: 4px;
 }
 
+
 :local .arrowPrice {
   composes: textGreen;
-  margin-left: -20px;
+  margin-left: -35px;
   float: left;
-  margin-top: 2px;
+  margin-top: 20px;
   max-width: 14px;
-}
-
-:local .hours {
-  font-size: 9px;
-  opacity: 0.5;
-  display: block;
-  text-align: right;
-  margin-top: 10px;
-  width: 85px;
 }
 
 :local .boxDetails {
@@ -64,7 +99,9 @@
   margin-bottom: 15px;
   border-radius: 6px;
   font-size: 11px;
+  word-wrap: break-word;
 }
+
 
 :local .btContinue {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
@@ -116,13 +153,25 @@
   opacity: 1;
 }
 
-/* . SCROLLBAR */
-::-webkit-scrollbar {
-  background-color: #654fa4;
-  border-radius: 6px;
-}
 
-::-webkit-scrollbar-thumb {
-  background-color: #68f285;
-  border-radius: 6px;
+@media only screen and (max-width: 599px) {
+  :local .name {
+    font-size: 12px;
+  }
+
+  :local .numberText {
+    font-size: 12px;
+  }
+
+  :local .textDetails {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    font-size: 10px;
+  }
+
+  :local .btContinue {
+    width: 100%;
+  }
 }
