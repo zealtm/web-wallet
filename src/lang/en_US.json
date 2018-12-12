@@ -444,6 +444,7 @@
   "ALIAS_ERROR_TRANSACTION": "Could not make a transaction from",
   "ALIAS_INFORMED_INCORRECT": "The informed alias is incorrect!",
   "ALIAS_MODAL_TRANSACTION": "To confirm your transaction, insert your password: ",
+  "SETTINGS_P2P": "Configurações P2P",
 
   "MENU_BUYCOINS": "Buy",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
