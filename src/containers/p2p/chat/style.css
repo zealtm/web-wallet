@@ -86,3 +86,9 @@
   margin: 0 auto 0 auto;
   height: 100%;
 }
+
+
+:local .defaultWhiteText {
+  composes: textDefault from "./../../../components/bases/textBase.css";
+  text-align: center;
+}

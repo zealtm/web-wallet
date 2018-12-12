@@ -59,7 +59,7 @@ class UserProfile extends React.Component {
     const dateCreate = formatDate(userProfile.createdAt);
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
-    
+
     return (
       <Grid container className={style.baseUserProfile}>
         <Grid item xs={12} sm={12}>
@@ -70,7 +70,7 @@ class UserProfile extends React.Component {
                 className={style.avatarProfile}
               />
               <div className={style.online} />
-              <p className={style.userName}>
+              <div className={style.userName}>
                 {userProfile.name} {userProfile.surname}
                 <br />{" "}
                 <div className={style.boxStar}>
@@ -81,7 +81,7 @@ class UserProfile extends React.Component {
                { userProfile && <span className={style.textSmall}>
                   {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
                 </span>}
-              </p>{" "}
+              </div>{" "}
               <br />
             </div>
             <div className={style.userDescription}>

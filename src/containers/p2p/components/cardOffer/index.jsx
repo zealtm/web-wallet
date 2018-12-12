@@ -4,16 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-<<<<<<< HEAD
-import { prepareOrOpenChat, setCancelOrder } from "../../redux/p2pAction";
-=======
 import {
-  openChat,
+  prepareOrOpenChat,
   setCancelOrder,
   openAvaliation,
   setUserProfile
 } from "../../redux/p2pAction";
->>>>>>> devp2p
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -47,30 +43,25 @@ class CardOffer extends React.Component {
     });
   };
 
-<<<<<<< HEAD
   prepareOrOpenChat = order => {
     const { prepareOrOpenChat } = this.props;
     prepareOrOpenChat(order);
-=======
+  };
+
   handleClick = () => {
     const { order } = this.props;
     if (this.props.type == undefined && order.status == "confirmed") {
-      this.openAvaliation();
+      // this.openAvaliation(); //before
+      this.prepareOrOpenChat(this.props.order);
     } else {
-      this.handleDetails();
+      // this.handleDetails(); //before
+      this.prepareOrOpenChat(this.props.order);
     }
   };
-
-  openChat = order => {
-    const { openChat } = this.props;
-    openChat(order);
->>>>>>> devp2p
-  };
-
   openAvaliation = () => {
-    const { openAvaliation, openChat } = this.props;
+    const { prepareOrOpenChat } = this.props;
     openAvaliation();
-    openChat();
+    prepareOrOpenChat();
   };
 
   openUserProfile = e => {
@@ -149,10 +140,10 @@ class CardOffer extends React.Component {
           <Grid item xs={5}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              <img 
+              <img
                 className={style.cancelOffer}
                 src="images/icons/close/close.png"
-                > 
+                >
                 </img>
               {userEmail == order.sell.user.email &&
               order.status != "confirmed" ? (
@@ -193,11 +184,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-<<<<<<< HEAD
-            {(/*userEmail != order.sell.user.email && type != "myhistory"*/ true) ? (
-=======
             {userEmail != order.sell.user.email && type != "myhistory" ? (
->>>>>>> devp2p
               <button
                 className={style.btContinue}
                 onClick={() => this.prepareOrOpenChat(order)}
@@ -218,7 +205,9 @@ CardOffer.propTypes = {
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
   type: PropTypes.string,
-  setUserProfile: PropTypes.func
+  setUserProfile: PropTypes.func,
+  openAvaliation: PropTypes.func,
+  p2pStore: PropTypes.object
 };
 
 const mapStateToProps = store => ({
@@ -227,14 +216,15 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-<<<<<<< HEAD
-  bindActionCreators({ prepareOrOpenChat, setCancelOrder }, dispatch);
-=======
   bindActionCreators(
-    { openChat, setCancelOrder, openAvaliation, setUserProfile },
+    {
+      prepareOrOpenChat,
+      setCancelOrder,
+      openAvaliation,
+      setUserProfile,
+    },
     dispatch
   );
->>>>>>> devp2p
 
 export default connect(
   mapStateToProps,

@@ -102,7 +102,7 @@ class Select extends React.Component {
 
 Select.propTypes = {
   list: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,
   width: PropTypes.string,

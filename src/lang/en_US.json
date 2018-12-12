@@ -603,7 +603,6 @@
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one year.",
   "P2P_MY_LISTING": "My listings",
-<<<<<<< HEAD
   "P2P_CHAT_SELECT_AN_USER": "Select an user",
   "P2P_FAILED_TO_FIND_ORDER": "Failed to find order",
   "P2P_CHAT_FAILED_TO_OPEN_CHAT": "Failed to open chat",
@@ -613,12 +612,11 @@
   "P2P_CHAT_NEGOTIATION_FINISHED_AT": "This negotitation was ended at ",
   "P2P_CHAT_NEGOTIATION_CANCELED_AT": "This negotitation was canceled at ",
   "P2P_CHAT_STATIC_BUYER_MESSAGE": "Hello, I saw your offer, and I'd want to talk with you",
-  "P2P2P_CHAT_ROOM_LOADING": "Hold on"
-=======
+  "P2P_CHAT_ROOM_LOADING": "Loading...",
   "P2P_CHANGE_ADDRESS": "Fill the address for receive",
   "P2P_COMING_SOON": "Rating coming soon !",
   "P2P_TAB_PURCHASE": "Purchase",
   "P2P_TAB_SALE": "Sale",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt"
->>>>>>> devp2p
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt",
+  "P2P_CHAT_NOBODY_WAS_INSTERESTED_YET": "Nobody was interested in your offer yet"
 }

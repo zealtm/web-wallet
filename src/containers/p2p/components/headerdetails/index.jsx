@@ -27,13 +27,9 @@ class HeaderDetails extends React.Component {
     super(props);
     this.state = {
       addressBuyer: "",
-<<<<<<< HEAD
-    }
-=======
       errors: []
     };
     this.renderErrors = this.renderErrors.bind(this);
->>>>>>> devp2p
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -51,15 +47,7 @@ class HeaderDetails extends React.Component {
     const { order, acceptOfferWhenBuying, openDeposit } = this.props;
     const { addressBuyer } = this.state;
 
-<<<<<<< HEAD
-    acceptOfferWhenBuying({
-      coin: "lunes",
-      orderId: order.id,
-      addressBuyer: addressBuyer
-    });
-=======
     let error = [];
->>>>>>> devp2p
 
     if (addressBuyer == "") {
       error.push(i18n.t("P2P_CHANGE_ADDRESS"));
@@ -94,33 +82,27 @@ class HeaderDetails extends React.Component {
     }
   };
 
-<<<<<<< HEAD
+
+  renderErrors = () => {
+    const { errors } = this.state;
+
+    return errors.map((val, key) => {
+      return (
+        <div key={key}>
+        <div className={style.textErrorSmall}>
+        <Clear className={style.iconListValid} />
+        {val}
+        </div>
+        </div>
+      );
+    });
+  }
 
   render() {
     const {
       currentOrder: order,
-      typeOfUser: typeOfChatUser,
+      typeOfUser: typeOfChatUser
     } = this.props.chatDetails
-=======
-  renderErrors = () => {
-    const { errors } = this.state;
-
-      return errors.map((val, key) => {
-        return (
-          <div key={key}>
-            <div className={style.textErrorSmall}>
-              <Clear className={style.iconListValid} />
-              {val}
-            </div>
-          </div>
-        );
-      });
-
-  };
-
-  render() {
-    const { order } = this.props;
->>>>>>> devp2p
 
     return (
       <div>
@@ -133,7 +115,7 @@ class HeaderDetails extends React.Component {
                 <img src={`images/icons/coins/${order.buy.coin}.png`} />
                 {order.buy.coin.toUpperCase()}
               </div>
-            </div> 
+            </div>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={4}>

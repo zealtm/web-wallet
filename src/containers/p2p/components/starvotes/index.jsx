@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// MATERIAL 
+// MATERIAL
 import {Star} from "@material-ui/icons";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 
 class StarVotes extends React.Component {
@@ -16,10 +16,10 @@ class StarVotes extends React.Component {
       let type = (val<=votes) ? style.starActive : style.star;
       return <Star key={val} className={type} />
     });
-    
+
   }
   render(){
-    
+
     return (
       <div className={style.boxStar}>
         {this.renderStar()}
@@ -29,7 +29,7 @@ class StarVotes extends React.Component {
 }
 
 StarVotes.propTypes = {
-  votes: PropTypes.number.isRequired
+  votes: PropTypes.number
 }
 
 export default StarVotes;

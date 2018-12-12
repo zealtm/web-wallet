@@ -72,7 +72,6 @@ export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
 });
 
-<<<<<<< HEAD
 export const setUserId = () => ({
   type: "SET_USER_ID_P2P"
 })
@@ -91,7 +90,6 @@ export const openChatToTheSeller = (buyer) => ({
 export const closeChat = () => ({
   type: "SAGA_CLOSE_CHAT"
 })
-=======
 export const openAvaliation = () => ({
   type: "OPEN_AVALIATION_P2P"
 });
@@ -118,4 +116,3 @@ export const getProfile = userProfile => ({
 export const clearUserProfile = () => ({
   type: "CLEAR_USER_PROFILE"
 });
->>>>>>> devp2p

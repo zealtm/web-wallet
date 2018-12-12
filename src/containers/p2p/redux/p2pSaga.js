@@ -57,6 +57,7 @@ export function* prepareOrOpenChat(payload) {
       }})
     }
   } catch (err) {
+    console.error(err)
     yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_CHAT_FAILED_TO_OPEN_CHAT")})
   }
 }

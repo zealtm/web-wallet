@@ -39,13 +39,9 @@ const initialState = {
     paymentMethods: [],
     paymentMethod: {}
   },
-<<<<<<< HEAD
-  cancelDone:false,
-=======
   cancelDone: false,
   tabIcon: 0,
   userProfile: []
->>>>>>> devp2p
 };
 
 const p2p = (state = initialState, action) => {
@@ -108,13 +104,8 @@ const p2p = (state = initialState, action) => {
     case "SET_P2P_CANCEL_ORDERS_REDUCER":
       return {
         ...state,
-<<<<<<< HEAD
-        loading:false,
-        cancelDone: true,
-=======
         loading: false,
-        cancelDone: true
->>>>>>> devp2p
+        cancelDone: true,
       };
 
     case "CLEAR_CANCEL_P2P":
@@ -154,33 +145,21 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         loadingCreateOrder: action.loading
-<<<<<<< HEAD
-      }
-=======
       };
->>>>>>> devp2p
 
     case "CREATE_OFFER_DONE":
       return {
         ...state,
         loadingCreateOrder: false,
         createDone: true
-<<<<<<< HEAD
-      }
-=======
       };
->>>>>>> devp2p
 
     case "CREATE_OFFER_ERROR":
       return {
         ...state,
         loadingCreateOrder: false,
         createError: true
-<<<<<<< HEAD
-      }
-=======
       };
->>>>>>> devp2p
 
     case "CREATE_OFFER_CLEAR":
       return {
@@ -229,7 +208,7 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         tabIcon: 2,
-        userProfile: action.userProfile, 
+        userProfile: action.userProfile,
         chatOpened: false,
        };
 

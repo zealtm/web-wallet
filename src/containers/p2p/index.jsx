@@ -8,6 +8,7 @@ import { getPaymentMethodsWhenBuying, setTabIcon } from "./redux/p2pAction";
 
 //MATERIAL
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
+import Hidden from "@material-ui/core/Hidden"
 
 //COMPONENTS
 import Offers from "./offers";

@@ -291,8 +291,6 @@
   padding: 0;
   composes: buttonBorderGreen;
 }
-<<<<<<< HEAD
-=======
 
 @media only screen and (max-width: 599px) {
   :local .baseWidget {
@@ -318,4 +316,3 @@
     font-size: 12px;
   }
 }
->>>>>>> devp2p

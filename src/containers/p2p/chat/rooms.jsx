@@ -15,26 +15,18 @@ import { chatDetailsSetter } from "./../redux/p2pAction"
 import { getChatBundle } from "./functions"
 
 class Rooms extends React.Component {
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
-      loadingTimeout: 20
     }
   }
-  handleLoadTimeout = () => {
-    setTimeout(() => {
-      let { loadingTimeout } = this.state
-      if (loadingTimeout === 0) {
-        this.setState({loading: false})
-        return;
-      }
-      this.setState({loadingTimeout: loadingTimeout - 1})
-      this.handleLoadTimeout()
-    }, 1000)
-  }
+
+  loading = (loading) => this.setState({loading})
+
   handleJoinRoom = (room) => {
-    this.handleLoadTimeout()
+    this.loading(true)
 
     const { chatDetailsSetter, chatDetails } = this.props
     chatDetailsSetter({
@@ -49,18 +41,21 @@ class Rooms extends React.Component {
     let { id: adId } = currentOrder
     getChatBundle({adOwnerId, buyerId: room.userId, adId})
   }
+
   loadRender = () => {
-    return <h1>{i18n.t("P2P_CHAT_ROOM_LOADING")}</h1>
+    return <p className={style.defaultWhiteText}>{i18n.t("P2P_CHAT_ROOM_LOADING")}</p>
+  }
+
+  emptyRender = () => {
+    return <p className={style.defaultWhiteText}>{i18n.t("P2P_CHAT_NOBODY_WAS_INSTERESTED_YET")}</p>
   }
   render() {
     let { rooms } = this.props
     let lastMessage;
 
-    if (this.state.loading) return (
-      <h1>Aguarde {this.state.loadingTimeout}</h1>
-    )
-    console.warn({rooms})
-    // rooms = Array.from(Array(10))
+    if (this.state.loading) return this.loadRender()
+    if (!rooms || (rooms && rooms.length < 1)) return this.emptyRender()
+
     return(
       <div className={style.roomsWrapper}>
         {rooms.map((room, key) => {
@@ -69,7 +64,6 @@ class Rooms extends React.Component {
           return (
             <div className={style.room} key={key} onClick={() => { this.handleJoinRoom(room) }}>
               <div className={style.imageWrapper}>
-                {/*<img src="https://cdn.zeplin.io/users/5b0c49ebe1de18fc65b8b40c/avatars/dd085533-1fa9-4f0b-87e2-e86850c0d4fe.png"/>*/}
                 <img src={room.profilePicture || room.photo || "images/lunio/lunio-user@100x100.jpg"}/>
               </div>
               <div className={style.messageWrapper}>

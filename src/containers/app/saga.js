@@ -10,7 +10,7 @@ import {
   setUserSeed,
   updateUserConsentsSaga,
   editUserData,
-  updateUserPasswordSaga, 
+  updateUserPasswordSaga,
   verifyInviteSaga,
   verifyEmailSaga
 } from "../user/redux/userSaga";
@@ -89,14 +89,11 @@ import {
   setP2POrdersCancelSaga,
   openDeposit,
   closeDeposit,
-<<<<<<< HEAD
-  setUserId
-=======
+  setUserId,
   openAvaliation,
   closeAvaliation,
   setTabIconSaga,
   getProfileSaga
->>>>>>> devp2p
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -117,7 +114,7 @@ import {
 
 import {
   getInviteAddressSaga,
-  sendMailInviteSaga, 
+  sendMailInviteSaga,
   getInviteSentSaga,
   sendWithdrawSaga
 } from "../invite/redux/inviteSaga";
@@ -225,14 +222,11 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),
     fork(takeLatest, "OPEN_DEPOSIT_P2P", openDeposit),
     fork(takeLatest, "CLOSE_DEPOSIT_P2P", closeDeposit),
-<<<<<<< HEAD
     fork(takeLatest, "SET_USER_ID_P2P", setUserId),
-=======
     fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
     fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
     fork(takeLatest, "SET_TAB_ICON", setTabIconSaga),
     fork(takeLatest, "GET_PROFILE", getProfileSaga),
->>>>>>> devp2p
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
