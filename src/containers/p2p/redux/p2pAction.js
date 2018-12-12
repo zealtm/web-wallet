@@ -108,9 +108,9 @@ export const setUserProfile = (userProfile) => ({
   userProfile
 });
 
-export const getProfile = userProfile => ({
+export const getProfile = profile => ({
   type: "GET_PROFILE",
-  userProfile
+  profile
 });
 
 export const clearUserProfile = () => ({

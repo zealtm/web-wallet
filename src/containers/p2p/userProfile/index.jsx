@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUserProfile, getProfile, clearUserProfile } from "../redux/p2pAction";
+import {
+  setUserProfile,
+  getProfile,
+  clearUserProfile
+} from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -22,6 +26,7 @@ import colors from "../../../components/bases/colors";
 // UTILS
 import i18n from "../../../utils/i18n";
 import { formatDate } from "../../../utils/numbers";
+import { encryptMd5 } from "../../../utils/cryptography";
 
 const styles = {
   root: {
@@ -40,23 +45,36 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getProfile,userProfile } = this.props;
-    if(userProfile.id){
+    const { getProfile, userProfile } = this.props;
+    if (userProfile.id) {
       getProfile(userProfile.id);
-    }else{
+    } else {
       getProfile();
     }
   };
 
   componentWillUnmount = () => {
-    const {clearUserProfile} = this.props;
+    const { clearUserProfile } = this.props;
     clearUserProfile();
+  };
+
+  rederPictureGravatar(email) {
+    if (email) {
+      const defaultImg =
+        "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+      return (
+        "https://s.gravatar.com/avatar/" +
+        encryptMd5(email.toLowerCase()) +
+        "?s=300" +
+        "&d=" +
+        defaultImg
+      );
+    }
   }
 
   render() {
-    const { classes, loading } = this.props;
-    const { userProfile } = this.props;
-    const dateCreate = formatDate(userProfile.createdAt);
+    const { classes, loading, profile } = this.props;
+    const dateCreate = formatDate(profile.createdAt);
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
@@ -65,22 +83,26 @@ class UserProfile extends React.Component {
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.userInfo}>
-              <img
-                src={"images/lunio/lunio-user@100x100.jpg"}
-                className={style.avatarProfile}
-              />
+              {profile && (
+                <img
+                  src={this.rederPictureGravatar(profile.email)}
+                  className={style.avatarProfile}
+                />
+              )}
               <div className={style.online} />
               <div className={style.userName}>
-                {userProfile.name} {userProfile.surname}
+                {profile.name} {profile.surname}
                 <br />{" "}
                 <div className={style.boxStar}>
-                  {userProfile.rating && (
-                    <StarVotes votes={userProfile.rating.average} />
+                  {profile.rating && (
+                    <StarVotes votes={profile.rating.average} />
                   )}
                 </div>
-               { userProfile && <span className={style.textSmall}>
-                  {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
-                </span>}
+                {profile && (
+                  <span className={style.textSmall}>
+                    {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
+                  </span>
+                )}
               </div>{" "}
               <br />
             </div>
@@ -89,7 +111,7 @@ class UserProfile extends React.Component {
                 {i18n.t("P2P_PROFILE_DESCRIPTION")}
               </span>
               <div className={style.textDescription}>
-                <p>{userProfile.description}</p>
+                <p>{profile.description}</p>
               </div>
             </div>
           </div>
@@ -173,6 +195,7 @@ UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   getProfile: PropTypes.func,
   userProfile: PropTypes.object,
+  profile: PropTypes.object,
   setUserProfile: PropTypes.func,
   clearUserProfile: PropTypes.func,
   loading: PropTypes.bool
@@ -180,6 +203,7 @@ UserProfile.propTypes = {
 
 const mapStateToProps = store => ({
   userProfile: store.p2p.userProfile,
+  profile: store.p2p.profile,
   userEmail: store.user.user.email,
   loading: store.p2p.loading
 });
