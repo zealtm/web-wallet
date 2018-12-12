@@ -93,3 +93,17 @@ export const setTabIcon = tabIcon => ({
   type: "SET_TAB_ICON",
   tabIcon
 });
+
+export const setUserProfile = (userProfile) => ({
+  type: "SET_USER_PROFILE_REDUCER",
+  userProfile
+});
+
+export const getProfile = userProfile => ({
+  type: "GET_PROFILE",
+  userProfile
+});
+
+export const clearUserProfile = () => ({
+  type: "CLEAR_USER_PROFILE"
+});

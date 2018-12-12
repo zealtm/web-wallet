@@ -10,7 +10,9 @@ import {
   setUserSeed,
   updateUserConsentsSaga,
   editUserData,
-  updateUserPasswordSaga
+  updateUserPasswordSaga, 
+  verifyInviteSaga,
+  verifyEmailSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -88,7 +90,8 @@ import {
   closeDeposit,
   openAvaliation,
   closeAvaliation,
-  setTabIconSaga
+  setTabIconSaga,
+  getProfileSaga
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -107,6 +110,13 @@ import {
   getHistoryBuySaga
 } from "../buycoin/redux/buySaga";
 
+import {
+  getInviteAddressSaga,
+  sendMailInviteSaga, 
+  getInviteSentSaga,
+  sendWithdrawSaga
+} from "../invite/redux/inviteSaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -117,6 +127,11 @@ export default function* rootSaga() {
     fork(takeLatest, "POST_USER_RESET_USER_API", resetUser),
     fork(takeLatest, "GET_USER_2FA_API", hasTwoFactorAuth),
     fork(takeLatest, "SET_USER_SEED_API", setUserSeed),
+    fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
+    fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
+    fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
+    fork(takeLatest, "VERIFY_INVITE_SAGA", verifyInviteSaga),
+    fork(takeLatest, "VERIFY_EMAIL_SAGA", verifyEmailSaga),
     fork(takeLatest, "PATH_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "PATH_USER_DATA_API", editUserData),
     fork(takeLatest, "PATH_USER_PASSWORD_API", updateUserPasswordSaga),
@@ -207,6 +222,7 @@ export default function* rootSaga() {
     fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
     fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
     fork(takeLatest, "SET_TAB_ICON", setTabIconSaga),
+    fork(takeLatest, "GET_PROFILE", getProfileSaga),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
@@ -221,6 +237,13 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_FEE_BUY", getFeeBuySaga),
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
-    fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga)
+    fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+
+    // invite
+    fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
+    fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
+    fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
+
   ];
 }
