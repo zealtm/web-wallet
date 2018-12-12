@@ -9,6 +9,10 @@ import P2pService from "../../../services/p2pService";
 
 const p2pService = new P2pService();
 
+const CHANGE_SKELETON_ERROR_STATE = {
+  type: "CHANGE_SKELETON_ERROR_STATE",
+  state: true
+};
 export function* openChat(payload) {
   yield put({
     type: "OPEN_CHAT_P2P_REDUCER",
@@ -55,6 +59,7 @@ export function* getP2PMyOrdersSaga(payload) {
       });
     }
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -125,6 +130,7 @@ export function* getP2PHistorySaga(payload) {
       });
     }
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -139,6 +145,7 @@ export function* acceptOfferWhenBuying(payload) {
     yield put({ type: "SUCCESS_REQUEST", message: "" });
     yield put({ type: "BUY_SETTER", data: { isBuyLoading: false } });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -163,10 +170,7 @@ export function* getP2PFilterSaga(payload) {
       orders: response.data.orders
     });
   } catch (error) {
-    yield put({
-      type: "CHANGE_SKELETON_ERROR_STATE",
-      state: true
-    });
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -217,6 +221,8 @@ export function* setP2POrdersCancelSaga(payload) {
       orderId: response
     });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
+
     yield put(internalServerError());
   }
 }
@@ -267,6 +273,7 @@ export function* getProfileSaga(payload) {
       userProfile: response.data
     });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
