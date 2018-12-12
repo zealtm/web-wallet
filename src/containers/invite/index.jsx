@@ -142,29 +142,6 @@ class Invite extends React.Component {
     });
   };
 
-  returnStatus = obj => {
-    const { sent, registered, transacted, redeemed } = obj;
-    let statusList = "sent";
-
-    if (sent != null) {
-      statusList = "sent";
-    }
-
-    if (registered != null) {
-      statusList = "registered";
-    }
-
-    if (transacted != null) {
-      statusList = "transacted";
-    }
-
-    if (redeemed != null) {
-      statusList = "redeemed";
-    }
-
-    return statusList.toUpperCase();
-  };
-
   renderInvite = () => {
     const { invite, loadingList } = this.props;
 
@@ -177,12 +154,11 @@ class Invite extends React.Component {
       <div>
         {invite.invites &&
           invite.invites.map((email, key) => {
-            const status = this.returnStatus(email);
             return (
               <ItemInvite
                 key={key}
                 email={email.receiptEmail}
-                status={status}
+                status={email.status}
               />
             );
           })}
