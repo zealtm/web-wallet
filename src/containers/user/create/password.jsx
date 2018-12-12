@@ -16,6 +16,9 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
 
+// COMPONENTS
+import LogoLunes from "../../../components/logoLunes";
+
 // MATERIAL UI
 import DoneIcon from "@material-ui/icons/Done";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -159,7 +162,9 @@ class Password extends React.Component {
           />
         </Link>
 
-        <img src="../../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <div className={style.resetHeader}>
           {i18n.t("NEW_ACCOUNT_PASSWORD_HEADER")}
         </div>

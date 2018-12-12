@@ -10,6 +10,9 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 // UTILS
 import i18n from "../../../utils/i18n";
 
+// COMPONENTS
+import LogoLunes from "../../../components/logoLunes";
+
 // STYLE
 import style from "../style.css";
 
@@ -17,7 +20,9 @@ class EmailMessage extends React.Component {
   render() {
     return (
       <div>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <img
           src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}

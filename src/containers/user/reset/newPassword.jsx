@@ -14,6 +14,7 @@ import ClearIcon from "@material-ui/icons/Clear";
 
 // COMPONENTS
 import Footer from "../footer";
+import LogoLunes from "../../../components/logoLunes";
 
 // STYLE
 import style from "../style.css";
@@ -128,18 +129,20 @@ class NewPassword extends React.Component {
     });
   };
 
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
-      this.inputValidator()
+      this.inputValidator();
     }
-  }
-  
+  };
+
   render() {
     let { inputs, passwordHint, errors } = this.state;
 
     return (
       <div className={style.formLogin} onKeyPress={this.handleKeyPress}>
-        <img src="../../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <div className={style.resetHeader}>
           {i18n.t("RESET_NEW_PASSWORD_HEADER")}
         </div>

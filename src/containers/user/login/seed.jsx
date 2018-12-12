@@ -10,6 +10,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 // COMPONENTS
 import Footer from "../footer";
 import Loading from "../../../components/loading";
+import LogoLunes from "../../../components/logoLunes";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -103,7 +104,9 @@ class Seed extends React.Component {
 
     return (
       <div onKeyPress={this.handleKeyPress}>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
 
         <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
         <textarea
