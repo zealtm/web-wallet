@@ -105,7 +105,7 @@ class CardOffer extends React.Component {
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
-    const dateCreate = formatDate(order.createdAt, "DM");
+    const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
     const hourCreate = formatDate(order.createdAt, "HM");
 
     let defaultFiat = getDefaultFiat();
