@@ -32,28 +32,7 @@ class HeaderDetails extends React.Component {
     super(props);
     this.state = {
       addressBuyer: "",
-      rooms: [],
-      joinedRoom: -1
     }
-  }
-  convertRooms = () => {
-    let { currentOrder: order } = this.props.chatDetails
-    if (!order || (order && !order.chat)) return;
-    let { rooms } = order.chat
-    let filteredRooms = rooms.map(room => {
-      return {
-        title: `${room.name} ${room.surname}`,
-        img: room.photo || '',
-        userId: room.userId,
-        roomHashId: room.roomHashId
-      }
-    })
-    this.setState({rooms: filteredRooms})
-  }
-
-  componentDidMount = () => {
-    let { currentOrder: order } = this.props.chatDetails
-    if (order) this.convertRooms()
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -93,31 +72,12 @@ class HeaderDetails extends React.Component {
     }
   };
 
-  handleJoinRoom = event => {
-    const { chatDetailsSetter, chatDetails } = this.props
-    let key = event.target.value
-    if (!key) return;
-    this.setState({joinedRoom: key})
-    let room = this.state.rooms[key]
-    chatDetailsSetter({
-      buyer: {
-        id: room.userId,
-        name: room.title
-      },
-      currentRoom: room.roomHashId
-    })
-    let { seller, currentOrder } = chatDetails
-    let { id: adOwnerId } = seller
-    let { id: adId } = currentOrder
-    getChatBundle({adOwnerId, buyerId: room.userId, adId})
-  }
 
   render() {
     const {
       currentOrder: order,
       typeOfUser: typeOfChatUser,
     } = this.props.chatDetails
-    const { rooms } = this.state
 
     return (
       <div>
@@ -165,23 +125,6 @@ class HeaderDetails extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container style={{
-          display: typeOfChatUser === 'seller' ? 'flex' : 'none'
-        }}>
-          <Grid item xs={3} />
-          <Grid item xs={9} style={{textAlign: 'center'}}>
-            <select onChange={this.handleJoinRoom} value={this.state.joinedRoom} style={{display: 'inline-block'}}>
-              <option disabled value="-1">{i18n.t("P2P_CHAT_SELECT_AN_USER")}</option>
-              {rooms.map((room, key) => {
-                return (
-                  <option key={key} value={key}>
-                    {room.title}
-                  </option>
-                )
-              })}
-            </select>
-          </Grid>
-        </Grid>
         <Grid
           container
           direction="column"
@@ -202,7 +145,8 @@ HeaderDetails.propTypes = {
   acceptOfferWhenBuying: PropTypes.func,
   openDeposit: PropTypes.func,
   chatDetails: PropTypes.object.isRequired,
-  chatDetailsSetter: PropTypes.func.isRequired
+  chatDetailsSetter: PropTypes.func.isRequired,
+  order: PropTypes.object.isRequired
 };
 const mapStateToProps = store => ({
   chatDetails: store.p2p.chatDetails,

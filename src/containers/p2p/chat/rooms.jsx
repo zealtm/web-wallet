@@ -22,7 +22,6 @@ class Rooms extends React.Component {
       loadingTimeout: 20
     }
   }
-  I need to finish this up
   handleLoadTimeout = () => {
     setTimeout(() => {
       let { loadingTimeout } = this.state
