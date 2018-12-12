@@ -12,6 +12,7 @@ import i18n from "../../utils/i18n";
 // COMPONENTS
 import Modal from "../../components/modal";
 import PaymentTitleModal from "./modal/paymentTitleModal";
+import ScannerModal from "./modal/scannerPayment";
 import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
@@ -23,12 +24,16 @@ class Payment extends React.Component {
   constructor() {
     super();
     this.state = {
-      isOpen: false
+      isOpen: false,
+      scannerOpen: false
     };
   }
-  handleModal = () => this.setState({ isOpen: !this.state.isOpen });
+  handleModal = () =>
+    this.setState({ ...this.state, isOpen: !this.state.isOpen });
+  openScannerModal = () =>
+    this.setState({ ...this.state, scannerOpen: !this.state.scannerOpen });
 
-  closeModal() {
+  closeModal = () => {
     const { setModalStep, setClearPayment } = this.props;
     this.handleModal();
     setClearPayment();
@@ -36,13 +41,16 @@ class Payment extends React.Component {
   }
 
   render() {
-    let { isOpen } = this.state;
-
+    let { isOpen, scannerOpen } = this.state;
     const { modalStep, setModalStep } = this.props;
 
     const titles = [i18n.t("PAYMENT_INVOICE"), i18n.t("PAYMENT_HISTORY")];
     const contents = [
-      <Invoice openModal={this.handleModal} key="1" />,
+      <Invoice
+        openModal={this.handleModal}
+        scannerModal={this.openScannerModal}
+        key="1"
+      />,
       <History key="2" />
     ];
 
@@ -55,11 +63,20 @@ class Payment extends React.Component {
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
 
         <Modal
+          title={""}
+          content={<ScannerModal scannerModal={this.openScannerModal}/>}
+          show={scannerOpen}
+          close={() => this.openScannerModal()}
+        />
+
+        <Modal
           title={i18n.t("PAYMENT_MODAL_TITLE")}
           content={<PaymentTitleModal />}
           show={isOpen}
           close={
-            modalStep === 5 || modalStep === 1 || modalStep === 6 ? () => this.closeModal() : null
+            modalStep === 5 || modalStep === 1 || modalStep === 6
+              ? () => this.closeModal()
+              : null
           }
           back={
             modalStep === 2 || modalStep === 3 || modalStep === 4
@@ -74,7 +91,8 @@ class Payment extends React.Component {
 
 Payment.propTypes = {
   modalStep: PropTypes.number.isRequired,
-  setModalStep: PropTypes.func.isRequired
+  setModalStep: PropTypes.func.isRequired,
+  setClearPayment: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({

@@ -64,7 +64,6 @@ export const setCancelOrder = orderId => ({
   orderId
 });
 
-
 export const clearCancel = () => ({
   type: "CLEAR_CANCEL_P2P"
 });
@@ -80,4 +79,31 @@ export const openDeposit = iduser => ({
 
 export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
+});
+
+export const openAvaliation = () => ({
+  type: "OPEN_AVALIATION_P2P"
+});
+
+export const closeAvaliation = () => ({
+  type: "CLOSE_AVALIATION_P2P"
+});
+
+export const setTabIcon = tabIcon => ({
+  type: "SET_TAB_ICON",
+  tabIcon
+});
+
+export const setUserProfile = (userProfile) => ({
+  type: "SET_USER_PROFILE_REDUCER",
+  userProfile
+});
+
+export const getProfile = userProfile => ({
+  type: "GET_PROFILE",
+  userProfile
+});
+
+export const clearUserProfile = () => ({
+  type: "CLEAR_USER_PROFILE"
 });

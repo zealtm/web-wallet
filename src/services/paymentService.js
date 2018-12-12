@@ -1,10 +1,19 @@
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 //CONSTANTS
-import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+import {
+  BASE_URL,
+  API_HEADER,
+  HEADER_RESPONSE,
+  HEADER_REQUEST
+} from "../constants/apiBaseUrl";
 
 // ERROR
-import { internalServerError, forbidden } from "../containers/errors/statusCodeMessage";
+import {
+  internalServerError,
+  forbidden
+} from "../containers/errors/statusCodeMessage";
 
 // UTILS
 import { setAuthToken } from "../utils/localStorage";
@@ -51,7 +60,7 @@ class PaymentService {
       if (error.response.data.code === 500) {
         return forbidden(i18n.t("PAYMENT_UNAUTHORIZED"));
       }
-      
+
       return internalServerError();
     }
   }
@@ -85,8 +94,8 @@ class PaymentService {
         };
       }
 
-      if (response.data.code !== 200 ) {
-        return 'ERRO';
+      if (response.data.code !== 200) {
+        return "ERRO";
       }
 
       return response.data.data;
@@ -99,7 +108,7 @@ class PaymentService {
   async sendPay(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
-      
+
       const response = await axios.post(
         BASE_URL + "/bill/pay/" + payload.barCode,
         payload,
@@ -108,6 +117,34 @@ class PaymentService {
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
+    } catch (error) {
+      console.warn(error);
+      internalServerError();
+      return;
+    }
+  }
+
+  async getBarcode(image) {
+    try {
+      let compressed = await imageCompression(image.target.files[0], 3, 1600);
+      
+      if(compressed.size > 8388608) {
+        return { message: i18n.t("PAYMENT_FILE_SIZE")};
+      }
+      
+      const formData = new FormData();
+
+      formData.append("file", compressed, compressed.name);
+
+      const barcode = await axios.post(
+        "https://solucti.com.br:3303",
+        formData,
+        HEADER_REQUEST
+      );
+
+      if (barcode.data.data.charAt(0) === "8") return;
+
+      return barcode.data;
     } catch (error) {
       console.warn(error);
       internalServerError();

@@ -32,6 +32,8 @@
   7.1 INPUT
   7.2 TEXTS
 
+8. INVITE
+
 */
 
 /* ------------------------------------------------------------------------- */
@@ -393,6 +395,7 @@
   opacity: 0.5;
   color: white;
   font-size: 17px;
+  padding-bottom: 40px;
 }
 
 :local(.inputTextAreaError) {
@@ -411,4 +414,10 @@
 
 /* ------------------------------------------------------------------------- */
 
-
+/* 8 INVITE */
+:local .inviteRow {
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 11px;
+}

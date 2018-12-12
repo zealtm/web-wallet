@@ -190,7 +190,7 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            description: value,
+            description: value
           }
         });
         break;
@@ -232,7 +232,6 @@ class CreateOffer extends React.Component {
       createOfferWhenSelling(order);
     }
   };
-
   renderErros = () => {
     let { errors } = this.state;
     return Object.keys(errors).map((value, key) => {
@@ -248,8 +247,7 @@ class CreateOffer extends React.Component {
         );
       }
     });
-
-  }
+  };
   render() {
     const { coinBuy, coinSell } = this.state;
     const {
@@ -277,7 +275,7 @@ class CreateOffer extends React.Component {
     if (createError)
       return (
         <div>
-          <span className={style.textError}>{i18n.t("P2P_ERROR")}{" "}</span>
+          <span className={style.textError}>{i18n.t("P2P_ERROR")} </span>
           <button className={style.btContinue} onClick={clearOffer}>
             {i18n.t("P2P_TRY_AGAIN")}
           </button>
@@ -297,7 +295,6 @@ class CreateOffer extends React.Component {
             </Grid>
             <Grid item xs={6}>
               <span className={style.name}>{username}</span>
-
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
@@ -429,24 +426,28 @@ class CreateOffer extends React.Component {
             <div className={style.textSmall}>
               {i18n.t("P2P_CREATE_OFFER_DESCRIPTION")}
             </div>
-            <span className={style.counterDescription}>{this.state.order.description.length} / {this.state.descriptionTotal}</span>
+            <span className={style.counterDescription}>
+              {this.state.order.description.length} /{" "}
+              {this.state.descriptionTotal}
+            </span>
             <textarea
               className={style.textArea}
               name="description"
               placeholder={i18n.t("P2P_CREATE_OFFER_DESCRIPTION_PLACEHOLDER")}
               onChange={e => this.handleFields(e)}
               maxLength={this.state.descriptionTotal}
-              defaultValue={this.state.order.description}
-            ></textarea>
+              value={this.state.order.description}
+            >
+              {this.state.order.description}
+            </textarea>
             {this.renderErros()}
             <button className={style.btContinue} onClick={this.validateForm}>
               {loadingCreateOrder ? (
                 <Loading />
               ) : (
-                  i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
-                )}
+                i18n.t("P2P_CREATE_OFFER_BUTTON_CONFIRMATION")
+              )}
             </button>
-
           </div>
         </div>
       </div>
@@ -456,7 +457,7 @@ class CreateOffer extends React.Component {
 
 CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired,
-  coinsEnabled: PropTypes.array,
+  coinsEnabled: PropTypes.any,
   user: PropTypes.object,
   loadingCreateOrder: PropTypes.bool,
   createDone: PropTypes.bool,

@@ -4,39 +4,36 @@ import PropTypes from "prop-types";
 // STYLE
 import style from "./style.css";
 
+//REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setTabIcon } from "../../redux/p2pAction";
+
 class TabIcons extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      active: 0
-    };
   }
 
   handleIcon = key => {
-    const { handle } = this.props;
-    this.setState({
-      active: key
-    });
-    handle(key);
+    const { setTabIcon } = this.props;
+    setTabIcon(key);
   };
 
   render() {
     const { content } = this.props;
-    const { active } = this.state;
+    const { tabIcon } = this.props.p2pStore;
 
     return (
       <div className={style.baseTab}>
         {content.map((val, key) => {
           let open;
           let icon_img;
-          if( key == active) {
-
-           open = style.itemTabActive;
+          if (key == tabIcon) {
+            open = style.itemTabActive;
             icon_img = val;
-            
-          } else{
-           open = style.itemTab;
-           icon_img = val + "-purple";
+          } else {
+            open = style.itemTab;
+            icon_img = val + "-purple";
           }
 
           return (
@@ -56,7 +53,24 @@ class TabIcons extends React.Component {
 
 TabIcons.propTypes = {
   content: PropTypes.array.isRequired,
-  handle: PropTypes.func.isRequired
+  handle: PropTypes.func.isRequired,
+  p2pStore: PropTypes.object,
+  setTabIcon: PropTypes.func
 };
 
-export default TabIcons;
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setTabIcon
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TabIcons);

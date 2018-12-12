@@ -93,10 +93,12 @@ class FeePayment extends React.Component {
 
   componentDidMount = () => {
     const {getFeePayment, payment, wallet} = this.props;
+
     const fromAddress = wallet.coins[payment.coin.abbreviation].address;
     const toAddress = payment.coin.address; 
+    const decimalPoint = wallet.coins[payment.coin.abbreviation].decimalPoint;
   
-    getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress);
+    getFeePayment(payment.coin.abbreviation, payment.amount, fromAddress, toAddress, decimalPoint);
   }
 
   render() {
@@ -121,7 +123,7 @@ class FeePayment extends React.Component {
           />
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_1")}</span>
-            <span className={style.totalConfirm}>{payment.amount} {payment.coin.abbreviation}</span>
+            <span className={style.totalConfirm}>{payment.amount.toFixed(8)} {payment.coin.abbreviation}</span>
           </div>
           <div>
             <span>{i18n.t("PAYMENT_FEE_TEXT_2")}</span>

@@ -36,25 +36,25 @@ export function* openModalPaySaga(payload) {
   });
 }
 
-export function* getP2PMyOrdersSaga(payload){
+export function* getP2PMyOrdersSaga(payload) {
   try {
-    yield put({type:"SET_LOADING_P2P",loading:true});
-    
+    yield put({ type: "SET_LOADING_P2P", loading: true });
+
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getMyOrders, token, payload.coin);
 
-    if(response.errorMessage){
+    if (response.errorMessage) {
       yield put({
-        type: "GET_MY_ORDERS_REDUCER", 
+        type: "GET_MY_ORDERS_REDUCER",
         orders: []
       });
-    }else{
+    } else {
       yield put({
-        type: "GET_MY_ORDERS_REDUCER", 
+        type: "GET_MY_ORDERS_REDUCER",
         orders: response.data.orders
       });
     }
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -71,41 +71,60 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "Lunes", img: `images/icons/coins/lunes.png`, value: "lunes"}];
-    if(response.cripto){
-      response.cripto.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name, img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+    let cripto = [
+      { title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes" }
+    ];
+    if (response.cripto) {
+      response.cripto.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/coins/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
 
-    yield put({ type: "BUY_SETTER", data: cripto});
+    if (response.fiat) {
+      response.fiat.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/fiat/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
+        }
+      });
+    }
+
+    yield put({ type: "BUY_SETTER", data: cripto });
   } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* getP2PHistorySaga(payload){
+export function* getP2PHistorySaga(payload) {
   try {
-    yield put({type:"SET_LOADING_P2P",loading:true});
+    yield put({ type: "SET_LOADING_P2P", loading: true });
 
     let token = yield call(getAuthToken);
     let response = yield call(p2pService.getHistory, token, payload.coin);
 
-    if(response.errorMessage){
+    if (response.errorMessage) {
       yield put({
-        type: "GET_HISTORY_REDUCER", 
+        type: "GET_HISTORY_REDUCER",
         orders: []
       });
-    }else{
+    } else {
       yield put({
-        type: "GET_HISTORY_REDUCER", 
+        type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
       });
     }
-
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -124,46 +143,54 @@ export function* acceptOfferWhenBuying(payload) {
   }
 }
 
-export function* getP2PFilterSaga(payload){
+export function* getP2PFilterSaga(payload) {
   try {
-    yield put({type:"SET_LOADING_P2P",loading:true});
+    yield put({ type: "SET_LOADING_P2P", loading: true });
 
-    const {coin, typeOrder, coinBuy} = payload;
+    const { coin, typeOrder, coinBuy } = payload;
 
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getFilter, token, coin, typeOrder, coinBuy);
-    
+    let response = yield call(
+      p2pService.getFilter,
+      token,
+      coin,
+      typeOrder,
+      coinBuy
+    );
+
     yield put({
-      type: "GET_FILTER_REDUCER", 
+      type: "GET_FILTER_REDUCER",
       orders: response
     });
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
 export function* createOfferWhenSelling(payload) {
   try {
-
-    yield put({type:"SET_LOADING_CREATE_OFFER",loading:true});
+    yield put({ type: "SET_LOADING_CREATE_OFFER", loading: true });
 
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.createOfferWhenSelling, token, payload.data);
-    
-    if(response.data.data.orderId){
+    let response = yield call(
+      p2pService.createOfferWhenSelling,
+      token,
+      payload.data
+    );
+
+    if (response.data.data.orderId) {
       yield put({
-        type: "CREATE_OFFER_DONE", 
+        type: "CREATE_OFFER_DONE",
         offer: response.data.data.orderId
       });
-    }else{
+    } else {
       yield put({
-        type: "CREATE_OFFER_ERROR",
+        type: "CREATE_OFFER_ERROR"
       });
     }
-
   } catch (error) {
     yield put({
-      type: "CREATE_OFFER_ERROR",
+      type: "CREATE_OFFER_ERROR"
     });
     yield put(internalServerError());
   }
@@ -171,8 +198,8 @@ export function* createOfferWhenSelling(payload) {
 
 export function* setP2POrdersCancelSaga(payload) {
   try {
-    yield put({type:"SET_LOADING_P2P",loading:true});
-    
+    yield put({ type: "SET_LOADING_P2P", loading: true });
+
     let token = yield call(getAuthToken);
 
     let response = yield call(
@@ -201,4 +228,42 @@ export function* closeDeposit() {
   yield put({
     type: "CLOSE_DEPOSIT_P2P_REDUCER"
   });
+}
+
+export function* openAvaliation() {
+  yield put({
+    type: "OPEN_AVALIATION_P2P_REDUCER"
+  });
+}
+
+export function* closeAvaliation() {
+  yield put({
+    type: "CLOSE_AVALIATION_P2P_REDUCER"
+  });
+}
+
+export function* setTabIconSaga(payload) {
+  yield put({
+    type: "SET_TAB_ICON_REDUCER",
+    tabIcon: payload.tabIcon
+  });
+}
+
+export function* getProfileSaga(payload) {
+  try {
+    
+    yield put({ type: "SET_LOADING_P2P", loading: true });
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      p2pService.getProfile,
+      token,
+      payload.userProfile
+    );
+    yield put({
+      type: "GET_PROFILE_REDUCER",
+      userProfile: response.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
 }
