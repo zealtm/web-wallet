@@ -117,7 +117,8 @@ P2P.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  skeleton: store.skeleton
 });
 
 const mapDispatchToProps = dispatch =>

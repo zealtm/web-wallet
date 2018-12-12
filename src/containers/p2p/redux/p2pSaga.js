@@ -160,9 +160,13 @@ export function* getP2PFilterSaga(payload) {
 
     yield put({
       type: "GET_FILTER_REDUCER",
-      orders: response
+      orders: response.data.orders
     });
   } catch (error) {
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -251,7 +255,6 @@ export function* setTabIconSaga(payload) {
 
 export function* getProfileSaga(payload) {
   try {
-    
     yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
     let response = yield call(
