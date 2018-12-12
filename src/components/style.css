@@ -75,7 +75,7 @@
     font-size: 12px;
   }
 }
-<<<<<<< HEAD
+
 /* ActionButton */
 :local(.imgAction) {
   opacity: 0.15;
@@ -96,7 +96,6 @@
   }
 }
 
-=======
 
 /* 4. LOGO LUNES */
 :local .logoLunes span {
@@ -109,4 +108,3 @@
 :local .logoLunes span span {
   color: #4cd566;
 }
->>>>>>> V-369
