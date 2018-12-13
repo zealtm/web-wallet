@@ -1,5 +1,8 @@
 import React from "react";
 
+// COMPONENTS
+import LogoLunes from "../../../components/logoLunes";
+
 // UTILS
 import i18n from "../../../utils/i18n";
 
@@ -13,7 +16,10 @@ class EmailMessage extends React.Component {
     }, 6000);
     return (
       <div className={style.contNewAccount}>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
+
         <div>
           <img
             src="../../../../images/icons/email/email@2x.png"
