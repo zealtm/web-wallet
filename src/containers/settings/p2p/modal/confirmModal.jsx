@@ -24,8 +24,6 @@ class ConfirmModal extends React.Component {
 
   hendlerContinue = () => {
     const { setModalStep } = this.props;
-
-    console.log("Acionou!");
     setModalStep(2);
   };
 
