@@ -12,6 +12,11 @@ export const getAuthToken = () => JSON.parse(localStorage.getItem(authToken));
 
 export const getDecodedAuthToken = () => decodeToken(getAuthToken())
 
+export const getUserId = () => {
+  let token = getDecodedAuthToken()
+  return token.payload.id
+}
+
 export const setUserSeedWords = (seed, password) => {
   setUserData({ secretWord: encryptAes(seed, password) });
   return;
@@ -61,7 +66,7 @@ export const setDefaultFiat = fiat => {
 
 export const getDefaultFiat = () => {
   let userStorage = getUserData();
-  return userStorage.defaultFiat ? userStorage.defaultFiat : "USD";
+  return userStorage && userStorage.defaultFiat ? userStorage.defaultFiat : "USD";
 };
 
 export const setDefaultCrypto = coin => {
