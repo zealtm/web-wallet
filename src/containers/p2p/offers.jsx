@@ -186,7 +186,7 @@ class Offers extends React.Component {
     });
   };
 
-  filterMyOrders = filtermyorder => {
+  filterMyOrders = (filtermyorder, title) => {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
 
@@ -201,7 +201,8 @@ class Offers extends React.Component {
     if (filtermyorder) {
       this.setState({
         ...this.state,
-        myOrders: !myOrders
+        myOrders: !myOrders,
+        typeFilter: title
       });
     }
   };
@@ -236,20 +237,13 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title) => {
+  selectTypeP2P = (value, title) =>
     this.setState({
       ...this.state,
       typeP2P: title
     });
-  };
-  selectTypeFilter = (value, title) => {
-    this.filterMyOrders(true);
 
-    this.setState({
-      ...this.state,
-      typeFilter: title
-    });
-  };
+  selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
   renderMenu = () => {
     const { type, coinsEnabled } = this.props;
