@@ -24,6 +24,7 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import Tabs from "../../components/tabs";
+import TabsFilter from "./components/tab";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -206,6 +207,10 @@ class Offers extends React.Component {
     }
   };
 
+  handleTab = (data) => {
+    console.log("TAB", data);
+  }
+
   renderFilters = () => {
     const { type } = this.props;
     const { tabGiving, tabDone, tabCanceled } = this.state;
@@ -298,7 +303,8 @@ class Offers extends React.Component {
       </Grid>
     ) : (
       <Grid container>
-        <Tabs tabTitles={titles} tabContents={[]} justify="center" />
+        <TabsFilter tabTitles={titles} justify="center" handleTab={this.handleTab} />
+        
       </Grid>
     );
   };
