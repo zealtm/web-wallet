@@ -9,6 +9,7 @@ import { setModalStep } from "../../../p2p/redux/p2pAction";
 // STYLE
 import style from "./style.css";
 
+import i18n from "../../../../utils/i18n";
 class ConfirmModal extends React.Component {
   constructor(props) {
     super(props);
@@ -24,8 +25,6 @@ class ConfirmModal extends React.Component {
 
   hendlerContinue = () => {
     const { setModalStep } = this.props;
-
-    console.log("Acionou!");
     setModalStep(2);
   };
 
@@ -74,8 +73,6 @@ ConfirmModal.propTypes = {
   setModalStep: PropTypes.func.isRequired
 };
 
-const mapStateToProps = store => ({});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -85,6 +82,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ConfirmModal);
