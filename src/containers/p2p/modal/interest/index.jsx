@@ -21,8 +21,4 @@ class InterestModal extends React.Component {
   }
 }
 
-InterestModal.propTypes = {
-
-}
-
 export default InterestModal;

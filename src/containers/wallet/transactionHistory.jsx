@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setWalletLoading, getWalletCoinHistory } from "./redux/walletAction";
+import { setWalletLoading } from "./redux/walletAction";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
@@ -63,7 +63,6 @@ class TransactionHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { wallet, coins } = this.props;
-    
     let history = wallet.coinHistory.history.txs;
     let selectedCoin = wallet.selectedCoin;
     let coin = coins[selectedCoin];
@@ -279,7 +278,6 @@ TransactionHistory.propTypes = {
   coins: PropTypes.array.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
   setWalletLoading: PropTypes.func.isRequired,
-  getWalletCoinHistory: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -293,7 +291,6 @@ const mapDispatchToProps = dispatch =>
     {
       loadWalletInfo,
       setWalletLoading,
-      getWalletCoinHistory
     },
     dispatch
   );

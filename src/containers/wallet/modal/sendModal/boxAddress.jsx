@@ -9,7 +9,6 @@ import {
   getValidateAddress,
   setWalletSendModalLoading
 } from "../../redux/walletAction";
-import { errorInput } from "../../../errors/redux/errorAction";
 
 // MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
@@ -121,7 +120,6 @@ class BoxAddress extends React.Component {
 BoxAddress.propTypes = {
   coin: PropTypes.string.isRequired,
   modal: PropTypes.object.isRequired,
-  errorInput: PropTypes.func.isRequired,
   getValidateAddress: PropTypes.func.isRequired,
   setWalletSendModalLoading: PropTypes.func.isRequired
 };
@@ -135,7 +133,6 @@ const mapDispatchToProps = dispatch =>
     {
       setWalletSendModalLoading,
       getValidateAddress,
-      errorInput
     },
     dispatch
   );

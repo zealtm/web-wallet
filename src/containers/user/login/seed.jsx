@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, setUserSeed } from "../redux/userAction";
+import { setUserSeed } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -147,7 +147,6 @@ Seed.propTypes = {
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   setUserSeed: PropTypes.func,
-  generateUserSeed: PropTypes.func,
   user: PropTypes.object
 };
 
@@ -159,7 +158,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setUserSeed,
-      loading,
       clearMessage,
       errorInput
     },

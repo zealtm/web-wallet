@@ -184,8 +184,7 @@ CardOffer.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  userEmail: store.user.user.email,
-  p2pStore: store.p2p
+  userEmail: store.user.user.email
 });
 
 const mapDispatchToProps = dispatch =>

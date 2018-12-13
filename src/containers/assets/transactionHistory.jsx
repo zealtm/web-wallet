@@ -246,7 +246,6 @@ TransactionHistory.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  user: store.user.user,
   skeleton: store.skeleton,
   assets: store.assets,
 });
