@@ -50,7 +50,6 @@ class UserControl extends React.Component {
             {i18n.t("MENU_SETTING")}
           </Link>
 
-          {/* <Link to="/" className={style.linkPopMenu}> */}
           <a
             href="mailto:support@lunes.io"
             className={style.linkPopMenu}
