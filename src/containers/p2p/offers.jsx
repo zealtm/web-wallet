@@ -88,7 +88,7 @@ class Offers extends React.Component {
       ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFlter: "Todos"
+      typeFilter: "Todos"
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -243,11 +243,12 @@ class Offers extends React.Component {
     });
   };
   selectTypeFilter = (value, title) => {
+    this.filterMyOrders(true);
+
     this.setState({
       ...this.state,
-      typeFlter: title
+      typeFilter: title
     });
-    this.filterMyOrders(true);
   };
 
   renderMenu = () => {
@@ -257,7 +258,7 @@ class Offers extends React.Component {
       listTypeP2P,
       listTypeFilter,
       typeP2P,
-      typeFlter
+      typeFilter
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
@@ -275,7 +276,7 @@ class Offers extends React.Component {
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
-            title={typeFlter}
+            title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
             width={"80%"}
