@@ -327,34 +327,28 @@ class Invoice extends React.Component {
     return;
   };
 
-  currentDateTransform = (value) => {
+  currentDateTransform = value => {
     let strDate = value ? value.replace(/[^\d]+/g, "") : "";
     if (value == undefined || value == "") return "";
     let day = strDate.substring(0, 2);
     let month = strDate.substring(2, 4);
     let year = strDate.substring(4, 8);
     let numDay = Number(day);
-    if (numDay < 9)
-      day = "0" + (numDay + 1);
-    else
-      day = (numDay + 1);
+    if (numDay < 9) day = "0" + (numDay + 1);
+    else day = numDay + 1;
 
-    return (day + "/" + month + "/" + year);
-  }
+    return day + "/" + month + "/" + year;
+  };
 
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
-    let dueDatePayment = undefined;
-    if(payment.dueDate){
-      dueDatePayment = this.currentDateTransform(payment.dueDate);
-    }else{
-      dueDatePayment = this.currentDateTransform(invoice.dueDate);
-    }
-   // payment.dueDate = this.currentDateTransform(payment.dueDate);
-    //invoice.dueDate = this.currentDateTransform(invoice.dueDate);
+    let dueDatePayment = invoice.dueDate
+      ? this.currentDateTransform(invoice.dueDate)
+      : (dueDatePayment = this.currentDateTransform(payment.dueDate));
+      
     return (
       <Grid container direction="row" justify="center">
         <Grid item xs={12} className={style.box}>
@@ -368,7 +362,7 @@ class Invoice extends React.Component {
                 }}
                 placeholder="237933802350009031431630033330944400000001000000"
                 inputProps={{ maxLength: 48, required: true }}
-                value={payment.number || invoice.number}
+                value={ invoice.number || payment.number }
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
                 onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}
