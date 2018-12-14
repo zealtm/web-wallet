@@ -4,7 +4,7 @@
   "description": "Wallet Web",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot",
+    "start": "node ./public/js/languageVerify.js && webpack-dev-server --hot",
     "build": "webpack",
     "start:production": "webpack-dev-server --hot --config webpack.config.prod.js",
     "build:production": "rm -rf ./public/scripts/* && webpack --config webpack.config.prod.js && node ./public/js/versionUpdate.js",

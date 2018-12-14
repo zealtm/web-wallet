@@ -8,6 +8,7 @@ import { loadGeneralInfo, balanceCoins } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
+import LogoLunes from "../../components/logoLunes";
 
 // STYLE
 import style from "./style.css";
@@ -31,11 +32,9 @@ class LoadingPage extends Component {
     return (
       <div className={style.alignLoadingContainer}>
         <div className={style.itemsLoadingContainer}>
-          <img
-            src="../../images/logo.svg"
-            className={style.logoLoading}
-            width="250px"
-          />
+          <center>
+            <LogoLunes large />
+          </center>
 
           <div>
             <Loading color="general" width="300px" />
