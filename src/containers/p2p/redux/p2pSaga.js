@@ -124,19 +124,10 @@ export function* getP2PHistorySaga(payload) {
         orders: []
       });
     } else {
-
-      let orders = [];
-      response.data.orders.map((val)=>{
-        const type = val.way =="buy" ? 0 : 1;
-        if(type == payload.filterTab){
-          orders.push(val);
-        }
-      });
-
       yield put({
         type: "GET_HISTORY_REDUCER",
-        orders: orders
-      });
+        orders: response.data.orders
+      }); 
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);

@@ -22,10 +22,9 @@ export const getMyOrders = coin => ({
   coin
 });
 
-export const getHistory = (coin, filterTab) => ({
+export const getHistory = coin => ({
   type: "GET_P2P_HISTORY",
-  coin, 
-  filterTab
+  coin
 });
 
 export const getFilter = (coin, typeOrder, coinBuy) => ({
@@ -95,7 +94,7 @@ export const setTabIcon = tabIcon => ({
   tabIcon
 });
 
-export const setUserProfile = (userProfile) => ({
+export const setUserProfile = userProfile => ({
   type: "SET_USER_PROFILE_REDUCER",
   userProfile
 });
