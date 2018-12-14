@@ -93,18 +93,18 @@ class InviteService {
   async sendWithdraw(token, address) {
     try {
       API_HEADER.headers.Authorization = token;
-     
+
       let response = await axios.post(
         BASE_URL + "/invite/withdraw",
         {
-          address: address.address.link
+          address: address.address
         },
         API_HEADER
       );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if (response.data.code !== 200) {
+      if (response.data.code != 200) {
         return internalServerError();
       }
 

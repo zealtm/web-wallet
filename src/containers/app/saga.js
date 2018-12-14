@@ -196,7 +196,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
     fork(takeLatest, "GET_ASSET_GENERAL_INFO_API", getAssetGeneralInfo),
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
-    fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
+    fork(takeLatest, "GET_RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
 
     // p2pchat
