@@ -52,7 +52,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: seed == undefined ? "" : seed.value,
-      placeholder: i18n.t("PLACEHOLDER_SEED"),
+      placeholder: i18n.t("SEED_INSERT_SEED"),
       required: true
     };
 
@@ -78,7 +78,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: generateMnemonic(),
-      placeholder: i18n.t("PLACEHOLDER_SEED"),
+      placeholder: i18n.t("SEED_INSERT_SEED"),
       required: true
     };
 
@@ -108,13 +108,13 @@ class Seed extends React.Component {
           <LogoLunes medium />
         </center>
 
-        <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
+        <div className={style.insertSeed}>{i18n.t("PLACEHOLDER_SEED")}</div>
         <textarea
           type="textarea"
           name="seed"
           cols="15"
           rows="6"
-          placeholder={i18n.t("PLACEHOLDER_SEED")}
+          placeholder={i18n.t("SEED_INSERT_SEED")}
           value={!seed ? undefined : seed.value}
           required
           onChange={event => this.getInput(event.target)}
