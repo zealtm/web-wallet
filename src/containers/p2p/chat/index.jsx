@@ -21,6 +21,7 @@ import { getChatBundle, appendFinalMessage } from "./functions";
 
 //UTILS
 import i18n from "./../../../utils/i18n";
+import { removeChatTargetScroll } from "./functions"
 
 class Chat extends React.Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class Chat extends React.Component {
     } else if (status === "canceled") {
       appendFinalMessage(updatedAt, true);
     }
+    removeChatTargetScroll()
   }
   componentDidUpdate() {}
   callChatBundle = () => {

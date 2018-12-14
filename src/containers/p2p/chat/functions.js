@@ -50,7 +50,7 @@ export const awaitChatLoadUp = () => {
   });
 };
 export const appendFinalMessage = async (timestamp, cancelled = false) => {
-  await awaitChatLoadUp();
+  await awaitChatLoadUp()
   let type = cancelled ? "CANCELED" : "FINISHED";
   let time = convertISO8601(timestamp);
   let baseEL = document.querySelector(".base");
@@ -63,5 +63,14 @@ export const appendFinalMessage = async (timestamp, cancelled = false) => {
   finalMessage.className = style.finalMessage;
   finalMessage.appendChild(line);
   finalMessage.appendChild(message);
-  baseEL.appendChild(finalMessage);
+  let prev = baseEL.querySelector(`.${style.finalMessage}`)
+  if (prev) prev.style.display = 'none'
+  baseEL.appendChild(finalMessage)
 };
+
+export const removeChatTargetScroll = async () => {
+  await awaitChatLoadUp()
+  let chatTargetEL = document.querySelector('.chatTarget')
+  if (!chatTargetEL) return;
+  chatTargetEL.style.overflow = 'hidden'
+}
