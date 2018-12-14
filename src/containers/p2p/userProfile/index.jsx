@@ -73,7 +73,7 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    const { classes, loading, profile } = this.props;
+    const { classes, loading, profile, rating } = this.props;
     const dateCreate = formatDate(profile.createdAt);
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
@@ -132,7 +132,7 @@ class UserProfile extends React.Component {
               </span>
 
               <div className={style.barsNumbers}>
-                <span>+500</span>
+                <span>{rating.count}</span>
               </div>
             </div>
             <LinearProgress
@@ -201,12 +201,16 @@ UserProfile.propTypes = {
   loading: PropTypes.bool
 };
 
-const mapStateToProps = store => ({
-  userProfile: store.p2p.userProfile,
-  profile: store.p2p.profile,
-  userEmail: store.user.user.email,
-  loading: store.p2p.loading
-});
+const mapStateToProps = store => (
+  console.warn(store),
+  {
+    userProfile: store.p2p.userProfile,
+    profile: store.p2p.profile,
+    userEmail: store.user.user.email,
+    loading: store.p2p.loading,
+    rating: store.p2p.profile.rating
+  }
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
