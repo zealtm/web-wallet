@@ -10,6 +10,7 @@ import { closeChat, setUserProfile } from "../../redux/p2pAction";
 import { formatDate } from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
 import { encryptMd5 } from "../../../../utils/cryptography";
+import { getProfileImg } from "../../../../utils/user"
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -51,30 +52,13 @@ class Header extends React.Component {
     });
   };
 
-  rederPictureGravatar() {
+  getUserPhoto() {
     let { typeOfUser, buyer, seller } = this.props.chatDetails
-    const defaultImg =
-      "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
     if (typeOfUser === 'seller') {
       if (!buyer) return;
-
-      let encryptedEmail = encryptMd5(buyer && buyer.email && buyer.email.toLowerCase())
-      return (
-        "https://s.gravatar.com/avatar/" +
-        encryptedEmail +
-        "?s=300" +
-        "&d=" +
-        defaultImg
-      );
+      return getProfileImg(300, buyer && buyer.email)
     } else {
-      let encryptedEmail = encryptMd5(seller && seller.email && seller.email.toLowerCase())
-      return (
-        "https://s.gravatar.com/avatar/" +
-        encryptedEmail +
-        "?s=300" +
-        "&d=" +
-        defaultImg
-      );
+      return getProfileImg(300, seller && seller.email)
     }
   }
 
@@ -106,7 +90,7 @@ class Header extends React.Component {
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
-                src={this.rederPictureGravatar(order.sell.user.email)}
+                src={this.getUserPhoto()}
               />
             </Grid>
             <Grid item xl={5}>
