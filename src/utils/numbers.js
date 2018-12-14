@@ -61,6 +61,8 @@ export const formatDate = (date, type = "DMY", monthNumber = false) => {
     return day;
   } else if (type === "DM") {
     return day + "/" + month;
+  } else if (type === "DMI") {
+    return day + "/" + month.toString().substr(0, 3);
   } else if (type === "H") {
     return hours;
   } else if (type === "HM") {

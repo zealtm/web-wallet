@@ -4,16 +4,17 @@ import PropTypes from "prop-types";
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPaymentMethodsWhenBuying } from "./redux/p2pAction";
+import { getPaymentMethodsWhenBuying, setTabIcon } from "./redux/p2pAction";
 
 //MATERIAL
-import { Hidden } from "@material-ui/core/";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
 
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
+import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
+import SellConfirmModal from "./modal/sellConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -24,16 +25,13 @@ class P2P extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabIcon: 0,
       openP2P: true
     };
   }
 
   handleTabIcon = key => {
-    this.setState({
-      ...this.state,
-      tabIcon: key
-    });
+    const { setTabIcon } = this.props;
+    setTabIcon(key);
   };
 
   handleP2P = () => {
@@ -65,12 +63,12 @@ class P2P extends React.Component {
   };
 
   renderContent = () => {
-    const { tabIcon } = this.state;
+    const { tabIcon } = this.props.p2pStore;
 
     const contents = [
       <Offers key={1} type="general" />,
       <Offers key={2} type="myhistory" />,
-      //<UserProfile key={3} />,
+      <UserProfile key={3} />,
       <CreateOffer key={4} />
     ];
     return contents[tabIcon];
@@ -82,12 +80,12 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "newoffer", /*"user"*/];
+    const contentTabIcons = ["tag", "user-star","user", "newoffer" ];
     const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
-    
+
     return (
       <div className={showBox}>
         {/* <Hidden smDown>
@@ -114,17 +112,20 @@ class P2P extends React.Component {
 
 P2P.propTypes = {
   p2pStore: PropTypes.object.isRequired,
-  getPaymentMethodsWhenBuying: PropTypes.func
+  getPaymentMethodsWhenBuying: PropTypes.func,
+  setTabIcon: PropTypes.func
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  skeleton: store.skeleton
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPaymentMethodsWhenBuying
+      getPaymentMethodsWhenBuying,
+      setTabIcon
     },
     dispatch
   );

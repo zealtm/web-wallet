@@ -10,6 +10,10 @@ import P2pService from "../../../services/p2pService";
 
 const p2pService = new P2pService();
 
+const CHANGE_SKELETON_ERROR_STATE = {
+  type: "CHANGE_SKELETON_ERROR_STATE",
+  state: true
+};
 export function* openChat(payload) {
   yield put({
     type: "OPEN_CHAT_P2P_REDUCER",
@@ -56,6 +60,7 @@ export function* getP2PMyOrdersSaga(payload) {
       });
     }
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -72,19 +77,31 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [{title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes"}];
-    if(response.cripto){
-      response.cripto.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/coins/${val.abbreviation}.png`, value: val.abbreviation})
+    let cripto = [
+      { title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes" }
+    ];
+    if (response.cripto) {
+      response.cripto.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/coins/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
 
-    if(response.fiat){
-      response.fiat.forEach(val=>{
-        if(val.status=="active"){
-          cripto.push({id: val.id, title: val.name.toUpperCase(), img: `images/icons/fiat/${val.abbreviation}.png`, value: val.abbreviation})
+    if (response.fiat) {
+      response.fiat.forEach(val => {
+        if (val.status == "active") {
+          cripto.push({
+            id: val.id,
+            title: val.name.toUpperCase(),
+            img: `images/icons/fiat/${val.abbreviation}.png`,
+            value: val.abbreviation
+          });
         }
       });
     }
@@ -114,6 +131,7 @@ export function* getP2PHistorySaga(payload) {
       });
     }
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -128,6 +146,7 @@ export function* acceptOfferWhenBuying(payload) {
     yield put({ type: "SUCCESS_REQUEST", message: "" });
     yield put({ type: "BUY_SETTER", data: { isBuyLoading: false } });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -149,9 +168,10 @@ export function* getP2PFilterSaga(payload) {
 
     yield put({
       type: "GET_FILTER_REDUCER",
-      orders: response
+      orders: response.data.orders
     });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
     yield put(internalServerError());
   }
 }
@@ -202,6 +222,23 @@ export function* setP2POrdersCancelSaga(payload) {
       orderId: response
     });
   } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
+
+    yield put(internalServerError());
+  }
+}
+
+export function* createSignatureSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -250,4 +287,26 @@ export function* closeAvaliation() {
   yield put({
     type: "CLOSE_AVALIATION_P2P_REDUCER"
   });
+}
+
+export function* setTabIconSaga(payload) {
+  yield put({
+    type: "SET_TAB_ICON_REDUCER",
+    tabIcon: payload.tabIcon
+  });
+}
+
+export function* getProfileSaga(payload) {
+  try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
+    let token = yield call(getAuthToken);
+    let response = yield call(p2pService.getProfile, token, payload.profile);
+    yield put({
+      type: "GET_PROFILE_REDUCER",
+      profile: response.data
+    });
+  } catch (error) {
+    yield put(CHANGE_SKELETON_ERROR_STATE);
+    yield put(internalServerError());
+  }
 }

@@ -31,13 +31,14 @@ export const getCreateUserInfoPassword = password => ({
   password
 });
 
-export const createUser = (name, surname, email, password) => ({
+export const createUser = (name, surname, email, password, link) => ({
   type: "POST_USER_CREATE_USER_API",
   user: {
     name,
     surname,
     email,
-    password
+    password,
+    link
   }
 });
 
@@ -47,7 +48,7 @@ export const setUserSeed = (seed, password) => ({
   password
 });
 
-export const resetUser = (login) => ({
+export const resetUser = login => ({
   type: "POST_USER_RESET_USER_API",
   login
 });
@@ -66,10 +67,29 @@ export const editUserData = data => ({
   data
 });
 
-export const updateUserPassword = (oldPassword, confirmOldPassword, newPassword, confirmNewPassword) => ({
+export const updateUserPassword = (
+  oldPassword,
+  confirmOldPassword,
+  newPassword,
+  confirmNewPassword
+) => ({
   type: "PATH_USER_PASSWORD_API",
   oldPassword,
   confirmOldPassword,
   newPassword,
   confirmNewPassword
+});
+
+export const clearUserData = () => ({
+  type: "CLEAR_USER_DATA"
+});
+
+export const verifyInvite = hash => ({
+  type: "VERIFY_INVITE_SAGA", 
+  hash
+});
+
+export const verifyEmail = hash => ({
+  type: "VERIFY_EMAIL_SAGA",
+  hash
 });

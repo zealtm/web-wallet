@@ -5,9 +5,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2018-11-15T00:29:52.319Z\n"
-"PO-Revision-Date: 2018-11-15T00:29:52.319Z\n"
-"Language: en_US\n"
+"POT-Creation-Date: 2018-11-29T01:16:50.758Z\n"
+"PO-Revision-Date: 2018-11-29T01:16:50.758Z\n"
+"Language: en\n"
 
 msgid "FEBRUARY"
 msgstr "February"
@@ -439,6 +439,20 @@ msgid "ASSETS_UNKNOWN"
 msgstr "Unknown error on trying to do assets' request."
 
 msgctxt "ERROR"
+msgid "BUYCOINS_INFO"
+msgstr "Your purchase of cryptocurrency has failed"
+
+msgctxt "ERROR"
+msgid "INVITE"
+msgid_plural "INVITE"
+msgstr[0] "Email invalid"
+msgstr[1] "Change e-mail"
+msgstr[2] "Await address loaded"
+
+msgctxt "ERROR"
+msgid "SEND_MAIL_INVITE"
+msgstr "Error on send"
+
 msgid "COINSALE_INFO"
 msgstr "Your purchase of cryptocurrency has failed"
 
@@ -479,6 +493,10 @@ msgid "COINSALE"
 msgid_plural "COINSALE"
 msgstr[0] "You have successfully completed the purchase!"
 msgstr[1] "View your purchase history in the History tab"
+
+msgctxt "SUCCESS"
+msgid "SEND_MAIL_INVITE"
+msgstr "Sent with success"
 
 msgctxt "CUPON"
 msgid "INSTRUCTION_MODAL"
@@ -905,6 +923,10 @@ msgctxt "EMAIL"
 msgid "BTN_RECEIVE"
 msgstr "E-mail"
 
+msgctxt "EMAIL"
+msgid "INVITE_TITLE"
+msgstr "E-mail"
+
 msgctxt "SEED"
 msgid "PLACEHOLDER"
 msgstr "Seed Words"
@@ -936,6 +958,10 @@ msgstr "Send"
 msgctxt "SEND"
 msgid "MODAL_TO_SEND"
 msgstr " You are sending "
+
+msgctxt "SEND"
+msgid "INVITE_BUTTON"
+msgstr "Send"
 
 msgctxt "DISABLED"
 msgid "BTN"
@@ -1217,6 +1243,10 @@ msgctxt "SHARE"
 msgid "BTN_RECEIVE"
 msgstr "Share"
 
+msgctxt "SHARE"
+msgid "INVITE_LINK"
+msgstr "Share link"
+
 msgctxt "BALANCE"
 msgid "WALLET"
 msgstr "Balance"
@@ -1224,6 +1254,10 @@ msgstr "Balance"
 msgctxt "BALANCE"
 msgid "LEASING"
 msgstr "Total Lunes Balance"
+
+msgctxt "BALANCE"
+msgid "INVITE_NO"
+msgstr "No balance available"
 
 msgctxt "TEXT"
 msgid "LEASING_HELP"
@@ -1258,6 +1292,10 @@ msgid_plural "COINSALE_FEE"
 msgstr[0] "You are sending "
 msgstr[1] " to "
 
+msgctxt "TEXT"
+msgid "INVITE"
+msgstr "Invite your friends and family to register on Lunes"
+
 msgctxt "START"
 msgid "LEASING_BT"
 msgstr "START LEASING"
@@ -1285,6 +1323,14 @@ msgstr "Node"
 msgctxt "BUTTON"
 msgid "VOUCHER"
 msgstr "Redeem"
+
+msgctxt "BUTTON"
+msgid "INVITE_COPY"
+msgstr "Copy"
+
+msgctxt "BUTTON"
+msgid "INVITE_SHARE"
+msgstr "Share"
 
 msgctxt "INFO"
 msgid "SETTINGS_HEADER"
@@ -1545,6 +1591,60 @@ msgid "MENU"
 msgstr "Buy"
 
 msgctxt "WAITING"
+msgid "BUYCOINS_STATUS"
+msgstr "Waiting"
+
+msgctxt "CONFIRMED"
+msgid "BUYCOINS_STATUS"
+msgstr "Confirmed"
+
+msgctxt "CANCELED"
+msgid "BUYCOINS_STATUS"
+msgstr "Canceled"
+
+msgctxt "PREFIX"
+msgid "BUYCOINS_PACK_TEXT"
+msgstr "You are buying "
+
+msgctxt "SUFIX"
+msgid "BUYCOINS_PACK_TEXT"
+msgstr " and will receive"
+
+msgctxt "PACK"
+msgid "BUY_ERROR"
+msgstr "Select a package"
+
+msgctxt "RELOAD"
+msgid "BUY_ERROR"
+msgstr "Error. Try reload page."
+
+msgctxt "CREDIT"
+msgid "BUY"
+msgstr "Payment"
+
+msgctxt "INVITE"
+msgid "MENU"
+msgstr "Invites"
+
+msgctxt "INVITE"
+msgid "INVITE_TITLE"
+msgstr "Invites"
+
+msgctxt "COUPON"
+msgid "INVITE_TITLE"
+msgstr "Coupon"
+
+msgctxt "INVITATIONS"
+msgid "INVITE_SEND"
+msgstr "Sent invitations"
+
+msgctxt "INVITATIONS"
+msgid "INVITE_CONFIRMED"
+msgstr "Confirmed invitations"
+
+msgctxt "WITHDRAW"
+msgid "INVITE"
+msgstr "You have successfully completed the withdraw!"
 msgid "COINSALE_STATUS"
 msgstr "Waiting"
 
