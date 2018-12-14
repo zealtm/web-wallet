@@ -485,7 +485,7 @@
   "INVITE_TITLE_EMAIL": "E-mail",
   "INVITE_TITLE_INVITE": "Invites",
   "INVITE_TITLE_COUPON": "Coupon",
-  "INVITE_TEXT_1": "You and the invited user will earn 5 LUNES after the invited user register and make at least one transaction inside the wallet , by sending some coins or using a service",
+  "INVITE_TEXT_1": "You and the invited user will earn 5 LUNES after the invited user register and make at least one transaction inside the wallet, by sending some coins or using a service",
   "INVITE_BUTTON_SEND": "Send",
   "INVITE_SEND_INVITATIONS": "Sent invites",
   "INVITE_ERROR_1": "Change e-mail",
