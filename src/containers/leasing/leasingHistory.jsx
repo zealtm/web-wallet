@@ -17,6 +17,9 @@ import Grid from "@material-ui/core/Grid";
 import { formatDate } from "../../utils/numbers";
 import i18n from "../../utils/i18n";
 
+// CONSTANTS
+import { blockexplorer } from "../../constants/apiBaseUrl";
+
 // STYLES
 import style from "./style.css";
 
@@ -143,7 +146,7 @@ class LeasingHistory extends React.Component {
                 <Grid item xs={12} className={style.descriptionHistory}>
                   <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
                   <a
-                    href={"https://blockexplorer.lunes.io/tx/" + value.txID}
+                    href={blockexplorer["lunes"] + value.txID}
                     target="blank"
                   >
                     {value.txID}

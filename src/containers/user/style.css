@@ -5,7 +5,6 @@
   1.2 BUTTON
   1.3 INPUT
   1.4 LINKS
-  1.5 IMAGES 
 
 2. FOOTER 
   2.1 GENERAL
@@ -85,16 +84,6 @@
   composes: linkDefault from "../../components/bases/textBase.css";
   font-size: 16px;
   font-weight: 900;
-}
-
-/* 1.5 IMAGES */
-:local(.logo) {
-  display: block;
-  max-width: 100%;
-  width: 160px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
 }
 
 /* ------------------------------------------------------------------------- */

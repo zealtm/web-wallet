@@ -7,6 +7,9 @@ import { bindActionCreators } from "redux";
 import { setWalletLoading, getWalletCoinHistory } from "./redux/walletAction";
 import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
+// CONSTANTS
+import { blockexplorer } from "../../constants/apiBaseUrl";
+
 // STYLE
 import style from "./style.css";
 
@@ -21,15 +24,6 @@ import i18n from "../../utils/i18n";
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import { formatDate } from "../../utils/numbers";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
-
-const blockexplorer = {
-  lunes: "https://blockexplorer.lunes.io/tx/",
-  btc: "https://live.blockcypher.com/btc/tx/",
-  ltc: "https://live.blockcypher.com/ltc/tx/",
-  bch: "https://live.blockcypher.com/bch/tx/",
-  dash: "https://chainz.cryptoid.info/dash/search.dws?q=",
-  eth: "https://etherscan.io/tx/"
-};
 
 class TransactionHistory extends React.Component {
   constructor() {
@@ -63,7 +57,7 @@ class TransactionHistory extends React.Component {
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { wallet, coins } = this.props;
-    
+
     let history = wallet.coinHistory.history.txs;
     let selectedCoin = wallet.selectedCoin;
     let coin = coins[selectedCoin];

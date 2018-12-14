@@ -148,14 +148,3 @@
     width: 100%;
   }
 }
-
-/* . SCROLLBAR */
-::-webkit-scrollbar {
-  background-color: #654fa4;
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #68f285;
-  border-radius: 6px;
-}
