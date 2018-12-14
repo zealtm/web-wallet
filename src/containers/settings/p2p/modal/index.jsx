@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 // COMPONENTS
 import DoneModal from "./doneModal";
 import ConfirmModal from "./confirmModal";
+import SecureBuy from "./secureBuy";
 
 class FlowModal extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class FlowModal extends React.Component {
       case 1:
         return <ConfirmModal />;
       case 2:
+        return <SecureBuy />;
+      case 3:
         return <DoneModal />;
     }
   }
