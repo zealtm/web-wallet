@@ -580,7 +580,8 @@
   "P2P_TEXT_11": "Para pagamento na plataforma P2P",
   "P2P_TEXT_12": "O fee da sua transação na rede Lunes é",
   "P2P_TEXT_13": "Parabéns, você acaba de fazer uma venda. Assim que você se certificar que o depósito foi realizado, confirme que a transação foi um sucesso!",
-  "P2P_BUTTON_CONFIRM": "Voltar",
+  "P2P_TEXT_14": "Classifique o comprador",
+  "P2P_BUTTON_CONFIRM": "Concluir",
   "P2P_TRY_AGAIN": "Tentar novamente",
   "P2P_MONTHLY_SIGNATURE": "Mensal",
   "P2P_QUARTERLY_SIGNATURE": "Trimestral",
@@ -596,5 +597,6 @@
   "P2P_COMING_SOON": "Avaliação em breve disponível !",
   "P2P_TAB_PURCHASE": "Compra",
   "P2P_TAB_SALE": "Venda",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento"
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento",
+  "P2P_MODAL_SEND_INFO_SUCCESS": "Avaliação realizada com sucesso"
 }

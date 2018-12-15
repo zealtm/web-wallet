@@ -118,7 +118,7 @@ class CardOffer extends React.Component {
           <Grid item xs={2}>
             <Avatar
               alt="avatar"
-              src={this.renderPictureGravatar(order.sell.user.email)}
+              src={this.rederPictureGravatar(order.sell.user.email)}
               className={style.avatar}
               onClick={this.openUserProfile}
             />

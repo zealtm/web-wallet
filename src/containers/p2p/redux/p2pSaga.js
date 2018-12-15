@@ -255,8 +255,7 @@ export function* setP2PRatingOrderSaga(payload) {
     if(!response){
       yield put(internalServerError());
     }else{
-      yield put(modalSuccess(i18n.t("MODAL_SEND_INFO_SUCCESS")));
-      
+      yield put(modalSuccess(i18n.t("P2P_MODAL_SEND_INFO_SUCCESS")));      
     }
   } catch (error) {
     yield put(internalServerError());
