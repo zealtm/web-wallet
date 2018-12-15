@@ -14,7 +14,6 @@ import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
-import SellConfirmModal from "./modal/sellConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -80,7 +79,7 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star","user", "newoffer" ];
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
     const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
