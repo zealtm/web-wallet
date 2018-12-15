@@ -22,17 +22,22 @@ class ConfirmModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 5,
+      value: 0,
       description: "",
       orderId: ""
     };
+  }
+  selectVote  = val => {
+    this.setState({
+      value: val || 0,
+    });
   }
   close = () => {
     const { closeAvaliation, closeChat } = this.props;
     closeAvaliation();
     closeChat();
   };
-  renderPictureGravatar(email) {
+  renderPictureGravatar = email => {
     const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
     return "https://s.gravatar.com/avatar/" + encryptMd5(email.toLowerCase()) + "?s=300" + "&d=" + defaultImg;
   }
@@ -50,20 +55,20 @@ class ConfirmModal extends React.Component {
     this.close();
   }
   render() {
-    const { order } = this.props;
+    const { order, userEmail } = this.props;
     let { value, description } = this.state;
+    let isComprador = (userEmail == order.sell.user.email);
+
     return (
       <Grid container>
         <Grid item xs={12}>
           <div className={style.profile}>
             <Avatar
-              src={"images/lunio/lunio-user@100x100.jpg"}
+              src={this.renderPictureGravatar(isComprador?order.buy.user.email:order.sell.user.email)}
               className={style.avatar}
             />
             <div className={style.userName}>
-              <span className={style.name}>
-                {order.sell.user.name} {order.sell.user.surname}
-              </span>
+              <span className={style.name}>{isComprador?order.buy.user.name:order.sell.user.name} {isComprador?order.buy.user.name:order.sell.user.userName}</span>
             </div>
             <div className={style.hr} />
           </div>
@@ -71,9 +76,9 @@ class ConfirmModal extends React.Component {
 
         <Grid item xs={12}>
           <div className={style.avaliation}>
-            <span className={style.spanTitle}>{i18n.t("P2P_TEXT_3")}</span>
+            <span className={style.spanTitle}>{isComprador?i18n.t("P2P_TEXT_14"):i18n.t("P2P_TEXT_3")}</span>
             <div className={style.starVotes}>
-              <Starvotes votes={order.buy.user.rating} />
+              <Starvotes votes={value} enable selectVote={this.selectVote}/>
             </div>
             <div>
               <Input className={style.comment}
@@ -96,10 +101,14 @@ class ConfirmModal extends React.Component {
   }
 }
 
-ConfirmModal.propTypes = {};
+ConfirmModal.propTypes = {
+  order: PropTypes.object,
+  userEmail: PropTypes.string,
+};
 
 const mapStateToProps = store => ({
-  order: store.p2p.order
+  order: store.p2p.order,
+  userEmail: store.user.user.email,
 });
 
 const mapDispatchToProps = dispatch =>
