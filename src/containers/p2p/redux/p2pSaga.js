@@ -227,6 +227,21 @@ export function* setP2POrdersCancelSaga(payload) {
   }
 }
 
+export function* createSignatureSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* openDeposit(payload) {
   yield put({
     type: "OPEN_DEPOSIT_P2P_REDUCER",

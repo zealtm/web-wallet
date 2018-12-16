@@ -166,6 +166,31 @@ class P2pService {
     }
   }
 
+  async createSignature(token, data) {
+    try {
+      let { planId, txID } = data;
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/signature`,
+        {
+          planId,
+          txID
+        },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
   async getProfile(token, userId) {
     try {
       API_HEADER.headers.Authorization = token;

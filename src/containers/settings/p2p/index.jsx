@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep, openModal } from "../../p2p/redux/p2pAction";
+import { getSignatures } from "../../settings/redux/settingsAction";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -19,6 +20,7 @@ import i18n from "../../../utils/i18n";
 // COMPONENTS
 import ModalPayment from "./modal/index";
 import Modal from "../../../components/modal";
+import Loading from "../../../components/loading";
 
 class P2P extends React.Component {
   closeModal() {
@@ -27,9 +29,43 @@ class P2P extends React.Component {
     setModalStep(1);
   }
 
-  render() {
-    const { modalOpen, openModal } = this.props;
+  componentDidMount = () => {
+    const { getSignatures } = this.props;
+    getSignatures();
+  };
 
+  renderPlans = () => {
+    const { signatures, openModal, loadingP2P } = this.props;
+
+    if(loadingP2P) return <div><Loading color="lunes" /></div>;
+
+    if(signatures.plans) {
+
+      return signatures.plans.map((val, key) => (
+        <Grid item key={key}>
+          <div className={style.cardP2p} onClick={() => openModal(true)}>
+            <h1>{val.status}</h1>
+            <img src="/images/icons/p2p/card.png" className={style.cardIcon} />
+            <div className={style.hrCard} />
+            <div className={style.cardTitle}>
+              <p>
+                O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                por um mês
+              </p>
+            </div>
+            <div className={style.valueCard}>
+              <span className={style.dollarSign}>{val.coinValue}</span>
+            </div>
+          </div>
+        </Grid>
+      ));
+
+    }
+  };
+
+  render() {
+    const { modalOpen } = this.props;
+        
     return (
       <div>
         <Modal
@@ -72,89 +108,7 @@ class P2P extends React.Component {
         </Grid>
 
         <Grid container className={style.p2pContainer}>
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>{i18n.t("P2P_MONTHLY_SIGNATURE")}</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>{i18n.t("P2P_MONTHLY_SIGNATURE_DESCRIPTION")}</p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>00</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>{i18n.t("P2P_QUARTERLY_SIGNATURE")}</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>{i18n.t("P2P_QUARTERLY_SIGNATURE_DESCRIPTION")}</p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>00</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>{i18n.t("P2P_SEMESTER_SIGNATURE")}</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>{i18n.t("P2P_SEMESTER_SIGNATURE_DESCRIPTION")}</p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>00</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item>
-            <div className={style.cardP2p}>
-              <h1>{i18n.t("P2P_YEARLY_SIGNATURE")}</h1>
-              <img
-                src="/images/icons/p2p/card.png"
-                className={style.cardIcon}
-              />
-              <div className={style.hrCard} />
-              <div className={style.cardTitle}>
-                <p>{i18n.t("P2P_YEARLY_SIGNATURE_DESCRIPTION")}</p>
-              </div>
-              <div className={style.valueCard}>
-                <span className={style.dollarSign}>R$</span>{" "}
-                <div className={style.containerValue}>
-                  <span className={style.value}>00</span>{" "}
-                  <span className={style.decimals}>,00</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
+          {this.renderPlans()}
         </Grid>
       </div>
     );
@@ -165,17 +119,25 @@ P2P.propTypes = {
   modalStep: PropTypes.number.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
-  openModal: PropTypes.func.isRequired
+  openModal: PropTypes.func.isRequired,
+  getSignatures: PropTypes.func,
+  signatures: PropTypes.object, 
+  loadingP2P: PropTypes.bool.isRequired
 };
+
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
-  modalOpen: store.p2p.modalOpen
+  modalOpen: store.p2p.modalOpen,
+  signatures: store.settings.signatures, 
+  loadingP2P: store.settings.loadingP2P
 });
+      
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setModalStep,
-      openModal
+      openModal,
+      getSignatures
     },
     dispatch
   );
