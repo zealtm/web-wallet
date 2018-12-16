@@ -127,7 +127,7 @@ export function* getP2PHistorySaga(payload) {
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
-      });
+      }); 
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
