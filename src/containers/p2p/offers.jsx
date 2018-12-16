@@ -24,6 +24,7 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import Tabs from "../../components/tabs";
+import TabsFilter from "./components/tab";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -88,7 +89,8 @@ class Offers extends React.Component {
       ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFilter: "Todos"
+      typeFlter: "Todos",
+      filterTab: 0
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -156,7 +158,7 @@ class Offers extends React.Component {
 
   renderOders = () => {
     const { orders, loading, type } = this.props;
-    const { tabGiving, tabDone, tabCanceled } = this.state;
+    const { tabGiving, tabDone, tabCanceled, filterTab } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     if (orders.length <= 0)
@@ -167,17 +169,31 @@ class Offers extends React.Component {
       );
     if (type == "myhistory") {
       return orders.map((val, key) => {
-        if (tabGiving && val.status == "confirmed") {
-          return <CardOffer key={key} order={val} />;
-        }
+        if (filterTab == 0 && val.way == "buy") {
+          if (tabGiving && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
 
-        if (tabDone && val.status == "confirmed") {
-          return <CardOffer key={key} order={val} />;
-        }
+          if (tabDone && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
 
-        if (tabCanceled && val.status === "canceled") {
-          console.warn(val.status);
-          return <CardOffer key={key} order={val} />;
+          if (tabCanceled && val.status === "canceled") {
+            return <CardOffer key={key} order={val} />;
+          }
+        }
+        if (filterTab == 1 && val.way == "sell") {
+          if (tabGiving && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
+
+          if (tabDone && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
+
+          if (tabCanceled && val.status === "canceled") {
+            return <CardOffer key={key} order={val} />;
+          }
         }
       });
     }
@@ -205,6 +221,16 @@ class Offers extends React.Component {
         typeFilter: title
       });
     }
+  };
+
+  handleTab = data => {
+    const { getHistory } = this.props;
+    const { coinSelect } = this.state;
+    this.setState({
+      ...this.state,
+      filterTab: data
+    });
+    getHistory(coinSelect.value);
   };
 
   renderFilters = () => {
@@ -293,8 +319,12 @@ class Offers extends React.Component {
         </Grid>
       </Grid>
     ) : (
-      <Grid container>
-        <Tabs tabTitles={titles} tabContents={[]} justify="center" />
+      <Grid container style={{ paddingBottom: "1.5rem" }}>
+        <TabsFilter
+          tabTitles={titles}
+          justify="center"
+          handleTab={this.handleTab}
+        />
       </Grid>
     );
   };
