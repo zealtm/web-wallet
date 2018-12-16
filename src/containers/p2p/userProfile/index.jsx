@@ -70,19 +70,17 @@ class UserProfile extends React.Component {
       : 0;
 
   render() {
+    let positivePercents = 0;
     const { classes, loading, profile } = this.props;
     const { rating } = profile;
-    let positivePercents = 0;
+    const dateCreate = formatDate(profile.createdAt);
 
-    if (rating) {
-      console.warn("ELE AQUI", rating);
+    if (rating)
       positivePercents = this.calcPercentagePositive(
         rating.positive,
         rating.count
       );
-    }
 
-    const dateCreate = formatDate(profile.createdAt);
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     return (
@@ -205,15 +203,12 @@ UserProfile.propTypes = {
   loading: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    userProfile: store.p2p.userProfile,
-    profile: store.p2p.profile,
-    userEmail: store.user.user.email,
-    loading: store.p2p.loading
-  }
-);
+const mapStateToProps = store => ({
+  userProfile: store.p2p.userProfile,
+  profile: store.p2p.profile,
+  userEmail: store.user.user.email,
+  loading: store.p2p.loading
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
