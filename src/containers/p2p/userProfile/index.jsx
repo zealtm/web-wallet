@@ -91,6 +91,7 @@ class UserProfile extends React.Component {
               {profile && (
                 <img
                   src={this.rederPictureGravatar(profile.email)}
+                  alt="profile"
                   className={style.avatarProfile}
                 />
               )}
