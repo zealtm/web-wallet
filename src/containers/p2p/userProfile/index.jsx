@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setUserProfile,
-  getProfile,
-  clearUserProfile
-} from "../redux/p2pAction";
+import { getProfile, clearUserProfile } from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -25,7 +21,7 @@ import colors from "../../../components/bases/colors";
 
 // UTILS
 import i18n from "../../../utils/i18n";
-import { formatDate } from "../../../utils/numbers";
+import { formatDate, percentCalc } from "../../../utils/numbers";
 import { encryptMd5 } from "../../../utils/cryptography";
 
 const styles = {
@@ -42,19 +38,15 @@ const styles = {
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      positivePercents: 0
+    };
   }
 
   componentDidMount = () => {
-    const { getProfile, userProfile } = this.props;
-    if (userProfile.id) {
-      getProfile(userProfile.id);
-    } else {
-      getProfile();
-    }
-  };
+    const { clearUserProfile, getProfile, userProfile } = this.props;
+    if (!userProfile.id) getProfile();
 
-  componentWillUnmount = () => {
-    const { clearUserProfile } = this.props;
     clearUserProfile();
   };
 
@@ -72,10 +64,25 @@ class UserProfile extends React.Component {
     }
   }
 
-  render() {
-    const { classes, loading, profile, rating } = this.props;
-    const dateCreate = formatDate(profile.createdAt);
+  calcPercentagePositive = (positiveTransactions, amountTransactions) =>
+    positiveTransactions > 0
+      ? percentCalc(positiveTransactions, amountTransactions)
+      : 0;
 
+  render() {
+    const { classes, loading, profile } = this.props;
+    const { rating } = profile;
+    let positivePercents = 0;
+
+    if (rating) {
+      console.warn("ELE AQUI", rating);
+      positivePercents = this.calcPercentagePositive(
+        rating.positive,
+        rating.count
+      );
+    }
+
+    const dateCreate = formatDate(profile.createdAt);
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     return (
@@ -94,9 +101,7 @@ class UserProfile extends React.Component {
                 {profile.name} {profile.surname}
                 <br />{" "}
                 <div className={style.boxStar}>
-                  {profile.rating && (
-                    <StarVotes votes={profile.rating.average} />
-                  )}
+                  {rating && <StarVotes votes={rating.average} />}
                 </div>
                 {profile && (
                   <span className={style.textSmall}>
@@ -151,7 +156,7 @@ class UserProfile extends React.Component {
               </span>
 
               <div className={style.barsNumbers}>
-                <span>50%</span>
+                <span>{positivePercents}%</span>
               </div>
             </div>
             <LinearProgress
@@ -160,7 +165,7 @@ class UserProfile extends React.Component {
                 colorPrimary: classes.colorPrimary,
                 barColorPrimary: classes.barColorPrimary
               }}
-              value={50}
+              value={positivePercents}
               variant="determinate"
             />
           </div>
@@ -194,9 +199,8 @@ class UserProfile extends React.Component {
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   getProfile: PropTypes.func,
-  userProfile: PropTypes.object,
+  userProfile: PropTypes.array,
   profile: PropTypes.object,
-  setUserProfile: PropTypes.func,
   clearUserProfile: PropTypes.func,
   loading: PropTypes.bool
 };
@@ -207,8 +211,7 @@ const mapStateToProps = store => (
     userProfile: store.p2p.userProfile,
     profile: store.p2p.profile,
     userEmail: store.user.user.email,
-    loading: store.p2p.loading,
-    rating: store.p2p.profile.rating
+    loading: store.p2p.loading
   }
 );
 
@@ -216,7 +219,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfile,
-      setUserProfile,
       clearUserProfile
     },
     dispatch

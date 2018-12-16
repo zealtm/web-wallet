@@ -105,7 +105,7 @@ export const setUserProfile = userProfile => ({
 });
 
 export const getProfile = profile => ({
-  type: "GET_PROFILE",
+  type: "GET_PROFILE_API",
   profile
 });
 
