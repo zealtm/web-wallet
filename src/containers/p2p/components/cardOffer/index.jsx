@@ -109,7 +109,8 @@ class CardOffer extends React.Component {
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * order.sell.amount;
-
+    let isComprador = (userEmail == order.sell.user.email);
+    let ratingExc =  isComprador? order.buy.rating: order.sell.rating;
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
         <Grid container>
@@ -136,7 +137,7 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <div className={style.boxStar}>
-              {(this.props.type == undefined && order.status == "confirmed") ?                
+              {(!this.ratingExc && order.status == "confirmed") ?                
                 <button
                   className={style.btRating}
                   onClick={() => this.openAvaliation()}
