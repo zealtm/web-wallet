@@ -41,3 +41,7 @@ export const setAliasLoading = state => ({
   type: "SET_WALLET_ALIAS_LOADING",
   state: state
 });
+
+export const getSignatures = () => ({
+  type: "GET_SIGNATURES_P2P"
+})

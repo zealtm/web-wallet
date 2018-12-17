@@ -29,6 +29,9 @@
   "SETTINGS_USER_NEW_PASSWORD": "New password",
   "SETTINGS_USER_CONFIRM_NEW_PASSWORD": "Confirm new password",
   "SETTINGS_USER_CHANGE_PASSWORD": "Change password",
+
+  "SETTINGS_P2P": "P2P signatures",
+
   "MESSAGE_PASSWORD": "Password",
   "PLACEHOLDER_PASSWORD": "Password",
   "MESSAGE_SELECT_FEE": "Select a Fee",
