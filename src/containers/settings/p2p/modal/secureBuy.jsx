@@ -29,7 +29,6 @@ class SecureBuy extends React.Component {
 
   setPassword = password => {
     this.setState({ ...this.state, password });
-    console.warn(password);
   };
 
   confirmPassword = () => {
@@ -37,12 +36,10 @@ class SecureBuy extends React.Component {
     let { user, errorInput } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      alert("SENHA VALIDA!");
       return;
     }
 
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
-    console.warn("CHEGOU AQUI");
 
     return;
   };
