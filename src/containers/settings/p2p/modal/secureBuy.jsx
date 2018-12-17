@@ -36,7 +36,7 @@ class SecureBuy extends React.Component {
     let { user, errorInput, setModalStep } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      setModalStep(3)
+      setModalStep(3);
       return;
     }
 
@@ -56,13 +56,9 @@ class SecureBuy extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>{i18n.t("COINSALE_CONFIRM_2")}</span>
-          <span className={style.totalConfirm}>
-            {i18n.t("COINSALE_CONFIRM_1")}
-          </span>
-          <span> {i18n.t("RECHARGE_PASS_TO")} </span>
+          <span>{i18n.t("P2P_CONFIRM_PASSWORD_SIGNATURE")}</span>
           <span className={style.addressConfirm}>
-            {i18n.t("COINSALE_TITLE")}
+            {i18n.t("P2P_CONFIRM_SIGNATURE")}
           </span>
         </div>
 
