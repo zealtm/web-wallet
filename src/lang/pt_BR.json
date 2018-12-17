@@ -596,5 +596,7 @@
   "P2P_COMING_SOON": "Avaliação em breve disponível !",
   "P2P_TAB_PURCHASE": "Compra",
   "P2P_TAB_SALE": "Venda",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento"
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
+  "P2P_CONFIRM_SIGNATURE": " ASSINATURA"
 }
