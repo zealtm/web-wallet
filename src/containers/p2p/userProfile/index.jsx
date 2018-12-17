@@ -192,7 +192,7 @@ class UserProfile extends React.Component {
         </Grid>
 
         <Grid item xs={12} sm={12}>
-          <div className={style.cardProfile} style={{ paddingBottom: "10%" }}>
+          <div className={style.cardProfileLast}>
             <div className={style.data}>
               <span className={style.spanDescription}>
                 {i18n.t("P2P_PROFILE_FEEDBACK")}

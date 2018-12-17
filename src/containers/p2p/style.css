@@ -87,7 +87,7 @@
 }
 
 :local .baseUserProfile {
-  max-height: 490px;
+  max-height: 500px;
   overflow: auto;
 }
 
@@ -97,6 +97,11 @@
   width: 97%;
   margin: 1px 0px 0px 0px;
   overflow: hidden;
+}
+
+:local .cardProfileLast {
+  composes: cardProfile;
+  margin-bottom: 10%;
 }
 
 :local(.userInfo) {
@@ -173,7 +178,7 @@
 }
 
 :local(.userFeedback) {
-  margin: 10% 0% 0% 10%;
+  margin: 10% 0% 10% 10%;
   width: 80%;
 }
 
