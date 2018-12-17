@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { string } from "prop-types";
 
 //  REDUX
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS
 import { encryptHmacSha512Key } from "../../../../utils/cryptography";
+
 import i18n from "../../../../utils/i18n";
 
 // STYLE
@@ -28,36 +29,21 @@ class SecureBuy extends React.Component {
 
   setPassword = password => {
     this.setState({ ...this.state, password });
+    console.warn(password);
   };
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput, buypack, coins, confirmBuy } = this.props;
-
-    const coin = buypack.paycoin;
-
-    const payload = {
-      coin: coin,
-      fromAddress: coins[coin].address,
-      toAddress: buypack.address,
-      lunesUserAddress: coins["lunes"].address,
-      amount: buypack.amountPay,
-      amountReceive: buypack.amount,
-      fee: buypack.fee.fee.fee,
-      feePerByte: buypack.fee.fee.feePerByte,
-      feeLunes: buypack.fee.fee.feeLunes,
-      price: coins[coin].price,
-      decimalPoint: coins[coin].decimalPoint,
-      user: user.password,
-      buypack: buypack
-    };
+    let { user, errorInput } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
-      confirmBuy();
+      alert("SENHA VALIDA!");
       return;
     }
 
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
+    console.warn("CHEGOU AQUI");
+
     return;
   };
 
