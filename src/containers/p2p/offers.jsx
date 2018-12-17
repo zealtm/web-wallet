@@ -271,7 +271,7 @@ class Offers extends React.Component {
       <Grid className={style.headerActionFilter} container>
         <Grid
           item
-          xs={3}
+          xs={2}
           style={{ textAlign: "center" }}
           className={style.scrollSelect}
         >
@@ -280,28 +280,30 @@ class Offers extends React.Component {
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}
-            width={"75%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
             title={typeFlter}
             selectItem={this.selectTypeFilter}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeP2P}
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
+        <Grid item xs={2} style={{ marginTop: "10px", textAlign: "center" }}>
           <a href="#">
             <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
           </a>
