@@ -74,7 +74,7 @@ class P2P extends React.Component {
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          lose={
+          close={
             modalStep === 1 || modalStep === 3 || modalStep === 4
               ? () => this.closeModal()
               : null
