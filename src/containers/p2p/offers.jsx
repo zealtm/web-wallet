@@ -269,7 +269,12 @@ class Offers extends React.Component {
 
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
-        <Grid item xs={3} style={{ textAlign: "center" }}>
+        <Grid
+          item
+          xs={3}
+          style={{ textAlign: "center" }}
+          className={style.scrollSelect}
+        >
           <Select
             list={coinsEnabled}
             titleImg={coinSelect.img}

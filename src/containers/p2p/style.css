@@ -283,6 +283,16 @@
   border-radius: 6px;
 }
 
+:local(.scrollSelect *::-webkit-scrollbar){
+  background-color: transparent;
+  border-radius: 6px;
+}
+
+:local(.scrollSelect *::-webkit-scrollbar-thumb){
+  background-color: #654fa4;
+  border-radius: 6px;
+}
+
 /* BUTTONS */
 
 :local(.btAdvertisement) {
