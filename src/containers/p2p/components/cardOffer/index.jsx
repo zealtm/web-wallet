@@ -137,7 +137,7 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <div className={style.boxStar}>
-              {(!this.ratingExc && order.status == "confirmed") ?                
+              {(this.ratingExc == undefined && order.status == "confirmed") ?                
                 <button
                   className={style.btRating}
                   onClick={() => this.openAvaliation()}
