@@ -69,12 +69,33 @@ class UserProfile extends React.Component {
       ? percentCalc(positiveTransactions, amountTransactions)
       : 0;
 
+  renderEvaluation = () => {
+    const { evaluation } = this.props.profile;
+
+    if (evaluation.length) {
+      return evaluation.map((item, key) => (
+        <div key={key} className={style.userFeedback}>
+          <span className={style.spanDescription}>
+            {`${item.name} ${item.surname}`}
+          </span>
+          <div className={style.feedbackBox}>
+            <StarVotes votes={item.value} />
+          </div>
+          <div className={style.textDescription}>
+            <p>{item.description}</p>
+          </div>
+        </div>
+      ));
+    }
+    return <div />;
+  };
+
   render() {
     let positivePercents = 0;
     const { classes, loading, profile } = this.props;
     const { rating } = profile;
     const dateCreate = formatDate(profile.createdAt);
-
+    console.warn(style.addCardBottom);
     if (rating)
       positivePercents = this.calcPercentagePositive(
         rating.positive,
@@ -171,23 +192,14 @@ class UserProfile extends React.Component {
         </Grid>
 
         <Grid item xs={12} sm={12}>
-          <div className={style.cardProfile}>
+          <div className={style.cardProfile} style={{ paddingBottom: "10%" }}>
             <div className={style.data}>
               <span className={style.spanDescription}>
                 {i18n.t("P2P_PROFILE_FEEDBACK")}
               </span>
               <div className={style.hr} />
             </div>
-
-            <div className={style.userFeedback}>
-              <span className={style.spanDescription}>João</span>
-              <div className={style.feedbackBox}>
-                <StarVotes votes={4} />
-              </div>
-              <div className={style.textDescription}>
-                <p>Bom trader, recomendo!</p>
-              </div>
-            </div>
+            {this.renderEvaluation()}
           </div>
         </Grid>
       </Grid>
@@ -204,12 +216,15 @@ UserProfile.propTypes = {
   loading: PropTypes.bool
 };
 
-const mapStateToProps = store => ({
-  userProfile: store.p2p.userProfile,
-  profile: store.p2p.profile,
-  userEmail: store.user.user.email,
-  loading: store.p2p.loading
-});
+const mapStateToProps = store => (
+  console.warn(store),
+  {
+    userProfile: store.p2p.userProfile,
+    profile: store.p2p.profile,
+    userEmail: store.user.user.email,
+    loading: store.p2p.loading
+  }
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
