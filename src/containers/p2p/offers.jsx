@@ -261,6 +261,12 @@ class Offers extends React.Component {
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
+    if (coinsEnabled.length > 0) {
+      coinsEnabled.forEach(el => {
+        el.title = "";
+      });
+    }
+
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
         <Grid item xs={3} style={{ textAlign: "center" }}>
