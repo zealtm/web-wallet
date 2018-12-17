@@ -610,5 +610,6 @@
   "P2P_COMING_SOON": "Rating coming soon !",
   "P2P_TAB_PURCHASE": "Purchase",
   "P2P_TAB_SALE": "Sale",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt"
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt",
+  "P2P_FAILED_TO_GET_ORDERS": "Could not get list of orders, try again later on"
 }

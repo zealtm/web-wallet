@@ -7,6 +7,8 @@ import { getAuthToken } from "../../../utils/localStorage";
 // SERVICES
 import P2pService from "../../../services/p2pService";
 
+import i18n from "../../../utils/i18n"
+
 const p2pService = new P2pService();
 
 const CHANGE_SKELETON_ERROR_STATE = {
@@ -116,9 +118,10 @@ export function* getP2PHistorySaga(payload) {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getHistory, token, payload.coin);
+    let response = yield call(p2pService.getHistory, token, payload.coin, payload.historyType);
 
     if (response.errorMessage) {
+      yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_FAILED_TO_GET_ORDERS")})
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: []
@@ -127,7 +130,7 @@ export function* getP2PHistorySaga(payload) {
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
-      }); 
+      });
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);

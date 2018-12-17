@@ -22,10 +22,8 @@ export const getMyOrders = coin => ({
   coin
 });
 
-export const getHistory = coin => ({
-  type: "GET_P2P_HISTORY",
-  coin
-});
+export const getHistory = (coin, historyType) => ({ type: "GET_P2P_HISTORY",
+coin, historyType });
 
 export const getFilter = (coin, typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",

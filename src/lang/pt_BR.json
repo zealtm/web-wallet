@@ -593,8 +593,9 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
   "P2P_MY_LISTING": "Meus anúncios",
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
-  "P2P_COMING_SOON": "Avaliação em breve disponível !",
+  "P2P_COMING_SOON": "Avaliação disponível em breve!",
   "P2P_TAB_PURCHASE": "Compra",
   "P2P_TAB_SALE": "Venda",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento"
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento",
+  "P2P_FAILED_TO_GET_ORDERS": "Falha ao pegar lista de ordens, tente novamente mais tarde."
 }

@@ -48,14 +48,22 @@ class P2pService {
     }
   }
 
-  async getHistory(token, coin) {
+  async getHistory(token, coin, type) {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/p2p/history",
-        API_HEADER
-      );
+      let response;
+      if (!type || type === 'p2p') {
+        response = await axios.get(
+          BASE_URL + "/coin/" + coin + "/p2p/history",
+          API_HEADER
+        );
+      } else if (type === 'escrow') {
+        response = await axios.get(
+          `${BASE_URL}/coin/${coin}/p2p/order/${type}`,
+          API_HEADER
+        );
+      }
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
