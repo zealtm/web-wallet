@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { string } from "prop-types";
+import PropTypes from "prop-types";
 
 //  REDUX
 import { connect } from "react-redux";
@@ -33,9 +33,10 @@ class SecureBuy extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput } = this.props;
+    let { user, errorInput, setModalStep } = this.props;
 
     if (user.password === encryptHmacSha512Key(password)) {
+      setModalStep(3)
       return;
     }
 
