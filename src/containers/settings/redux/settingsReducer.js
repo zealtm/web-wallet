@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
   errors: [],
   loadingP2P: false,
-  signatures: []
+  signatures: {}
 };
 
 const settings = (state = initialState, action) => {
