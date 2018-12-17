@@ -23,7 +23,6 @@ import colors from "../../components/bases/colors";
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
-import Tabs from "../../components/tabs";
 import TabsFilter from "./components/tab";
 
 // UTILS
@@ -89,7 +88,7 @@ class Offers extends React.Component {
       ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFlter: "Todos",
+      typeFilter: "Todos",
       filterTab: 0
     };
 
