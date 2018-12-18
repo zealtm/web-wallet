@@ -1,10 +1,7 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
-// UTILS
 import { getAuthToken } from "../../../utils/localStorage";
-
-// SERVICES
 import P2pService from "../../../services/p2pService";
 
 const p2pService = new P2pService();
@@ -13,6 +10,7 @@ const CHANGE_SKELETON_ERROR_STATE = {
   type: "CHANGE_SKELETON_ERROR_STATE",
   state: true
 };
+
 export function* openChat(payload) {
   yield put({
     type: "OPEN_CHAT_P2P_REDUCER",
@@ -231,12 +229,7 @@ export function* createSignatureSaga(payload) {
   try {
     let token = yield call(getAuthToken);
 
-    yield call(
-      p2pService.createSignature,
-      token,
-      payload.data
-    );
-
+    yield call(p2pService.createSignature, token, payload.data);
   } catch (error) {
     yield put(internalServerError());
   }
@@ -277,8 +270,9 @@ export function* setTabIconSaga(payload) {
 export function* getProfileSaga(payload) {
   try {
     yield put({ type: "SET_LOADING_P2P", loading: true });
-    let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getProfile, token, payload.profile);
+
+    const token = yield call(getAuthToken);
+    const response = yield call(p2pService.getProfile, token, payload.profile);
     yield put({
       type: "GET_PROFILE_REDUCER",
       profile: response.data

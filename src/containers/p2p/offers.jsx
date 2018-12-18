@@ -286,6 +286,7 @@ class Offers extends React.Component {
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={coinsEnabled}
+            title={""}
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}

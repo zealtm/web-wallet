@@ -11,6 +11,7 @@ class SellConfirmModal extends React.Component {
     return (
       <div className={style.containerSellConfirm}>
         <img
+          alt={"sell-confirm"}
           src="/images/modal/sell-confirm.png"
           className={style.imgSellConfirm}
         />

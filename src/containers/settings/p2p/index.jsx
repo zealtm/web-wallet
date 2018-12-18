@@ -49,7 +49,11 @@ class P2P extends React.Component {
         <Grid item key={key}>
           <div className={style.cardP2p} onClick={() => openModal(true)}>
             <h1>{val.status}</h1>
-            <img src="/images/icons/p2p/card.png" className={style.cardIcon} />
+            <img
+              src="/images/icons/p2p/card.png"
+              alt="card"
+              className={style.cardIcon}
+            />
             <div className={style.hrCard} />
             <div className={style.cardTitle}>
               <p>
