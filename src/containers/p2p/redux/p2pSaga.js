@@ -125,7 +125,7 @@ export function* getP2PHistorySaga(payload) {
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
-      }); 
+      });
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
@@ -152,20 +152,13 @@ export function* getP2PFilterSaga(payload) {
   try {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
-    const { coin, typeOrder, coinBuy } = payload;
+    const { typeOrder, coinBuy } = payload;
 
     let token = yield call(getAuthToken);
-    let response = yield call(
-      p2pService.getFilter,
-      token,
-      coin,
-      typeOrder,
-      coinBuy
-    );
-
+    let response = yield call(p2pService.getFilter, token, typeOrder, coinBuy);
     yield put({
       type: "GET_FILTER_REDUCER",
-      orders: response.data.orders
+      orders: !response ? [] : response.orders
     });
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);

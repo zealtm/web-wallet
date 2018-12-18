@@ -96,6 +96,7 @@ class Offers extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
+    const { getFilter } = this.props;
     this.setState({
       ...this.state,
       coinSelect: {
@@ -105,16 +106,15 @@ class Offers extends React.Component {
       }
     });
 
-    this.filterMyOrders(false);
+    getFilter("p2p", value);
   };
 
   clearCancel = () => {
     const { clearCancel, getFilter } = this.props;
-    const { coinSelect } = this.state;
 
     clearCancel();
 
-    getFilter(coinSelect.value, "p2p", "");
+    getFilter("p2p", "");
   };
 
   onChangeTab(status) {
@@ -151,7 +151,7 @@ class Offers extends React.Component {
     if (type === "myhistory") {
       getHistory(coinSelect.value);
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
     }
   };
 
@@ -210,7 +210,7 @@ class Offers extends React.Component {
     } else if (type == "myhistory") {
       getHistory(coinSelect.value);
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
     }
 
     if (filtermyorder) {
