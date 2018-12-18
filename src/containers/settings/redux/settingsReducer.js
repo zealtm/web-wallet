@@ -9,7 +9,8 @@ const initialState = {
   loading: false,
   errors: [],
   loadingP2P: false,
-  signatures: []
+  signatures: [],
+  signature: []
 };
 
 const settings = (state = initialState, action) => {
@@ -62,6 +63,13 @@ const settings = (state = initialState, action) => {
       return {
         ...state,
         signatures: action.signatures,
+        loadingP2P: false
+      };
+
+    case "GET_SIGNATURE_P2P_REDUCER":
+      return {
+        ...state,
+        signature: action.signature,
         loadingP2P: false
       };
 

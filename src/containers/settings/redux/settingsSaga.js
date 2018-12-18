@@ -215,15 +215,44 @@ export function* getSignaturesSaga() {
     let response = yield call(settingsService.getSignatures, token);
 
     let signatures = [];
-    if(response){
-      signatures = response.data
+    if (response) {
+      signatures = response.data;
     }
 
     yield put({
       type: "GET_SIGNATURES_P2P_REDUCER",
       signatures: signatures
     });
+
     yield put({ type: "SET_LOADING_P2P", loadingP2P: false });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getSignatureSaga() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.getSignature, token);
+
+    let signature = [];
+    if (response) {
+      signature = response.data;
+    }
+
+    yield put({
+      type: "GET_SIGNATURE_P2P_REDUCER",
+      signature: signature
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* signSignatureSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    yield call(settingsService.signSignature, token, payload.data);
   } catch (error) {
     yield put(internalServerError());
   }
