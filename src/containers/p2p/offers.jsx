@@ -111,7 +111,6 @@ class Offers extends React.Component {
 
   clearCancel = () => {
     const { clearCancel, getFilter } = this.props;
-    const { coinSelect } = this.state;
 
     clearCancel();
 
