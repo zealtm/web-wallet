@@ -95,7 +95,6 @@ class UserProfile extends React.Component {
     const { classes, loading, profile } = this.props;
     const { rating } = profile;
     const dateCreate = formatDate(profile.createdAt);
-    console.warn(style.addCardBottom);
     if (rating)
       positivePercents = this.calcPercentagePositive(
         rating.positive,
@@ -216,15 +215,12 @@ UserProfile.propTypes = {
   loading: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    userProfile: store.p2p.userProfile,
-    profile: store.p2p.profile,
-    userEmail: store.user.user.email,
-    loading: store.p2p.loading
-  }
-);
+const mapStateToProps = store => ({
+  userProfile: store.p2p.userProfile,
+  profile: store.p2p.profile,
+  userEmail: store.user.user.email,
+  loading: store.p2p.loading
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
