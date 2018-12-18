@@ -154,9 +154,7 @@ class Security extends React.Component {
 
 Security.propTypes = {
   twoFactor: PropTypes.bool,
-  loadingSettings: PropTypes.func,
   getTwoFactorAuth: PropTypes.func,
-  clearMessage: PropTypes.func,
   settings: PropTypes.object
 };
 

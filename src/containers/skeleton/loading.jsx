@@ -46,7 +46,6 @@ class LoadingPage extends Component {
 }
 
 LoadingPage.propTypes = {
-  errorRequest: PropTypes.func,
   loadGeneralInfo: PropTypes.func,
   skeleton: PropTypes.object,
   user: PropTypes.object
