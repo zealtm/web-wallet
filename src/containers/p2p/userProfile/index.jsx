@@ -72,7 +72,7 @@ class UserProfile extends React.Component {
   renderEvaluation = () => {
     const { evaluation } = this.props.profile;
 
-    if (evaluation.length) {
+    if (evaluation && evaluation.length) {
       return evaluation.map((item, key) => (
         <div key={key} className={style.userFeedback}>
           <span className={style.spanDescription}>
@@ -156,7 +156,7 @@ class UserProfile extends React.Component {
               </span>
 
               <div className={style.barsNumbers}>
-                <span>{rating.count}</span>
+                <span>{rating ? rating.count : 0}</span>
               </div>
             </div>
             <LinearProgress
