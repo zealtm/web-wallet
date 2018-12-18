@@ -7,7 +7,9 @@ const initialState = {
     loadingAlias: false
   },
   loading: false,
-  errors: []
+  errors: [],
+  loadingP2P: false,
+  signatures: {}
 };
 
 const settings = (state = initialState, action) => {
@@ -48,6 +50,19 @@ const settings = (state = initialState, action) => {
           modalAlias: state.wallet.modalAlias,
           loadingAlias: action.state ? true : false
         }
+      };
+
+    case "SET_LOADING_P2P":
+      return {
+        ...state,
+        loadingP2P: action.loadingP2P
+      };
+
+    case "GET_SIGNATURES_P2P_REDUCER":
+      return {
+        ...state,
+        signatures: action.signatures,
+        loadingP2P: false
       };
 
     default: {

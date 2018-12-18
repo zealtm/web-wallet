@@ -63,6 +63,11 @@ export const setCancelOrder = orderId => ({
   orderId
 });
 
+export const createSignature = data => ({
+  type: "API_P2P_CREATE_CREATE_SIGNATURE",
+  data
+});
+
 export const clearCancel = () => ({
   type: "CLEAR_CANCEL_P2P"
 });
@@ -86,4 +91,23 @@ export const openAvaliation = () => ({
 
 export const closeAvaliation = () => ({
   type: "CLOSE_AVALIATION_P2P"
+});
+
+export const setTabIcon = tabIcon => ({
+  type: "SET_TAB_ICON",
+  tabIcon
+});
+
+export const setUserProfile = userProfile => ({
+  type: "SET_USER_PROFILE_REDUCER",
+  userProfile
+});
+
+export const getProfile = profile => ({
+  type: "GET_PROFILE_API",
+  profile
+});
+
+export const clearUserProfile = () => ({
+  type: "CLEAR_USER_PROFILE"
 });
