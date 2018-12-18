@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setModalStep } from "../redux/paymentAction";
 
 // COMPONENTS
 import DetailsPayment from "./detailsPayment";
@@ -41,24 +39,12 @@ class PaymentTitleModal extends React.Component {
 
 PaymentTitleModal.propTypes = {
   modalStep:    PropTypes.number.isRequired,
-  loading:      PropTypes.bool.isRequired,
-  setModalStep: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
-  modalStep:  store.payment.modalStep,
-  loading:    store.payment.loading
+  modalStep:  store.payment.modalStep
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      setModalStep
-    },
-    dispatch
-  );
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(PaymentTitleModal);

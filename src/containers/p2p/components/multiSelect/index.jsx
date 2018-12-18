@@ -30,7 +30,7 @@ class MultiSelect extends React.Component {
                         found = true;
                         delete listCoins[key];
                     }
-                }                
+                }
             }
         );
         if (!found) {
@@ -43,7 +43,7 @@ class MultiSelect extends React.Component {
                             value, title, img
                         }
                     ]
-                    
+
 
                 })
 
@@ -89,10 +89,11 @@ class MultiSelect extends React.Component {
         }
     };
 
+    //NAO USAR COMPONENT WILL MOUNT
     componentWillMount() {
         document.addEventListener("click", this.handleClick);
     }
-
+    //NAO SEI SE AQUI ERA PRA SER REMOVELISTENER
     componentWillUnmount() {
         document.addEventListener("click", this.handleClick);
     }
@@ -102,10 +103,10 @@ class MultiSelect extends React.Component {
             return (
                 <div className={style.title}>
                     {listCoins.map((item, id) => (
-                        
+
                         item!==undefined ? <img key={id} className={style.ico} src={item.img} />:""
                     ))
-                    }                   
+                    }
                 </div>
             );
         } else {
@@ -129,7 +130,7 @@ class MultiSelect extends React.Component {
         );
     }
     render() {
-        const { width, error } = this.props;
+        const { width } = this.props;
         const { listOpen } = this.state;
 
         const wrapperStyle = {
@@ -162,7 +163,8 @@ class MultiSelect extends React.Component {
 
 MultiSelect.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectItems: PropTypes.func.isRequired
+    selectItems: PropTypes.func.isRequired,
+    width: PropTypes.string
 };
 
 export default MultiSelect;

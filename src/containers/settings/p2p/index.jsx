@@ -28,7 +28,7 @@ class P2P extends React.Component {
   }
 
   render() {
-    const { modalOpen, openModal } = this.props;
+    const { modalOpen } = this.props;
 
     return (
       <div>

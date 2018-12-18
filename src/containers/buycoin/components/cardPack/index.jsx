@@ -1,12 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// MATERIAL UI
-import Grid from "@material-ui/core/Grid";
 
 // UTILS
 import {convertBiggestCoinUnit} from "../../../../utils/numbers";
-import { getDefaultFiat } from "../../../../utils/localStorage";
 import i18n from "../../../../utils/i18n";
 
 // STYLES
