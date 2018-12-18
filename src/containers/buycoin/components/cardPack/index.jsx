@@ -62,8 +62,6 @@ class CardPack extends React.Component {
     let defaultCoin = getDefaultFiat();
     let fiatAmount = buypack.fiatAmount[defaultCoin.toUpperCase()];
     
-    console.log(JSON.stringify(buypack));
-
     return (
       <div className={styleactive} onClick={() => onSelect(buypack.id, buypack.coinAmount, fiatAmount)}>
         <img
