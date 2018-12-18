@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 import Grid from "@material-ui/core/Grid";
 
 // UTILS
-import {convertBiggestCoinUnit} from "../../../../utils/numbers";
+import { convertBiggestCoinUnit } from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
 import i18n from "../../../../utils/i18n";
 
@@ -20,48 +20,59 @@ class CardPack extends React.Component {
   constructor(props) {
     super(props);
   }
-  renderValCoin(){
+  renderTypeFiat() {
+    let defaultCoin = getDefaultFiat();
+    if (defaultCoin = "USD") {
+      return "$";
+    } else if (defaultCoin = "EUR") {
+      return "€";
+    } else {
+      return "R$";
+    }
+  }
+  renderValCoin() {
     const { buypackage, buypack, coins } = this.props;
-   
-    let defaultCoin = "BRL";
+
+    let defaultCoin = getDefaultFiat();
     let fiatAmount = buypack.fiatAmount[defaultCoin.toUpperCase()];
-    
-    if(buypackage.paycoin != ''){
+
+    if (buypackage.paycoin != '') {
       let coin = coins[buypackage.paycoin];
       let price = coin.price[defaultCoin];
       let qtdCoin = (fiatAmount / price.price).toFixed(8);
-      console.log(JSON.stringify(qtdCoin))
-      return(
+
+      return (
         <div className={style.valueCard}>
-            <span className={style.dollarSign}>{buypackage.paycoin.toUpperCase()}</span><br/>
-            <span className={style.valueCoin}>{qtdCoin}</span>
+          <span className={style.dollarSign}>{buypackage.paycoin.toUpperCase()}</span><br />
+          <span className={style.valueCoin}>{qtdCoin}</span>
         </div>
       );
     }
-    return(
+    return (
       <div className={style.valueCard}>
-          <span className={style.dollarSign}>R$</span>
-          <span className={style.value}>{parseFloat(fiatAmount).toFixed(0)}</span>
-          <span className={style.decimals}>,00</span>
+        <span className={style.dollarSign}>{this.renderTypeFiat()}</span>
+        <span className={style.value}>{parseFloat(fiatAmount).toFixed(0)}</span>
+        <span className={style.decimals}>,00</span>
       </div>
     );
   }
   render() {
-    const {buypack, onSelect, active, selectedCoin} = this.props;
+    const { buypack, onSelect, active, selectedCoin } = this.props;
     const styleactive = active ? style.cardBuyActive : style.cardBuy;
-    //let defaultCoin = getDefaultFiat();
-    let defaultCoin = "BRL";
+    let defaultCoin = getDefaultFiat();
     let fiatAmount = buypack.fiatAmount[defaultCoin.toUpperCase()];
+    
+    console.log(JSON.stringify(buypack));
 
     return (
-      <div className={styleactive} onClick={()=>onSelect(buypack.id, buypack.coinAmount, fiatAmount)}>
+      <div className={styleactive} onClick={() => onSelect(buypack.id, buypack.coinAmount, fiatAmount)}>
         <img
           src={`/images/icons/coins/${selectedCoin.abbreviation}.png`}
           className={style.cardIcon}
         />
         <div className={style.hrCard} />
-        <p className={style.paragraph}> {i18n.t("COINSALE_PACK_TEXT_PREFIX")} <b>{`${defaultCoin} ${parseFloat(fiatAmount).toFixed(2)}`}</b> {i18n.t("COINSALE_PACK_TEXT_SUFIX")} </p>
-        <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount,8)}</h1>
+        <p className={style.paragraph}>{i18n.t("COINSALE_PACK_TEXT_PREFIX")} <b>{`${defaultCoin} ${parseFloat(fiatAmount).toFixed(0)}`},00</b> {i18n.t("COINSALE_PACK_TEXT_SUFIX")} </p>
+        <h1 className={style.amount}>{convertBiggestCoinUnit(buypack.coinAmount, 8)}</h1>
         {this.renderValCoin()}
       </div>
     );
@@ -88,7 +99,7 @@ const mapDispatchToProps = dispatch =>
     },
     dispatch
   );
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CardPack);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardPack);
