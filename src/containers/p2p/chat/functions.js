@@ -1,6 +1,7 @@
 import i18n from "./../../../utils/i18n";
 import style from "./style.css";
 import { convertISO8601 } from "./../../../utils/numbers.js";
+import { chat } from "./../../../constants/apiBaseUrl.js"
 
 export const getChatBundle = (data = {}) => {
   try {
@@ -24,7 +25,7 @@ export const getChatBundle = (data = {}) => {
       (() => {
         throw new Error("buyerId is not defined");
       })();
-    bundleEL.src = `http://localhost:6005/serve/chat?root=${componentId}&namespace=${namespace}&adId=${adId}&adOwnerId=${adOwnerId}&buyerId=${buyerId}`;
+    bundleEL.src = chat.getUrl(componentId, namespace, adId, adOwnerId, buyerId);
     bundleEL.type = "text/javascript";
     bundlesWrapperEL.appendChild(bundleEL);
   } catch (err) {
