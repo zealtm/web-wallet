@@ -45,9 +45,7 @@ class CardOffer extends React.Component {
 
   handleClick = () => {
     const { order } = this.props;
-    if (this.props.type == undefined && order.status == "confirmed") {
-      this.openAvaliation();
-    } else {
+    if (order.status != "confirmed") {
       this.handleDetails();
     }
   };
@@ -111,7 +109,8 @@ class CardOffer extends React.Component {
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * order.sell.amount;
-
+    let isComprador = (userEmail == order.sell.user.email);
+    let ratingExc =  isComprador? order.buy.rating: order.sell.rating;
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
         <Grid container>
@@ -138,20 +137,28 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <div className={style.boxStar}>
-              <StarVotes votes={order.sell.user.rating} />
-
-              {userEmail == order.sell.user.email &&
-              order.status != "confirmed" ? (
+              {(this.ratingExc == undefined && order.status == "confirmed") ?                
                 <button
-                  className={style.btnClose}
-                  onClick={this.handleCancelOrder}
+                  className={style.btRating}
+                  onClick={() => this.openAvaliation()}
                 >
-                  <img
-                    className={style.cancelOffer}
-                    src="images/icons/close/close.png"
-                  />
+                  {i18n.t("P2P_BUTTON_RATING")}
                 </button>
-              ) : null}
+                :
+                <StarVotes votes={order.sell.user.rating} />
+              }
+              {userEmail == order.sell.user.email &&
+                order.status != "confirmed" ? (
+                  <button
+                    className={style.btnClose}
+                    onClick={this.handleCancelOrder}
+                  >
+                    <img
+                      className={style.cancelOffer}
+                      src="images/icons/close/close.png"
+                    />
+                  </button>
+                ) : null}
             </div>
             <span className={style.defaultFiat}>
               {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}

@@ -37,10 +37,14 @@ class P2P extends React.Component {
   renderPlans = () => {
     const { signatures, openModal, loadingP2P } = this.props;
 
-    if(loadingP2P) return <div><Loading color="lunes" /></div>;
+    if (loadingP2P)
+      return (
+        <div>
+          <Loading color="lunes" />
+        </div>
+      );
 
-    if(signatures.plans) {
-
+    if (signatures.plans) {
       return signatures.plans.map((val, key) => (
         <Grid item key={key}>
           <div className={style.cardP2p} onClick={() => openModal(true)}>
@@ -59,19 +63,23 @@ class P2P extends React.Component {
           </div>
         </Grid>
       ));
-
     }
   };
 
   render() {
-    const { modalOpen } = this.props;
-        
+    const { modalStep, setModalStep, modalOpen } = this.props;
+
     return (
       <div>
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          close={() => this.closeModal()}
+          lose={
+            modalStep === 1 || modalStep === 3 || modalStep === 4
+              ? () => this.closeModal()
+              : null
+          }
+          back={modalStep === 2 ? () => setModalStep(modalStep - 1) : null}
         />
 
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -121,17 +129,17 @@ P2P.propTypes = {
   setModalStep: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
   getSignatures: PropTypes.func,
-  signatures: PropTypes.object, 
+  signatures: PropTypes.object,
   loadingP2P: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = store => ({
   modalStep: store.p2p.modalStep,
   modalOpen: store.p2p.modalOpen,
-  signatures: store.settings.signatures, 
+  signatures: store.settings.signatures,
   loadingP2P: store.settings.loadingP2P
 });
-      
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {

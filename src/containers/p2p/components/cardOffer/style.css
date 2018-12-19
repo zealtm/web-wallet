@@ -107,6 +107,15 @@
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
   width: 240px;
 }
+:local .btRating {  
+  composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";  
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  padding: 0px;
+  font-size: 10px;
+  color: #68f285;
+}
 
 :local(.btnClose) {
   background-color: transparent;
