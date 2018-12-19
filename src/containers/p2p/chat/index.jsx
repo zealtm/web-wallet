@@ -5,11 +5,9 @@ import PropTypes from "prop-types";
 import Header from "../components/header";
 import BoxChat from "../components/boxChat";
 import DepositModal from "../modal/deposit";
-import ConfirmModal from "../modal/confirm";
 
 //REDUX
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 // STYLE
 import style from "./style.css";
@@ -46,9 +44,7 @@ const mapStateToProps = store => ({
   p2pStore: store.p2p
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Chat);

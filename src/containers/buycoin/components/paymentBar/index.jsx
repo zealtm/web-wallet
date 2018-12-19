@@ -26,7 +26,7 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-const stylesCustom = theme => ({
+const stylesCustom = () => ({
   root: {
     color: "#654fa4",
     "&$checked": {

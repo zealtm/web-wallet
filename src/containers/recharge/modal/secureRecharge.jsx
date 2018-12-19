@@ -108,7 +108,8 @@ SecureRecharge.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
-  confirmRecharge: PropTypes.func.isRequired
+  confirmRecharge: PropTypes.func.isRequired,
+  coins: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = store => ({
