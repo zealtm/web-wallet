@@ -74,6 +74,8 @@ class CoinsBar extends React.Component {
   renderCoins = () => {
     const { coinsEnabled, coins, selected } = this.props;
     console.warn(" coins                       ", coins);
+    console.warn(" D E S E S P E R O           ", coins.lunes.price.BRL.price);
+
     let defaultCoin = getDefaultFiat();
 
     return coinsEnabled.map((val, index) => {
@@ -85,10 +87,6 @@ class CoinsBar extends React.Component {
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
-
-      // let nxa = (coins.lunes.price.BRL = lunesPrice);
-      // console.log("nxa     " + nxa);
-      // console.log(coins.lunes);
 
       return (
         <div

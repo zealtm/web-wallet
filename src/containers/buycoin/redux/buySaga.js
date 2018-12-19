@@ -396,19 +396,23 @@ export function* getHistoryBuySaga(payload) {
 }
 
 export function* getLunesFixedBuy(coins) {
+  console.warn("entra aq 1");
   try {
+    console.warn("entra aq 2");
+
     let token = yield call(getAuthToken);
+    console.warn("entra aq 3");
+
     let response = yield call(buyService.getLunesFixedBuy, token);
+    console.warn("entra aq 4");
 
-    // let fixedLunesPrice = response.BRL.price;
-    //troque o nome das variaveis
-
-   coins.lunes.price.BRL.price = response.BRL.price
-    console.warn("     arroz     ", coins);
+    console.warn("response.BRL.price", response.BRL.price);
+    
+    coins.lunes.price.BRL.price = response.BRL.price;
+    console.warn("new coins ", coins);
 
     yield put({
       type: "GET_LUNES_FIXED_BUY",
-      // fixedLunesPrice
       coins
     });
 
@@ -417,35 +421,3 @@ export function* getLunesFixedBuy(coins) {
     yield put(internalServerError());
   }
 }
-
-/* 
-
-
-export function* getLunesFixedBuy(coins) {
-  try {
-    let token = yield call(getAuthToken);
-    let response = yield call(buyService.getLunesFixedBuy, token);
-
-    console.log("coins.lunes.price.BRL.price", coins.lunes.price.BRL.price);
-    let hm = (coins.lunes.price.BRL.price = response.BRL.price);
-    console.log("hm", hm);
-
-    yield put({
-      type: "GET_LUNES_FIXED_BUY"
-      // coins
-    });
-
-    return;
-  } catch (error) {
-    yield put(internalServerError());
-  }
-}
-
-  if (response.coins.length > 0) {
-      response.coins.map(val => {
-        if (val.abbreviation !== payload.coin) {
-          coins.push(val);
-        }
-      });
-    }
- */
