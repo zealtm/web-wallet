@@ -83,7 +83,6 @@ export const convertISO8601 = (iso) => {
     date: `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
   }
 }
-window.convertISO8601 = convertISO8601
 
 export const commonToSatoshi = (value, zeros = 8) => {
   return parseInt(value * 10**zeros)
