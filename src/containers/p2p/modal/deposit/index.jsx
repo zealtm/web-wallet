@@ -40,21 +40,24 @@ class DepositModal extends React.Component {
     const { order } = this.props;
     return (
       <div className={style.depositContainer}>
-        <div className={style.textDeposit}>
-          {i18n.t("P2P_TEXT_4")}
-        </div>
+        <div className={style.textDeposit}>{i18n.t("P2P_TEXT_4")}</div>
         <QrCode
-            className={style.imgQrCodeDeposit}
-            value={order.sell.address}
-            size={176}
-            bgColor={"#fff"}
-            fgColor={"#000"}
-            level={"L"}
-            renderAs="svg"
-          />
+          className={style.imgQrCodeDeposit}
+          value={order.sell.address}
+          size={176}
+          bgColor={"#fff"}
+          fgColor={"#000"}
+          level={"L"}
+          renderAs="svg"
+        />
         <div className={style.inputCopyBtnDeposit}>
           <input className={style.inputDeposit} value={order.sell.address} />
-          <button className={style.copyCodeDeposit} onClick={() => this.copyCoinAddress()}>{i18n.t("P2P_TEXT_5")}</button>
+          <button
+            className={style.copyCodeDeposit}
+            onClick={() => this.copyCoinAddress()}
+          >
+            {i18n.t("P2P_TEXT_5")}
+          </button>
           <button className={style.btnDeposit} onClick={this.cleanChat}>
             {i18n.t("P2P_TEXT_6")}
           </button>
@@ -66,8 +69,8 @@ class DepositModal extends React.Component {
 
 DepositModal.propTypes = {
   closeChat: PropTypes.func,
-  closeDeposit: PropTypes.func, 
-  order: PropTypes.object, 
+  closeDeposit: PropTypes.func,
+  order: PropTypes.object,
   successRequest: PropTypes.func
 };
 
@@ -77,7 +80,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { acceptOfferWhenBuying, closeChat, closeDeposit,successRequest },
+    { acceptOfferWhenBuying, closeChat, closeDeposit, successRequest },
     dispatch
   );
 

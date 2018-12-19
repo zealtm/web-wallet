@@ -169,7 +169,7 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirmed") {
+          if (tabGiving && val.status == "confirming") {
             return <CardOffer key={key} order={val} />;
           }
 
