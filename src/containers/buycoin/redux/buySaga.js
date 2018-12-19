@@ -105,10 +105,9 @@ export function* getCoinForPaymentSaga(payload) {
 
     let coins = [];
 
-    if(response.coins.length>0){
-      response.coins.map((val)=>{
-        if(val.abbreviation!==payload.coin){
-
+    if (response.coins.length > 0) {
+      response.coins.map(val => {
+        if (val.abbreviation !== payload.coin) {
           coins.push(val);
         }
       });
@@ -395,3 +394,58 @@ export function* getHistoryBuySaga(payload) {
     yield put(internalServerError());
   }
 }
+
+export function* getLunesFixedBuy(coins) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(buyService.getLunesFixedBuy, token);
+
+    // let fixedLunesPrice = response.BRL.price;
+    //troque o nome das variaveis
+
+   coins.lunes.price.BRL.price = response.BRL.price
+    console.warn("     arroz     ", coins);
+
+    yield put({
+      type: "GET_LUNES_FIXED_BUY",
+      // fixedLunesPrice
+      coins
+    });
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+/* 
+
+
+export function* getLunesFixedBuy(coins) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(buyService.getLunesFixedBuy, token);
+
+    console.log("coins.lunes.price.BRL.price", coins.lunes.price.BRL.price);
+    let hm = (coins.lunes.price.BRL.price = response.BRL.price);
+    console.log("hm", hm);
+
+    yield put({
+      type: "GET_LUNES_FIXED_BUY"
+      // coins
+    });
+
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+  if (response.coins.length > 0) {
+      response.coins.map(val => {
+        if (val.abbreviation !== payload.coin) {
+          coins.push(val);
+        }
+      });
+    }
+ */

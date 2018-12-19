@@ -12,15 +12,15 @@ export const getCoinsEnabled = () => ({
   type: "GET_BUY_COINS_ENABLED"
 });
 
-export const getCoinForPayment = (coin) => ({
+export const getCoinForPayment = coin => ({
   type: "GET_COIN_FOR_PAYMENT",
   coin
-})
+});
 
 export const getCoinPackage = (id, coin, address) => ({
   type: "GET_COIN_PACKAGE",
   id,
-  coin, 
+  coin,
   address
 });
 
@@ -34,7 +34,7 @@ export const setBuyPackage = (id, amount, amountFiat) => ({
 export const setCoinSelected = (coin, address, id) => ({
   type: "SET_BUY_COIN_PAYMENT",
   coin: coin,
-  address: address, 
+  address: address,
   id: id
 });
 
@@ -68,7 +68,7 @@ export const confirmBuy = buy => ({
   buy
 });
 
-export const getHistoryBuy = (coins) => ({
+export const getHistoryBuy = coins => ({
   type: "GET_HISTORY_BUY",
   coins
 });
@@ -81,7 +81,12 @@ export const setClearBuyPack = () => ({
   type: "SET_CLEAR_BUY_PACK_REDUCER"
 });
 
-export const setLoadingHistory = (payload) => ({
+export const setLoadingHistory = payload => ({
   type: "SET_LOADING_HISTORY",
   payload
-})
+});
+
+export const getLunesFixedBuy = (coins) => ({
+  type: "GET_LUNES_FIXED_BUY_API",
+  coins
+});

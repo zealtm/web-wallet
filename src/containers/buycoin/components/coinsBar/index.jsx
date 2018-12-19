@@ -9,7 +9,8 @@ import {
   getCoinPackage,
   getCoinForPayment,
   getHistoryBuy,
-  setClearBuyPack
+  setClearBuyPack,
+  getLunesFixedBuy
 } from "../../redux/buyAction";
 
 // MATERIAL UI
@@ -51,9 +52,11 @@ class CoinsBar extends React.Component {
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
-      setClearBuyPack
+      setClearBuyPack,
+      getLunesFixedBuy
     } = this.props;
 
+    getLunesFixedBuy();
     setClearBuyPack();
     getCoinPackage(id, coin, address);
     getCoinForPayment(coin);
@@ -70,18 +73,22 @@ class CoinsBar extends React.Component {
 
   renderCoins = () => {
     const { coinsEnabled, coins, selected } = this.props;
-
+    console.warn(" coins                       ", coins);
     let defaultCoin = getDefaultFiat();
 
     return coinsEnabled.map((val, index) => {
       let coin = coins[val.value.abbreviation];
 
-      if (val.value.abbreviation.toUpperCase()=="LUNES") return;
-      
-      if (!coin || coins[val.value.abbreviation].status!="active") return;
+      if (val.value.abbreviation.toUpperCase() == "LUNES") return;
+
+      if (!coin || coins[val.value.abbreviation].status != "active") return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
+
+      // let nxa = (coins.lunes.price.BRL = lunesPrice);
+      // console.log("nxa     " + nxa);
+      // console.log(coins.lunes);
 
       return (
         <div
@@ -206,7 +213,8 @@ CoinsBar.propTypes = {
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
   coins: store.skeleton.coins,
-  selected: store.buy.buypackage.coin.abbreviation
+  selected: store.buy.buypackage.coin.abbreviation,
+  lunesPrice: store.buy.coinsBuy
 });
 
 const mapDispatchToProps = dispatch =>
@@ -215,7 +223,8 @@ const mapDispatchToProps = dispatch =>
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
-      setClearBuyPack
+      setClearBuyPack,
+      getLunesFixedBuy
     },
     dispatch
   );

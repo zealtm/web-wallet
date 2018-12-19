@@ -10,7 +10,7 @@ import {
   setUserSeed,
   updateUserConsentsSaga,
   editUserData,
-  updateUserPasswordSaga, 
+  updateUserPasswordSaga,
   verifyInviteSaga,
   verifyEmailSaga
 } from "../user/redux/userSaga";
@@ -105,12 +105,13 @@ import {
   getFeeBuySaga,
   setFeeBuySaga,
   confirmBuySaga,
-  getHistoryBuySaga
+  getHistoryBuySaga,
+  getLunesFixedBuy
 } from "../buycoin/redux/buySaga";
 
 import {
   getInviteAddressSaga,
-  sendMailInviteSaga, 
+  sendMailInviteSaga,
   getInviteSentSaga,
   sendWithdrawSaga
 } from "../invite/redux/inviteSaga";
@@ -219,7 +220,7 @@ export default function* rootSaga() {
     fork(takeLatest, "CLOSE_DEPOSIT_P2P", closeDeposit),
     fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
     fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
-    
+
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
     fork(takeLatest, "GET_BUY_COINS_ENABLED", getBuyCoinsEnabledSaga),
@@ -234,12 +235,12 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+    fork(takeLatest, "GET_LUNES_FIXED_BUY_API", getLunesFixedBuy),
 
     // invite
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
     fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
     fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
-    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
-
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga)
   ];
 }
