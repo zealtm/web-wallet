@@ -76,11 +76,15 @@ export const formatDate = (date, type = "DMY", monthNumber = false) => {
 
 export const convertISO8601 = (iso) => {
   let d = new Date(iso)
+  let minutes = d.getMinutes().toString()
+  minutes = minutes < 10 ? '0'.concat(minutes) : minutes
   return {
-    hour: `${d.getHours() + 1}:${d.getMinutes()}`,
+    hour: `${d.getHours() + 1}:${minutes}`,
     date: `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
   }
 }
+window.convertISO8601 = convertISO8601
+
 export const commonToSatoshi = (value, zeros = 8) => {
   return parseInt(value * 10**zeros)
 }
