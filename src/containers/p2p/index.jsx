@@ -90,9 +90,7 @@ class P2P extends React.Component {
 
     return (
       <div className={showBox+' p2pContainer'}>
-        <Hidden smDown>
-          <div className={style.headerP2P}>{this.renderArrow()}</div>
-        </Hidden>
+        <div className={style.headerP2P}>{this.renderArrow()}</div>
 
         {
           (openChat==false)?
