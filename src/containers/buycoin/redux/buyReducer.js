@@ -184,11 +184,10 @@ const buy = (state = initialState, action) => {
         loadingPackages: false
       };
 
-    case "GET_LUNES_FIXED_BUY":
-      console.warn("Deus, me dá força");
+    case "GET_LUNES_BUY_PRICES":
       return {
         ...state,
-        coinsBuy: action.coins
+        coinsBuy: action.coins,
       };
 
     default: {

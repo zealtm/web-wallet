@@ -86,7 +86,7 @@ export const setLoadingHistory = payload => ({
   payload
 });
 
-export const getLunesFixedBuy = (coins) => ({
-  type: "GET_LUNES_FIXED_BUY_API",
+export const getLunesBuyPrices = coins => ({
+  type: "GET_LUNES_BUY_PRICES_API",
   coins
 });

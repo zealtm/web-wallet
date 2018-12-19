@@ -120,7 +120,7 @@ class BuyService {
     }
   }
 
-  async getLunesFixedBuy(token) {
+  async getLunesBuyPrices(token) {
     try {
       API_HEADER.headers.Authorization = token;
 

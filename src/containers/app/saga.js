@@ -106,7 +106,7 @@ import {
   setFeeBuySaga,
   confirmBuySaga,
   getHistoryBuySaga,
-  getLunesFixedBuy
+  getLunesBuyPrices
 } from "../buycoin/redux/buySaga";
 
 import {
@@ -235,7 +235,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
-    fork(takeLatest, "GET_LUNES_FIXED_BUY_API", getLunesFixedBuy),
+    fork(takeLatest, "GET_LUNES_BUY_PRICES_API", getLunesBuyPrices),
 
     // invite
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),

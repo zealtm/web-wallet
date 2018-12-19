@@ -395,24 +395,18 @@ export function* getHistoryBuySaga(payload) {
   }
 }
 
-export function* getLunesFixedBuy(coins) {
-  console.warn("entra aq 1");
+export function* getLunesBuyPrices(payload) {
   try {
-    console.warn("entra aq 2");
-
+    let { coins } = payload;
     let token = yield call(getAuthToken);
-    console.warn("entra aq 3");
+    let response = yield call(buyService.getLunesBuyPrices, token);
 
-    let response = yield call(buyService.getLunesFixedBuy, token);
-    console.warn("entra aq 4");
-
-    console.warn("response.BRL.price", response.BRL.price);
-    
     coins.lunes.price.BRL.price = response.BRL.price;
-    console.warn("new coins ", coins);
+    coins.lunes.price.EUR.price = response.EUR.price;
+    coins.lunes.price.USD.price = response.USD.price;
 
     yield put({
-      type: "GET_LUNES_FIXED_BUY",
+      type: "GET_LUNES_BUY_PRICES",
       coins
     });
 

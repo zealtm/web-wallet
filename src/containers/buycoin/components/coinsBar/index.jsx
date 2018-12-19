@@ -10,7 +10,7 @@ import {
   getCoinForPayment,
   getHistoryBuy,
   setClearBuyPack,
-  getLunesFixedBuy
+  getLunesBuyPrices
 } from "../../redux/buyAction";
 
 // MATERIAL UI
@@ -52,15 +52,24 @@ class CoinsBar extends React.Component {
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
-      setClearBuyPack,
-      getLunesFixedBuy
+      setClearBuyPack
     } = this.props;
 
-    getLunesFixedBuy();
     setClearBuyPack();
     getCoinPackage(id, coin, address);
     getCoinForPayment(coin);
     getHistoryBuy(coin);
+  };
+
+  componentDidMount() {
+    this.getFixedCoins();
+  }
+
+  getFixedCoins = () => {
+    const { coins } = this.props;
+    console.log(coins);
+    getLunesBuyPrices(coins);
+    return;
   };
 
   renderArrowPercent = val => {
@@ -73,8 +82,6 @@ class CoinsBar extends React.Component {
 
   renderCoins = () => {
     const { coinsEnabled, coins, selected } = this.props;
-    console.warn(" coins                       ", coins);
-    console.warn(" D E S E S P E R O           ", coins.lunes.price.BRL.price);
 
     let defaultCoin = getDefaultFiat();
 
@@ -82,7 +89,6 @@ class CoinsBar extends React.Component {
       let coin = coins[val.value.abbreviation];
 
       if (val.value.abbreviation.toUpperCase() == "LUNES") return;
-
       if (!coin || coins[val.value.abbreviation].status != "active") return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
@@ -222,7 +228,7 @@ const mapDispatchToProps = dispatch =>
       getCoinForPayment,
       getHistoryBuy,
       setClearBuyPack,
-      getLunesFixedBuy
+      getLunesBuyPrices
     },
     dispatch
   );
