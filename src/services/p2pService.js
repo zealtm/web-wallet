@@ -242,7 +242,6 @@ class P2pService {
 
       return true;
     } catch (error) {
-      console.warn("ERROR ddd", error);
       return internalServerError();
     }
   }
