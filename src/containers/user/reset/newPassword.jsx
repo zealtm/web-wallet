@@ -134,7 +134,6 @@ class NewPassword extends React.Component {
       this.inputValidator();
     }
   };
-
   render() {
     let { inputs, passwordHint, errors } = this.state;
 
@@ -202,7 +201,6 @@ class NewPassword extends React.Component {
 }
 
 NewPassword.propTypes = {
-  authenticate: PropTypes.func,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func
 };

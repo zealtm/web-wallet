@@ -26,6 +26,22 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
+const stylesCustom = () => ({
+  root: {
+    color: "#654fa4",
+    "&$checked": {
+      color: "#68f285"
+    }
+  },
+  rootLabel: {
+    fontSize: "15px",
+    color: "#fff"
+  },
+  checked: {
+    color: "#68f285"
+  }
+});
+
 class PaymentBar extends React.Component {
   constructor(props) {
     super(props);
