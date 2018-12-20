@@ -100,6 +100,38 @@ class CardOffer extends React.Component {
     );
   }
 
+  renderRatingButton = () => {
+    let { order, userEmail } = this.props
+    let isSeller = (userEmail == order.sell.user.email);
+    let sellerRating = order.sell.rating //seller rated the buyer these values <
+    let buyerRating = order.buy.rating //buyer rated the seller these values <
+    console.warn({isSeller, sellerRating, buyerRating, userEmail, order})
+    if (isSeller && order.status === 'confirmed') {
+      if (!sellerRating) {
+        return (
+          <button
+          className={style.btRating}
+          onClick={() => this.openAvaliation()}
+          >
+            {i18n.t("P2P_BUTTON_RATE_BUYER")}
+          </button>
+        )
+      } else {
+        return <StarVotes votes={sellerRating} />
+      }
+    } else if (!isSeller && order.status === 'confirmed') {
+      if (!buyerRating) {
+        return (
+          <button className={style.btRating} onClick={() => this.openAvaliation()}>
+          {i18n.t("P2P_BUTTON_RATE_SELLER")}
+          </button>
+        )
+      } else {
+        return <StarVotes votes={buyerRating} />
+      }
+    }
+  }
+
   render() {
     const { order, userEmail, type } = this.props;
     const { openDetails } = this.state;
@@ -109,8 +141,7 @@ class CardOffer extends React.Component {
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * order.sell.amount;
-    let isComprador = (userEmail == order.sell.user.email);
-    let ratingExc =  isComprador ? order.buy.rating : order.sell.rating;
+
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
         <Grid container>
@@ -137,16 +168,9 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <div className={style.boxStar}>
-              {(ratingExc == undefined && order.status == "confirmed") ?
-                <button
-                  className={style.btRating}
-                  onClick={() => this.openAvaliation()}
-                >
-                  {i18n.t("P2P_BUTTON_RATING")}
-                </button>
-                :
-                <StarVotes votes={order.sell.user.rating} />
-              }
+
+              {this.renderRatingButton()}
+
               {userEmail == order.sell.user.email &&
                 order.status != "confirmed" ? (
                   <button

@@ -50,7 +50,7 @@ class ConfirmModal extends React.Component {
   handleRatingOrder = () => {
     const { order , setRatingOrder } = this.props;
     let { value, description } = this.state;
-    let rating = { value: value, description: description , orderId:order.id };
+    let rating = { value, description, orderId: order.id };
     setRatingOrder(rating);
     this.close();
   }

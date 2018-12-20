@@ -613,7 +613,8 @@
   "P2P_TAB_SALE": "Sale",
   "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt",
   "P2P_MODAL_SEND_INFO_SUCCESS": "Rating successfully completed",
-  "P2P_BUTTON_RATING": "Evaluate",
+  "P2P_BUTTON_RATE_BUYER": "Rate buyer",
+  "P2P_BUTTON_RATE_SELLER": "Rate seller",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE"
 }
