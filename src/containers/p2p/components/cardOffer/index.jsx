@@ -101,7 +101,9 @@ class CardOffer extends React.Component {
   }
 
   renderRatingButton = () => {
-    let { order, userEmail } = this.props
+    let { order, userEmail, status } = this.props
+    console.warn({status, order})
+    if (!status !== 'confirmed') return;
     let isSeller = (userEmail == order.sell.user.email);
     let sellerRating = order.sell.rating //seller rated the buyer these values <
     let buyerRating = order.buy.rating //buyer rated the seller these values <
@@ -208,7 +210,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {userEmail != order.sell.user.email && type != "myhistory" ? (
+            {/*userEmail != order.sell.user.email && type != "myhistory"*/true ? (
               <button
                 className={style.btContinue}
                 onClick={() => this.openChat(order)}

@@ -169,29 +169,29 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+          if (tabGiving && val.status == "waiting") {
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+          if (tabGiving && val.status == "waiting") {
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status}/>;
           }
         }
       });
