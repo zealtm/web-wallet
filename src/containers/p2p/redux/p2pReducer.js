@@ -9,6 +9,7 @@ const initialState = {
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
+  sellConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
@@ -59,6 +60,12 @@ const p2p = (state = initialState, action) => {
           ...state.chat,
           iduser: action.iduser
         }
+      };
+
+    case "OPEN_CONFIRM_SELL_P2P":
+      return {
+        ...state,
+        sellConfirmIsOpen: action.isOpen
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":

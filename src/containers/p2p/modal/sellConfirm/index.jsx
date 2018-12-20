@@ -1,4 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { openConfirmSell } from "../../redux/p2pAction";
+import { Close } from "@material-ui/icons/";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -8,8 +14,15 @@ import style from "./style.css";
 
 class SellConfirmModal extends React.Component {
   render() {
+    const { openConfirmSell } = this.props;
     return (
       <div className={style.containerSellConfirm}>
+        <div div>
+          <Close
+            className={style.arrowBack}
+            onClick={() => openConfirmSell(false)}
+          />
+        </div>
         <img
           alt={"sell-confirm"}
           src="/images/modal/sell-confirm.png"
@@ -20,7 +33,6 @@ class SellConfirmModal extends React.Component {
         </div>
         <div className={style.boxBtnSellConfirm}>
           <button className={style.btnSellConfirm}>
-            {" "}
             {i18n.t("P2P_BUTTON_CONFIRM_RECEIPT")}
           </button>
         </div>
@@ -29,4 +41,18 @@ class SellConfirmModal extends React.Component {
   }
 }
 
-export default SellConfirmModal;
+SellConfirmModal.propTypes = {
+  openConfirmSell: PropTypes.func
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      openConfirmSell
+    },
+    dispatch
+  );
+export default connect(
+  null,
+  mapDispatchToProps
+)(SellConfirmModal);

@@ -93,7 +93,6 @@ class HeaderDetails extends React.Component {
   render() {
     const { order, openDeposit } = this.props;
     const orderStatusIsOpen = order.status === "open";
-
     return (
       <div>
         <Grid container>
@@ -180,7 +179,9 @@ HeaderDetails.propTypes = {
   acceptOfferWhenBuying: PropTypes.func,
   openDeposit: PropTypes.func
 };
-const mapStateToProps = store => ({ order: store.p2p.chat.iduser });
+const mapStateToProps = store => ({
+  order: store.p2p.chat.iduser
+});
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ openDeposit, acceptOfferWhenBuying }, dispatch);
 export default connect(

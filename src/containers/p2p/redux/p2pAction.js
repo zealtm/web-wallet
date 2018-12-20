@@ -3,6 +3,14 @@ export const openChat = iduser => ({
   iduser
 });
 
+export const openConfirmSell = isOpen => (
+  console.warn(isOpen),
+  {
+    type: "OPEN_CONFIRM_SELL_P2P",
+    isOpen
+  }
+);
+
 export const closeChat = () => ({
   type: "CLOSE_CHAT_P2P"
 });
