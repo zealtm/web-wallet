@@ -62,10 +62,11 @@ const p2p = (state = initialState, action) => {
         }
       };
 
-    case "OPEN_CONFIRM_SELL_P2P":
+    case "HANDLE_CONFIRM_SELL_P2P":
       return {
         ...state,
-        sellConfirmIsOpen: action.isOpen
+        sellConfirmIsOpen: action.isOpen,
+        openDeposit: false
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":

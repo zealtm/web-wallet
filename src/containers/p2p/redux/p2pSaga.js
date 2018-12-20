@@ -275,3 +275,13 @@ export function* getProfileSaga(payload) {
     yield put(internalServerError());
   }
 }
+
+export function* confirmOrder(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(p2pService.confirmOrder, token, payload.idOrder);
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

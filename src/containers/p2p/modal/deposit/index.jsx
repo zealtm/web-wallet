@@ -12,7 +12,8 @@ import { bindActionCreators } from "redux";
 import {
   acceptOfferWhenBuying,
   closeChat,
-  closeDeposit
+  closeDeposit,
+  handleConfirmSell
 } from "../../redux/p2pAction";
 import { successRequest } from "../../../errors/redux/errorAction";
 
@@ -20,9 +21,10 @@ import style from "./style.css";
 
 class DepositModal extends React.Component {
   cleanChat = () => {
-    const { closeChat, closeDeposit } = this.props;
+    const { closeChat, closeDeposit, handleConfirmSell } = this.props;
     closeChat();
     closeDeposit();
+    handleConfirmSell(false);
   };
 
   copyCoinAddress = () => {
@@ -71,7 +73,8 @@ DepositModal.propTypes = {
   closeChat: PropTypes.func,
   closeDeposit: PropTypes.func,
   order: PropTypes.object,
-  successRequest: PropTypes.func
+  successRequest: PropTypes.func,
+  handleConfirmSell: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -80,7 +83,13 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { acceptOfferWhenBuying, closeChat, closeDeposit, successRequest },
+    {
+      acceptOfferWhenBuying,
+      closeChat,
+      closeDeposit,
+      handleConfirmSell,
+      successRequest
+    },
     dispatch
   );
 

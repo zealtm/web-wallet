@@ -8,8 +8,9 @@ import {
   openChat,
   setCancelOrder,
   openAvaliation,
-  openConfirmSell,
+  handleConfirmSell,
   setUserProfile,
+  openDeposit,
   getProfile
 } from "../../redux/p2pAction";
 
@@ -94,11 +95,16 @@ class CardOffer extends React.Component {
     }
   };
 
+  showSellConfirm = order => {
+    const { openDeposit, handleConfirmSell } = this.props;
+    openDeposit(order);
+    handleConfirmSell(true);
+  };
+
   renderNegociateButton = () => {
-    const { order, type, openConfirmSell } = this.props;
+    const { order, type } = this.props;
 
     if (type !== "myhistory" && order.way === "buy") {
-      console.warn(1);
       return (
         <button
           className={style.btContinue}
@@ -113,7 +119,7 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => openConfirmSell(true)}
+          onClick={() => this.showSellConfirm(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
@@ -236,8 +242,9 @@ CardOffer.propTypes = {
   type: PropTypes.string,
   setUserProfile: PropTypes.func,
   openAvaliation: PropTypes.func,
-  openConfirmSell: PropTypes.func,
-  getProfile: PropTypes.func
+  handleConfirmSell: PropTypes.func,
+  getProfile: PropTypes.func,
+  openDeposit: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -252,7 +259,8 @@ const mapDispatchToProps = dispatch =>
       setCancelOrder,
       openAvaliation,
       setUserProfile,
-      openConfirmSell,
+      openDeposit,
+      handleConfirmSell,
       getProfile
     },
     dispatch

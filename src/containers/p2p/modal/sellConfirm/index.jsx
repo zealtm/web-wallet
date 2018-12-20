@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openConfirmSell } from "../../redux/p2pAction";
+import {
+  handleConfirmSell,
+  openDeposit,
+  confirmOrder
+} from "../../redux/p2pAction";
+import DepositModal from "../../modal/deposit";
+
 import { Close } from "@material-ui/icons/";
 
 // UTILS
@@ -13,14 +19,26 @@ import i18n from "../../../../utils/i18n";
 import style from "./style.css";
 
 class SellConfirmModal extends React.Component {
+  openModalDeposit = () => {
+    const { openDeposit, order, confirmOrder } = this.props;
+    openDeposit(order);
+
+    if (order.id) {
+      confirmOrder(order.id);
+      openDeposit(order);
+    }
+  };
+
   render() {
-    const { openConfirmSell } = this.props;
-    return (
+    const { handleConfirmSell, depositIsOpen } = this.props;
+    return depositIsOpen ? (
+      <DepositModal />
+    ) : (
       <div className={style.containerSellConfirm}>
-        <div div>
+        <div>
           <Close
             className={style.arrowBack}
-            onClick={() => openConfirmSell(false)}
+            onClick={() => handleConfirmSell(false)}
           />
         </div>
         <img
@@ -32,7 +50,10 @@ class SellConfirmModal extends React.Component {
           <p className={style.textSellConfirm}> {i18n.t("P2P_TEXT_13")}</p>
         </div>
         <div className={style.boxBtnSellConfirm}>
-          <button className={style.btnSellConfirm}>
+          <button
+            className={style.btnSellConfirm}
+            onClick={() => this.openModalDeposit()}
+          >
             {i18n.t("P2P_BUTTON_CONFIRM_RECEIPT")}
           </button>
         </div>
@@ -42,17 +63,28 @@ class SellConfirmModal extends React.Component {
 }
 
 SellConfirmModal.propTypes = {
-  openConfirmSell: PropTypes.func
+  order: PropTypes.object,
+  handleConfirmSell: PropTypes.func,
+  openDeposit: PropTypes.func,
+  depositIsOpen: PropTypes.bool,
+  confirmOrder: PropTypes.func
 };
+
+const mapStateToProps = store => ({
+  depositIsOpen: store.p2p.openDeposit,
+  order: store.p2p.chat.iduser
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openConfirmSell
+      openDeposit,
+      handleConfirmSell,
+      confirmOrder
     },
     dispatch
   );
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SellConfirmModal);

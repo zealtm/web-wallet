@@ -223,6 +223,29 @@ class P2pService {
       return internalServerError();
     }
   }
+
+  async confirmOrder(token, idOrder) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/confirm/${idOrder}`,
+        API_HEADER
+      );
+
+      console.warn("confirmOrder", response);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.warn("ERROR ddd", error);
+      return internalServerError();
+    }
+  }
 }
 
 export default P2pService;
