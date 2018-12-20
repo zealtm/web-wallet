@@ -114,8 +114,7 @@ class UserProfile extends React.Component {
                   alt="profile"
                   className={style.avatarProfile}
                 />
-              )}
-              <div className={style.online} />
+              )}              
               <p className={style.userName}>
                 {profile.name} {profile.surname}
                 <br />{" "}
