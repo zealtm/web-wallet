@@ -187,7 +187,7 @@ const buy = (state = initialState, action) => {
     case "GET_LUNES_BUY_PRICES":
       return {
         ...state,
-        coinsBuy: action.coins,
+        coinsBuy: action.coins
       };
 
     default: {

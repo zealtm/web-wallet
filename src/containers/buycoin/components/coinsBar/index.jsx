@@ -61,16 +61,15 @@ class CoinsBar extends React.Component {
     getHistoryBuy(coin);
   };
 
-  componentDidMount() {
-    this.getFixedCoins();
-  }
-
   getFixedCoins = () => {
-    const { coins } = this.props;
-    console.log(coins);
+    const { coins, getLunesBuyPrices } = this.props;
     getLunesBuyPrices(coins);
     return;
   };
+
+  componentDidMount() {
+    this.getFixedCoins();
+  }
 
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
