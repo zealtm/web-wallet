@@ -53,7 +53,7 @@ class P2pService {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/p2p/history",
+        `${BASE_URL}/coin/${coin}/p2p/history`,
         API_HEADER
       );
 
@@ -67,13 +67,14 @@ class P2pService {
 
   async acceptOfferWhenBuying(token, data) {
     try {
-      let { coin, orderId } = data;
+      let { coin, orderId, addressBuyer } = data;
       API_HEADER.headers.Authorization = token;
 
       const response = await axios.post(
         `${BASE_URL}/coin/${coin}/p2p/buy`,
         {
-          orderId: orderId
+          orderId,
+          addressBuyer
         },
         API_HEADER
       );
@@ -218,6 +219,28 @@ class P2pService {
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async confirmOrder(token, idOrder) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/confirm/${idOrder}`,
+        API_HEADER
+      );
+
+      console.warn("confirmOrder", response);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
     } catch (error) {
       return internalServerError();
     }

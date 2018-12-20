@@ -3,6 +3,11 @@ export const openChat = iduser => ({
   iduser
 });
 
+export const handleConfirmSell = isOpen => ({
+  type: "HANDLE_CONFIRM_SELL_P2P",
+  isOpen
+});
+
 export const closeChat = () => ({
   type: "CLOSE_CHAT_P2P"
 });
@@ -110,4 +115,9 @@ export const getProfile = profile => ({
 
 export const clearUserProfile = () => ({
   type: "CLEAR_USER_PROFILE"
+});
+
+export const confirmOrder = idOrder => ({
+  type: "POST_CONFIRM_ORDER_API",
+  idOrder
 });

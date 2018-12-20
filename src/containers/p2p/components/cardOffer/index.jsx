@@ -8,7 +8,9 @@ import {
   openChat,
   setCancelOrder,
   openAvaliation,
+  handleConfirmSell,
   setUserProfile,
+  openDeposit,
   getProfile
 } from "../../redux/p2pAction";
 
@@ -93,6 +95,47 @@ class CardOffer extends React.Component {
     }
   };
 
+  showSellConfirm = order => {
+    const { openDeposit, handleConfirmSell } = this.props;
+    openDeposit(order);
+    handleConfirmSell(true);
+  };
+
+  renderNegociateButton = () => {
+    const { order, type } = this.props;
+
+    if (type !== "myhistory" && order.way === "buy") {
+      return (
+        <button
+          className={style.btContinue}
+          onClick={() => this.openChat(order)}
+        >
+          {i18n.t("P2P_BUTTON_NEGOTIATE")}
+        </button>
+      );
+    }
+    if (type !== "myhistory" && order.way === "sell") {
+      console.warn(2);
+      return (
+        <button
+          className={style.btContinue}
+          onClick={() => this.showSellConfirm(order)}
+        >
+          {i18n.t("P2P_BUTTON_NEGOTIATE")}
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className={style.btContinue}
+          onClick={() => this.openChat(order)}
+        >
+          {i18n.t("P2P_BUTTON_NEGOTIATE")}
+        </button>
+      );
+    }
+  };
+
   rederPictureGravatar(email) {
     const defaultImg =
       "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
@@ -144,7 +187,9 @@ class CardOffer extends React.Component {
             <div className={style.boxStar}>
               <StarVotes votes={parseInt(user.rating)} />
 
-              {userEmail == user.email && order.status != "confirmed" ? (
+              {userEmail == user.email &&
+              order.status != "confirmed" &&
+              order.status !== "canceled" ? (
                 <button
                   className={style.btnClose}
                   onClick={this.handleCancelOrder}
@@ -180,14 +225,8 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {userEmail != user.email && type != "myhistory" ? (
-              <button
-                className={style.btContinue}
-                onClick={() => this.openChat(order)}
-              >
-                {i18n.t("P2P_BUTTON_NEGOTIATE")}
-              </button>
-            ) : null}
+            {console.warn(user.email, order.way, type)}
+            {this.renderNegociateButton()}
           </Grid>
         </Grid>
       </div>
@@ -203,7 +242,9 @@ CardOffer.propTypes = {
   type: PropTypes.string,
   setUserProfile: PropTypes.func,
   openAvaliation: PropTypes.func,
-  getProfile: PropTypes.func
+  handleConfirmSell: PropTypes.func,
+  getProfile: PropTypes.func,
+  openDeposit: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -218,6 +259,8 @@ const mapDispatchToProps = dispatch =>
       setCancelOrder,
       openAvaliation,
       setUserProfile,
+      openDeposit,
+      handleConfirmSell,
       getProfile
     },
     dispatch

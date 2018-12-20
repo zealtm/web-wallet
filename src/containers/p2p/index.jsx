@@ -14,6 +14,7 @@ import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
+import SellConfirm from "./modal/sellConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -73,37 +74,51 @@ class P2P extends React.Component {
     return contents[tabIcon];
   };
 
+  renderModals = () => {
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+    const {
+      chatOpened,
+      openAvaliation,
+      sellConfirmIsOpen
+    } = this.props.p2pStore;
+
+    if (sellConfirmIsOpen && !chatOpened) {
+      console.warn("RETORNANDO");
+      return <SellConfirm />;
+    }
+    if (!chatOpened) {
+      return (
+        <div>
+          <div className={style.baseContent}>{this.renderContent()}</div>
+          <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+        </div>
+      );
+    }
+
+    if (openAvaliation) {
+      return <ConfirmModal />;
+    } else {
+      return (
+        <div>
+          <Chat />
+        </div>
+      );
+    }
+  };
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying } = this.props;
     getPaymentMethodsWhenBuying("lunes");
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
-    const { chatOpened, openAvaliation } = this.props.p2pStore;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
       <div className={showBox}>
-        {/* <Hidden smDown>
-          
-        </Hidden> */}
         <div className={style.headerP2P}>{this.renderArrow()}</div>
-
-        {chatOpened == false ? (
-          <div>
-            <div className={style.baseContent}>{this.renderContent()}</div>
-            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-          </div>
-        ) : openAvaliation == true ? (
-          <ConfirmModal />
-        ) : (
-          <div>
-            <Chat />
-          </div>
-        )}
+        {this.renderModals()}
       </div>
     );
   }
