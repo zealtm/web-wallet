@@ -1,3 +1,17 @@
+export const openChat = iduser => ({
+  type: "OPEN_CHAT_P2P",
+  iduser
+});
+
+export const handleConfirmSell = isOpen => ({
+  type: "HANDLE_CONFIRM_SELL_P2P",
+  isOpen
+});
+
+export const closeChat = () => ({
+  type: "SAGA_CLOSE_CHAT"
+});
+
 export const setModalStep = step => ({
   type: "SET_MODAL_FLOW_STEP",
   step
@@ -18,9 +32,8 @@ export const getHistory = coin => ({
   coin
 });
 
-export const getFilter = (coin, typeOrder, coinBuy) => ({
+export const getFilter = (typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",
-  coin,
   typeOrder,
   coinBuy
 });
@@ -79,22 +92,20 @@ export const closeDeposit = () => ({
 
 export const setUserId = () => ({
   type: "SET_USER_ID_P2P"
-})
-export const chatDetailsSetter = (payload) => ({
+});
+export const chatDetailsSetter = payload => ({
   type: "CHAT_DETAILS_SETTER",
   payload
-})
+});
 export const prepareOrOpenChat = order => ({
-  type: 'SAGA_PREPARE_OR_OPEN_CHAT',
+  type: "SAGA_PREPARE_OR_OPEN_CHAT",
   order
-})
-export const openChatToTheSeller = (buyer) => ({
-  type: 'SAGA_OPEN_CHAT_TO_THE_SELLER',
+});
+export const openChatToTheSeller = buyer => ({
+  type: "SAGA_OPEN_CHAT_TO_THE_SELLER",
   buyer
-})
-export const closeChat = () => ({
-  type: "SAGA_CLOSE_CHAT"
-})
+});
+
 export const openAvaliation = () => ({
   type: "OPEN_AVALIATION_P2P"
 });
@@ -114,10 +125,15 @@ export const setUserProfile = userProfile => ({
 });
 
 export const getProfile = profile => ({
-  type: "GET_PROFILE",
+  type: "GET_PROFILE_API",
   profile
 });
 
 export const clearUserProfile = () => ({
   type: "CLEAR_USER_PROFILE"
+});
+
+export const confirmOrder = idOrder => ({
+  type: "POST_CONFIRM_ORDER_API",
+  idOrder
 });

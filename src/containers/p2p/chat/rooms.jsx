@@ -12,6 +12,9 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { chatDetailsSetter } from "./../redux/p2pAction"
 
+//GLOBAL COMPONENTS
+import Loading from "./../../../components/loading.jsx"
+
 //FUNCTIONS
 import { getChatBundle } from "./functions"
 
@@ -42,7 +45,8 @@ class Rooms extends React.Component {
   }
 
   loadRender = () => {
-    return <p className={style.defaultWhiteText}>{i18n.t("P2P_CHAT_ROOM_LOADING")}</p>
+    // return <p className={style.defaultWhiteText}>{i18n.t("P2P_CHAT_ROOM_LOADING")}</p>
+    return <Loading/>
   }
 
   emptyRender = () => {

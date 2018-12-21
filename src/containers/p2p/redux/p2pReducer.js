@@ -19,9 +19,11 @@ const initialState = {
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
+  sellConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
-  currentOrder: { // I think its not being used
+  currentOrder: {
+    // I think its not being used
     //this should come from the API
     orderId: "1",
     isOwner: false
@@ -42,7 +44,7 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile:[]
+  profile: {}
 };
 
 const p2p = (state = initialState, action) => {
@@ -54,12 +56,12 @@ const p2p = (state = initialState, action) => {
           ...state.chatDetails,
           ...action.payload
         }
-      }
+      };
     case "SET_USER_ID":
       return {
         ...state,
         userId: action.id
-      }
+      };
     case "SETTER":
       return {
         ...state,
@@ -84,6 +86,13 @@ const p2p = (state = initialState, action) => {
         }
       };
 
+    case "HANDLE_CONFIRM_SELL_P2P":
+      return {
+        ...state,
+        sellConfirmIsOpen: action.isOpen,
+        openDeposit: false
+      };
+
     case "CLOSE_CHAT_P2P_REDUCER":
       return {
         ...state,
@@ -106,7 +115,7 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        cancelDone: true,
+        cancelDone: true
       };
 
     case "CLEAR_CANCEL_P2P":
@@ -210,8 +219,8 @@ const p2p = (state = initialState, action) => {
         ...state,
         tabIcon: 2,
         userProfile: action.userProfile,
-        chatOpened: false,
-       };
+        chatOpened: false
+      };
 
     case "GET_PROFILE_REDUCER":
       return {
@@ -224,8 +233,8 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         userProfile: [],
-        profile:[]
-      }
+        profile: {}
+      };
 
     default: {
       return {

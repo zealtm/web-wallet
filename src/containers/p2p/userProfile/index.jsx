@@ -4,11 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setUserProfile,
-  getProfile,
-  clearUserProfile
-} from "../redux/p2pAction";
+import { getProfile, clearUserProfile } from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -25,7 +21,7 @@ import colors from "../../../components/bases/colors";
 
 // UTILS
 import i18n from "../../../utils/i18n";
-import { formatDate } from "../../../utils/numbers";
+import { formatDate, percentCalc } from "../../../utils/numbers";
 import { encryptMd5 } from "../../../utils/cryptography";
 
 const styles = {
@@ -42,19 +38,15 @@ const styles = {
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      positivePercents: 0
+    };
   }
 
   componentDidMount = () => {
-    const { getProfile, userProfile } = this.props;
-    if (userProfile.id) {
-      getProfile(userProfile.id);
-    } else {
-      getProfile();
-    }
-  };
+    const { clearUserProfile, getProfile, userProfile } = this.props;
+    if (!userProfile.id) getProfile();
 
-  componentWillUnmount = () => {
-    const { clearUserProfile } = this.props;
     clearUserProfile();
   };
 
@@ -72,9 +64,42 @@ class UserProfile extends React.Component {
     }
   }
 
+  calcPercentagePositive = (positiveTransactions, amountTransactions) =>
+    positiveTransactions > 0
+      ? percentCalc(positiveTransactions, amountTransactions)
+      : 0;
+
+  renderEvaluation = () => {
+    const { evaluation } = this.props.profile;
+
+    if (evaluation && evaluation.length) {
+      return evaluation.map((item, key) => (
+        <div key={key} className={style.userFeedback}>
+          <span className={style.spanDescription}>
+            {`${item.name} ${item.surname}`}
+          </span>
+          <div className={style.feedbackBox}>
+            <StarVotes votes={item.value} />
+          </div>
+          <div className={style.textDescription}>
+            <p>{item.description}</p>
+          </div>
+        </div>
+      ));
+    }
+    return <div />;
+  };
+
   render() {
+    let positivePercents = 0;
     const { classes, loading, profile } = this.props;
+    const { rating } = profile;
     const dateCreate = formatDate(profile.createdAt);
+    if (rating)
+      positivePercents = this.calcPercentagePositive(
+        rating.positive,
+        rating.count
+      );
 
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
@@ -86,17 +111,15 @@ class UserProfile extends React.Component {
               {profile && (
                 <img
                   src={this.rederPictureGravatar(profile.email)}
+                  alt="profile"
                   className={style.avatarProfile}
                 />
               )}
-              <div className={style.online} />
               <div className={style.userName}>
                 {profile.name} {profile.surname}
                 <br />{" "}
                 <div className={style.boxStar}>
-                  {profile.rating && (
-                    <StarVotes votes={profile.rating.average} />
-                  )}
+                  {rating && <StarVotes votes={rating.average} />}
                 </div>
                 {profile && (
                   <span className={style.textSmall}>
@@ -132,7 +155,7 @@ class UserProfile extends React.Component {
               </span>
 
               <div className={style.barsNumbers}>
-                <span>+500</span>
+                <span>{rating ? rating.count : 0}</span>
               </div>
             </div>
             <LinearProgress
@@ -151,7 +174,7 @@ class UserProfile extends React.Component {
               </span>
 
               <div className={style.barsNumbers}>
-                <span>50%</span>
+                <span>{positivePercents}%</span>
               </div>
             </div>
             <LinearProgress
@@ -160,30 +183,21 @@ class UserProfile extends React.Component {
                 colorPrimary: classes.colorPrimary,
                 barColorPrimary: classes.barColorPrimary
               }}
-              value={50}
+              value={positivePercents}
               variant="determinate"
             />
           </div>
         </Grid>
 
         <Grid item xs={12} sm={12}>
-          <div className={style.cardProfile}>
+          <div className={style.cardProfileLast}>
             <div className={style.data}>
               <span className={style.spanDescription}>
                 {i18n.t("P2P_PROFILE_FEEDBACK")}
               </span>
               <div className={style.hr} />
             </div>
-
-            <div className={style.userFeedback}>
-              <span className={style.spanDescription}>João</span>
-              <div className={style.feedbackBox}>
-                <StarVotes votes={4} />
-              </div>
-              <div className={style.textDescription}>
-                <p>Bom trader, recomendo!</p>
-              </div>
-            </div>
+            {this.renderEvaluation()}
           </div>
         </Grid>
       </Grid>
@@ -194,9 +208,8 @@ class UserProfile extends React.Component {
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   getProfile: PropTypes.func,
-  userProfile: PropTypes.object,
+  userProfile: PropTypes.array,
   profile: PropTypes.object,
-  setUserProfile: PropTypes.func,
   clearUserProfile: PropTypes.func,
   loading: PropTypes.bool
 };
@@ -212,7 +225,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfile,
-      setUserProfile,
       clearUserProfile
     },
     dispatch
