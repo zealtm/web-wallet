@@ -43,7 +43,8 @@ class HeaderDetails extends React.Component {
   };
 
   handleClick = () => {
-    const { order, acceptOfferWhenBuying, openDeposit } = this.props;
+    const { acceptOfferWhenBuying, openDeposit } = this.props;
+    const { currentOrder: order } = this.props.chatDetails
     const { addressBuyer } = this.state;
 
     let error = [];
@@ -97,10 +98,12 @@ class HeaderDetails extends React.Component {
   };
 
   render() {
-    const { order, openDeposit } = this.props;
-    const { typeOfChatUser } = this.props.chatDetails;
+    const { openDeposit } = this.props;
+    const { typeOfChatUser, currentOrder: order } = this.props.chatDetails;
 
     if (!order) return null;
+    console.warn({order})
+
     const orderStatusIsOpen = order.status === "open";
     return (
       <div>

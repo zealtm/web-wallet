@@ -39,8 +39,7 @@ class CardOffer extends React.Component {
   }
 
   prepareOrOpenChat = order => {
-    const { prepareOrOpenChat } = this.props;
-    prepareOrOpenChat(order);
+    this.props.prepareOrOpenChat(order);
   };
 
   toggleCardDetails = (bool) =>
@@ -111,7 +110,6 @@ class CardOffer extends React.Component {
       );
     }
     if (type !== "myhistory" && order.way === "sell") {
-      console.warn(2);
       return (
         <button
           className={style.btContinue}

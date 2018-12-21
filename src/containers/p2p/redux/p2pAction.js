@@ -9,7 +9,7 @@ export const handleConfirmSell = isOpen => ({
 });
 
 export const closeChat = () => ({
-  type: "CLOSE_CHAT_P2P"
+  type: "SAGA_CLOSE_CHAT"
 });
 
 export const setModalStep = step => ({

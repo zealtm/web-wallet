@@ -83,7 +83,6 @@ class P2P extends React.Component {
     } = this.props.p2pStore;
 
     if (sellConfirmIsOpen && !chatOpened) {
-      console.warn("RETORNANDO");
       return <SellConfirm />;
     }
     if (!chatOpened) {
@@ -121,7 +120,7 @@ class P2P extends React.Component {
     return (
       <div className={showBox + " p2pContainer"}>
         <div className={style.headerP2P}>{this.renderArrow()}</div>
-        {this.renderModals()}
+        { /*this.renderModals()*/ }
 
         {openChat == false ? (
           <div>

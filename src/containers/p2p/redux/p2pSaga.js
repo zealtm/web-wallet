@@ -96,7 +96,6 @@ export function* openChatToTheSeller(payload) {
   let { id: adId } = currentOrder;
   let { id: adOwnerId } = seller;
   let { id: buyerId } = buyer || {};
-  console.warn({ payload });
   yield put({
     type: "CHAT_DETAILS_SETTER",
     payload: {
