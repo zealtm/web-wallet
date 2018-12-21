@@ -10,7 +10,10 @@ const initialState = {
   errors: [],
   loadingP2P: false,
   signatures: [],
-  signature: []
+  signature: {},
+  mySignature:{},
+  fee: {},
+  address: {}
 };
 
 const settings = (state = initialState, action) => {
@@ -59,6 +62,12 @@ const settings = (state = initialState, action) => {
         loadingP2P: action.loadingP2P
       };
 
+      case "SET_LOADING_REDUCER":
+      return {
+        ...state,
+        loading: action.loading
+      };
+
     case "GET_SIGNATURES_P2P_REDUCER":
       return {
         ...state,
@@ -69,8 +78,21 @@ const settings = (state = initialState, action) => {
     case "GET_SIGNATURE_P2P_REDUCER":
       return {
         ...state,
-        signature: action.signature,
+        mySignature: action.mySignature,
         loadingP2P: false
+      };
+
+    case "SET_SIGNATURE_P2P":
+      return {
+        ...state,
+        signature: action.signature
+      };
+
+    case "GET_FEE_P2P_REDUCER":
+      return {
+        ...state,
+        fee: action.fee,
+        loading: false
       };
 
     default: {

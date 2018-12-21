@@ -8,7 +8,8 @@ import { setModalStep, openModal } from "../../p2p/redux/p2pAction";
 import {
   getSignatures,
   getSignature,
-  signSignature
+  signSignature,
+  setSignature
 } from "../../settings/redux/settingsAction";
 
 // MATERIAL UI
@@ -34,18 +35,19 @@ class P2P extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getSignatures, getSignature, signSignature } = this.props;
+    const { getSignatures, getSignature } = this.props;
     getSignatures();
     getSignature();
-    // let data = {
-    //   planId:1234,
-    //   txId: 123
-    // }
-    // signSignature(data)
   };
 
+  setSignature(val) {
+    const { setSignature, openModal } = this.props;
+    openModal(true);
+    setSignature(val);
+  }
+
   renderPlans = () => {
-    const { signatures, openModal, loadingP2P } = this.props;
+    const { signatures, loadingP2P, mySignature } = this.props;
 
     if (loadingP2P)
       return (
@@ -55,30 +57,64 @@ class P2P extends React.Component {
       );
 
     if (signatures.plans) {
-      return signatures.plans.map((val, key) => (
-        <Grid item key={key}>
-          <div className={style.cardP2p} onClick={() => openModal(true)}>
-            <h1>{val.status}</h1>
-            <img src="/images/icons/p2p/card.png" className={style.cardIcon} />
-            <div className={style.hrCard} />
-            <div className={style.cardTitle}>
-              <p>
-                O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                por um mês
-              </p>
+      if (mySignature) {
+        return signatures.plans.map((val, key) => (
+          <Grid item key={key}>
+            <div
+              className={
+                val.id === mySignature.planId ? style.cardBlue : style.cardGrey
+              }
+            >
+              <h1>{val.status}</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hrCard} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
+              </div>
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>{val.coinValue}</span>
+              </div>
             </div>
-            <div className={style.valueCard}>
-              <span className={style.dollarSign}>{val.coinValue}</span>
+          </Grid>
+        ));
+      }
+      if (mySignature === undefined) {
+        return signatures.plans.map((val, key) => (
+          <Grid item key={key}>
+            <div
+              className={style.cardP2p}
+              onClick={() => this.setSignature(val)}
+            >
+              <h1>{val.status}</h1>
+              <img
+                src="/images/icons/p2p/card.png"
+                className={style.cardIcon}
+              />
+              <div className={style.hrCard} />
+              <div className={style.cardTitle}>
+                <p>
+                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
+                  por um mês
+                </p>
+              </div>
+              <div className={style.valueCard}>
+                <span className={style.dollarSign}>{val.coinValue}</span>
+              </div>
             </div>
-          </div>
-        </Grid>
-      ));
+          </Grid>
+        ));
+      }
     }
   };
 
   render() {
     const { modalOpen } = this.props;
-
     return (
       <div>
         <Modal
@@ -86,7 +122,6 @@ class P2P extends React.Component {
           show={modalOpen}
           close={() => this.closeModal()}
         />
-
         <Grid item xs={12} className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
@@ -112,14 +147,12 @@ class P2P extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid container>
           <Grid item xs={9} className={style.plansDescription}>
             <h1>P2P</h1>
             <p>{i18n.t("P2P_PLANS_DESCRIPTION")}</p>
           </Grid>
         </Grid>
-
         <Grid container className={style.p2pContainer}>
           {this.renderPlans()}
         </Grid>
@@ -137,7 +170,9 @@ P2P.propTypes = {
   getSignature: PropTypes.func,
   signSignature: PropTypes.func,
   signatures: PropTypes.object,
-  loadingP2P: PropTypes.bool.isRequired
+  loadingP2P: PropTypes.bool.isRequired,
+  mySignature: PropTypes.object,
+  setSignature: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -145,7 +180,8 @@ const mapStateToProps = store => ({
   modalOpen: store.p2p.modalOpen,
   signatures: store.settings.signatures,
   loadingP2P: store.settings.loadingP2P,
-  signature: store.settings.signature
+  signature: store.settings.signature,
+  mySignature: store.settings.mySignature
 });
 
 const mapDispatchToProps = dispatch =>
@@ -155,7 +191,8 @@ const mapDispatchToProps = dispatch =>
       openModal,
       getSignatures,
       getSignature,
-      signSignature
+      signSignature,
+      setSignature
     },
     dispatch
   );

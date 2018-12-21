@@ -38,16 +38,12 @@ class SettingsService {
     }
   }
 
-  async signSignature(token, data) {
-    const { planId, txId } = data;
+  async signSignature(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
       let response = await axios.post(
         BASE_URL + "/signature",
-        {
-          planId,
-          txId
-        },
+        payload,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
