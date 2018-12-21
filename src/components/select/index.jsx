@@ -58,12 +58,12 @@ class Select extends React.Component {
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.handleClick);
   }
 
   componentWillUnmount() {
-    document.addEventListener("click", this.handleClick);
+    document.removeEventListener("click", this.handleClick);
   }
 
   render() {

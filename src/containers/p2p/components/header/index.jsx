@@ -9,8 +9,7 @@ import { closeChat, setUserProfile } from "../../redux/p2pAction";
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
-import { encryptMd5 } from "../../../../utils/cryptography";
-import { getProfileImg } from "../../../../utils/user"
+import { getProfileImg } from "../../../../utils/user";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -53,22 +52,20 @@ class Header extends React.Component {
   };
 
   getUserPhoto() {
-    let { typeOfUser, buyer, seller } = this.props.chatDetails
-    if (typeOfUser === 'seller') {
+    let { typeOfUser, buyer, seller } = this.props.chatDetails;
+    if (typeOfUser === "seller") {
       if (!buyer) return;
-      return getProfileImg(300, buyer && buyer.email)
+      return getProfileImg(300, buyer && buyer.email);
     } else {
-      return getProfileImg(300, seller && seller.email)
+      return getProfileImg(300, seller && seller.email);
     }
   }
 
   getName = () => {
-    let { typeOfUser, buyer, seller } = this.props.chatDetails
-    if (typeOfUser === 'buyer')
-      return seller.name +' '+ seller.surname
-    else
-      return buyer ? buyer.name +' '+ buyer.surname : undefined;
-  }
+    let { typeOfUser, buyer, seller } = this.props.chatDetails;
+    if (typeOfUser === "buyer") return seller.name + " " + seller.surname;
+    else return buyer ? buyer.name + " " + buyer.surname : undefined;
+  };
   render() {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
@@ -77,7 +74,7 @@ class Header extends React.Component {
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * order.sell.amount;
 
-    let name = this.getName()
+    let name = this.getName();
 
     return (
       <div className={style.topBar + " chatHeader"}>

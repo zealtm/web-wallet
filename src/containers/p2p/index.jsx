@@ -8,13 +8,13 @@ import { getPaymentMethodsWhenBuying, setTabIcon } from "./redux/p2pAction";
 
 //MATERIAL
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
-import Hidden from "@material-ui/core/Hidden"
 
 //COMPONENTS
 import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
+import SellConfirm from "./modal/sellConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -74,38 +74,63 @@ class P2P extends React.Component {
     return contents[tabIcon];
   };
 
+  renderModals = () => {
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+    const {
+      chatOpened,
+      openAvaliation,
+      sellConfirmIsOpen
+    } = this.props.p2pStore;
+
+    if (sellConfirmIsOpen && !chatOpened) {
+      console.warn("RETORNANDO");
+      return <SellConfirm />;
+    }
+    if (!chatOpened) {
+      return (
+        <div>
+          <div className={style.baseContent}>{this.renderContent()}</div>
+          <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+        </div>
+      );
+    }
+
+    if (openAvaliation) {
+      return <ConfirmModal />;
+    } else {
+      return (
+        <div>
+          <Chat />
+        </div>
+      );
+    }
+  };
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying } = this.props;
     getPaymentMethodsWhenBuying("lunes");
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star","user", "newoffer" ];
-    const { openAvaliation, chatDetails } = this.props.p2pStore;
-    const { open: openChat } = chatDetails
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+    const { chatDetails } = this.props.p2pStore;
+    const { open: openChat } = chatDetails;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
-      <div className={showBox+' p2pContainer'}>
-        <Hidden smDown>
-          <div className={style.headerP2P}>{this.renderArrow()}</div>
-        </Hidden>
+      <div className={showBox + " p2pContainer"}>
+        <div className={style.headerP2P}>{this.renderArrow()}</div>
+        {this.renderModals()}
 
-        {
-          (openChat==false)?
-            (
-              <div>
-                <div className={style.baseContent}>
-                  {this.renderContent()}
-                </div>
-                <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-              </div>
-            ) : (
-              <Chat/>
-            )
-        }
+        {openChat == false ? (
+          <div>
+            <div className={style.baseContent}>{this.renderContent()}</div>
+            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+          </div>
+        ) : (
+          <Chat />
+        )}
       </div>
     );
   }
