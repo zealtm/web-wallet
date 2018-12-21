@@ -102,7 +102,6 @@ class HeaderDetails extends React.Component {
     const { typeOfChatUser, currentOrder: order } = this.props.chatDetails;
 
     if (!order) return null;
-    console.warn({order})
 
     const orderStatusIsOpen = order.status === "open";
     return (
