@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setUserSeed } from "../redux/userAction";
+import { setUserSeed, loading } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -160,6 +160,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      loading,
       setUserSeed,
       clearMessage,
       errorInput
