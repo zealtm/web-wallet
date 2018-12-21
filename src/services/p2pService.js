@@ -230,6 +230,7 @@ class P2pService {
 
       const response = await axios.post(
         `${BASE_URL}/coin/lunes/p2p/confirm/${idOrder}`,
+        {},
         API_HEADER
       );
 
