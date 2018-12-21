@@ -100,6 +100,7 @@ class HeaderDetails extends React.Component {
     const { order, openDeposit } = this.props;
     const { typeOfChatUser } = this.props.chatDetails;
 
+    if (!order) return null;
     const orderStatusIsOpen = order.status === "open";
     return (
       <div>
@@ -191,7 +192,7 @@ HeaderDetails.propTypes = {
   openDeposit: PropTypes.func,
   chatDetails: PropTypes.object.isRequired,
   chatDetailsSetter: PropTypes.func.isRequired,
-  order: PropTypes.object.isRequired
+  order: PropTypes.object
 };
 const mapStateToProps = store => ({
   chatDetails: store.p2p.chatDetails,

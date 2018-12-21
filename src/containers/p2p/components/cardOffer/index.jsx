@@ -38,32 +38,27 @@ class CardOffer extends React.Component {
     };
   }
 
-  handleDetails = () => {
-    this.setState({
-      ...this.state,
-      openDetails: !this.state.openDetails
-    });
-  };
-
   prepareOrOpenChat = order => {
     const { prepareOrOpenChat } = this.props;
     prepareOrOpenChat(order);
   };
 
+  toggleCardDetails = (bool) =>
+    this.setState({openDetails: bool === undefined ? !this.state.openDetails : bool})
+
   handleClick = () => {
     const { order } = this.props;
     if (this.props.type == undefined && order.status == "confirmed") {
-      // this.openAvaliation(); //before
-      this.prepareOrOpenChat(this.props.order);
+      this.openAvaliation(); //before
+      // this.prepareOrOpenChat(this.props.order);
     } else {
       // this.handleDetails(); //before
-      this.prepareOrOpenChat(this.props.order);
+      this.toggleCardDetails()
     }
   };
   openAvaliation = () => {
-    const { prepareOrOpenChat } = this.props;
+    const { openAvaliation } = this.props;
     openAvaliation();
-    prepareOrOpenChat();
   };
 
   openUserProfile = e => {
