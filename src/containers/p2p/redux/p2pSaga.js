@@ -199,7 +199,7 @@ export function* getP2PHistorySaga(payload) {
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: response.data.orders
-      });
+      }); 
     }
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
@@ -295,6 +295,21 @@ export function* setP2POrdersCancelSaga(payload) {
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
 
+    yield put(internalServerError());
+  }
+}
+
+export function* createSignatureSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+
+    yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+
+  } catch (error) {
     yield put(internalServerError());
   }
 }

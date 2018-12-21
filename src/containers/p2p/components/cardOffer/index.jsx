@@ -140,11 +140,6 @@ class CardOffer extends React.Component {
           <Grid item xs={5}>
             <div className={style.boxStar}>
               <StarVotes votes={order.sell.user.rating} />
-              <img
-                className={style.cancelOffer}
-                src="images/icons/close/close.png"
-                >
-                </img>
               {userEmail == order.sell.user.email &&
               order.status != "confirmed" ? (
                 <button
@@ -152,15 +147,14 @@ class CardOffer extends React.Component {
                   onClick={this.handleCancelOrder}
                 >
                   <img
-                    className={style.btnCloseImg}
-                    src="images/icons/p2p/btn-CloseP2p.png"
-                    alt="closep2p"
+                    className={style.cancelOffer}
+                    src="images/icons/close/close.png"
                   />
                 </button>
               ) : null}
             </div>
             <span className={style.defaultFiat}>
-            {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
+              {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
             </span>
             <span className={style.unit}>
               {parseFloat(unitValue).toFixed(2)}
@@ -174,7 +168,6 @@ class CardOffer extends React.Component {
               <img src={`images/icons/coins/${order.buy.coin}.png`} />
               {order.buy.coin.toUpperCase()}
             </div>
-
           </Grid>
           <Grid item xs={2} />
           <Grid

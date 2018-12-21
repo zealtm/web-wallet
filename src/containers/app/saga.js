@@ -36,7 +36,8 @@ import {
   getTwoFactorAuth,
   verifyTwoFactorAuthSettings,
   getAliases,
-  createAlias
+  createAlias,
+  getSignaturesSaga
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -87,6 +88,7 @@ import {
   acceptOfferWhenBuying,
   createOfferWhenSelling,
   setP2POrdersCancelSaga,
+  createSignatureSaga,
   openDeposit,
   closeDeposit,
   setUserId,
@@ -172,6 +174,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_LEASING_START_API", createLeasing),
     fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+    fork(takeLatest, "GET_SIGNATURES_P2P", getSignaturesSaga),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
@@ -220,6 +223,7 @@ export default function* rootSaga() {
     fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
     fork(takeLatest, "API_CREATE_OFFER_WHEN_SELLING", createOfferWhenSelling),
     fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),
+    fork(takeLatest, "API_P2P_CREATE_CREATE_SIGNATURE", createSignatureSaga),
     fork(takeLatest, "OPEN_DEPOSIT_P2P", openDeposit),
     fork(takeLatest, "CLOSE_DEPOSIT_P2P", closeDeposit),
     fork(takeLatest, "SET_USER_ID_P2P", setUserId),
@@ -247,7 +251,6 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
     fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
     fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
-    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
-
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga)
   ];
 }

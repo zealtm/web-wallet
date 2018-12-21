@@ -23,7 +23,7 @@ import colors from "../../components/bases/colors";
 import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
-import Tabs from "../../components/tabs";
+import TabsFilter from "./components/tab";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -88,7 +88,8 @@ class Offers extends React.Component {
       ],
       myOrders: false,
       typeP2P: "Escrow",
-      typeFlter: "Todos"
+      typeFilter: "Todos",
+      filterTab: 0
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -156,7 +157,7 @@ class Offers extends React.Component {
 
   renderOders = () => {
     const { orders, loading, type } = this.props;
-    const { tabGiving, tabDone, tabCanceled } = this.state;
+    const { tabGiving, tabDone, tabCanceled, filterTab } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
     if (orders.length <= 0)
@@ -167,17 +168,31 @@ class Offers extends React.Component {
       );
     if (type == "myhistory") {
       return orders.map((val, key) => {
-        if (tabGiving && val.status == "confirmed") {
-          return <CardOffer key={key} order={val} />;
-        }
+        if (filterTab == 0 && val.way == "buy") {
+          if (tabGiving && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
 
-        if (tabDone && val.status == "confirmed") {
-          return <CardOffer key={key} order={val} />;
-        }
+          if (tabDone && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
 
-        if (tabCanceled && val.status === "canceled") {
-          console.warn(val.status);
-          return <CardOffer key={key} order={val} />;
+          if (tabCanceled && val.status === "canceled") {
+            return <CardOffer key={key} order={val} />;
+          }
+        }
+        if (filterTab == 1 && val.way == "sell") {
+          if (tabGiving && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
+
+          if (tabDone && val.status == "confirmed") {
+            return <CardOffer key={key} order={val} />;
+          }
+
+          if (tabCanceled && val.status === "canceled") {
+            return <CardOffer key={key} order={val} />;
+          }
         }
       });
     }
@@ -186,7 +201,7 @@ class Offers extends React.Component {
     });
   };
 
-  filterMyOrders = filtermyorder => {
+  filterMyOrders = (filtermyorder, title) => {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
 
@@ -201,9 +216,20 @@ class Offers extends React.Component {
     if (filtermyorder) {
       this.setState({
         ...this.state,
-        myOrders: !myOrders
+        myOrders: !myOrders,
+        typeFilter: title
       });
     }
+  };
+
+  handleTab = data => {
+    const { getHistory } = this.props;
+    const { coinSelect } = this.state;
+    this.setState({
+      ...this.state,
+      filterTab: data
+    });
+    getHistory(coinSelect.value);
   };
 
   renderFilters = () => {
@@ -236,19 +262,13 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title) => {
+  selectTypeP2P = (value, title) =>
     this.setState({
       ...this.state,
       typeP2P: title
     });
-  };
-  selectTypeFilter = (value, title) => {
-    this.setState({
-      ...this.state,
-      typeFlter: title
-    });
-    this.filterMyOrders(true);
-  };
+
+  selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
   renderMenu = () => {
     const { type, coinsEnabled } = this.props;
@@ -257,7 +277,7 @@ class Offers extends React.Component {
       listTypeP2P,
       listTypeFilter,
       typeP2P,
-      typeFlter
+      typeFilter
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
@@ -275,7 +295,7 @@ class Offers extends React.Component {
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
-            title={typeFlter}
+            title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
             width={"80%"}
@@ -297,8 +317,12 @@ class Offers extends React.Component {
         </Grid>
       </Grid>
     ) : (
-      <Grid container>
-        <Tabs tabTitles={titles} tabContents={[]} justify="center" />
+      <Grid container style={{ paddingBottom: "1.5rem" }}>
+        <TabsFilter
+          tabTitles={titles}
+          justify="center"
+          handleTab={this.handleTab}
+        />
       </Grid>
     );
   };

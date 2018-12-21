@@ -13,11 +13,13 @@ import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 // SERVICES
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
+import SettingsService from "../../../services/settingsService";
 import TransactionService from "../../../services/transaction/transactionService";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
+const settingsService = new SettingsService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -198,6 +200,31 @@ export function* getAliases(action) {
     }
   } catch (error) {
     console.warn("error", error);
+    yield put(internalServerError());
+  }
+}
+
+export function* getSignaturesSaga() {
+  try {
+    yield put({
+      type: "SET_LOADING_P2P",
+      loadingP2P: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.getSignatures, token);
+
+    let signatures = [];
+    if(response){
+      signatures = response.data
+    }
+
+    yield put({
+      type: "GET_SIGNATURES_P2P_REDUCER",
+      signatures: signatures
+    });
+    yield put({ type: "SET_LOADING_P2P", loadingP2P: false });
+  } catch (error) {
     yield put(internalServerError());
   }
 }
