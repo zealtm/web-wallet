@@ -37,7 +37,10 @@ import {
   verifyTwoFactorAuthSettings,
   getAliases,
   createAlias,
-  getSignaturesSaga
+  getSignaturesSaga,
+  getSignatureSaga,
+  signSignatureSaga,
+  getFeeP2PSaga
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -174,6 +177,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
     fork(takeLatest, "GET_SIGNATURES_P2P", getSignaturesSaga),
+    fork(takeLatest, "GET_SIGNATURE_P2P", getSignatureSaga),
+    fork(takeLatest, "SIGN_SIGNATURE_P2P", signSignatureSaga),
+    fork(takeLatest, "GET_FEE_P2P", getFeeP2PSaga),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
