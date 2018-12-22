@@ -78,41 +78,40 @@ class HeaderDetails extends React.Component {
   renderErrors = () => {
     const { errors } = this.state;
 
-      return errors.map((val, key) => {
-        return (
-          <div key={key}>
-            <div className={style.textErrorSmall}>
-              <Clear className={style.iconListValid} />
-              {val}
-            </div>
+    return errors.map((val, key) => {
+      return (
+        <div key={key}>
+          <div className={style.textErrorSmall}>
+            <Clear className={style.iconListValid} />
+            {val}
           </div>
-        );
-      });
-
+        </div>
+      );
+    });
   };
 
   render() {
-    const { order } = this.props;
-
+    const { order, openDeposit } = this.props;
+    const orderStatusIsOpen = order.status === "open";
     return (
       <div>
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={4}>
             <div className={style.formGroup}>
-              <div className={style.textSmall}>{i18n.t("P2P_HEADER_BUY")}</div>
+              <div className={style.textSmall}>
+                {i18n.t("P2P_HEADER_PAYMENT")}
+              </div>
               <div className={style.listItemCoin}>
                 <img src={`images/icons/coins/${order.buy.coin}.png`} />
                 {order.buy.coin.toUpperCase()}
               </div>
-            </div> 
+            </div>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={4}>
             <div className={style.formGroup}>
-              <div className={style.textSmall}>
-                {i18n.t("P2P_HEADER_PAYMENT")}
-              </div>
+              <div className={style.textSmall}>{i18n.t("P2P_HEADER_BUY")}</div>
               <div className={style.listItemCoin}>
                 <img src={`images/icons/coins/${order.sell.coin}.png`} />
                 {order.sell.coin.toUpperCase()}
@@ -126,24 +125,37 @@ class HeaderDetails extends React.Component {
             <div className={style.boxDescription}>{order.description}</div>
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={3} />
-          <Grid item xs={9}>
-            <input
-              type="text"
-              placeholder="address to sent"
-              className={style.inputCenter}
-              value={this.state.addressBuyer}
-              name="addressBuyer"
-              onChange={e => this.handleFields(e)}
-            />
+        {orderStatusIsOpen ? (
+          <Grid container>
+            <Grid item xs={3} />
+            <Grid item xs={9}>
+              <input
+                type="text"
+                placeholder="address to send"
+                className={style.inputCenter}
+                value={this.state.addressBuyer}
+                name="addressBuyer"
+                onChange={e => this.handleFields(e)}
+              />
+            </Grid>
           </Grid>
-        </Grid>
+        ) : null}
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
             {this.renderErrors()}
-          {order.status != "confirmed"?<button className={style.btBuy} onClick={this.handleClick}>{i18n.t("P2P_HEADER_BUY_2")}</button>:null}
+            {orderStatusIsOpen ? (
+              <button className={style.btBuy} onClick={this.handleClick}>
+                {i18n.t("P2P_HEADER_BUY_2")}
+              </button>
+            ) : (
+              <button
+                className={style.btBuy}
+                onClick={() => openDeposit(order)}
+              >
+                {i18n.t("P2P_INFORMATION")}
+              </button>
+            )}
           </Grid>
         </Grid>
         <Grid
@@ -167,7 +179,9 @@ HeaderDetails.propTypes = {
   acceptOfferWhenBuying: PropTypes.func,
   openDeposit: PropTypes.func
 };
-const mapStateToProps = store => ({ order: store.p2p.chat.iduser });
+const mapStateToProps = store => ({
+  order: store.p2p.chat.iduser
+});
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ openDeposit, acceptOfferWhenBuying }, dispatch);
 export default connect(

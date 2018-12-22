@@ -11,7 +11,7 @@ const initialState = {
   loadingP2P: false,
   signatures: [],
   signature: {},
-  mySignature:{},
+  mySignature: {},
   fee: {},
   address: {}
 };
@@ -62,7 +62,7 @@ const settings = (state = initialState, action) => {
         loadingP2P: action.loadingP2P
       };
 
-      case "SET_LOADING_REDUCER":
+    case "SET_LOADING_REDUCER":
       return {
         ...state,
         loading: action.loading

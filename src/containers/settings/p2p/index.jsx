@@ -114,13 +114,19 @@ class P2P extends React.Component {
   };
 
   render() {
-    const { modalOpen } = this.props;
+    const { modalStep, setModalStep, modalOpen } = this.props;
+
     return (
       <div>
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          close={() => this.closeModal()}
+          lose={
+            modalStep === 1 || modalStep === 3 || modalStep === 4
+              ? () => this.closeModal()
+              : null
+          }
+          back={modalStep === 2 ? () => setModalStep(modalStep - 1) : null}
         />
         <Grid item xs={12} className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>

@@ -610,5 +610,8 @@
   "P2P_COMING_SOON": "Rating coming soon !",
   "P2P_TAB_PURCHASE": "Purchase",
   "P2P_TAB_SALE": "Sale",
-  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt"
+  "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
+  "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
+  "P2P_INFORMATION": "Information"
 }
