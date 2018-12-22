@@ -145,8 +145,8 @@ class Offers extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getFilter, getHistory, type } = this.props;
     const { coinSelect } = this.state;
+    const { getFilter, getHistory, type } = this.props;
 
     if (type === "myhistory") {
       getHistory(coinSelect.value);

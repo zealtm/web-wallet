@@ -181,8 +181,8 @@ class CardOffer extends React.Component {
     const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
 
     const defaultFiat = getDefaultFiat();
-    const total = unitValue * orderSell.amount;
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
+    const total = unitValue * orderSell.amount;
 
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
