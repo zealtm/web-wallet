@@ -365,15 +365,12 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    coinsEnabled: store.p2p.coinsEnabled || [],
-    orders: store.p2p.orders,
-    loading: store.p2p.loading,
-    cancelDone: store.p2p.cancelDone
-  }
-);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders,
+  loading: store.p2p.loading,
+  cancelDone: store.p2p.cancelDone
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

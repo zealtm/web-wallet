@@ -82,7 +82,11 @@ class CardOffer extends React.Component {
 
   renderBtClose = () => {
     const { order, userEmail } = this.props;
-    if (userEmail == order.sell.user.email && order.status != "confirmed") {
+    if (
+      userEmail == order.sell.user.email &&
+      order.status != "confirmed" &&
+      order.status != "confirming"
+    ) {
       return (
         <button className={style.btnClose}>
           <img
@@ -115,7 +119,6 @@ class CardOffer extends React.Component {
       );
     }
     if (type !== "myhistory" && order.way === "sell") {
-      console.warn(2);
       return (
         <button
           className={style.btContinue}
@@ -148,16 +151,38 @@ class CardOffer extends React.Component {
     );
   }
 
-  render() {
-    const { order, userEmail, type } = this.props;
-    const { openDetails } = this.state;
-    const { user } = this.props.order.sell;
-    const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
-    const hourCreate = formatDate(order.createdAt, "HM");
+  validateTypeUser = typeWay => {
+    const { order } = this.props;
+    const typeUser = typeWay === "sell" ? order.buy : order.sell;
 
-    let defaultFiat = getDefaultFiat();
+    console.warn(
+      "TYPEUSER",
+      typeWay,
+      typeUser,
+      "BUY",
+      order.buy,
+      "SELL",
+      order.sell
+    );
+    if (typeWay === "sell" && !typeUser.user.id) return order.sell;
+
+    return typeUser;
+  };
+
+  render() {
+    const { order, userEmail } = this.props;
+    const { openDetails } = this.state;
+    const { user } = this.validateTypeUser(order.way);
+
+    const orderBuy = order.buy;
+    const orderSell = order.sell;
+
+    const hourCreate = formatDate(order.createdAt, "HM");
+    const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
+
+    const defaultFiat = getDefaultFiat();
+    const total = unitValue * orderSell.amount;
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
-    const total = unitValue * order.sell.amount;
 
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
@@ -170,19 +195,22 @@ class CardOffer extends React.Component {
               onClick={this.openUserProfile}
             />
           </Grid>
+
           <Grid item xs={5}>
             <span className={style.name} onClick={this.openUserProfile}>
               {user.name} {user.surname}
             </span>
             <span className={style.dateCreate}>{dateCreate}</span>
             <span className={style.hourCreate}>{hourCreate}</span>
-            <span className={style.numberText}>{order.sell.amount}</span>
+            <span className={style.numberText}>{orderSell.amount}</span>
             <span className={style.textSmall}>{i18n.t("P2P_OFFER")}</span>
+
             <div className={style.offerText}>
-              <img src={`images/icons/coins/${order.sell.coin}.png`} />
-              {order.sell.coin.toUpperCase()}
+              <img src={`images/icons/coins/${orderSell.coin}.png`} />
+              {orderSell.coin.toUpperCase()}
             </div>
           </Grid>
+
           <Grid item xs={5}>
             <div className={style.boxStar}>
               <StarVotes votes={parseInt(user.rating)} />
@@ -201,20 +229,24 @@ class CardOffer extends React.Component {
                 </button>
               ) : null}
             </div>
+
             <span className={style.defaultFiat}>
               {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
             </span>
+
             <span className={style.unit}>
               {parseFloat(unitValue).toFixed(2)}
             </span>
+
             <ArrowForward className={style.arrowPrice} />
+
             <span className={style.numberText}>
               {defaultFiat} {parseFloat(total).toFixed(2)}
             </span>
             <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
-              <img src={`images/icons/coins/${order.buy.coin}.png`} />
-              {order.buy.coin.toUpperCase()}
+              <img src={`images/icons/coins/${orderBuy.coin}.png`} />
+              {orderBuy.coin.toUpperCase()}
             </div>
           </Grid>
           <Grid item xs={2} />
@@ -225,7 +257,6 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {console.warn(user.email, order.way, type)}
             {this.renderNegociateButton()}
           </Grid>
         </Grid>
@@ -237,12 +268,16 @@ class CardOffer extends React.Component {
 CardOffer.propTypes = {
   openChat: PropTypes.func.isRequired,
   order: PropTypes.object,
+
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
+
   type: PropTypes.string,
   setUserProfile: PropTypes.func,
+
   openAvaliation: PropTypes.func,
   handleConfirmSell: PropTypes.func,
+
   getProfile: PropTypes.func,
   openDeposit: PropTypes.func
 };
