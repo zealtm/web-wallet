@@ -30,7 +30,7 @@ class SellConfirmModal extends React.Component {
   };
 
   render() {
-    const { handleConfirmSell, depositIsOpen } = this.props;
+    const { handleConfirmSell, depositIsOpen, textValue } = this.props;
     return depositIsOpen ? (
       <DepositModal />
     ) : (
@@ -47,7 +47,7 @@ class SellConfirmModal extends React.Component {
           className={style.imgSellConfirm}
         />
         <div>
-          <p className={style.textSellConfirm}> {i18n.t("P2P_TEXT_13")}</p>
+          <p className={style.textSellConfirm}>{textValue}</p>
         </div>
         <div className={style.boxBtnSellConfirm}>
           <button
@@ -67,7 +67,8 @@ SellConfirmModal.propTypes = {
   handleConfirmSell: PropTypes.func,
   openDeposit: PropTypes.func,
   depositIsOpen: PropTypes.bool,
-  confirmOrder: PropTypes.func
+  confirmOrder: PropTypes.func,
+  textValue: PropTypes.string
 };
 
 const mapStateToProps = store => ({
