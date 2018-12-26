@@ -105,10 +105,13 @@ class CardOffer extends React.Component {
     handleConfirmSell(true);
   };
 
-  renderNegociateButton = () => {
-    const { order, type } = this.props;
+  renderNegociateButton = user => {
+    const { order, userEmail } = this.props;
+    const way = order.way;
+    const isCancelOrComplet =
+      order.status === "canceled" || order.status === "confirmed";
 
-    if (type !== "myhistory" && order.way === "buy") {
+    if (!isCancelOrComplet && way === "buy") {
       return (
         <button
           className={style.btContinue}
@@ -118,7 +121,7 @@ class CardOffer extends React.Component {
         </button>
       );
     }
-    if (type !== "myhistory" && order.way === "sell") {
+    if (!isCancelOrComplet && way === "sell") {
       return (
         <button
           className={style.btContinue}
@@ -127,7 +130,7 @@ class CardOffer extends React.Component {
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
       );
-    } else {
+    } else if (!isCancelOrComplet && userEmail !== user.email) {
       return (
         <button
           className={style.btContinue}
@@ -153,18 +156,10 @@ class CardOffer extends React.Component {
 
   validateTypeUser = typeWay => {
     const { order } = this.props;
-    const typeUser = typeWay === "sell" ? order.buy : order.sell;
+    const typeWayIsSell = typeWay === "sell";
+    const typeUser = typeWayIsSell ? order.buy : order.sell;
 
-    console.warn(
-      "TYPEUSER",
-      typeWay,
-      typeUser,
-      "BUY",
-      order.buy,
-      "SELL",
-      order.sell
-    );
-    if (typeWay === "sell" && !typeUser.user.id) return order.sell;
+    if (typeWayIsSell && !typeUser.user.id) return order.sell;
 
     return typeUser;
   };
@@ -215,7 +210,7 @@ class CardOffer extends React.Component {
             <div className={style.boxStar}>
               <StarVotes votes={parseInt(user.rating)} />
 
-              {userEmail == user.email &&
+              {userEmail === user.email &&
               order.status != "confirmed" &&
               order.status !== "canceled" ? (
                 <button
@@ -257,7 +252,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {this.renderNegociateButton()}
+            {this.renderNegociateButton(user)}
           </Grid>
         </Grid>
       </div>

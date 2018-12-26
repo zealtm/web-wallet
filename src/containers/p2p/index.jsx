@@ -21,6 +21,8 @@ import style from "./style.css";
 import CreateOffer from "./createOffer";
 import Chat from "./chat";
 
+import i18n from "../../utils/i18n";
+
 class P2P extends React.Component {
   constructor(props) {
     super(props);
@@ -84,7 +86,7 @@ class P2P extends React.Component {
 
     if (sellConfirmIsOpen && !chatOpened) {
       console.warn("RETORNANDO");
-      return <SellConfirm />;
+      return <SellConfirm textValue={i18n.t("P2P_TEXT_13")} />;
     }
     if (!chatOpened) {
       return (
