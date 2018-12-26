@@ -62,8 +62,8 @@ class CoinsBar extends React.Component {
   };
 
   getFixedCoins = () => {
-    const { coins, getLunesBuyPrices } = this.props;
-    getLunesBuyPrices(coins);
+    const { getLunesBuyPrices, price } = this.props;
+    getLunesBuyPrices(price);
     return;
   };
 
@@ -215,9 +215,9 @@ CoinsBar.propTypes = {
 
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
-  coins: store.skeleton.coins,
-  selected: store.buy.buypackage.coin.abbreviation,
-  lunesPrice: store.buy.coinsBuy
+  price: store.skeleton.coins,
+  coins: store.buy.coinsBuy,
+  selected: store.buy.buypackage.coin.abbreviation
 });
 
 const mapDispatchToProps = dispatch =>

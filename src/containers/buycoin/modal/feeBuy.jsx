@@ -194,7 +194,8 @@ const mapStateToProps = store => ({
   wallet: store.skeleton,
   loading: store.buy.loading,
   fee: store.buy.fee,
-  coins: store.skeleton.coins
+  price: store.skeleton.coins,
+  coins: store.buy.coinsBuy
 });
 
 const mapDispatchToProps = dispatch =>

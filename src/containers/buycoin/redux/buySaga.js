@@ -404,7 +404,7 @@ export function* getLunesBuyPrices(payload) {
     coins.lunes.price.BRL.price = response.BRL.price;
     coins.lunes.price.EUR.price = response.EUR.price;
     coins.lunes.price.USD.price = response.USD.price;
-
+   
     yield put({
       type: "GET_LUNES_BUY_PRICES",
       coins
