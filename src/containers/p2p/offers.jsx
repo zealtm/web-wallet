@@ -24,6 +24,7 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
+import Instructions from "./instructions";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -311,10 +312,8 @@ class Offers extends React.Component {
             width={"80%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
-          <a href="#">
-            <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
-          </a>
+        <Grid item xs={3} style={{ marginTop: "3px", textAlign: "center" }}>
+          <Instructions />
         </Grid>
       </Grid>
     ) : (
