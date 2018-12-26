@@ -87,7 +87,7 @@
 }
 
 :local .baseUserProfile {
-  max-height: 500px;
+  height: calc(95vh - 200px);
   overflow: auto;
 }
 
@@ -225,7 +225,8 @@
   text-align: right;
 }
 :local .content {
-  height: 400px;
+  height: calc(92vh - 200px);
+  /* height: 400px; */
   overflow: auto;
 }
 
