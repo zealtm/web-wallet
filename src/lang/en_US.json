@@ -613,5 +613,6 @@
   "P2P_BUTTON_CONFIRM_RECEIPT": "Confirm receipt",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
-  "P2P_INFORMATION": "Information"
+  "P2P_INFORMATION": "Information",
+  "P2P_SIGNATURE_ACTIVE": "You don't have an active signature"
 }

@@ -597,5 +597,6 @@
   "P2P_BUTTON_CONFIRM_RECEIPT": "Confirmar Recebimento",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
   "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
-  "P2P_INFORMATION": "Informação"
+  "P2P_INFORMATION": "Informação",
+  "P2P_SIGNATURE_ACTIVE": "Você não possui uma assinatura ativa"
 }
