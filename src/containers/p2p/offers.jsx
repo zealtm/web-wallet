@@ -24,6 +24,7 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
+import Instructions from "./instructions";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -89,7 +90,7 @@ class Offers extends React.Component {
       myOrders: false,
       typeP2P: "Escrow",
       typeFilter: "Todos",
-      filterTab: 0,
+      filterTab: 0
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -263,15 +264,15 @@ class Offers extends React.Component {
     return;
   };
   selectTypeP2P = (value, title) => {
-    const { getHistory } = this.props
-    let { coinSelect, typeP2P } = this.state
+    const { getHistory } = this.props;
+    let { coinSelect, typeP2P } = this.state;
     this.setState({
       ...this.state,
       typeP2P: title
     });
-    console.warn('selectTypeP2P', {coinSelect, title, value})
-    getHistory(coinSelect.value, typeP2P.toLowerCase())
-  }
+    console.warn("selectTypeP2P", { coinSelect, title, value });
+    getHistory(coinSelect.value, typeP2P.toLowerCase());
+  };
 
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
@@ -326,13 +327,11 @@ class Offers extends React.Component {
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"100%"}
+            width={"90%"}
           />
         </Grid>
-        <Grid item xs={2} style={{ marginTop: "10px", textAlign: "center" }}>
-          <a href="#">
-            <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
-          </a>
+        <Grid item xs={2} style={{ marginTop: "5px", textAlign: "center" }}>
+          <Instructions />
         </Grid>
       </Grid>
     ) : (
