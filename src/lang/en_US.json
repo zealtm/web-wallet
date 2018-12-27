@@ -617,6 +617,7 @@
   "P2P_BUTTON_RATE_SELLER": "Rate seller",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
+  "P2P_FAILED_TO_GET_ORDERS": "Could not get list of orders, try again later on",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
   "P2P_INFORMATION": "Information"
