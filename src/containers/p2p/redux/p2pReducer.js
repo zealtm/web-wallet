@@ -9,6 +9,7 @@ const initialState = {
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
+  sellConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
@@ -60,6 +61,13 @@ const p2p = (state = initialState, action) => {
           ...state.chat,
           iduser: action.iduser
         }
+      };
+
+    case "HANDLE_CONFIRM_SELL_P2P":
+      return {
+        ...state,
+        sellConfirmIsOpen: action.isOpen,
+        openDeposit: false
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":
@@ -203,8 +211,8 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         userProfile: [],
-        profile:[]
-      }
+        profile: {}
+      };
 
     default: {
       return {

@@ -72,6 +72,7 @@ class CreateOffer extends React.Component {
         description: ""
       },
       errors: [],
+      coinPaymentList: [],
       descriptionTotal: 250
     };
 
@@ -79,6 +80,9 @@ class CreateOffer extends React.Component {
   }
 
   coinSelectedSell = (value, title, img = undefined) => {
+    const { coinsEnabled } = this.props;
+    const coinPaymentList = coinsEnabled.filter(coin => coin.value !== value);
+
     this.setState({
       ...this.state,
       coinSell: {
@@ -86,6 +90,7 @@ class CreateOffer extends React.Component {
         value,
         img
       },
+      coinPaymentList,
       order: {
         ...this.state.order,
         coin: value
@@ -93,7 +98,7 @@ class CreateOffer extends React.Component {
     });
   };
 
-  coinSelectedBuy = (value, title, img = undefined) => {
+  paymentCoinSelected = (value, title, img = undefined) => {
     const { coinsEnabled } = this.props;
     let idMethod = 0;
     coinsEnabled.map(val => {
@@ -209,6 +214,7 @@ class CreateOffer extends React.Component {
       addressSeller,
       description
     } = this.state.order;
+
     let error = [];
 
     if (!type) error.push(i18n.t("P2P_ERROR_1"));
@@ -229,15 +235,17 @@ class CreateOffer extends React.Component {
         ...this.state,
         errors: []
       });
+
       createOfferWhenSelling(order);
     }
   };
+
   renderErros = () => {
     let { errors } = this.state;
     return Object.keys(errors).map((value, key) => {
       if (errors[key]) {
         return (
-          <div className={style.textErrorSmall}>
+          <div key={key} className={style.textErrorSmall}>
             <ClearIcon
               className={style.iconListValid}
               style={{ color: "red" }}
@@ -248,8 +256,9 @@ class CreateOffer extends React.Component {
       }
     });
   };
+
   render() {
-    const { coinBuy, coinSell } = this.state;
+    const { coinBuy, coinSell, coinPaymentList } = this.state;
     const {
       classes,
       coinsEnabled,
@@ -357,10 +366,10 @@ class CreateOffer extends React.Component {
                   {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
                 </div>
                 <Select
-                  list={coinsEnabled}
+                  list={coinPaymentList}
                   title={coinBuy.name}
                   titleImg={coinBuy.img}
-                  selectItem={this.coinSelectedBuy}
+                  selectItem={this.paymentCoinSelected}
                   error={null}
                   width={"100%"}
                 />
@@ -389,7 +398,7 @@ class CreateOffer extends React.Component {
               label="P2P (Peer to Peer)"
               labelPlacement="end"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               value="escroow"
               className={style.labelRadio}
               classes={{ label: classes.rootLabel }}
@@ -404,7 +413,7 @@ class CreateOffer extends React.Component {
               }
               label="Escroow"
               labelPlacement="end"
-            />
+            /> */}
             <hr />
           </div>
 

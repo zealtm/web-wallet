@@ -3,6 +3,11 @@ export const openChat = iduser => ({
   iduser
 });
 
+export const handleConfirmSell = isOpen => ({
+  type: "HANDLE_CONFIRM_SELL_P2P",
+  isOpen
+});
+
 export const closeChat = () => ({
   type: "CLOSE_CHAT_P2P"
 });
@@ -27,9 +32,8 @@ export const getHistory = coin => ({
   coin
 });
 
-export const getFilter = (coin, typeOrder, coinBuy) => ({
+export const getFilter = (typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",
-  coin,
   typeOrder,
   coinBuy
 });
@@ -105,7 +109,7 @@ export const setUserProfile = userProfile => ({
 });
 
 export const getProfile = profile => ({
-  type: "GET_PROFILE",
+  type: "GET_PROFILE_API",
   profile
 });
 
@@ -115,4 +119,9 @@ export const clearUserProfile = () => ({
 export const setRatingOrder = data => ({
   type: "SET_P2P_RATING_ORDER",
   data
+});
+
+export const confirmOrder = idOrder => ({
+  type: "POST_CONFIRM_ORDER_API",
+  idOrder
 });

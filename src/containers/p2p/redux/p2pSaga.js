@@ -1,7 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError, modalSuccess } from "../../errors/statusCodeMessage";
 
-// UTILS
 import { getAuthToken } from "../../../utils/localStorage";
 import i18n from "../../../utils/i18n";
 
@@ -14,6 +13,7 @@ const CHANGE_SKELETON_ERROR_STATE = {
   type: "CHANGE_SKELETON_ERROR_STATE",
   state: true
 };
+
 export function* openChat(payload) {
   yield put({
     type: "OPEN_CHAT_P2P_REDUCER",
@@ -155,20 +155,13 @@ export function* getP2PFilterSaga(payload) {
   try {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
-    const { coin, typeOrder, coinBuy } = payload;
+    const { typeOrder, coinBuy } = payload;
 
     let token = yield call(getAuthToken);
-    let response = yield call(
-      p2pService.getFilter,
-      token,
-      coin,
-      typeOrder,
-      coinBuy
-    );
-
+    let response = yield call(p2pService.getFilter, token, typeOrder, coinBuy);
     yield put({
       type: "GET_FILTER_REDUCER",
-      orders: response.data.orders
+      orders: !response ? [] : response.orders
     });
   } catch (error) {
     yield put(CHANGE_SKELETON_ERROR_STATE);
@@ -284,8 +277,9 @@ export function* setTabIconSaga(payload) {
 export function* getProfileSaga(payload) {
   try {
     yield put({ type: "SET_LOADING_P2P", loading: true });
-    let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getProfile, token, payload.profile);
+
+    const token = yield call(getAuthToken);
+    const response = yield call(p2pService.getProfile, token, payload.profile);
     yield put({
       type: "GET_PROFILE_REDUCER",
       profile: response.data
@@ -304,7 +298,15 @@ export function* setP2PRatingOrderSaga(payload) {
       token,
       payload.data
     );
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+export function* confirmOrder(payload) {
+  try {
+    let token = yield call(getAuthToken);
 
+    yield call(p2pService.confirmOrder, token, payload.idOrder);
   } catch (error) {
     yield put(internalServerError());
   }

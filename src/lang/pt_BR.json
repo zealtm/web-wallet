@@ -29,8 +29,6 @@
   "SETTINGS_USER_CONFIRM_NEW_PASSWORD": "Confirme a nova senha",
   "SETTINGS_USER_CHANGE_PASSWORD": "Troque a senha",
 
-  "SETTINGS_P2P": "Assinaturas P2P",
-
   "MESSAGE_PASSWORD": "Senha",
   "PLACEHOLDER_PASSWORD": "Senha",
   "MESSAGE_SELECT_FEE": "Selecione uma taxa",
@@ -601,5 +599,8 @@
   "P2P_MODAL_SEND_INFO_SUCCESS": "Avaliação realizada com sucesso",
   "P2P_BUTTON_RATING": "Avalie",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
-  "P2P_CONFIRM_SIGNATURE": " ASSINATURA"
+  "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
+  "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
+  "P2P_INFORMATION": "Informação"
 }

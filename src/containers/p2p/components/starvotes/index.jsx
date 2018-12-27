@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// MATERIAL 
-import {Star} from "@material-ui/icons";
+// MATERIAL
+import { Star } from "@material-ui/icons";
 
-// STYLE 
+// STYLE
 import style from "./style.css";
 
 class StarVotes extends React.Component {
@@ -14,12 +14,12 @@ class StarVotes extends React.Component {
       value: props.votes || 0,
     }
   }
-  mouseOver = val => {    
+  mouseOver = val => {
     this.setState({
       value: val || 0,
     });
   }
-  
+
   clicked = val =>{
     const {selectVote} = this.props;
     selectVote(val);
@@ -30,7 +30,7 @@ class StarVotes extends React.Component {
     if(enable){
       return [1,2,3,4,5].map(val => {
         let type = (val<=value) ? style.starActiveRating : style.starRating;
-        return <Star key={val} 
+        return <Star key={val}
           onMouseOver={()=>this.mouseOver(val)}
           onMouseMove={()=>this.mouseOver(val)}
           onMouseLeave={()=>this.mouseOver(votes)}
@@ -43,15 +43,9 @@ class StarVotes extends React.Component {
       let type = (val<=votes) ? style.starActive : style.star;
       return <Star key={val} className={type} />
     });
-    
-  }
-  render(){
-    
-    return (
-      <div className={style.boxStar}>
-        {this.renderStar()}
-      </div>
-    )
+  };
+  render() {
+    return <div className={style.boxStar}>{this.renderStar()}</div>;
   }
 }
 

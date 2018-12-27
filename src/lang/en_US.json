@@ -616,5 +616,8 @@
   "P2P_BUTTON_RATE_BUYER": "Rate buyer",
   "P2P_BUTTON_RATE_SELLER": "Rate seller",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
-  "P2P_CONFIRM_SIGNATURE": " SIGNATURE"
+  "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
+  "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
+  "P2P_INFORMATION": "Information"
 }
