@@ -9,7 +9,7 @@ import { closeChat, setUserProfile } from "../../redux/p2pAction";
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
 import { getDefaultFiat } from "../../../../utils/localStorage";
-import { encryptMd5 } from "../../../../utils/cryptography";
+import { getProfileImg } from "../../../../utils/user";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
@@ -31,7 +31,8 @@ class Header extends React.Component {
     super(props);
     this.state = {
       showHeaderDetails: true,
-      arrowDown: false
+      arrowDown: false,
+      name: undefined
     };
   }
   onClickPerfil() {
@@ -50,18 +51,21 @@ class Header extends React.Component {
     });
   };
 
-  rederPictureGravatar(email) {
-    const defaultImg =
-      "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
-    return (
-      "https://s.gravatar.com/avatar/" +
-      encryptMd5(email.toLowerCase()) +
-      "?s=300" +
-      "&d=" +
-      defaultImg
-    );
+  getUserPhoto() {
+    let { typeOfUser, buyer, seller } = this.props.chatDetails;
+    if (typeOfUser === "seller") {
+      if (!buyer) return;
+      return getProfileImg(300, buyer && buyer.email);
+    } else {
+      return getProfileImg(300, seller && seller.email);
+    }
   }
 
+  getName = () => {
+    let { typeOfUser, buyer, seller } = this.props.chatDetails;
+    if (typeOfUser === "buyer") return seller.name + " " + seller.surname;
+    else return buyer ? buyer.name + " " + buyer.surname : undefined;
+  };
   render() {
     const { order } = this.props;
     const dateCreate = formatDate(order.createdAt, "DM");
@@ -70,8 +74,10 @@ class Header extends React.Component {
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * order.sell.amount;
 
+    let name = this.getName();
+
     return (
-      <div className={style.topBar}>
+      <div className={style.topBar + " chatHeader"}>
         <div className={style.header}>
           <Grid container>
             <Grid item xs={1}>
@@ -81,7 +87,7 @@ class Header extends React.Component {
               <Avatar
                 alt="Avatar"
                 className={style.avatar}
-                src={this.rederPictureGravatar(order.sell.user.email)}
+                src={this.getUserPhoto()}
               />
             </Grid>
             <Grid item xl={5}>
@@ -89,7 +95,7 @@ class Header extends React.Component {
                 className={style.textGreen}
                 onClick={() => this.onClickPerfil()}
               >
-                {order.sell.user.name} {order.sell.user.surname}
+                {name}
               </span>
               <span className={style.textSmall}>{dateCreate}</span>
             </Grid>
@@ -142,11 +148,13 @@ class Header extends React.Component {
 Header.propTypes = {
   closeChat: PropTypes.func.isRequired,
   order: PropTypes.object,
-  setUserProfile: PropTypes.func
+  setUserProfile: PropTypes.func,
+  chatDetails: PropTypes.object
 };
 
 const mapStateToProps = store => ({
-  order: store.p2p.chat.iduser
+  order: store.p2p.chatDetails.currentOrder,
+  chatDetails: store.p2p.chatDetails
 });
 
 const mapDispatchToProps = dispatch =>

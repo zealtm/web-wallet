@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  openChat,
+  prepareOrOpenChat,
   setCancelOrder,
   openAvaliation,
   handleConfirmSell,
@@ -38,31 +38,26 @@ class CardOffer extends React.Component {
     };
   }
 
-  handleDetails = () => {
-    this.setState({
-      ...this.state,
-      openDetails: !this.state.openDetails
-    });
+  prepareOrOpenChat = order => {
+    this.props.prepareOrOpenChat(order);
   };
+
+  toggleCardDetails = (bool) =>
+    this.setState({openDetails: bool === undefined ? !this.state.openDetails : bool})
 
   handleClick = () => {
     const { order } = this.props;
     if (this.props.type == undefined && order.status == "confirmed") {
-      this.openAvaliation();
+      this.openAvaliation(); //before
+      // this.prepareOrOpenChat(this.props.order);
     } else {
-      this.handleDetails();
+      // this.handleDetails(); //before
+      this.toggleCardDetails()
     }
   };
-
-  openChat = order => {
-    const { openChat } = this.props;
-    openChat(order);
-  };
-
   openAvaliation = () => {
-    const { openAvaliation, openChat } = this.props;
+    const { openAvaliation } = this.props;
     openAvaliation();
-    openChat();
   };
 
   openUserProfile = e => {
@@ -108,14 +103,13 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
       );
     }
     if (type !== "myhistory" && order.way === "sell") {
-      console.warn(2);
       return (
         <button
           className={style.btContinue}
@@ -128,7 +122,7 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
@@ -149,7 +143,7 @@ class CardOffer extends React.Component {
   }
 
   render() {
-    const { order, userEmail, type } = this.props;
+    const { order, userEmail } = this.props;
     const { openDetails } = this.state;
     const { user } = this.props.order.sell;
     const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
@@ -225,7 +219,6 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {console.warn(user.email, order.way, type)}
             {this.renderNegociateButton()}
           </Grid>
         </Grid>
@@ -235,13 +228,14 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired,
+  prepareOrOpenChat: PropTypes.func.isRequired,
   order: PropTypes.object,
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
   type: PropTypes.string,
   setUserProfile: PropTypes.func,
   openAvaliation: PropTypes.func,
+  p2pStore: PropTypes.object,
   handleConfirmSell: PropTypes.func,
   getProfile: PropTypes.func,
   openDeposit: PropTypes.func
@@ -255,13 +249,13 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openChat,
       setCancelOrder,
       openAvaliation,
       setUserProfile,
       openDeposit,
       handleConfirmSell,
-      getProfile
+      getProfile,
+      prepareOrOpenChat
     },
     dispatch
   );

@@ -1,8 +1,18 @@
 const initialState = {
+  userId: undefined, //TODO remove
   chat: {
     iduser: null
   },
-  chatOpened: false,
+  chatOpened: false, //TODO remove
+  chatDetails: {
+    myId: undefined,
+    open: false,
+    currentOrder: undefined, //{buy: {...}, sell: {...} chat: { rooms: [] }}
+    seller: undefined, //{id: ''}
+    buyer: undefined, //{id: '', name: '', surname: '', email: ''}
+    typeOfUser: undefined, // 'seller' || 'buyer'
+    currentRoom: undefined
+  },
   openDeposit: false,
   openAvaliation: false,
   loading: false,
@@ -13,6 +23,7 @@ const initialState = {
   orders: [],
   coinsEnabled: [],
   currentOrder: {
+    // I think its not being used
     //this should come from the API
     orderId: "1",
     isOwner: false
@@ -38,6 +49,19 @@ const initialState = {
 
 const p2p = (state = initialState, action) => {
   switch (action.type) {
+    case "CHAT_DETAILS_SETTER":
+      return {
+        ...state,
+        chatDetails: {
+          ...state.chatDetails,
+          ...action.payload
+        }
+      };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        userId: action.id
+      };
     case "SETTER":
       return {
         ...state,

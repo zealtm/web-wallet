@@ -1,13 +1,82 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../errors/statusCodeMessage";
 
-import { getAuthToken } from "../../../utils/localStorage";
-import P2pService from "../../../services/p2pService";
+// UTILS
+import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
+import { decodeToken } from "../../../utils/cryptography";
+import { getChatBundle } from "../chat/functions";
 
-import i18n from "../../../utils/i18n"
+// SERVICES
+import P2pService from "../../../services/p2pService";
 
 const p2pService = new P2pService();
 
+//prepare to the seller, open to the buyer
+export function* prepareOrOpenChat(payload) {
+  try {
+    let { order } = payload;
+
+    let state = window.store.getState();
+    let { orders: myOrders } = state.p2p;
+    if (!myOrders) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: i18n.t("P2P_NO_USER_ORDERS")
+      });
+      return;
+    }
+    order = myOrders.find(o => (o.id === order.id ? true : false));
+    if (!order) {
+      yield put({
+        type: "REQUEST_FAILED",
+        message: i18n.t("P2P_FAILED_TO_FIND_ORDER")
+      });
+      return;
+    }
+    let seller = order.sell.user;
+    seller.id = parseInt(seller.id);
+
+    let decodedToken = getDecodedAuthToken();
+    let myId = decodedToken.payload.id | 0;
+    let typeOfUser; //eslint-disable-line
+    typeOfUser = myId === seller.id ? "seller" : "buyer";
+    if (typeOfUser === "seller") {
+      yield put({
+        type: "CHAT_DETAILS_SETTER",
+        payload: {
+          myId,
+          currentOrder: order,
+          open: true, //"chat" opens to the seller, but the bundle wont
+          seller,
+          typeOfUser
+          //buyer is going to be defined when the seller select who he's going to chat
+        }
+      });
+    } else {
+      //chat opens to the buyer
+      let buyer = { id: myId };
+      yield put({
+        type: "CHAT_DETAILS_SETTER",
+        payload: {
+          myId,
+          currentOrder: order,
+          open: true,
+          seller,
+          buyer,
+          typeOfUser,
+          currentRoom: undefined
+        }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: "REQUEST_FAILED",
+      message: i18n.t("P2P_CHAT_FAILED_TO_OPEN_CHAT")
+    });
+  }
+}
 const CHANGE_SKELETON_ERROR_STATE = {
   type: "CHANGE_SKELETON_ERROR_STATE",
   state: true
@@ -20,9 +89,33 @@ export function* openChat(payload) {
   });
 }
 
+export function* openChatToTheSeller(payload) {
+  let { buyer } = payload;
+  if (!buyer) throw new Error("Failed to open chat");
+  let { seller, currentOrder } = window.store.getState().p2p.chatDetails;
+  let { id: adId } = currentOrder;
+  let { id: adOwnerId } = seller;
+  let { id: buyerId } = buyer || {};
+  yield put({
+    type: "CHAT_DETAILS_SETTER",
+    payload: {
+      open: true,
+      buyer
+    }
+  });
+  getChatBundle({ adOwnerId, adId, buyerId });
+}
 export function* closeChat() {
   yield put({
-    type: "CLOSE_CHAT_P2P_REDUCER"
+    type: "CHAT_DETAILS_SETTER",
+    payload: {
+      currentOrder: undefined,
+      open: false,
+      seller: undefined,
+      buyer: undefined,
+      typeOfUser: undefined,
+      currentRoom: undefined
+    }
   });
 }
 
@@ -116,10 +209,18 @@ export function* getP2PHistorySaga(payload) {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getHistory, token, payload.coin, payload.historyType);
+    let response = yield call(
+      p2pService.getHistory,
+      token,
+      payload.coin,
+      payload.historyType
+    );
 
     if (response.errorMessage) {
-      yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_FAILED_TO_GET_ORDERS")})
+      yield put({
+        type: "REQUEST_FAILED",
+        message: i18n.t("P2P_FAILED_TO_GET_ORDERS")
+      });
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: []
@@ -244,6 +345,11 @@ export function* closeDeposit() {
   });
 }
 
+export function* setUserId() {
+  let token = decodeToken(getAuthToken());
+  let id = token.payload.id;
+  yield put({ type: "SET_USER_ID", id });
+}
 export function* openAvaliation() {
   yield put({
     type: "OPEN_AVALIATION_P2P_REDUCER"

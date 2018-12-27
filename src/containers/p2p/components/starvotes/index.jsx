@@ -22,7 +22,7 @@ class StarVotes extends React.Component {
 }
 
 StarVotes.propTypes = {
-  votes: PropTypes.number.isRequired
+  votes: PropTypes.number
 };
 
 export default StarVotes;

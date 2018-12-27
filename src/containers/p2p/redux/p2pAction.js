@@ -9,7 +9,7 @@ export const handleConfirmSell = isOpen => ({
 });
 
 export const closeChat = () => ({
-  type: "CLOSE_CHAT_P2P"
+  type: "SAGA_CLOSE_CHAT"
 });
 
 export const setModalStep = step => ({
@@ -86,6 +86,22 @@ export const openDeposit = iduser => ({
 
 export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
+});
+
+export const setUserId = () => ({
+  type: "SET_USER_ID_P2P"
+});
+export const chatDetailsSetter = payload => ({
+  type: "CHAT_DETAILS_SETTER",
+  payload
+});
+export const prepareOrOpenChat = order => ({
+  type: "SAGA_PREPARE_OR_OPEN_CHAT",
+  order
+});
+export const openChatToTheSeller = buyer => ({
+  type: "SAGA_OPEN_CHAT_TO_THE_SELLER",
+  buyer
 });
 
 export const openAvaliation = () => ({
