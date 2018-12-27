@@ -281,37 +281,50 @@ class Offers extends React.Component {
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
+    if (coinsEnabled.length > 0) {
+      coinsEnabled.forEach(el => {
+        el.title = "";
+      });
+    }
+
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
-        <Grid item xs={3} style={{ textAlign: "center" }}>
+        <Grid
+          item
+          xs={2}
+          style={{ textAlign: "center" }}
+          className={style.scrollSelect}
+        >
           <Select
             list={coinsEnabled}
             title={""}
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}
-            width={"75%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
             title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeP2P}
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
+        <Grid item xs={2} style={{ marginTop: "10px", textAlign: "center" }}>
           <a href="#">
             <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
           </a>
