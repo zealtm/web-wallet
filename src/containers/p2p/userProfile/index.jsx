@@ -71,7 +71,7 @@ class UserProfile extends React.Component {
 
   renderEvaluation = () => {
     const { evaluation } = this.props.profile;
-
+    console.warn("AVALIAÇÔES", evaluation);
     if (evaluation && evaluation.length) {
       return evaluation.map((item, key) => (
         <div key={key} className={style.userFeedback}>
@@ -114,7 +114,7 @@ class UserProfile extends React.Component {
                   alt="profile"
                   className={style.avatarProfile}
                 />
-              )}              
+              )}
               <p className={style.userName}>
                 {profile.name} {profile.surname}
                 <br />{" "}

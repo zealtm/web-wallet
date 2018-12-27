@@ -1,13 +1,14 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError, modalSuccess } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalSuccess
+} from "../../errors/statusCodeMessage";
 
 import { getAuthToken } from "../../../utils/localStorage";
 import i18n from "../../../utils/i18n";
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
-
-import i18n from "../../../utils/i18n"
 
 const p2pService = new P2pService();
 
@@ -119,10 +120,18 @@ export function* getP2PHistorySaga(payload) {
     yield put({ type: "SET_LOADING_P2P", loading: true });
 
     let token = yield call(getAuthToken);
-    let response = yield call(p2pService.getHistory, token, payload.coin, payload.historyType);
+    let response = yield call(
+      p2pService.getHistory,
+      token,
+      payload.coin,
+      payload.historyType
+    );
 
     if (response.errorMessage) {
-      yield put({type: "REQUEST_FAILED", message: i18n.t("P2P_FAILED_TO_GET_ORDERS")})
+      yield put({
+        type: "REQUEST_FAILED",
+        message: i18n.t("P2P_FAILED_TO_GET_ORDERS")
+      });
       yield put({
         type: "GET_HISTORY_REDUCER",
         orders: []
@@ -229,14 +238,14 @@ export function* createSignatureSaga(payload) {
     yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
 
-    yield call(
+    const response = yield call(
       p2pService.createSignature,
       token,
       payload.data
     );
-    if(!response){
+    if (!response) {
       yield put(internalServerError());
-    }else{
+    } else {
       yield put(modalSuccess(i18n.t("P2P_MODAL_SEND_INFO_SUCCESS")));
     }
   } catch (error) {
@@ -258,10 +267,9 @@ export function* closeDeposit() {
 }
 
 export function* openAvaliation(payload) {
-  console.warn('openAvaliation', {payload})
   yield put({
     type: "OPEN_AVALIATION_P2P_REDUCER",
-    order : payload.order
+    order: payload.order
   });
 }
 
@@ -297,11 +305,7 @@ export function* setP2PRatingOrderSaga(payload) {
   try {
     let token = yield call(getAuthToken);
 
-    yield call(
-      p2pService.setRatingOrder,
-      token,
-      payload.data
-    );
+    yield call(p2pService.setRatingOrder, token, payload.data);
   } catch (error) {
     yield put(internalServerError());
   }

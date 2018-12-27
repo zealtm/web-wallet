@@ -33,8 +33,8 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile:[],
-  order : []
+  profile: {},
+  order: []
 };
 
 const p2p = (state = initialState, action) => {
@@ -176,7 +176,7 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         openAvaliation: true,
-        order : action.order
+        order: action.order
       };
 
     case "CLOSE_AVALIATION_P2P_REDUCER":
@@ -197,8 +197,8 @@ const p2p = (state = initialState, action) => {
         ...state,
         tabIcon: 2,
         userProfile: action.userProfile,
-        chatOpened: false,
-       };
+        chatOpened: false
+      };
 
     case "GET_PROFILE_REDUCER":
       return {

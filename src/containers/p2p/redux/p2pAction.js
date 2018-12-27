@@ -27,8 +27,11 @@ export const getMyOrders = coin => ({
   coin
 });
 
-export const getHistory = (coin, historyType) => ({ type: "GET_P2P_HISTORY",
-coin, historyType });
+export const getHistory = (coin, historyType) => ({
+  type: "GET_P2P_HISTORY",
+  coin,
+  historyType
+});
 
 export const getFilter = (typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",
@@ -92,13 +95,12 @@ export const closeDeposit = () => ({
 //   type: "OPEN_AVALIATION_P2P",
 //   order
 // });
-export const openAvaliation = (order) => {
-  console.warn('openAvaliation action', {order})
+export const openAvaliation = order => {
   return {
     type: "OPEN_AVALIATION_P2P",
     order
-  }
-}
+  };
+};
 
 export const closeAvaliation = () => ({
   type: "CLOSE_AVALIATION_P2P"
