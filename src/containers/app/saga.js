@@ -37,7 +37,10 @@ import {
   verifyTwoFactorAuthSettings,
   getAliases,
   createAlias,
-  getSignaturesSaga
+  getSignaturesSaga,
+  getSignatureSaga,
+  signSignatureSaga,
+  getFeeP2PSaga
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -93,7 +96,8 @@ import {
   openAvaliation,
   closeAvaliation,
   setTabIconSaga,
-  getProfileSaga
+  getProfileSaga,
+  confirmOrder
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -173,6 +177,9 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
     fork(takeLatest, "GET_SIGNATURES_P2P", getSignaturesSaga),
+    fork(takeLatest, "GET_SIGNATURE_P2P", getSignatureSaga),
+    fork(takeLatest, "SIGN_SIGNATURE_P2P", signSignatureSaga),
+    fork(takeLatest, "GET_FEE_P2P", getFeeP2PSaga),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
@@ -226,7 +233,8 @@ export default function* rootSaga() {
     fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
     fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
     fork(takeLatest, "SET_TAB_ICON", setTabIconSaga),
-    fork(takeLatest, "GET_PROFILE", getProfileSaga),
+    fork(takeLatest, "GET_PROFILE_API", getProfileSaga),
+    fork(takeLatest, "POST_CONFIRM_ORDER_API", confirmOrder),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),

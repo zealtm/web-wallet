@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import Header from "../components/header";
 import BoxChat from "../components/boxChat";
 import DepositModal from "../modal/deposit";
-import ConfirmModal from "../modal/confirm";
 
 //REDUX
 import { connect } from "react-redux";

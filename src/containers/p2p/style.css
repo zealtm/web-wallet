@@ -87,16 +87,21 @@
 }
 
 :local .baseUserProfile {
-  max-height: 490px;
+  max-height: 500px;
   overflow: auto;
 }
 
-:local(.cardProfile) {
+:local .cardProfile {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   min-height: 195px;
   width: 97%;
   margin: 1px 0px 0px 0px;
   overflow: hidden;
+}
+
+:local .cardProfileLast {
+  composes: cardProfile;
+  margin-bottom: 10%;
 }
 
 :local(.userInfo) {
@@ -173,7 +178,7 @@
 }
 
 :local(.userFeedback) {
-  margin: 10% 0% 0% 10%;
+  margin: 10% 0% 10% 10%;
   width: 80%;
 }
 
@@ -280,6 +285,16 @@
 
 :local(.baseWidget *::-webkit-scrollbar-thumb) {
   background-color: #68f285;
+  border-radius: 6px;
+}
+
+:local(.scrollSelect *::-webkit-scrollbar){
+  background-color: transparent;
+  border-radius: 6px;
+}
+
+:local(.scrollSelect *::-webkit-scrollbar-thumb){
+  background-color: #654fa4;
   border-radius: 6px;
 }
 

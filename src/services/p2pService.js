@@ -53,12 +53,12 @@ class P2pService {
       API_HEADER.headers.Authorization = token;
 
       let response;
-      if (!type || type === 'p2p') {
+      if (!type || type === "p2p") {
         response = await axios.get(
           BASE_URL + "/coin/" + coin + "/p2p/history",
           API_HEADER
         );
-      } else if (type === 'escrow') {
+      } else if (type === "escrow") {
         response = await axios.get(
           `${BASE_URL}/coin/${coin}/p2p/order/${type}`,
           API_HEADER
@@ -75,13 +75,14 @@ class P2pService {
 
   async acceptOfferWhenBuying(token, data) {
     try {
-      let { coin, orderId } = data;
+      let { coin, orderId, addressBuyer } = data;
       API_HEADER.headers.Authorization = token;
 
       const response = await axios.post(
         `${BASE_URL}/coin/${coin}/p2p/buy`,
         {
-          orderId: orderId
+          orderId,
+          addressBuyer
         },
         API_HEADER
       );
@@ -134,20 +135,21 @@ class P2pService {
     }
   }
 
-  async getFilter(token, coin, type, coinBuy) {
+  async getFilter(token, type, coinBuy) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.get(
-        BASE_URL + "/coin/" + coin + "/p2p/order/" + type + "/" + coinBuy,
+
+      const coin = !coinBuy ? "lunes" : coinBuy;
+      const response = await axios.get(
+        `${BASE_URL}/coin/${coin}/p2p/order/${type}/${coin}`,
         API_HEADER
       );
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if (response.data.data == undefined) {
-        return [];
-      }
+      if (!response.data.data) return;
 
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return internalServerError();
     }
@@ -201,16 +203,53 @@ class P2pService {
 
   async getProfile(token, userId) {
     try {
-      API_HEADER.headers.Authorization = token;
+      let evaluation = undefined;
       const request = userId
         ? `${BASE_URL}/coin/lunes/p2p/profile?userId=${userId}`
         : `${BASE_URL}/coin/lunes/p2p/profile`;
 
+      API_HEADER.headers.Authorization = token;
       let response = await axios.get(request, API_HEADER);
 
+      if (userId) {
+        evaluation = await axios.get(
+          `${BASE_URL}/coin/lunes/p2p/profile/rating?userId=${userId}`,
+          API_HEADER
+        );
+      } else {
+        evaluation = await axios.get(
+          `${BASE_URL}/coin/lunes/p2p/profile/rating`,
+          API_HEADER
+        );
+      }
+
+      response.data.data.evaluation = evaluation.data.data.rating;
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response.data;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
+
+  async confirmOrder(token, idOrder) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/confirm/${idOrder}`,
+        {},
+        API_HEADER
+      );
+
+      console.warn("confirmOrder", response);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
     } catch (error) {
       return internalServerError();
     }

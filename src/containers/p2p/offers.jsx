@@ -96,6 +96,7 @@ class Offers extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
+    const { getFilter } = this.props;
     this.setState({
       ...this.state,
       coinSelect: {
@@ -105,16 +106,15 @@ class Offers extends React.Component {
       }
     });
 
-    this.filterMyOrders(false);
+    getFilter("p2p", value);
   };
 
   clearCancel = () => {
     const { clearCancel, getFilter } = this.props;
-    const { coinSelect } = this.state;
 
     clearCancel();
 
-    getFilter(coinSelect.value, "p2p", "");
+    getFilter("p2p", "");
   };
 
   onChangeTab(status) {
@@ -151,7 +151,7 @@ class Offers extends React.Component {
     if (type === "myhistory") {
       getHistory(coinSelect.value, typeP2P.toLowerCase());
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
     }
   };
 
@@ -169,7 +169,7 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirmed") {
+          if (tabGiving && val.status == "confirming") {
             return <CardOffer key={key} order={val} />;
           }
 
@@ -182,7 +182,7 @@ class Offers extends React.Component {
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirmed") {
+          if (tabGiving && val.status == "confirming") {
             return <CardOffer key={key} order={val} />;
           }
 
@@ -210,7 +210,7 @@ class Offers extends React.Component {
     } else if (type == "myhistory") {
       getHistory(coinSelect.value);
     } else {
-      getFilter(coinSelect.value, "p2p", "");
+      getFilter("p2p", "");
     }
 
     if (filtermyorder) {
@@ -286,36 +286,50 @@ class Offers extends React.Component {
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
+    if (coinsEnabled.length > 0) {
+      coinsEnabled.forEach(el => {
+        el.title = "";
+      });
+    }
+
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
-        <Grid item xs={3} style={{ textAlign: "center" }}>
+        <Grid
+          item
+          xs={2}
+          style={{ textAlign: "center" }}
+          className={style.scrollSelect}
+        >
           <Select
             list={coinsEnabled}
+            title={""}
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}
-            width={"75%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
             title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeP2P}
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
+        <Grid item xs={2} style={{ marginTop: "10px", textAlign: "center" }}>
           <a href="#">
             <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
           </a>
@@ -331,6 +345,7 @@ class Offers extends React.Component {
       </Grid>
     );
   };
+
   render() {
     const { cancelDone } = this.props;
 
@@ -368,12 +383,15 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => ({
-  coinsEnabled: store.p2p.coinsEnabled || [],
-  orders: store.p2p.orders,
-  loading: store.p2p.loading,
-  cancelDone: store.p2p.cancelDone
-});
+const mapStateToProps = store => (
+  console.warn(store),
+  {
+    coinsEnabled: store.p2p.coinsEnabled || [],
+    orders: store.p2p.orders,
+    loading: store.p2p.loading,
+    cancelDone: store.p2p.cancelDone
+  }
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

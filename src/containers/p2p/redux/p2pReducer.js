@@ -9,6 +9,7 @@ const initialState = {
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
+  sellConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
@@ -32,7 +33,7 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile:[]
+  profile: {}
 };
 
 const p2p = (state = initialState, action) => {
@@ -59,6 +60,13 @@ const p2p = (state = initialState, action) => {
           ...state.chat,
           iduser: action.iduser
         }
+      };
+
+    case "HANDLE_CONFIRM_SELL_P2P":
+      return {
+        ...state,
+        sellConfirmIsOpen: action.isOpen,
+        openDeposit: false
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":
@@ -186,9 +194,9 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         tabIcon: 2,
-        userProfile: action.userProfile, 
-        chatOpened: false,
-       };
+        userProfile: action.userProfile,
+        chatOpened: false
+      };
 
     case "GET_PROFILE_REDUCER":
       return {
@@ -201,8 +209,8 @@ const p2p = (state = initialState, action) => {
       return {
         ...state,
         userProfile: [],
-        profile:[]
-      }
+        profile: {}
+      };
 
     default: {
       return {

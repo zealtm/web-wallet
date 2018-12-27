@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { closeChat,setUserProfile } from "../../redux/p2pAction";
+import { closeChat, setUserProfile } from "../../redux/p2pAction";
 
 // UTILS
 import { formatDate } from "../../../../utils/numbers";
@@ -37,8 +37,6 @@ class Header extends React.Component {
   onClickPerfil() {
     const { order, setUserProfile } = this.props;
     setUserProfile(order.sell.user);
-    console.log("teste");
-    console.log(order);
   }
   closeChat = () => {
     const { closeChat } = this.props;
@@ -51,10 +49,17 @@ class Header extends React.Component {
       arrowDown: !this.state.arrowDown
     });
   };
-  
-  rederPictureGravatar(email){
-    const defaultImg = "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
-    return "https://s.gravatar.com/avatar/"+encryptMd5(email.toLowerCase())+"?s=300"+"&d="+defaultImg;
+
+  rederPictureGravatar(email) {
+    const defaultImg =
+      "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
+    return (
+      "https://s.gravatar.com/avatar/" +
+      encryptMd5(email.toLowerCase()) +
+      "?s=300" +
+      "&d=" +
+      defaultImg
+    );
   }
 
   render() {
@@ -63,8 +68,8 @@ class Header extends React.Component {
 
     let defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
-    const total =  unitValue * order.sell.amount;
-    
+    const total = unitValue * order.sell.amount;
+
     return (
       <div className={style.topBar}>
         <div className={style.header}>
@@ -93,10 +98,9 @@ class Header extends React.Component {
                 <StarVotes votes={order.sell.user.rating} />
               </div>
             </Grid>
-            </Grid>
+          </Grid>
 
-            <Grid container>          
-
+          <Grid container>
             <Grid item xs={3} />
             <Grid item xs={4}>
               <div className={style.card}>{order.sell.amount}</div>
@@ -105,7 +109,9 @@ class Header extends React.Component {
               <ArrowForward className={style.arrowPrice} />
             </Grid>
             <Grid item xs={4}>
-              <div className={style.card}>{defaultFiat} {total.toFixed(2)}</div>
+              <div className={style.card}>
+                {defaultFiat} {total.toFixed(2)}
+              </div>
             </Grid>
             <Grid
               container
@@ -135,7 +141,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   closeChat: PropTypes.func.isRequired,
-  order: PropTypes.object, 
+  order: PropTypes.object,
   setUserProfile: PropTypes.func
 };
 
@@ -144,7 +150,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ closeChat,setUserProfile }, dispatch);
+  bindActionCreators({ closeChat, setUserProfile }, dispatch);
 
 export default connect(
   mapStateToProps,
