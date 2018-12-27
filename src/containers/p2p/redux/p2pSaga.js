@@ -255,6 +255,7 @@ export function* closeDeposit() {
 }
 
 export function* openAvaliation(payload) {
+  console.warn('openAvaliation', {payload})
   yield put({
     type: "OPEN_AVALIATION_P2P_REDUCER",
     order : payload.order

@@ -18,6 +18,9 @@ import style from "./style.css";
 //COMPONENTS
 import Starvotes from "../../components/starvotes";
 
+//UTILS
+import { encryptMd5 } from "./../../../../utils/cryptography.js"
+
 class ConfirmModal extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +60,9 @@ class ConfirmModal extends React.Component {
   render() {
     const { order, userEmail } = this.props;
     let { value, description } = this.state;
+
+    if (!order) return null;
+
     let isComprador = (userEmail == order.sell.user.email);
 
     return (

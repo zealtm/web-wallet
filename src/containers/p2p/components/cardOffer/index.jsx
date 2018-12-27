@@ -57,9 +57,9 @@ class CardOffer extends React.Component {
     openChat(order);
   };
 
-  openAvaliation = () => {
+  openAvaliation = (order) => {
     const { openAvaliation, openChat } = this.props;
-    openAvaliation();
+    openAvaliation(order);
     openChat();
   };
 
@@ -149,7 +149,8 @@ class CardOffer extends React.Component {
   renderRatingButton = () => {
     let { order, userEmail, status } = this.props
     console.warn({status, order})
-    if (!status !== 'confirmed') return;
+    if (status !== 'confirmed') return;
+    console.warn({status, oi: 1})
     let isSeller = (userEmail == order.sell.user.email);
     let sellerRating = order.sell.rating //seller rated the buyer these values <
     let buyerRating = order.buy.rating //buyer rated the seller these values <
@@ -159,7 +160,7 @@ class CardOffer extends React.Component {
         return (
           <button
           className={style.btRating}
-          onClick={() => this.openAvaliation()}
+          onClick={() => this.openAvaliation(order)}
           >
             {i18n.t("P2P_BUTTON_RATE_BUYER")}
           </button>
@@ -170,7 +171,7 @@ class CardOffer extends React.Component {
     } else if (!isSeller && order.status === 'confirmed') {
       if (!buyerRating) {
         return (
-          <button className={style.btRating} onClick={() => this.openAvaliation()}>
+          <button className={style.btRating} onClick={() => this.openAvaliation(order)}>
           {i18n.t("P2P_BUTTON_RATE_SELLER")}
           </button>
         )
