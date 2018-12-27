@@ -88,6 +88,7 @@ class ConfirmModal extends React.Component {
             </div>
             <div>
               <Input className={style.comment}
+                aria-label="comment"
                 value={description}
                 onChange={this.handleValuefaultChange("description")}
               />
