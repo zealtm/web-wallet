@@ -14,7 +14,7 @@ import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
-import SellConfirm from "./modal/sellConfirm";
+import DepositConfirm from "./modal/depositConfirm";
 
 //STYLE
 import style from "./style.css";
@@ -81,12 +81,18 @@ class P2P extends React.Component {
     const {
       chatOpened,
       openAvaliation,
-      sellConfirmIsOpen
+      depositConfirmIsOpen,
+      isDepositBuy
     } = this.props.p2pStore;
 
-    if (sellConfirmIsOpen && !chatOpened) {
+    const depositText = isDepositBuy
+      ? i18n.t("P2P_TEXT_14")
+      : i18n.t("P2P_TEXT_13");
+
+    if (depositConfirmIsOpen && !chatOpened) {
       console.warn("RETORNANDO");
-      return <SellConfirm textValue={i18n.t("P2P_TEXT_13")} />;
+
+      return <DepositConfirm textValue={depositText} />;
     }
     if (!chatOpened) {
       return (

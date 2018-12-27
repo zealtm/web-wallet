@@ -18,7 +18,7 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-class SellConfirmModal extends React.Component {
+class DepositConfirmModal extends React.Component {
   openModalDeposit = () => {
     const { openDeposit, order, confirmOrder } = this.props;
     openDeposit(order);
@@ -62,7 +62,7 @@ class SellConfirmModal extends React.Component {
   }
 }
 
-SellConfirmModal.propTypes = {
+DepositConfirmModal.propTypes = {
   order: PropTypes.object,
   handleConfirmSell: PropTypes.func,
   openDeposit: PropTypes.func,
@@ -88,4 +88,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SellConfirmModal);
+)(DepositConfirmModal);

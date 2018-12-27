@@ -3,9 +3,10 @@ export const openChat = iduser => ({
   iduser
 });
 
-export const handleConfirmSell = isOpen => ({
+export const handleConfirmSell = (isOpen, isDepositBuy) => ({
   type: "HANDLE_CONFIRM_SELL_P2P",
-  isOpen
+  isOpen,
+  isDepositBuy
 });
 
 export const closeChat = () => ({

@@ -99,20 +99,28 @@ class CardOffer extends React.Component {
     }
   };
 
-  showSellConfirm = order => {
+  showSellConfirm = (order, isDepositBuy) => {
     const { openDeposit, handleConfirmSell } = this.props;
     openDeposit(order);
-    handleConfirmSell(true);
+    handleConfirmSell(true, isDepositBuy);
   };
 
   renderNegociateButton = user => {
     const { order, userEmail } = this.props;
     const way = order.way;
+    const isSameEmail = userEmail === user.email;
     const isCancelOrComplet =
       order.status === "canceled" || order.status === "confirmed";
-
+    console.warn("TESTE", order);
     if (!isCancelOrComplet && way === "buy") {
-      return (
+      return order.sell.confirmation ? (
+        <button
+          className={style.btContinue}
+          onClick={() => this.showSellConfirm(order, true)}
+        >
+          {i18n.t("P2P_BUTTON_NEGOTIATE")}
+        </button>
+      ) : (
         <button
           className={style.btContinue}
           onClick={() => this.openChat(order)}
@@ -121,16 +129,17 @@ class CardOffer extends React.Component {
         </button>
       );
     }
-    if (!isCancelOrComplet && way === "sell") {
+
+    if (!isCancelOrComplet && way === "sell" && !isSameEmail) {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.showSellConfirm(order)}
+          onClick={() => this.showSellConfirm(order, false)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
       );
-    } else if (!isCancelOrComplet && userEmail !== user.email) {
+    } else if (!isCancelOrComplet && !isSameEmail) {
       return (
         <button
           className={style.btContinue}
@@ -277,10 +286,13 @@ CardOffer.propTypes = {
   openDeposit: PropTypes.func
 };
 
-const mapStateToProps = store => ({
-  userEmail: store.user.user.email,
-  p2pStore: store.p2p
-});
+const mapStateToProps = store => (
+  console.warn(store),
+  {
+    userEmail: store.user.user.email,
+    p2pStore: store.p2p
+  }
+);
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

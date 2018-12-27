@@ -4,12 +4,13 @@ const initialState = {
   },
   chatOpened: false,
   openDeposit: false,
+  isDepositBuy: false,
   openAvaliation: false,
   loading: false,
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
-  sellConfirmIsOpen: false,
+  depositConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
@@ -65,8 +66,9 @@ const p2p = (state = initialState, action) => {
     case "HANDLE_CONFIRM_SELL_P2P":
       return {
         ...state,
-        sellConfirmIsOpen: action.isOpen,
-        openDeposit: false
+        depositConfirmIsOpen: action.isOpen,
+        openDeposit: false,
+        isDepositBuy: action.isDepositBuy
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":
