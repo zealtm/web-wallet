@@ -89,7 +89,7 @@ class Offers extends React.Component {
       myOrders: false,
       typeP2P: "Escrow",
       typeFilter: "Todos",
-      filterTab: 0
+      filterTab: 0,
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -146,10 +146,10 @@ class Offers extends React.Component {
 
   componentDidMount = () => {
     const { getFilter, getHistory, type } = this.props;
-    const { coinSelect } = this.state;
+    const { coinSelect, typeP2P } = this.state;
 
     if (type === "myhistory") {
-      getHistory(coinSelect.value);
+      getHistory(coinSelect.value, typeP2P.toLowerCase());
     } else {
       getFilter("p2p", "");
     }
@@ -262,11 +262,16 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title) =>
+  selectTypeP2P = (value, title) => {
+    const { getHistory } = this.props
+    let { coinSelect, typeP2P } = this.state
     this.setState({
       ...this.state,
       typeP2P: title
     });
+    console.warn('selectTypeP2P', {coinSelect, title, value})
+    getHistory(coinSelect.value, typeP2P.toLowerCase())
+  }
 
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
