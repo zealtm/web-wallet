@@ -25,6 +25,7 @@ import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
 import Instructions from "./instructions";
+import Sort from "./sort";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -90,7 +91,8 @@ class Offers extends React.Component {
       myOrders: false,
       typeP2P: "Escrow",
       typeFilter: "Todos",
-      filterTab: 0
+      filterTab: 0,
+      sortMenu: false
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -274,6 +276,13 @@ class Offers extends React.Component {
     getHistory(coinSelect.value, typeP2P.toLowerCase());
   };
 
+  handleSort = () => {
+    this.setState({
+      ...this.state,
+      sortMenu: !this.state.sortMenu
+    });
+  };
+
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
   renderMenu = () => {
@@ -330,9 +339,18 @@ class Offers extends React.Component {
             width={"90%"}
           />
         </Grid>
-        <Grid item xs={2} style={{ marginTop: "5px", textAlign: "center" }}>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
+          <div className={style.sort}>
+            <img
+              src="/images/icons/p2p/sort.png"
+              onClick={() => this.handleSort()}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
           <Instructions />
         </Grid>
+        {this.state.sortMenu && <Sort />}
       </Grid>
     ) : (
       <Grid container style={{ paddingBottom: "1.5rem" }}>
@@ -347,7 +365,6 @@ class Offers extends React.Component {
 
   render() {
     const { cancelDone } = this.props;
-
     if (cancelDone)
       return (
         <div>

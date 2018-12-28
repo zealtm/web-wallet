@@ -598,5 +598,10 @@
   "P2P_FAILED_TO_GET_ORDERS": "Falha ao pegar lista de ordens, tente novamente mais tarde.",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
   "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
-  "P2P_INFORMATION": "Informação"
+  "P2P_INFORMATION": "Informação",
+  "P2P_SORT_TITLE": "Filtro",
+  "P2P_SORT_ASCENDING": "Ordem Crescente",
+  "P2P_SORT_DESCENDING": "Ordem Decrescente",
+  "P2P_SORT_NEWEST": "Recentes",
+  "P2P_SORT_OLDEST": "Antigas"
 }
