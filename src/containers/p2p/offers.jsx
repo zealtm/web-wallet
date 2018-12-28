@@ -262,6 +262,7 @@ class Offers extends React.Component {
     }
     return;
   };
+
   selectTypeP2P = (value, title) =>
     this.setState({
       ...this.state,

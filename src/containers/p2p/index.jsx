@@ -77,7 +77,6 @@ class P2P extends React.Component {
   };
 
   renderModals = () => {
-    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
     const {
       chatOpened,
       openAvaliation,
@@ -85,33 +84,30 @@ class P2P extends React.Component {
       isDepositBuy
     } = this.props.p2pStore;
 
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+
     const depositText = isDepositBuy
       ? i18n.t("P2P_TEXT_14")
       : i18n.t("P2P_TEXT_13");
 
-    if (depositConfirmIsOpen && !chatOpened) {
-      console.warn("RETORNANDO");
-
+    if (depositConfirmIsOpen && !chatOpened)
       return <DepositConfirm textValue={depositText} />;
-    }
-    if (!chatOpened) {
+
+    if (!chatOpened)
       return (
         <div>
           <div className={style.baseContent}>{this.renderContent()}</div>
           <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
         </div>
       );
-    }
 
-    if (openAvaliation) {
-      return <ConfirmModal />;
-    } else {
-      return (
-        <div>
-          <Chat />
-        </div>
-      );
-    }
+    if (openAvaliation) return <ConfirmModal />;
+
+    return (
+      <div>
+        <Chat />
+      </div>
+    );
   };
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying } = this.props;

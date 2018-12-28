@@ -111,7 +111,7 @@ class CardOffer extends React.Component {
     const isSameEmail = userEmail === user.email;
     const isCancelOrComplet =
       order.status === "canceled" || order.status === "confirmed";
-    console.warn("TESTE", order);
+
     if (!isCancelOrComplet && way === "buy") {
       return order.sell.confirmation ? (
         <button
@@ -166,7 +166,7 @@ class CardOffer extends React.Component {
   validateTypeUser = typeWay => {
     const { order } = this.props;
     const typeWayIsSell = typeWay === "sell";
-    const typeUser = typeWayIsSell ? order.buy : order.sell;
+    const typeUser = typeWayIsSell ? order.sell : order.buy;
 
     if (typeWayIsSell && !typeUser.user.id) return order.sell;
 
