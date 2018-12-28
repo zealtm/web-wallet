@@ -626,5 +626,15 @@
   "P2P_FAILED_TO_GET_ORDERS": "Could not get list of orders, try again later on",
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
-  "P2P_INFORMATION": "Information"
+  "P2P_INFORMATION": "Information",
+  "P2P_INFORMATION_SIGNATURE_TITLE_1": "To use P2P you must sign the service:",
+  "P2P_INFORMATION_SIGNATURE_PLANS_12_MONTHS": "12 months for 24 reais.",
+  "P2P_INFORMATION_SIGNATURE_PLANS_06_MONTHS": "6 months for 18 reais.",
+  "P2P_INFORMATION_SIGNATURE_PLANS_03_MONTHS": "3 months for 10 reais.",
+  "P2P_INFORMATION_SIGNATURE_PLANS_01_MONTHS": "1 month for 4 reais.",
+  "P2P_INFORMATION_SIGNATURE_TITLE_2": "To use Escrow, additional amounts are charged:",
+  "P2P_INFORMATION_ESCROW_1": "The minimum order value in escrow is $ 5.00 per order.",
+  "P2P_INFORMATION_ESCROW_2": "The rate paid by the seller in escrow is 1%.",
+  "P2P_INFORMATION_ESCROW_3": "To ensure the agility and security of the system, in Escrow the seller makes the payment in advance.",
+  "P2P_INFORMATION_FOOTER": "You will receive notifications by email when your purchase or sale takes effect, you will also receive an email for new chats that are open with you."
 }
