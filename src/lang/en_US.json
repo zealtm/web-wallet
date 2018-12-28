@@ -616,8 +616,8 @@
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
   "P2P_INFORMATION": "Information",
   "P2P_SORT_TITLE": "Filter",
-  "P2P_SORT_ASCENDING": "Ascending",
-  "P2P_SORT_DESCENDING": "Descending",
+  "P2P_SORT_ASCENDING": "Ascending price",
+  "P2P_SORT_DESCENDING": "Descending price",
   "P2P_SORT_NEWEST": "Newest",
   "P2P_SORT_OLDEST": "Oldest"
 }
