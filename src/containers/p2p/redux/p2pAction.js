@@ -10,7 +10,7 @@ export const handleConfirmSell = (isOpen, isDepositBuy) => ({
 });
 
 export const closeChat = () => ({
-  type: "CLOSE_CHAT_P2P"
+  type: "SAGA_CLOSE_CHAT"
 });
 
 export const setModalStep = step => ({
@@ -28,10 +28,8 @@ export const getMyOrders = coin => ({
   coin
 });
 
-export const getHistory = coin => ({
-  type: "GET_P2P_HISTORY",
-  coin
-});
+export const getHistory = (coin, historyType) => ({ type: "GET_P2P_HISTORY",
+coin, historyType });
 
 export const getFilter = (typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",
@@ -89,6 +87,22 @@ export const openDeposit = iduser => ({
 
 export const closeDeposit = () => ({
   type: "CLOSE_DEPOSIT_P2P"
+});
+
+export const setUserId = () => ({
+  type: "SET_USER_ID_P2P"
+});
+export const chatDetailsSetter = payload => ({
+  type: "CHAT_DETAILS_SETTER",
+  payload
+});
+export const prepareOrOpenChat = order => ({
+  type: "SAGA_PREPARE_OR_OPEN_CHAT",
+  order
+});
+export const openChatToTheSeller = buyer => ({
+  type: "SAGA_OPEN_CHAT_TO_THE_SELLER",
+  buyer
 });
 
 export const openAvaliation = () => ({

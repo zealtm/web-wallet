@@ -28,6 +28,31 @@
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
 }
 
+:local .cardBlue {
+  width: 230px;
+  padding: 20px 5px 8px 5px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 305px;
+  cursor: pointer;
+  background: #473088;
+}
+:local .cardGrey {
+  width: 230px;
+  padding: 20px 5px 8px 5px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  align-items: center;
+  max-width: 100%;
+  min-height: 305px;
+  cursor: pointer;
+  background: gray;
+}
+
 :local(.boxContainer) {
   margin: 0;
 }
@@ -142,7 +167,6 @@
 :local(.plansDescription) {
   padding: 0% 0% 0% 17%;
 }
-
 
 @media screen and (min-width: 1199px) {
   :local(.headerSettingsDefault p) {

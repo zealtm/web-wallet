@@ -115,14 +115,26 @@ class P2P extends React.Component {
   };
 
   render() {
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
+    const { chatDetails } = this.props.p2pStore;
+    const { open: openChat } = chatDetails;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
-      <div className={showBox}>
+      <div className={showBox + " p2pContainer"}>
         <div className={style.headerP2P}>{this.renderArrow()}</div>
-        {this.renderModals()}
+        {/*this.renderModals()*/}
+
+        {openChat == false ? (
+          <div>
+            <div className={style.baseContent}>{this.renderContent()}</div>
+            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
+          </div>
+        ) : (
+          <Chat />
+        )}
       </div>
     );
   }

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  openChat,
+  prepareOrOpenChat,
   setCancelOrder,
   openAvaliation,
   handleConfirmSell,
@@ -38,31 +38,28 @@ class CardOffer extends React.Component {
     };
   }
 
-  handleDetails = () => {
-    this.setState({
-      ...this.state,
-      openDetails: !this.state.openDetails
-    });
+  prepareOrOpenChat = order => {
+    this.props.prepareOrOpenChat(order);
   };
+
+  toggleCardDetails = bool =>
+    this.setState({
+      openDetails: bool === undefined ? !this.state.openDetails : bool
+    });
 
   handleClick = () => {
     const { order } = this.props;
     if (this.props.type == undefined && order.status == "confirmed") {
-      this.openAvaliation();
+      this.openAvaliation(); //before
+      // this.prepareOrOpenChat(this.props.order);
     } else {
-      this.handleDetails();
+      // this.handleDetails(); //before
+      this.toggleCardDetails();
     }
   };
-
-  openChat = order => {
-    const { openChat } = this.props;
-    openChat(order);
-  };
-
   openAvaliation = () => {
-    const { openAvaliation, openChat } = this.props;
+    const { openAvaliation } = this.props;
     openAvaliation();
-    openChat();
   };
 
   openUserProfile = e => {
@@ -123,7 +120,7 @@ class CardOffer extends React.Component {
       ) : (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
@@ -143,7 +140,7 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
@@ -152,11 +149,12 @@ class CardOffer extends React.Component {
   };
 
   rederPictureGravatar(email) {
+    const validEmail = email ? email.toLowerCase() : email;
     const defaultImg =
       "https://luneswallet.app/images/icons/p2p/lunio-user300x300.jpg";
     return (
       "https://s.gravatar.com/avatar/" +
-      encryptMd5(email.toLowerCase()) +
+      encryptMd5(validEmail) +
       "?s=300" +
       "&d=" +
       defaultImg
@@ -166,7 +164,8 @@ class CardOffer extends React.Component {
   validateTypeUser = typeWay => {
     const { order } = this.props;
     const typeWayIsSell = typeWay === "sell";
-    const typeUser = typeWayIsSell ? order.sell : order.buy;
+
+    const typeUser = typeWayIsSell ? order.buy : order.sell;
 
     if (typeWayIsSell && !typeUser.user.id) return order.sell;
 
@@ -177,7 +176,6 @@ class CardOffer extends React.Component {
     const { order, userEmail } = this.props;
     const { openDetails } = this.state;
     const { user } = this.validateTypeUser(order.way);
-
     const orderBuy = order.buy;
     const orderSell = order.sell;
 
@@ -270,7 +268,7 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired,
+  prepareOrOpenChat: PropTypes.func.isRequired,
   order: PropTypes.object,
 
   setCancelOrder: PropTypes.func,
@@ -280,30 +278,28 @@ CardOffer.propTypes = {
   setUserProfile: PropTypes.func,
 
   openAvaliation: PropTypes.func,
+  p2pStore: PropTypes.object,
   handleConfirmSell: PropTypes.func,
 
   getProfile: PropTypes.func,
   openDeposit: PropTypes.func
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    userEmail: store.user.user.email,
-    p2pStore: store.p2p
-  }
-);
+const mapStateToProps = store => ({
+  userEmail: store.user.user.email,
+  p2pStore: store.p2p
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openChat,
       setCancelOrder,
       openAvaliation,
       setUserProfile,
       openDeposit,
       handleConfirmSell,
-      getProfile
+      getProfile,
+      prepareOrOpenChat
     },
     dispatch
   );

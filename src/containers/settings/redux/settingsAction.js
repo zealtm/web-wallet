@@ -44,4 +44,33 @@ export const setAliasLoading = state => ({
 
 export const getSignatures = () => ({
   type: "GET_SIGNATURES_P2P"
-})
+});
+
+export const getSignature = () => ({
+  type: "GET_SIGNATURE_P2P"
+});
+
+export const signSignature = data => ({
+  type: "SIGN_SIGNATURE_P2P",
+  data
+});
+
+export const setSignature = signature => ({
+  type: "SET_SIGNATURE_P2P",
+  signature
+});
+
+export const getFeeP2P = (
+  coin,
+  amount,
+  fromAddress,
+  toAddress,
+  decimalPoint
+) => ({
+  type: "GET_FEE_P2P",
+  coin,
+  fromAddress,
+  toAddress,
+  amount,
+  decimalPoint
+});
