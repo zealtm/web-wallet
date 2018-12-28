@@ -276,7 +276,6 @@ class Offers extends React.Component {
       ...this.state,
       typeP2P: title
     });
-    console.warn("selectTypeP2P", { coinSelect, title, value });
     getHistory(coinSelect.value, typeP2P.toLowerCase());
   };
 
@@ -392,7 +391,6 @@ class Offers extends React.Component {
   }
   sortOrders = (orders) => {
     let { typeOfSort } = this.state
-    console.warn({typeOfSort})
     if (!typeOfSort) return orders;
     if (!orders || (orders && orders.length < 1)) return orders;
     // ascending | descending | newest | oldest
@@ -444,7 +442,6 @@ Offers.propTypes = {
 };
 
 const mapStateToProps = store => (
-  console.warn(store),
   {
     coinsEnabled: store.p2p.coinsEnabled || [],
     orders: store.p2p.orders,
