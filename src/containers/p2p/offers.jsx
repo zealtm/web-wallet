@@ -383,7 +383,6 @@ Offers.propTypes = {
 };
 
 const mapStateToProps = store => (
-  console.warn(store),
   {
     coinsEnabled: store.p2p.coinsEnabled || [],
     orders: store.p2p.orders,

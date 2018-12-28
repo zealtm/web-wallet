@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  openChat,
+  prepareOrOpenChat,
   setCancelOrder,
   openAvaliation,
   handleConfirmSell,
@@ -45,6 +45,15 @@ class CardOffer extends React.Component {
     });
   };
 
+  prepareOrOpenChat = order => {
+    this.props.prepareOrOpenChat(order);
+  };
+
+  toggleCardDetails = bool =>
+    this.setState({
+      openDetails: bool === undefined ? !this.state.openDetails : bool
+    });
+
   handleClick = () => {
     const { order } = this.props;
     if (order.status != "confirmed") {
@@ -57,7 +66,7 @@ class CardOffer extends React.Component {
     openChat(order);
   };
 
-  openAvaliation = (order) => {
+  openAvaliation = order => {
     const { openAvaliation, openChat } = this.props;
     openAvaliation(order);
     openChat();
@@ -106,14 +115,13 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
       );
     }
     if (type !== "myhistory" && order.way === "sell") {
-      console.warn(2);
       return (
         <button
           className={style.btContinue}
@@ -126,7 +134,7 @@ class CardOffer extends React.Component {
       return (
         <button
           className={style.btContinue}
-          onClick={() => this.openChat(order)}
+          onClick={() => this.prepareOrOpenChat(order)}
         >
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
@@ -147,42 +155,45 @@ class CardOffer extends React.Component {
   }
 
   renderRatingButton = () => {
-    let { order, userEmail, status } = this.props
-    console.warn({status, order})
-    if (status !== 'confirmed') return;
-    console.warn({status, oi: 1})
-    let isSeller = (userEmail == order.sell.user.email);
-    let sellerRating = order.sell.rating //seller rated the buyer these values <
-    let buyerRating = order.buy.rating //buyer rated the seller these values <
-    console.warn({isSeller, sellerRating, buyerRating, userEmail, order})
-    if (isSeller && order.status === 'confirmed') {
+    let { order, userEmail, status } = this.props;
+    console.warn({ status, order });
+    if (status !== "confirmed") return;
+    console.warn({ status, oi: 1 });
+    let isSeller = userEmail == order.sell.user.email;
+    let sellerRating = order.sell.rating; //seller rated the buyer these values <
+    let buyerRating = order.buy.rating; //buyer rated the seller these values <
+    console.warn({ isSeller, sellerRating, buyerRating, userEmail, order });
+    if (isSeller && order.status === "confirmed") {
       if (!sellerRating) {
         return (
           <button
-          className={style.btRating}
-          onClick={() => this.openAvaliation(order)}
+            className={style.btRating}
+            onClick={() => this.openAvaliation(order)}
           >
             {i18n.t("P2P_BUTTON_RATE_BUYER")}
           </button>
-        )
+        );
       } else {
-        return <StarVotes votes={sellerRating} />
+        return <StarVotes votes={sellerRating} />;
       }
-    } else if (!isSeller && order.status === 'confirmed') {
+    } else if (!isSeller && order.status === "confirmed") {
       if (!buyerRating) {
         return (
-          <button className={style.btRating} onClick={() => this.openAvaliation(order)}>
-          {i18n.t("P2P_BUTTON_RATE_SELLER")}
+          <button
+            className={style.btRating}
+            onClick={() => this.openAvaliation(order)}
+          >
+            {i18n.t("P2P_BUTTON_RATE_SELLER")}
           </button>
-        )
+        );
       } else {
-        return <StarVotes votes={buyerRating} />
+        return <StarVotes votes={buyerRating} />;
       }
     }
-  }
+  };
 
   render() {
-    const { order, userEmail, type } = this.props;
+    const { order, userEmail } = this.props;
     const { openDetails } = this.state;
     const { user } = this.props.order.sell;
     const dateCreate = formatDate(order.createdAt, "DMI").toUpperCase();
@@ -218,21 +229,20 @@ class CardOffer extends React.Component {
           </Grid>
           <Grid item xs={5}>
             <div className={style.boxStar}>
-
               {this.renderRatingButton()}
 
               {userEmail == order.sell.user.email &&
-                order.status != "confirmed" ? (
-                  <button
-                    className={style.btnClose}
-                    onClick={this.handleCancelOrder}
-                  >
-                    <img
-                      className={style.cancelOffer}
-                      src="images/icons/close/close.png"
-                    />
-                  </button>
-                ) : null}
+              order.status != "confirmed" ? (
+                <button
+                  className={style.btnClose}
+                  onClick={this.handleCancelOrder}
+                >
+                  <img
+                    className={style.cancelOffer}
+                    src="images/icons/close/close.png"
+                  />
+                </button>
+              ) : null}
             </div>
             <span className={style.defaultFiat}>
               {i18n.t("P2P_VALUE_UNITY")} {defaultFiat}{" "}
@@ -267,16 +277,19 @@ class CardOffer extends React.Component {
 }
 
 CardOffer.propTypes = {
-  openChat: PropTypes.func.isRequired,
+  prepareOrOpenChat: PropTypes.func.isRequired,
   order: PropTypes.object,
   setCancelOrder: PropTypes.func,
   userEmail: PropTypes.string,
   type: PropTypes.string,
   setUserProfile: PropTypes.func,
   openAvaliation: PropTypes.func,
+  p2pStore: PropTypes.object,
   handleConfirmSell: PropTypes.func,
   getProfile: PropTypes.func,
-  openDeposit: PropTypes.func
+  openDeposit: PropTypes.func,
+  openChat: PropTypes.func,
+  status: PropTypes.strings
 };
 
 const mapStateToProps = store => ({
@@ -287,13 +300,13 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      openChat,
       setCancelOrder,
       openAvaliation,
       setUserProfile,
       openDeposit,
       handleConfirmSell,
-      getProfile
+      getProfile,
+      prepareOrOpenChat
     },
     dispatch
   );
