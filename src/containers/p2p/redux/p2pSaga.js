@@ -19,6 +19,7 @@ export function* prepareOrOpenChat(payload) {
 
     let state = window.store.getState();
     let { orders: myOrders } = state.p2p;
+
     if (!myOrders) {
       yield put({
         type: "REQUEST_FAILED",
@@ -26,21 +27,27 @@ export function* prepareOrOpenChat(payload) {
       });
       return;
     }
+
     order = myOrders.find(o => (o.id === order.id ? true : false));
+
     if (!order) {
       yield put({
         type: "REQUEST_FAILED",
         message: i18n.t("P2P_FAILED_TO_FIND_ORDER")
       });
+
       return;
     }
+
     let seller = order.sell.user;
     seller.id = parseInt(seller.id);
 
     let decodedToken = getDecodedAuthToken();
     let myId = decodedToken.payload.id | 0;
     let typeOfUser; //eslint-disable-line
+
     typeOfUser = myId === seller.id ? "seller" : "buyer";
+
     if (typeOfUser === "seller") {
       yield put({
         type: "CHAT_DETAILS_SETTER",
@@ -53,22 +60,24 @@ export function* prepareOrOpenChat(payload) {
           //buyer is going to be defined when the seller select who he's going to chat
         }
       });
-    } else {
-      //chat opens to the buyer
-      let buyer = { id: myId };
-      yield put({
-        type: "CHAT_DETAILS_SETTER",
-        payload: {
-          myId,
-          currentOrder: order,
-          open: true,
-          seller,
-          buyer,
-          typeOfUser,
-          currentRoom: undefined
-        }
-      });
+
+      return;
     }
+
+    //chat opens to the buyer
+    let buyer = { id: myId };
+    yield put({
+      type: "CHAT_DETAILS_SETTER",
+      payload: {
+        myId,
+        currentOrder: order,
+        open: true,
+        seller,
+        buyer,
+        typeOfUser,
+        currentRoom: undefined
+      }
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -77,6 +86,7 @@ export function* prepareOrOpenChat(payload) {
     });
   }
 }
+
 const CHANGE_SKELETON_ERROR_STATE = {
   type: "CHANGE_SKELETON_ERROR_STATE",
   state: true
@@ -335,7 +345,12 @@ export function* createSignatureSaga(payload) {
 export function* openDeposit(payload) {
   yield put({
     type: "OPEN_DEPOSIT_P2P_REDUCER",
-    iduser: payload.iduser
+    order: payload.order
+  });
+
+  yield put({
+    type: "CHAT_DETAILS_SETTER",
+    payload: { currentOrder: payload.order }
   });
 }
 

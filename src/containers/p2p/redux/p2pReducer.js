@@ -187,7 +187,7 @@ const p2p = (state = initialState, action) => {
         openDeposit: true,
         chat: {
           ...state.chat,
-          iduser: action.iduser
+          iduser: action.order
         }
       };
 

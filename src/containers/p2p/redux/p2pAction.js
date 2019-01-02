@@ -28,8 +28,11 @@ export const getMyOrders = coin => ({
   coin
 });
 
-export const getHistory = (coin, historyType) => ({ type: "GET_P2P_HISTORY",
-coin, historyType });
+export const getHistory = (coin, historyType) => ({
+  type: "GET_P2P_HISTORY",
+  coin,
+  historyType
+});
 
 export const getFilter = (typeOrder, coinBuy) => ({
   type: "GET_P2P_FILTER",
@@ -80,9 +83,9 @@ export const clearOffer = () => ({
   type: "CREATE_OFFER_CLEAR"
 });
 
-export const openDeposit = iduser => ({
+export const openDeposit = order => ({
   type: "OPEN_DEPOSIT_P2P",
-  iduser
+  order
 });
 
 export const closeDeposit = () => ({

@@ -78,31 +78,30 @@ class P2P extends React.Component {
 
   renderModals = () => {
     const {
-      chatOpened,
       openAvaliation,
       depositConfirmIsOpen,
-      isDepositBuy
+      isDepositBuy,
+      chatDetails
     } = this.props.p2pStore;
-
+    const isOpen = chatDetails.open;
     const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
 
     const depositText = isDepositBuy
       ? i18n.t("P2P_TEXT_14")
       : i18n.t("P2P_TEXT_13");
 
-    if (depositConfirmIsOpen && !chatOpened)
-      return <DepositConfirm textValue={depositText} />;
+    if (depositConfirmIsOpen) return <DepositConfirm textValue={depositText} />;
 
-    if (!chatOpened)
+    if (openAvaliation) return <ConfirmModal />;
+
+    if (!isOpen) {
       return (
         <div>
           <div className={style.baseContent}>{this.renderContent()}</div>
           <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
         </div>
       );
-
-    if (openAvaliation) return <ConfirmModal />;
-
+    }
     return (
       <div>
         <Chat />
@@ -115,9 +114,6 @@ class P2P extends React.Component {
   };
 
   render() {
-    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
-    const { chatDetails } = this.props.p2pStore;
-    const { open: openChat } = chatDetails;
     const { openP2P } = this.state;
 
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
@@ -125,16 +121,7 @@ class P2P extends React.Component {
     return (
       <div className={showBox + " p2pContainer"}>
         <div className={style.headerP2P}>{this.renderArrow()}</div>
-        {/*this.renderModals()*/}
-
-        {openChat == false ? (
-          <div>
-            <div className={style.baseContent}>{this.renderContent()}</div>
-            <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
-          </div>
-        ) : (
-          <Chat />
-        )}
+        {this.renderModals()}
       </div>
     );
   }
