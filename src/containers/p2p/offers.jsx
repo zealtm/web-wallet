@@ -170,29 +170,35 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
       });
@@ -381,15 +387,12 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    coinsEnabled: store.p2p.coinsEnabled || [],
-    orders: store.p2p.orders,
-    loading: store.p2p.loading,
-    cancelDone: store.p2p.cancelDone
-  }
-);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders,
+  loading: store.p2p.loading,
+  cancelDone: store.p2p.cancelDone
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

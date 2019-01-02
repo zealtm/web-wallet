@@ -95,21 +95,25 @@ export const closeDeposit = () => ({
 export const setUserId = () => ({
   type: "SET_USER_ID_P2P"
 });
+
 export const chatDetailsSetter = payload => ({
   type: "CHAT_DETAILS_SETTER",
   payload
 });
+
 export const prepareOrOpenChat = order => ({
   type: "SAGA_PREPARE_OR_OPEN_CHAT",
   order
 });
+
 export const openChatToTheSeller = buyer => ({
   type: "SAGA_OPEN_CHAT_TO_THE_SELLER",
   buyer
 });
 
-export const openAvaliation = () => ({
-  type: "OPEN_AVALIATION_P2P"
+export const openAvaliation = order => ({
+  type: "OPEN_AVALIATION_P2P",
+  order
 });
 
 export const closeAvaliation = () => ({
@@ -133,6 +137,10 @@ export const getProfile = profile => ({
 
 export const clearUserProfile = () => ({
   type: "CLEAR_USER_PROFILE"
+});
+export const setRatingOrder = data => ({
+  type: "SET_P2P_RATING_ORDER",
+  data
 });
 
 export const confirmOrder = idOrder => ({

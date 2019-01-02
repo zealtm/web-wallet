@@ -38,6 +38,13 @@ class CardOffer extends React.Component {
     };
   }
 
+  handleDetails = () => {
+    this.setState({
+      ...this.state,
+      openDetails: !this.state.openDetails
+    });
+  };
+
   prepareOrOpenChat = order => {
     this.props.prepareOrOpenChat(order);
   };
@@ -49,17 +56,9 @@ class CardOffer extends React.Component {
 
   handleClick = () => {
     const { order } = this.props;
-    if (this.props.type == undefined && order.status == "confirmed") {
-      this.openAvaliation(); //before
-      // this.prepareOrOpenChat(this.props.order);
-    } else {
-      // this.handleDetails(); //before
-      this.toggleCardDetails();
+    if (order.status != "confirmed") {
+      this.handleDetails();
     }
-  };
-  openAvaliation = () => {
-    const { openAvaliation } = this.props;
-    openAvaliation();
   };
 
   openUserProfile = e => {
@@ -172,6 +171,44 @@ class CardOffer extends React.Component {
     return typeUser;
   };
 
+  renderRatingButton = () => {
+    let { order, userEmail, status, openAvaliation } = this.props;
+
+    if (status !== "confirmed") return;
+
+    let isSeller = userEmail == order.sell.user.email;
+    let sellerRating = order.sell.rating; //seller rated the buyer these values <
+    let buyerRating = order.buy.rating; //buyer rated the seller these values <
+
+    if (isSeller && order.status === "confirmed") {
+      if (!sellerRating) {
+        return (
+          <button
+            className={style.btRating}
+            onClick={() => openAvaliation(order)}
+          >
+            {i18n.t("P2P_BUTTON_RATE_BUYER")}
+          </button>
+        );
+      } else {
+        return <StarVotes votes={sellerRating} />;
+      }
+    } else if (!isSeller && order.status === "confirmed") {
+      if (!buyerRating) {
+        return (
+          <button
+            className={style.btRating}
+            onClick={() => openAvaliation(order)}
+          >
+            {i18n.t("P2P_BUTTON_RATE_SELLER")}
+          </button>
+        );
+      } else {
+        return <StarVotes votes={buyerRating} />;
+      }
+    }
+  };
+
   render() {
     const { order, userEmail } = this.props;
     const { openDetails } = this.state;
@@ -215,7 +252,7 @@ class CardOffer extends React.Component {
 
           <Grid item xs={5}>
             <div className={style.boxStar}>
-              <StarVotes votes={parseInt(user.rating)} />
+              {this.renderRatingButton()}
 
               {userEmail === user.email &&
               order.status != "confirmed" &&
@@ -282,7 +319,9 @@ CardOffer.propTypes = {
   handleConfirmSell: PropTypes.func,
 
   getProfile: PropTypes.func,
-  openDeposit: PropTypes.func
+  openDeposit: PropTypes.func,
+  openChat: PropTypes.func,
+  status: PropTypes.strings
 };
 
 const mapStateToProps = store => ({

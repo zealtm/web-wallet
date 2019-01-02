@@ -71,7 +71,6 @@ class UserProfile extends React.Component {
 
   renderEvaluation = () => {
     const { evaluation } = this.props.profile;
-
     if (evaluation && evaluation.length) {
       return evaluation.map((item, key) => (
         <div key={key} className={style.userFeedback}>

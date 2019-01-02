@@ -1,5 +1,8 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalSuccess
+} from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
@@ -28,7 +31,7 @@ export function* prepareOrOpenChat(payload) {
       return;
     }
 
-    order = myOrders.find(o => (o.id === order.id ? true : false));
+    order = myOrders.find(item => (item.id === order.id ? true : false));
 
     if (!order) {
       yield put({
@@ -334,9 +337,19 @@ export function* setP2POrdersCancelSaga(payload) {
 
 export function* createSignatureSaga(payload) {
   try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
 
-    yield call(p2pService.createSignature, token, payload.data);
+    const response = yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+    if (!response) {
+      yield put(internalServerError());
+    } else {
+      yield put(modalSuccess(i18n.t("P2P_MODAL_SEND_INFO_SUCCESS")));
+    }
   } catch (error) {
     yield put(internalServerError());
   }
@@ -365,9 +378,11 @@ export function* setUserId() {
   let id = token.payload.id;
   yield put({ type: "SET_USER_ID", id });
 }
-export function* openAvaliation() {
+
+export function* openAvaliation(payload) {
   yield put({
-    type: "OPEN_AVALIATION_P2P_REDUCER"
+    type: "OPEN_AVALIATION_P2P_REDUCER",
+    order: payload.order
   });
 }
 
@@ -399,7 +414,15 @@ export function* getProfileSaga(payload) {
     yield put(internalServerError());
   }
 }
+export function* setP2PRatingOrderSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
 
+    yield call(p2pService.setRatingOrder, token, payload.data);
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
 export function* confirmOrder(payload) {
   try {
     let token = yield call(getAuthToken);
