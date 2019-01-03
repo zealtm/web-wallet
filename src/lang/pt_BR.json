@@ -497,7 +497,7 @@
   "INVITE_STATUS_TRANSACTED": "Transacionado",
   "INVITE_STATUS_REDEEMED": "Resgatado",
   "INVITE_ERROR_EMAIL": "Seu e-mail não foi verificado, por favor tente novamente clicando no botão a baixo.",
-  "BTN_INVITE_RESEND": "",
+  "BTN_INVITE_RESEND": "Reenviar",
   "INVITE_SUCCESS_EMAIL": "E-mail confirmado.",
   "MENU_COINSALE": "Comprar",
   "COINSALE_TITLE": "COMPRAR CRIPTOMOEDAS",
