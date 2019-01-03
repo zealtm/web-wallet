@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getTwoFactorAuth } from "../redux/settingsAction";
-import { errorInput } from "../../errors/redux/errorAction";
 
 // STYLE
 import style from "../style.css";
@@ -155,10 +154,7 @@ class Security extends React.Component {
 
 Security.propTypes = {
   twoFactor: PropTypes.bool,
-  loadingSettings: PropTypes.func,
   getTwoFactorAuth: PropTypes.func,
-  clearMessage: PropTypes.func,
-  errorInput: PropTypes.func,
   settings: PropTypes.object
 };
 
@@ -171,7 +167,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getTwoFactorAuth,
-      errorInput
     },
     dispatch
   );

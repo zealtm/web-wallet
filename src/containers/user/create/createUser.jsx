@@ -8,6 +8,9 @@ import { bindActionCreators } from "redux";
 import { getCreateUserInfo, verifyInvite } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
+// COMPONENTS
+import LogoLunes from "../../../components/logoLunes";
+
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
 import i18n from "../../../utils/i18n";
@@ -135,8 +138,9 @@ class CreateUser extends React.Component {
             className={style.iconArrowBack}
           />
         </Link>
-
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <div>
           <div className={style.newAccountHeader}>
             {i18n.t("NEW_ACCOUNT_HEADER")}

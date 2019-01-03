@@ -1,10 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-
-// REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setModalStep } from "../../../p2p/redux/p2pAction";
 
 // STYLE
 import style from "./style.css";
@@ -36,22 +30,5 @@ class DoneModal extends React.Component {
     );
   }
 }
-DoneModal.propTypes = {
-  setModalStep: PropTypes.func.isRequired
-};
-const mapStateToProps = store => ({
-  modalStep: store.p2p.modalStep
-});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      setModalStep
-    },
-    dispatch
-  );
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoneModal);
+export default DoneModal;
