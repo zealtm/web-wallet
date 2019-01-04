@@ -5,8 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  setWalletModalStep,
-  setWalletSendModalLoading
+  setWalletModalStep
 } from "../../redux/walletAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
@@ -91,7 +90,6 @@ BoxConfirm.propTypes = {
   modal: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
   setWalletModalStep: PropTypes.func.isRequired,
-  setWalletSendModalLoading: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -103,7 +101,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setWalletModalStep,
-      setWalletSendModalLoading,
       errorInput
     },
     dispatch

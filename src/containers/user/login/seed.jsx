@@ -4,12 +4,13 @@ import PropTypes from "prop-types";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loading, setUserSeed } from "../redux/userAction";
+import { setUserSeed, loading } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // COMPONENTS
 import Footer from "../footer";
 import Loading from "../../../components/loading";
+import LogoLunes from "../../../components/logoLunes";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -51,7 +52,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: seed == undefined ? "" : seed.value,
-      placeholder: i18n.t("PLACEHOLDER_SEED"),
+      placeholder: i18n.t("SEED_INSERT_SEED"),
       required: true
     };
 
@@ -77,7 +78,7 @@ class Seed extends React.Component {
       type: "text",
       name: "seed",
       value: generateMnemonic(),
-      placeholder: i18n.t("PLACEHOLDER_SEED"),
+      placeholder: i18n.t("SEED_INSERT_SEED"),
       required: true
     };
 
@@ -103,15 +104,17 @@ class Seed extends React.Component {
 
     return (
       <div onKeyPress={this.handleKeyPress}>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
 
-        <div className={style.insertSeed}>{i18n.t("SEED_INSERT_SEED")}</div>
+        <div className={style.insertSeed}>{i18n.t("PLACEHOLDER_SEED")}</div>
         <textarea
           type="textarea"
           name="seed"
           cols="15"
           rows="6"
-          placeholder={i18n.t("PLACEHOLDER_SEED")}
+          placeholder={i18n.t("SEED_INSERT_SEED")}
           value={!seed ? undefined : seed.value}
           required
           onChange={event => this.getInput(event.target)}
@@ -147,7 +150,6 @@ Seed.propTypes = {
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   setUserSeed: PropTypes.func,
-  generateUserSeed: PropTypes.func,
   user: PropTypes.object
 };
 
@@ -158,8 +160,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setUserSeed,
       loading,
+      setUserSeed,
       clearMessage,
       errorInput
     },

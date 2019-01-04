@@ -8,11 +8,11 @@ export const getAssetHistory = (assetId, lunesAddress) => ({
   lunesAddress
 })
 export const setSelectedCoin = assetId => ({
-  type: "ASSETS_SET_SELECTED_COIN",
+  type: "POST_ASSETS_SET_SELECTED_COIN",
   assetId
 });
 export const reloadAsset = (assetId, lunesAddress) => ({
-  type: "RELOAD_ASSET_API",
+  type: "GET_RELOAD_ASSET_API",
   assetId,
   lunesAddress
 })

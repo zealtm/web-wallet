@@ -269,6 +269,18 @@
   padding: 10px;
 }
 
+/* . SCROLLBAR */
+:local(.baseWidget *::-webkit-scrollbar) {
+  background-color: #654fa4;
+  border-radius: 6px;
+}
+
+:local(.baseWidget *::-webkit-scrollbar-thumb) {
+  background-color: #68f285;
+  border-radius: 6px;
+}
+
+
 /* BUTTONS */
 
 :local(.btAdvertisement) {

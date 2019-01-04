@@ -134,10 +134,10 @@ class PaymentService {
       
       const formData = new FormData();
 
-      formData.append("file", compressed, compressed.name);
+      formData.append("fupload1", compressed, compressed.name);
 
       const barcode = await axios.post(
-        "https://solucti.com.br:3303",
+        "https://barcode.lunes.ninja/",
         formData,
         HEADER_REQUEST
       );

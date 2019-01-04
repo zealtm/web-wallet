@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"
 
 // COMPONENTS
 import Modal from "../modal";
@@ -38,6 +39,8 @@ class Instructions extends React.Component {
   }
 }
 
-
+Instructions.propTypes = {
+  children: PropTypes.object
+}
 
 export default Instructions

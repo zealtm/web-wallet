@@ -351,7 +351,7 @@ class Invoice extends React.Component {
       
     return (
       <Grid container direction="row" justify="center">
-        <Grid item xs={12} className={style.box}>
+        <Grid item xs={11} className={style.box}>
           <div className={style.row}>
             <Grid item xs={11} md={12}>
               <Input
@@ -364,7 +364,6 @@ class Invoice extends React.Component {
                 inputProps={{ maxLength: 48, required: true }}
                 value={ invoice.number || payment.number }
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
-                onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}
               />
             </Grid>
@@ -379,6 +378,7 @@ class Invoice extends React.Component {
                     src="images/icons/camera/camera-white.png"
                     alt="Camera"
                   />
+                  <span>Max. 3MB</span>
                 </label>
                 <input
                   id="file-upload"
