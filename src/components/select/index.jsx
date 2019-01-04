@@ -27,7 +27,6 @@ class Select extends React.Component {
 
   renderItems = () => {
     const { list, width } = this.props;
-
     const listStyle = {
       width: width ? `calc(${width} - 20px)` : "200px"
     };
@@ -59,12 +58,12 @@ class Select extends React.Component {
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.handleClick);
   }
 
   componentWillUnmount() {
-    document.addEventListener("click", this.handleClick);
+    document.removeEventListener("click", this.handleClick);
   }
 
   render() {
@@ -73,7 +72,7 @@ class Select extends React.Component {
 
     const wrapperStyle = {
       width: width ? width : "180px",
-      borderBottom: error ? '1px solid #f44336' : 'none',
+      borderBottom: error ? "1px solid #f44336" : "none"
     };
 
     return (
@@ -102,8 +101,8 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.object).isRequired,
-  title: PropTypes.string.isRequired,
+  list: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  title: PropTypes.string,
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,
   width: PropTypes.string,

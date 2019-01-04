@@ -1,10 +1,5 @@
-import {
-  takeLatest,
-  takeEvery
-} from "redux-saga";
-import {
-  fork
-} from "redux-saga/effects";
+import { takeLatest, takeEvery } from "redux-saga";
+import { fork } from "redux-saga/effects";
 import {
   authenticateUser,
   createTwoFactorAuth,
@@ -15,7 +10,9 @@ import {
   setUserSeed,
   updateUserConsentsSaga,
   editUserData,
-  updateUserPasswordSaga
+  updateUserPasswordSaga,
+  verifyInviteSaga,
+  verifyEmailSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -39,7 +36,11 @@ import {
   getTwoFactorAuth,
   verifyTwoFactorAuthSettings,
   getAliases,
-  createAlias
+  createAlias,
+  getSignaturesSaga,
+  getSignatureSaga,
+  signSignatureSaga,
+  getFeeP2PSaga
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -57,7 +58,8 @@ import {
   getInvoiceSaga,
   getHistoryPaySaga,
   confirmPaySaga,
-  setModalStepSaga
+  setModalStepSaga,
+  uploadBarcodeSaga
 } from "../payment/redux/paymentSaga";
 import {
   getAssetGeneralInfo,
@@ -77,9 +79,33 @@ import {
 } from "../recharge/redux/rechargeSaga";
 
 import {
+  openChatToTheSeller,
+  prepareOrOpenChat,
+  closeChat,
+  setModalStepSaga as setModalFlowP2P,
+  openModalPaySaga as setOpenModalFlowP2P,
+  getP2PMyOrdersSaga,
+  getP2PHistorySaga,
+  getP2PFilterSaga,
+  getPaymentMethodsWhenBuying,
+  acceptOfferWhenBuying,
+  createOfferWhenSelling,
+  setP2POrdersCancelSaga,
+  createSignatureSaga,
+  openDeposit,
+  closeDeposit,
+  setUserId,
+  openAvaliation,
+  closeAvaliation,
+  setTabIconSaga,
+  getProfileSaga,
+  confirmOrder
+} from "../p2p/redux/p2pSaga";
+
+import {
   setModalStepSaga as setModalStepBuySaga,
   getBuyCoinsEnabledSaga,
-  getCoinPackageSaga, 
+  getCoinPackageSaga,
   getCoinForPaymentSaga,
   openModalPaySaga,
   setClearBuySaga,
@@ -91,6 +117,13 @@ import {
   confirmBuySaga,
   getHistoryBuySaga
 } from "../coinsale/redux/coinsaleSaga";
+
+import {
+  getInviteAddressSaga,
+  sendMailInviteSaga,
+  getInviteSentSaga,
+  sendWithdrawSaga
+} from "../invite/redux/inviteSaga";
 
 export default function* rootSaga() {
   yield [
@@ -105,6 +138,11 @@ export default function* rootSaga() {
     fork(takeLatest, "UPDATE_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "EDIT_USER_DATA_API", editUserData),
     fork(takeLatest, "UPDATE_USER_PASSWORD_API", updateUserPasswordSaga),
+    fork(takeLatest, "VERIFY_INVITE_SAGA", verifyInviteSaga),
+    fork(takeLatest, "VERIFY_EMAIL_SAGA", verifyEmailSaga),
+    fork(takeLatest, "PATH_USER_CONSENTS_API", updateUserConsentsSaga),
+    fork(takeLatest, "PATH_USER_DATA_API", editUserData),
+    fork(takeLatest, "PATH_USER_PASSWORD_API", updateUserPasswordSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
@@ -117,7 +155,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
     fork(takeLatest, "GET_WALLET_COIN_HISTORY_API", getWalletCoinHistory),
     fork(takeLatest, "GET_WALLET_MODAL_SEND_FEE_API", getWalletSendModalFee),
-    fork(takeLatest, "SHARE_COIN_ADRESS_API", shareCoinAddress),
+    fork(takeLatest, "GET_COIN_ADRESS_API", shareCoinAddress),
     fork(takeLatest, "SET_WALLET_TRANSACTION_API", setWalletTransaction),
     fork(takeEvery, "SET_WALLET_UTXOS_API", setUtxos),
 
@@ -127,17 +165,26 @@ export default function* rootSaga() {
 
     // Coupons
     fork(takeLatest, "GET_VOUCHER_API", getVoucher),
-    fork(takeLatest, "VERIFY_COUPON_API", verifyCoupon),
+    fork(takeLatest, "GET_COUPON_API", verifyCoupon),
 
     // Settings
     fork(takeLatest, "POST_SETTINGS_CREATE_2FA_API", getTwoFactorAuth),
     fork(takeLatest, "GET_SETTINGS_2FA_API", verifyTwoFactorAuthSettings),
-    fork(takeLatest, "VALIDATE_LEASING_ADDRESS_API", validateLeasingAddress),
-    fork(takeLatest, "START_LEASING_API", createLeasing),
-    fork(takeLatest, "CANCEL_LEASING_API", cancelLeasing),
+    fork(
+      takeLatest,
+      "GET_LEASING_VALIDATE_ADDRESS_API",
+      validateLeasingAddress
+    ),
+    fork(takeLatest, "SET_LEASING_START_API", createLeasing),
+    fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+    fork(takeLatest, "GET_SIGNATURES_P2P", getSignaturesSaga),
+    fork(takeLatest, "GET_SIGNATURE_P2P", getSignatureSaga),
+    fork(takeLatest, "SIGN_SIGNATURE_P2P", signSignatureSaga),
+    fork(takeLatest, "GET_FEE_P2P", getFeeP2PSaga),
 
     //payment-saga
+    fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
     fork(takeLatest, "GET_API_COINS", getCoinsEnabledSaga),
     fork(takeLatest, "SET_PAYMENT", setPaymentSaga),
     fork(takeLatest, "GET_FEE_PAYMENT", getFeePaymentSaga),
@@ -154,7 +201,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_RECHARGE", setRechargeSaga),
     fork(takeLatest, "GET_FEE_RECHARGE", getFeeRechargeSaga),
     fork(takeLatest, "SET_FEE_RECHARGE", setFeeRechargeSaga),
-    fork(takeLatest, "CONFIRM_RECHARGE", confirmRechargeSaga),
+    fork(takeLatest, "SET_CONFIRM_RECHARGE", confirmRechargeSaga),
     fork(takeLatest, "GET_HISTORY_RECHARGE", getHistoryRechargeSaga),
     fork(takeLatest, "GET_RECHARGE_COINS_ENABLED", getRechargeCoinsEnabledSaga),
 
@@ -165,6 +212,33 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+
+    // p2pchat
+    fork(takeLatest, "SAGA_PREPARE_OR_OPEN_CHAT", prepareOrOpenChat),
+    fork(takeLatest, "SAGA_OPEN_CHAT_TO_THE_SELLER", openChatToTheSeller),
+    fork(takeLatest, "SAGA_CLOSE_CHAT", closeChat),
+    fork(takeLatest, "SET_MODAL_FLOW_STEP", setModalFlowP2P),
+    fork(takeLatest, "SET_MODAL_OPEN", setOpenModalFlowP2P),
+    fork(takeLatest, "GET_P2P_MY_ORDERS", getP2PMyOrdersSaga),
+    fork(takeLatest, "GET_P2P_HISTORY", getP2PHistorySaga),
+    fork(takeLatest, "GET_P2P_FILTER", getP2PFilterSaga),
+    fork(
+      takeLatest,
+      "API_GET_PAYMENT_METHODS_WHEN_BUYING",
+      getPaymentMethodsWhenBuying
+    ),
+    fork(takeLatest, "API_ACCEPT_OFFER_WHEN_BUYING", acceptOfferWhenBuying),
+    fork(takeLatest, "API_CREATE_OFFER_WHEN_SELLING", createOfferWhenSelling),
+    fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),
+    fork(takeLatest, "API_P2P_CREATE_CREATE_SIGNATURE", createSignatureSaga),
+    fork(takeLatest, "OPEN_DEPOSIT_P2P", openDeposit),
+    fork(takeLatest, "CLOSE_DEPOSIT_P2P", closeDeposit),
+    fork(takeLatest, "SET_USER_ID_P2P", setUserId),
+    fork(takeLatest, "OPEN_AVALIATION_P2P", openAvaliation),
+    fork(takeLatest, "CLOSE_AVALIATION_P2P", closeAvaliation),
+    fork(takeLatest, "SET_TAB_ICON", setTabIconSaga),
+    fork(takeLatest, "GET_PROFILE_API", getProfileSaga),
+    fork(takeLatest, "POST_CONFIRM_ORDER_API", confirmOrder),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),
@@ -181,5 +255,10 @@ export default function* rootSaga() {
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
 
+    // invite
+    fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
+    fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
+    fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga)
   ];
 }

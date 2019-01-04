@@ -66,6 +66,9 @@ const menuItens = [
 class Menu extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeP2p: false,
+    }
   }
 
   onClickFunction = error => {
@@ -75,6 +78,16 @@ class Menu extends React.Component {
       errorInput("Service Unavailable. Try again later.");
     }
     return;
+  };
+
+  openP2PComponent = () => {
+    const { actionP2PComponent } = this.props;
+    actionP2PComponent();
+
+    this.setState({
+      ...this.state,
+      activeP2p: !this.state.activeP2p,
+    })
   };
 
   renderMenu = () => {
@@ -106,7 +119,10 @@ class Menu extends React.Component {
 
   render() {
     const { openMenu, user, actionLogout, actionMenu } = this.props;
+    const {activeP2p} = this.state;
 
+    const p2pStyleMenu = activeP2p ? style.linkMenuP2P : style.linkMenuP2PActive;
+    
     return (
       <div
         className={style.colMenu}
@@ -129,6 +145,9 @@ class Menu extends React.Component {
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
+              <Link to="/invite" className={style.link} onClick={actionMenu}>
+                {i18n.t("MENU_INVITE")}
+              </Link>
               <a
                 href="mailto:support@lunes.io"
                 className={style.link}
@@ -144,6 +163,17 @@ class Menu extends React.Component {
           </Grid>
         </Hidden>
         {this.renderMenu()}
+        <div className={style.menuP2P}>
+          <button
+            className={p2pStyleMenu}
+            onClick={() => this.openP2PComponent()}
+          >
+            <img
+              src={"../../images/icons/general/p2p@3x.png"}
+              className={style.iconP2p}
+            />
+          </button>
+        </div>
       </div>
     );
   }
@@ -155,7 +185,8 @@ Menu.propTypes = {
   actionMenu: PropTypes.func.isRequired,
   actionLogout: PropTypes.func.isRequired,
   errorInput: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  actionP2PComponent: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({

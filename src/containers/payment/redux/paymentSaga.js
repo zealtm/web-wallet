@@ -1,5 +1,8 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalError
+} from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getUserSeedWords } from "../../../utils/localStorage";
@@ -7,6 +10,7 @@ import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { convertToLocaleDate } from "../../../utils/strings";
+import i18n from "../../../utils/i18n";
 
 // SERVICES
 import PaymentService from "../../../services/paymentService";
@@ -38,7 +42,8 @@ export function* getCoinsEnabledSaga() {
           value: {
             id: coin.id,
             abbreviation: coin.abbreviation,
-            address: coin.address
+            address: coin.address,
+            limit: coin.limit
           },
           img: "/images/icons/coins/" + coin.abbreviation + ".png"
         };
@@ -86,12 +91,13 @@ export function* setPaymentSaga(payload) {
 
     const balance = balanceResponse.data.data.available;
     const amount = amountResponse.data.data.value;
+    const decimalPoint = payload.pay.decimalPoint;
 
     const data = {
       number: payload.pay.number,
       coin: payload.pay.coin,
-      balance: convertBiggestCoinUnit(balance, 8),
-      amount: convertBiggestCoinUnit(amount, 8),
+      balance: convertBiggestCoinUnit(balance, decimalPoint),
+      amount: convertBiggestCoinUnit(amount, decimalPoint),
       value: value,
       assignor: payload.pay.assignor,
       name: payload.pay.name,
@@ -237,6 +243,70 @@ export function* getHistoryPaySaga() {
     });
   } catch (error) {
     yield put(internalServerError());
+  }
+}
+
+export function* uploadBarcodeSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(paymentService.getBarcode, payload.image);
+
+    if (!response || !response.data) {
+      if (!response) {
+        yield put(modalError(i18n.t("PAYMENT_MESSAGE_BARCODE")));
+      } else {
+        yield put(modalError(response.message));
+      }
+
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        payload: false
+      });
+      return;
+    }
+
+    let getBoletoInfo = yield call(
+      paymentService.getInvoice,
+      token,
+      response.data
+    );
+
+    const data = {
+      error: false,
+      number: response.data,
+      value: getBoletoInfo.data.value,
+      assignor: getBoletoInfo.data.assignor,
+      dueDate: getBoletoInfo.data.dueDate
+        ? convertToLocaleDate(getBoletoInfo.data.dueDate)
+        : ""
+    };
+
+    yield put({
+      type: "GET_INVOICE_REDUCER",
+      payment: data
+    });
+
+    yield put({
+      type: "GET_PAYMENT_DATA_REDUCER",
+      number: response.data
+    });
+
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
+  } catch (error) {
+    console.warn(error);
+    yield put(internalServerError());
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
   }
 }
 

@@ -94,7 +94,6 @@ let recharge = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
-
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -113,10 +112,22 @@ let assets = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
 
+let p2pSettings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/p2p")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/p2p")
+});
+
 let buycoin = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../coinsale")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../coinsale")
+});
+
+let invite = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../invite")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../invite")
 });
 /* eslint-enable */
 
@@ -145,10 +156,13 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route path="/setp2p" component={p2pSettings} />
               <Route path="/coinsale" component={buycoin} />
+              <Route path="/invite" component={invite} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

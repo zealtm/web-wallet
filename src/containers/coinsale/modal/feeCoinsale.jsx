@@ -96,8 +96,9 @@ class FeeCoinsale extends React.Component {
 
     const fromAddress = wallet.coins[buypack.paycoin].address;
     const toAddress = buypack.address;
-
-    getFeeBuy(buypack.paycoin, buypack.amountPay, fromAddress, toAddress);
+    const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
+    
+    getFeeBuy(buypack.paycoin, buypack.amountPay, fromAddress, toAddress, decimalPoint);
   };
 
   render() {
@@ -125,7 +126,7 @@ class FeeCoinsale extends React.Component {
           <div>
             <span>{i18n.t("COINSALE_FEE_TEXT_1")}</span>
             <span className={style.totalConfirm}>
-              {buypack.amountPay} {buypack.paycoin.toUpperCase()}
+              {buypack.amountPay.toFixed(8)} {buypack.paycoin.toUpperCase()}
             </span>
           </div>
           <div>

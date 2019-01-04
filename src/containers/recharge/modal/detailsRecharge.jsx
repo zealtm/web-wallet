@@ -91,7 +91,7 @@ class DetailsRecharge extends React.Component {
           {i18n.t("RECHARGE_DETAILS_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
             <span className={style.textGreen}>
-              {recharge.amount} {recharge.coin.abbreviation.toUpperCase()}
+              {recharge.amount.toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
             </span>
             {i18n.t("RECHARGE_DETAILS_2")}
             <span className={style.textGreen}>R$ {recharge.value}</span>

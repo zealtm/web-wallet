@@ -98,7 +98,7 @@ class DetailsPayment extends React.Component {
           {i18n.t("PAYMENT_DETAILS_TEXT_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
             <span className={style.textGreen}>
-              {payment.amount} {payment.coin.abbreviation.toUpperCase()}
+              {payment.amount.toFixed(8)} {payment.coin.abbreviation.toUpperCase()}
             </span>
             {i18n.t("PAYMENT_DETAILS_TEXT_2")}
             <span className={style.textGreen}>R$ {payment.value}</span>
