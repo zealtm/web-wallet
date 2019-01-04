@@ -9,7 +9,8 @@ import {
   getCoinPackage,
   getCoinForPayment,
   getHistoryBuy,
-  setClearBuyPack
+  setClearBuyPack,
+  getLunesBuyPrices
 } from "../../redux/buyAction";
 
 // MATERIAL UI
@@ -60,6 +61,16 @@ class CoinsBar extends React.Component {
     getHistoryBuy(coin);
   };
 
+  getFixedCoins = () => {
+    const { getLunesBuyPrices, price } = this.props;
+    getLunesBuyPrices(price);
+    return;
+  };
+
+  componentDidMount() {
+    this.getFixedCoins();
+  }
+
   renderArrowPercent = val => {
     if (parseFloat(val) < 0) {
       return <ArrowDropDown className={style.arrowPercentDown} />;
@@ -76,9 +87,7 @@ class CoinsBar extends React.Component {
     return coinsEnabled.map((val, index) => {
       let coin = coins[val.value.abbreviation];
 
-      if (val.value.abbreviation.toUpperCase()=="LUNES") return;
-      
-      if (!coin || coins[val.value.abbreviation].status!="active") return;
+      if (!coin || coins[val.value.abbreviation].status != "active") return;
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
@@ -205,7 +214,8 @@ CoinsBar.propTypes = {
 
 const mapStateToProps = store => ({
   coinsEnabled: store.buy.coins,
-  coins: store.skeleton.coins,
+  price: store.skeleton.coins,
+  coins: store.buy.coinsBuy,
   selected: store.buy.buypackage.coin.abbreviation
 });
 
@@ -215,7 +225,8 @@ const mapDispatchToProps = dispatch =>
       getCoinPackage,
       getCoinForPayment,
       getHistoryBuy,
-      setClearBuyPack
+      setClearBuyPack,
+      getLunesBuyPrices
     },
     dispatch
   );

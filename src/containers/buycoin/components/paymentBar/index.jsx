@@ -65,7 +65,6 @@ class PaymentBar extends React.Component {
   render() {
     const { title, img } = this.state;
     const { classes, coins, coinsActive } = this.props;
-
     let coinspayment = [];
 
     Object.keys(coins).map(key => {
@@ -137,7 +136,7 @@ PaymentBar.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  coins: store.buy.coinsPayment || [],
+  coins: store.buy.coinsBuy || [],
   coinsActive: store.skeleton.coins || []
 });
 
