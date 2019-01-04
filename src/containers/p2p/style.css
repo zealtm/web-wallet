@@ -87,7 +87,7 @@
 }
 
 :local .baseUserProfile {
-  max-height: 500px;
+  height: calc(95vh - 200px);
   overflow: auto;
 }
 
@@ -225,7 +225,8 @@
   text-align: right;
 }
 :local .content {
-  height: 400px;
+  height: calc(92vh - 200px);
+  /* height: 400px; */
   overflow: auto;
 }
 
@@ -285,6 +286,16 @@
 
 :local(.baseWidget *::-webkit-scrollbar-thumb) {
   background-color: #68f285;
+  border-radius: 6px;
+}
+
+:local(.scrollSelect *::-webkit-scrollbar){
+  background-color: transparent;
+  border-radius: 6px;
+}
+
+:local(.scrollSelect *::-webkit-scrollbar-thumb){
+  background-color: #654fa4;
   border-radius: 6px;
 }
 

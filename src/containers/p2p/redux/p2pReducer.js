@@ -1,18 +1,30 @@
 const initialState = {
+  userId: undefined, //TODO remove
   chat: {
     iduser: null
   },
-  chatOpened: false,
+  chatOpened: false, //TODO remove
+  chatDetails: {
+    myId: undefined,
+    open: false,
+    currentOrder: undefined, //{buy: {...}, sell: {...} chat: { rooms: [] }}
+    seller: undefined, //{id: ''}
+    buyer: undefined, //{id: '', name: '', surname: '', email: ''}
+    typeOfUser: undefined, // 'seller' || 'buyer'
+    currentRoom: undefined
+  },
   openDeposit: false,
+  isDepositBuy: false,
   openAvaliation: false,
   loading: false,
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
-  sellConfirmIsOpen: false,
+  depositConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
+    // I think its not being used
     //this should come from the API
     orderId: "1",
     isOwner: false
@@ -33,11 +45,25 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile: {}
+  profile: {},
+  order: []
 };
 
 const p2p = (state = initialState, action) => {
   switch (action.type) {
+    case "CHAT_DETAILS_SETTER":
+      return {
+        ...state,
+        chatDetails: {
+          ...state.chatDetails,
+          ...action.payload
+        }
+      };
+    case "SET_USER_ID":
+      return {
+        ...state,
+        userId: action.id
+      };
     case "SETTER":
       return {
         ...state,
@@ -65,8 +91,9 @@ const p2p = (state = initialState, action) => {
     case "HANDLE_CONFIRM_SELL_P2P":
       return {
         ...state,
-        sellConfirmIsOpen: action.isOpen,
-        openDeposit: false
+        depositConfirmIsOpen: action.isOpen,
+        openDeposit: false,
+        isDepositBuy: action.isDepositBuy
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":
@@ -161,7 +188,7 @@ const p2p = (state = initialState, action) => {
         openDeposit: true,
         chat: {
           ...state.chat,
-          iduser: action.iduser
+          iduser: action.order
         }
       };
 
@@ -174,7 +201,8 @@ const p2p = (state = initialState, action) => {
     case "OPEN_AVALIATION_P2P_REDUCER":
       return {
         ...state,
-        openAvaliation: true
+        openAvaliation: true,
+        order: action.order
       };
 
     case "CLOSE_AVALIATION_P2P_REDUCER":

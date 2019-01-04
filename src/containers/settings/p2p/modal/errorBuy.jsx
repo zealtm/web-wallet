@@ -34,6 +34,7 @@ class ErrorBuy extends React.Component {
           <img
             src="/images/icons/error/error.png"
             className={style.imageResult}
+            alt="Error image"
           />
           <div>{i18n.t("COINSALE_INFO_ERROR")}</div>
         </div>

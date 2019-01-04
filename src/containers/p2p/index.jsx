@@ -15,12 +15,14 @@ import Offers from "./offers";
 import TabIcons from "./components/tabicons";
 import UserProfile from "./userProfile";
 import ConfirmModal from "./modal/confirm";
-import SellConfirm from "./modal/sellConfirm";
+import DepositConfirm from "./modal/depositConfirm";
 
 //STYLE
 import style from "./style.css";
 import CreateOffer from "./createOffer";
 import Chat from "./chat";
+
+import i18n from "../../utils/i18n";
 
 class P2P extends React.Component {
   constructor(props) {
@@ -76,18 +78,24 @@ class P2P extends React.Component {
   };
 
   renderModals = () => {
-    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
     const {
-      chatOpened,
       openAvaliation,
-      sellConfirmIsOpen
+      depositConfirmIsOpen,
+      isDepositBuy,
+      chatDetails
     } = this.props.p2pStore;
+    const isOpen = chatDetails.open;
+    const contentTabIcons = ["tag", "user-star", "user", "newoffer"];
 
-    if (sellConfirmIsOpen && !chatOpened) {
-      console.warn("RETORNANDO");
-      return <SellConfirm />;
-    }
-    if (!chatOpened) {
+    const depositText = isDepositBuy
+      ? i18n.t("P2P_TEXT_14")
+      : i18n.t("P2P_TEXT_13");
+
+    if (depositConfirmIsOpen) return <DepositConfirm textValue={depositText} />;
+
+    if (openAvaliation) return <ConfirmModal />;
+
+    if (!isOpen) {
       return (
         <div>
           <div className={style.baseContent}>{this.renderContent()}</div>
@@ -95,16 +103,11 @@ class P2P extends React.Component {
         </div>
       );
     }
-
-    if (openAvaliation) {
-      return <ConfirmModal />;
-    } else {
-      return (
-        <div>
-          <Chat />
-        </div>
-      );
-    }
+    return (
+      <div>
+        <Chat />
+      </div>
+    );
   };
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying, getSignature } = this.props;
@@ -118,7 +121,7 @@ class P2P extends React.Component {
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
-      <div className={showBox}>
+      <div className={showBox + " p2pContainer"}>
         <div className={style.headerP2P}>{this.renderArrow()}</div>
         {this.renderModals()}
       </div>

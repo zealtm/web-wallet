@@ -67,6 +67,8 @@ class SecureBuy extends React.Component {
             type="password"
             name="txtpass"
             placeholder="*********"
+            aria-label="password"
+            alt="password"
             onChange={event => this.setPassword(event.target.value)}
             value={password}
             className={style.inputTextDefault}

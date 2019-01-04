@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { openDeposit, acceptOfferWhenBuying } from "../../redux/p2pAction";
+import {
+  openDeposit,
+  acceptOfferWhenBuying,
+  chatDetailsSetter
+} from "../../redux/p2pAction";
 
 //UTILS
 import i18n from "./../../../../utils/i18n";
@@ -14,6 +18,8 @@ import { KeyboardArrowUp, Clear } from "@material-ui/icons";
 
 // STYLE
 import style from "./style.css";
+
+//FUNCTIONS
 
 class HeaderDetails extends React.Component {
   constructor(props) {
@@ -37,7 +43,8 @@ class HeaderDetails extends React.Component {
   };
 
   handleClick = () => {
-    const { order, acceptOfferWhenBuying, openDeposit } = this.props;
+    const { acceptOfferWhenBuying, openDeposit } = this.props;
+    const { currentOrder: order } = this.props.chatDetails;
     const { addressBuyer } = this.state;
 
     let error = [];
@@ -90,9 +97,50 @@ class HeaderDetails extends React.Component {
     });
   };
 
+  renderAddresInput = orderStatusIsOpen => {
+    if (orderStatusIsOpen)
+      return (
+        <Grid container>
+          <Grid item xs={3} />
+          <Grid item xs={9}>
+            <input
+              type="text"
+              placeholder="address to send"
+              className={style.inputCenter}
+              value={this.state.addressBuyer}
+              name="addressBuyer"
+              onChange={e => this.handleFields(e)}
+            />
+          </Grid>
+        </Grid>
+      );
+  };
+
+  renderButtons = (orderStatusIsOpen, order) => {
+    const { openDeposit } = this.props;
+
+    if (orderStatusIsOpen) {
+      return (
+        <button className={style.btBuy} onClick={this.handleClick}>
+          {i18n.t("P2P_HEADER_BUY_2")}
+        </button>
+      );
+    }
+
+    return (
+      <button className={style.btBuy} onClick={() => openDeposit(order)}>
+        {i18n.t("P2P_INFORMATION")}
+      </button>
+    );
+  };
+
   render() {
-    const { order, openDeposit } = this.props;
+    const { typeOfChatUser, currentOrder: order } = this.props.chatDetails;
+
+    if (!order) return null;
+
     const orderStatusIsOpen = order.status === "open";
+
     return (
       <div>
         <Grid container>
@@ -119,45 +167,26 @@ class HeaderDetails extends React.Component {
             </div>
           </Grid>
         </Grid>
-        <Grid container>
+        <Grid
+          container
+          style={{ display: typeOfChatUser === "buyer" ? "flex" : "none" }}
+        >
           <Grid item xs={3} />
           <Grid item xs={9}>
             <div className={style.boxDescription}>{order.description}</div>
           </Grid>
         </Grid>
-        {orderStatusIsOpen ? (
-          <Grid container>
-            <Grid item xs={3} />
-            <Grid item xs={9}>
-              <input
-                type="text"
-                placeholder="address to send"
-                className={style.inputCenter}
-                value={this.state.addressBuyer}
-                name="addressBuyer"
-                onChange={e => this.handleFields(e)}
-              />
-            </Grid>
-          </Grid>
-        ) : null}
+
+        {this.renderAddresInput(orderStatusIsOpen)}
+
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
             {this.renderErrors()}
-            {orderStatusIsOpen ? (
-              <button className={style.btBuy} onClick={this.handleClick}>
-                {i18n.t("P2P_HEADER_BUY_2")}
-              </button>
-            ) : (
-              <button
-                className={style.btBuy}
-                onClick={() => openDeposit(order)}
-              >
-                {i18n.t("P2P_INFORMATION")}
-              </button>
-            )}
+            {this.renderButtons(orderStatusIsOpen, order)}
           </Grid>
         </Grid>
+
         <Grid
           container
           direction="column"
@@ -166,7 +195,7 @@ class HeaderDetails extends React.Component {
         >
           <KeyboardArrowUp
             onClick={() => this.props.showHeaderDetails()}
-            className={style.arrowUp}
+            className={style.arrowUp + " showHeaderDetails"}
           />
         </Grid>
       </div>
@@ -175,15 +204,25 @@ class HeaderDetails extends React.Component {
 }
 HeaderDetails.propTypes = {
   showHeaderDetails: PropTypes.func,
-  order: PropTypes.object,
   acceptOfferWhenBuying: PropTypes.func,
-  openDeposit: PropTypes.func
+  openDeposit: PropTypes.func,
+  chatDetails: PropTypes.object.isRequired,
+  chatDetailsSetter: PropTypes.func.isRequired,
+  order: PropTypes.object
 };
 const mapStateToProps = store => ({
+  chatDetails: store.p2p.chatDetails,
   order: store.p2p.chat.iduser
 });
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openDeposit, acceptOfferWhenBuying }, dispatch);
+  bindActionCreators(
+    {
+      openDeposit,
+      acceptOfferWhenBuying,
+      chatDetailsSetter
+    },
+    dispatch
+  );
 export default connect(
   mapStateToProps,
   mapDispatchToProps

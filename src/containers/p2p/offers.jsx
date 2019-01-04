@@ -24,6 +24,7 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
+import Instructions from "./instructions";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -145,11 +146,11 @@ class Offers extends React.Component {
   }
 
   componentDidMount = () => {
+    const { coinSelect, typeP2P } = this.state;
     const { getFilter, getHistory, type } = this.props;
-    const { coinSelect } = this.state;
 
     if (type === "myhistory") {
-      getHistory(coinSelect.value);
+      getHistory(coinSelect.value, typeP2P.toLowerCase());
     } else {
       getFilter("p2p", "");
     }
@@ -169,29 +170,35 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
       });
@@ -262,11 +269,15 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title) =>
+  selectTypeP2P = (value, title) => {
+    const { getHistory } = this.props;
+    let { coinSelect, typeP2P } = this.state;
     this.setState({
       ...this.state,
       typeP2P: title
     });
+    getHistory(coinSelect.value, typeP2P.toLowerCase());
+  };
 
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
@@ -281,40 +292,51 @@ class Offers extends React.Component {
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
+    if (coinsEnabled.length > 0) {
+      coinsEnabled.forEach(el => {
+        el.title = "";
+      });
+    }
+
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
-        <Grid item xs={3} style={{ textAlign: "center" }}>
+        <Grid
+          item
+          xs={2}
+          style={{ textAlign: "center" }}
+          className={style.scrollSelect}
+        >
           <Select
             list={coinsEnabled}
             title={""}
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}
-            width={"75%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
             title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeP2P}
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"80%"}
+            width={"90%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
-          <a href="#">
-            <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
-          </a>
+        <Grid item xs={2} style={{ marginTop: "5px", textAlign: "center" }}>
+          <Instructions />
         </Grid>
       </Grid>
     ) : (
@@ -365,15 +387,12 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    coinsEnabled: store.p2p.coinsEnabled || [],
-    orders: store.p2p.orders,
-    loading: store.p2p.loading,
-    cancelDone: store.p2p.cancelDone
-  }
-);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders,
+  loading: store.p2p.loading,
+  cancelDone: store.p2p.cancelDone
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
