@@ -44,7 +44,6 @@ class CoinsBar extends React.Component {
   setCoin = id => {
     let { setSelectedCoin } = this.props;
     setSelectedCoin(id);
-    console.warn("teste");
   };
 
   renderArrowPercent = val => {
