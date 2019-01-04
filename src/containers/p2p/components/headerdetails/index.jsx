@@ -44,7 +44,7 @@ class HeaderDetails extends React.Component {
 
   handleClick = () => {
     const { acceptOfferWhenBuying, openDeposit } = this.props;
-    const { currentOrder: order } = this.props.chatDetails
+    const { currentOrder: order } = this.props.chatDetails;
     const { addressBuyer } = this.state;
 
     let error = [];
@@ -97,13 +97,50 @@ class HeaderDetails extends React.Component {
     });
   };
 
-  render() {
+  renderAddresInput = orderStatusIsOpen => {
+    if (orderStatusIsOpen)
+      return (
+        <Grid container>
+          <Grid item xs={3} />
+          <Grid item xs={9}>
+            <input
+              type="text"
+              placeholder="address to send"
+              className={style.inputCenter}
+              value={this.state.addressBuyer}
+              name="addressBuyer"
+              onChange={e => this.handleFields(e)}
+            />
+          </Grid>
+        </Grid>
+      );
+  };
+
+  renderButtons = (orderStatusIsOpen, order) => {
     const { openDeposit } = this.props;
+
+    if (orderStatusIsOpen) {
+      return (
+        <button className={style.btBuy} onClick={this.handleClick}>
+          {i18n.t("P2P_HEADER_BUY_2")}
+        </button>
+      );
+    }
+
+    return (
+      <button className={style.btBuy} onClick={() => openDeposit(order)}>
+        {i18n.t("P2P_INFORMATION")}
+      </button>
+    );
+  };
+
+  render() {
     const { typeOfChatUser, currentOrder: order } = this.props.chatDetails;
 
     if (!order) return null;
 
     const orderStatusIsOpen = order.status === "open";
+
     return (
       <div>
         <Grid container>
@@ -139,37 +176,14 @@ class HeaderDetails extends React.Component {
             <div className={style.boxDescription}>{order.description}</div>
           </Grid>
         </Grid>
-        {orderStatusIsOpen ? (
-          <Grid container>
-            <Grid item xs={3} />
-            <Grid item xs={9}>
-              <input
-                type="text"
-                placeholder="address to send"
-                className={style.inputCenter}
-                value={this.state.addressBuyer}
-                name="addressBuyer"
-                onChange={e => this.handleFields(e)}
-              />
-            </Grid>
-          </Grid>
-        ) : null}
+
+        {this.renderAddresInput(orderStatusIsOpen)}
+
         <Grid container>
           <Grid item xs={3} />
           <Grid item xs={9}>
             {this.renderErrors()}
-            {orderStatusIsOpen ? (
-              <button className={style.btBuy} onClick={this.handleClick}>
-                {i18n.t("P2P_HEADER_BUY_2")}
-              </button>
-            ) : (
-              <button
-                className={style.btBuy}
-                onClick={() => openDeposit(order)}
-              >
-                {i18n.t("P2P_INFORMATION")}
-              </button>
-            )}
+            {this.renderButtons(orderStatusIsOpen, order)}
           </Grid>
         </Grid>
 

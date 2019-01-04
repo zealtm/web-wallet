@@ -1,5 +1,8 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalSuccess
+} from "../../errors/statusCodeMessage";
 
 // UTILS
 import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
@@ -19,6 +22,7 @@ export function* prepareOrOpenChat(payload) {
 
     let state = window.store.getState();
     let { orders: myOrders } = state.p2p;
+
     if (!myOrders) {
       yield put({
         type: "REQUEST_FAILED",
@@ -26,21 +30,27 @@ export function* prepareOrOpenChat(payload) {
       });
       return;
     }
-    order = myOrders.find(o => (o.id === order.id ? true : false));
+
+    order = myOrders.find(item => (item.id === order.id ? true : false));
+
     if (!order) {
       yield put({
         type: "REQUEST_FAILED",
         message: i18n.t("P2P_FAILED_TO_FIND_ORDER")
       });
+
       return;
     }
+
     let seller = order.sell.user;
     seller.id = parseInt(seller.id);
 
     let decodedToken = getDecodedAuthToken();
     let myId = decodedToken.payload.id | 0;
     let typeOfUser; //eslint-disable-line
+
     typeOfUser = myId === seller.id ? "seller" : "buyer";
+
     if (typeOfUser === "seller") {
       yield put({
         type: "CHAT_DETAILS_SETTER",
@@ -53,22 +63,24 @@ export function* prepareOrOpenChat(payload) {
           //buyer is going to be defined when the seller select who he's going to chat
         }
       });
-    } else {
-      //chat opens to the buyer
-      let buyer = { id: myId };
-      yield put({
-        type: "CHAT_DETAILS_SETTER",
-        payload: {
-          myId,
-          currentOrder: order,
-          open: true,
-          seller,
-          buyer,
-          typeOfUser,
-          currentRoom: undefined
-        }
-      });
+
+      return;
     }
+
+    //chat opens to the buyer
+    let buyer = { id: myId };
+    yield put({
+      type: "CHAT_DETAILS_SETTER",
+      payload: {
+        myId,
+        currentOrder: order,
+        open: true,
+        seller,
+        buyer,
+        typeOfUser,
+        currentRoom: undefined
+      }
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -77,6 +89,7 @@ export function* prepareOrOpenChat(payload) {
     });
   }
 }
+
 const CHANGE_SKELETON_ERROR_STATE = {
   type: "CHANGE_SKELETON_ERROR_STATE",
   state: true
@@ -324,9 +337,19 @@ export function* setP2POrdersCancelSaga(payload) {
 
 export function* createSignatureSaga(payload) {
   try {
+    yield put({ type: "SET_LOADING_P2P", loading: true });
     let token = yield call(getAuthToken);
 
-    yield call(p2pService.createSignature, token, payload.data);
+    const response = yield call(
+      p2pService.createSignature,
+      token,
+      payload.data
+    );
+    if (!response) {
+      yield put(internalServerError());
+    } else {
+      yield put(modalSuccess(i18n.t("P2P_MODAL_SEND_INFO_SUCCESS")));
+    }
   } catch (error) {
     yield put(internalServerError());
   }
@@ -335,7 +358,12 @@ export function* createSignatureSaga(payload) {
 export function* openDeposit(payload) {
   yield put({
     type: "OPEN_DEPOSIT_P2P_REDUCER",
-    iduser: payload.iduser
+    order: payload.order
+  });
+
+  yield put({
+    type: "CHAT_DETAILS_SETTER",
+    payload: { currentOrder: payload.order }
   });
 }
 
@@ -350,9 +378,11 @@ export function* setUserId() {
   let id = token.payload.id;
   yield put({ type: "SET_USER_ID", id });
 }
-export function* openAvaliation() {
+
+export function* openAvaliation(payload) {
   yield put({
-    type: "OPEN_AVALIATION_P2P_REDUCER"
+    type: "OPEN_AVALIATION_P2P_REDUCER",
+    order: payload.order
   });
 }
 
@@ -384,7 +414,15 @@ export function* getProfileSaga(payload) {
     yield put(internalServerError());
   }
 }
+export function* setP2PRatingOrderSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
 
+    yield call(p2pService.setRatingOrder, token, payload.data);
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
 export function* confirmOrder(payload) {
   try {
     let token = yield call(getAuthToken);

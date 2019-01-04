@@ -14,12 +14,13 @@ const initialState = {
     currentRoom: undefined
   },
   openDeposit: false,
+  isDepositBuy: false,
   openAvaliation: false,
   loading: false,
   loadingCreateOrder: false,
   modalStep: 1,
   modalOpen: false,
-  sellConfirmIsOpen: false,
+  depositConfirmIsOpen: false,
   orders: [],
   coinsEnabled: [],
   currentOrder: {
@@ -44,7 +45,8 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile: {}
+  profile: {},
+  order: []
 };
 
 const p2p = (state = initialState, action) => {
@@ -89,8 +91,9 @@ const p2p = (state = initialState, action) => {
     case "HANDLE_CONFIRM_SELL_P2P":
       return {
         ...state,
-        sellConfirmIsOpen: action.isOpen,
-        openDeposit: false
+        depositConfirmIsOpen: action.isOpen,
+        openDeposit: false,
+        isDepositBuy: action.isDepositBuy
       };
 
     case "CLOSE_CHAT_P2P_REDUCER":
@@ -185,7 +188,7 @@ const p2p = (state = initialState, action) => {
         openDeposit: true,
         chat: {
           ...state.chat,
-          iduser: action.iduser
+          iduser: action.order
         }
       };
 
@@ -198,7 +201,8 @@ const p2p = (state = initialState, action) => {
     case "OPEN_AVALIATION_P2P_REDUCER":
       return {
         ...state,
-        openAvaliation: true
+        openAvaliation: true,
+        order: action.order
       };
 
     case "CLOSE_AVALIATION_P2P_REDUCER":

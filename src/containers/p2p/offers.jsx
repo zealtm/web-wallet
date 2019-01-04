@@ -146,8 +146,8 @@ class Offers extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getFilter, getHistory, type } = this.props;
     const { coinSelect, typeP2P } = this.state;
+    const { getFilter, getHistory, type } = this.props;
 
     if (type === "myhistory") {
       getHistory(coinSelect.value, typeP2P.toLowerCase());
@@ -170,29 +170,35 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
       });
@@ -270,7 +276,6 @@ class Offers extends React.Component {
       ...this.state,
       typeP2P: title
     });
-    console.warn("selectTypeP2P", { coinSelect, title, value });
     getHistory(coinSelect.value, typeP2P.toLowerCase());
   };
 
@@ -382,14 +387,12 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  {
-    coinsEnabled: store.p2p.coinsEnabled || [],
-    orders: store.p2p.orders,
-    loading: store.p2p.loading,
-    cancelDone: store.p2p.cancelDone
-  }
-);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders,
+  loading: store.p2p.loading,
+  cancelDone: store.p2p.cancelDone
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
