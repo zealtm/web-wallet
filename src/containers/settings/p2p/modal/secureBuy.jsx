@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../../../p2p/redux/p2pAction";
-import { confirmBuy } from "../../../../containers/buycoin/redux/buyAction";
+import { confirmBuy } from "../../../../containers/coinsale/redux/coinsaleAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS

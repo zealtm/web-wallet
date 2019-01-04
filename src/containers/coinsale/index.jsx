@@ -91,7 +91,7 @@ Coinsales.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  setClearBuy: PropTypes.func.isRequired,
+  setClearBuy: PropTypes.func,
   getCoinsEnabled: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
