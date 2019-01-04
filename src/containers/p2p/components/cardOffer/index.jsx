@@ -210,7 +210,7 @@ class CardOffer extends React.Component {
   };
 
   render() {
-    const { order, userEmail } = this.props;
+    const { order, userEmail, mySignature } = this.props;
     const { openDetails } = this.state;
     const { user } = this.validateTypeUser(order.way);
     const orderBuy = order.buy;
@@ -296,7 +296,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {this.renderNegociateButton(user)}
+            {mySignature && this.renderNegociateButton()}
           </Grid>
         </Grid>
       </div>
@@ -320,13 +320,16 @@ CardOffer.propTypes = {
 
   getProfile: PropTypes.func,
   openDeposit: PropTypes.func,
+
+  mySignature: PropTypes.object,
   openChat: PropTypes.func,
   status: PropTypes.strings
 };
 
 const mapStateToProps = store => ({
   userEmail: store.user.user.email,
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  mySignature: store.settings.mySignature
 });
 
 const mapDispatchToProps = dispatch =>

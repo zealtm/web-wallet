@@ -609,6 +609,7 @@
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
   "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
   "P2P_INFORMATION": "Informação",
+  "P2P_SIGNATURE_ACTIVE": "Você não possui uma assinatura ativa",
   "P2P_INFORMATION_SIGNATURE_TITLE_1": "Para usar o P2P é necessário assinar o serviço:",
   "P2P_INFORMATION_SIGNATURE_PLANS_12_MONTHS": "12 meses por 24 reais.",
   "P2P_INFORMATION_SIGNATURE_PLANS_06_MONTHS": "6 meses por 18 reais.",

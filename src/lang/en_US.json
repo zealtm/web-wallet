@@ -632,6 +632,7 @@
   "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
   "P2P_INFORMATION": "Information",
+  "P2P_SIGNATURE_ACTIVE": "You don't have an active signature",
   "P2P_INFORMATION_SIGNATURE_TITLE_1": "To use P2P you must sign the service",
   "P2P_INFORMATION_SIGNATURE_PLANS_12_MONTHS": "12 months for 24 reais.",
   "P2P_INFORMATION_SIGNATURE_PLANS_06_MONTHS": "6 months for 18 reais.",

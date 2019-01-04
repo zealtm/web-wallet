@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getPaymentMethodsWhenBuying, setTabIcon } from "./redux/p2pAction";
+import { getSignature } from "../../containers/settings/redux/settingsAction";
 
 //MATERIAL
 import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons/";
@@ -66,7 +67,7 @@ class P2P extends React.Component {
 
   renderContent = () => {
     const { tabIcon } = this.props.p2pStore;
-
+    
     const contents = [
       <Offers key={1} type="general" />,
       <Offers key={2} type="myhistory" />,
@@ -109,8 +110,9 @@ class P2P extends React.Component {
     );
   };
   componentDidMount = () => {
-    const { getPaymentMethodsWhenBuying } = this.props;
+    const { getPaymentMethodsWhenBuying, getSignature } = this.props;
     getPaymentMethodsWhenBuying("lunes");
+    getSignature();
   };
 
   render() {
@@ -130,19 +132,23 @@ class P2P extends React.Component {
 P2P.propTypes = {
   p2pStore: PropTypes.object.isRequired,
   getPaymentMethodsWhenBuying: PropTypes.func,
-  setTabIcon: PropTypes.func
+  setTabIcon: PropTypes.func,
+  getSignature: PropTypes.func,
+  mySignature: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   p2pStore: store.p2p,
-  skeleton: store.skeleton
+  skeleton: store.skeleton,
+  mySignature: store.settings.mySignature
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPaymentMethodsWhenBuying,
-      setTabIcon
+      setTabIcon,
+      getSignature
     },
     dispatch
   );
