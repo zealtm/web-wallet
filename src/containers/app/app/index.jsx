@@ -83,6 +83,12 @@ let consent = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
+let deposit = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/deposit")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/deposit")
+});
+
 let invoices = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
   loading: loading,
@@ -156,6 +162,7 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+              <Route path="/deposit" component={deposit} />
 
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
