@@ -161,11 +161,16 @@ class Offers extends React.Component {
 
   renderOrders = () => {
     let { orders, loading, type } = this.props;
-    const { typeOfSort, tabGiving, tabDone, tabCanceled, filterTab } = this.state;
+    const {
+      typeOfSort,
+      tabGiving,
+      tabDone,
+      tabCanceled,
+      filterTab
+    } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
 
-    if (typeOfSort)
-      orders = this.sortOrders(orders)
+    if (typeOfSort) orders = this.sortOrders(orders);
 
     if (orders.length <= 0)
       return (
@@ -353,14 +358,14 @@ class Offers extends React.Component {
             <img
               src="/images/icons/p2p/sort.png"
               onClick={() => this.handleSort()}
-              style={{cursor: 'pointer'}}
+              style={{ cursor: "pointer" }}
             />
           </div>
         </Grid>
         <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
           <Instructions />
         </Grid>
-        {this.state.sortMenu && <Sort that={this}/>}
+        {this.state.sortMenu && <Sort that={this} />}
       </Grid>
     ) : (
       <Grid container style={{ paddingBottom: "1.5rem" }}>
@@ -374,42 +379,40 @@ class Offers extends React.Component {
   };
 
   _sortAscendingOrDescending = (orders, type) => {
-    return orders.sort((a,b) => {
+    return orders.sort((a, b) => {
       if (!a || !b) return;
       if (!a.sell || !b.sell) return;
-      let aAmount = a.sell.amount | 0
-      let bAmount = b.sell.amount | 0
-      if (type == 'descending')
-        return bAmount - aAmount
-      return aAmount - bAmount //ascending is the default sorting method
-    })
-  }
+      let aAmount = a.sell.amount | 0;
+      let bAmount = b.sell.amount | 0;
+      if (type == "descending") return bAmount - aAmount;
+      return aAmount - bAmount; //ascending is the default sorting method
+    });
+  };
   _sortByNewestOrOldest = (orders, type) => {
-    return orders.sort((a,b) => {
+    return orders.sort((a, b) => {
       if (!a || !b) return;
       if (!a.createdAt || !b.createdAt) return;
-      let aAmount = new Date(a.createdAt).getTime() | 0
-      let bAmount = new Date(b.createdAt).getTime() | 0
-      if (type == 'oldest')
-        return bAmount - aAmount
-      return aAmount - bAmount //ascending is the default sorting method
-    })
-  }
-  sortOrders = (orders) => {
-    let { typeOfSort } = this.state
+      let aAmount = new Date(a.createdAt).getTime() | 0;
+      let bAmount = new Date(b.createdAt).getTime() | 0;
+      if (type == "oldest") return bAmount - aAmount;
+      return aAmount - bAmount; //ascending is the default sorting method
+    });
+  };
+  sortOrders = orders => {
+    let { typeOfSort } = this.state;
     if (!typeOfSort) return orders;
     if (!orders || (orders && orders.length < 1)) return orders;
     // ascending | descending | newest | oldest
-    if (typeOfSort === 'ascending' || typeOfSort === 'descending') {
-      orders = this._sortAscendingOrDescending(orders, typeOfSort)
-      return orders
+    if (typeOfSort === "ascending" || typeOfSort === "descending") {
+      orders = this._sortAscendingOrDescending(orders, typeOfSort);
+      return orders;
     }
-    if (typeOfSort === 'newest' || typeOfSort === 'oldest') {
-      orders = this._sortByNewestOrOldest(orders, typeOfSort)
-      return orders
+    if (typeOfSort === "newest" || typeOfSort === "oldest") {
+      orders = this._sortByNewestOrOldest(orders, typeOfSort);
+      return orders;
     }
-    return orders
-  }
+    return orders;
+  };
 
   render() {
     const { cancelDone } = this.props;

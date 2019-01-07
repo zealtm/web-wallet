@@ -36,13 +36,13 @@ class Sort extends React.Component {
   }
 
   handleChange = event => {
-    let { that } = this.props
+    let { that } = this.props;
     this.setState({
       ...this.state,
       selectedValue: event.target.value
     });
     // that refers to the class Orders
-    that.setState({typeOfSort: event.target.value})
+    that.setState({ typeOfSort: event.target.value });
   };
 
   render() {
