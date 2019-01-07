@@ -163,12 +163,13 @@ class CardOffer extends React.Component {
   validateTypeUser = typeWay => {
     const { order } = this.props;
     const typeWayIsSell = typeWay === "sell";
+    if (!order || (order && !order.buy) || (order && !order.sell)) return;
 
-    const typeUser = typeWayIsSell ? order.buy : order.sell;
+    const user = typeWayIsSell ? order.buy.user : order.sell.user;
 
-    if (typeWayIsSell && !typeUser.user.id) return order.sell;
+    // if (typeWayIsSell && !user.id) return order.sell;
 
-    return typeUser;
+    return user;
   };
 
   renderRatingButton = () => {
@@ -212,7 +213,7 @@ class CardOffer extends React.Component {
   render() {
     const { order, userEmail, mySignature } = this.props;
     const { openDetails } = this.state;
-    const { user } = this.validateTypeUser(order.way);
+    const user = this.validateTypeUser(order.way);
     const orderBuy = order.buy;
     const orderSell = order.sell;
 
@@ -296,7 +297,7 @@ class CardOffer extends React.Component {
             style={openDetails ? { display: "block" } : null}
           >
             <div className={style.textDetails}>{order.description}</div>
-            {mySignature && this.renderNegociateButton()}
+            {mySignature && this.renderNegociateButton(user)}
           </Grid>
         </Grid>
       </div>
