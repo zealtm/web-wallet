@@ -13,7 +13,7 @@ class Invoice extends React.Component {
   render() {
     return (
       <Grid container direction="row" justify="center">
-        <Grid item xs={12} className={style.box} style={{ padding: 5 }}>
+        <Grid item xs={12} sm={7}  className={style.box} style={{ padding: 5 }}>
           <p>{i18n.t("DEPOSIT_TAB_TITLE")}</p>
         </Grid>
       </Grid>
