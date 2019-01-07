@@ -17,7 +17,7 @@
 
 /* MODAL*/
 :local(.alignInstructions) {
-  margin-top: 10vw;
+  margin-top: 3vw;
 }
 
 :local(.alignInstructions, ol) {

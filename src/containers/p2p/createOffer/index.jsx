@@ -346,39 +346,6 @@ class CreateOffer extends React.Component {
           </div>
 
           <div className={style.formGroup}>
-            <Grid container>
-              <Grid item xs={4} className={style.scrollSelect}>
-                <div className={style.textSmall}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
-                </div>
-                <Select
-                  list={coinsEnabled}
-                  title={coinSell.name}
-                  titleImg={coinSell.img}
-                  selectItem={this.coinSelectedSell}
-                  error={null}
-                  width={"100%"}
-                />
-              </Grid>
-              <Grid item xs={2} />
-              <Grid item xs={5} className={style.scrollSelect}>
-                <div className={style.textSmallCoinPayment}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
-                </div>
-                <Select
-                  list={coinPaymentList}
-                  title={coinBuy.name}
-                  titleImg={coinBuy.img}
-                  selectItem={this.paymentCoinSelected}
-                  error={null}
-                  width={"100%"}
-                />
-              </Grid>
-            </Grid>
-            <hr />
-          </div>
-
-          <div className={style.formGroup}>
             <div className={style.textSmall}>
               {i18n.t("P2P_CREATE_OFFER_NEGOTIATION")}
             </div>
@@ -438,10 +405,10 @@ class CreateOffer extends React.Component {
                   {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
                 </div>
                 <Select
-                  list={coinsEnabled}
+                  list={coinPaymentList}
                   title={coinBuy.name}
                   titleImg={coinBuy.img}
-                  selectItem={this.coinSelectedBuy}
+                  selectItem={this.paymentCoinSelected}
                   error={null}
                   width={"100%"}
                 />

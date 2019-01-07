@@ -18,7 +18,7 @@ import i18n from "../../../../utils/i18n";
 // STYLE
 import style from "./style.css";
 
-class SellConfirmModal extends React.Component {
+class DepositConfirmModal extends React.Component {
   openModalDeposit = () => {
     const { openDeposit, order, confirmOrder } = this.props;
     openDeposit(order);
@@ -30,7 +30,7 @@ class SellConfirmModal extends React.Component {
   };
 
   render() {
-    const { handleConfirmSell, depositIsOpen } = this.props;
+    const { handleConfirmSell, depositIsOpen, textValue } = this.props;
     return depositIsOpen ? (
       <DepositModal />
     ) : (
@@ -47,7 +47,7 @@ class SellConfirmModal extends React.Component {
           className={style.imgSellConfirm}
         />
         <div>
-          <p className={style.textSellConfirm}> {i18n.t("P2P_TEXT_13")}</p>
+          <p className={style.textSellConfirm}>{textValue}</p>
         </div>
         <div className={style.boxBtnSellConfirm}>
           <button
@@ -62,12 +62,13 @@ class SellConfirmModal extends React.Component {
   }
 }
 
-SellConfirmModal.propTypes = {
+DepositConfirmModal.propTypes = {
   order: PropTypes.object,
   handleConfirmSell: PropTypes.func,
   openDeposit: PropTypes.func,
   depositIsOpen: PropTypes.bool,
-  confirmOrder: PropTypes.func
+  confirmOrder: PropTypes.func,
+  textValue: PropTypes.string
 };
 
 const mapStateToProps = store => ({
@@ -87,4 +88,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SellConfirmModal);
+)(DepositConfirmModal);

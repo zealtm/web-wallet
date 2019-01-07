@@ -47,7 +47,7 @@ class P2P extends React.Component {
   }
 
   renderPlans = () => {
-    const { signatures, loadingP2P, mySignature } = this.props;
+    const { signatures, openModal, loadingP2P, mySignature } = this.props;
 
     if (loadingP2P)
       return (

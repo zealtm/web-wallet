@@ -8,6 +8,10 @@ import style from "./style.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setTabIcon } from "../../redux/p2pAction";
+import { errorInput } from "../../../errors/redux/errorAction";
+
+//UTILS
+import i18n from "../../../../utils/i18n";
 
 class TabIcons extends React.Component {
   constructor(props) {
@@ -15,8 +19,14 @@ class TabIcons extends React.Component {
   }
 
   handleIcon = key => {
-    const { setTabIcon } = this.props;
-    setTabIcon(key);
+    const { setTabIcon, mySignature, errorInput } = this.props;
+
+    if (key == 3 && mySignature == undefined) {
+      errorInput(i18n.t("P2P_SIGNATURE_ACTIVE"));
+      return;
+    } else {
+      setTabIcon(key);
+    }
   };
 
   render() {
@@ -55,17 +65,21 @@ TabIcons.propTypes = {
   content: PropTypes.array.isRequired,
   handle: PropTypes.func.isRequired,
   p2pStore: PropTypes.object,
-  setTabIcon: PropTypes.func
+  setTabIcon: PropTypes.func,
+  errorInput: PropTypes.func,
+  mySignature: PropTypes.object
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  p2pStore: store.p2p,
+  mySignature: store.settings.mySignature
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setTabIcon
+      setTabIcon,
+      errorInput
     },
     dispatch
   );

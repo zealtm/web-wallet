@@ -71,7 +71,6 @@ class UserProfile extends React.Component {
 
   renderEvaluation = () => {
     const { evaluation } = this.props.profile;
-
     if (evaluation && evaluation.length) {
       return evaluation.map((item, key) => (
         <div key={key} className={style.userFeedback}>
@@ -114,8 +113,8 @@ class UserProfile extends React.Component {
                   alt="profile"
                   className={style.avatarProfile}
                 />
-              )}              
-              <p className={style.userName}>
+              )}
+              <div className={style.userName}>
                 {profile.name} {profile.surname}
                 <br />{" "}
                 <div className={style.boxStar}>
@@ -126,7 +125,7 @@ class UserProfile extends React.Component {
                     {i18n.t("P2P_PROFILE_USER_DATE")} {dateCreate}
                   </span>
                 )}
-              </p>{" "}
+              </div>{" "}
               <br />
             </div>
             <div className={style.userDescription}>
