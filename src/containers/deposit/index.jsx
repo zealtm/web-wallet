@@ -1,15 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 // UTILS
-import i18n from "../../../utils/i18n";
+import i18n from "../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
 
 // COMPONENTS
 
-import Tabs from "../../../components/tabs";
+import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
 

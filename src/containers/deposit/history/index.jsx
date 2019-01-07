@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
 
 // UTILS
-import i18n from "../../../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./../style.css";

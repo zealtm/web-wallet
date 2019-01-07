@@ -83,12 +83,6 @@ let consent = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/consent")
 });
 
-let deposit = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/deposit")),
-  loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../settings/deposit")
-});
-
 let invoices = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../payment")),
   loading: loading,
@@ -128,6 +122,12 @@ let buycoin = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../buycoin")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+});
+
+let deposit = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../deposit")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../deposit")
 });
 
 let invite = Loadable({
