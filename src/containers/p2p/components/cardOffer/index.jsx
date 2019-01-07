@@ -324,7 +324,7 @@ CardOffer.propTypes = {
 
   mySignature: PropTypes.object,
   openChat: PropTypes.func,
-  status: PropTypes.strings
+  status: PropTypes.string
 };
 
 const mapStateToProps = store => ({
