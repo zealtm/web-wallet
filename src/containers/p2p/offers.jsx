@@ -88,7 +88,7 @@ class Offers extends React.Component {
         { title: "Meus", value: undefined, img: undefined }
       ],
       myOrders: false,
-      typeP2P: "Escrow",
+      typeP2P: "P2P",
       typeFilter: "Todos",
       filterTab: 0
     };
