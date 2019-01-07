@@ -88,7 +88,7 @@ class Offers extends React.Component {
         { title: "Meus", value: undefined, img: undefined }
       ],
       myOrders: false,
-      typeP2P: "Escrow",
+      typeP2P: "P2P", //Escrow || P2P
       typeFilter: "Todos",
       filterTab: 0
     };
@@ -152,6 +152,7 @@ class Offers extends React.Component {
     if (type === "myhistory") {
       getHistory(coinSelect.value, typeP2P.toLowerCase());
     } else {
+      console.warn("COMPONENTDIDMOUNT->else")
       getFilter("p2p", "");
     }
   };
