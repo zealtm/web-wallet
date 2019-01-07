@@ -25,6 +25,7 @@ import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
 import Instructions from "./instructions";
+import Sort from "./sort";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -90,7 +91,9 @@ class Offers extends React.Component {
       myOrders: false,
       typeP2P: "P2P",
       typeFilter: "Todos",
-      filterTab: 0
+      filterTab: 0,
+      sortMenu: false,
+      typeOfSort: undefined
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -156,10 +159,13 @@ class Offers extends React.Component {
     }
   };
 
-  renderOders = () => {
-    const { orders, loading, type } = this.props;
-    const { tabGiving, tabDone, tabCanceled, filterTab } = this.state;
+  renderOrders = () => {
+    let { orders, loading, type } = this.props;
+    const { typeOfSort, tabGiving, tabDone, tabCanceled, filterTab } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
+
+    if (typeOfSort)
+      orders = this.sortOrders(orders)
 
     if (orders.length <= 0)
       return (
@@ -239,7 +245,7 @@ class Offers extends React.Component {
     getHistory(coinSelect.value);
   };
 
-  renderFilters = () => {
+  renderContentFilters = () => {
     const { type } = this.props;
     const { tabGiving, tabDone, tabCanceled } = this.state;
 
@@ -277,6 +283,13 @@ class Offers extends React.Component {
       typeP2P: title
     });
     getHistory(coinSelect.value, typeP2P.toLowerCase());
+  };
+
+  handleSort = () => {
+    this.setState({
+      ...this.state,
+      sortMenu: !this.state.sortMenu
+    });
   };
 
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
@@ -335,9 +348,19 @@ class Offers extends React.Component {
             width={"90%"}
           />
         </Grid>
-        <Grid item xs={2} style={{ marginTop: "5px", textAlign: "center" }}>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
+          <div className={style.sort}>
+            <img
+              src="/images/icons/p2p/sort.png"
+              onClick={() => this.handleSort()}
+              style={{cursor: 'pointer'}}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
           <Instructions />
         </Grid>
+        {this.state.sortMenu && <Sort that={this}/>}
       </Grid>
     ) : (
       <Grid container style={{ paddingBottom: "1.5rem" }}>
@@ -350,9 +373,46 @@ class Offers extends React.Component {
     );
   };
 
+  _sortAscendingOrDescending = (orders, type) => {
+    return orders.sort((a,b) => {
+      if (!a || !b) return;
+      if (!a.sell || !b.sell) return;
+      let aAmount = a.sell.amount | 0
+      let bAmount = b.sell.amount | 0
+      if (type == 'descending')
+        return bAmount - aAmount
+      return aAmount - bAmount //ascending is the default sorting method
+    })
+  }
+  _sortByNewestOrOldest = (orders, type) => {
+    return orders.sort((a,b) => {
+      if (!a || !b) return;
+      if (!a.createdAt || !b.createdAt) return;
+      let aAmount = new Date(a.createdAt).getTime() | 0
+      let bAmount = new Date(b.createdAt).getTime() | 0
+      if (type == 'oldest')
+        return bAmount - aAmount
+      return aAmount - bAmount //ascending is the default sorting method
+    })
+  }
+  sortOrders = (orders) => {
+    let { typeOfSort } = this.state
+    if (!typeOfSort) return orders;
+    if (!orders || (orders && orders.length < 1)) return orders;
+    // ascending | descending | newest | oldest
+    if (typeOfSort === 'ascending' || typeOfSort === 'descending') {
+      orders = this._sortAscendingOrDescending(orders, typeOfSort)
+      return orders
+    }
+    if (typeOfSort === 'newest' || typeOfSort === 'oldest') {
+      orders = this._sortByNewestOrOldest(orders, typeOfSort)
+      return orders
+    }
+    return orders
+  }
+
   render() {
     const { cancelDone } = this.props;
-
     if (cancelDone)
       return (
         <div>
@@ -366,8 +426,8 @@ class Offers extends React.Component {
     return (
       <div>
         {this.renderMenu()}
-        {this.renderFilters()}
-        <div className={style.content}>{this.renderOders()}</div>
+        {this.renderContentFilters()}
+        <div className={style.content}>{this.renderOrders()}</div>
       </div>
     );
   }

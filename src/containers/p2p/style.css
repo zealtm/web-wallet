@@ -278,6 +278,13 @@
   padding: 10px;
 }
 
+:local(.sort img) {
+  position: relative;
+  height: 23px;
+  left: 10px;
+  top: 5px;
+}
+
 /* . SCROLLBAR */
 :local(.baseWidget *::-webkit-scrollbar) {
   background-color: #654fa4;
@@ -289,12 +296,12 @@
   border-radius: 6px;
 }
 
-:local(.scrollSelect *::-webkit-scrollbar){
+:local(.scrollSelect *::-webkit-scrollbar) {
   background-color: transparent;
   border-radius: 6px;
 }
 
-:local(.scrollSelect *::-webkit-scrollbar-thumb){
+:local(.scrollSelect *::-webkit-scrollbar-thumb) {
   background-color: #654fa4;
   border-radius: 6px;
 }
