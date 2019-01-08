@@ -1,5 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Slider from "react-slick";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getPackages } from "./redux/depositAction";
 
 // COMPONENTS
 import CardPack from "./cardPack";
@@ -14,13 +20,17 @@ import i18n from "../../utils/i18n";
 import style from "./style.css";
 
 class Invoice extends React.Component {
+  componentDidMount() {
+    const { getPackages } = this.props;
+    getPackages();
+  }
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
 
   renderPacks = () => {
-    const packages = [15, 30, 45, 60, 100, 250, 500, 1000];
+    const { packages } = this.props;
 
     return packages.map((val, index) => {
       return <CardPack key={index} pack={val} />;
@@ -96,6 +106,23 @@ class Invoice extends React.Component {
   }
 }
 
-Invoice.propTypes = {};
+Invoice.propTypes = {
+  getPackages: PropTypes.func
+};
 
-export default Invoice;
+const mapStateToProps = store => ({
+  packages: store.deposit.packages
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getPackages
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Invoice);
