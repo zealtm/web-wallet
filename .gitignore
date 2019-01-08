@@ -30,3 +30,6 @@ package-lock.json
 # testnet
 /src/constants/apiBaseUrl.js
 budo
+
+#VSCode
+.history
