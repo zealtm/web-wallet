@@ -57,7 +57,7 @@ class UserControl extends React.Component {
             onClick={() => this.handleClick()}
           >
             <div className={style.boxIcon}>
-              <img scr="../../images/icons/invite/deposit.png" />
+              <img src="../../images/icons/deposit/deposit.png" />
             </div>
             {i18n.t("MENU_DEPOSIT")}
           </Link>
