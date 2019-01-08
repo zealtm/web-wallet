@@ -24,7 +24,7 @@ const arrayHistory = [
   },
   {
     nameHistory: "Deposito",
-    type: "recorrent",
+    type: "Recorrent",
     info: {
       data: "15/12/2018 16:30",
       status: "Confirm",
@@ -38,7 +38,7 @@ const arrayHistory = [
   },
   {
     nameHistory: "Deposito",
-    type: "recorrent",
+    type: "Recorrent",
     info: {
       data: "20/11/2018 12:30",
       status: "Pendent",
@@ -100,13 +100,17 @@ class History extends React.Component {
                 <p>{item.value}</p>
               </Grid>
               <Grid item xs={4} style={{ textAlign: "end" }}>
-                {item.status === "Cancel" ? (
-                  <p className={style.txtCancel}>{item.status}</p>
-                ) : item.status === "Pendent" ? (
-                  <p className={style.txtPendent}>{item.status}</p>
-                ) : (
-                  <p className={style.txtConfirm}>{item.status}</p>
-                )}
+                <p
+                  className={
+                    item.status === "Cancel"
+                      ? style.txtCancel
+                      : item.status === "Pendent"
+                      ? style.txtPendent
+                      : style.txtConfirm
+                  }
+                >
+                  {item.status}
+                </p>
               </Grid>
             </Grid>
           </Grid>
@@ -124,7 +128,7 @@ class History extends React.Component {
               <div key={id}>
                 <Grid
                   onClick={
-                    item.type === "recorrent"
+                    item.type === "Recorrent"
                       ? () => this.displaySubItems()
                       : null
                   }
@@ -141,30 +145,30 @@ class History extends React.Component {
                   </Grid>
 
                   <Grid item xs={4} className={style.boxItem_2}>
-                    {item.info.status === "Cancel" ? (
-                      <p className={style.txtCancel}>{item.info.status}</p>
-                    ) : item.info.status === "Pendent" ? (
-                      <p className={style.txtPendent}>{item.info.status}</p>
-                    ) : (
-                      <p className={style.txtConfirm}>{item.info.status}</p>
-                    )}
+                    <p
+                      className={
+                        item.info.status === "Cancel"
+                          ? style.txtCancel
+                          : item.info.status === "Pendent"
+                          ? style.txtPendent
+                          : style.txtConfirm
+                      }
+                    >
+                      {item.info.status}
+                    </p>
 
                     <p className={style.textBold}>{item.info.value}</p>
                     <p>{item.user.id}</p>
                   </Grid>
 
                   <Grid item xs={1} className={style.boxIcon}>
-                    {item.type === "recorrent" &&
+                    {item.type === "Recorrent" &&
                     item.info.status === "Confirm" ? (
-                      <CloseIcon
-                        color="error"
-                        onClick={() => console.warn("cancel")}
-                        style={{ fontSize: 20 }}
-                      />
+                      <CloseIcon color="error" style={{ fontSize: 20 }} />
                     ) : null}
                   </Grid>
                 </Grid>
-                {item.type === "recorrent" ? this.renderSubItems(id) : null}
+                {item.type === "Recorrent" ? this.renderSubItems(id) : null}
               </div>
             );
           })}
