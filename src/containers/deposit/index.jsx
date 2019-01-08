@@ -18,14 +18,16 @@ class Deposit extends React.Component {
       i18n.t("DEPOSIT_TAB_TITLE"),
       i18n.t("DEPOSIT_TAB_HISTORY_TITLE")
     ];
-    const contents = [<Invoice key="1" />, <History key="2" />];
+    const contents = [<Invoice key={0} />, <History key={1} />];
     return (
       <div>
-        <div className={style.header}>
-          <h1>{i18n.t("DEPOSIT_HEADER_TITLE")}</h1>
-          <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>
+        <div className={style.box}>
+          <div className={style.header}>
+            <h1>{i18n.t("DEPOSIT_HEADER_TITLE")}</h1>
+            <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>
+          </div>
+          <Tabs tabTitles={titles} tabContents={contents} justify="center" />
         </div>
-        <Tabs tabTitles={titles} tabContents={contents} justify="center" />
       </div>
     );
   }
