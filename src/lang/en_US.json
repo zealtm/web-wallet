@@ -611,5 +611,8 @@
   "DEPOSIT_TAB_TITLE": "Deposit",
   "DEPOSIT_TAB_HISTORY_TITLE": "History",
   "DEPOSIT_HEADER_TITLE": "DEPOSIT LUNES' WALLET",
-  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services"
+  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services",
+  "DEPOSIT_TITLE_CANCEL": "Cancellation Alert",
+  "DEPOSIT_TEXT_CANCEL": "You have clicked to cancel your deposit recurring value:",
+  "DEPOSIT_BTN_CANCEL": "I want to cancel"
 }

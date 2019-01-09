@@ -1,0 +1,56 @@
+:local .depositCancelContainer {
+  text-align: center;
+  margin-top: 25px;
+}
+
+:local .depositCancelImg {
+  max-width: 100%;
+  margin-bottom: 12%;
+}
+
+:local .depositCancelText {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  width: 63%;
+  margin: 0 auto;
+  margin-bottom: 7%;
+}
+
+:local .depositNumCancel {
+  composes: bgPurpleDark from "../../../components/bases/colorBase.css";
+  composes: textDefault from "../../../components/bases/textBase.css";
+  width: 90%;
+  font-size: 40px;
+  display: block;
+  border-radius: 6px;
+  margin: 0 auto;
+  padding: 14px;
+  margin-bottom: 50px;
+}
+
+:local .depositBtnCancel {
+  composes: buttonEnable from "../../../components/bases/buttonBase.css";
+  width: 90%;
+  height: 60px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 414px) {
+  :local .depositNumCancel {
+    font-size: 20px;
+    width: 80%;
+    padding: 25px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  :local .depositCancelImg {
+    width: 24%;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  :local .depositCancelText {
+    font-size: 12px;
+  }
+}
+
