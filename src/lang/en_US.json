@@ -273,6 +273,7 @@
   "MENU_PURCHASE": "Purchase",
   "MENU_COUPONS": "Coupons",
   "MENU_SETTING": "Settings",
+  "MENU_DEPOSIT": "Deposit",
   "MENU_LEASING": "Leasing",
   "MODAL_TITLE_START_LEASING": "Start Leasing",
   "MENU_PRIVACY": "Privacy",
@@ -610,5 +611,6 @@
   "DEPOSIT_TAB_TITLE": "Deposit",
   "DEPOSIT_TAB_HISTORY_TITLE": "History",
   "DEPOSIT_HEADER_TITLE": "DEPOSIT LUNES' WALLET",
-  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services"
+  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services",
+  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of"
 }

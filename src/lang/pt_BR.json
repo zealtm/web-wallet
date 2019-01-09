@@ -272,6 +272,7 @@
   "MENU_PURCHASE": "Comprar",
   "MENU_COUPONS": "Cupons",
   "MENU_SETTING": "Configurações",
+  "MENU_DEPOSIT": "Depósito",
   "MENU_LEASING": "Leasing",
   "MODAL_TITLE_START_LEASING": "Iniciar Leasing",
   "MENU_PRIVACY": "Privacidade",
@@ -595,5 +596,6 @@
   "DEPOSIT_TAB_TITLE": "Depósito",
   "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
   "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
-  "DEPOSIT_HEADER_SUBTITLE": "Deposite dinheiro FIAT para usar os serviços Lunes"
+  "DEPOSIT_HEADER_SUBTITLE": "Deposite dinheiro FIAT para usar os serviços Lunes",
+  "DEPOSIT_PACK_TEXT": "Você vai receber de dinheiro na plataforma o equivalente à"
 }
