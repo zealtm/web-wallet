@@ -614,5 +614,6 @@
   "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services",
   "DEPOSIT_TITLE_CANCEL": "Cancellation Alert",
   "DEPOSIT_TEXT_CANCEL": "You have clicked to cancel your deposit recurring value:",
-  "DEPOSIT_BTN_CANCEL": "I want to cancel"
+  "DEPOSIT_BTN_CANCEL": "I want to cancel",
+  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of"
 }
