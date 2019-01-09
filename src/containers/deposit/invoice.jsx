@@ -100,6 +100,32 @@ class Invoice extends React.Component {
               </IconButton>
             </Grid>
           </Hidden>
+          <Grid
+            item
+            xs={12}
+            className={style.transparentBox}
+            style={{ marginTop: "10px" }}
+          >
+            <button className={style.buttonBorderGreen}>
+              {i18n.t("DEPOSIT_TAB_TITLE")}
+            </button>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            className={style.transparentBox}
+            style={{ marginTop: "10px" }}
+          >
+            <div className={style.information}>
+              <a href="#">
+                {i18n.t("COUPON_INSTRUCTIONS")}
+                <img
+                  src="/images/icons/recharge/ic_instrucoes.png"
+                  alt={i18n.t("COUPON_INSTRUCTIONS")}
+                />
+              </a>
+            </div>
+          </Grid>
         </Grid>
       </div>
     );
