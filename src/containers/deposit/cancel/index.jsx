@@ -1,13 +1,8 @@
 import React from "react";
 
-//import PropTypes from "prop-types";
-
-//import Modal from "./../../../components/modal";
-
 import style from "./style.css";
-import i18n from "../../../utils/i18n";
 
-//import i18n from "../../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 class Cancel extends React.Component {
   render() {
