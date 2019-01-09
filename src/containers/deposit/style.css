@@ -1,4 +1,12 @@
-/* 1. BASE */
+/* 
+
+1. BASE
+
+2. TEXT
+
+3. PAYMENT MEHTODS
+
+*/
 
 :local .box {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
@@ -45,4 +53,14 @@
 :local .header p {
   text-align: center;
   font-size: 12px;
+}
+
+/* 3. PAYMENT MEHTODS */
+:local .containerinput{
+  background: #473088;
+  font-size: 1.33em;
+  text-align: center;
+  border-radius: 5px;
+  padding: 15px 35px;
+  min-height: 48px;
 }
