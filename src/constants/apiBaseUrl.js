@@ -32,7 +32,7 @@ export const API_HEADER = {
 
 
 export const chat = {
-  ENV: 'DEV', //DEV || PROD
+  ENV: 'PROD', //DEV || PROD
   CHAT_DEV: 'http://localhost:6005',
   CHAT_PROD: 'https://chat.luneswallet.app',
   getUrl: function(componentId, namespace, adId, adOwnerId, buyerId) {
