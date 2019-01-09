@@ -12,6 +12,7 @@ class Cancel extends React.Component {
           <img
             src="images/icons/deposit/cancel-deposit.png"
             className={style.depositCancelImg}
+            alt={i18n.t("DEPOSIT_TAB_TITLE")}
           />
           <div>
             <p className={style.depositCancelText}>{i18n.t("DEPOSIT_TEXT_CANCEL")}</p>
