@@ -13,6 +13,7 @@ import i18n from "../../utils/i18n";
 
 //STYLE
 import style from "./style.css";
+import { StringWithLength } from "lunes-js-api/raw/src/classes/ByteProcessor";
 
 class UserControl extends React.Component {
   constructor(props) {
@@ -48,6 +49,17 @@ class UserControl extends React.Component {
               <img src="../../images/icons/settings/settings.png" />
             </div>
             {i18n.t("MENU_SETTING")}
+          </Link>
+
+          <Link
+            to="/deposit"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
+            <div className={style.boxIcon}>
+              <img src="../../images/icons/deposit/deposit.png" />
+            </div>
+            {i18n.t("MENU_DEPOSIT")}
           </Link>
 
           <Link

@@ -112,11 +112,7 @@ class Menu extends React.Component {
   render() {
     const { openMenu, user, actionLogout, actionMenu } = this.props;
 
-    return (
-      <div
-        className={style.colMenu}
-        style={{ left: +openMenu ? " 0px " : "-232px" }}
-      >
+    return <div className={style.colMenu} style={{ left: +openMenu ? " 0px " : "-232px" }}>
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
             <Grid item xs={4} className={style.boxAvatarUser}>
@@ -134,14 +130,13 @@ class Menu extends React.Component {
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
+              <Link to="/deposit" className={style.link} onClick={actionMenu}>
+                {i18n.t("MENU_DEPOSIT")}
+              </Link>
               <Link to="/invite" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_INVITE")}
               </Link>
-              <a
-                href="mailto:support@lunes.io"
-                className={style.link}
-                onClick={actionMenu}
-              >
+              <a href="mailto:support@lunes.io" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SUPPORT")}
                 {/* <Link to="/help" className={style.link}></Link> */}
               </a>
@@ -153,19 +148,12 @@ class Menu extends React.Component {
         </Hidden>
         {this.renderMenu()}
         <div className={style.menuP2P}>
-          <button
-            className={style.linkMenuP2P}
-            onClick={() => this.openP2PComponent()}
-          >
-            <img
-              src={"../../images/icons/general/p2p@3x.png"}
-              className={style.iconP2p}
-            />
+          <button className={style.linkMenuP2P} onClick={() => this.openP2PComponent()}>
+            <img src={"../../images/icons/general/p2p@3x.png"} className={style.iconP2p} />
             <div>{"  "}</div>
           </button>
         </div>
-      </div>
-    );
+      </div>;
   }
 }
 
