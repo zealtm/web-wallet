@@ -50,6 +50,20 @@ const arrayHistory = [
       { data: "01/09/2018", value: "RS 100,00", status: "Confim" },
       { data: "14/08/2018", value: "RS 800,00", status: "Cancel" }
     ]
+  },
+  {
+    nameHistory: "Deposito",
+    type: "default",
+    info: {
+      data: "11/11/2018 18:30",
+      status: "Confirm",
+      value: "RS 700,00"
+    },
+    user: { cpf: "179.487.228-33", id: "54432158" },
+    subItem: [
+      { data: "", value: "", status: "" },
+      { data: "", value: "", status: "" }
+    ]
   }
 ];
 
@@ -57,37 +71,40 @@ class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayItems: "none"
+      toggleHistory: undefined
     };
   }
 
-  displaySubItems() {
-    if (this.state.displayItems === "block") {
-      this.setState({
-        ...this.state,
-        displayItems: "none"
-      });
-      return;
-    }
+  stateDataHistory = key => {
+    let { toggleHistory } = this.state;
+
     this.setState({
-      ...this.state,
-      displayItems: "block"
+      toggleHistory: toggleHistory === key ? undefined : key
     });
-    return;
-  }
+  };
+
+  handleClass = (index, type) => {
+    let { toggleHistory } = this.state;
+    if (type) {
+      return toggleHistory !== undefined && toggleHistory === index
+        ? style.boxSubIte
+        : style.opacityItem;
+    }
+
+    return style.opacityItem;
+  };
 
   renderSubItems(id) {
-    const { displayItems } = this.state;
-    return arrayHistory[id].subItem.map((item, idSubItem) => {
+    return arrayHistory[id].subItem.map((item, index) => {
       return (
         <div
-          key={idSubItem}
+          key={index}
           style={{
-            width: "100%",
-            display: displayItems
+            width: "100%"
           }}
         >
           <Grid
+            className={this.handleClass(id, "hm")}
             container
             justify="center"
             style={{ backgroundColor: "#42227d" }}
@@ -129,7 +146,7 @@ class History extends React.Component {
                 <Grid
                   onClick={
                     item.type === "Recorrent"
-                      ? () => this.displaySubItems()
+                      ? () => this.stateDataHistory(id)
                       : null
                   }
                   container
@@ -139,7 +156,13 @@ class History extends React.Component {
                   <Grid item xs={1} />
 
                   <Grid item xs={5} className={style.boxItem_1}>
-                    <p className={style.textGreen}>{item.nameHistory}</p>
+                    <p className={style.textGreen}>
+                      {item.nameHistory}
+
+                      {item.type === "Recorrent" ? (
+                        <span> {" - " + item.type}</span>
+                      ) : null}
+                    </p>
                     <p className={style.textBold}>{item.info.data}</p>
                     <p>{item.user.cpf}</p>
                   </Grid>
