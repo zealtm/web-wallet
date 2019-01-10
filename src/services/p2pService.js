@@ -48,14 +48,22 @@ class P2pService {
     }
   }
 
-  async getHistory(token, coin) {
+  async getHistory(token, coin, type) {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let response = await axios.get(
-        `${BASE_URL}/coin/${coin}/p2p/history`,
-        API_HEADER
-      );
+      let response;
+      if (!type || type === "p2p") {
+        response = await axios.get(
+          BASE_URL + "/coin/" + coin + "/p2p/history",
+          API_HEADER
+        );
+      } else if (type === "escrow") {
+        response = await axios.get(
+          `${BASE_URL}/coin/${coin}/p2p/order/${type}`,
+          API_HEADER
+        );
+      }
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
@@ -223,6 +231,29 @@ class P2pService {
       return internalServerError();
     }
   }
+  async setRatingOrder(token, data) {
+    try {
+      let { value, description, orderId } = data;
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/coin/lunes/p2p/rating/${orderId}`,
+        {
+          value,
+          description
+        },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      if (response.data.code !== 200) {
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
 
   async confirmOrder(token, idOrder) {
     try {
@@ -234,7 +265,6 @@ class P2pService {
         API_HEADER
       );
 
-      console.warn("confirmOrder", response);
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       if (response.data.code !== 200) {

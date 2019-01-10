@@ -24,6 +24,8 @@ import CardOffer from "./components/cardOffer";
 import Select from "../../components/select";
 import Loading from "../../components/loading";
 import TabsFilter from "./components/tab";
+import Instructions from "./instructions";
+import Sort from "./sort";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -87,9 +89,11 @@ class Offers extends React.Component {
         { title: "Meus", value: undefined, img: undefined }
       ],
       myOrders: false,
-      typeP2P: "Escrow",
+      typeP2P: "P2P",
       typeFilter: "Todos",
-      filterTab: 0
+      filterTab: 0,
+      sortMenu: false,
+      typeOfSort: undefined
     };
 
     this.filterMyOrders = this.filterMyOrders.bind(this);
@@ -145,11 +149,11 @@ class Offers extends React.Component {
   }
 
   componentDidMount = () => {
+    const { coinSelect, typeP2P } = this.state;
     const { getFilter, getHistory, type } = this.props;
-    const { coinSelect } = this.state;
 
     if (type === "myhistory") {
-      getHistory(coinSelect.value);
+      getHistory(coinSelect.value, typeP2P.toLowerCase());
     } else {
       getFilter("p2p", "");
     }
@@ -162,7 +166,6 @@ class Offers extends React.Component {
       let newContentHeight = baseHeight - 59 - 38 - 48 - 35
       contentEL.style.height = newContentHeight+'px'
       this.contentInterval = setInterval(() => {
-        console.warn('OIIIII')
         let baseHeight = showBoxEL.clientHeight
         let newContentHeight = baseHeight - 59 - 38 - 48 - 35
         if (type === 'myhistory')
@@ -177,9 +180,17 @@ class Offers extends React.Component {
   }
 
   renderOders = () => {
-    const { orders, loading, type } = this.props;
-    const { tabGiving, tabDone, tabCanceled, filterTab } = this.state;
+    let { orders, loading, type } = this.props;
+    const {
+      typeOfSort,
+      tabGiving,
+      tabDone,
+      tabCanceled,
+      filterTab
+    } = this.state;
     if (loading) return <Loading color="lunes" margin={"50% 0% 0% 0%"} />;
+
+    if (typeOfSort) orders = this.sortOrders(orders);
 
     if (orders.length <= 0)
       return (
@@ -190,29 +201,35 @@ class Offers extends React.Component {
     if (type == "myhistory") {
       return orders.map((val, key) => {
         if (filterTab == 0 && val.way == "buy") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
         if (filterTab == 1 && val.way == "sell") {
-          if (tabGiving && val.status == "confirming") {
-            return <CardOffer key={key} order={val} />;
+          if (
+            tabGiving &&
+            (val.status == "confirming" || val.status == "waiting")
+          ) {
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabDone && val.status == "confirmed") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
 
           if (tabCanceled && val.status === "canceled") {
-            return <CardOffer key={key} order={val} />;
+            return <CardOffer key={key} order={val} status={val.status} />;
           }
         }
       });
@@ -253,7 +270,7 @@ class Offers extends React.Component {
     getHistory(coinSelect.value);
   };
 
-  renderFilters = () => {
+  renderContentFilters = () => {
     const { type } = this.props;
     const { tabGiving, tabDone, tabCanceled } = this.state;
 
@@ -283,11 +300,22 @@ class Offers extends React.Component {
     }
     return;
   };
-  selectTypeP2P = (value, title) =>
+  selectTypeP2P = (value, title) => {
+    const { getHistory } = this.props;
+    let { coinSelect, typeP2P } = this.state;
     this.setState({
       ...this.state,
       typeP2P: title
     });
+    getHistory(coinSelect.value, typeP2P.toLowerCase());
+  };
+
+  handleSort = () => {
+    this.setState({
+      ...this.state,
+      sortMenu: !this.state.sortMenu
+    });
+  };
 
   selectTypeFilter = (value, title) => this.filterMyOrders(true, title);
 
@@ -302,41 +330,62 @@ class Offers extends React.Component {
     } = this.state;
     const titles = [i18n.t("P2P_TAB_PURCHASE"), i18n.t("P2P_TAB_SALE")];
 
+    if (coinsEnabled.length > 0) {
+      coinsEnabled.forEach(el => {
+        el.title = "";
+      });
+    }
+
     return type !== "myhistory" ? (
       <Grid className={style.headerActionFilter} container>
-        <Grid item xs={3} style={{ textAlign: "center" }}>
+        <Grid
+          item
+          xs={2}
+          style={{ textAlign: "center" }}
+          className={style.scrollSelect}
+        >
           <Select
             list={coinsEnabled}
             title={""}
             titleImg={coinSelect.img}
             selectItem={this.coinSelected}
             error={null}
-            width={"75%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeFilter}
             title={typeFilter}
             selectItem={this.selectTypeFilter}
             error={null}
-            width={"80%"}
+            width={"100%"}
           />
         </Grid>
+        <Grid item xs={1} />
         <Grid item xs={3} style={{ textAlign: "center" }}>
           <Select
             list={listTypeP2P}
             title={typeP2P}
             selectItem={this.selectTypeP2P}
             error={null}
-            width={"80%"}
+            width={"90%"}
           />
         </Grid>
-        <Grid item xs={3} style={{ marginTop: "10px", textAlign: "center" }}>
-          <a href="#">
-            <img src="/images/icons/recharge/ic_instrucoes.png" alt={""} />
-          </a>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
+          <div className={style.sort}>
+            <img
+              src="/images/icons/p2p/sort.png"
+              onClick={() => this.handleSort()}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
         </Grid>
+        <Grid item xs={1} style={{ marginTop: "5px", textAlign: "center" }}>
+          <Instructions />
+        </Grid>
+        {this.state.sortMenu && <Sort that={this} />}
       </Grid>
     ) : (
       <Grid container style={{ paddingBottom: "1.5rem" }}>
@@ -349,9 +398,44 @@ class Offers extends React.Component {
     );
   };
 
+  _sortAscendingOrDescending = (orders, type) => {
+    return orders.sort((a, b) => {
+      if (!a || !b) return;
+      if (!a.sell || !b.sell) return;
+      let aAmount = a.sell.amount | 0;
+      let bAmount = b.sell.amount | 0;
+      if (type == "descending") return bAmount - aAmount;
+      return aAmount - bAmount; //ascending is the default sorting method
+    });
+  };
+  _sortByNewestOrOldest = (orders, type) => {
+    return orders.sort((a, b) => {
+      if (!a || !b) return;
+      if (!a.createdAt || !b.createdAt) return;
+      let aAmount = new Date(a.createdAt).getTime() | 0;
+      let bAmount = new Date(b.createdAt).getTime() | 0;
+      if (type == "oldest") return bAmount - aAmount;
+      return aAmount - bAmount; //ascending is the default sorting method
+    });
+  };
+  sortOrders = orders => {
+    let { typeOfSort } = this.state;
+    if (!typeOfSort) return orders;
+    if (!orders || (orders && orders.length < 1)) return orders;
+    // ascending | descending | newest | oldest
+    if (typeOfSort === "ascending" || typeOfSort === "descending") {
+      orders = this._sortAscendingOrDescending(orders, typeOfSort);
+      return orders;
+    }
+    if (typeOfSort === "newest" || typeOfSort === "oldest") {
+      orders = this._sortByNewestOrOldest(orders, typeOfSort);
+      return orders;
+    }
+    return orders;
+  };
+
   render() {
     const { cancelDone } = this.props;
-
     if (cancelDone)
       return (
         <div>
@@ -365,7 +449,7 @@ class Offers extends React.Component {
     return (
       <div>
         {this.renderMenu()}
-        {this.renderFilters()}
+        {this.renderContentFilters()}
         <div className={style.content+" jsContent"}>{this.renderOders()}</div>
       </div>
     );
@@ -386,15 +470,12 @@ Offers.propTypes = {
   cancelDone: PropTypes.bool
 };
 
-const mapStateToProps = store => (
-  console.warn(store),
-  {
-    coinsEnabled: store.p2p.coinsEnabled || [],
-    orders: store.p2p.orders,
-    loading: store.p2p.loading,
-    cancelDone: store.p2p.cancelDone
-  }
-);
+const mapStateToProps = store => ({
+  coinsEnabled: store.p2p.coinsEnabled || [],
+  orders: store.p2p.orders,
+  loading: store.p2p.loading,
+  cancelDone: store.p2p.cancelDone
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
