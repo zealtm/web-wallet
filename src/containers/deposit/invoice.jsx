@@ -21,9 +21,9 @@ import CustomCheckbox from "../../components/checkBox";
 const customStyle = {
   underlineItems: {
     color: "white",
-    borderBottom: "1px solid ",
     borderBottomColor: `${colors.purple.dark} !important`,
-    fontSize: "16px !important"
+    fontSize: "16px !important",
+    width: "180px",
   },
   menuItemRoot: {
     color: colors.messages.info
@@ -48,8 +48,12 @@ class Invoice extends React.Component {
     super();
     this.state = {
       paymentMethods: ["Boleto", "Crédito"],
-      days: [...Array(31).keys()]
+      payment: "Boleto",
+      days: [...Array(31).keys()],
+      day: '1'
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   listPaymentMethods = () => {
@@ -76,15 +80,29 @@ class Invoice extends React.Component {
     return days.map((day, index) => (
       <MenuItem
         key={index}
-        value={day}
+        value={day + 1}
         classes={{
           root: classes.menuItemRoot
         }}
       >
-        {day}
+        {day + 1}
       </MenuItem>
     ));
   };
+
+  handleChange = (event) => {
+    this.setState({
+      ...this.state,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleChangePaymentMethod = (event) => {
+    this.setState({
+      ...this.state,
+      [event.target.name]: event.target.value
+    })
+  }
 
   render() {
     const { classes } = this.props;
@@ -102,15 +120,17 @@ class Invoice extends React.Component {
 
         <Grid container spacing={8}>
           <Grid item xs={12} sm={4}>
-            <div className={style.containerinput}>
+            <div className={style.containerInput}>
               <Select
                 classes={{
                   selectMenu: classes.underlineItems
                 }}
                 MenuProps={MenuProps}
-                value={paymentMethods}
+                value={this.state.payment}
+                renderValue={value => `${value}`}
+                onChange={event => this.handleChangePaymentMethod(event)}
                 displayEmpty={true}
-                name="day"
+                name="payment"
                 disableUnderline={true}
               >
                 {this.listPaymentMethods()}
@@ -119,25 +139,29 @@ class Invoice extends React.Component {
           </Grid>
 
           <Grid item xs={6} sm={4}>
-            <div className={style.containerinput}>
-              <CustomCheckbox /> Recorrente
+            <div className={style.containerInput}>
+              <CustomCheckbox /> <div className={style.paddingTop}>Recorrente</div>
             </div>
           </Grid>
 
           <Grid item xs={6} sm={4}>
-            <div className={style.containerinput}>
+            <div className={style.containerInput}>
+            <div className={style.paddingTop}>
               <Select
                 classes={{
                   selectMenu: classes.underlineItems
                 }}
                 MenuProps={MenuProps}
-                value={days}
+                value={this.state.day}
+                renderValue={value => `${value}`}
+                onChange= {event => this.handleChange(event)}
                 displayEmpty={true}
                 name="day"
                 disableUnderline={true}
               >
                 {this.listDays()}
               </Select>
+            </div>
             </div>
           </Grid>
         </Grid>
