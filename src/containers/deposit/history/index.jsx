@@ -142,57 +142,57 @@ class History extends React.Component {
         <Grid item xs={12} sm={7} className={style.boxHistory}>
           {arrayHistory.map((item, id) => {
             return (
-              <div key={id}>
-                <Grid
-                  onClick={
-                    item.type === "Recorrent"
-                      ? () => this.stateDataHistory(id)
-                      : null
-                  }
-                  container
-                  direction="row"
-                  justify="center"
-                >
-                  <Grid item xs={1} />
+              <Grid
+              className={style.boxHistoryItems}
+                key={id}
+                onClick={
+                  item.type === "Recorrent"
+                    ? () => this.stateDataHistory(id)
+                    : null
+                }
+                container
+                direction="row"
+                justify="center"
+              >
+                <Grid item xs={1} />
 
-                  <Grid item xs={5} className={style.boxItem_1}>
-                    <p className={style.textGreen}>
-                      {item.nameHistory}
+                <Grid item xs={5} className={style.boxItem_1}>
+                  <p className={style.textGreen}>
+                    {item.nameHistory}
 
-                      {item.type === "Recorrent" ? (
-                        <span> {" - " + item.type}</span>
-                      ) : null}
-                    </p>
-                    <p className={style.textBold}>{item.info.data}</p>
-                    <p>{item.user.cpf}</p>
-                  </Grid>
-
-                  <Grid item xs={4} className={style.boxItem_2}>
-                    <p
-                      className={
-                        item.info.status === "Cancel"
-                          ? style.txtCancel
-                          : item.info.status === "Pendent"
-                          ? style.txtPendent
-                          : style.txtConfirm
-                      }
-                    >
-                      {item.info.status}
-                    </p>
-
-                    <p className={style.textBold}>{item.info.value}</p>
-                    <p>{item.user.id}</p>
-                  </Grid>
-
-                  <Grid item xs={1} className={style.boxIcon}>
-                    {item.type === "Recorrent" &&
-                    item.info.status === "Confirm" ? (
-                      <CloseIcon color="error" style={{ fontSize: 20 }} />
+                    {item.type === "Recorrent" ? (
+                      <span> {" - " + item.type}</span>
                     ) : null}
-                  </Grid>
+                  </p>
+                  <p className={style.textBold}>{item.info.data}</p>
+                  <p>{item.user.cpf}</p>
+                </Grid>
+
+                <Grid item xs={4} className={style.boxItem_2}>
+                  <p
+                    className={
+                      item.info.status === "Cancel"
+                        ? style.txtCancel
+                        : item.info.status === "Pendent"
+                        ? style.txtPendent
+                        : style.txtConfirm
+                    }
+                  >
+                    {item.info.status}
+                  </p>
+
+                  <p className={style.textBold}>{item.info.value}</p>
+                  <p>{item.user.id}</p>
+                </Grid>
+
+                <Grid item xs={1} className={style.boxIcon}>
+                  {item.type === "Recorrent" &&
+                  item.info.status === "Confirm" ? (
+                    <CloseIcon color="error" style={{ fontSize: 20 }} />
+                  ) : null}
                 </Grid>
                 {item.type === "Recorrent" ? this.renderSubItems(id) : null}
-              </div>
+              </Grid>
             );
           })}
         </Grid>
