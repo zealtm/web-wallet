@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 
 // MATERIAL UI
@@ -21,9 +22,9 @@ import CustomCheckbox from "../../components/checkBox";
 const customStyle = {
   underlineItems: {
     color: "white",
-    borderBottomColor: `${colors.purple.dark} !important`,
-    fontSize: "16px !important",
-    width: "180px",
+    borderBottomColor: `${colors.green.default} !important`,
+    fontSize: "1em !important",
+    width: "8em"
   },
   menuItemRoot: {
     color: colors.messages.info
@@ -46,11 +47,13 @@ const MenuProps = {
 class Invoice extends React.Component {
   constructor() {
     super();
+
     this.state = {
-      paymentMethods: ["Boleto", "Crédito"],
-      payment: "Boleto",
+      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_CREDIT")],
+      payment: i18n.t("DEPOSIT_INVOICE"),
       days: [...Array(31).keys()],
-      day: '1'
+      day: "1",
+      checkBox: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -90,23 +93,31 @@ class Invoice extends React.Component {
     ));
   };
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
       ...this.state,
       [event.target.name]: event.target.value
-    })
+    });
+  };
+
+  handleChangeRecurrent() {
+    const { checkBox } = this.state;
+    this.setState({
+      ...this.state,
+      checkBox: !checkBox
+    });
   }
 
-  handleChangePaymentMethod = (event) => {
+  handleChangePaymentMethod = event => {
     this.setState({
       ...this.state,
       [event.target.name]: event.target.value
-    })
-  }
+    });
+  };
 
   render() {
     const { classes } = this.props;
-    const { days, paymentMethods } = this.state;
+    const { checkBox } = this.state;
 
     return (
       <Grid container direction="row" justify="center">
@@ -115,7 +126,7 @@ class Invoice extends React.Component {
         </Grid>
 
         <Grid item xs={12} className="payments">
-          <h4>Formas de pagamento</h4>
+          <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
         </Grid>
 
         <Grid container spacing={8}>
@@ -140,28 +151,41 @@ class Invoice extends React.Component {
 
           <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
-              <CustomCheckbox /> <div className={style.paddingTop}>Recorrente</div>
+              <CustomCheckbox onChange={() => this.handleChangeRecurrent()} />
+              <div className={style.paddingTop}>
+                {i18n.t("DEPOSIT_RECURRENT")}
+              </div>
             </div>
           </Grid>
 
           <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
-            <div className={style.paddingTop}>
-              <Select
-                classes={{
-                  selectMenu: classes.underlineItems
-                }}
-                MenuProps={MenuProps}
-                value={this.state.day}
-                renderValue={value => `${value}`}
-                onChange= {event => this.handleChange(event)}
-                displayEmpty={true}
-                name="day"
-                disableUnderline={true}
-              >
-                {this.listDays()}
-              </Select>
-            </div>
+                <Grid item>
+                  <img src="images/icons/deposit/calendar@25x28.png" alt="Calendar"/>
+                </Grid>
+                <Grid item>
+                  <FormControl
+                    className={classes.formControl}
+                    disabled={!checkBox}
+                  >
+                    <div className={style.paddingTop}>
+                      <Select
+                        classes={{
+                          selectMenu: classes.underlineItems
+                        }}
+                        MenuProps={MenuProps}
+                        value={this.state.day}
+                        renderValue={value => `${value}`}
+                        onChange={event => this.handleChange(event)}
+                        displayEmpty={true}
+                        name="day"
+                        disableUnderline={true}
+                      >
+                        {this.listDays()}
+                      </Select>
+                    </div>
+                  </FormControl>
+                </Grid>
             </div>
           </Grid>
         </Grid>

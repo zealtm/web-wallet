@@ -610,5 +610,9 @@
   "DEPOSIT_TAB_TITLE": "Deposit",
   "DEPOSIT_TAB_HISTORY_TITLE": "History",
   "DEPOSIT_HEADER_TITLE": "DEPOSIT LUNES' WALLET",
-  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services"
+  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services",
+  "DEPOSIT_PAYMENT_METHODS": "Payment methods",
+  "DEPOSIT_RECURRENT": "Recurrent",
+  "DEPOSIT_INVOICE": "Invoice",
+  "DEPOSIT_CREDIT": "Credit"
 }
