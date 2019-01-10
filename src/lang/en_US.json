@@ -610,5 +610,10 @@
   "DEPOSIT_TAB_TITLE": "Deposit",
   "DEPOSIT_TAB_HISTORY_TITLE": "History",
   "DEPOSIT_HEADER_TITLE": "DEPOSIT LUNES' WALLET",
-  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services"
+  "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT's money to use in Lunes services",
+
+  "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "You will be directed to the Bank's site that makes your payment in debt",
+  "BANK_ICON": "Bank icon"
 }
