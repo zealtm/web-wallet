@@ -1,5 +1,9 @@
-/* 1. BASE */
-
+/*
+ 1. BASE
+ 2. TEXT
+ 3. MODAL 
+*/
+/*1.BASE */
 :local .box {
   composes: bgPurpleDefault from "../../components/bases/colorBase.css";
   border-radius: 5px;
@@ -45,4 +49,29 @@
 :local .header p {
   text-align: center;
   font-size: 12px;
+}
+
+/*3. MODAL*/
+:local(.modalBox){
+  text-align: center;
+  color: #fff;
+}
+
+:local(.modalBox) img{
+  width: 140px;
+  height: 140px;
+}
+
+:local(.modalBox) strong{
+  position: relative;
+  bottom: 36px;
+  font-size: 14px;
+}
+
+:local(.modalBox) p{
+  position: relative;
+  top: 49px;
+  padding-left: 10%;
+  padding-right: 10%;
+  font-size: 16px;
 }

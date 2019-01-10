@@ -20,7 +20,7 @@ class Deposit extends React.Component {
     super();
 
     this.state = {
-      isOpen: true
+      isOpen: false
     };
   }
 
@@ -41,7 +41,7 @@ class Deposit extends React.Component {
     return (
       <div>
         <Modal
-          title={"Modal Teste"}
+          title={i18n.t("DEPOSIT_ACCOUNT_MODAL_TITLE")}
           show={isOpen}
           content={<BankModal />}
           close={() => this.handleModalState()}
@@ -52,6 +52,7 @@ class Deposit extends React.Component {
           <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>
         </div>
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
+        <button onClick={() => this.handleModalState()}>Teste Modal</button>
       </div>
     );
   }
