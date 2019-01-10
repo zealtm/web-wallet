@@ -87,7 +87,7 @@
 }
 
 :local .baseUserProfile {
-  height: calc(95vh - 200px);
+  height: calc(100% - 100px);
   overflow: auto;
 }
 
@@ -225,12 +225,12 @@
   text-align: right;
 }
 :local .content {
-  height: calc(92vh - 200px);
-  /* height: 400px; */
+  height: 400px;
   overflow: auto;
 }
 
 :local .baseContent {
+  height: 100%;
   margin: 15px;
 }
 

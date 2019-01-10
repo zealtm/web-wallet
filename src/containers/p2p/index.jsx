@@ -88,7 +88,7 @@ class P2P extends React.Component {
     }
     if (!chatOpened) {
       return (
-        <div>
+        <div style={{height: '100%'}}>
           <div className={style.baseContent}>{this.renderContent()}</div>
           <TabIcons content={contentTabIcons} handle={this.handleTabIcon} />
         </div>
@@ -116,7 +116,7 @@ class P2P extends React.Component {
     const showBox = openP2P ? style.baseWidget : style.baseWidgetClose;
 
     return (
-      <div className={showBox}>
+      <div className={showBox+' jsShowBox'}>
         <div className={style.headerP2P}>{this.renderArrow()}</div>
         {this.renderModals()}
       </div>
