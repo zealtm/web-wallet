@@ -6,34 +6,8 @@
   margin-top: 40px;
 }
 
-:local .arrowControl {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-:local .transparentBox {
-  composes: box;
-  background-color: transparent;
-  padding: 0;
-}
 :local .header {
   margin: 0 auto;
-}
-
-:local .information {
-  text-align: center;
-}
-
-:local .information a {
-  text-decoration: none;
-  color: white;
-}
-
-:local .information img {
-  position: relative;
-  left: 10px;
-  top: 5px;
 }
 
 @media screen and (min-width: 600px) {
@@ -71,8 +45,3 @@
 }
 
 /* 3. BUTTONS */
-
-:local .buttonBorderGreen {
-  background-color: transparent;
-  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
-}

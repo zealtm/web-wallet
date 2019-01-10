@@ -5,16 +5,16 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages } from "./redux/depositAction";
+import { getPackages } from "../redux/depositAction";
 
 // COMPONENTS
-import CardPack from "./cardPack";
+import CardPack from "../cardPack";
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 
 // UTILS
-import i18n from "../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
