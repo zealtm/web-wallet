@@ -63,7 +63,6 @@ class P2P extends React.Component {
               className={
                 val.id === mySignature.planId ? style.cardBlue : style.cardGrey
               }
-              onClick={() => this.setSignature(val)}
             >
               <h1
                 className={

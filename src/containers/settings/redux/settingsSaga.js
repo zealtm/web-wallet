@@ -303,7 +303,7 @@ export function* signSignatureSaga(payload) {
           );
 
           yield put({
-            type: "SET_LOADING_REDUCER", //SET_CLEAR_BUY_REDUCER
+            type: "SET_LOADING_REDUCER",
             loading: false
           });
 
@@ -323,15 +323,6 @@ export function* signSignatureSaga(payload) {
           return;
         }
       }
-
-      yield put({
-        type: "SET_CLEAR_BUY_REDUCER"
-      });
-
-      yield put({
-        type: "SET_MODAL_FLOW_STEP_REDUCER",
-        step: 4
-      });
 
       yield put(internalServerError());
       return;
