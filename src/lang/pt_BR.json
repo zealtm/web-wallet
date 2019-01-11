@@ -628,5 +628,6 @@
   "P2P_FEE_TEXT_1": "Você está enviando",
   "P2P_FEE_TEXT_2": "LUNES",
   "P2P_FEE_TEXT_3": "para realizar a assinatura do serviço de P2P por",
-  "P2P_FEE_TEXT_4": "dias"
+  "P2P_FEE_TEXT_4": "dias",
+  "P2P_SIGNATURE_CONFIRM": "Assinatura efetivada com sucesso"
 }
