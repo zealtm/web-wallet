@@ -8,10 +8,8 @@ import style from "./style.css";
 
 // COMPONENTS
 import Tabs from "../../components/tabs";
-import Modal from "../../components/modal";
 import Invoice from "./invoice";
 import History from "./history";
-import BankModal from "./modal/bankModal";
 
 class Deposit extends React.Component {
   render() {
@@ -28,7 +26,6 @@ class Deposit extends React.Component {
             <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>
           </div>
           <Tabs tabTitles={titles} tabContents={contents} justify="center" />
-          <Modal show={true} content={<BankModal />} />
         </div>
       </div>
     );
