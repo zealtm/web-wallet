@@ -240,6 +240,7 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
+
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
@@ -326,12 +327,28 @@ class Invoice extends React.Component {
     return;
   };
 
+  currentDateTransform = value => {
+    let strDate = value ? value.replace(/[^\d]+/g, "") : "";
+    if (value == undefined || value == "") return "";
+    let day = strDate.substring(0, 2);
+    let month = strDate.substring(2, 4);
+    let year = strDate.substring(4, 8);
+    let numDay = Number(day);
+    if (numDay < 9) day = "0" + (numDay + 1);
+    else day = numDay + 1;
+
+    return day + "/" + month + "/" + year;
+  };
+
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
-
+    let dueDatePayment = invoice.dueDate
+      ? this.currentDateTransform(invoice.dueDate)
+      : (dueDatePayment = this.currentDateTransform(payment.dueDate));
+      
     return (
       <Grid container direction="row" justify="center">
         <Grid item xs={11} className={style.box}>
@@ -345,12 +362,11 @@ class Invoice extends React.Component {
                 }}
                 placeholder="237933802350009031431630033330944400000001000000"
                 inputProps={{ maxLength: 48, required: true }}
-                value={invoice.number || payment.number}
+                value={ invoice.number || payment.number }
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
                 error={errors.includes("number")}
               />
             </Grid>
-
             <Grid item xs={1}>
               <div className={style.cameraIconMargin}>
                 <label
@@ -420,7 +436,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={payment.dueDate || invoice.dueDate}
+                value={dueDatePayment}
                 onChange={this.handleInvoiceDefaultChange("dueDate")}
                 error={errors.includes("dueDate")}
                 inputComponent={DateMask}

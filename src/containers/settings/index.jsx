@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { getTwoFactorAuth } from "./redux/settingsAction";
-import { errorInput } from "../errors/redux/errorAction";
 
 // COMPONENTS
 import Settings from "./settings";
@@ -44,7 +43,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getTwoFactorAuth,
-      errorInput
     },
     dispatch
   );

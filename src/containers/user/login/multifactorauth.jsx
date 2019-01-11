@@ -138,8 +138,7 @@ class MultiFactorAuth extends React.Component {
                   errors
                     ? style.inputTwoFactorAuthenticatorError
                     : style.inputTwoFactorAuthenticator
-                }
-              />
+                }/>
             );
           })}
         </div>

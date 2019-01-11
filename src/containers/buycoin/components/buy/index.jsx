@@ -112,7 +112,7 @@ Buy.propTypes = {
 
 const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
-  coins: store.skeleton.coins,
+  coins: store.buy.coinsBuy,
   loading: store.buy.loading
 });
 

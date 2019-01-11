@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadGeneralInfo, balanceCoins } from "./redux/skeletonAction";
+import { loadGeneralInfo } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
@@ -46,9 +46,7 @@ class LoadingPage extends Component {
 }
 
 LoadingPage.propTypes = {
-  errorRequest: PropTypes.func,
   loadGeneralInfo: PropTypes.func,
-  balanceCoins: PropTypes.func,
   skeleton: PropTypes.object,
   user: PropTypes.object
 };
@@ -61,8 +59,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadGeneralInfo,
-      balanceCoins
+      loadGeneralInfo
     },
     dispatch
   );

@@ -115,7 +115,7 @@ const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
   loading: store.buy.loading,
   user: store.user.user,
-  coins: store.skeleton.coins
+  coins: store.buy.coinsBuy
 });
 
 const mapDispatchToProps = dispatch =>

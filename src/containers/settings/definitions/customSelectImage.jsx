@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// REDUX
-import { connect } from "react-redux";
-
 // MATERIAL
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
@@ -78,18 +75,9 @@ class CustomSelectImage extends React.Component {
 
 CustomSelectImage.propTypes = {
   action: PropTypes.func.isRequired,
-  coins: PropTypes.array,
   type: PropTypes.string,
   value: PropTypes.string,
   image: PropTypes.string
 };
 
-const mapStateToProps = store => ({
-  coins: store.skeleton.coins,
-  user: store.user.user
-});
-
-export default connect(
-  mapStateToProps,
-  null
-)(CustomSelectImage);
+export default CustomSelectImage;
