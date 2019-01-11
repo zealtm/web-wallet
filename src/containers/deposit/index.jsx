@@ -23,7 +23,7 @@ class Deposit extends React.Component {
     const contents = [<Invoice key={0} />, <History key={1} />];
     return (
       <Grid container justify="center">
-        <Grid item xs={12} sm={7} className={style.header}>
+        <Grid item xs={12} className={style.header}>
           <center>
             <h1>{i18n.t("DEPOSIT_HEADER_TITLE")}</h1>
             <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>

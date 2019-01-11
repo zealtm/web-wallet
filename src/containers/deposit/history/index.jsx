@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import CloseIcon from "@material-ui/icons/Close";
 
 // STYLE
-import style from "./../style.css";
+import style from "./style.css";
 
 const arrayHistory = [
   {
@@ -143,7 +143,7 @@ class History extends React.Component {
           {arrayHistory.map((item, id) => {
             return (
               <Grid
-              className={style.boxHistoryItems}
+                className={style.boxHistoryItems}
                 key={id}
                 onClick={
                   item.type === "Recorrent"
@@ -157,7 +157,7 @@ class History extends React.Component {
                 <Grid item xs={1} />
 
                 <Grid item xs={5} className={style.boxItem_1}>
-                  <p className={style.textGreen}>
+                  <p className={style.txtConfirm}>
                     {item.nameHistory}
 
                     {item.type === "Recorrent" ? (

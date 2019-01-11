@@ -1,5 +1,4 @@
 /* 1. BASES */
-/* 2. HISTORY */
 
 /* ------------------------------------------------------------------------- */
 
@@ -11,27 +10,8 @@
   margin-top: 40px;
 }
 
-:local .arrowControl {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
-:local .transparentBox {
-  composes: box;
-  background-color: transparent;
-  padding: 0;
-}
 :local .header {
   margin: 0 auto;
-}
-
-::-webkit-scrollbar {
-  background-color: transparent;
-  height: 5px;
-  width: 5px;
-  border-radius: 6px;
-  padding: 2px;
 }
 
 :local .information {
@@ -48,20 +28,9 @@
   left: 10px;
   top: 5px;
 }
-/* 
-@media screen and (min-width: 600px) {
-  :local .box {
-    max-width: 60vw !important;
-  }
-} */
 
 :local .header {
   margin: 0 auto;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #68f285;
-  border-radius: 6px;
 }
 
 /* 2. TEXT */
@@ -74,21 +43,6 @@
 :local .header p {
   text-align: center;
   font-size: 12px;
-}
-
-:local .txtCancel {
-  color: #f05252;
-  font-weight: bold;
-}
-
-:local .txtPendent {
-  color: #fad04d;
-  font-weight: bold;
-}
-
-:local .txtConfirm {
-  color: #68f285;
-  font-weight: bold;
 }
 
 @media screen and (max-width: 599px) {
@@ -107,67 +61,3 @@
   background-color: transparent;
   composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }
-
-/* ------------------------------------------------------------------------- */
-
-/* 2. HISTORY */
-:local .boxHistory {
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
-  border-radius: 6px;
-  box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.1);
-  overflow: auto;
-  max-height: 650px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-:local .boxHistoryItems {
-  border-top: 1px solid #42227d;
-}
-
-:local .boxItem_1 {
-  padding: 10px 0;
-}
-
-:local .boxItem_2 {
-  composes: boxItem_1;
-  text-align: right;
-}
-
-:local .boxSubItem {
-  font-size: 10px;
-  display: flex;
-  border-bottom: 1px solid #473088;
-  font-weight: bold;
-  cursor: default;
-  margin-bottom: 8px;
-}
-
-:local .opacityItem {
-  composes: boxSubItem;
-  display: none;
-}
-
-@media screen and (max-width: 599px) {
-  :local .boxHistory {
-    font-size: 10px;
-    max-height: 350px;
-  }
-}
-
-/* TEXT */
-:local p.textGreen {
-  font-weight: bold;
-  color: #68f285;
-}
-
-:local p.textBold {
-  font-weight: bold;
-}
-
-:local .boxIcon {
-  padding-top: 20px;
-  text-align: end;
-}
-
-/* ------------------------------------------------------------------------- */

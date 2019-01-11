@@ -5,16 +5,17 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages } from "./redux/depositAction";
+import { getPackages } from "../redux/depositAction";
+
+// COMPONENTS
+import CardPack from "../cardPack";
 
 // MATERIAL UI
-import CardPack from "./cardPack";
 import { Grid, Hidden, IconButton } from "@material-ui/core";
-
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 
 // UTILS
-import i18n from "../../utils/i18n";
+import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
@@ -78,7 +79,6 @@ class Invoice extends React.Component {
             className={style.box}
             style={{ padding: 5 }}
           >
-            <p>{i18n.t("DEPOSIT_TAB_TITLE")}</p>
             <Grid container style={{ justifyContent: "center" }}>
               <Hidden xsDown>
                 <Grid item xs={1} className={style.arrowControl}>
