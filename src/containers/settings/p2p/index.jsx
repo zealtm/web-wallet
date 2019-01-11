@@ -28,9 +28,11 @@ import Loading from "../../../components/loading";
 
 class P2P extends React.Component {
   closeModal() {
-    const { setModalStep, openModal } = this.props;
+    const { setModalStep, openModal, getSignatures, getSignature } = this.props;
     openModal(false);
     setModalStep(1);
+    getSignatures();
+    getSignature();
   }
 
   componentDidMount = () => {
