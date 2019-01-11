@@ -1,5 +1,9 @@
-/* 1. BASE */
-
+/*
+ 1. BASE
+ 2. TEXT
+ 3. MODAL 
+*/
+/*1.BASE */
 :local .box {
   margin-left: auto;
   margin-right: auto;

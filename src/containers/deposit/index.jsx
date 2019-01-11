@@ -7,7 +7,6 @@ import i18n from "../../utils/i18n";
 import style from "./style.css";
 
 // COMPONENTS
-
 import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
