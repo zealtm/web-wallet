@@ -17,7 +17,7 @@ class BankModal extends Component {
         <strong>{i18n.t("DEPOSIT_ACCOUNT_MODAL_HEADER")}</strong>
         <div>
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Itau.svg/1011px-Itau.svg.png"
+            src="images/icons/deposit/itau-icon.png"
             alt={i18n.t("BANK_ICON")}
           />
         </div>
