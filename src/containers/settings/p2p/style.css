@@ -75,25 +75,16 @@
   margin-top: 5%;
 }
 
-:local(.value) {
-  font-size: 60px;
-  font-weight: 500;
-  color: #54d467;
-}
-
-:local(.decimals) {
-  font-size: 25px;
-  font-weight: 500;
-  color: #54d467;
-  margin-top: 7px;
-}
-
 :local(.containerValue) {
   display: flex;
 }
 
-:local(.valueCard) {
-  display: inline-flex;
+:local(.status) {
+  color: transparent;
+}
+
+:local(.statusActive) {
+  text-transform: capitalize;
 }
 
 @media only screen and (max-width: 1023px) {

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setModalStep } from "../../../p2p/redux/p2pAction";
-import { confirmBuy } from "../../../../containers/buycoin/redux/buyAction";
+import { signSignature } from "../../redux/settingsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS
@@ -33,10 +33,33 @@ class SecureBuy extends React.Component {
 
   confirmPassword = () => {
     let { password } = this.state;
-    let { user, errorInput, setModalStep } = this.props;
+    let {
+      user,
+      errorInput,
+      signSignature,
+      coins,
+      p2pPackage,
+      signature
+    } = this.props;
+
+    const coin = "lunes";
+
+    const payload = {
+      planId: signature.id,
+      coin: coin,
+      fromAddress: coins[coin].address,
+      lunesUserAddress: coins[coin].address,
+      amount: signature.coinValue,
+      fee: p2pPackage.fee.fee.fee,
+      feePerByte: p2pPackage.fee.fee.feePerByte,
+      feeLunes: p2pPackage.fee.fee.feeLunes,
+      price: coins[coin].price,
+      decimalPoint: coins[coin].decimalPoint,
+      user: user.password
+    };
 
     if (user.password === encryptHmacSha512Key(password)) {
-      setModalStep(3);
+      signSignature(payload);
       return;
     }
 
@@ -86,27 +109,29 @@ class SecureBuy extends React.Component {
 }
 
 SecureBuy.propTypes = {
-  buypack: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
   coins: PropTypes.array.isRequired,
-  confirmBuy: PropTypes.func.isRequired,
-  setModalStep: PropTypes.func.isRequired
+  setModalStep: PropTypes.func.isRequired,
+  signSignature: PropTypes.func,
+  p2pPackage: PropTypes.object,
+  signature: PropTypes.object
 };
 
 const mapStateToProps = store => ({
-  buypack: store.buy.buypackage,
-  loading: store.buy.loading,
+  p2pPackage: store.settings.p2pPackage,
+  loading: store.settings.loading,
   user: store.user.user,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  signature: store.settings.signature
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setModalStep,
-      confirmBuy,
+      signSignature,
       errorInput
     },
     dispatch

@@ -74,3 +74,8 @@ export const getFeeP2P = (
   amount,
   decimalPoint
 });
+
+export const setFeeP2P = fee => ({
+  type: "SET_FEE_P2P",
+  fee
+});

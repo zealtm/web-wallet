@@ -7,7 +7,7 @@ import { bindActionCreators } from "redux";
 
 // COMPONENTS
 import DoneModal from "./doneModal";
-import ConfirmModal from "./confirmModal";
+import FeeModal from "./feeModal";
 import SecureBuy from "./secureBuy";
 import ErrorBuy from "./errorBuy";
 
@@ -20,7 +20,7 @@ class FlowModal extends React.Component {
 
     switch (modalStep) {
       case 1:
-        return <ConfirmModal />;
+        return <FeeModal />;
       case 2:
         return <SecureBuy />;
       case 3:

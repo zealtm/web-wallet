@@ -8,7 +8,6 @@ import { setModalStep, openModal } from "../../p2p/redux/p2pAction";
 import {
   getSignatures,
   getSignature,
-  signSignature,
   setSignature
 } from "../../settings/redux/settingsAction";
 
@@ -47,7 +46,7 @@ class P2P extends React.Component {
   }
 
   renderPlans = () => {
-    const { signatures, openModal, loadingP2P, mySignature } = this.props;
+    const { signatures, loadingP2P, mySignature } = this.props;
 
     if (loadingP2P)
       return (
@@ -64,8 +63,17 @@ class P2P extends React.Component {
               className={
                 val.id === mySignature.planId ? style.cardBlue : style.cardGrey
               }
+              onClick={() => this.setSignature(val)}
             >
-              <h1>{val.status}</h1>
+              <h1
+                className={
+                  val.id === mySignature.planId
+                    ? style.statusActive
+                    : style.status
+                }
+              >
+                {val.status}
+              </h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
@@ -78,7 +86,10 @@ class P2P extends React.Component {
                 </p>
               </div>
               <div className={style.valueCard}>
-                <span className={style.dollarSign}>{val.coinValue}</span>
+                <p className={style.dollarSign}>{val.coinValue}</p>
+                <span className={style.dollarSign}>
+                  {val.duration} {i18n.t("P2P_FEE_TEXT_4")}
+                </span>
               </div>
             </div>
           </Grid>
@@ -91,7 +102,6 @@ class P2P extends React.Component {
               className={style.cardP2p}
               onClick={() => this.setSignature(val)}
             >
-              <h1>{val.status}</h1>
               <img
                 src="/images/icons/p2p/card.png"
                 className={style.cardIcon}
@@ -104,7 +114,10 @@ class P2P extends React.Component {
                 </p>
               </div>
               <div className={style.valueCard}>
-                <span className={style.dollarSign}>{val.coinValue}</span>
+                <p className={style.dollarSign}>{val.coinValue}</p>
+                <span className={style.dollarSign}>
+                  {val.duration} {i18n.t("P2P_FEE_TEXT_4")}
+                </span>
               </div>
             </div>
           </Grid>
@@ -121,7 +134,7 @@ class P2P extends React.Component {
         <Modal
           content={<ModalPayment />}
           show={modalOpen}
-          lose={
+          close={
             modalStep === 1 || modalStep === 3 || modalStep === 4
               ? () => this.closeModal()
               : null
@@ -172,13 +185,13 @@ P2P.propTypes = {
   modalOpen: PropTypes.bool.isRequired,
   setModalStep: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  getSignatures: PropTypes.func,
-  getSignature: PropTypes.func,
-  signSignature: PropTypes.func,
-  signatures: PropTypes.object,
+  getSignatures: PropTypes.func.isRequired,
+  getSignature: PropTypes.func.isRequired,
+  signatures: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    .isRequired,
   loadingP2P: PropTypes.bool.isRequired,
-  mySignature: PropTypes.object,
-  setSignature: PropTypes.func
+  mySignature: PropTypes.object.isRequired,
+  setSignature: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -197,7 +210,6 @@ const mapDispatchToProps = dispatch =>
       openModal,
       getSignatures,
       getSignature,
-      signSignature,
       setSignature
     },
     dispatch
