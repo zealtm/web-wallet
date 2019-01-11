@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 //UTILS
-import i18n from "../../utils/i18n";
+import i18n from "../../../../utils/i18n";
 
 //STYLE
 import style from "./style.css";
