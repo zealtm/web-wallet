@@ -11,6 +11,9 @@ import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
 
+// MATERIAL UI
+import { Grid } from "@material-ui/core";
+
 class Deposit extends React.Component {
   render() {
     const titles = [
@@ -19,15 +22,15 @@ class Deposit extends React.Component {
     ];
     const contents = [<Invoice key={0} />, <History key={1} />];
     return (
-      <div>
-        <div className={style.box}>
-          <div className={style.header}>
+      <Grid container justify="center">
+        <Grid item xs={12} className={style.header}>
+          <center>
             <h1>{i18n.t("DEPOSIT_HEADER_TITLE")}</h1>
             <p>{i18n.t("DEPOSIT_HEADER_SUBTITLE")}</p>
-          </div>
-          <Tabs tabTitles={titles} tabContents={contents} justify="center" />
-        </div>
-      </div>
+          </center>
+        </Grid>
+        <Tabs tabTitles={titles} tabContents={contents} justify="center" />
+      </Grid>
     );
   }
 }

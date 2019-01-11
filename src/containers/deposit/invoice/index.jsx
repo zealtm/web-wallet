@@ -9,8 +9,9 @@ import { getPackages } from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
-import { Grid, Hidden, IconButton } from "@material-ui/core";
 
+// MATERIAL UI
+import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 
 // UTILS
@@ -70,61 +71,71 @@ class Invoice extends React.Component {
 
     return (
       <div>
-        <Grid container style={{ justifyContent: "center" }}>
-          <Hidden xsDown>
-            <Grid item xs={1} className={style.arrowControl}>
-              <IconButton
-                color="inherit"
-                aria-label={i18n.t("TEXT_PREV")}
-                onClick={() => this.moveSlide("prev")}
-              >
-                <KeyboardArrowLeft />
-              </IconButton>
-            </Grid>
-          </Hidden>
-
-          <Grid item xs={12} sm={10} style={{ minHeight: 300 }}>
-            <Slider ref={c => (this.slider = c)} {...settings}>
-              {this.renderPacks()}
-            </Slider>
-          </Grid>
-
-          <Hidden xsDown>
-            <Grid item xs={1} className={style.arrowControl}>
-              <IconButton
-                color="inherit"
-                aria-label={i18n.t("TEXT_PREV")}
-                onClick={() => this.moveSlide()}
-              >
-                <KeyboardArrowRight />
-              </IconButton>
-            </Grid>
-          </Hidden>
+        <Grid container direction="row" justify="center">
           <Grid
             item
             xs={12}
-            className={style.transparentBox}
-            style={{ marginTop: "10px" }}
+            sm={7}
+            className={style.box}
+            style={{ padding: 5 }}
           >
-            <button className={style.buttonBorderGreen}>
-              {i18n.t("DEPOSIT_TAB_TITLE")}
-            </button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            className={style.transparentBox}
-            style={{ marginTop: "10px" }}
-          >
-            <div className={style.information}>
-              <a href="#">
-                {i18n.t("COUPON_INSTRUCTIONS")}
-                <img
-                  src="/images/icons/recharge/ic_instrucoes.png"
-                  alt={i18n.t("COUPON_INSTRUCTIONS")}
-                />
-              </a>
-            </div>
+            <Grid container style={{ justifyContent: "center" }}>
+              <Hidden xsDown>
+                <Grid item xs={1} className={style.arrowControl}>
+                  <IconButton
+                    color="inherit"
+                    aria-label={i18n.t("TEXT_PREV")}
+                    onClick={() => this.moveSlide("prev")}
+                  >
+                    <KeyboardArrowLeft />
+                  </IconButton>
+                </Grid>
+              </Hidden>
+
+              <Grid item xs={12} sm={10} style={{ minHeight: 300 }}>
+                <Slider ref={c => (this.slider = c)} {...settings}>
+                  {this.renderPacks()}
+                </Slider>
+              </Grid>
+
+              <Hidden xsDown>
+                <Grid item xs={1} className={style.arrowControl}>
+                  <IconButton
+                    color="inherit"
+                    aria-label={i18n.t("TEXT_PREV")}
+                    onClick={() => this.moveSlide()}
+                  >
+                    <KeyboardArrowRight />
+                  </IconButton>
+                </Grid>
+              </Hidden>
+              <Grid
+                item
+                xs={12}
+                className={style.transparentBox}
+                style={{ marginTop: "10px" }}
+              >
+                <button className={style.buttonBorderGreen}>
+                  {i18n.t("DEPOSIT_TAB_TITLE")}
+                </button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                className={style.transparentBox}
+                style={{ marginTop: "10px" }}
+              >
+                <div className={style.information}>
+                  <a href="#">
+                    {i18n.t("COUPON_INSTRUCTIONS")}
+                    <img
+                      src="/images/icons/recharge/ic_instrucoes.png"
+                      alt={i18n.t("COUPON_INSTRUCTIONS")}
+                    />
+                  </a>
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </div>
