@@ -22,3 +22,19 @@ export function* getPackagesSaga() {
     yield put(internalServerError());
   }
 }
+
+export function* getDepositHistorySaga() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getDepositHistory, token);
+
+    if (response.status !== 200) return yield put(internalServerError());
+
+    yield put({
+      type: "GET_HISTORY_DEPOSIT_REDUCER",
+      history: response.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

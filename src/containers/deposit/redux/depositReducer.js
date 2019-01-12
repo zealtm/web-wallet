@@ -1,5 +1,6 @@
 const initialState = {
-  packages: []
+  packages: [],
+  history: []
 };
 
 const deposit = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         packages: action.packages
+      };
+    case "GET_HISTORY_DEPOSIT_REDUCER":
+      return {
+        ...state,
+        history: action.history
       };
     default: {
       return {
