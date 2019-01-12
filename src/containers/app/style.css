@@ -1,3 +1,4 @@
+@import url("~slick-carousel/slick/slick.css");
 /*
 
 1. CONATINER LOGIN
@@ -54,7 +55,7 @@
 /* ------------------------------------------------------------------------- */
 
 /* 3. SCROLLBAR */
-::-webkit-scrollbar              {
+::-webkit-scrollbar {
   background-color: transparent;
   height: 5px;
   width: 5px;
@@ -62,7 +63,7 @@
   padding: 2px;
 }
 
-::-webkit-scrollbar-thumb        {
+::-webkit-scrollbar-thumb {
   background-color: #654fa4;
   border-radius: 6px;
 }

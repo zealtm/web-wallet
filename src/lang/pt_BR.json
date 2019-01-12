@@ -272,6 +272,7 @@
   "MENU_PURCHASE": "Comprar",
   "MENU_COUPONS": "Cupons",
   "MENU_SETTING": "Configurações",
+  "MENU_DEPOSIT": "Depósito",
   "MENU_LEASING": "Leasing",
   "MODAL_TITLE_START_LEASING": "Iniciar Leasing",
   "MENU_PRIVACY": "Privacidade",
@@ -599,5 +600,14 @@
   "DEPOSIT_PAYMENT_METHODS": "Formas de pagamento",
   "DEPOSIT_RECURRENT": "Recorrente",
   "DEPOSIT_INVOICE": "Boleto",
-  "DEPOSIT_CREDIT": "Crédito"
+  "DEPOSIT_CREDIT": "Crédito",
+
+  "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Banco",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "Você será direcionado para o site do Banco que efeturá seu pagamento em débito",
+  "BANK_ICON": "Icone do banco",
+  "DEPOSIT_TITLE_CANCEL": "Alerta para cancelamento",
+  "DEPOSIT_TEXT_CANCEL": "Você clicou em cancelar o seu depósito recorrente no valor de:",
+  "DEPOSIT_BTN_CANCEL": "Eu quero cancelar",
+  "DEPOSIT_PACK_TEXT": "Você vai receber de dinheiro na plataforma o equivalente à"
 }

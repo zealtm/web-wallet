@@ -273,6 +273,7 @@
   "MENU_PURCHASE": "Purchase",
   "MENU_COUPONS": "Coupons",
   "MENU_SETTING": "Settings",
+  "MENU_DEPOSIT": "Deposit",
   "MENU_LEASING": "Leasing",
   "MODAL_TITLE_START_LEASING": "Start Leasing",
   "MENU_PRIVACY": "Privacy",
@@ -614,5 +615,14 @@
   "DEPOSIT_PAYMENT_METHODS": "Payment methods",
   "DEPOSIT_RECURRENT": "Recurrent",
   "DEPOSIT_INVOICE": "Invoice",
-  "DEPOSIT_CREDIT": "Credit"
+  "DEPOSIT_CREDIT": "Credit",
+
+  "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "You will be directed to the Bank's site that makes your payment in debt",
+  "BANK_ICON": "Bank icon",
+  "DEPOSIT_TITLE_CANCEL": "Cancellation Alert",
+  "DEPOSIT_TEXT_CANCEL": "You have clicked to cancel your deposit recurring value:",
+  "DEPOSIT_BTN_CANCEL": "I want to cancel",
+  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of"
 }
