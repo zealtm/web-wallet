@@ -12,8 +12,36 @@ const initialState = {
   signatures: [],
   signature: {},
   mySignature: {},
-  fee: {},
-  address: {}
+  fee: {
+    fee: {
+      low: 0,
+      medium: 0,
+      high: 0
+    }
+  },
+  address: {},
+  p2pPackage: {
+    fee: {
+      fee: 0,
+      feePerByte: 0,
+      feeLunes: 0
+    },
+    idpack: "", // o pacote escolhido
+    coin: {
+      id: "",
+      address: "",
+      abbreviation: ""
+    },
+    paycoin: "", // moeda usada pra pagar
+    paycoinid: "", // id da moeda usada pra pagar
+    amountFiat: "", // qtde em fiat a pagar
+    amountPay: "", // qtde a pagar
+    balance: "", // o balance do usuario de moeda pra pagar
+    amount: "", // qtde a receber
+    operator: "",
+    address: "", // endereco para enviar o pgto
+    receiveAddress: "" // endereco onde o usuario vai receber a moeda comprada
+  }
 };
 
 const settings = (state = initialState, action) => {
@@ -93,6 +121,15 @@ const settings = (state = initialState, action) => {
         ...state,
         fee: action.fee,
         loading: false
+      };
+
+    case "SET_FEE_P2P_REDUCER":
+      return {
+        ...state,
+        p2pPackage: {
+          ...state.p2pPackage,
+          fee: action.fee
+        }
       };
 
     default: {

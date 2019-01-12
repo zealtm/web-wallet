@@ -47,12 +47,10 @@ class SettingsService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      if (response.data.code !== 200) {
-        return internalServerError();
-      }
-      return response.data;
+      return response;
     } catch (error) {
-      return internalServerError();
+      internalServerError();
+      return;
     }
   }
 }

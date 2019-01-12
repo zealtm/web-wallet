@@ -250,46 +250,97 @@ export function* getSignatureSaga() {
 }
 
 export function* signSignatureSaga(payload) {
-  const coin = "lunes";
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      loading: true
+    });
 
-  let seed = yield call(getUserSeedWords);
-  let token = yield call(getAuthToken);
+    try {
+      let seed = yield call(getUserSeedWords);
+      let token = yield call(getAuthToken);
 
-  // pega o servico disponivel
-  let lunesWallet = yield call(transactionService.p2pService, coin, token);
+      const coin = payload.data.coin;
 
-  const payloadTransaction = {
-    coin: coin,
-    fromAddress: payload.data.fromAddress,
-    toAddress: lunesWallet.address,
-    lunesUserAddress: payload.data.lunesUserAddress,
-    amount: payload.data.amount,
-    fee: payload.data.fee,
-    feePerByte: payload.data.feePerByte,
-    feeLunes: payload.data.feeLunes,
-    price: payload.data.price,
-    decimalPoint: lunesWallet.decimalPoint
-  };
+      // pega o servico disponivel
+      let lunesWallet = yield call(transactionService.p2pService, coin, token);
 
-  let response = yield call(
-    transactionService.transaction,
-    lunesWallet.id,
-    payloadTransaction,
-    lunesWallet,
-    decryptAes(seed, payload.data.user),
-    token
-  );
+      const payloadTransaction = {
+        coin: coin,
+        fromAddress: payload.data.fromAddress,
+        toAddress: lunesWallet.address,
+        lunesUserAddress: payload.data.lunesUserAddress,
+        amount: payload.data.amount,
+        fee: payload.data.fee,
+        feePerByte: payload.data.feePerByte,
+        feeLunes: payload.data.feeLunes,
+        price: payload.data.price,
+        decimalPoint: payload.data.decimalPoint
+      };
 
+      if (lunesWallet) {
+        let response = yield call(
+          transactionService.transaction,
+          lunesWallet.id,
+          payloadTransaction,
+          lunesWallet,
+          decryptAes(seed, payload.data.user),
+          token
+        );
 
-  const transacao_obj = JSON.parse(response.config.data);
+        const transacao_obj = JSON.parse(response.config.data);
 
-  if (response) {
-    const payload_elastic = {
-      txID: transacao_obj.txID,
-      planId: payload.data.planId
-    };
+        if (response) {
+          const payload_elastic = {
+            txID: transacao_obj.txID,
+            planId: payload.data.planId
+          };
 
-  yield call(settingsService.signSignature, token, payload_elastic);
+          let response_elastic = yield call(
+            settingsService.signSignature,
+            token,
+            payload_elastic
+          );
+
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            loading: false
+          });
+
+          if (response_elastic.data.errorMessage) {
+            yield put({
+              type: "SET_MODAL_FLOW_STEP_REDUCER",
+              step: 4
+            });
+            yield put(internalServerError());
+          } else {
+            yield put({
+              type: "SET_MODAL_FLOW_STEP_REDUCER",
+              step: 3
+            });
+          }
+
+          return;
+        }
+      }
+
+      yield put(internalServerError());
+      return;
+    } catch (error) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        loading: false
+      });
+
+      yield put({
+        type: "SET_MODAL_FLOW_STEP_REDUCER",
+        step: 4
+      });
+
+      yield put(internalServerError());
+    }
+  } catch (error) {
+    yield put(internalServerError());
   }
 }
 
@@ -300,24 +351,19 @@ export function* getFeeP2PSaga(payload) {
       loading: true
     });
 
-    const coin = "lunes";
-    let token = yield call(getAuthToken);
-
-    // pega o servico disponivel
-    let lunesWallet = yield call(transactionService.p2pService, coin, token);
-
     let response = yield call(
       coinService.getFee,
       payload.coin,
       payload.fromAddress,
-      lunesWallet.toAddress,
+      payload.toAddress,
       payload.amount,
       payload.decimalPoint
     );
+
     if (!response.fee) {
       yield put({
         type: "SET_LOADING_REDUCER",
-        payload: false
+        loading: false
       });
       yield put(internalServerError());
     }
@@ -329,4 +375,11 @@ export function* getFeeP2PSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
+}
+
+export function* setFeeP2PSaga(payload) {
+  yield put({
+    type: "SET_FEE_P2P_REDUCER",
+    fee: payload
+  });
 }

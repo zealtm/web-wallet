@@ -606,7 +606,7 @@
   "P2P_CHAT_ROOM_LOADING": "Carregando...",
   "P2P_CHAT_NOBODY_WAS_INSTERESTED_YET": "Ninguém se interessou na oferta, ainda.",
   "P2P_FAILED_TO_GET_ORDERS": "Falha ao pegar lista de ordens, tente novamente mais tarde.",
-  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar assinatura",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Insira sua senha para confirmar o envio e realizar",
   "P2P_CONFIRM_SIGNATURE": " ASSINATURA",
   "P2P_INFORMATION": "Informação",
   "P2P_SORT_TITLE": "Filtro",
@@ -624,5 +624,10 @@
   "P2P_INFORMATION_ESCROW_1": "O valor mínimo de ordem no Escrow é de R$5,00 por ordem.",
   "P2P_INFORMATION_ESCROW_2": "A taxa paga pelo vendedor no Escrow é de 1%.",
   "P2P_INFORMATION_ESCROW_3": "Para garantir a agilidade e segurança do sistema, no Escrow o vendedor faz o pagamento antecipado.",
-  "P2P_INFORMATION_FOOTER": "Você receberá por e-mail as notificações de quando sua compra ou venda for efetivada, irá receber também um e-mail por novos chats abertos com você."
+  "P2P_INFORMATION_FOOTER": "Você receberá por e-mail as notificações de quando sua compra ou venda for efetivada, irá receber também um e-mail por novos chats abertos com você.",
+  "P2P_FEE_TEXT_1": "Você está enviando",
+  "P2P_FEE_TEXT_2": "LUNES",
+  "P2P_FEE_TEXT_3": "para realizar a assinatura do serviço de P2P por",
+  "P2P_FEE_TEXT_4": "dias",
+  "P2P_SIGNATURE_CONFIRM": "Assinatura efetivada com sucesso"
 }

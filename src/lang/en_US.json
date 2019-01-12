@@ -629,7 +629,7 @@
   "P2P_BUTTON_RATE_SELLER": "Rate seller",
   "P2P_CHAT_NOBODY_WAS_INSTERESTED_YET": "Nobody was interested in your offer yet",
   "P2P_FAILED_TO_GET_ORDERS": "Could not get list of orders, try again later on",
-  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and signature",
+  "P2P_CONFIRM_PASSWORD_SIGNATURE": "Enter your password to confirm delivery and",
   "P2P_CONFIRM_SIGNATURE": " SIGNATURE",
   "P2P_INFORMATION": "Information",
   "P2P_SORT_TITLE": "Filter",
@@ -647,5 +647,10 @@
   "P2P_INFORMATION_ESCROW_1": "The minimum order value in escrow is $ 5.00 per order.",
   "P2P_INFORMATION_ESCROW_2": "The rate paid by the seller in escrow is 1%.",
   "P2P_INFORMATION_ESCROW_3": "To ensure the agility and security of the system, in Escrow the seller makes the payment in advance.",
-  "P2P_INFORMATION_FOOTER": "You will receive notifications by email when your purchase or sale takes effect, you will also receive an email for new chats that are open with you."
+  "P2P_INFORMATION_FOOTER": "You will receive notifications by email when your purchase or sale takes effect, you will also receive an email for new chats that are open with you.",
+  "P2P_FEE_TEXT_1": "You are sending",
+  "P2P_FEE_TEXT_2": "LUNES",
+  "P2P_FEE_TEXT_3": "to sign P2P service for",
+  "P2P_FEE_TEXT_4": "days",
+  "P2P_SIGNATURE_CONFIRM": "Signature successfully completed"
 }
