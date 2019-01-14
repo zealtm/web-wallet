@@ -105,10 +105,9 @@ export function* getCoinForPaymentSaga(payload) {
 
     let coins = [];
 
-    if(response.coins.length>0){
-      response.coins.map((val)=>{
-        if(val.abbreviation!==payload.coin){
-
+    if (response.coins.length > 0) {
+      response.coins.map(val => {
+        if (val.abbreviation !== payload.coin) {
           coins.push(val);
         }
       });
@@ -391,6 +390,27 @@ export function* getHistoryBuySaga(payload) {
       history
     });
     yield put({ type: "SET_LOADING_HISTORY", payload: false });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getLunesBuyPrices(payload) {
+  try {
+    let { coins } = payload;
+    let token = yield call(getAuthToken);
+    let response = yield call(buyService.getLunesBuyPrices, token);
+
+    coins.lunes.price.BRL.price = response.BRL.price;
+    coins.lunes.price.EUR.price = response.EUR.price;
+    coins.lunes.price.USD.price = response.USD.price;
+   
+    yield put({
+      type: "GET_LUNES_BUY_PRICES",
+      coins
+    });
+
+    return;
   } catch (error) {
     yield put(internalServerError());
   }

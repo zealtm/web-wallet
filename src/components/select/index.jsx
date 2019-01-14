@@ -58,6 +58,7 @@ class Select extends React.Component {
     }
   };
 
+  //NAO USAR WILL MOUNT
   componentWillMount() {
     document.addEventListener("click", this.handleClick);
   }
@@ -106,7 +107,8 @@ Select.propTypes = {
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default Select;

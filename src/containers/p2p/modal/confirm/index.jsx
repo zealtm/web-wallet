@@ -65,9 +65,12 @@ class ConfirmModal extends React.Component {
   }
 }
 
-ConfirmModal.propTypes = {};
+ConfirmModal.propTypes = {
+  closeAvaliation: PropTypes.func.isRequired,
+  closeChat: PropTypes.func.isRequired
+};
 
-const mapStateToProps = store => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ closeAvaliation, closeChat }, dispatch);

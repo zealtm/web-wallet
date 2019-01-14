@@ -272,6 +272,7 @@
   "MENU_PURCHASE": "Comprar",
   "MENU_COUPONS": "Cupons",
   "MENU_SETTING": "Configurações",
+  "MENU_DEPOSIT": "Depósito",
   "MENU_LEASING": "Leasing",
   "MODAL_TITLE_START_LEASING": "Iniciar Leasing",
   "MENU_PRIVACY": "Privacidade",
@@ -499,7 +500,7 @@
   "INVITE_STATUS_TRANSACTED": "Transacionado",
   "INVITE_STATUS_REDEEMED": "Resgatado",
   "INVITE_ERROR_EMAIL": "Seu e-mail não foi verificado, por favor tente novamente clicando no botão a baixo.",
-  "BTN_INVITE_RESEND": "",
+  "BTN_INVITE_RESEND": "Reenviar",
   "INVITE_SUCCESS_EMAIL": "E-mail confirmado.",
   "MENU_COINSALE": "Comprar",
   "COINSALE_TITLE": "COMPRAR CRIPTOMOEDAS",
@@ -590,5 +591,23 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
   "P2P_MY_LISTING": "Meus anúncios",
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
-  "P2P_COMING_SOON": "Avaliação em breve disponível !"
+  "P2P_COMING_SOON": "Avaliação em breve disponível !",
+
+  "DEPOSIT_TAB_TITLE": "Depósito",
+  "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
+  "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
+  "DEPOSIT_HEADER_SUBTITLE": "Deposite dinheiro FIAT para usar os serviços Lunes",
+  "DEPOSIT_PAYMENT_METHODS": "Formas de pagamento",
+  "DEPOSIT_RECURRENT": "Recorrente",
+  "DEPOSIT_INVOICE": "Boleto",
+  "DEPOSIT_CREDIT": "Crédito",
+
+  "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Banco",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "Você será direcionado para o site do Banco que efeturá seu pagamento em débito",
+  "BANK_ICON": "Icone do banco",
+  "DEPOSIT_TITLE_CANCEL": "Alerta para cancelamento",
+  "DEPOSIT_TEXT_CANCEL": "Você clicou em cancelar o seu depósito recorrente no valor de:",
+  "DEPOSIT_BTN_CANCEL": "Eu quero cancelar",
+  "DEPOSIT_PACK_TEXT": "Você vai receber de dinheiro na plataforma o equivalente à"
 }

@@ -124,6 +124,12 @@ let buycoin = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
 });
 
+let deposit = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../deposit")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../deposit")
+});
+
 let invite = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../invite")),
   loading: loading,
@@ -156,6 +162,7 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+              <Route path="/deposit" component={deposit} />
 
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
