@@ -333,6 +333,7 @@ class CreateOffer extends React.Component {
                   name="amount"
                   placeholder="0.0000"
                   className={style.inputDefault}
+                  // value={this.createDone ? this.state.order.amount : ""}
                   value={this.state.order.amount}
                   onChange={e => this.handleFields(e)}
                 />
