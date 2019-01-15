@@ -224,16 +224,10 @@ class CardOffer extends React.Component {
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * orderSell.amount;
 
-    return (
-      <div className={style.baseUser} onClick={this.handleClick}>
+    return <div className={style.baseUser} onClick={this.handleClick}>
         <Grid container>
           <Grid item xs={2}>
-            <Avatar
-              alt="avatar"
-              src={this.rederPictureGravatar(user.email)}
-              className={style.avatar}
-              onClick={this.openUserProfile}
-            />
+            <Avatar alt="avatar" src={this.rederPictureGravatar(user.email)} className={style.avatar} onClick={this.openUserProfile} />
           </Grid>
 
           <Grid item xs={5}>
@@ -251,23 +245,13 @@ class CardOffer extends React.Component {
             </div>
           </Grid>
 
-          <Grid item xs={5}>
+        <Grid item xs={5} style={{ marginTop: "auto" }}>
             <div className={style.boxStar}>
               {this.renderRatingButton()}
 
-              {userEmail === user.email &&
-              order.status != "confirmed" &&
-              order.status !== "canceled" ? (
-                <button
-                  className={style.btnClose}
-                  onClick={this.handleCancelOrder}
-                >
-                  <img
-                    className={style.cancelOffer}
-                    src="images/icons/close/close.png"
-                  />
-                </button>
-              ) : null}
+              {userEmail === user.email && order.status != "confirmed" && order.status !== "canceled" ? <button className={style.btnClose} onClick={this.handleCancelOrder}>
+                  <img className={style.cancelOffer} src="images/icons/close/close.png" />
+                </button> : null}
             </div>
 
             <span className={style.defaultFiat}>
@@ -290,18 +274,12 @@ class CardOffer extends React.Component {
             </div>
           </Grid>
           <Grid item xs={2} />
-          <Grid
-            item
-            xs={10}
-            className={style.boxDetails}
-            style={openDetails ? { display: "block" } : null}
-          >
+          <Grid item xs={10} className={style.boxDetails} style={openDetails ? { display: "block" } : null}>
             <div className={style.textDetails}>{order.description}</div>
             {mySignature && this.renderNegociateButton(user)}
           </Grid>
         </Grid>
-      </div>
-    );
+      </div>;
   }
 }
 
