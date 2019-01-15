@@ -251,7 +251,7 @@ class CardOffer extends React.Component {
             </div>
           </Grid>
 
-          <Grid item xs={5}>
+          <Grid item xs={5} style={{ marginTop: "auto" }}>
             <div className={style.boxStar}>
               {this.renderRatingButton()}
 
