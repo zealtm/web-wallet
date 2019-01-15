@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createOfferWhenSelling, clearOffer } from "../redux/p2pAction";
+import {
+  createOfferWhenSelling,
+  clearOffer,
+  getPaymentMethodsWhenBuying
+} from "../redux/p2pAction";
 
 // MATERIAL
 import {
@@ -78,6 +82,11 @@ class CreateOffer extends React.Component {
 
     this.handleFields = this.handleFields.bind(this);
   }
+
+  componentDidMount = () => {
+    const { getPaymentMethodsWhenBuying } = this.props;
+    getPaymentMethodsWhenBuying("lunes");
+  };
 
   coinSelectedSell = (value, title, img = undefined) => {
     const { coinsEnabled } = this.props;
@@ -383,39 +392,42 @@ class CreateOffer extends React.Component {
             /> */}
             <hr />
           </div>
-
-          <div className={style.formGroup}>
-            <Grid container>
-              <Grid item xs={4}>
-                <div className={style.textSmall}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
-                </div>
-                <Select
-                  list={coinsEnabled}
-                  title={coinSell.name}
-                  titleImg={coinSell.img}
-                  selectItem={this.coinSelectedSell}
-                  error={null}
-                  width={"120%"}
-                />
+          {!coinsEnabled.length ? (
+            <Loading />
+          ) : (
+            <div className={style.formGroup}>
+              <Grid container>
+                <Grid item xs={4}>
+                  <div className={style.textSmall}>
+                    {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
+                  </div>
+                  <Select
+                    list={coinsEnabled}
+                    title={coinSell.name}
+                    titleImg={coinSell.img}
+                    selectItem={this.coinSelectedSell}
+                    error={null}
+                    width={"120%"}
+                  />
+                </Grid>
+                <Grid item xs={2} />
+                <Grid item xs={5}>
+                  <div className={style.textSmallCoinPayment}>
+                    {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
+                  </div>
+                  <Select
+                    list={coinPaymentList}
+                    title={coinBuy.name}
+                    titleImg={coinBuy.img}
+                    selectItem={this.paymentCoinSelected}
+                    error={null}
+                    width={"100%"}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={2} />
-              <Grid item xs={5}>
-                <div className={style.textSmallCoinPayment}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
-                </div>
-                <Select
-                  list={coinPaymentList}
-                  title={coinBuy.name}
-                  titleImg={coinBuy.img}
-                  selectItem={this.paymentCoinSelected}
-                  error={null}
-                  width={"100%"}
-                />
-              </Grid>
-            </Grid>
-            <hr />
-          </div>
+              <hr />
+            </div>
+          )}
 
           <div className={style.formGroup}>
             <div className={style.textSmall}>
@@ -472,7 +484,8 @@ CreateOffer.propTypes = {
   createDone: PropTypes.bool,
   createError: PropTypes.bool,
   clearOffer: PropTypes.func,
-  createOfferWhenSelling: PropTypes.func
+  createOfferWhenSelling: PropTypes.func,
+  getPaymentMethodsWhenBuying: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -487,7 +500,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createOfferWhenSelling,
-      clearOffer
+      clearOffer,
+      getPaymentMethodsWhenBuying
     },
     dispatch
   );
