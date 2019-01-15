@@ -34,8 +34,8 @@
   position: absolute;
   bottom: 0px;
   right: 16px;
-  max-height: 580px;
-  height: 92vh;
+  /* max-height: 580px; */
+  height: 70vh;
   width: 100%;
   max-width: 414px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.3);
@@ -225,9 +225,49 @@
   text-align: right;
 }
 :local .content {
-  height: calc(92vh - 200px);
-  /* height: 400px; */
+  height: calc(145vh - 92vh);
   overflow: auto;
+}
+
+@media (max-width: 1920px) {
+  :local .content {
+    height: calc(144vh - 95vh);
+    overflow: auto;
+  }
+}
+
+@media (min-width: 1920px) {
+  :local .content {
+    height: calc(144vh - 91vh);
+    overflow: auto;
+  }
+}
+@media (min-width: 1920px) {
+  :local .content {
+    height: calc(144vh - 91vh);
+    overflow: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  :local .content {
+    height: calc(144vh - 92vh);
+    overflow: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  :local .content {
+    height: calc(144vh - 99vh);
+    overflow: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  :local .content {
+    height: calc(144vh - 80vh);
+    overflow: auto;
+  }
 }
 
 :local .baseContent {
