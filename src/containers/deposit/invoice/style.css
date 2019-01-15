@@ -29,17 +29,34 @@
   top: 5px;
 }
 
-:local .containerInput {
-  background: #473088;
-  font-size: 1.33em;
+:local .selectImageDate{
   text-align: center;
+}
+:local .selectImageDate img{
+  position: absolute;
+}
+:local .selectImageDate img:nth-child(1){
+  max-width: 20px;
+  position: absolute;
+  top: 21px;
+}
+
+:local .containerInput {
+  position: relative;
+  background: #473088;
   border-radius: 5px;
-  padding: 15px 35px;
+  padding: 10px 15px;
   min-height: 48px;
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
+}
+:local .desable{
+  opacity: .4;
+}
+:local .desable img:nth-child(1){
+  filter: grayscale(1);
 }
 /* 2. TEXT */
 

@@ -26,20 +26,32 @@ import i18n from "../../../utils/i18n";
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
 
-const customStyle = {
+const customStyle = theme => ({
   underlineItems: {
     color: "white",
     borderBottomColor: `${colors.green.default} !important`,
-    fontSize: "1em !important",
+    fontSize: "1em",
     width: "8em",
+    [theme.breakpoints.down('sm')]: {
+      width: "14em",
+    },
     icon: {
       fill: "green"
     }
   },
+  selectDate:{
+    color: "white",
+    fontSize: "1em",
+    width: "8em",
+    [theme.breakpoints.down('sm')]: {
+      width: "5em",
+      color:'white'
+    },
+  },
   menuItemRoot: {
     color: colors.messages.info
   }
-};
+});
 
 const settings = {
   arrows: false,
@@ -77,7 +89,7 @@ class Invoice extends React.Component {
 
     this.state = {
       checkBox: false,
-      dayPayment: "",
+      dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
       days: [...Array(31).keys()],
       payment: i18n.t("DEPOSIT_INVOICE"),
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_CREDIT")]
@@ -215,13 +227,13 @@ class Invoice extends React.Component {
 
           <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
-              <Grid item>
+              <Grid item className={style.selectImageDate}>
+              <div className={!checkBox ? style.desable : ''}>
                 <img
                   src="images/icons/deposit/calendar@25x28.png"
                   alt="Calendar"
                 />
-              </Grid>
-              <Grid item>
+                
                 <FormControl
                   className={classes.formControl}
                   disabled={!checkBox}
@@ -229,7 +241,7 @@ class Invoice extends React.Component {
                   <div className={style.paddingTop}>
                     <Select
                       classes={{
-                        selectMenu: classes.underlineItems
+                        selectMenu: classes.selectDate
                       }}
                       MenuProps={MenuProps}
                       value={this.state.dayPayment}
@@ -238,11 +250,13 @@ class Invoice extends React.Component {
                       name="day"
                       disableUnderline={true}
                       IconComponent={props => <img {...props} src={imgUri} />}
+                      style={{fontSize:'.9em', paddingLeft:'25px'}}
                     >
                       {this.listDays()}
                     </Select>
                   </div>
                 </FormControl>
+                </div>
               </Grid>
             </div>
           </Grid>

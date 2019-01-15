@@ -616,6 +616,7 @@
   "DEPOSIT_RECURRENT": "Recurrent",
   "DEPOSIT_INVOICE": "Invoice",
   "DEPOSIT_CREDIT": "Credit",
+  "DEPOSIT_SELECT_DATE": "Select date",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",
