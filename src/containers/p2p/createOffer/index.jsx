@@ -211,6 +211,36 @@ class CreateOffer extends React.Component {
     }
   };
 
+  clearAllState = () => {
+    const { clearOffer } = this.props;
+    this.setState({
+      coinSell: {
+        name: "Select",
+        img: ""
+      },
+      coinBuy: {
+        name: "Select",
+        img: ""
+      },
+
+      selectedValue: "",
+
+      order: {
+        coin: "",
+        type: "",
+        paymentMethodId: "",
+        amount: "",
+        amountPayment: "",
+        addressSeller: "",
+        description: ""
+      },
+      errors: [],
+      descriptionTotal: 250
+    });
+
+    clearOffer();
+  };
+
   validateForm = () => {
     const { createOfferWhenSelling } = this.props;
     const { order } = this.state;
@@ -280,15 +310,19 @@ class CreateOffer extends React.Component {
 
     const username = user.name + " " + user.surname;
 
-    if (createDone)
+    if (createDone) {
       return (
         <div>
           <span className={style.textSuccess}>{i18n.t("P2P_TEXT_1")}</span>
-          <button className={style.btContinue} onClick={clearOffer}>
+          <button
+            className={style.btContinue}
+            onClick={() => this.clearAllState()}
+          >
             {i18n.t("P2P_TEXT_2")}
           </button>
         </div>
       );
+    }
 
     if (createError)
       return (
