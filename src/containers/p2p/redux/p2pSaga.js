@@ -182,9 +182,7 @@ export function* getPaymentMethodsWhenBuying(payload) {
       coin
     );
 
-    let cripto = [
-      { title: "LUNES", img: `images/icons/coins/lunes.png`, value: "lunes" }
-    ];
+    let cripto = [];
     if (response.cripto) {
       response.cripto.forEach(val => {
         if (val.status == "active") {

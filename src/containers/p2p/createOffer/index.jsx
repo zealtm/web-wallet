@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createOfferWhenSelling, clearOffer } from "../redux/p2pAction";
+import {
+  createOfferWhenSelling,
+  clearOffer,
+  getPaymentMethodsWhenBuying
+} from "../redux/p2pAction";
 
 // MATERIAL
 import {
@@ -59,9 +63,7 @@ class CreateOffer extends React.Component {
         name: "Select",
         img: ""
       },
-
       selectedValue: "",
-
       order: {
         coin: "",
         type: "",
@@ -79,6 +81,11 @@ class CreateOffer extends React.Component {
     this.handleFields = this.handleFields.bind(this);
   }
 
+  componentDidMount = () => {
+    const { getPaymentMethodsWhenBuying } = this.props;
+    getPaymentMethodsWhenBuying(null);
+  };
+
   coinSelectedSell = (value, title, img = undefined) => {
     const { coinsEnabled } = this.props;
     const coinPaymentList = coinsEnabled.filter(coin => coin.value !== value);
@@ -90,6 +97,10 @@ class CreateOffer extends React.Component {
         value,
         img
       },
+      coinBuy: {
+        name: "Select",
+        img: ""
+      },
       coinPaymentList,
       order: {
         ...this.state.order,
@@ -100,12 +111,7 @@ class CreateOffer extends React.Component {
 
   paymentCoinSelected = (value, title, img = undefined) => {
     const { coinsEnabled } = this.props;
-    let idMethod = 0;
-    coinsEnabled.map(val => {
-      if (val.value == value) {
-        idMethod = val.id;
-      }
-    });
+    const paymentCoin = coinsEnabled.find(coin => coin.value === value);
 
     this.setState({
       ...this.state,
@@ -116,7 +122,7 @@ class CreateOffer extends React.Component {
       },
       order: {
         ...this.state.order,
-        paymentMethodId: idMethod
+        paymentMethodId: paymentCoin.id
       }
     });
   };
@@ -202,6 +208,36 @@ class CreateOffer extends React.Component {
     }
   };
 
+  clearAllState = () => {
+    const { clearOffer } = this.props;
+    this.setState({
+      coinSell: {
+        name: "Select",
+        img: ""
+      },
+      coinBuy: {
+        name: "Select",
+        img: ""
+      },
+
+      selectedValue: "",
+
+      order: {
+        coin: "",
+        type: "",
+        paymentMethodId: "",
+        amount: "",
+        amountPayment: "",
+        addressSeller: "",
+        description: ""
+      },
+      errors: [],
+      descriptionTotal: 250
+    });
+
+    clearOffer();
+  };
+
   validateForm = () => {
     const { createOfferWhenSelling } = this.props;
     const { order } = this.state;
@@ -269,17 +305,22 @@ class CreateOffer extends React.Component {
       clearOffer
     } = this.props;
 
+    console.warn(this.state.order);
     const username = user.name + " " + user.surname;
 
-    if (createDone)
+    if (createDone) {
       return (
         <div>
           <span className={style.textSuccess}>{i18n.t("P2P_TEXT_1")}</span>
-          <button className={style.btContinue} onClick={clearOffer}>
+          <button
+            className={style.btContinue}
+            onClick={() => this.clearAllState()}
+          >
             {i18n.t("P2P_TEXT_2")}
           </button>
         </div>
       );
+    }
 
     if (createError)
       return (
@@ -383,39 +424,42 @@ class CreateOffer extends React.Component {
             /> */}
             <hr />
           </div>
-
-          <div className={style.formGroup}>
-            <Grid container>
-              <Grid item xs={4}>
-                <div className={style.textSmall}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
-                </div>
-                <Select
-                  list={coinsEnabled}
-                  title={coinSell.name}
-                  titleImg={coinSell.img}
-                  selectItem={this.coinSelectedSell}
-                  error={null}
-                  width={"120%"}
-                />
+          {!coinsEnabled.length ? (
+            <Loading />
+          ) : (
+            <div className={style.formGroup}>
+              <Grid container>
+                <Grid item xs={4}>
+                  <div className={style.textSmall}>
+                    {i18n.t("P2P_CREATE_OFFER_COIN_ANNOUNCED")}
+                  </div>
+                  <Select
+                    list={coinsEnabled}
+                    title={coinSell.name}
+                    titleImg={coinSell.img}
+                    selectItem={this.coinSelectedSell}
+                    error={null}
+                    width={"120%"}
+                  />
+                </Grid>
+                <Grid item xs={2} />
+                <Grid item xs={5}>
+                  <div className={style.textSmallCoinPayment}>
+                    {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
+                  </div>
+                  <Select
+                    list={coinPaymentList}
+                    title={coinBuy.name}
+                    titleImg={coinBuy.img}
+                    selectItem={this.paymentCoinSelected}
+                    error={null}
+                    width={"100%"}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={2} />
-              <Grid item xs={5}>
-                <div className={style.textSmallCoinPayment}>
-                  {i18n.t("P2P_CREATE_OFFER_COIN_PAYMENT")}
-                </div>
-                <Select
-                  list={coinPaymentList}
-                  title={coinBuy.name}
-                  titleImg={coinBuy.img}
-                  selectItem={this.paymentCoinSelected}
-                  error={null}
-                  width={"100%"}
-                />
-              </Grid>
-            </Grid>
-            <hr />
-          </div>
+              <hr />
+            </div>
+          )}
 
           <div className={style.formGroup}>
             <div className={style.textSmall}>
@@ -472,7 +516,8 @@ CreateOffer.propTypes = {
   createDone: PropTypes.bool,
   createError: PropTypes.bool,
   clearOffer: PropTypes.func,
-  createOfferWhenSelling: PropTypes.func
+  createOfferWhenSelling: PropTypes.func,
+  getPaymentMethodsWhenBuying: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -487,7 +532,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createOfferWhenSelling,
-      clearOffer
+      clearOffer,
+      getPaymentMethodsWhenBuying
     },
     dispatch
   );

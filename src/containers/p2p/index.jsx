@@ -67,7 +67,7 @@ class P2P extends React.Component {
 
   renderContent = () => {
     const { tabIcon } = this.props.p2pStore;
-    
+
     const contents = [
       <Offers key={1} type="general" />,
       <Offers key={2} type="myhistory" />,
@@ -111,7 +111,7 @@ class P2P extends React.Component {
   };
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying, getSignature } = this.props;
-    getPaymentMethodsWhenBuying("lunes");
+    getPaymentMethodsWhenBuying();
     getSignature();
   };
 

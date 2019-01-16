@@ -15,7 +15,9 @@ const tabStyles = theme => ({
     margin: theme.spacing.unit * 2
   },
   tabsRoot: {
-    margin: "-5px", 
+    margin: "-5px",
+    position: "relative",
+    bottom: "12px"    
   },
   tabsIndicator: {
     backgroundColor: colors.green.dark,
