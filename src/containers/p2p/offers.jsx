@@ -217,7 +217,9 @@ class Offers extends React.Component {
       });
     }
     return orders.map((val, key) => {
-      return <CardOffer key={key} order={val} type={type} />;
+      return (
+        <CardOffer key={key} order={val} type={type} status={val.status} />
+      );
     });
   };
 

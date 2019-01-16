@@ -135,7 +135,7 @@ class CardOffer extends React.Component {
           {i18n.t("P2P_BUTTON_NEGOTIATE")}
         </button>
       );
-    } else if (!isCancelOrComplet && !isSameEmail) {
+    } else if (!isCancelOrComplet) {
       return (
         <button
           className={style.btContinue}
@@ -160,14 +160,14 @@ class CardOffer extends React.Component {
     );
   }
 
-  validateTypeUser = typeWay => {
+  validateTypeUser = (typeWay, status) => {
     const { order } = this.props;
     const typeWayIsSell = typeWay === "sell";
+
+    if (status === "open") return order.sell.user;
     if (!order || (order && !order.buy) || (order && !order.sell)) return;
 
     const user = typeWayIsSell ? order.buy.user : order.sell.user;
-
-    // if (typeWayIsSell && !user.id) return order.sell;
 
     return user;
   };
@@ -213,7 +213,7 @@ class CardOffer extends React.Component {
   render() {
     const { order, userEmail, mySignature } = this.props;
     const { openDetails } = this.state;
-    const user = this.validateTypeUser(order.way);
+    const user = this.validateTypeUser(order.way, order.status);
     const orderBuy = order.buy;
     const orderSell = order.sell;
 

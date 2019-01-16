@@ -134,12 +134,31 @@ class HeaderDetails extends React.Component {
     );
   };
 
+  renderContentToBuy = order => {
+    const { userEmailLoggedIn } = this.props;
+    const orderStatusIsOpen = order.status === "open";
+    console.warn(userEmailLoggedIn, order.sell.user.email);
+    if (userEmailLoggedIn === order.sell.user.email) return null;
+
+    return (
+      <span>
+        {this.renderAddresInput(orderStatusIsOpen)}
+
+        <Grid container>
+          <Grid item xs={3} />
+          <Grid item xs={9}>
+            {this.renderErrors()}
+            {this.renderButtons(orderStatusIsOpen, order)}
+          </Grid>
+        </Grid>
+      </span>
+    );
+  };
+
   render() {
     const { typeOfChatUser, currentOrder: order } = this.props.chatDetails;
 
     if (!order) return null;
-
-    const orderStatusIsOpen = order.status === "open";
 
     return (
       <div>
@@ -176,16 +195,7 @@ class HeaderDetails extends React.Component {
             <div className={style.boxDescription}>{order.description}</div>
           </Grid>
         </Grid>
-
-        {this.renderAddresInput(orderStatusIsOpen)}
-
-        <Grid container>
-          <Grid item xs={3} />
-          <Grid item xs={9}>
-            {this.renderErrors()}
-            {this.renderButtons(orderStatusIsOpen, order)}
-          </Grid>
-        </Grid>
+        {this.renderContentToBuy(order)}
 
         <Grid
           container
@@ -208,11 +218,14 @@ HeaderDetails.propTypes = {
   openDeposit: PropTypes.func,
   chatDetails: PropTypes.object.isRequired,
   chatDetailsSetter: PropTypes.func.isRequired,
-  order: PropTypes.object
+  order: PropTypes.object,
+  userEmailLoggedIn: PropTypes.string
 };
+
 const mapStateToProps = store => ({
   chatDetails: store.p2p.chatDetails,
-  order: store.p2p.chat.iduser
+  order: store.p2p.chat.iduser,
+  userEmailLoggedIn: store.user.user.email
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
