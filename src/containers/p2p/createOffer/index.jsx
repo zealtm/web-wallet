@@ -63,9 +63,7 @@ class CreateOffer extends React.Component {
         name: "Select",
         img: ""
       },
-
       selectedValue: "",
-
       order: {
         coin: "",
         type: "",
@@ -85,7 +83,7 @@ class CreateOffer extends React.Component {
 
   componentDidMount = () => {
     const { getPaymentMethodsWhenBuying } = this.props;
-    getPaymentMethodsWhenBuying("lunes");
+    getPaymentMethodsWhenBuying(null);
   };
 
   coinSelectedSell = (value, title, img = undefined) => {
@@ -99,6 +97,10 @@ class CreateOffer extends React.Component {
         value,
         img
       },
+      coinBuy: {
+        name: "Select",
+        img: ""
+      },
       coinPaymentList,
       order: {
         ...this.state.order,
@@ -109,12 +111,7 @@ class CreateOffer extends React.Component {
 
   paymentCoinSelected = (value, title, img = undefined) => {
     const { coinsEnabled } = this.props;
-    let idMethod = 0;
-    coinsEnabled.map(val => {
-      if (val.value == value) {
-        idMethod = val.id;
-      }
-    });
+    const paymentCoin = coinsEnabled.find(coin => coin.value === value);
 
     this.setState({
       ...this.state,
@@ -125,7 +122,7 @@ class CreateOffer extends React.Component {
       },
       order: {
         ...this.state.order,
-        paymentMethodId: idMethod
+        paymentMethodId: paymentCoin.id
       }
     });
   };
@@ -308,6 +305,7 @@ class CreateOffer extends React.Component {
       clearOffer
     } = this.props;
 
+    console.warn(this.state.order);
     const username = user.name + " " + user.surname;
 
     if (createDone) {
