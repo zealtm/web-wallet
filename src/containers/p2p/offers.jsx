@@ -80,9 +80,7 @@ class Offers extends React.Component {
         value: "lunes",
         img: "images/icons/coins/lunes.png"
       },
-      listTypeP2P: [
-        { title: "P2P", value: undefined, img: undefined }
-      ],
+      listTypeP2P: [{ title: "P2P", value: undefined, img: undefined }],
       listTypeFilter: [
         { title: "Todos", value: undefined, img: undefined },
         { title: "Meus", value: undefined, img: undefined }
@@ -99,7 +97,8 @@ class Offers extends React.Component {
   }
 
   coinSelected = (value, title, img = undefined) => {
-    const { getFilter } = this.props;
+    const { typeFilter, coinSelect } = this.state;
+    const { getFilter, getMyOrders } = this.props;
     this.setState({
       ...this.state,
       coinSelect: {
@@ -109,7 +108,11 @@ class Offers extends React.Component {
       }
     });
 
-    getFilter("p2p", value);
+    if (typeFilter == "Todos") {
+      getFilter("p2p", value);
+    } else {
+      getMyOrders(value);
+    }
   };
 
   clearCancel = () => {
@@ -222,12 +225,12 @@ class Offers extends React.Component {
     const { getFilter, getMyOrders, getHistory, type } = this.props;
     const { coinSelect, myOrders } = this.state;
 
-    if (myOrders == false && type != "myhistory") {
+    if (title == "Meus") {
       getMyOrders(coinSelect.value);
     } else if (type == "myhistory") {
       getHistory(coinSelect.value);
     } else {
-      getFilter("p2p", "");
+      getFilter("p2p", coinSelect.value);
     }
 
     if (filtermyorder) {
@@ -280,13 +283,18 @@ class Offers extends React.Component {
     return;
   };
   selectTypeP2P = (value, title) => {
-    const { getHistory } = this.props;
-    let { coinSelect, typeP2P } = this.state;
+    const { getFilter, getMyOrders } = this.props;
+    let { coinSelect, typeFilter } = this.state;
     this.setState({
       ...this.state,
       typeP2P: title
     });
-    getHistory(coinSelect.value, typeP2P.toLowerCase());
+
+    if (typeFilter == "Todos") {
+      getFilter("p2p", coinSelect.value);
+    } else {
+      getMyOrders(coinSelect.value);
+    }
   };
 
   handleSort = () => {
@@ -446,7 +454,8 @@ Offers.propTypes = {
   loading: PropTypes.bool,
   type: PropTypes.string,
   clearCancel: PropTypes.func,
-  cancelDone: PropTypes.bool
+  cancelDone: PropTypes.bool,
+  typeFilter: PropTypes.string
 };
 
 const mapStateToProps = store => ({
