@@ -137,7 +137,7 @@ class HeaderDetails extends React.Component {
   renderContentToBuy = order => {
     const { userEmailLoggedIn } = this.props;
     const orderStatusIsOpen = order.status === "open";
-    console.warn(userEmailLoggedIn, order.sell.user.email);
+
     if (userEmailLoggedIn === order.sell.user.email) return null;
 
     return (
