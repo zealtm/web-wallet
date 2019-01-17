@@ -590,5 +590,6 @@
   "P2P_YEARLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um ano.",
   "P2P_MY_LISTING": "Meus anúncios",
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
-  "P2P_COMING_SOON": "Avaliação em breve disponível !"
+  "P2P_COMING_SOON": "Avaliação em breve disponível !",
+  "SELECT_COIN": "Selecione uma moeda"
 }

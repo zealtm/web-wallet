@@ -351,12 +351,11 @@ class Invoice extends React.Component {
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
-    const title = coin.name || "Select a coin..";
+    const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
       ? this.currentDateTransform(invoice.dueDate)
       : (dueDatePayment = this.currentDateTransform(payment.dueDate));
-    //let dueDatePayment = this.currentDateTransform("02/12/2019");
 
     return (
       <Grid container direction="row" justify="center">
