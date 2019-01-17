@@ -587,7 +587,7 @@
   "P2P_QUARTERLY_SIGNATURE": "Trimestral",
   "P2P_SEMESTER_SIGNATURE": "Semestral",
   "P2P_YEARLY_SIGNATURE": "Anual",
-  "P2P_PLANS_DESCRIPTION": "O serviço de assinatura da plataforma de negociações P2P será liberada em período de beta aberto por um mês a partir da data de lançamento. A partir desse período, o acesso a negociações na plataforma irá ocorrer através da compra de pacotes com pagamento em Lunes.",
+  "P2P_PLANS_DESCRIPTION": "Faça a compra de seu pacote com Lunes e obtenha acesso completo ao sistema de P2P da Lunes",
   "P2P_MONTHLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por um mês.",
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por três meses.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "O plano básico de P2P te permitirá usar o sistema Lunes de P2P por seis meses.",
@@ -631,5 +631,6 @@
   "P2P_FEE_TEXT_4": "dias",
   "P2P_SIGNATURE_CONFIRM": "Assinatura efetivada com sucesso",
   "P2P_BUTTON_RATE_BUYER": "Avaliar",
-  "P2P_BUTTON_RATE_SELLER": "Avaliar"
+  "P2P_BUTTON_RATE_SELLER": "Avaliar",
+  "P2P_STATUS_PLAN": "Ativo"
 }

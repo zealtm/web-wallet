@@ -603,7 +603,7 @@
   "P2P_QUARTERLY_SIGNATURE": "Quarterly",
   "P2P_SEMESTER_SIGNATURE": "Semester",
   "P2P_YEARLY_SIGNATURE": "Yearly",
-  "P2P_PLANS_DESCRIPTION": "The signature of the P2P service will be open in a beta test for one month to all wallet users. After this period, to negotiate on the P2P platform will require buying a signature with Lunes payment.",
+  "P2P_PLANS_DESCRIPTION": "Purchase your package paying with Lunes and get full access to the Lunes P2P system",
   "P2P_MONTHLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for one month.",
   "P2P_QUARTERLY_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for three months.",
   "P2P_SEMESTER_SIGNATURE_DESCRIPTION": "The P2P basic plan will allow you to use the service for six months.",
@@ -652,5 +652,6 @@
   "P2P_FEE_TEXT_2": "LUNES",
   "P2P_FEE_TEXT_3": "to sign P2P service for",
   "P2P_FEE_TEXT_4": "days",
-  "P2P_SIGNATURE_CONFIRM": "Signature successfully completed"
+  "P2P_SIGNATURE_CONFIRM": "Signature successfully completed",
+  "P2P_STATUS_PLAN": "Active"
 }
