@@ -116,7 +116,10 @@ import {
   sendWithdrawSaga
 } from "../invite/redux/inviteSaga";
 
-import { getPackagesSaga } from "../deposit/redux/depositSaga";
+import {
+  getPackagesSaga,
+  getDepositHistorySaga
+} from "../deposit/redux/depositSaga";
 
 export default function* rootSaga() {
   yield [
@@ -246,6 +249,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
 
     // deposit
-    fork(takeLatest, "GET_PACKAGES", getPackagesSaga)
+    fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
+    fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga)
   ];
 }
