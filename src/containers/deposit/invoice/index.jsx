@@ -32,21 +32,21 @@ const customStyle = theme => ({
     borderBottomColor: `${colors.green.default} !important`,
     fontSize: "1em",
     width: "8em",
-    [theme.breakpoints.down('sm')]: {
-      width: "14em",
+    [theme.breakpoints.down("sm")]: {
+      width: "14em"
     },
     icon: {
       fill: "green"
     }
   },
-  selectDate:{
+  selectDate: {
     color: "white",
     fontSize: "1em",
     width: "8em",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       width: "5em",
-      color:'white'
-    },
+      color: "white"
+    }
   },
   menuItemRoot: {
     color: colors.messages.info
@@ -100,6 +100,7 @@ class Invoice extends React.Component {
     const { getPackages } = this.props;
     getPackages();
   }
+
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
@@ -159,7 +160,8 @@ class Invoice extends React.Component {
 
     this.setState({
       ...this.state,
-      checkBox: !checkBox
+      checkBox: !checkBox,
+      dayPayment: i18n.t("DEPOSIT_SELECT_DATE")
     });
   }
 
@@ -228,34 +230,36 @@ class Invoice extends React.Component {
           <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
               <Grid item className={style.selectImageDate}>
-              <div className={!checkBox ? style.desable : ''}>
-                <img
-                  src="images/icons/deposit/calendar@25x28.png"
-                  alt="Calendar"
-                />
-                
-                <FormControl
-                  className={classes.formControl}
-                  disabled={!checkBox}
-                >
-                  <div className={style.paddingTop}>
-                    <Select
-                      classes={{
-                        selectMenu: classes.selectDate
-                      }}
-                      MenuProps={MenuProps}
-                      value={this.state.dayPayment}
-                      renderValue={value => value}
-                      onChange={event => this.handleChange(event.target.value)}
-                      name="day"
-                      disableUnderline={true}
-                      IconComponent={props => <img {...props} src={imgUri} />}
-                      style={{fontSize:'.9em', paddingLeft:'25px'}}
-                    >
-                      {this.listDays()}
-                    </Select>
-                  </div>
-                </FormControl>
+                <div className={!checkBox ? style.desable : ""}>
+                  <img
+                    src="images/icons/deposit/calendar@25x28.png"
+                    alt="Calendar"
+                  />
+
+                  <FormControl
+                    className={classes.formControl}
+                    disabled={!checkBox}
+                  >
+                    <div className={style.paddingTop}>
+                      <Select
+                        classes={{
+                          selectMenu: classes.selectDate
+                        }}
+                        MenuProps={MenuProps}
+                        value={this.state.dayPayment}
+                        renderValue={value => value}
+                        onChange={event =>
+                          this.handleChange(event.target.value)
+                        }
+                        name="day"
+                        disableUnderline={true}
+                        IconComponent={props => <img {...props} src={imgUri} />}
+                        style={{ fontSize: ".9em", paddingLeft: "25px" }}
+                      >
+                        {this.listDays()}
+                      </Select>
+                    </div>
+                  </FormControl>
                 </div>
               </Grid>
             </div>
