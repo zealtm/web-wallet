@@ -597,6 +597,11 @@
   "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
   "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
   "DEPOSIT_HEADER_SUBTITLE": "Deposite dinheiro FIAT para usar os serviços Lunes",
+  "DEPOSIT_PAYMENT_METHODS": "Formas de pagamento",
+  "DEPOSIT_RECURRENT": "Recorrente",
+  "DEPOSIT_INVOICE": "Boleto",
+  "DEPOSIT_CREDIT": "Crédito",
+  "DEPOSIT_SELECT_DATE": "Escolha a data",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Banco",

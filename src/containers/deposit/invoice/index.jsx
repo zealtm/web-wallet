@@ -9,22 +9,98 @@ import { getPackages } from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
+import CustomCheckbox from "../../../components/checkBox";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { withStyles } from "@material-ui/core/styles";
 
 // UTILS
 import i18n from "../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
+import colors from "../../../components/bases/colors";
+
+const customStyle = theme => ({
+  underlineItems: {
+    color: "white",
+    borderBottomColor: `${colors.green.default} !important`,
+    fontSize: "1em",
+    width: "8em",
+    [theme.breakpoints.down("sm")]: {
+      width: "14em"
+    },
+    icon: {
+      fill: "green"
+    }
+  },
+  selectDate: {
+    color: "white",
+    fontSize: "1em",
+    width: "8em",
+    [theme.breakpoints.down("sm")]: {
+      width: "5em",
+      color: "white"
+    }
+  },
+  menuItemRoot: {
+    color: colors.messages.info
+  }
+});
+
+const settings = {
+  arrows: false,
+  draggable: true,
+  dots: false,
+  infinite: false,
+  speed: 200,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1279,
+      settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 959,
+      settings: {
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 599,
+      settings: {
+        slidesToShow: 2
+      }
+    }
+  ]
+};
 
 class Invoice extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      checkBox: false,
+      dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
+      days: [...Array(31).keys()],
+      payment: i18n.t("DEPOSIT_INVOICE"),
+      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_CREDIT")]
+    };
+  }
+
   componentDidMount() {
     const { getPackages } = this.props;
     getPackages();
   }
+
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
@@ -38,37 +114,162 @@ class Invoice extends React.Component {
     });
   };
 
-  render() {
-    let settings = {
-      arrows: false,
-      draggable: true,
-      dots: false,
-      infinite: false,
-      speed: 200,
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      responsive: [
-        {
-          breakpoint: 1279,
-          settings: {
-            slidesToShow: 3
-          }
-        },
-        {
-          breakpoint: 959,
-          settings: {
-            slidesToShow: 2
-          }
-        },
-        {
-          breakpoint: 599,
-          settings: {
-            slidesToShow: 2
-          }
+  listPaymentMethods = () => {
+    const { classes } = this.props;
+    const { paymentMethods } = this.state;
+
+    return paymentMethods.map((method, index) => (
+      <MenuItem
+        value={method}
+        key={index}
+        classes={{
+          root: classes.menuItemRoot
+        }}
+      >
+        {method}
+      </MenuItem>
+    ));
+  };
+
+  listDays = () => {
+    const { classes } = this.props;
+    const { days } = this.state;
+
+    return days.map((day, index) => (
+      <MenuItem
+        key={index}
+        value={day + 1}
+        classes={{
+          root: classes.menuItemRoot
+        }}
+      >
+        {day + 1}
+      </MenuItem>
+    ));
+  };
+
+  handleChange = value => {
+    this.setState({
+      ...this.state,
+      dayPayment: value
+    });
+  };
+
+  handleChangeRecurrent() {
+    const { checkBox } = this.state;
+
+    this.setState({
+      ...this.state,
+      checkBox: !checkBox,
+      dayPayment: i18n.t("DEPOSIT_SELECT_DATE")
+    });
+  }
+
+  handleChangePaymentMethod = value => {
+    this.setState({
+      ...this.state,
+      payment: value
+    });
+  };
+
+  renderPaymentMethods = () => {
+    const { classes } = this.props;
+    const { checkBox } = this.state;
+    const imgUri = "./images/icons/arrow/expand-more@1x.png";
+
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          color: "#fff",
+          maxHeight: 40 * 4.5,
+          marginTop: "45px",
+          backgroundColor: "#473088",
+          width: "10%"
         }
-      ]
+      }
     };
 
+    return (
+      <div>
+        <Grid item xs={12} className="payments">
+          <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
+        </Grid>
+
+        <Grid container spacing={8}>
+          <Grid item xs={12} sm={4}>
+            <div className={style.containerInput}>
+              <Select
+                classes={{
+                  selectMenu: classes.underlineItems
+                }}
+                MenuProps={MenuProps}
+                value={this.state.payment}
+                renderValue={value => value}
+                onChange={event =>
+                  this.handleChangePaymentMethod(event.target.value)
+                }
+                displayEmpty={true}
+                name="payment"
+                disableUnderline={true}
+                IconComponent={props => <img {...props} src={imgUri} />}
+              >
+                {this.listPaymentMethods()}
+              </Select>
+            </div>
+          </Grid>
+
+          <Grid item xs={6} sm={4}>
+            <div className={style.containerInput}>
+              <CustomCheckbox onChange={() => this.handleChangeRecurrent()} />
+              <div className={style.paddingTop}>
+                {i18n.t("DEPOSIT_RECURRENT")}
+              </div>
+            </div>
+          </Grid>
+
+          <Grid item xs={6} sm={4}>
+            <div className={style.containerInput}>
+              <Grid item className={style.selectImageDate}>
+                <div className={!checkBox ? style.desable : ""}>
+                  <img
+                    src="images/icons/deposit/calendar@25x28.png"
+                    alt="Calendar"
+                  />
+
+                  <FormControl
+                    className={classes.formControl}
+                    disabled={!checkBox}
+                  >
+                    <div className={style.paddingTop}>
+                      <Select
+                        classes={{
+                          selectMenu: classes.selectDate
+                        }}
+                        MenuProps={MenuProps}
+                        value={this.state.dayPayment}
+                        renderValue={value => value}
+                        onChange={event =>
+                          this.handleChange(event.target.value)
+                        }
+                        name="day"
+                        disableUnderline={true}
+                        IconComponent={props => <img {...props} src={imgUri} />}
+                        style={{ fontSize: ".9em", paddingLeft: "25px" }}
+                      >
+                        {this.listDays()}
+                      </Select>
+                    </div>
+                  </FormControl>
+                </div>
+              </Grid>
+            </div>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  };
+
+  render() {
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -109,6 +310,16 @@ class Invoice extends React.Component {
                   </IconButton>
                 </Grid>
               </Hidden>
+
+              <Grid
+                item
+                xs={12}
+                className={style.transparentBox}
+                style={{ marginTop: "10px", marginBottom: "10px" }}
+              >
+                {this.renderPaymentMethods()}
+              </Grid>
+
               <Grid
                 item
                 xs={12}
@@ -162,4 +373,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Invoice);
+)(withStyles(customStyle)(Invoice));

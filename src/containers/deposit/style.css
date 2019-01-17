@@ -40,6 +40,8 @@
   font-size: 12px;
 }
 
+/* 3. PAYMENT MEHTODS */
+
 @media screen and (max-width: 599px) {
   :local .header h1 {
     font-size: 12px;
