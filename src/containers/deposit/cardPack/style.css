@@ -1,9 +1,9 @@
 :local(.card) {
   background-color: rgba(255, 255, 255, 0.02);
   padding: 20px 5px 8px 5px;
-  border-radius: 10px;
+  border-radius: 4px;
   text-align: center;
-  margin: 10px;
+  margin: 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -90,4 +90,6 @@
 
 :local(.paragraph) {
   font-size: 12px;
+  display: block;
+  margin: 19px;
 }
