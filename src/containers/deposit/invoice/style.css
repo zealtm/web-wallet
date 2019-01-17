@@ -58,6 +58,11 @@
 :local .desable img:nth-child(1){
   filter: grayscale(1);
 }
+@media screen and (min-width: 600px) {
+  :local .box {
+    max-width: 70vw !important;
+  }
+}
 /* 2. TEXT */
 
 /* 3. BUTTONS */
