@@ -23,6 +23,7 @@
   width: 50px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
 }
 
 :local(.dollarSign) {
@@ -44,6 +45,10 @@
   font-weight: 500;
   color: #54d467;
   margin-top: 7px;
+}
+
+:local(.valueCard) {
+  margin-top: 25px;
 }
 
 @media screen and (max-width: 599px) {
