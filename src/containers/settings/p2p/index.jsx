@@ -80,9 +80,7 @@ class P2P extends React.Component {
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  Este plano permitirá usar o sistema Lunes de P2P por um mês
-                </p>
+                <p>{i18n.t("P2P_DESC_PLAN")}</p>
               </div>
               <div className={style.valueCard}>
                 <span className={style.dollarSign}>
