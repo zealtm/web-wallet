@@ -1,0 +1,5 @@
+/* BASE */
+:local(.information) {
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  text-align: center;
+}
