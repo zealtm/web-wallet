@@ -11,10 +11,12 @@ import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
 
+
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
 
 class Deposit extends React.Component {
+
   render() {
     const titles = [
       i18n.t("DEPOSIT_TAB_TITLE"),
