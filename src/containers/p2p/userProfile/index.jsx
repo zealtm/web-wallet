@@ -119,14 +119,18 @@ class UserProfile extends React.Component {
 
   renderEditIcon = () => {
     const { isEditabled } = this.state;
-    if (isEditabled) return <EditIcon onClick={() => this.validateField()} />;
-
-    return <EditIcon onClick={() => this.handleInputState()} />;
+    const { profile, userEmail } = this.props;
+    const isUserLogged = profile.email === userEmail;
+    if (isEditabled && isUserLogged)
+      return <EditIcon onClick={() => this.validateField()} />;
+    else if (isUserLogged)
+      return <EditIcon onClick={() => this.handleInputState()} />;
   };
 
   renderDescriptionInput = () => {
     const { isEditabled } = this.state;
     const { profile } = this.props;
+
     if (isEditabled) {
       return (
         <Grid item xs={12}>
@@ -277,7 +281,8 @@ UserProfile.propTypes = {
   userProfile: PropTypes.array,
   profile: PropTypes.object,
   clearUserProfile: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  userEmail: PropTypes.string
 };
 
 const mapStateToProps = store => ({
