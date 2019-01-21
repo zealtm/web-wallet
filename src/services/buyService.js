@@ -37,12 +37,12 @@ class BuyService {
     }
   }
 
-  async getCoinPayment(token) {
+  async getCoinPayment(token, coin) {
     try {
       API_HEADER.headers.Authorization = token;
 
       let response = await axios.get(
-        BASE_URL + "/coin/lunes/sell/paymentMethods",
+        BASE_URL + "/coin/" + coin + "/sell/paymentMethods",
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
@@ -90,7 +90,7 @@ class BuyService {
         payload,
         API_HEADER
       );
-     
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response;
     } catch (error) {
@@ -103,15 +103,34 @@ class BuyService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      let response = await axios.get(`${BASE_URL}/coin/${coins}/sell/history`, API_HEADER);
+      let response = await axios.get(
+        `${BASE_URL}/coin/${coins}/sell/history`,
+        API_HEADER
+      );
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      if(response.data.code !== 200){
+      if (response.data.code !== 200) {
         return internalServerError();
       }
-     
+
       return response.data.data.txs;
+    } catch (err) {
+      return internalServerError();
+    }
+  }
+
+  async getLunesBuyPrices(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+
+      let response = await axios.get(
+        `${BASE_URL}/coin/lunes/price?service=compra`,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data.data;
     } catch (err) {
       return internalServerError();
     }

@@ -52,7 +52,10 @@ const payment = (state = initialState, action) => {
     case "GET_PAYMENT_DATA_REDUCER":
       return {
         ...state,
-        number: action.number
+        payment: {
+          ...state.payment,
+          number: action.number
+        }
       };
 
     case "SET_PAYMENT_REDUCER":
@@ -116,7 +119,7 @@ const payment = (state = initialState, action) => {
           ...state.payment,
           error: true
         }
-      }
+      };
 
     default: {
       return {

@@ -17,6 +17,9 @@ import Grid from "@material-ui/core/Grid";
 import { formatDate } from "../../utils/numbers";
 import i18n from "../../utils/i18n";
 
+// CONSTANTS
+import { blockexplorer } from "../../constants/apiBaseUrl";
+
 // STYLES
 import style from "./style.css";
 
@@ -50,7 +53,6 @@ class LeasingHistory extends React.Component {
   cancelLeasing(txId) {
     let {
       coinFee,
-      decimalPoint,
       cancelLeasing,
       user,
       coins,
@@ -61,7 +63,6 @@ class LeasingHistory extends React.Component {
     cancelLeasing({
       txId,
       coinFee,
-      decimalPoint,
       password: user.password,
       coinName: coins.lunes.abbreviation
     });
@@ -145,7 +146,7 @@ class LeasingHistory extends React.Component {
                 <Grid item xs={12} className={style.descriptionHistory}>
                   <div>{i18n.t("LEASING_TITLE_EXPLORER")}</div>
                   <a
-                    href={"https://blockexplorer.lunes.io/tx/" + value.txID}
+                    href={blockexplorer["lunes"] + value.txID}
                     target="blank"
                   >
                     {value.txID}
@@ -171,7 +172,9 @@ class LeasingHistory extends React.Component {
   };
 
   render() {
-    let { balance, leasingBalance } = this.props;
+    const { coins, leasingBalance } = this.props;
+    const balance = coins.lunes ? coins.lunes.balance.available : "0";
+
     return (
       <div>
         <Grid container className={style.containerTransactions}>
@@ -225,24 +228,20 @@ class LeasingHistory extends React.Component {
 LeasingHistory.propTypes = {
   openModal: PropTypes.func,
   coins: PropTypes.array.isRequired,
-  balance: PropTypes.number,
   history: PropTypes.object,
   setLeasingLoading: PropTypes.func,
   leasingBalance: PropTypes.number,
   cancelLeasing: PropTypes.func,
   getLeasingInfo: PropTypes.func,
   coinFee: PropTypes.number,
-  decimalPoint: PropTypes.number,
   user: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   coins: store.skeleton.coins,
-  balance: store.skeleton.coins.lunes.balance.available,
   history: store.leasing.history.data,
   leasingBalance: store.leasing.leasingBalance,
   coinFee: store.leasing.coinFee.low,
-  decimalPoint: store.skeleton.coins.lunes.decimalPoint,
   user: store.user.user
 });
 

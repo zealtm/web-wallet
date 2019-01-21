@@ -56,7 +56,8 @@ class DoneRecharge extends React.Component {
 
 DoneRecharge.propTypes = {
   loading: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  loadWalletInfo: PropTypes.func.isRequired
 }
 
 const mapStateToProps = store => ({

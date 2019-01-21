@@ -34,7 +34,7 @@ class UserControl extends React.Component {
     if (openBox) {
       setTimeout(() => {
         this.setState({ ...this.state, openBox: false });
-      }, 10000);
+      }, 3000);
 
       return (
         <div className={style.menuUser}>
@@ -48,6 +48,17 @@ class UserControl extends React.Component {
               <img src="../../images/icons/settings/settings.png" />
             </div>
             {i18n.t("MENU_SETTING")}
+          </Link>
+
+          <Link
+            to="/invite"
+            className={style.linkPopMenu}
+            onClick={() => this.handleClick()}
+          >
+            <div className={style.boxIcon}>
+              <img src="../../images/icons/invite/invite.png" />
+            </div>
+            {i18n.t("MENU_INVITE")}
           </Link>
 
           {/* <Link to="/" className={style.linkPopMenu}> */}

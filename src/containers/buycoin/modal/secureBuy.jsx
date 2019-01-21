@@ -71,13 +71,13 @@ class SecureBuy extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>{i18n.t("BUYCOINS_CONFIRM_2")}</span>
+          <span>{i18n.t("COINSALE_CONFIRM_2")}</span>
           <span className={style.totalConfirm}>
-            {i18n.t("BUYCOINS_CONFIRM_1")}
+            {i18n.t("COINSALE_CONFIRM_1")}
           </span>
           <span> {i18n.t("RECHARGE_PASS_TO")} </span>
           <span className={style.addressConfirm}>
-            {i18n.t("BUYCOINS_TITLE")}
+            {i18n.t("COINSALE_TITLE")}
           </span>
         </div>
 
@@ -115,7 +115,7 @@ const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
   loading: store.buy.loading,
   user: store.user.user,
-  coins: store.skeleton.coins
+  coins: store.buy.coinsBuy
 });
 
 const mapDispatchToProps = dispatch =>

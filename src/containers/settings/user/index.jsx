@@ -29,7 +29,6 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 
-
 // STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
   img: {
@@ -115,43 +114,42 @@ class User extends React.Component {
   }
 
   handleSelectChange = (property, value) => {
+    switch (property) {
+      case "name":
+      case "surname":
+        value = value.replace(/([\d\\/-])/g, "");
+        break;
+      case "state":
+      case "city":
+        value = value.replace(/([\d\\/])/g, "");
+        break;
+      case "phone":
+      case "directDistanceDialing":
+      case "zipcode":
+        value = value.replace(/([^\d/])/g, "");
+        break;
+      case "birthDay":
+      case "birthMonth":
+      case "birthYear":
+      case "address":
+        value;
+        break;
+      case "password":
+      case "newPassword":
+      case "confirmNewPassword":
+        value = value.replace(/\s/, "");
+        break;
+    }
+
     this.setState({
       ...this.state,
       [property]: value
     });
+    return;
   };
 
   changeAvatar = () => {
     window.open("https://gravatar.com", "blank");
-  };
-
-  handleNameChange = value =>
-    this.handleSelectChange("name", value.replace(/([\d\\/-])/g, ""));
-  handleSurnameChange = surname =>
-    this.handleSelectChange("surname", surname.replace(/([\d\\/-])/g, ""));
-  handleBirthDayChange = birthDay =>
-    this.handleSelectChange("birthDay", birthDay);
-  handleBirthMonthChange = birthMonth =>
-    this.handleSelectChange("birthMonth", birthMonth);
-  handleBirthYearChange = birthYear =>
-    this.handleSelectChange("birthYear", birthYear);
-  handlePhoneChange = phone =>
-    this.handleSelectChange("phone", phone.replace(/([^\d/])/g, ""));
-  handleDirectDistanceDialingChange = ddd =>
-    this.handleSelectChange(
-      "directDistanceDialing",
-      ddd.replace(/([^\d/])/g, "")
-    );
-  handleAddressChange = address => this.handleSelectChange("address", address);
-  handleCityChange = city =>
-    this.handleSelectChange("city", city.replace(/([\d\\/])/g, ""));
-  handleZipcodeChange = zipcode =>
-    this.handleSelectChange("zipcode", zipcode.replace(/([^\d/])/g, ""));
-  handleStateChange = state =>
-    this.handleSelectChange("state", state.replace(/([\d\\/])/g, ""));
-
-  handlePasswordChange = property => event => {
-    this.handleSelectChange(property, event.target.value.replace(/\s/, ""));
   };
 
   updateData = () => {
@@ -351,10 +349,7 @@ class User extends React.Component {
                       : i18n.t("SETTINGS_USER_ACCOUNT_NOT_VERIFIED")}
                   </span>
                 </p>
-                <p
-                  className={style.textDefault}
-                  style={{ margin: "1rem 0 0 0" }}
-                >
+                <p className={style.pUserStatus_1}>
                   {emailVerified ? (
                     <React.Fragment>
                       <Done className={style.successDefault} />
@@ -371,7 +366,7 @@ class User extends React.Component {
                     </React.Fragment>
                   )}
                 </p>
-                <p className={style.textDefault} style={{ marginTop: "0" }}>
+                <p className={style.pUserStatus_2}>
                   {twoFactor ? (
                     <React.Fragment>
                       <Done className={style.successDefault} />
@@ -401,22 +396,31 @@ class User extends React.Component {
                   className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CURRENT_PASSWORD")}
+                  onChange={event =>
+                    this.handleSelectChange("password", event.target.value)
+                  }
                   value={password}
-                  onChange={this.handlePasswordChange("password")}
                 />
                 <input
                   className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_NEW_PASSWORD")}
+                  onChange={event =>
+                    this.handleSelectChange("newPassword", event.target.value)
+                  }
                   value={newPassword}
-                  onChange={this.handlePasswordChange("newPassword")}
                 />
                 <input
                   className={style.inputTextDefault}
                   type="password"
                   placeholder={i18n.t("SETTINGS_USER_CONFIRM_NEW_PASSWORD")}
+                  onChange={event =>
+                    this.handleSelectChange(
+                      "confirmNewPassword",
+                      event.target.value
+                    )
+                  }
                   value={confirmNewPassword}
-                  onChange={this.handlePasswordChange("confirmNewPassword")}
                 />
               </div>
             </Grid>
@@ -446,7 +450,7 @@ class User extends React.Component {
                     <input
                       className={style.inputTextDefault}
                       onChange={event =>
-                        this.handleNameChange(event.target.value)
+                        this.handleSelectChange("name", event.target.value)
                       }
                       value={name}
                       pattern="[0-9]+$"
@@ -460,7 +464,7 @@ class User extends React.Component {
                       <input
                         className={style.inputTextDefault}
                         onChange={event =>
-                          this.handleSurnameChange(event.target.value)
+                          this.handleSelectChange("surname", event.target.value)
                         }
                         value={surname}
                       />
@@ -476,7 +480,7 @@ class User extends React.Component {
                       <input
                         className={style.inputTextDefault}
                         onChange={event =>
-                          this.handleSurnameChange(event.target.value)
+                          this.handleSelectChange("surname", event.target.value)
                         }
                         value={surname}
                       />
@@ -502,7 +506,10 @@ class User extends React.Component {
                             MenuProps={MenuProps}
                             value={birthDay}
                             onChange={event =>
-                              this.handleBirthDayChange(event.target.value)
+                              this.handleSelectChange(
+                                "birthDay",
+                                event.target.value
+                              )
                             }
                             displayEmpty
                             name="age"
@@ -525,7 +532,10 @@ class User extends React.Component {
                             MenuProps={MenuProps}
                             value={birthMonth}
                             onChange={event =>
-                              this.handleBirthMonthChange(event.target.value)
+                              this.handleSelectChange(
+                                "birthMonth",
+                                event.target.value
+                              )
                             }
                             displayEmpty
                             name="age"
@@ -547,7 +557,10 @@ class User extends React.Component {
                             MenuProps={MenuProps}
                             value={birthYear}
                             onChange={event =>
-                              this.handleBirthYearChange(event.target.value)
+                              this.handleSelectChange(
+                                "birthYear",
+                                event.target.value
+                              )
                             }
                             displayEmpty
                             name="age"
@@ -566,16 +579,16 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div style={{ float: "left", width: "25%" }}>
+                      <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
-                          className={style.inputTextDefault}
-                          style={{ width: "60%" }}
+                          className={style.inputUserContact}
                           onChange={event =>
-                            this.handleDirectDistanceDialingChange(
+                            this.handleSelectChange(
+                              "direct",
                               event.target.value
                             )
                           }
@@ -586,11 +599,10 @@ class User extends React.Component {
                         {i18n.t("SETTINGS_USER_NUMBER")}
                       </div>
                       <input
-                        className={style.inputTextDefault}
+                        className={style.inputUserNumber}
                         maxLength="9"
-                        style={{ width: "63%" }}
                         onChange={event =>
-                          this.handlePhoneChange(event.target.value)
+                          this.handleSelectChange("phone", event.target.value)
                         }
                         value={phone}
                       />
@@ -603,16 +615,16 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div style={{ float: "left", width: "25%" }}>
+                      <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
-                          className={style.inputTextDefault}
-                          style={{ width: "60%" }}
+                          className={style.inputUserContact}
                           onChange={event =>
-                            this.handleDirectDistanceDialingChange(
+                            this.handleSelectChange(
+                              "direct",
                               event.target.value
                             )
                           }
@@ -623,11 +635,10 @@ class User extends React.Component {
                         {i18n.t("SETTINGS_USER_NUMBER")}
                       </div>
                       <input
-                        className={style.inputTextDefault}
+                        className={style.inputUserNumber}
                         maxLength="9"
-                        style={{ width: "63%" }}
                         onChange={event =>
-                          this.handlePhoneChange(event.target.value)
+                          this.handleSelectChange("phone", event.target.value)
                         }
                         value={phone}
                       />
@@ -648,7 +659,7 @@ class User extends React.Component {
                     <input
                       className={style.inputTextDefault}
                       onChange={event =>
-                        this.handleAddressChange(event.target.value)
+                        this.handleSelectChange("address", event.target.value)
                       }
                       value={address}
                     />
@@ -661,7 +672,7 @@ class User extends React.Component {
                     <input
                       className={style.inputTextDefault}
                       onChange={event =>
-                        this.handleCityChange(event.target.value)
+                        this.handleSelectChange("city", event.target.value)
                       }
                       value={city}
                     />
@@ -676,7 +687,7 @@ class User extends React.Component {
                       maxLength="8"
                       className={style.inputTextDefault}
                       onChange={event =>
-                        this.handleZipcodeChange(event.target.value)
+                        this.handleSelectChange("zipcode", event.target.value)
                       }
                       value={zipcode}
                     />
@@ -689,7 +700,7 @@ class User extends React.Component {
                     <input
                       className={style.inputTextDefault}
                       onChange={event =>
-                        this.handleStateChange(event.target.value)
+                        this.handleSelectChange("state", event.target.value)
                       }
                       value={state}
                     />

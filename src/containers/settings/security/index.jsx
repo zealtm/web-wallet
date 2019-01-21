@@ -1,5 +1,13 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+
+// REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getTwoFactorAuth } from "../redux/settingsAction";
+
+// STYLE
 import style from "../style.css";
 import Grid from "@material-ui/core/Grid";
 import i18n from "../../../utils/i18n";
@@ -52,4 +60,26 @@ class Security extends React.Component {
   }
 }
 
-export default withRouter(Security);
+Security.propTypes = {
+  twoFactor: PropTypes.bool,
+  getTwoFactorAuth: PropTypes.func,
+  settings: PropTypes.object
+};
+
+const mapStateToProps = store => ({
+  twoFactor: store.user.twoFactor,
+  settings: store.settings
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getTwoFactorAuth
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Security));

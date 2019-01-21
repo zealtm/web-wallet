@@ -6,6 +6,8 @@
 
 3. IMAGES/UI
 
+4. LOADING 
+   4.1 ITEMS
 
 */
 
@@ -220,12 +222,6 @@
   cursor: pointer;
 }
 
-:local .logo {
-  display: block;
-  width: 80px;
-  margin-left: 8px;
-}
-
 :local .iconNotification {
   float: right;
   display: block;
@@ -282,10 +278,6 @@
 /* eslint-enable */
 
 @media only screen and (max-width: 599px) {
-  :local .logo {
-    width: 75px;
-    margin-left: 14px;
-  }
   :local .menuHamb {
     background-color: "red";
     margin-left: -12px;
@@ -293,9 +285,6 @@
 }
 
 @media only screen and (min-width: 1280px) {
-  :local .logo {
-    margin-left: -5px;
-  }
   :local(.linkMenu img) {
     margin-right: 16px;
   }
@@ -304,15 +293,8 @@
 /* ------------------------------------------------------------------------- */
 
 /* 4. LOADING */
-/* 4.1 LOGO */
-:local(.logoLoading) {
-  composes: logo;
-  width: 200px;
-  margin-bottom: 2%;
-  display: inline;
-}
 
-/* 4.2 ITEMS */
+/* 4.1 ITEMS */
 :local(.screenLoadingContainer) {
   width: 50%;
   height: 100vh;
@@ -332,4 +314,35 @@
 
 :local(body) {
   background-color: #42227d;
+}
+:local(.menuP2P) {
+  align-items: center;
+  justify-content: center;
+  margin-left: 40%;
+  margin-top: 100px;
+  margin-bottom: 50%;
+}
+:local .iconP2p {
+  width: 40px;
+  height: 40px;
+}
+:local(.linkMenuP2P) {
+  top: 100%;
+  margin-top: -100px;
+  opacity: 0.5;
+  background-color: transparent;
+  border: none;
+}
+
+:local .linkMenuP2P:hover {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 599px) {
+  :local(.linkMenuP2P) {
+    position: static;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    opacity: 1;
+  }
 }

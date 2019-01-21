@@ -66,19 +66,25 @@ let security = Loadable({
 });
 
 let twoFactoryAuthenticate = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/security/2FA")),
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/2FA")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security/2FA")
 });
 
 let mobileAuthenticator = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/security/mobile")),
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/mobile")),
   loading: loading,
-  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/mobile")
+  serverSideRequirePath: path.resolve(
+    __dirname,
+    "../../settings/security/mobile"
+  )
 });
 
 let KYC = Loadable({
-  loader: () => fakeDelay(400).then(() => import("../../settings/security/KYC")),
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/KYC")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security/KYC")
 });
@@ -112,7 +118,6 @@ let recharge = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../recharge")
 });
-
 let errorNotFound = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../errors/404")),
   loading: loading,
@@ -131,10 +136,22 @@ let assets = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../assets")
 });
 
+let p2pSettings = Loadable({
+  loader: () => fakeDelay(400).then(() => import("../../settings/p2p")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/p2p")
+});
+
 let buycoin = Loadable({
   loader: () => fakeDelay(0).then(() => import("../../buycoin")),
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../buycoin")
+});
+
+let invite = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../invite")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../invite")
 });
 /* eslint-enable */
 
@@ -163,14 +180,23 @@ class App extends Component {
               <Route path="/wallet-settings" component={walletSettings} />
               <Route path="/definitions" component={definitions} />
               <Route path="/consent" component={consent} />
+
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
-              <Route path="/twoFactoryAuthenticate" component={twoFactoryAuthenticate}/>
-              <Route path="/mobileAuthenticator" component={mobileAuthenticator}/>
-              <Route path="/KYC" component={KYC}/>
+              <Route
+                path="/twoFactoryAuthenticate"
+                component={twoFactoryAuthenticate}
+              />
+              <Route
+                path="/mobileAuthenticator"
+                component={mobileAuthenticator}
+              />
+              <Route path="/KYC" component={KYC} />
 
+              <Route path="/setp2p" component={p2pSettings} />
               <Route path="/coinsale" component={buycoin} />
+              <Route path="/invite" component={invite} />
 
               {/* ERRORS PAGE */}
               <Route path="/404" component={errorNotFound} />

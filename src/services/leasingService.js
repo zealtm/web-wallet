@@ -9,11 +9,15 @@ import { internalServerError } from "../containers/errors/statusCodeMessage";
 // UTILS
 import { setAuthToken } from "../utils/localStorage";
 class LeasingService {
-  async getProfessionalNodes() {
+  async getProfessionalNodes(token) {
     try {
-      let response = await axios.get("https://lunes.in/trust.json");
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(
+        `${BASE_URL}/util/trusted-nodes`,
+        API_HEADER
+      );
 
-      return response.data.node;
+      return response.data.data.node;
     } catch (error) {
       internalServerError();
       return;
@@ -59,9 +63,9 @@ class LeasingService {
 
   async saveLeaseTransaction(data, coinName, token) {
     try {
-      let endpointUrl = BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
-
-      setAuthToken(endpointUrl.headers[HEADER_RESPONSE]);
+      API_HEADER.headers.Authorization = token;
+      let endpointUrl =
+        BASE_URL + "/coin/" + coinName + "/leasing/history/" + data.sender;
 
       let transactionData = {
         txID: data.id,
@@ -72,8 +76,9 @@ class LeasingService {
         describe: null
       };
 
-      API_HEADER.headers.Authorization = token;
       let response = await axios.post(endpointUrl, transactionData, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
       return response;
     } catch (error) {
       internalServerError();

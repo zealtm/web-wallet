@@ -14,6 +14,7 @@ import { inputValidator } from "../../../utils/inputValidator";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
+import LogoLunes from "../../../components/logoLunes";
 
 // STYLE
 import style from "../style.css";
@@ -80,8 +81,9 @@ class ResetUser extends React.Component {
             className={style.iconArrowBack}
           />
         </Link>
-
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
         <img
           src="../../../../images/icons/email/email@1x.png"
           className={style.iconEmail}

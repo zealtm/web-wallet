@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
-  getAssetHistory,
   getAssetGeneralInfo,
   reloadAsset
 } from "./redux/assetsAction";
@@ -237,7 +236,6 @@ class TransactionHistory extends React.Component {
 }
 
 TransactionHistory.propTypes = {
-  user: PropTypes.object.isRequired,
   skeleton: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
   getAssetHistory: PropTypes.func.isRequired,
@@ -246,7 +244,6 @@ TransactionHistory.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  user: store.user.user,
   skeleton: store.skeleton,
   assets: store.assets,
 });
@@ -254,7 +251,6 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getAssetHistory,
       getAssetGeneralInfo,
       reloadAsset
     },
