@@ -49,7 +49,6 @@ class P2P extends React.Component {
 
   renderPlans = () => {
     const { signatures, loadingP2P, mySignature } = this.props;
-
     if (loadingP2P)
       return (
         <div>
@@ -73,7 +72,7 @@ class P2P extends React.Component {
                     : style.status
                 }
               >
-                {val.status}
+                {i18n.t("P2P_STATUS_PLAN")}
               </h1>
               <img
                 src="/images/icons/p2p/card.png"
@@ -81,16 +80,13 @@ class P2P extends React.Component {
               />
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
-                <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
-                </p>
+                <p>{i18n.t("P2P_DESC_PLAN")}</p>
               </div>
               <div className={style.valueCard}>
-                <p className={style.dollarSign}>{val.coinValue}</p>
                 <span className={style.dollarSign}>
                   {val.duration} {i18n.t("P2P_FEE_TEXT_4")}
                 </span>
+                <p className={style.dollarSign}>{val.coinValue}</p>
               </div>
             </div>
           </Grid>
@@ -110,15 +106,14 @@ class P2P extends React.Component {
               <div className={style.hrCard} />
               <div className={style.cardTitle}>
                 <p>
-                  O plano básico de P2P te permitirá usar o sistema Lunes de P2P
-                  por um mês
+                  Este plano permitirá usar o sistema Lunes de P2P por um mês
                 </p>
               </div>
               <div className={style.valueCard}>
-                <p className={style.dollarSign}>{val.coinValue}</p>
                 <span className={style.dollarSign}>
                   {val.duration} {i18n.t("P2P_FEE_TEXT_4")}
                 </span>
+                <p className={style.dollarSign}>{val.coinValue}</p>
               </div>
             </div>
           </Grid>
