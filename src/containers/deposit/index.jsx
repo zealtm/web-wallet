@@ -34,6 +34,8 @@ class Deposit extends React.Component {
     return (
       <Grid container justify="center">
         <Modal
+          back={1}
+          title={i18n.t("DEPOSIT_INF_MODAL_HEADER")}
           content={<Informations />}
           show={isOpen}
           close={() => this.setState({ isOpen: false })}

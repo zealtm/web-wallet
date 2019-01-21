@@ -610,5 +610,15 @@
   "DEPOSIT_TITLE_CANCEL": "Alerta para cancelamento",
   "DEPOSIT_TEXT_CANCEL": "Você clicou em cancelar o seu depósito recorrente no valor de:",
   "DEPOSIT_BTN_CANCEL": "Eu quero cancelar",
-  "DEPOSIT_PACK_TEXT": "Você vai receber de dinheiro na plataforma o equivalente à"
+  "DEPOSIT_PACK_TEXT": "Você vai receber de dinheiro na plataforma o equivalente à",
+  "DEPOSIT_INF_MODAL_HEADER": "Volte ao passo anterior",
+  "DEPOSIT_INF_MODAL_TITLE": "Valide as informações abaixo e preencha/corrija o necessário:",
+  "DEPOSIT_INF_MODAL_FULLNAME": "Nome Completo",
+  "DEPOSIT_INF_MODAL_PERSONAL_NUMBER": "CPF/CNPJ",
+  "DEPOSIT_INF_MODAL_STATE": "Estado",
+  "DEPOSIT_INF_MODAL_CITY": "Cidade",
+  "DEPOSIT_INF_MODAL_CEP": "CEP",
+  "DEPOSIT_INF_MODAL_ADDRESS": "Endereço",
+  "DEPOSIT_INF_MODAL_ADDRESS_NUMBER": "Nº",
+  "DEPOSIT_INF_MODAL_BTN_CONTINUE": "Continuar"
 }
