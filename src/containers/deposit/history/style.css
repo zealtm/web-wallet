@@ -1,0 +1,78 @@
+/* 1. BASES */
+/* 2. TEXT */
+
+/* ------------------------------------------------------------------------- */
+
+/* 1. BASES */
+
+:local .boxHistory {
+  composes: bgPurpleDefault from "../../../components/bases/colorBase.css";
+  border-radius: 6px;
+  overflow: auto;
+  max-height: 650px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+:local .boxHistoryItems {
+  border-top: 1px solid #42227d;
+}
+
+:local .boxItem_1 {
+  padding: 10px 0;
+}
+
+:local .boxItem_2 {
+  composes: boxItem_1;
+  text-align: right;
+}
+
+:local .boxSubItem {
+  font-size: 10px;
+  display: flex;
+  border-bottom: 1px solid #473088;
+  font-weight: bold;
+  cursor: default;
+  margin-bottom: 8px;
+}
+
+:local .opacityItem {
+  composes: boxSubItem;
+  display: none;
+}
+
+@media screen and (max-width: 599px) {
+  :local .boxHistory {
+    font-size: 10px;
+    max-height: 350px;
+  }
+}
+
+:local(.boxHistory::-webkit-scrollbar-thumb) {
+  background-color: #68f285;
+}
+
+/* 2. TEXT */
+:local .txtCancel {
+  color: #f05252;
+  font-weight: bold;
+}
+
+:local .txtPendent {
+  color: #fad04d;
+  font-weight: bold;
+}
+
+:local .txtConfirm {
+  color: #68f285;
+  font-weight: bold;
+}
+
+:local p.textBold {
+  font-weight: bold;
+}
+
+:local .boxIcon {
+  padding-top: 20px;
+  text-align: end;
+}

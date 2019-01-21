@@ -1,38 +1,31 @@
-/* 1. BASE */
-
+/*1.BASE */
 :local .box {
-  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
-  border-radius: 5px;
-  padding: 1rem;
-  box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.1);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
 }
 
 :local .header {
   margin: 0 auto;
 }
 
-@media screen and (min-width: 600px) {
-  :local .box {
-    max-width: 60vw !important;
-  }
+:local .information {
+  text-align: center;
 }
 
-@media screen and (min-width: 1280px) {
-  :local .box {
-    max-width: 40vw !important;
-  }
+:local .information a {
+  text-decoration: none;
+  color: white;
 }
 
-@media screen and (min-width: 600px) {
-  :local .header {
-    max-width: 60vw !important;
-  }
+:local .information img {
+  position: relative;
+  left: 10px;
+  top: 5px;
 }
 
-@media screen and (min-width: 1280px) {
-  :local .header {
-    max-width: 40vw !important;
-  }
+:local .header {
+  margin: 0 auto;
 }
 
 /* 2. TEXT */
@@ -45,4 +38,23 @@
 :local .header p {
   text-align: center;
   font-size: 12px;
+}
+
+/* 3. PAYMENT MEHTODS */
+
+@media screen and (max-width: 599px) {
+  :local .header h1 {
+    font-size: 12px;
+    margin: 20px 0 0;
+  }
+  :local .header p {
+    font-size: 10px;
+    margin: 0 0 30px;
+  }
+}
+
+/* 3. BUTTONS */
+:local .buttonBorderGreen {
+  background-color: transparent;
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
 }

@@ -1,0 +1,100 @@
+:local(.card) {
+  background-color: rgba(255, 255, 255, 0.02);
+  padding: 20px 5px 8px 5px;
+  border-radius: 4px;
+  text-align: center;
+  margin: 3px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  min-height: 305px;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  transition: 0.2s;
+}
+
+:local .card:hover {
+  background-color: #473088;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+}
+
+:local(.cardIcon) {
+  width: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+}
+
+:local(.dollarSign) {
+  font-weight: 300;
+  font-size: 20px;
+  color: #54d467;
+  margin-top: 5%;
+}
+
+:local(.value) {
+  font-size: 50px;
+  font-weight: 500;
+  margin-top: -5px;
+  color: #54d467;
+}
+
+:local(.decimals) {
+  font-size: 20px;
+  font-weight: 500;
+  color: #54d467;
+  margin-top: 7px;
+}
+
+:local(.valueCard) {
+  margin-top: 25px;
+}
+
+@media screen and (max-width: 599px) {
+  :local .amount {
+    font-family: "OffSide";
+    font-weight: normal;
+    font-size: 3.5vw;
+    letter-spacing: 2px;
+  }
+
+  :local(.dollarSign) {
+    font-weight: 300;
+    font-size: 10px;
+    color: #54d467;
+    margin-top: 5%;
+  }
+
+  :local(.value) {
+    font-size: 40px;
+    font-weight: 500;
+    margin-top: -5px;
+    color: #54d467;
+  }
+
+  :local(.decimals) {
+    font-size: 10px;
+    font-weight: 500;
+    color: #54d467;
+    margin-top: 7px;
+  }
+
+  :local(.valueCard) {
+    padding-top: 20%;
+  }
+}
+
+:local .arrowControl {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+/* 2. TEXT */
+
+:local(.paragraph) {
+  font-size: 12px;
+  display: block;
+  margin: 19px;
+}

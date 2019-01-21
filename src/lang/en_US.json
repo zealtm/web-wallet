@@ -636,5 +636,19 @@
   "DEPOSIT_CONFIRMDATA_SCHEDULING_TITLE": "Scheduling",
   "DEPOSIT_CONFIRMDATA_SCHEDULING": "10/05/2019",
   "DEPOSIT_CONFIRMDATA_BTN_CONFIRM": "Confirm",
-  "DEPOSIT_CONFIRMDATA_INFORMATION": "Information"
+  "DEPOSIT_CONFIRMDATA_INFORMATION": "Information",
+  "DEPOSIT_PAYMENT_METHODS": "Payment methods",
+  "DEPOSIT_RECURRENT": "Recurrent",
+  "DEPOSIT_INVOICE": "Invoice",
+  "DEPOSIT_CREDIT": "Credit",
+  "DEPOSIT_SELECT_DATE": "Select date",
+
+  "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "You will be directed to the Bank's site that makes your payment in debt",
+  "BANK_ICON": "Bank icon",
+  "DEPOSIT_TITLE_CANCEL": "Cancellation Alert",
+  "DEPOSIT_TEXT_CANCEL": "You have clicked to cancel your deposit recurring value:",
+  "DEPOSIT_BTN_CANCEL": "I want to cancel",
+  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of"
 }
