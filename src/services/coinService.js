@@ -1,5 +1,5 @@
 import axios from "axios";
-import CAValidator from "cryptocurrency-address-validator";
+import WAValidator from "lunes-address-validator";
 
 // CONSTANTS
 import {
@@ -342,13 +342,13 @@ class CoinService {
       }
 
       if (TESTNET) {
-        valid = await CAValidator.validate(
+        valid = await WAValidator.validate(
           address,
           coin.toUpperCase(),
           "testnet"
         );
       } else {
-        valid = await CAValidator.validate(address, coin.toUpperCase());
+        valid = await WAValidator.validate(address, coin.toUpperCase());
       }
 
       if (!valid) {
