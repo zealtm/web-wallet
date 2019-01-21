@@ -40,7 +40,10 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      positivePercents: 0
+      positivePercents: 0,
+      isEditabled: false,
+      description: "",
+      errors: []
     };
   }
 
@@ -90,8 +93,60 @@ class UserProfile extends React.Component {
     return <div />;
   };
 
-  renderDescriptionInput = () =>{
-    
+  handleInputState = () => {
+    const { isEditabled } = this.state;
+    this.setState({ isEditabled: !isEditabled });
+  };
+
+  handleFields = e => {
+    const { value } = e.target;
+    this.setState({ description: value });
+  };
+
+  handleEvent = e => {
+    if (e.key === "Enter") this.validateField();
+  };
+
+  validateField = () => {
+    const { description } = this.state;
+    let error = [];
+    if (!description) error.push("Insira uma descrição");
+    if (error.length > 0) this.setState({ errors: error });
+    else this.setState({ errors: [] });
+
+    this.handleInputState();
+  };
+
+  renderEditIcon = () => {
+    const { isEditabled } = this.state;
+    if (isEditabled) return <EditIcon onClick={() => this.validateField()} />;
+
+    return <EditIcon onClick={() => this.handleInputState()} />;
+  };
+
+  renderDescriptionInput = () => {
+    const { isEditabled } = this.state;
+    const { profile } = this.props;
+    if (isEditabled) {
+      return (
+        <Grid item xs={12}>
+          <textarea
+            className={style.textArea}
+            name="description"
+            placeholder="Coloque informações complementares sobre você"
+            onChange={e => this.handleFields(e)}
+            onKeyPress={this.handleEvent}
+            maxLength="100"
+          />
+        </Grid>
+      );
+    } else {
+      return (
+        <div className={style.textDescription}>
+          <p>{profile.description}</p>
+        </div>
+      );
+    }
   };
 
   render() {
@@ -137,14 +192,15 @@ class UserProfile extends React.Component {
               <span className={style.spanDescription}>
                 {i18n.t("P2P_PROFILE_DESCRIPTION")}
               </span>
-              <div className={style.textDescription}>
-                <p>{profile.description}</p>
-                
-              </div>
-            </div>
-            <div className={style.editButton}>
-              <div style={{position: "absolute"}}>
-                <EditIcon onClick={() => alert("oi")} />
+              {/* <div className={style.textDescription}>
+                 <p>{profile.description}</p> 
+               
+              </div> */}
+              {this.renderDescriptionInput()}
+              <div className={style.editButton}>
+                <div style={{ position: "absolute" }}>
+                  {this.renderEditIcon()}
+                </div>
               </div>
             </div>
           </div>

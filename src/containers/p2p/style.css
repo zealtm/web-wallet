@@ -344,6 +344,30 @@
   top: 7px;
 }
 
+:local .inputDefault {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  font-size: 12px;
+  padding: 5px;
+  width: calc(100% - 10px);
+  height: 24px;
+  margin: 0px;
+  text-align: center;
+  border: none;
+  position: none;
+  margin-top: 1px;
+}
+:local .inputDefault::placeholder {
+  font-size: 12px;
+}
+
+:local .textArea {
+  composes: inputDefault;
+  height: auto;
+  min-height: 100px;
+  padding: 15px;
+  width: calc(100% - 30px);
+}
+
 /* . SCROLLBAR */
 :local(.baseWidget *::-webkit-scrollbar) {
   background-color: #654fa4;
@@ -402,7 +426,7 @@
   position: relative;
   display: flex;
   justify-content: flex-end;
-  bottom: 59px;
-  right: 2px;
+  bottom: 30px;
+  left: 28px;
   cursor: pointer;
 }
