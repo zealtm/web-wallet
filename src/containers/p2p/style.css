@@ -398,3 +398,11 @@
     font-size: 12px;
   }
 }
+:local .editButton {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  bottom: 59px;
+  right: 2px;
+  cursor: pointer;
+}

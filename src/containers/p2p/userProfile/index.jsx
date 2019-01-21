@@ -10,6 +10,7 @@ import { getProfile, clearUserProfile } from "../redux/p2pAction";
 import Grid from "@material-ui/core/Grid";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
+import EditIcon from "@material-ui/icons/Edit";
 
 // COMPONENTS
 import StarVotes from "../components/starvotes";
@@ -89,6 +90,10 @@ class UserProfile extends React.Component {
     return <div />;
   };
 
+  renderDescriptionInput = () =>{
+    
+  };
+
   render() {
     let positivePercents = 0;
     const { classes, loading, profile } = this.props;
@@ -134,6 +139,12 @@ class UserProfile extends React.Component {
               </span>
               <div className={style.textDescription}>
                 <p>{profile.description}</p>
+                
+              </div>
+            </div>
+            <div className={style.editButton}>
+              <div style={{position: "absolute"}}>
+                <EditIcon onClick={() => alert("oi")} />
               </div>
             </div>
           </div>
