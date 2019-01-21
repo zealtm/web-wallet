@@ -1,5 +1,5 @@
 import axios from "axios";
-import WAValidator from "multicoin-address-validator";
+import WAValidator from "lunes-address-validator";
 
 // CONSTANTS
 import {
