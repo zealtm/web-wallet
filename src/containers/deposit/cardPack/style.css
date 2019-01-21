@@ -1,9 +1,9 @@
 :local(.card) {
   background-color: rgba(255, 255, 255, 0.02);
   padding: 20px 5px 8px 5px;
-  border-radius: 10px;
+  border-radius: 4px;
   text-align: center;
-  margin: 10px;
+  margin: 3px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,6 +23,7 @@
   width: 50px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
 }
 
 :local(.dollarSign) {
@@ -44,6 +45,10 @@
   font-weight: 500;
   color: #54d467;
   margin-top: 7px;
+}
+
+:local(.valueCard) {
+  margin-top: 25px;
 }
 
 @media screen and (max-width: 599px) {
@@ -90,4 +95,6 @@
 
 :local(.paragraph) {
   font-size: 12px;
+  display: block;
+  margin: 19px;
 }
