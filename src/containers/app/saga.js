@@ -101,7 +101,8 @@ import {
   setTabIconSaga,
   getProfileSaga,
   setP2PRatingOrderSaga,
-  confirmOrder
+  confirmOrder,
+  setUserDescription
 } from "../p2p/redux/p2pSaga";
 
 import {
@@ -245,6 +246,7 @@ export default function* rootSaga() {
 
     fork(takeLatest, "SET_P2P_CANCEL_ORDERS", setP2POrdersCancelSaga),
     fork(takeLatest, "SET_P2P_RATING_ORDER", setP2PRatingOrderSaga),
+    fork(takeLatest, "SET_USER_DESCRIPTION_API", setUserDescription),
 
     // buy coins
     fork(takeLatest, "SET_MODAL_BUY_STEP", setModalStepBuySaga),

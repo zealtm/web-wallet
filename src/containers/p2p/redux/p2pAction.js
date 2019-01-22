@@ -147,3 +147,8 @@ export const confirmOrder = idOrder => ({
   type: "POST_CONFIRM_ORDER_API",
   idOrder
 });
+
+export const setUserDescription = profile => ({
+  type: "SET_USER_DESCRIPTION_API",
+  profile
+})

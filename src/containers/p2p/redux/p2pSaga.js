@@ -430,3 +430,18 @@ export function* confirmOrder(payload) {
     yield put(internalServerError());
   }
 }
+export function* setUserDescription(action) {
+  try {
+    let token = yield call(getAuthToken);
+
+    const response = yield call(
+      p2pService.updateUserDescription,
+      token,
+      action.profile
+    );
+    if (response.status !== 200)
+      yield put({ type: "SET_USER_DESCRIPTION_ERROR" });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
