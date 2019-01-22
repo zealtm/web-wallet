@@ -366,6 +366,7 @@
   min-height: 100px;
   padding: 15px;
   width: calc(100% - 30px);
+  resize: none;
 }
 
 /* . SCROLLBAR */

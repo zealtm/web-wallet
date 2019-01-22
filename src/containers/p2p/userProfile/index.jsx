@@ -4,7 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfile, clearUserProfile } from "../redux/p2pAction";
+import {
+  getProfile,
+  clearUserProfile,
+  setUserDescription
+} from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +19,7 @@ import EditIcon from "@material-ui/icons/Edit";
 // COMPONENTS
 import StarVotes from "../components/starvotes";
 import Loading from "../../../components/loading";
+import ModalBar from "../../../components/modalBar";
 
 // styles
 import style from "../style.css";
@@ -100,20 +105,19 @@ class UserProfile extends React.Component {
 
   handleFields = e => {
     const { value } = e.target;
-    this.setState({ description: value });
+    if (value) this.setState({ description: value });
   };
 
   handleEvent = e => {
-    if (e.key === "Enter") this.validateField();
+    if (e.key === "Enter") this.sendDescription();
   };
 
-  validateField = () => {
+  sendDescription = () => {
     const { description } = this.state;
-    let error = [];
-    if (!description) error.push("Insira uma descrição");
-    if (error.length > 0) this.setState({ errors: error });
-    else this.setState({ errors: [] });
+    const { setUserDescription, profile } = this.props;
 
+    profile.description = description;
+    setUserDescription(profile);
     this.handleInputState();
   };
 
@@ -122,7 +126,7 @@ class UserProfile extends React.Component {
     const { profile, userEmail } = this.props;
     const isUserLogged = profile.email === userEmail;
     if (isEditabled && isUserLogged)
-      return <EditIcon onClick={() => this.validateField()} />;
+      return <EditIcon onClick={() => this.sendDescription()} />;
     else if (isUserLogged)
       return <EditIcon onClick={() => this.handleInputState()} />;
   };
@@ -130,7 +134,8 @@ class UserProfile extends React.Component {
   renderDescriptionInput = () => {
     const { isEditabled } = this.state;
     const { profile } = this.props;
-
+    
+    let value = profile.description ? profile.description : undefined;
     if (isEditabled) {
       return (
         <Grid item xs={12}>
@@ -141,6 +146,7 @@ class UserProfile extends React.Component {
             onChange={e => this.handleFields(e)}
             onKeyPress={this.handleEvent}
             maxLength="100"
+            value={value}
           />
         </Grid>
       );
@@ -168,6 +174,15 @@ class UserProfile extends React.Component {
 
     return (
       <Grid container className={style.baseUserProfile}>
+        <div>
+          {profile.error ? (
+            <ModalBar
+              type="error"
+              message={"Erro ao inserir descrição"}
+              timer
+            />
+          ) : null}
+        </div>
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.userInfo}>
@@ -282,7 +297,8 @@ UserProfile.propTypes = {
   profile: PropTypes.object,
   clearUserProfile: PropTypes.func,
   loading: PropTypes.bool,
-  userEmail: PropTypes.string
+  userEmail: PropTypes.string,
+  setUserDescription: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -296,7 +312,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfile,
-      clearUserProfile
+      clearUserProfile,
+      setUserDescription
     },
     dispatch
   );
