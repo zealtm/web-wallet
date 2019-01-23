@@ -1,6 +1,8 @@
 /* BASE */
 :local .container {
   max-height: 69vh;
+  padding-left: 40px;
+  padding-right: 40px;
   margin-top: 20px;
 }
 :local(.information) {
@@ -52,8 +54,10 @@
 :local .buttonBorderGreen {
   composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";
   background-color: transparent;
+  margin-bottom: 20px;
 }
 
 :local .buttonEnable {
   composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+  margin-bottom: 20px;
 }

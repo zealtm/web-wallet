@@ -6,15 +6,13 @@ import style from "./style.css";
 import colors from "../../../../components/bases/colors";
 
 // MATERIAL
-import { Grid, Input } from "@material-ui/core";
+import { Grid, Input, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
-import { ChevronDownIcon } from "@material-ui/icons";
-import Select from "../../../../components/select";
 
-const customStyle = {
+const customStyle = theme => ({
   inputRoot: {
     color: colors.messages.info,
     margin: "0.5rem 0",
@@ -53,32 +51,44 @@ const customStyle = {
   disabled: {},
   error: {},
   focused: {},
-  select: {
+  underlineItems: {
+    color: "white",
+    borderBottomColor: `${colors.green.default} !important`,
+    fontSize: "1em",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "14em"
+    },
+    icon: {
+      fill: "green"
+    }
+  },
+  menuItemRoot: {
+    color: colors.messages.info
+  },
+  underline: {
     width: "100%",
     "&:hover": {
-      backgroundColor: "trasparent"
+      backgroundColor: colors.purple.dark
     },
     "&:before": {
-      borderColor: "red"
+      borderColor: colors.purple.dark
     },
     "&:after": {
-      borderColor: "yellow"
+      borderColor: colors.purple.dark
     }
   },
   icon: {
-    fill: "blue"
+    fill: "#68f285"
   }
-};
+});
 
 class InformationModal extends React.Component {
   constructor() {
     super();
     this.state = {
       fullName: "",
-      personalNumber1: "",
-      personalNumber2: "",
-      personalNumber3: "",
-      personalNumber4: "",
+      personalNumber: "",
       city: "",
       state: "",
       cep: "",
@@ -89,10 +99,9 @@ class InformationModal extends React.Component {
   checkAllInputs = () => {
     const {
       fullName,
-      personalNumber1,
-      personalNumber2,
-      personalNumber3,
-      personalNumber4,
+      personalNumber,
+      state,
+      city,
       cep,
       address,
       addressNumber
@@ -100,11 +109,9 @@ class InformationModal extends React.Component {
 
     return (
       fullName &&
-      personalNumber1 &&
-      personalNumber1 &&
-      personalNumber2 &&
-      personalNumber3 &&
-      personalNumber4 &&
+      personalNumber &&
+      state &&
+      city &&
       cep &&
       address &&
       addressNumber
@@ -121,26 +128,52 @@ class InformationModal extends React.Component {
     console.warn(this.state);
   };
 
-  renderStates = () => {
-    const states = [];
-    return states;
+  listStates = () => {
+    const { classes } = this.props;
+    const states = ["São Paulo", "Rio de Janeiro"];
+
+    return states.map((item, index) => (
+      <MenuItem
+        value={item}
+        key={index}
+        classes={{
+          root: classes.menuItemRoot
+        }}
+      >
+        {item}
+      </MenuItem>
+    ));
   };
 
   render() {
     const { classes } = this.props;
-    let list = [];
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          color: "#fff",
+          maxHeight: 40 * 4.5,
+          marginTop: "45px",
+          backgroundColor: "#473088",
+          width: "10%"
+        }
+      }
+    };
+
     return (
       <div>
-        <Grid container justify="space-between" className={style.container}>
-          <Grid container justify="center">
-            <Grid item xs={12}>
-              <p className={style.formGroup}>
-                {i18n.t("DEPOSIT_INF_MODAL_TITLE")}
-              </p>
-            </Grid>
+        <Grid container className={style.container}>
+          <Grid item xs={12}>
+            <p className={style.formGroup}>
+              {i18n.t("DEPOSIT_INF_MODAL_TITLE")}
+            </p>
           </Grid>
-          <Grid container direction="row" justify="center">
-            <Grid item xs={12} sm={6}>
+          <Grid
+            container
+            direction="row"
+            justify="space-around"
+            className={style.formGroup}
+          >
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_FULLNAME")}
               </div>
@@ -156,7 +189,7 @@ class InformationModal extends React.Component {
               />
             </Grid>
             <Grid item sm={1} />
-            <Grid item xs={3} sm={1}>
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
               </div>
@@ -167,82 +200,76 @@ class InformationModal extends React.Component {
                   input: classes.inputCssCenter
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber1}
-                onChange={this.handleInput("personalNumber1")}
-              />
-            </Grid>
-            <Grid item xs={3} sm={1}>
-              <div className={style.personalNumber}>
-                {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-              </div>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber2}
-                onChange={this.handleInput("personalNumber2")}
-              />
-            </Grid>
-            <Grid item xs={3} sm={1}>
-              <div className={style.personalNumber}>
-                {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-              </div>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber3}
-                onChange={this.handleInput("personalNumber3")}
-              />
-            </Grid>
-            <Grid item xs={3} sm={1}>
-              <div className={style.personalNumber}>
-                {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-              </div>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber4}
-                onChange={this.handleInput("personalNumber4")}
+                value={this.state.personalNumber}
+                onChange={this.handleInput("personalNumber")}
               />
             </Grid>
           </Grid>
-
           <Grid
             container
             direction="row"
-            justify="center"
+            justify="space-around"
             className={style.formGroup}
           >
-            <Grid item xs={5}>
+            <Grid item xs={5} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_STATE")}
               </div>
-              <Select width={"100%"} list={list} />
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                MenuProps={MenuProps}
+                value={this.state.state}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("state")}
+              >
+                {this.listStates()}
+              </Select>
             </Grid>
             <Grid item xs={1} />
-            <Grid item xs={5}>
+            <Grid item xs={5} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
               </div>
-              <Select width={"100%"} list={list} />
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                MenuProps={MenuProps}
+                value={this.state.city}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("city")}
+              >
+                {this.listStates()}
+              </Select>
             </Grid>
           </Grid>
 
           <Grid
             container
             direction="row"
-            justify="center"
+            justify="space-around"
             className={style.formGroup}
           >
             <Grid item xs={12} sm={5}>
