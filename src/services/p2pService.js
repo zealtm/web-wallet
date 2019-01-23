@@ -277,7 +277,7 @@ class P2pService {
     }
   }
 
-  async updateUserDescription(token, userDescription) {    
+  async updateUserDescription(token, userDescription) {
     try {
       API_HEADER.headers.Authorization = token;
       const response = axios.patch(
@@ -288,6 +288,8 @@ class P2pService {
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response;
     } catch (error) {
+      //console.log(error);
+      
       return internalServerError();
     }
   }

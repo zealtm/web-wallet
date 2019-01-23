@@ -45,9 +45,7 @@ const initialState = {
   cancelDone: false,
   tabIcon: 0,
   userProfile: [],
-  profile: {
-    error: false
-  },
+  profile: {},
   order: []
 };
 
@@ -250,14 +248,7 @@ const p2p = (state = initialState, action) => {
           description: action.profile
         }
       };
-      case "SET_USER_DESCRIPTION_ERROR":
-      return{
-        ...state,
-        profile:{
-          ...state.profile,
-          error: true
-        }
-      };
+
 
     default: {
       return {

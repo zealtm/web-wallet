@@ -106,6 +106,7 @@ class UserProfile extends React.Component {
   handleFields = e => {
     const { value } = e.target;
     if (value) this.setState({ description: value });
+    else this.setState({description: null})
   };
 
   handleEvent = e => {
@@ -120,6 +121,7 @@ class UserProfile extends React.Component {
     setUserDescription(profile);
     this.handleInputState();
   };
+ 
 
   renderEditIcon = () => {
     const { isEditabled } = this.state;
@@ -134,8 +136,10 @@ class UserProfile extends React.Component {
   renderDescriptionInput = () => {
     const { isEditabled } = this.state;
     const { profile } = this.props;
+    let {description} = profile;
+
+    //console.log(profile);
     
-    let value = profile.description ? profile.description : undefined;
     if (isEditabled) {
       return (
         <Grid item xs={12}>
@@ -146,7 +150,7 @@ class UserProfile extends React.Component {
             onChange={e => this.handleFields(e)}
             onKeyPress={this.handleEvent}
             maxLength="100"
-            value={value}
+            defaultValue={description}
           />
         </Grid>
       );
