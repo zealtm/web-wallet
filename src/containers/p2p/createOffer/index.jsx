@@ -7,7 +7,8 @@ import { bindActionCreators } from "redux";
 import {
   createOfferWhenSelling,
   clearOffer,
-  getPaymentMethodsWhenBuying
+  getPaymentMethodsWhenBuying,
+  getProfile
 } from "../redux/p2pAction";
 
 // MATERIAL
@@ -82,8 +83,9 @@ class CreateOffer extends React.Component {
   }
 
   componentDidMount = () => {
-    const { getPaymentMethodsWhenBuying } = this.props;
+    const { getPaymentMethodsWhenBuying, getProfile } = this.props;
     getPaymentMethodsWhenBuying(null);
+    getProfile();
   };
 
   coinSelectedSell = (value, title, img = undefined) => {
@@ -293,19 +295,25 @@ class CreateOffer extends React.Component {
     });
   };
 
+  limitCharacterName = name => {
+    name.length > 27 ? (name = name.substr(0, 26) + "...") : name;
+    return name;
+  };
+
   render() {
     const { coinBuy, coinSell, coinPaymentList } = this.state;
     const {
       classes,
       coinsEnabled,
       user,
+      profile,
       loadingCreateOrder,
       createDone,
       createError,
       clearOffer
     } = this.props;
+    const { rating } = profile;
 
-    console.warn(this.state.order);
     const username = user.name + " " + user.surname;
 
     if (createDone) {
@@ -344,11 +352,13 @@ class CreateOffer extends React.Component {
               />
             </Grid>
             <Grid item xs={6}>
-              <span className={style.name}>{username}</span>
+              <span className={style.name}>
+                {this.limitCharacterName(username)}
+              </span>
             </Grid>
             <Grid item xs={4} style={{ paddingLeft: 10 }}>
               <div className={style.boxStar}>
-                <StarVotes votes={0} />
+                {rating && <StarVotes votes={rating.average} />}
               </div>
             </Grid>
           </Grid>
@@ -512,6 +522,7 @@ CreateOffer.propTypes = {
   classes: PropTypes.object.isRequired,
   coinsEnabled: PropTypes.any,
   user: PropTypes.object,
+  profile: PropTypes.object,
   loadingCreateOrder: PropTypes.bool,
   createDone: PropTypes.bool,
   createError: PropTypes.bool,
@@ -523,6 +534,7 @@ CreateOffer.propTypes = {
 const mapStateToProps = store => ({
   coinsEnabled: store.p2p.coinsEnabled || [],
   user: store.user.user,
+  profile: store.p2p.profile,
   loadingCreateOrder: store.p2p.loadingCreateOrder,
   createDone: store.p2p.createDone,
   createError: store.p2p.createError
@@ -533,7 +545,8 @@ const mapDispatchToProps = dispatch =>
     {
       createOfferWhenSelling,
       clearOffer,
-      getPaymentMethodsWhenBuying
+      getPaymentMethodsWhenBuying,
+      getProfile
     },
     dispatch
   );
