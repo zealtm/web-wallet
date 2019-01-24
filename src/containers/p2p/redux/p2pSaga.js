@@ -434,15 +434,12 @@ export function* setUserDescription(action) {
   try {
     let token = yield call(getAuthToken);
 
-    const response = yield call(
-      p2pService.updateUserDescription,
-      token,
-      {description: action.profile.description}
-    );
-    console.warn(response);
-        
-    //if (response.status !== 200)
-      //yield put({ type: "SET_USER_DESCRIPTION_ERROR" });
+    const response = yield call(p2pService.updateUserDescription, token, {
+      description: action.profile.description
+    });
+    if (response.status !== 200) {
+      yield put(internalServerError());
+    }
   } catch (error) {
     yield put(internalServerError());
   }

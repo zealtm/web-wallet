@@ -631,5 +631,6 @@
   "P2P_FEE_TEXT_4": "dias",
   "P2P_SIGNATURE_CONFIRM": "Assinatura efetivada com sucesso",
   "P2P_BUTTON_RATE_BUYER": "Avaliar",
-  "P2P_BUTTON_RATE_SELLER": "Avaliar"
+  "P2P_BUTTON_RATE_SELLER": "Avaliar",
+  "P2P_USER_DESCRIPTION":"Escreva uma breve descrição sobre você"
 }

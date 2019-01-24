@@ -19,7 +19,7 @@ import EditIcon from "@material-ui/icons/Edit";
 // COMPONENTS
 import StarVotes from "../components/starvotes";
 import Loading from "../../../components/loading";
-import ModalBar from "../../../components/modalBar";
+//import ModalBar from "../../../components/modalBar";
 
 // styles
 import style from "../style.css";
@@ -47,8 +47,7 @@ class UserProfile extends React.Component {
     this.state = {
       positivePercents: 0,
       isEditabled: false,
-      description: "",
-      errors: []
+      description: ""
     };
   }
 
@@ -106,7 +105,7 @@ class UserProfile extends React.Component {
   handleFields = e => {
     const { value } = e.target;
     if (value) this.setState({ description: value });
-    else this.setState({description: null})
+    else this.setState({ description: null });
   };
 
   handleEvent = e => {
@@ -117,11 +116,10 @@ class UserProfile extends React.Component {
     const { description } = this.state;
     const { setUserDescription, profile } = this.props;
 
-    profile.description = description;
+    if (description) profile.description = description;
     setUserDescription(profile);
     this.handleInputState();
   };
- 
 
   renderEditIcon = () => {
     const { isEditabled } = this.state;
@@ -136,20 +134,18 @@ class UserProfile extends React.Component {
   renderDescriptionInput = () => {
     const { isEditabled } = this.state;
     const { profile } = this.props;
-    let {description} = profile;
+    let { description } = profile;
 
-    //console.log(profile);
-    
     if (isEditabled) {
       return (
         <Grid item xs={12}>
           <textarea
             className={style.textArea}
             name="description"
-            placeholder="Coloque informações complementares sobre você"
+            placeholder={i18n.t("P2P_USER_DESCRIPTION")}
             onChange={e => this.handleFields(e)}
             onKeyPress={this.handleEvent}
-            maxLength="100"
+            maxLength="250"
             defaultValue={description}
           />
         </Grid>
@@ -178,15 +174,6 @@ class UserProfile extends React.Component {
 
     return (
       <Grid container className={style.baseUserProfile}>
-        <div>
-          {profile.error ? (
-            <ModalBar
-              type="error"
-              message={"Erro ao inserir descrição"}
-              timer
-            />
-          ) : null}
-        </div>
         <Grid item xs={12} sm={12}>
           <div className={style.cardProfile}>
             <div className={style.userInfo}>

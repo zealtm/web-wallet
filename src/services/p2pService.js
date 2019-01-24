@@ -280,16 +280,14 @@ class P2pService {
   async updateUserDescription(token, userDescription) {
     try {
       API_HEADER.headers.Authorization = token;
-      const response = axios.patch(
+      const response = await axios.patch(
         `${BASE_URL}/coin/lunes/p2p/profile`,
         userDescription,
         API_HEADER
       );
-      setAuthToken(response.headers[HEADER_RESPONSE]);
+      setAuthToken(response.headers[HEADER_RESPONSE])
       return response;
     } catch (error) {
-      //console.log(error);
-      
       return internalServerError();
     }
   }
