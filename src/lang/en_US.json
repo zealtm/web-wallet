@@ -650,5 +650,15 @@
   "DEPOSIT_TITLE_CANCEL": "Cancellation Alert",
   "DEPOSIT_TEXT_CANCEL": "You have clicked to cancel your deposit recurring value:",
   "DEPOSIT_BTN_CANCEL": "I want to cancel",
-  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of"
+  "DEPOSIT_PACK_TEXT": "You'll receive money the equivalent of",
+  "DEPOSIT_INF_MODAL_HEADER": "Go Back",
+  "DEPOSIT_INF_MODAL_TITLE": "Check the informations below and correct/fill if necessary:",
+  "DEPOSIT_INF_MODAL_FULLNAME": "Full Name",
+  "DEPOSIT_INF_MODAL_PERSONAL_NUMBER": "CPF/CNPJ",
+  "DEPOSIT_INF_MODAL_STATE": "State",
+  "DEPOSIT_INF_MODAL_CITY": "City",
+  "DEPOSIT_INF_MODAL_CEP": "CEP",
+  "DEPOSIT_INF_MODAL_ADDRESS": "Address",
+  "DEPOSIT_INF_MODAL_ADDRESS_NUMBER": "Nº",
+  "DEPOSIT_INF_MODAL_BTN_CONTINUE": "Continue"
 }

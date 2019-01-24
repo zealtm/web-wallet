@@ -1,0 +1,63 @@
+/* BASE */
+:local .container {
+  max-height: 69vh;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+:local(.information) {
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  text-align: center;
+}
+
+:local .box {
+  composes: bgPurpleDefault from "../../../../components/bases/colorBase.css";
+  border-radius: 5px;
+  padding: 1rem;
+  box-shadow: 0px 0px 10px 0px rgba(51, 51, 51, 0.1);
+}
+
+:local .formGroup {
+  margin-bottom: 50px;
+  color: #fff;
+}
+
+@media screen and (min-width: 600px) {
+  :local .box {
+    max-width: 60vw !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  :local .box {
+    max-width: 40vw !important;
+  }
+}
+
+:local(.row) {
+  display: flex;
+  margin: 0.5rem 0 1rem 0;
+}
+
+:local .textGreen {
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+  font-size: 13px;
+  display: block;
+}
+:local .personalNumber {
+  color: transparent;
+  font-size: 13px;
+  display: block;
+}
+
+/* 3. BUTTONS */
+:local .buttonBorderGreen {
+  composes: buttonBorderGreen from "../../../../components/bases/buttonBase.css";
+  background-color: transparent;
+  margin-bottom: 20px;
+}
+
+:local .buttonEnable {
+  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
+  margin-bottom: 20px;
+}
