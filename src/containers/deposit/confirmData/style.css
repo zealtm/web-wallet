@@ -1,0 +1,74 @@
+:local .containerConfirmData {
+  max-height: 69vh;
+  text-align: center;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+
+:local .ConfirmDataImg {
+  width: 22%;
+  float: left;
+  padding-right: 35px;
+  padding-top: 14px;
+}
+
+:local .ConfirmDataDecimal {
+  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  float: left;
+  padding: 20px 6px;
+  font-size: 15px;
+}
+
+:local .ConfirmDataNum {
+  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  font-size: 65px;
+  float: left;
+}
+
+:local .ConfirmDataText {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: left;
+}
+
+:local .ConfirmDataDiv {
+  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  font-size: 10px;
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+:local .ConfirmDataField {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  composes: bgPurpleDark from "../../../components/bases/colorBase.css";
+  padding: 16px;
+  margin: 5px;
+  display: block;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+:local .ConfirmDataBtn {
+  composes: buttonEnable from "../../../components/bases/buttonBase.css";
+  width: 98%;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+:local .ConfirmDataInformation {
+  composes: textDefault from "../../../components/bases/textBase.css";
+  display: inline-block;
+}
+
+:local .ConfirmDataInformationImg {
+  width: 25px;
+  padding-left: 8px;
+  margin-bottom: -7px;
+}
