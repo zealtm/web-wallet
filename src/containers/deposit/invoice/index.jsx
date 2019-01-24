@@ -269,6 +269,13 @@ class Invoice extends React.Component {
     );
   };
 
+  inputValidator = () => {
+    const { openModal } = this.props;
+
+    //validações
+    openModal();
+  };
+
   render() {
     return (
       <div>
@@ -326,7 +333,10 @@ class Invoice extends React.Component {
                 className={style.transparentBox}
                 style={{ marginTop: "10px" }}
               >
-                <button className={style.buttonBorderGreen}>
+                <button
+                  className={style.buttonBorderGreen}
+                  onClick={() => this.inputValidator()}
+                >
                   {i18n.t("DEPOSIT_TAB_TITLE")}
                 </button>
               </Grid>
@@ -355,7 +365,8 @@ class Invoice extends React.Component {
 }
 
 Invoice.propTypes = {
-  getPackages: PropTypes.func
+  getPackages: PropTypes.func,
+  openModal: PropTypes.func
 };
 
 const mapStateToProps = store => ({

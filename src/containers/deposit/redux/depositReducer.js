@@ -1,6 +1,8 @@
 const initialState = {
   packages: [],
-  history: []
+  history: [],
+  modalStep: 1,
+
 };
 
 const deposit = (state = initialState, action) => {
@@ -14,6 +16,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         history: action.history
+      };
+      case "SET_MODAL_STEP":
+      return {
+        ...state,
+        modalStep: action.step
       };
     default: {
       return {
