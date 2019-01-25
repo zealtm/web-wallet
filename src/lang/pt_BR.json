@@ -456,6 +456,10 @@
   "TEXT_FAILED_UPLOAD": "Envio falhou",
   "TEXT_FRONT": "Frente",
   "TEXT_BACK": "Trás",
+  "KYC_UPLOAD_ADDRESS": "Comprovante de endereço",
+  "KYC_UPLOAD_FRONT": "Frente Documento",
+  "KYC_UPLOAD_BACK": "Verso Documento",
+  "KYC_UPLOAD_SELFIE": "Selfie Documento",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
