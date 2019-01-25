@@ -154,9 +154,10 @@ class KYC extends React.Component {
       <form id="customForm" style={inputStyle.alignForm}>
         <div style={inputStyle.input}>
           <label htmlFor="inputFile" style={{ float: "left" }}>
-            <img src="images/icons/camera/camera@2x.png" />
+            <img src="images/icons/camera/camera@2x.png" alt="camera"/>
           </label>
           <input
+          arial-label
             style={{ display: "none" }}
             type="file"
             id="inputFile"
@@ -165,6 +166,7 @@ class KYC extends React.Component {
           <span style={{ marginLeft: "15px", color: "#654fa4" }}>{value}</span>
           <img
             src="images/icons/security/anexo@1x.png"
+            alt="anexo"
             style={{ float: "right" }}
             onClick={onSubmit}
           />
