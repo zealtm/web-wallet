@@ -15,7 +15,7 @@ import style from "./style.css";
 import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
-import Informations from "./modal/informations";
+import DepositModal from "./modal";
 import Modal from "../../components/modal";
 
 // MATERIAL UI
@@ -53,12 +53,15 @@ class Deposit extends React.Component {
       i18n.t("DEPOSIT_TAB_TITLE"),
       i18n.t("DEPOSIT_TAB_HISTORY_TITLE")
     ];
-    const contents = [<Invoice openModal={() => this.handleModal()} key={0} />, <History key={1} />];
+    const contents = [
+      <Invoice openModal={() => this.handleModal()} key={0} />,
+      <History key={1} />
+    ];
     return (
       <Grid container justify="center">
         <Modal
           title={i18n.t("DEPOSIT_INF_MODAL_HEADER")}
-          content={<Informations />}
+          content={<DepositModal />}
           show={isOpen}
           close={() => this.setState({ isOpen: false })}
           back={() => this.handleSteps(modalStep - 1)}
