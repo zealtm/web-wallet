@@ -159,12 +159,16 @@ class TransactionService {
       if (coin === "usdt")
         network = TESTNET ? networks.BTCTESTNET : networks.BTC;
 
+      if (coin === "mona")
+        network = TESTNET ? networks.MONATESTNET : networks.MONA;
+
       if (
         coin === "btc" ||
         coin === "ltc" ||
         coin === "bch" ||
         coin === "dash" ||
-        coin === "usdt"
+        coin === "usdt" ||
+        coin === "mona"
       ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({
