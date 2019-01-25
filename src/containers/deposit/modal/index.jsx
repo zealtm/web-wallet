@@ -5,22 +5,20 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //COMPONENTS
-import BankModal from "./modal/bankModal";
-import DebitCancel from "./modal/debitCancel";
-import Information from "./modal/information";
+import BankModal from "./bankModal";
+import DebitCancel from "./debitCancel";
+import Information from "./informations";
+import ConfirmData from "./confirmData";
 
 class DepositModal extends Component {
-  componentDidMount() {}
-
   renderModalContent = () => {
     const { modalStep } = this.props;
-    const modalInformation = <Information />;
 
-    if (modalStep === 1) return modalInformation;
-    if (modalStep === 2) return <BankModal />;
-    if (modalStep === 3) return <DebitCancel />;
+    if (modalStep === 1) return <Information />;
+    if (modalStep === 2) return <ConfirmData />;
+    if (modalStep === 3) return <BankModal />;
 
-    return modalInformation;
+    return <DebitCancel />;
   };
 
   render() {
@@ -33,7 +31,7 @@ DepositModal.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  modalSteps: store.deposit.modalStep
+  modalStep: store.deposit.modalStep
 });
 
 export default connect(

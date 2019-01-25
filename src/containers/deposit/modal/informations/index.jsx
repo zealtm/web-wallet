@@ -1,6 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import {
+  setLoading,
+  setUserData,
+  setModalSteps
+} from "../../redux/depositAction";
+
 // STYLE
 import style from "./style.css";
 import colors from "../../../../components/bases/colors";
@@ -8,6 +17,9 @@ import colors from "../../../../components/bases/colors";
 // MATERIAL
 import { Grid, Input, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+
+//COMPONENTS
+import ButtonContinue from "../../../../components/buttonContinue";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -96,6 +108,7 @@ class InformationModal extends React.Component {
       addressNumber: ""
     };
   }
+
   checkAllInputs = () => {
     const {
       fullName,
@@ -125,7 +138,13 @@ class InformationModal extends React.Component {
   };
 
   validateForm = () => {
-    console.warn(this.state);
+    const { setLoading, setUserData, setModalSteps } = this.props;
+
+    setLoading(true);
+    setModalSteps(2);
+
+    // remove in the future
+    window.setTimeout(() => setUserData(this.state), 3000);
   };
 
   listStates = () => {
@@ -146,7 +165,7 @@ class InformationModal extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -324,16 +343,11 @@ class InformationModal extends React.Component {
 
           <Grid container justify="center">
             <Grid item xs={5}>
-              <button
-                className={
-                  this.checkAllInputs()
-                    ? style.buttonEnable
-                    : style.buttonBorderGreen
-                }
-                onClick={this.checkAllInputs() ? this.validateForm : null}
-              >
-                {i18n.t("DEPOSIT_INF_MODAL_BTN_CONTINUE")}
-              </button>
+              <ButtonContinue
+                label={i18n.t("DEPOSIT_INF_MODAL_BTN_CONTINUE")}
+                action={this.checkAllInputs() ? this.validateForm : () => null}
+                loading={loading}
+              />
             </Grid>
           </Grid>
         </Grid>
@@ -343,7 +357,28 @@ class InformationModal extends React.Component {
 }
 
 InformationModal.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+  setLoading: PropTypes.func,
+  setUserData: PropTypes.func,
+  setModalSteps: PropTypes.func
 };
 
-export default withStyles(customStyle)(InformationModal);
+const mapStateToProps = store => ({
+  loading: store.deposit.loading
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setLoading,
+      setUserData,
+      setModalSteps
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(customStyle)(InformationModal));

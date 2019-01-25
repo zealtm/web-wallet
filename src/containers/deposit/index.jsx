@@ -33,7 +33,10 @@ class Deposit extends React.Component {
 
   handleSteps = step => {
     const { setModalSteps } = this.props;
-    return step > 1 ? setModalSteps(step - 1) : null;
+
+    if (step > 1) setModalSteps(step - 1);
+
+    return;
   };
 
   handleModal = () => {
@@ -42,6 +45,7 @@ class Deposit extends React.Component {
 
   closeModal = () => {
     const { setModalSteps } = this.props;
+
     this.handleModal();
     setModalSteps(1);
   };
@@ -63,8 +67,8 @@ class Deposit extends React.Component {
           title={i18n.t("DEPOSIT_INF_MODAL_HEADER")}
           content={<DepositModal />}
           show={isOpen}
-          close={() => this.setState({ isOpen: false })}
-          back={() => this.handleSteps(modalStep - 1)}
+          close={() => this.closeModal()}
+          back={() => this.handleSteps(modalStep)}
         />
         <Grid item xs={12} className={style.header}>
           <center>
@@ -84,7 +88,7 @@ Deposit.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  modalStep: store.payment.modalStep
+  modalStep: store.deposit.modalStep
 });
 
 const mapDispatchToProps = dispatch =>

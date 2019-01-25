@@ -1,15 +1,18 @@
 import React from "react";
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setModalSteps, setLoading } from "../../redux/depositAction";
+import PropTypes from "prop-types";
+import i18n from "../../../../utils/i18n";
 import style from "./style.css";
-
-import i18n from "../../../utils/i18n";
-
 import Grid from "@material-ui/core/Grid";
-
 import Hidden from "@material-ui/core/Hidden";
+import ButtonContinue from "../../../../components/buttonContinue";
 
 class ConfirmData extends React.Component {
   render() {
+    const { setModalSteps } = this.props;
+
     return (
       <div>
         <Grid container className={style.containerConfirmData}>
@@ -122,9 +125,10 @@ class ConfirmData extends React.Component {
           </Grid>
 
           <Grid item xs={12} style={{ marginTop: 20 }}>
-            <button className={style.ConfirmDataBtn}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_BTN_CONFIRM")}
-            </button>
+            <ButtonContinue
+              label={i18n.t("DEPOSIT_CONFIRMDATA_BTN_CONFIRM")}
+              action={() => setModalSteps(3)}
+            />
           </Grid>
 
           <Hidden smUp>
@@ -147,4 +151,26 @@ class ConfirmData extends React.Component {
   }
 }
 
-export default ConfirmData;
+ConfirmData.propTypes = {
+  modalStep: PropTypes.number,
+  setModalSteps: PropTypes.func,
+  loading: PropTypes.bool
+};
+
+const mapStateToProps = store => ({
+  modalStep: store.deposit.modalStep
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setLoading,
+      setModalSteps
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConfirmData);
