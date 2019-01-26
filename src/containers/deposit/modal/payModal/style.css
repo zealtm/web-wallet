@@ -1,0 +1,19 @@
+/* BASE */
+:local .container {
+  max-height: 69vh;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+
+:local .ConfirmDataField {
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  composes: bgPurpleDark from "../../../../components/bases/colorBase.css";
+  padding: 16px;
+  margin: 5px;
+  display: block;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
