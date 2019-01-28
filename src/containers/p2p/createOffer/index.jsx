@@ -142,7 +142,8 @@ class CreateOffer extends React.Component {
 
   handleFields = e => {
     const { name, value } = e.target;
-
+    let number = value.replace(/[^0-9.]/, "");
+    let newAddress = "";
     switch (name) {
       case "coin":
         this.setState({
@@ -176,7 +177,7 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            amount: value
+            amount: number
           }
         });
         break;
@@ -185,16 +186,17 @@ class CreateOffer extends React.Component {
           ...this.state,
           order: {
             ...this.state.order,
-            amountPayment: value
+            amountPayment: number
           }
         });
         break;
       case "addressSeller":
+        newAddress = value.replace(/[^\w.-]/,"");
         this.setState({
           ...this.state,
           order: {
             ...this.state.order,
-            addressSeller: value
+            addressSeller: newAddress
           }
         });
         break;
