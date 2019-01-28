@@ -162,13 +162,17 @@ class TransactionService {
       if (coin === "nmc")
         network = TESTNET ? networks.NMCTESTNET : networks.NMC;
 
+      if (coin === "mona")
+        network = TESTNET ? networks.MONATESTNET : networks.MONA;
+
       if (
         coin === "btc" ||
         coin === "ltc" ||
         coin === "bch" ||
         coin === "dash" ||
         coin === "usdt" ||
-        coin === "nmc"
+        coin === "nmc" ||
+        coin === "mona" 
       ) {
         let transactionBtc = new BtcTransaction();
         let responseBtc = await transactionBtc.createTransaction({
