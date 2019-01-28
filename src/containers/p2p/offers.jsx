@@ -428,7 +428,7 @@ class Offers extends React.Component {
     if (cancelDone)
       return (
         <div>
-          <span className={style.textSuccess}>Cancel done!</span>
+          <span className={style.textSuccess}>{i18n.t("P2P_CANCEL_ORDER")}</span>
           <button className={style.buttonEnable} onClick={this.clearCancel}>
             {i18n.t("P2P_TEXT_2")}
           </button>

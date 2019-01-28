@@ -654,5 +654,6 @@
   "P2P_FEE_TEXT_4": "days",
   "P2P_SIGNATURE_CONFIRM": "Signature successfully completed",
   "P2P_STATUS_PLAN": "Active",
-  "P2P_DESC_PLAN": "This plan will allow you to use P2P's system for"
+  "P2P_DESC_PLAN": "This plan will allow you to use P2P's system for",
+  "P2P_CANCEL_ORDER": "Cancel done!"
 }
