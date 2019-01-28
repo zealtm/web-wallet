@@ -22,6 +22,7 @@ import Done from "@material-ui/icons/Done";
 // COMPONENTS
 import Select from "../../../../components/select";
 import { CEP } from "../../../../components/inputMask";
+import InfoContainer from "../infoContainer";
 
 const inputStyle = {
   root: {
@@ -211,6 +212,8 @@ class KYC extends React.Component {
   render() {
     const { classes } = this.props;
     const { enableButtonConfirm } = this.state;
+    const imgUrl = "images/icons/security/kyc_documentConfirm.png";
+
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -263,8 +266,13 @@ class KYC extends React.Component {
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
                 <Grid item xs={12} sm={10} className={style.wrapperKYC}>
-                  <Grid container className={style.contentKYC}>
-                    <Grid container className={style.boxKYC_1}>
+                  <InfoContainer
+                    imageUrl={imgUrl}
+                    title={i18n.t("KYC_DOCUMENTCONFIRM_TITLE")}
+                    description={i18n.t("KYC_DOCUMENTCONFIRM_TEXT")}
+                  />
+                 <Grid container className={style.contentKYC}>
+                     <Grid container className={style.boxKYC_1}>
                       <Grid item xs={12} sm={6}>
                         <Hidden smUp>
                           <div>
