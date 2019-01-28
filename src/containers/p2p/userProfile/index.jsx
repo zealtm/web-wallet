@@ -4,16 +4,22 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfile, clearUserProfile } from "../redux/p2pAction";
+import {
+  getProfile,
+  clearUserProfile,
+  setUserDescription
+} from "../redux/p2pAction";
 
 //MATERIAL
 import Grid from "@material-ui/core/Grid";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { withStyles } from "@material-ui/core/styles";
+import EditIcon from "@material-ui/icons/Edit";
 
 // COMPONENTS
 import StarVotes from "../components/starvotes";
 import Loading from "../../../components/loading";
+//import ModalBar from "../../../components/modalBar";
 
 // styles
 import style from "../style.css";
@@ -39,7 +45,9 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      positivePercents: 0
+      positivePercents: 0,
+      isEditabled: false,
+      description: ""
     };
   }
 
@@ -89,6 +97,68 @@ class UserProfile extends React.Component {
     return <div />;
   };
 
+  handleInputState = () => {
+    const { isEditabled } = this.state;
+    this.setState({ isEditabled: !isEditabled });
+  };
+
+  handleFields = e => {
+    const { value } = e.target;
+    if (value) this.setState({ description: value });
+    else this.setState({ description: null });
+  };
+
+  handleEvent = e => {
+    if (e.key === "Enter") this.sendDescription();
+  };
+
+  sendDescription = () => {
+    const { description } = this.state;
+    const { setUserDescription, profile } = this.props;
+
+    if (description) profile.description = description;
+    setUserDescription(profile);
+    this.handleInputState();
+  };
+
+  renderEditIcon = () => {
+    const { isEditabled } = this.state;
+    const { profile, userEmail } = this.props;
+    const isUserLogged = profile.email === userEmail;
+    if (isEditabled && isUserLogged)
+      return <EditIcon onClick={() => this.sendDescription()} />;
+    else if (isUserLogged)
+      return <EditIcon onClick={() => this.handleInputState()} />;
+  };
+
+  renderDescriptionInput = () => {
+    const { isEditabled } = this.state;
+    const { profile } = this.props;
+    let { description } = profile;
+
+    if (isEditabled) {
+      return (
+        <Grid item xs={12}>
+          <textarea
+            className={style.textArea}
+            name="description"
+            placeholder={i18n.t("P2P_USER_DESCRIPTION")}
+            onChange={e => this.handleFields(e)}
+            onKeyPress={this.handleEvent}
+            maxLength="250"
+            defaultValue={description}
+          />
+        </Grid>
+      );
+    } else {
+      return (
+        <div className={style.textDescription}>
+          <p>{profile.description}</p>
+        </div>
+      );
+    }
+  };
+
   render() {
     let positivePercents = 0;
     const { classes, loading, profile } = this.props;
@@ -132,8 +202,15 @@ class UserProfile extends React.Component {
               <span className={style.spanDescription}>
                 {i18n.t("P2P_PROFILE_DESCRIPTION")}
               </span>
-              <div className={style.textDescription}>
-                <p>{profile.description}</p>
+              {/* <div className={style.textDescription}>
+                 <p>{profile.description}</p> 
+               
+              </div> */}
+              {this.renderDescriptionInput()}
+              <div className={style.editButton}>
+                <div style={{ position: "absolute" }}>
+                  {this.renderEditIcon()}
+                </div>
               </div>
             </div>
           </div>
@@ -210,7 +287,9 @@ UserProfile.propTypes = {
   userProfile: PropTypes.array,
   profile: PropTypes.object,
   clearUserProfile: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  userEmail: PropTypes.string,
+  setUserDescription: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -224,7 +303,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getProfile,
-      clearUserProfile
+      clearUserProfile,
+      setUserDescription
     },
     dispatch
   );

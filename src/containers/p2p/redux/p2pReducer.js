@@ -240,6 +240,16 @@ const p2p = (state = initialState, action) => {
         profile: {}
       };
 
+    case "SET_USER_DESCRIPTION":
+      return {
+        ...state,
+        profile:{
+          ...state.profile,
+          description: action.profile
+        }
+      };
+
+
     default: {
       return {
         ...state
