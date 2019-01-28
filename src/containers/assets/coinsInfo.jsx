@@ -18,6 +18,10 @@ import Hidden from "@material-ui/core/Hidden";
 import i18n from "../../utils/i18n";
 import { convertBiggestCoinUnit } from "../../utils/numbers";
 
+//COMPONENTS
+import Modal from "../../components/modal";
+import ReceiveModal from "./modal/receiveModal/";
+
 class CoinsInfo extends React.Component {
   constructor() {
     super();
@@ -41,7 +45,7 @@ class CoinsInfo extends React.Component {
     let asset = assets[selectedCoin];
     return (
       <Grid item xs={8} className={style.floatRight}>
-        <Grid item className={ style.balanceItem}>
+        <Grid item className={style.balanceItem}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
           <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
         </Grid>
@@ -53,9 +57,9 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
-    return(
+    return (
       <Grid item xs={8} className={style.floatRight}>
-        <Grid item className={ style.balanceItemMobile}>
+        <Grid item className={style.balanceItemMobile}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
           <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
         </Grid>
@@ -66,7 +70,14 @@ class CoinsInfo extends React.Component {
   renderButton = () => {
     return (
       <Grid item className={style.alignButtons}>
-        <button className={style.receiveButton}>{i18n.t("BTN_RECEIVE")}</button>
+        <button
+          className={style.receiveButton}
+          onClick={() => {
+            this.handleReceiveModal();
+          }}
+        >
+          {i18n.t("BTN_RECEIVE")}
+        </button>
 
         <button className={style.sentButton}>{i18n.t("BTN_SEND")}</button>
       </Grid>
@@ -75,7 +86,12 @@ class CoinsInfo extends React.Component {
   renderButtonMobile = () => {
     return (
       <Grid item xs={11} className={style.alignButtons}>
-        <button className={style.receiveButtonMobile}>
+        <button
+          className={style.receiveButtonMobile}
+          onClick={() => {
+            this.handleReceiveModal();
+          }}
+        >
           {i18n.t("BTN_RECEIVE")}
         </button>
         <button className={style.sentButtonMobile}>{i18n.t("BTN_SEND")}</button>
@@ -83,15 +99,32 @@ class CoinsInfo extends React.Component {
     );
   };
 
+  renderReceiveModal = coin => {
+    return (
+      <Modal
+        title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
+        content={<ReceiveModal coin={coin} />}
+        show={this.state.modalReceive}
+        close={() => {
+          this.handleReceiveModal();
+        }}
+      />
+    );
+  };
+  handleReceiveModal = () => {
+    this.setState({ modalReceive: !this.state.modalReceive });
+  };
   render() {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
-
+    console.log(asset);
+    
     if (selectedCoin === undefined) return null;
 
     return (
       <div>
+        {this.renderReceiveModal(asset)}
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
