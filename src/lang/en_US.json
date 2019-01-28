@@ -458,6 +458,10 @@
   "TEXT_FAILED_UPLOAD": "Failed to upload ...",
   "TEXT_FRONT": "Front",
   "TEXT_BACK": "Back",
+  "KYC_INFOCONTAINER_TITLE": "Congratulation, you sent all the documents.",
+  "KYC_INFOCONTAINER_TEXT": "Now wait for the approval. Stay alert to your e-mail!.",
+  "KYC_INFOCONTAINER_IMG": "Information",
+
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",

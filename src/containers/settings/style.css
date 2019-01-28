@@ -509,3 +509,27 @@ input[type="file"]::-webkit-file-upload-button {
     display: flex;
   }
 }
+
+/* INFOCONTAINER */
+
+:local .infoTitle {
+font-size: 24px;
+}
+
+:local .infoText {
+font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  :local .infoTitle {
+    font-size: 14px;
+  }
+  
+  :local .infoText {
+    font-size: 12px;
+  }
+
+  :local .infoBoxText {
+    margin-left: 20px;
+  }
+}
