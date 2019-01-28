@@ -510,7 +510,7 @@ input[type="file"]::-webkit-file-upload-button {
   }
 }
 
-/* DOCUMENTCONFIRM */
+/* INFOCONTAINER */
 
 :local .infoTitle {
 font-size: 24px;

@@ -268,8 +268,8 @@ class KYC extends React.Component {
                 <Grid item xs={12} sm={10} className={style.wrapperKYC}>
                   <InfoContainer
                     imageUrl={imgUrl}
-                    title={i18n.t("KYC_DOCUMENTCONFIRM_TITLE")}
-                    description={i18n.t("KYC_DOCUMENTCONFIRM_TEXT")}
+                    title={i18n.t("KYC_INFOCONTAINER_TITLE")}
+                    description={i18n.t("KYC_INFOCONTAINER_TEXT")}
                   />
                  <Grid container className={style.contentKYC}>
                      <Grid container className={style.boxKYC_1}>

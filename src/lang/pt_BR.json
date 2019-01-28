@@ -456,9 +456,9 @@
   "TEXT_FAILED_UPLOAD": "Envio falhou",
   "TEXT_FRONT": "Frente",
   "TEXT_BACK": "Trás",
-  "KYC_DOCUMENTCONFIRM_TITLE": "Parabéns, você enviou todos os documentos.",
-  "KYC_DOCUMENTCONFIRM_TEXT": "Agora aguarde a aprovação de seus dados. Fique atento ao seu e-mail!",
-  "KYC_DOCUMENTCONFIRM_IMG": "Informações",
+  "KYC_INFOCONTAINER_TITLE": "Parabéns, você enviou todos os documentos.",
+  "KYC_INFOCONTAINER_TEXT": "Agora aguarde a aprovação de seus dados. Fique atento ao seu e-mail!",
+  "KYC_INFOCONTAINER_IMG": "Informações",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",

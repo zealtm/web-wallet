@@ -8,25 +8,23 @@ class InfoContainer extends React.Component {
   render() {
     const { imageUrl, title, description } = this.props;
 
-    return (
-      <div>
+    return <div>
         <Grid>
           <Grid container>
             <Grid item sm={3} xs={3}>
-              <img src={imageUrl} alt={i18n.t("KYC_DOCUMENTCONFIRM_IMG")} />
+              <img src={imageUrl} alt={i18n.t("KYC_INFOCONTAINER_IMG")} />
             </Grid>
 
             <Grid item sm={6} xs={8} className={style.infoBoxText}>
               <h1 className={style.infoTitle}>{title}</h1>
-              
+
               <Grid>
                 <span className={style.infoText}>{description}</span>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </div>
-    );
+      </div>;
   }
 }
 
