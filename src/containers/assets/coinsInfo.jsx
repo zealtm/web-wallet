@@ -17,6 +17,7 @@ import Modal from "../../components/modal";
 import Grid from "@material-ui/core/Grid";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUp from "@material-ui/icons/ArrowDropUp";
+import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -55,6 +56,55 @@ class CoinsInfo extends React.Component {
     this.setState({ isOpen: false });
   };
 
+  renderBalance = () => {
+    let { assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
+    return (
+      <Grid item xs={8} className={style.floatRight}>
+        <Grid item className={style.balanceItem}>
+          <h2>{i18n.t("WALLET_BALANCE")}</h2>
+          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+        </Grid>
+        <Hidden xsDown> {this.renderButton()}</Hidden>
+      </Grid>
+    );
+  };
+  
+  renderBalanceMobile = () => {
+    let { assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
+    return (
+      <Grid item xs={8} className={style.floatRight}>
+        <Grid item className={style.balanceItemMobile}>
+          <h2>{i18n.t("WALLET_BALANCE")}</h2>
+          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+        </Grid>
+        <Hidden xsDown> {this.renderButton()}</Hidden>
+      </Grid>
+    );
+  };
+  renderButton = () => {
+    return (
+      <Grid item className={style.alignButtons}>
+        <button className={style.receiveButton}>{i18n.t("BTN_RECEIVE")}</button>
+
+        <button className={style.sentButton}>{i18n.t("BTN_SEND")}</button>
+      </Grid>
+    );
+  };
+  renderButtonMobile = () => {
+    return (
+      <Grid item xs={11} className={style.alignButtons}>
+        <button className={style.receiveButtonMobile}>
+          {i18n.t("BTN_RECEIVE")}
+        </button>
+        <button className={style.sentButtonMobile}>{i18n.t("BTN_SEND")}</button>
+      </Grid>
+    );
+  };
+
   render() {
     let { assets: assetsRoute } = this.props;
     const { isOpen } = this.state;
@@ -73,7 +123,7 @@ class CoinsInfo extends React.Component {
           back={() => this.previousStep()}
         />
 
-        {/* <Grid container className={style.containerInfo}>
+        <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
@@ -88,19 +138,12 @@ class CoinsInfo extends React.Component {
                 />
               </Grid>
             </Grid>
+            <Hidden xsDown>{this.renderBalance()}</Hidden>
 
-            <Grid
-              item
-              xs={8}
-              className={style.balanceItem + " " + style.floatRight}
-            >
-              <Grid item>
-                <h2>{i18n.t("WALLET_BALANCE")}</h2>
-                <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
-              </Grid>
-            </Grid>
+            <Hidden smUp>{this.renderBalanceMobile()}</Hidden>
           </Grid>
-        </Grid> */}
+        </Grid>
+        <Hidden smUp>{this.renderButtonMobile()}</Hidden>
       </div>
     );
   }
