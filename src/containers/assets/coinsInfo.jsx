@@ -4,9 +4,14 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { setModalAssets } from "./redux/assetsAction";
 
 // STYLE
 import style from "./style.css";
+
+// COMPONENTS
+import SendModal from "./modal/sendModal";
+import Modal from "../../components/modal";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -22,7 +27,8 @@ class CoinsInfo extends React.Component {
     super();
     this.state = {
       modalSend: false,
-      modalReceive: false
+      modalReceive: false,
+      isOpen: true
     };
   }
 
@@ -34,16 +40,40 @@ class CoinsInfo extends React.Component {
     }
   };
 
+  previousStep = () => {
+    let { modal, setModalAssets } = this.props;
+    if (modal >= 0) {
+      setModalAssets(modal - 1);
+    }
+
+    return;
+  };
+
+  handleModalSendClose = () => {
+    let { setModalAssets } = this.props;
+    setModalAssets(0);
+    this.setState({ isOpen: false });
+  };
+
   render() {
     let { assets: assetsRoute } = this.props;
+    const { isOpen } = this.state;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
 
-    if (selectedCoin === undefined) return null;
+    // if (selectedCoin === undefined) return null;
 
     return (
       <div>
-        <Grid container className={style.containerInfo}>
+        <Modal
+          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
+          content={<SendModal />}
+          show={isOpen}
+          close={this.handleModalSendClose}
+          back={() => this.previousStep()}
+        />
+
+        {/* <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
@@ -70,7 +100,7 @@ class CoinsInfo extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
     );
   }
@@ -78,15 +108,24 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired
+  assets: PropTypes.object.isRequired,
+  setModalAssets: PropTypes.func.isRequired,
+  modal: PropTypes.number.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets
+  assets: store.assets,
+  modal: store.assets.modal
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setModalAssets
+    },
+    dispatch
+  );
 
 export default connect(
   mapSateToProps,

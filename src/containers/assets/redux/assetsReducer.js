@@ -4,6 +4,7 @@ const initialState = {
   isTxHistoryLoading: false,
   assets: [],
   history: [],
+  modal: 0
 };
 
 const asset = (state = initialState, action) => {
@@ -14,20 +15,26 @@ const asset = (state = initialState, action) => {
         isBalanceLoading: action.isBalanceLoading,
         isTxHistoryLoading: action.isTxHistoryLoading,
         assets: action.assets ? action.assets : state.assets
-      }
+      };
 
     case "SET_ASSET_HISTORY":
       return {
         ...state,
         isTxHistoryLoading: action.isTxHistoryLoading,
         history: action.history ? action.history : []
-      }
+      };
 
     case "POST_ASSETS_SET_SELECTED_COIN":
       return {
         ...state,
         selectedCoin: action.assetId,
         loading: false
+      };
+
+      case "SET_MODAL_ASSETS":
+      return {
+        ...state,
+        modal: action.modal
       };
     default: {
       return {

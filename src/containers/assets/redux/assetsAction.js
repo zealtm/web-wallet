@@ -16,3 +16,8 @@ export const reloadAsset = (assetId, lunesAddress) => ({
   assetId,
   lunesAddress
 })
+
+export const setModalAssets = modal => ({
+  type: "SET_MODAL_ASSETS",
+  modal
+});
