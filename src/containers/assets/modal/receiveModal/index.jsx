@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import React from "react";
 import { connect } from "react-redux";
 import { successRequest } from "../../../errors/redux/errorAction";
-//import { shareCoinAddress } from "../../redux/walletAction";
+import { shareTokenAddress } from "../../redux/assetsAction";
 
 // STYLE
 import style from "../../style.css";
@@ -15,7 +15,7 @@ import style from "../../style.css";
 import i18n from "../../../../utils/i18n";
 
 // MATERIAL UI
-//import Hidden from "@material-ui/core/Hidden";
+import Hidden from "@material-ui/core/Hidden";
 
 class Receive extends React.Component {
   copyCoinAddress = () => {
@@ -35,9 +35,9 @@ class Receive extends React.Component {
   };
 
   hasAddress = () => {
-    let { coin } = this.props;
-    let coinAddress = coin.sender;
-    let coinName = coin.tokenName;
+    let { coin, shareTokenAddress } = this.props;
+    let coinAddress = coin.address;
+    let coinName = coin.name;
     return coinAddress ? (
       <div>
         <div className={style.qrCodeReceive}>
@@ -78,10 +78,10 @@ class Receive extends React.Component {
                 </span>
               </p>
             </div>
-            {/* <Hidden smUp>
+             <Hidden smUp>
               <div
                 className={style.buttonReceive}
-                onClick={() => shareCoinAddress(coinName, coinAddress)}
+                onClick={() => shareTokenAddress(coinName, coinAddress)}
               >
                 <img
                   src="/images/icons/modal-receive/ic_shared@1x.png"
@@ -93,7 +93,7 @@ class Receive extends React.Component {
                   </span>
                 </p>
               </div>
-            </Hidden> */}
+            </Hidden> 
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ class Receive extends React.Component {
 Receive.propTypes = {
   email: PropTypes.string,
   coin: PropTypes.object,
-  shareCoinAddress: PropTypes.func,
+  shareTokenAddress: PropTypes.func,
   successRequest: PropTypes.func
 };
 
@@ -119,7 +119,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ successRequest }, dispatch);
+  bindActionCreators({ successRequest, shareTokenAddress }, dispatch);
 
 export default connect(
   mapStateToProps,

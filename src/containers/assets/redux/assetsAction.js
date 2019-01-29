@@ -15,4 +15,10 @@ export const reloadAsset = (assetId, lunesAddress) => ({
   type: "GET_RELOAD_ASSET_API",
   assetId,
   lunesAddress
-})
+});
+
+export const shareTokenAddress = (name, address) => ({
+  type: "GET_TOKEN_ADRESS_API",
+  name,
+  address
+});

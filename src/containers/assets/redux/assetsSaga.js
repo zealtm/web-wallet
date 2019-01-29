@@ -5,33 +5,44 @@ import { getAuthToken } from "../../../utils/localStorage";
 
 // Services
 import AssetService from "../../../services/assetService";
+import CoinService from "../../../services/coinService";
 const assetService = new AssetService();
+const coinService = new CoinService();
 
+import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 
 export function* getAssetGeneralInfo(action) {
   try {
     yield put({
       type: "SET_ASSET_DATA",
-      isBalanceLoading: true })
+      isBalanceLoading: true
+    });
 
     let token = getAuthToken();
     let { lunesAddress } = action;
 
-    let response = yield call([assetService, assetService.getBalances], lunesAddress, token);
+    let response = yield call(
+      [assetService, assetService.getBalances],
+      lunesAddress,
+      token
+    );
 
-    if (response.type !== 'success') {
-      yield put({type: "REQUEST_FAILED", message: response.message})
-      yield put({type: "SET_ASSET_DATA", isBalanceLoading: false})
+    if (response.type !== "success") {
+      yield put({ type: "REQUEST_FAILED", message: response.message });
+      yield put({ type: "SET_ASSET_DATA", isBalanceLoading: false });
       return;
     }
 
     let assets = response.data.balances;
 
-    yield put({ type: "SET_ASSET_DATA", assets: assets, isBalanceLoading: false })
-
+    yield put({
+      type: "SET_ASSET_DATA",
+      assets: assets,
+      isBalanceLoading: false
+    });
   } catch (error) {
-    yield put({type: "REQUEST_FAILED", message: error.message})
-    console.warn(error)
+    yield put({ type: "REQUEST_FAILED", message: error.message });
+    console.warn(error);
   }
 }
 
@@ -40,11 +51,10 @@ export function* getAssetHistory(action) {
     yield put({
       type: "SET_ASSET_HISTORY",
       isTxHistoryLoading: true
-    })
+    });
 
     let token = yield call(getAuthToken);
     let { assetId, lunesAddress } = action;
-
 
     let response = yield call(
       [assetService, assetService.getTxHistory],
@@ -53,9 +63,9 @@ export function* getAssetHistory(action) {
       token
     );
 
-    if (response.type !== 'success') {
-      yield put({type: "REQUEST_FAILED", message: response.message})
-      yield put({type: "SET_ASSET_DATA", isTxHistoryLoading: false})
+    if (response.type !== "success") {
+      yield put({ type: "REQUEST_FAILED", message: response.message });
+      yield put({ type: "SET_ASSET_DATA", isTxHistoryLoading: false });
       return;
     }
 
@@ -70,7 +80,7 @@ export function* getAssetHistory(action) {
     return;
   } catch (error) {
     yield put({ type: "REQUEST_FAILED", message: error.message });
-    console.warn(error)
+    console.warn(error);
   }
 }
 
@@ -78,15 +88,23 @@ export function* reloadAsset(action) {
   try {
     let { assetId, lunesAddress } = action;
 
-    yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress })
+    yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress });
 
     yield put({
       type: "GET_ASSET_HISTORY_API",
       assetId,
       lunesAddress
-    })
-  } catch(error) {
-    yield put({type:"REQUEST_FAILED", message: error.message})
-    console.warn(error)
+    });
+  } catch (error) {
+    yield put({ type: "REQUEST_FAILED", message: error.message });
+    console.warn(error);
+  }
+}
+
+export function* shareTokenAddress(action) {
+  try {    
+    yield call(coinService.shareCoinAddress, action.name, action.address);
+  } catch (error) {
+    yield put(internalServerError());
   }
 }

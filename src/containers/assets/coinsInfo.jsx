@@ -115,16 +115,16 @@ class CoinsInfo extends React.Component {
     this.setState({ modalReceive: !this.state.modalReceive });
   };
   render() {
-    let { assets: assetsRoute } = this.props;
+    let { assets: assetsRoute, skeleton } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
-    console.log(asset);
+    let coin = skeleton.coins.lunes;
     
     if (selectedCoin === undefined) return null;
 
     return (
       <div>
-        {this.renderReceiveModal(asset)}
+        {this.renderReceiveModal(coin)}
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
@@ -153,12 +153,14 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
-  assets: PropTypes.object.isRequired
+  assets: PropTypes.object.isRequired,
+  skeleton: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
-  assets: store.assets
+  assets: store.assets,
+  skeleton: store.skeleton
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
