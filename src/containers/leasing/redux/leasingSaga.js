@@ -1,26 +1,13 @@
-import {
-  put,
-  call
-} from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import {
   internalServerError,
   modalError
 } from "../../errors/statusCodeMessage";
-import {
-  successRequest,
-  errorInput
-} from "../../errors/redux/errorAction";
-import {
-  convertBiggestCoinUnit
-} from "../../../utils/numbers";
+import { successRequest, errorInput } from "../../errors/redux/errorAction";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import i18n from "../../../utils/i18n";
-import {
-  decryptAes
-} from "../../../utils/cryptography";
-import {
-  getAuthToken,
-  getUserSeedWords
-} from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import TransactionService from "../../../services/transaction/transactionService";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
@@ -30,7 +17,9 @@ const transactionService = new TransactionService();
 
 export function* getProfessionalNode() {
   try {
-    let response = yield call(leasingService.getProfessionalNodes);
+    const token = yield call(getAuthToken);
+    const response = yield call(leasingService.getProfessionalNodes, token);
+
     yield put({
       type: "GET_PROFESSIONAL_NODE",
       professionalNode: response
@@ -153,10 +142,15 @@ export function* cancelLeasing(action) {
 
 export function* getLeasingInfo(action) {
   try {
-    let token = yield call(getAuthToken);
-    let professionalNodes = yield call(leasingService.getProfessionalNodes);
-    let seed = yield call(getUserSeedWords);
-    let responseCoins = yield call(
+    const token = yield call(getAuthToken);
+    const seed = yield call(getUserSeedWords);
+
+    const professionalNodes = yield call(
+      leasingService.getProfessionalNodes,
+      token
+    );
+
+    const responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
       decryptAes(seed, action.password)
