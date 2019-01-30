@@ -634,5 +634,6 @@
   "P2P_BUTTON_RATE_SELLER": "Avaliar",
   "P2P_USER_DESCRIPTION":"Escreva uma breve descrição sobre você",
   "P2P_STATUS_PLAN": "Ativo",
-  "P2P_DESC_PLAN": " Este plano permitirá usar o sistema Lunes de P2P por"
+  "P2P_DESC_PLAN": " Este plano permitirá usar o sistema Lunes de P2P por",
+  "P2P_CANCEL_ORDER": "Cancelamento concluído!"
 }
