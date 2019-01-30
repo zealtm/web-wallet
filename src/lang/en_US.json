@@ -465,7 +465,10 @@
   "KYC_INFOCONTAINER_TITLE": "Congratulation, you sent all the documents.",
   "KYC_INFOCONTAINER_TEXT": "Now wait for the approval. Stay alert to your e-mail!.",
   "KYC_INFOCONTAINER_IMG": "Information",
-
+  "KYC_INFOCONFIRM_IMG": "Confirmed Information",
+  "KYC_INFOCONFIRM_TITLE": "Approved Address",
+  "KYC_INFOCONFIRM_TEXT": "Your address has been approved and will be used to improve your security.",
+  
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",

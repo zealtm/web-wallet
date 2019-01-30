@@ -21,6 +21,7 @@ import Done from "@material-ui/icons/Done";
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
+import InfoConfirm from "../infoCorfirm";
 
 const inputStyle = {
   root: {
@@ -321,11 +322,15 @@ class KYC extends React.Component {
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
                 <Grid item xs={12} sm={10} className={style.wrapperKYC}>
-                  <InfoContainer
+                  {/* <InfoContainer
                     imageUrl={imgUrl}
                     title={i18n.t("KYC_INFOCONTAINER_TITLE")}
                     description={i18n.t("KYC_INFOCONTAINER_TEXT")}
-                  />
+                  /> */}
+                  <InfoConfirm
+                    title={i18n.t("KYC_INFOCONFIRM_TITLE")}
+                    description={i18n.t("KYC_INFOCONFIRM_TEXT")} 
+                    />
                  <Grid container className={style.contentKYC}>
                      <Grid container className={style.boxKYC_1}>
                       <Grid item xs={12} sm={6}>
