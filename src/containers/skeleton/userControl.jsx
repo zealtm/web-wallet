@@ -14,6 +14,8 @@ import i18n from "../../utils/i18n";
 //STYLE
 import style from "./style.css";
 
+import { getProfileImg } from "./../../utils/user"
+
 class UserControl extends React.Component {
   constructor(props) {
     super(props);
@@ -85,12 +87,11 @@ class UserControl extends React.Component {
   };
 
   render() {
-    const { user } = this.props.user;
     return (
       <div>
         <Avatar
           alt="Avatar"
-          src={user.profilePicture}
+          src={getProfileImg(200)}
           className={style.avatarHeader}
           onClick={() => this.handleClick()}
         />

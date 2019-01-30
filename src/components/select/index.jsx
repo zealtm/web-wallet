@@ -58,13 +58,12 @@ class Select extends React.Component {
     }
   };
 
-  //NAO USAR WILL MOUNT
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener("click", this.handleClick);
   }
 
   componentWillUnmount() {
-    document.addEventListener("click", this.handleClick);
+    document.removeEventListener("click", this.handleClick);
   }
 
   render() {
@@ -103,7 +102,7 @@ class Select extends React.Component {
 
 Select.propTypes = {
   list: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,
   width: PropTypes.string,
