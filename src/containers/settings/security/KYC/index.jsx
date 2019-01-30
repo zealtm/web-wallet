@@ -157,13 +157,13 @@ class KYC extends React.Component {
             <img src="images/icons/camera/camera@2x.png" alt="camera"/>
           </label>
           <input
-          arial-label
+            aria-label
             style={{ display: "none" }}
             type="file"
             id="inputFile"
             onClick={() => this.enableButtonUpload()}
           />
-          <span style={{ marginLeft: "15px", color: "#654fa4" }}>{value}</span>
+          <span style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}>{value}</span>
           <img
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
