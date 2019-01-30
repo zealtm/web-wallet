@@ -1,19 +1,96 @@
-/* BASE */
-:local .container {
-  max-height: 69vh;
-  padding-left: 40px;
-  padding-right: 40px;
-  margin-top: 20px;
+
+:local .containerPayModal {
+  text-align: center;
+  max-height: 74vh;
 }
 
-:local .ConfirmDataField {
+:local .payModalImg {
+  width: 12%;
+  margin-bottom: 10px;
+}
+
+:local .payModalText {
   composes: textDefault from "../../../../components/bases/textBase.css";
-  composes: bgPurpleDark from "../../../../components/bases/colorBase.css";
-  padding: 16px;
-  margin: 5px;
-  display: block;
-  border-radius: 6px;
-  font-size: 16px;
+  width: 62%;
+  display: inline-block;
   font-weight: bold;
-  margin-bottom: 12px;
+}
+
+:local .payModalField {
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+  composes: bgPurpleDark from "../../../../components/bases/colorBase.css";
+  padding: 30px;
+  border-radius: 6px;
+  font-weight: bold;
+  max-width: 86%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  justify-content: center;
+  display: flex;
+  letter-spacing: 0.5px;
+}
+
+:local .payModalTitle {
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
+  font-weight: bold;
+}
+
+:local .payModalIconsCopy {
+  width: 21px;
+  opacity: 0.3;
+}
+
+:local .payModalIconsDownload {
+  width: 22px;
+  opacity: 0.3;
+}
+
+:local .payModalIconsShare {
+  width: 24px;
+  opacity: 0.3;
+  padding-bottom: 6px;
+}
+
+:local .payModalTextIcon {
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  opacity: 0.3;
+}
+
+:local .payModalBoxImgIcon {
+  composes: bgPurpleDark from "../../../../components/bases/colorBase.css";
+  display: inline-flex;
+  justify-content: space-evenly;
+  line-height: 0;
+  padding: 20px;
+  border-radius: 6px;
+  max-width: 86%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 414px) {
+  :local .payModalText {
+    font-size: 12px;
+    width: 79%;
+  }
+  :local .payModalText {
+    font-size: 12px;
+  }
+  :local .payModalField {
+    font-size: 14px;
+  }
+  :local .payModalTitle {
+    font-size: 14px;
+  }
+  :local .payModalTextIcon {
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 415px) {
+  :local .payModalIconsBoxDownload {
+    padding-left: 80px;
+  }
+  :local .payModalBoxImgIcon {
+    justify-content: center;
+  }
 }
