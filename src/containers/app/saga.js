@@ -118,7 +118,8 @@ import {
   getFeeBuySaga,
   setFeeBuySaga,
   confirmBuySaga,
-  getHistoryBuySaga
+  getHistoryBuySaga,
+  getLunesBuyPrices
 } from "../buycoin/redux/buySaga";
 
 import {
@@ -214,7 +215,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
     fork(takeLatest, "GET_ASSET_GENERAL_INFO_API", getAssetGeneralInfo),
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
-    fork(takeLatest, "RELOAD_ASSET_API", reloadAsset),
+    fork(takeLatest, "GET_RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
 
     // p2pchat
@@ -262,6 +263,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_FEE_BUY", setFeeBuySaga),
     fork(takeLatest, "CONFIRM_BUY", confirmBuySaga),
     fork(takeLatest, "GET_HISTORY_BUY", getHistoryBuySaga),
+    fork(takeLatest, "GET_LUNES_BUY_PRICES_API", getLunesBuyPrices),
 
     // invite
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),

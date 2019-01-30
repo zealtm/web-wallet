@@ -106,7 +106,8 @@ Select.propTypes = {
   selectItem: PropTypes.func.isRequired,
   titleImg: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default Select;

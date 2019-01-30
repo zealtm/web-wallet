@@ -11,6 +11,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 // COMPONENTS
 import Loading from "../../../components/loading";
 import Footer from "../footer";
+import LogoLunes from "../../../components/logoLunes";
 
 // UTILS
 import { inputValidator } from "../../../utils/inputValidator";
@@ -47,10 +48,9 @@ class Auth extends React.Component {
     this.setState({
       ...this.state,
       inputs: { ...inputs, [name]: value ? input : { value: "" } },
-      errors: undefined,
+      errors: undefined
     });
   };
-
 
   inputValidator = () => {
     let { inputs } = this.state;
@@ -71,11 +71,11 @@ class Auth extends React.Component {
     }
   };
 
-  handleKeyPress = (target) => {
+  handleKeyPress = target => {
     if (target.charCode == 13) {
-      this.inputValidator()
+      this.inputValidator();
     }
-  }
+  };
 
   render() {
     // let userName = getUsername();
@@ -83,8 +83,10 @@ class Auth extends React.Component {
     let { inputs, errors } = this.state;
 
     return (
-      <div onKeyPress={this.handleKeyPress} >
-        <img src="../../images/logo.svg" className={style.logo} />
+      <div onKeyPress={this.handleKeyPress}>
+        <center>
+          <LogoLunes medium />
+        </center>
         <div className={style.description}>{i18n.t("LOGIN_HEADER")}</div>
         <form autoComplete={"on"}>
           <input
@@ -118,7 +120,6 @@ class Auth extends React.Component {
                 : style.inputTextDefault
             }
           />
-
         </form>
 
         <Link className={style.textForgetPass} to="/reset">

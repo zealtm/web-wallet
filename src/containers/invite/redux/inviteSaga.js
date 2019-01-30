@@ -97,22 +97,28 @@ export function* getInviteSentSaga() {
 }
 
 export function* sendWithdrawSaga(address) {
-  yield put({
-    type: "SET_LOADING_WITHDRAW",
-    loading: true
-  });
-
-  let token = yield call(getAuthToken);
-  const response = yield call(inviteService.sendWithdraw, token, address);
-
-  if (response.data !== 200) {
-    yield put(errorInput(i18n.t("INVITE_NO_BALANCE")));
+  try {
+    yield put({
+      type: "SET_LOADING_WITHDRAW",
+      loading: true
+    });
+  
+    let token = yield call(getAuthToken);
+    const response = yield call(inviteService.sendWithdraw, token, address);
+  
+    if (response.code != 200) {
+      yield put(internalServerError());
+    }else{
+      yield put(successRequest(i18n.t("INVITE_WITHDRAW")));
+      yield put({
+        type: "GET_INVITE_ADDRESS"
+      });
+    }
+  
+    yield put({
+      type: "SEND_WITHDRAW_INVITE_REDUCER"
+    });
+  }catch(e){
+    yield put(internalServerError());
   }
-  else{
-    yield put(successRequest(i18n.t("INVITE_WITHDRAW")));
-  }
-
-  yield put({
-    type: "SEND_WITHDRAW_INVITE_REDUCER"
-  });
 }

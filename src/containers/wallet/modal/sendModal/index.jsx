@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 
 // REDUX
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setWalletModalStep } from "../../redux/walletAction";
 
 // COMPONENTS
 import BoxAddress from "./boxAddress";
@@ -45,25 +43,15 @@ class SendModal extends React.Component {
 SendModal.propTypes = {
   modal: PropTypes.object.isRequired,
   wallet: PropTypes.object.isRequired,
-  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
-  setWalletModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   wallet: store.wallet,
   modal: store.wallet.modal,
-  coins: store.skeleton.coins
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      setWalletModalStep
-    },
-    dispatch
-  );
 
 export default connect(
   mapSateToProps,
-  mapDispatchToProps
+  null
 )(SendModal);
