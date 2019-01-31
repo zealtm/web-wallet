@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalAssets } from "../../redux/assetsAction";
+import { setAddressModalStep } from "../../redux/assetsAction";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
@@ -17,8 +17,8 @@ import i18n from "../../../../utils/i18n";
 
 class BoxProcess extends React.Component {
   doTransaction = () => {
-    const { setModalAssets } = this.props;
-    setModalAssets(5);
+    const { setAddressModalStep } = this.props;
+    setAddressModalStep(5);
   };
 
   componentDidMount() {
@@ -59,7 +59,7 @@ BoxProcess.propTypes = {
   coin: PropTypes.string.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   modal: PropTypes.object.isRequired,
-  setModalAssets: PropTypes.func.isRequired
+  setAddressModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -71,7 +71,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalAssets
+      setAddressModalStep
     },
     dispatch
   );

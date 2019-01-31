@@ -238,7 +238,7 @@ class TransactionHistory extends React.Component {
 TransactionHistory.propTypes = {
   skeleton: PropTypes.object.isRequired,
   assets: PropTypes.object.isRequired,
-  getAssetHistory: PropTypes.func.isRequired,
+  getAssetHistory: PropTypes.func,
   getAssetGeneralInfo: PropTypes.func.isRequired,
   reloadAsset: PropTypes.func.isRequired
 };

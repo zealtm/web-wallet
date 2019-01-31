@@ -4,7 +4,14 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalAssets } from "./redux/assetsAction";
+import {
+  setAssetsSendModalOpen,
+  setAssetsReceiveModalOpen,
+  setAddressModalStep,
+  resetModalSend
+} from "./redux/assetsAction";
+
+import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
@@ -21,15 +28,13 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
   constructor() {
     super();
     this.state = {
       modalSend: false,
-      modalReceive: false,
-      isOpen: true
+      modalReceive: false
     };
   }
 
@@ -42,55 +47,70 @@ class CoinsInfo extends React.Component {
   };
 
   previousStep = () => {
-    let { modal, setModalAssets } = this.props;
-    if (modal >= 0) {
-      setModalAssets(modal - 1);
+    let { step } = this.props.assets.modal;
+    let { setAddressModalStep } = this.props;
+    if (step >= 0) {
+      setAddressModalStep(step - 1);
     }
 
     return;
   };
 
   handleModalSendClose = () => {
-    let { setModalAssets } = this.props;
-    setModalAssets(0);
-    this.setState({ isOpen: false });
+    this.props.resetModalSend();
+    let { user, assets, setAssetsSendModalOpen, loadWalletInfo } = this.props;
+    let step = assets.modal.step;
+
+    if (step === 4) {
+      return null;
+    } else if (step === 5 || step === 6) {
+      return () => {
+        setAssetsSendModalOpen(), loadWalletInfo(user.password);
+      };
+    } else {
+      return () => setAssetsReceiveModalOpen();
+    }
   };
 
   renderBalance = () => {
-    let { assets: assetsRoute } = this.props;
-    let { assets, selectedCoin } = assetsRoute;
-    let asset = assets[selectedCoin];
+    let { coins } = this.props;
+    let asset = coins["lunes"];
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItem}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+          <p>{asset.balance.available}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
     );
   };
-  
+
   renderBalanceMobile = () => {
-    let { assets: assetsRoute } = this.props;
-    let { assets, selectedCoin } = assetsRoute;
-    let asset = assets[selectedCoin];
+    let { coins } = this.props;
+    let asset = coins["lunes"];
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItemMobile}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+          <p>{asset.balance.available}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
     );
   };
   renderButton = () => {
+    let { setAssetsSendModalOpen } = this.props;
     return (
       <Grid item className={style.alignButtons}>
         <button className={style.receiveButton}>{i18n.t("BTN_RECEIVE")}</button>
 
-        <button className={style.sentButton}>{i18n.t("BTN_SEND")}</button>
+        <button
+          className={style.sentButton}
+          onClick={() => setAssetsSendModalOpen()}
+        >
+          {i18n.t("BTN_SEND")}
+        </button>
       </Grid>
     );
   };
@@ -106,34 +126,30 @@ class CoinsInfo extends React.Component {
   };
 
   render() {
-    let { assets: assetsRoute } = this.props;
-    const { isOpen } = this.state;
-    let { assets, selectedCoin } = assetsRoute;
-    let asset = assets[selectedCoin];
-
-    // if (selectedCoin === undefined) return null;
+    let { assets } = this.props;
+    let step = assets.modal.step;
 
     return (
       <div>
         <Modal
           title={i18n.t("WALLET_MODAL_SEND_TITLE")}
           content={<SendModal />}
-          show={isOpen}
+          show={assets.modal.open}
           close={this.handleModalSendClose}
-          back={() => this.previousStep()}
+          back={
+            step === 0 || step === 4 || step === 5 || step === 6
+              ? null
+              : () => this.previousStep()
+          }
         />
 
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{asset.tokenName.toUpperCase()}</h3>
+                {/* <h3>{asset.tokenName.toUpperCase()}</h3> */}
                 <img
-                  src={
-                    asset.image
-                      ? asset.image
-                      : "images/icons/tokens/default.png"
-                  }
+                  src={"images/icons/tokens/default.png"}
                   className={style.iconCoinSelected}
                 />
               </Grid>
@@ -151,21 +167,30 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
+  coins: PropTypes.array.isRequired,
   assets: PropTypes.object.isRequired,
-  setModalAssets: PropTypes.func.isRequired,
-  modal: PropTypes.number.isRequired
+  loadWalletInfo: PropTypes.func.isRequired,
+  setAssetsSendModalOpen: PropTypes.func.isRequired,
+  setAssetsReceiveModalOpen: PropTypes.func.isRequired,
+  resetModalSend: PropTypes.func.isRequired,
+  setAddressModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
-  modal: store.assets.modal
+  modal: store.assets.modal,
+  coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalAssets
+      setAssetsSendModalOpen,
+      setAssetsReceiveModalOpen,
+      resetModalSend,
+      setAddressModalStep,
+      loadWalletInfo
     },
     dispatch
   );

@@ -19,14 +19,14 @@ import style from "../../style.css";
 class SendModal extends React.Component {
   renderContent = () => {
     let { modal } = this.props;
-    
-    if (modal === 0) return <BoxAddress coin="lunes" />;
-    if (modal === 1) return <BoxAmount coin="lunes" />;
-    if (modal === 2) return <BoxFee coin="lunes" />;
-    if (modal === 3) return <BoxConfirm coin="lunes" />;
-    if (modal === 4) return <BoxProcess coin="lunes" />;
-    if (modal === 5) return <BoxResult coin="lunes" />;
-    if (modal === 6) return <BoxResultError coin="lunes" />;
+  
+    if (modal.step === 0) return <BoxAddress coin="lunes" />;
+    if (modal.step === 1) return <BoxAmount coin="lunes" />;
+    if (modal.step === 2) return <BoxFee coin="lunes" />;
+    if (modal.step === 3) return <BoxConfirm coin="lunes" />;
+    if (modal.step === 4) return <BoxProcess coin="lunes" />;
+    if (modal.step === 5) return <BoxResult coin="lunes" />;
+    if (modal.step === 6) return <BoxResultError coin="lunes" />;
   };
 
   render() {
@@ -35,7 +35,7 @@ class SendModal extends React.Component {
 }
 
 SendModal.propTypes = {
-  modal: PropTypes.number.isRequired
+  modal: PropTypes.object.isRequired,
 };
 
 const mapSateToProps = store => ({

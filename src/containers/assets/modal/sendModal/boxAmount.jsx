@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalAssets } from "../../redux/assetsAction";
+import {
+  setModalAssets,
+  setAssetsSendModalAmount,
+  getAssetsSendModalFee,
+  setAssetsSendModalLoading
+} from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS
@@ -42,8 +47,36 @@ class BoxAmount extends React.Component {
   };
 
   confirmAmount = () => {
-    const { setModalAssets } = this.props;
-    setModalAssets(2);
+    let { amount } = this.state;
+    let {
+      modal,
+      coins,
+      coin,
+      errorInput,
+      setAssetsSendModalLoading,
+      getAssetsSendModalFee,
+      setAssetsSendModalAmount
+    } = this.props;
+    let coinBalance = coins[coin].balance.available;
+
+    if (coin !== "lunes" && coin !== "eth" && amount < 0.0002) {
+      return errorInput(i18n.t("MODAL_SEND_MIN_AMOUNT") + " Min: 0.00020000");
+    }
+
+    if (parseFloat(amount) <= coinBalance) {
+      setAssetsSendModalLoading();
+      setAssetsSendModalAmount(parseFloat(amount));
+      getAssetsSendModalFee(
+        coin,
+        coins[coin].address,
+        modal.address,
+        parseFloat(amount),
+        coins[coin].decimalPoint
+      );
+      return;
+    }
+
+    return errorInput(i18n.t("MESSAGE_INVALID_AMOUNT"));
   };
 
   render() {
@@ -91,11 +124,14 @@ class BoxAmount extends React.Component {
 }
 
 BoxAmount.propTypes = {
-  modal: PropTypes.number.isRequired,
+  modal: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setModalAssets: PropTypes.func.isRequired
+  setModalAssets: PropTypes.func.isRequired,
+  setAssetsSendModalAmount: PropTypes.func.isRequired,
+  getAssetsSendModalFee: PropTypes.func.isRequired,
+  setAssetsSendModalLoading: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -107,6 +143,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setModalAssets,
+      setAssetsSendModalAmount,
+      getAssetsSendModalFee,
+      setAssetsSendModalLoading,
       errorInput
     },
     dispatch

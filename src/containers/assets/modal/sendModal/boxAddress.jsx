@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalAssets } from "../../redux/assetsAction";
+import { getValidateAddress } from "../../redux/assetsAction";
 
 // MATERIAL UI
 import Hidden from "@material-ui/core/Hidden";
@@ -33,8 +33,12 @@ class BoxAddress extends React.Component {
   };
 
   validateAddress = () => {
-    const { setModalAssets } = this.props;
-    setModalAssets(1);
+    let { address } = this.state;
+    let { coin, getValidateAddress} = this.props;
+
+    getValidateAddress(coin, address);
+
+    return;
   };
 
   renderQrCodeReader = () => {
@@ -128,8 +132,8 @@ class BoxAddress extends React.Component {
 
 BoxAddress.propTypes = {
   coin: PropTypes.string.isRequired,
-  modal: PropTypes.number.isRequired,
-  setModalAssets: PropTypes.func.isRequired
+  modal: PropTypes.object.isRequired,
+  getValidateAddress: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -139,7 +143,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalAssets
+      getValidateAddress
     },
     dispatch
   );

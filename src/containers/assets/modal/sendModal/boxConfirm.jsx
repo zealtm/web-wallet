@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  setModalAssets
-} from "../../redux/assetsAction";
+import { setAddressModalStep } from "../../redux/assetsAction";
 import { errorInput } from "../../../errors/redux/errorAction";
 
 // UTILS
@@ -32,8 +30,15 @@ class BoxConfirm extends React.Component {
   };
 
   confirmPassword = () => {
-    const { setModalAssets } = this.props;
-    setModalAssets(4);
+    let { password } = this.state;
+    let { user, errorInput, setAddressModalStep } = this.props;
+
+    if (user.password === encryptHmacSha512Key(password)) {
+      setAddressModalStep(4);
+      return;
+    }
+    errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
+    return;
   };
 
   render() {
@@ -47,13 +52,11 @@ class BoxConfirm extends React.Component {
           className={style.modalIconCoin}
         />
         <div>
-          <span>
-            {i18n.t("MODAL_SEND_INFO_TRANSACTION")}{" "}
-          </span>
+          <span>{i18n.t("MODAL_SEND_INFO_TRANSACTION")} </span>
           <span className={style.totalConfirm}>
             {modal.finalAmount + " " + coin.toUpperCase()}
           </span>
-          <span>  {i18n.t("MODAL_SEND_TO_ADDRESS")}{' '}</span>
+          <span> {i18n.t("MODAL_SEND_TO_ADDRESS")} </span>
           <span className={style.addressConfirm}>{modal.address}</span>
         </div>
 
@@ -82,7 +85,7 @@ BoxConfirm.propTypes = {
   user: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   errorInput: PropTypes.func.isRequired,
-  setModalAssets: PropTypes.func.isRequired,
+  setAddressModalStep: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
@@ -93,7 +96,7 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalAssets,
+      setAddressModalStep,
       errorInput
     },
     dispatch
