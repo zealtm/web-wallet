@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //COMPONENTS
-import BankModal from "./bankModal";
+import PayModal from "./payModal";
 import DebitCancel from "./debitCancel";
 import Information from "./informations";
 import ConfirmData from "./confirmData";
@@ -16,7 +16,7 @@ class DepositModal extends Component {
 
     if (modalStep === 1) return <Information />;
     if (modalStep === 2) return <ConfirmData />;
-    if (modalStep === 3) return <BankModal />;
+    if (modalStep === 3) return <PayModal />;
 
     return <DebitCancel />;
   };
