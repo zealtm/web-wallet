@@ -7,6 +7,11 @@ import FileUploadProgress from "react-fileupload-progress";
 import style from "../../style.css";
 import colors from "../../../../components/bases/colors";
 
+//REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getKyc } from "../../redux/settingsAction";
+
 // MATERIAL UI
 import { Grid, Input, Select, MenuItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -127,8 +132,8 @@ const inputStyle = {
   }
 };
 class KYC extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       enableButtonUpload: false,
       enableButtonConfirm: false,
@@ -137,7 +142,10 @@ class KYC extends React.Component {
       city: ""
     };
   }
-
+  componentDidMount = () => {
+    const { getKyc } = this.props;
+    getKyc();
+  };
   formGetter() {
     return new FormData(document.getElementById("customForm"));
   }
@@ -256,7 +264,7 @@ class KYC extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, kyc } = this.props;
     const { enableButtonConfirm } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -269,7 +277,9 @@ class KYC extends React.Component {
         }
       }
     };
-
+    
+    console.warn("Kyc -> "+ kyc);
+    
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -579,7 +589,16 @@ class KYC extends React.Component {
 }
 
 KYC.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  getKyc: PropTypes.func,
+  kyc: PropTypes.object.isRequired
 };
+const mapStateToProps = store => ({
+  kyc: store.settings.kyc
+});
+const mapDispatchToProps = dispatch => bindActionCreators({ getKyc }, dispatch);
 
-export default withStyles(inputStyle)(KYC);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(inputStyle)(KYC));

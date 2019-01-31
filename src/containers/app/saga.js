@@ -36,7 +36,8 @@ import {
   getTwoFactorAuth,
   verifyTwoFactorAuthSettings,
   getAliases,
-  createAlias
+  createAlias,
+  getKyc
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -169,6 +170,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_LEASING_START_API", createLeasing),
     fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+    fork(takeLatest, "GET_KYC_API", getKyc),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
