@@ -60,7 +60,8 @@ import {
 import {
   getAssetGeneralInfo,
   getAssetHistory,
-  reloadAsset
+  reloadAsset,
+  shareTokenAddress
 } from "../assets/redux/assetsSaga";
 import {
   setModalStepSaga as setModalStepRechargeSaga,
@@ -199,6 +200,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "GET_RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+    fork(takeLatest, "GET_TOKEN_ADRESS_API",shareTokenAddress),
 
     // p2pchat
     fork(takeLatest, "OPEN_CHAT_P2P", openChat),
