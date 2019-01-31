@@ -330,12 +330,20 @@ class Invoice extends React.Component {
   currentDateTransform = value => {
     let strDate = value ? value.replace(/[^\d]+/g, "") : "";
     if (value == undefined || value == "") return "";
+
     let day = strDate.substring(0, 2);
     let month = strDate.substring(2, 4);
     let year = strDate.substring(4, 8);
+    if (strDate.length == 7) {
+      day = strDate.substring(0, 1);
+      month = strDate.substring(1, 3);
+      year = strDate.substring(3, 7);
+    }
     let numDay = Number(day);
-    if (numDay < 9) day = "0" + (numDay + 1);
-    else day = numDay + 1;
+
+    if (numDay < 10) {
+      day = "0" + numDay;
+    }
 
     return day + "/" + month + "/" + year;
   };
@@ -343,12 +351,12 @@ class Invoice extends React.Component {
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
-    const title = coin.name || "Select a coin..";
+    const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
       ? this.currentDateTransform(invoice.dueDate)
       : (dueDatePayment = this.currentDateTransform(payment.dueDate));
-      
+
     return (
       <Grid container direction="row" justify="center">
         <Grid item xs={11} className={style.box}>
@@ -362,7 +370,7 @@ class Invoice extends React.Component {
                 }}
                 placeholder="237933802350009031431630033330944400000001000000"
                 inputProps={{ maxLength: 48, required: true }}
-                value={ invoice.number || payment.number }
+                value={invoice.number || payment.number}
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
                 error={errors.includes("number")}
               />
