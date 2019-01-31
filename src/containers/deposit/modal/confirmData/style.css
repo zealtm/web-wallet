@@ -14,20 +14,20 @@
 }
 
 :local .ConfirmDataDecimal {
-  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
   float: left;
   padding: 20px 6px;
   font-size: 15px;
 }
 
 :local .ConfirmDataNum {
-  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
   font-size: 65px;
   float: left;
 }
 
 :local .ConfirmDataText {
-  composes: textDefault from "../../../components/bases/textBase.css";
+  composes: textDefault from "../../../../components/bases/textBase.css";
   display: block;
   font-size: 13px;
   font-weight: bold;
@@ -35,7 +35,7 @@
 }
 
 :local .ConfirmDataDiv {
-  composes: clGreenDefault from "../../../components/bases/colorBase.css";
+  composes: clGreenDefault from "../../../../components/bases/colorBase.css";
   font-size: 10px;
   font-weight: bold;
   text-align: left;
@@ -44,8 +44,8 @@
 }
 
 :local .ConfirmDataField {
-  composes: textDefault from "../../../components/bases/textBase.css";
-  composes: bgPurpleDark from "../../../components/bases/colorBase.css";
+  composes: textDefault from "../../../../components/bases/textBase.css";
+  composes: bgPurpleDark from "../../../../components/bases/colorBase.css";
   padding: 16px;
   margin: 5px;
   display: block;
@@ -56,14 +56,14 @@
 }
 
 :local .ConfirmDataBtn {
-  composes: buttonEnable from "../../../components/bases/buttonBase.css";
+  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
   width: 98%;
   font-weight: bold;
   font-size: 13px;
 }
 
 :local .ConfirmDataInformation {
-  composes: textDefault from "../../../components/bases/textBase.css";
+  composes: textDefault from "../../../../components/bases/textBase.css";
   display: inline-block;
 }
 

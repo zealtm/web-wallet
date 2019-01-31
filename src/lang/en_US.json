@@ -660,5 +660,11 @@
   "DEPOSIT_INF_MODAL_CEP": "CEP",
   "DEPOSIT_INF_MODAL_ADDRESS": "Address",
   "DEPOSIT_INF_MODAL_ADDRESS_NUMBER": "Nº",
-  "DEPOSIT_INF_MODAL_BTN_CONTINUE": "Continue"
+  "DEPOSIT_INF_MODAL_BTN_CONTINUE": "Continue",
+
+  "DEPOSIT_PAYMODAL_TEXT": "Ticket generated and sent to the registered e-mail. After payment, the money will be available for use on the platform within 2 business days",
+  "DEPOSIT_PAYMODAL_TITLE": "Digitable line copied",
+  "DEPOSIT_PAYMODAL_COPY": "Copy",
+  "DEPOSIT_PAYMODAL_DOWNLOAD": "Download",
+  "DEPOSIT_PAYMODAL_SHARE": "To share"
 }
