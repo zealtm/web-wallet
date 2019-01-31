@@ -124,7 +124,7 @@ class ConfirmData extends React.Component {
             </span>
           </Grid>
 
-          <Grid item xs={12} style={{ marginTop: 20 }}>
+          <Grid item xs={12} style={{ }}>
             <ButtonContinue
               label={i18n.t("DEPOSIT_CONFIRMDATA_BTN_CONFIRM")}
               action={() => setModalSteps(3)}

@@ -15,7 +15,7 @@ import style from "./style.css";
 import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
-import PayModal from "./modal/payModal";
+import ConfirmData from "./modal/confirmData";
 import Modal from "../../components/modal";
 
 // MATERIAL UI
@@ -63,7 +63,7 @@ class Deposit extends React.Component {
       <Grid container justify="center">
         <Modal
           title={i18n.t("DEPOSIT_INF_MODAL_HEADER")}
-          content={<PayModal />}
+          content={<ConfirmData />}
           show={isOpen}
           close={() => this.closeModal()}
           back={() => this.handleSteps(modalStep)}
