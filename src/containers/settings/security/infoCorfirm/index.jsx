@@ -11,7 +11,7 @@ class infoConfirm extends React.Component {
     return (
       <div>
         <Grid>
-          <Grid container>
+          <Grid container style={{ marginBottom: "25px" }}>
             <Grid item sm={3} xs={3}>
               <img
                 src="/images/settings/kyc_infoConfirm.png"
