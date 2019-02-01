@@ -208,6 +208,7 @@ export function* getAliases(action) {
 
 export function* kycCreate(payload) {
   try {
+    yield put({ type: "SET_LOADING_CREATE_KYC", loadingCreate: true });
     let token = yield call(getAuthToken);
     let response = yield call(settingsService.kycCreate, token, payload);
 
@@ -228,6 +229,7 @@ export function* kycCreate(payload) {
 
 export function* kycUpload(payload) {
   try {
+    yield put({ type: "SET_LOADING_KYC", loadingKyc: true });
     let token = yield call(getAuthToken);
     let response = yield call(settingsService.kycUpload, token, payload);
 

@@ -9,7 +9,9 @@ const initialState = {
   loading: false,
   errors: [],
   payload: {},
-  upload: {}
+  upload: {},
+  loadingKyc: false,
+  loadingCreate: false
 };
 
 const settings = (state = initialState, action) => {
@@ -52,18 +54,30 @@ const settings = (state = initialState, action) => {
         }
       };
 
+      case "SET_LOADING_KYC":
+      return {
+        ...state,
+        loadingKyc: action.loadingKyc
+      };
+
+      case "SET_LOADING_CREATE_KYC":
+      return {
+        ...state,
+        loadingCreate: action.loadingCreate
+      };
+
     case "KYC_CREATE_REDUCER":
       return {
         ...state,
         payload: action.payload,
-        loadingSent: false
+        loadingCreate: false
       };
 
       case "KYC_UPLOAD_REDUCER":
       return {
         ...state,
         upload: action.upload,
-        loadingSent: false
+        loadingKyc: false
       };
 
     default: {

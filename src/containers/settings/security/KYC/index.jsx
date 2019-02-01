@@ -25,6 +25,7 @@ import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
+import Loading from "../../../../components/loading";
 
 const inputStyle = {
   root: {
@@ -154,19 +155,16 @@ class KYC extends React.Component {
     return new FormData(document.getElementById("customForm"));
   }
 
-  enableButtonUpload = (value, fileType) => {
+  uploadImage = (value, fileType) => {
     const { kycUpload } = this.props;
     let reader = new FileReader();
     reader.readAsDataURL(this.state.selectedFile);
     reader.onload = function() {
       const payload = {
         fileType: fileType,
-        file: reader.result.split(',')[1]
+        file: reader.result.split(",")[1]
       };
       kycUpload(payload);
-    };
-    reader.onerror = function(error) {
-      console.log("Error: ", error);
     };
   };
 
@@ -198,7 +196,7 @@ class KYC extends React.Component {
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
             style={{ float: "right" }}
-            onClick={() => this.enableButtonUpload(value, fileType)}
+            onClick={() => this.uploadImage(value, fileType)}
           />
         </div>
       </form>
@@ -281,6 +279,32 @@ class KYC extends React.Component {
     });
   };
 
+  checkAllInputs = () => {
+    const {
+      street,
+      state,
+      city,
+      zipcode,
+      fullName,
+      cnpj,
+      countryCode,
+      areaCode,
+      phoneNumber
+    } = this.state;
+
+    return (
+      street &&
+      state &&
+      city &&
+      zipcode &&
+      fullName &&
+      cnpj &&
+      countryCode &&
+      areaCode &&
+      phoneNumber
+    );
+  };
+
   handleClick = () => {
     const { kycCreate } = this.props;
     const {
@@ -310,13 +334,11 @@ class KYC extends React.Component {
         zipcode
       }
     };
-
-    // kycCreate(payload);
+    kycCreate(payload);
   };
 
   render() {
-    const { classes } = this.props;
-    const { enableButtonConfirm } = this.state;
+    const { classes, loadingKyc, loadingCreate } = this.props;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -519,35 +541,39 @@ class KYC extends React.Component {
                       </Grid>
                     </Grid>
                     <Grid item xs={12} lg={6} className={style.boxKYC_3}>
-                      <FileUploadProgress
-                        isRequired
-                        id="fileupkeyload"
-                        key="ex1"
-                        url=""
-                        onProgress={(e, request, progress) => {
-                          console.warn("progress", e, request, progress);
-                        }}
-                        onLoad={(e, request) => {
-                          console.warn("load", e, request);
-                        }}
-                        onError={(e, request) => {
-                          console.warn("error", e, request);
-                        }}
-                        onAbort={(e, request) => {
-                          console.warn("abort", e, request);
-                        }}
-                        formGetter={this.formGetter.bind(this)}
-                        formRenderer={e =>
-                          this.customFormRenderer(
-                            e,
-                            i18n.t("KYC_UPLOAD_ADDRESS"),
-                            "address"
-                          )
-                        }
-                        progressRenderer={this.customProgressRenderer.bind(
-                          this
-                        )}
-                      />
+                      {loadingKyc ? (
+                        <Loading />
+                      ) : (
+                        <FileUploadProgress
+                          isRequired
+                          id="fileupkeyload"
+                          key="ex1"
+                          url=""
+                          onProgress={(e, request, progress) => {
+                            console.warn("progress", e, request, progress);
+                          }}
+                          onLoad={(e, request) => {
+                            console.warn("load", e, request);
+                          }}
+                          onError={(e, request) => {
+                            console.warn("error", e, request);
+                          }}
+                          onAbort={(e, request) => {
+                            console.warn("abort", e, request);
+                          }}
+                          formGetter={this.formGetter.bind(this)}
+                          formRenderer={e =>
+                            this.customFormRenderer(
+                              e,
+                              i18n.t("KYC_UPLOAD_ADDRESS"),
+                              "address"
+                            )
+                          }
+                          progressRenderer={this.customProgressRenderer.bind(
+                            this
+                          )}
+                        />
+                      )}
                     </Grid>
                   </Grid>
 
@@ -571,114 +597,130 @@ class KYC extends React.Component {
                     </Grid>
                     <Grid item className={style.displayBox_3}>
                       <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        <FileUploadProgress
-                          isRequired
-                          id="fileupload"
-                          key="ex1"
-                          url=""
-                          onProgress={(e, request, progress) => {
-                            console.warn("progress", e, request, progress);
-                          }}
-                          onLoad={(e, request) => {
-                            console.warn("load", e, request);
-                          }}
-                          onError={(e, request) => {
-                            console.warn("error", e, request);
-                          }}
-                          onAbort={(e, request) => {
-                            console.warn("abort", e, request);
-                          }}
-                          formGetter={this.formGetter.bind(this)}
-                          formRenderer={e =>
-                            this.customFormRenderer(
-                              e,
-                              i18n.t("KYC_UPLOAD_FRONT"),
-                              "documentFront"
-                            )
-                          }
-                          progressRenderer={this.customProgressRenderer.bind(
-                            this
-                          )}
-                        />
+                        {loadingKyc ? (
+                          <Loading />
+                        ) : (
+                          <FileUploadProgress
+                            isRequired
+                            id="fileupload"
+                            key="ex1"
+                            url=""
+                            onProgress={(e, request, progress) => {
+                              console.warn("progress", e, request, progress);
+                            }}
+                            onLoad={(e, request) => {
+                              console.warn("load", e, request);
+                            }}
+                            onError={(e, request) => {
+                              console.warn("error", e, request);
+                            }}
+                            onAbort={(e, request) => {
+                              console.warn("abort", e, request);
+                            }}
+                            formGetter={this.formGetter.bind(this)}
+                            formRenderer={e =>
+                              this.customFormRenderer(
+                                e,
+                                i18n.t("KYC_UPLOAD_FRONT"),
+                                "documentFront"
+                              )
+                            }
+                            progressRenderer={this.customProgressRenderer.bind(
+                              this
+                            )}
+                          />
+                        )}
                       </Grid>
                       <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        <FileUploadProgress
-                          isRequired
-                          id="fileupload"
-                          key="ex1"
-                          url=""
-                          onProgress={(e, request, progress) => {
-                            console.warn("progress", e, request, progress);
-                          }}
-                          onLoad={(e, request) => {
-                            console.warn("load", e, request);
-                          }}
-                          onError={(e, request) => {
-                            console.warn("error", e, request);
-                          }}
-                          onAbort={(e, request) => {
-                            console.warn("abort", e, request);
-                          }}
-                          formGetter={this.formGetter.bind(this)}
-                          formRenderer={e =>
-                            this.customFormRenderer(
-                              e,
-                              i18n.t("KYC_UPLOAD_BACK"),
-                              "documentBack"
-                            )
-                          }
-                          progressRenderer={this.customProgressRenderer.bind(
-                            this
-                          )}
-                        />
+                        {loadingKyc ? (
+                          <Loading />
+                        ) : (
+                          <FileUploadProgress
+                            isRequired
+                            id="fileupload"
+                            key="ex1"
+                            url=""
+                            onProgress={(e, request, progress) => {
+                              console.warn("progress", e, request, progress);
+                            }}
+                            onLoad={(e, request) => {
+                              console.warn("load", e, request);
+                            }}
+                            onError={(e, request) => {
+                              console.warn("error", e, request);
+                            }}
+                            onAbort={(e, request) => {
+                              console.warn("abort", e, request);
+                            }}
+                            formGetter={this.formGetter.bind(this)}
+                            formRenderer={e =>
+                              this.customFormRenderer(
+                                e,
+                                i18n.t("KYC_UPLOAD_BACK"),
+                                "documentBack"
+                              )
+                            }
+                            progressRenderer={this.customProgressRenderer.bind(
+                              this
+                            )}
+                          />
+                        )}
                       </Grid>
                       <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        <FileUploadProgress
-                          isRequired
-                          id="fileupload"
-                          key="ex1"
-                          url="http://localhost:6000/api/upload"
-                          onProgress={(e, request, progress) => {
-                            console.warn("progress", e, request, progress);
-                          }}
-                          onLoad={(e, request) => {
-                            console.warn("load", e, request);
-                          }}
-                          onError={(e, request) => {
-                            console.warn("error", e, request);
-                          }}
-                          onAbort={(e, request) => {
-                            console.warn("abort", e, request);
-                          }}
-                          formGetter={this.formGetter.bind(this)}
-                          formRenderer={e =>
-                            this.customFormRenderer(
-                              e,
-                              i18n.t("KYC_UPLOAD_SELFIE"),
-                              "documentSelfie"
-                            )
-                          }
-                          progressRenderer={this.customProgressRenderer.bind(
-                            this
-                          )}
-                        />
+                        {loadingKyc ? (
+                          <Loading />
+                        ) : (
+                          <FileUploadProgress
+                            isRequired
+                            id="fileupload"
+                            key="ex1"
+                            url="http://localhost:6000/api/upload"
+                            onProgress={(e, request, progress) => {
+                              console.warn("progress", e, request, progress);
+                            }}
+                            onLoad={(e, request) => {
+                              console.warn("load", e, request);
+                            }}
+                            onError={(e, request) => {
+                              console.warn("error", e, request);
+                            }}
+                            onAbort={(e, request) => {
+                              console.warn("abort", e, request);
+                            }}
+                            formGetter={this.formGetter.bind(this)}
+                            formRenderer={e =>
+                              this.customFormRenderer(
+                                e,
+                                i18n.t("KYC_UPLOAD_SELFIE"),
+                                "documentSelfie"
+                              )
+                            }
+                            progressRenderer={this.customProgressRenderer.bind(
+                              this
+                            )}
+                          />
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
                     <center>
                       <Grid item xs={12} sm={6}>
-                        {enableButtonConfirm ? (
+                        {this.checkAllInputs() ? (
                           <button
                             className={style.buttonEnableSecurity}
                             onClick={() => this.handleClick()}
                           >
-                            {i18n.t("BTN_CONFIRM")}
+                            {loadingCreate ? (
+                              <Loading />
+                            ) : (
+                              i18n.t("BTN_CONFIRM")
+                            )}
                           </button>
                         ) : (
                           <button
                             className={style.buttonDisabledSecurity}
-                            onClick={() => this.handleClick()}
+                            disabled
                           >
                             {i18n.t("BTN_CONFIRM")}
                           </button>
@@ -699,11 +741,14 @@ class KYC extends React.Component {
 KYC.propTypes = {
   classes: PropTypes.object.isRequired,
   kycCreate: PropTypes.func.isRequired,
-  kycUpload: PropTypes.func.isRequired
+  kycUpload: PropTypes.func.isRequired,
+  loadingKyc: PropTypes.bool.isRequired,
+  loadingCreate: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = store => ({
-  p2pStore: store.p2p
+  loadingKyc: store.settings.loadingKyc,
+  loadingCreate: store.settings.loadingCreate
 });
 
 const mapDispatchToProps = dispatch =>
