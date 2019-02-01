@@ -41,3 +41,13 @@ export const setAliasLoading = state => ({
   type: "SET_WALLET_ALIAS_LOADING",
   state: state
 });
+
+export const kycCreate = payload => ({
+  type: "KYC_CREATE",
+  payload
+});
+
+export const kycUpload = upload => ({
+  type: "KYC_UPLOAD",
+  upload
+});

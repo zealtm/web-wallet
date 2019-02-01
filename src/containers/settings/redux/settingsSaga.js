@@ -9,15 +9,19 @@ import {
 import i18next from "../../../utils/i18n";
 import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 // SERVICES
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
+import SettingsService from "../../../services/settingsService";
+import { errorInput, successRequest } from "../../errors/redux/errorAction";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
+const settingsService = new SettingsService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -198,6 +202,46 @@ export function* getAliases(action) {
     }
   } catch (error) {
     console.warn("error", error);
+    yield put(internalServerError());
+  }
+}
+
+export function* kycCreate(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycCreate, token, payload);
+
+    yield put({
+      type: "KYC_CREATE_REDUCER",
+      payload
+    });
+
+    if (response.code != 200) {
+      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+    } else {
+      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    }
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* kycUpload(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycUpload, token, payload);
+
+    yield put({
+      type: "KYC_UPLOAD_REDUCER",
+      payload
+    });
+
+    if (response.code != 200) {
+      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+    } else {
+      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    }
+  } catch (error) {
     yield put(internalServerError());
   }
 }

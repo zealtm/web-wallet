@@ -463,6 +463,11 @@
   "KYC_INFOCONTAINER_TITLE": "Parabéns, você enviou todos os documentos.",
   "KYC_INFOCONTAINER_TEXT": "Agora aguarde a aprovação de seus dados. Fique atento ao seu e-mail!",
   "KYC_INFOCONTAINER_IMG": "Informações",
+  "KYC_FULL_NAME": "Nome Completo",
+  "KYC_DDI": "DDI",
+  "KYC_DDD": "DDD",
+  "KYC_PHONE": "Telefone",
+
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
   "BUYCOINS_FEE_TEXT_1": "Você está enviando ",

@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FileUploadProgress from "react-fileupload-progress";
 
+//REDUX
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { kycCreate, kycUpload } from "../../redux/settingsAction";
+
 // STYLE
 import style from "../../style.css";
 import colors from "../../../../components/bases/colors";
@@ -132,9 +137,16 @@ class KYC extends React.Component {
     this.state = {
       enableButtonUpload: false,
       enableButtonConfirm: false,
-      address: "",
+      fullName: "",
+      street: "",
       state: "",
-      city: ""
+      city: "",
+      zipcode: "",
+      cnpj: "",
+      countryCode: "",
+      areaCode: "",
+      phoneNumber: "",
+      selectedFile: null
     };
   }
 
@@ -142,14 +154,27 @@ class KYC extends React.Component {
     return new FormData(document.getElementById("customForm"));
   }
 
-  enableButtonUpload = () => {
-    this.setState({
-      ...this.state,
-      enableButtonUpload: true
-    });
+  enableButtonUpload = (value, fileType) => {
+    const { kycUpload } = this.props;
+    let reader = new FileReader();
+    reader.readAsDataURL(this.state.selectedFile);
+    reader.onload = function() {
+      const payload = {
+        fileType: fileType,
+        file: reader.result.split(',')[1]
+      };
+      kycUpload(payload);
+    };
+    reader.onerror = function(error) {
+      console.log("Error: ", error);
+    };
   };
 
-  customFormRenderer(onSubmit, value) {
+  fileUpload = e => {
+    this.setState({ selectedFile: e.target.files[0] });
+  };
+
+  customFormRenderer(onSubmit, value, fileType) {
     return (
       <form id="customForm" style={inputStyle.alignForm}>
         <div style={inputStyle.input}>
@@ -161,7 +186,8 @@ class KYC extends React.Component {
             style={{ display: "none" }}
             type="file"
             id="inputFile"
-            onClick={() => this.enableButtonUpload()}
+            onChange={this.fileUpload}
+            accept=".png"
           />
           <span
             style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
@@ -172,7 +198,7 @@ class KYC extends React.Component {
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
             style={{ float: "right" }}
-            onClick={onSubmit}
+            onClick={() => this.enableButtonUpload(value, fileType)}
           />
         </div>
       </form>
@@ -255,6 +281,39 @@ class KYC extends React.Component {
     });
   };
 
+  handleClick = () => {
+    const { kycCreate } = this.props;
+    const {
+      street,
+      state,
+      city,
+      zipcode,
+      fullName,
+      cnpj,
+      countryCode,
+      areaCode,
+      phoneNumber
+    } = this.state;
+    const payload = {
+      fullName,
+      cnpj,
+      phone: {
+        countryCode,
+        areaCode,
+        phoneNumber
+      },
+      address: {
+        street,
+        city,
+        state,
+        country: "Brasil",
+        zipcode
+      }
+    };
+
+    // kycCreate(payload);
+  };
+
   render() {
     const { classes } = this.props;
     const { enableButtonConfirm } = this.state;
@@ -324,6 +383,54 @@ class KYC extends React.Component {
                 <Grid item xs={12} sm={10} className={style.wrapperKYC}>
                   <Grid container className={style.contentKYC}>
                     <Grid container className={style.boxKYC_1}>
+                      <Grid item xs={12} sm={5}>
+                        <p>{i18n.t("KYC_FULL_NAME")}</p>
+                        <Input
+                          value={this.state.fullName}
+                          onChange={this.handleInput("fullName")}
+                          classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                            input: classes.cssInput
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={2}>
+                        <p>{i18n.t("KYC_DDI")}</p>
+                        <Input
+                          value={this.state.countryCode}
+                          onChange={this.handleInput("countryCode")}
+                          classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                            input: classes.cssInput
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={2}>
+                        <p>{i18n.t("KYC_DDD")}</p>
+                        <Input
+                          value={this.state.areaCode}
+                          onChange={this.handleInput("areaCode")}
+                          classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                            input: classes.cssInput
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={3}>
+                        <p>{i18n.t("KYC_PHONE")}</p>
+                        <Input
+                          value={this.state.phoneNumber}
+                          onChange={this.handleInput("phoneNumber")}
+                          classes={{
+                            root: classes.root,
+                            underline: classes.cssUnderline,
+                            input: classes.cssInput
+                          }}
+                        />
+                      </Grid>
                       <Grid item xs={12} sm={6}>
                         <Hidden smUp>
                           <div>
@@ -332,8 +439,8 @@ class KYC extends React.Component {
                         </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
                         <Input
-                          value={this.state.address}
-                          onChange={this.handleInput("address")}
+                          value={this.state.street}
+                          onChange={this.handleInput("street")}
                           classes={{
                             root: classes.root,
                             underline: classes.cssUnderline,
@@ -355,7 +462,9 @@ class KYC extends React.Component {
                             underline: classes.cssUnderline,
                             input: classes.cssInput
                           }}
+                          value={this.state.zipcode}
                           inputComponent={CEP}
+                          onChange={this.handleInput("zipcode")}
                         />
                       </Grid>
                     </Grid>
@@ -431,7 +540,8 @@ class KYC extends React.Component {
                         formRenderer={e =>
                           this.customFormRenderer(
                             e,
-                            i18n.t("KYC_UPLOAD_ADDRESS")
+                            i18n.t("KYC_UPLOAD_ADDRESS"),
+                            "address"
                           )
                         }
                         progressRenderer={this.customProgressRenderer.bind(
@@ -449,6 +559,8 @@ class KYC extends React.Component {
                         </div>
                         <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
                         <Input
+                          value={this.state.cnpj}
+                          onChange={this.handleInput("cnpj")}
                           classes={{
                             root: classes.root,
                             underline: classes.cssUnderline,
@@ -480,7 +592,8 @@ class KYC extends React.Component {
                           formRenderer={e =>
                             this.customFormRenderer(
                               e,
-                              i18n.t("KYC_UPLOAD_FRONT")
+                              i18n.t("KYC_UPLOAD_FRONT"),
+                              "documentFront"
                             )
                           }
                           progressRenderer={this.customProgressRenderer.bind(
@@ -510,7 +623,8 @@ class KYC extends React.Component {
                           formRenderer={e =>
                             this.customFormRenderer(
                               e,
-                              i18n.t("KYC_UPLOAD_BACK")
+                              i18n.t("KYC_UPLOAD_BACK"),
+                              "documentBack"
                             )
                           }
                           progressRenderer={this.customProgressRenderer.bind(
@@ -540,7 +654,8 @@ class KYC extends React.Component {
                           formRenderer={e =>
                             this.customFormRenderer(
                               e,
-                              i18n.t("KYC_UPLOAD_SELFIE")
+                              i18n.t("KYC_UPLOAD_SELFIE"),
+                              "documentSelfie"
                             )
                           }
                           progressRenderer={this.customProgressRenderer.bind(
@@ -554,13 +669,16 @@ class KYC extends React.Component {
                     <center>
                       <Grid item xs={12} sm={6}>
                         {enableButtonConfirm ? (
-                          <button className={style.buttonEnableSecurity}>
+                          <button
+                            className={style.buttonEnableSecurity}
+                            onClick={() => this.handleClick()}
+                          >
                             {i18n.t("BTN_CONFIRM")}
                           </button>
                         ) : (
                           <button
-                            disabled
                             className={style.buttonDisabledSecurity}
+                            onClick={() => this.handleClick()}
                           >
                             {i18n.t("BTN_CONFIRM")}
                           </button>
@@ -579,7 +697,25 @@ class KYC extends React.Component {
 }
 
 KYC.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  kycCreate: PropTypes.func.isRequired,
+  kycUpload: PropTypes.func.isRequired
 };
 
-export default withStyles(inputStyle)(KYC);
+const mapStateToProps = store => ({
+  p2pStore: store.p2p
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      kycCreate,
+      kycUpload
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(inputStyle)(KYC));

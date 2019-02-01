@@ -7,7 +7,9 @@ const initialState = {
     loadingAlias: false
   },
   loading: false,
-  errors: []
+  errors: [],
+  payload: {},
+  upload: {}
 };
 
 const settings = (state = initialState, action) => {
@@ -48,6 +50,20 @@ const settings = (state = initialState, action) => {
           modalAlias: state.wallet.modalAlias,
           loadingAlias: action.state ? true : false
         }
+      };
+
+    case "KYC_CREATE_REDUCER":
+      return {
+        ...state,
+        payload: action.payload,
+        loadingSent: false
+      };
+
+      case "KYC_UPLOAD_REDUCER":
+      return {
+        ...state,
+        upload: action.upload,
+        loadingSent: false
       };
 
     default: {

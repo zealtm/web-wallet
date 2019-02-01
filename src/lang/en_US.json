@@ -465,6 +465,10 @@
   "KYC_INFOCONTAINER_TITLE": "Congratulation, you sent all the documents.",
   "KYC_INFOCONTAINER_TEXT": "Now wait for the approval. Stay alert to your e-mail!.",
   "KYC_INFOCONTAINER_IMG": "Information",
+  "KYC_FULL_NAME": "Full Name",
+  "KYC_DDI": "DDI",
+  "KYC_DDD": "DDD",
+  "KYC_PHONE": "Phone",
 
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
