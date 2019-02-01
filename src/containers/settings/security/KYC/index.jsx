@@ -25,6 +25,7 @@ import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
+import infoContainer from "../infoContainer";
 
 const inputStyle = {
   root: {
@@ -278,7 +279,7 @@ class KYC extends React.Component {
       }
     };
     
-    console.warn("Kyc -> "+ kyc);
+    console.log("Kyc -> ", kyc);
     
     return (
       <div>
@@ -329,7 +330,7 @@ class KYC extends React.Component {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              </Grid>{/**Grid containerItens */}
               <Grid item xs={12} className={style.containerKYC}>
                 <Grid item xs={12} sm={10} className={style.wrapperKYC}>
                   <Grid container className={style.contentKYC}>
@@ -578,10 +579,10 @@ class KYC extends React.Component {
                       </Grid>
                     </center>
                   </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+                </Grid>{/**grid wrapperKYC */}
+              </Grid>{/**Grid coitainerKYC */}
+            </Grid>{/*Grid class allSecurity */}
+          </Grid>{/*Primeiro grid*/ }
         </div>
       </div>
     );
