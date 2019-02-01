@@ -136,7 +136,7 @@ PaymentBar.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  coins: store.buy.coinsBuy || [],
+  coins: store.buy.coinsPayment || [],
   coinsActive: store.skeleton.coins || []
 });
 
