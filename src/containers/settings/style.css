@@ -533,3 +533,34 @@ font-size: 16px;
     margin-left: 20px;
   }
 }
+
+
+
+
+/* INFOCONFIRM */
+
+:local .infoConfirmTitle {
+font-size: 24px;
+}
+
+:local .infoConfirmImg {
+  width: 80%;
+}
+
+:local .infoConfirmText {
+font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  :local .infoConfirmTitle {
+    font-size: 14px;
+  }
+  
+  :local .infoConfirmText {
+    font-size: 12px;
+  }
+
+  :local .infoConfirmBoxText {
+    margin-left: 20px;
+  }
+}
