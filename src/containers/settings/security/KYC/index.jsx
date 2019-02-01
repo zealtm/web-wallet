@@ -20,6 +20,7 @@ import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
+
 import InfoContainer from "../infoContainer";
 import InfoConfirm from "../infoCorfirm";
 
@@ -156,7 +157,7 @@ class KYC extends React.Component {
       <form id="customForm" style={inputStyle.alignForm}>
         <div style={inputStyle.input}>
           <label htmlFor="inputFile" style={{ float: "left" }}>
-            <img src="images/icons/camera/camera@2x.png" alt="camera"/>
+            <img src="images/icons/camera/camera@2x.png" alt="camera" />
           </label>
           <input
             aria-label
@@ -165,7 +166,11 @@ class KYC extends React.Component {
             id="inputFile"
             onClick={() => this.enableButtonUpload()}
           />
-          <span style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}>{value}</span>
+          <span
+            style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
+          >
+            {value}
+          </span>
           <img
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
@@ -256,7 +261,6 @@ class KYC extends React.Component {
   render() {
     const { classes } = this.props;
     const { enableButtonConfirm } = this.state;
-    const imgUrl = "images/icons/security/kyc_documentConfirm.png";
     const MenuProps = {
       PaperProps: {
         style: {
@@ -268,7 +272,6 @@ class KYC extends React.Component {
         }
       }
     };
-    
 
     return (
       <div>
@@ -333,6 +336,7 @@ class KYC extends React.Component {
                     />
                  <Grid container className={style.contentKYC}>
                      <Grid container className={style.boxKYC_1}>
+
                       <Grid item xs={12} sm={6}>
                         <Hidden smUp>
                           <div>
