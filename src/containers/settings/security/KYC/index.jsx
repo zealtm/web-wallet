@@ -27,6 +27,7 @@ import Done from "@material-ui/icons/Done";
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
+import InfoConfirm from "../infoCorfirm";
 
 const inputStyle = {
   root: {
@@ -266,7 +267,7 @@ class KYC extends React.Component {
               : { display: "flex" }
           }
         >
-          <p>Documentos não aprovados</p>
+          <p>{i18n.t("KYC_REJECTED_TEXT")}</p>
           <ErrorOutline style={{ color: "#f36161" }} />
         </span>
 
@@ -509,7 +510,12 @@ class KYC extends React.Component {
         />
       );
     } else if (kyc.status === "confirmed") {
-      return alert("Status Confirmado");
+      return (
+        <InfoConfirm
+          title={i18n.t("KYC_INFOCONFIRM_TITLE")}
+          description={i18n.t("KYC_INFOCONFIRM_TEXT")}
+        />
+      );
     } else {
       return this.renderKycForm();
     }
@@ -539,9 +545,6 @@ class KYC extends React.Component {
   };
 
   render() {
-    const { kyc } = this.props;
-
-    //console.log("Kyc -> ", kyc);
 
     return (
       <div>
