@@ -89,7 +89,7 @@ BoxConfirm.propTypes = {
 };
 
 const mapSateToProps = store => ({
-  modal: store.wallet.modal,
+  modal: store.assets.modal,
   user: store.user.user
 });
 
