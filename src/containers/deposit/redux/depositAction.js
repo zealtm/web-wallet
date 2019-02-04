@@ -23,3 +23,8 @@ export const setUserData = user => ({
 export const getDepositHistory = () => ({
   type: "GET_DEPOSIT_HISTORY"
 });
+
+export const setPaymentMethod = (method) => ({
+  type: "SET_PAYMENT_METHOD",
+  method
+});

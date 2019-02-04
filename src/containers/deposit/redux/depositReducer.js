@@ -3,7 +3,8 @@ const initialState = {
   history: [],
   user: {},
   modalStep: 1,
-  loading: false
+  loading: false,
+  paymentMethod: null
 };
 
 const deposit = (state = initialState, action) => {
@@ -33,6 +34,12 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading
+      };
+    case "SET_PAYMENT_METHOD":
+
+      return {
+        ...state,
+        paymentMethod: action.method
       };
 
     default: {
