@@ -33,7 +33,7 @@ const customStyle = theme => ({
     fontSize: "1em",
     width: "8em",
     [theme.breakpoints.down("sm")]: {
-      width: "14em"
+      width: "6em"
     },
     icon: {
       fill: "green"

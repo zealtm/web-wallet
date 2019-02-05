@@ -132,8 +132,29 @@ class InformationModal extends React.Component {
   };
 
   handleInput = property => e => {
+    let value = null;
+    switch (property) {
+      case "fullName":
+        value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
+        break;
+      case "personalNumber":
+        value = e.target.value.replace(/\D/, "");
+        break;
+      case "cep":
+        value = e.target.value.replace(/[^0-9-]/, "");
+        break;
+      case "address":
+        value = e.target.value.replace(/[^0-9a-zA-Z.-]/, "");
+        break;
+      case "addressNumbe":
+        value = e.target.value.replace(/\D/, "");
+        break;
+      default:
+        value = e.target.value;
+        break
+    }
     this.setState({
-      [property]: e.target.value
+      [property]: value
     });
   };
 
@@ -221,6 +242,7 @@ class InformationModal extends React.Component {
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
                 value={this.state.personalNumber}
                 onChange={this.handleInput("personalNumber")}
+                inputProps={{maxLength: 14}}
               />
             </Grid>
           </Grid>
@@ -320,6 +342,7 @@ class InformationModal extends React.Component {
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
                 value={this.state.cep}
                 onChange={this.handleInput("cep")}
+                inputProps={{maxLength: 9}}
               />
             </Grid>
             <Grid item sm={1} />
