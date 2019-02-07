@@ -147,12 +147,15 @@ class KYC extends React.Component {
       countryCode: "",
       areaCode: "",
       phoneNumber: "",
-      selectedFile: null
+      addressFile: null,
+      documentFronFile: null,
+      documentBackFile: null,
+      documentSelfieFile: null,
     };
   }
 
   formGetter() {
-    return new FormData(document.getElementById("customForm"));
+    return new FormData(document.getElementByClassName("customForm"));
   }
 
   uploadImage = (value, fileType) => {
@@ -169,39 +172,78 @@ class KYC extends React.Component {
   };
 
   fileUpload = e => {
-    this.setState({ selectedFile: e.target.files[0] });
+    switch (e.target.name) {
+      case "address":
+        this.setState({ addressFile: e.target.files[0] });
+        break;
+      case "documentFront":
+        this.setState({ documentFronFile: e.target.files[0] });
+        break;
+      case "documentBack":
+        this.setState({ documentBackFile: e.target.files[0] });
+        break;
+      case "documentSelfie":
+        this.setState({ documentSelfieFile: e.target.files[0] });
+        break;
+    }
+    
   };
 
   customFormRenderer(onSubmit, value, fileType) {
+    let id = fileType+"InputFile"
     return (
-      <form id="customForm" style={inputStyle.alignForm}>
-        <div style={inputStyle.input}>
-          <label htmlFor="inputFile" style={{ float: "left" }}>
+      <form className="customForm" style={inputStyle.alignForm}>
+      <label htmlFor={id} style={inputStyle.input}> 
+        {/* <div  style={inputStyle.input}> */}
+          <label   style={{ float: "left" }}>
             <img src="images/icons/camera/camera@2x.png" alt="camera" />
           </label>
+          <span 
+            style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
+          >
+            {this.renderFileName(fileType) ? this.renderFileName(fileType) : value }
+          </span>
+          
           <input
             aria-label
             style={{ display: "none" }}
             type="file"
-            id="inputFile"
+            id={id}
             onChange={this.fileUpload}
             accept=".png"
+            name ={fileType}
           />
-          <span
-            style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
-          >
-            {value}
-          </span>
+
+
           <img
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
             style={{ float: "right" }}
             onClick={() => this.uploadImage(value, fileType)}
           />
-        </div>
+        {/* </div> */}
+        </label>
       </form>
     );
   }
+
+  renderFileName = (name) => {
+    const {addressFile, documentFronFile, documentBackFile, documentSelfieFile} = this.state;
+    if(addressFile !== null && name === "address"){
+      return addressFile.name;
+    }else if(documentFronFile !== null && name === "documentFront"){
+      return documentFronFile.name;
+    }else if(documentBackFile!== null && name === "documentBack"){
+      return documentBackFile.name;
+    }else if(documentSelfieFile !== null && name === "documentSelfie"){
+      return documentSelfieFile.name;
+    }else{
+      return false;
+    }
+  };
+
+
+
 
   customProgressRenderer(progress, hasError, cancelHandler) {
     if (hasError || progress > -1) {
@@ -603,7 +645,7 @@ class KYC extends React.Component {
                           <FileUploadProgress
                             isRequired
                             id="fileupload"
-                            key="ex1"
+                            key="ex2"
                             url=""
                             onProgress={(e, request, progress) => {
                               console.warn("progress", e, request, progress);
@@ -638,7 +680,7 @@ class KYC extends React.Component {
                           <FileUploadProgress
                             isRequired
                             id="fileupload"
-                            key="ex1"
+                            key="ex3"
                             url=""
                             onProgress={(e, request, progress) => {
                               console.warn("progress", e, request, progress);
@@ -673,7 +715,7 @@ class KYC extends React.Component {
                           <FileUploadProgress
                             isRequired
                             id="fileupload"
-                            key="ex1"
+                            key="ex4"
                             url="http://localhost:6000/api/upload"
                             onProgress={(e, request, progress) => {
                               console.warn("progress", e, request, progress);
