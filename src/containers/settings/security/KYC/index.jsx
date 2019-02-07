@@ -150,7 +150,7 @@ class KYC extends React.Component {
       addressFile: null,
       documentFronFile: null,
       documentBackFile: null,
-      documentSelfieFile: null,
+      documentSelfieFile: null
     };
   }
 
@@ -161,12 +161,13 @@ class KYC extends React.Component {
   uploadImage = (value, fileType) => {
     const { kycUpload } = this.props;
     let reader = new FileReader();
-    reader.readAsDataURL(this.state.selectedFile);
+    reader.readAsDataURL(value);
     reader.onload = function() {
       const payload = {
         fileType: fileType,
         file: reader.result.split(",")[1]
       };
+      
       kycUpload(payload);
     };
   };
@@ -174,36 +175,37 @@ class KYC extends React.Component {
   fileUpload = e => {
     switch (e.target.name) {
       case "address":
-        this.setState({ addressFile: e.target.files[0] });
+        this.setState({ addressFile:{ file: e.target.files[0], fileType: e.target.name} });
         break;
       case "documentFront":
-        this.setState({ documentFronFile: e.target.files[0] });
+        this.setState({ documentFronFile:{ file: e.target.files[0], fileType: e.target.name}});
         break;
       case "documentBack":
-        this.setState({ documentBackFile: e.target.files[0] });
+        this.setState({ documentBackFile:{ file: e.target.files[0], fileType: e.target.name} });
         break;
       case "documentSelfie":
-        this.setState({ documentSelfieFile: e.target.files[0] });
+        this.setState({ documentSelfieFile:{ file: e.target.files[0], fileType: e.target.name}});
         break;
     }
-    
   };
 
   customFormRenderer(onSubmit, value, fileType) {
-    let id = fileType+"InputFile"
+    let id = fileType + "InputFile";
     return (
       <form className="customForm" style={inputStyle.alignForm}>
-      <label htmlFor={id} style={inputStyle.input}> 
-        {/* <div  style={inputStyle.input}> */}
-          <label   style={{ float: "left" }}>
+        <label htmlFor={id} style={inputStyle.input}>
+          {/* <div  style={inputStyle.input}> */}
+          <label style={{ float: "left" }}>
             <img src="images/icons/camera/camera@2x.png" alt="camera" />
           </label>
-          <span 
+          <span
             style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
           >
-            {this.renderFileName(fileType) ? this.renderFileName(fileType) : value }
+            {this.renderFileName(fileType)
+              ? this.renderFileName(fileType)
+              : value}
           </span>
-          
+
           <input
             aria-label
             style={{ display: "none" }}
@@ -211,39 +213,42 @@ class KYC extends React.Component {
             id={id}
             onChange={this.fileUpload}
             accept=".png"
-            name ={fileType}
+            name={fileType}
           />
 
-
-          <img
+          {/* <img
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
             style={{ float: "right" }}
             onClick={() => this.uploadImage(value, fileType)}
-          />
-        {/* </div> */}
+          /> */}
+          {/* </div> */}
         </label>
       </form>
     );
   }
 
-  renderFileName = (name) => {
-    const {addressFile, documentFronFile, documentBackFile, documentSelfieFile} = this.state;
-    if(addressFile !== null && name === "address"){
-      return addressFile.name;
-    }else if(documentFronFile !== null && name === "documentFront"){
-      return documentFronFile.name;
-    }else if(documentBackFile!== null && name === "documentBack"){
-      return documentBackFile.name;
-    }else if(documentSelfieFile !== null && name === "documentSelfie"){
-      return documentSelfieFile.name;
-    }else{
+  renderFileName = name => {
+    const {
+      addressFile,
+      documentFronFile,
+      documentBackFile,
+      documentSelfieFile
+    } = this.state;
+    if (addressFile !== null && name === "address") {
+      return addressFile.file.name;
+    } else if (documentFronFile !== null && name === "documentFront") {
+      return documentFronFile.file.name;
+    } else if (documentBackFile !== null && name === "documentBack") {
+      return documentBackFile.file.name;
+    } else if (documentSelfieFile !== null && name === "documentSelfie") {
+      return documentSelfieFile.file.name;
+    } else {
       return false;
     }
+
+    
   };
-
-
-
 
   customProgressRenderer(progress, hasError, cancelHandler) {
     if (hasError || progress > -1) {
@@ -331,7 +336,11 @@ class KYC extends React.Component {
       cnpj,
       countryCode,
       areaCode,
-      phoneNumber
+      phoneNumber,
+      addressFile,
+      documentFronFile,
+      documentBackFile,
+      documentSelfieFile
     } = this.state;
 
     return (
@@ -343,7 +352,11 @@ class KYC extends React.Component {
       cnpj &&
       countryCode &&
       areaCode &&
-      phoneNumber
+      phoneNumber &&
+      addressFile &&
+      documentFronFile &&
+      documentBackFile &&
+      documentSelfieFile
     );
   };
 
@@ -358,7 +371,11 @@ class KYC extends React.Component {
       cnpj,
       countryCode,
       areaCode,
-      phoneNumber
+      phoneNumber,
+      addressFile,
+      documentFronFile,
+      documentBackFile,
+      documentSelfieFile
     } = this.state;
     const payload = {
       fullName,
@@ -376,6 +393,10 @@ class KYC extends React.Component {
         zipcode
       }
     };
+    this.uploadImage(addressFile.file, addressFile.fileType);
+    this.uploadImage(documentFronFile.file, documentFronFile.fileType);
+    this.uploadImage(documentBackFile.file, documentBackFile.fileType);
+    this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
     kycCreate(payload);
   };
 
