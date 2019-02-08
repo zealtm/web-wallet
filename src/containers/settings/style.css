@@ -487,6 +487,22 @@ input[type="file"]::-webkit-file-upload-button {
   padding: 5px;
 }
 
+:local(.removeFile){
+  -webkit-appearance: none;
+  position: relative;
+  right:  6px;
+  top: 2px;
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  float: right;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  color: #f05252;
+}
+
 @media screen and (max-width: 1279px) {
   :local(.displayBox_3) {
     display: block;

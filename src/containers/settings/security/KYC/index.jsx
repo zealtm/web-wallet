@@ -107,6 +107,12 @@ const inputStyle = {
     borderRadius: "25px",
     padding: "10px"
   },
+  inputWithFile: {
+    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: "25px",
+    padding: "10px"
+  },
   underline: {
     width: "90%",
     "&:hover": {
@@ -167,68 +173,96 @@ class KYC extends React.Component {
         fileType: fileType,
         file: reader.result.split(",")[1]
       };
-      
+
       kycUpload(payload);
     };
   };
 
   fileUpload = e => {
-    switch (e.target.name) {
-      case "address":
-        this.setState({ addressFile:{ file: e.target.files[0], fileType: e.target.name} });
-        break;
-      case "documentFront":
-        this.setState({ documentFronFile:{ file: e.target.files[0], fileType: e.target.name}});
-        break;
-      case "documentBack":
-        this.setState({ documentBackFile:{ file: e.target.files[0], fileType: e.target.name} });
-        break;
-      case "documentSelfie":
-        this.setState({ documentSelfieFile:{ file: e.target.files[0], fileType: e.target.name}});
-        break;
+    if (e.target.files[0]) {
+      switch (e.target.name) {
+        case "address":
+          this.setState({
+            addressFile: { file: e.target.files[0], fileType: e.target.name }
+          });
+          break;
+        case "documentFront":
+          this.setState({
+            documentFronFile: {
+              file: e.target.files[0],
+              fileType: e.target.name
+            }
+          });
+          break;
+        case "documentBack":
+          this.setState({
+            documentBackFile: {
+              file: e.target.files[0],
+              fileType: e.target.name
+            }
+          });
+          break;
+        case "documentSelfie":
+          this.setState({
+            documentSelfieFile: {
+              file: e.target.files[0],
+              fileType: e.target.name
+            }
+          });
+          break;
+      }
     }
   };
 
   customFormRenderer(onSubmit, value, fileType) {
     let id = fileType + "InputFile";
+    let style = this.renderInputFileStyle(fileType);
     return (
       <form className="customForm" style={inputStyle.alignForm}>
-        <label htmlFor={id} style={inputStyle.input}>
-          {/* <div  style={inputStyle.input}> */}
-          <label style={{ float: "left" }}>
-            <img src="images/icons/camera/camera@2x.png" alt="camera" />
-          </label>
-          <span
-            style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
-          >
-            {this.renderFileName(fileType)
-              ? this.renderFileName(fileType)
-              : value}
-          </span>
+        <div  style={style}>
+            {this.renderFileName(fileType, value)}
 
-          <input
-            aria-label
-            style={{ display: "none" }}
-            type="file"
-            id={id}
-            onChange={this.fileUpload}
-            accept=".png"
-            name={fileType}
-          />
+            <input
+              aria-label
+              style={{ display: "none" }}
+              type="file"
+              id={id}
+              onChange={this.fileUpload}
+              accept=".png"
+              name={fileType}
+            />
 
-          {/* <img
+            {/* <img
             src="images/icons/security/anexo@1x.png"
             alt="anexo"
             style={{ float: "right" }}
             onClick={() => this.uploadImage(value, fileType)}
           /> */}
-          {/* </div> */}
-        </label>
+
+        </div>
       </form>
     );
   }
+  renderInputFileStyle = fileType => {
+    const {
+      addressFile,
+      documentFronFile,
+      documentBackFile,
+      documentSelfieFile
+    } = this.state;
 
-  renderFileName = name => {
+    if (fileType === "address" && addressFile !== null) {
+      return inputStyle.inputWithFile;
+    } else if (fileType === "documentFront" && documentFronFile !== null) {
+      return inputStyle.inputWithFile;
+    } else if (fileType === "documentBack" && documentBackFile !== null) {
+      return inputStyle.inputWithFile;
+    } else if (fileType === "documentSelfie" && documentSelfieFile !== null) {
+      return inputStyle.inputWithFile;
+    }
+    return inputStyle.input;
+  };
+  renderFileName = (name, value) => {
     const {
       addressFile,
       documentFronFile,
@@ -236,18 +270,94 @@ class KYC extends React.Component {
       documentSelfieFile
     } = this.state;
     if (addressFile !== null && name === "address") {
-      return addressFile.file.name;
+      return (
+        <div>
+          <label style={{ float: "left" }}>
+            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+          </label>
+          <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
+            {addressFile.file.name}
+          </span>
+          <button
+            className={style.removeFile}
+            onClick={() => {
+              this.setState({ addressFile: null });
+            }}
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      );
     } else if (documentFronFile !== null && name === "documentFront") {
-      return documentFronFile.file.name;
+      return (
+        <div>
+          <label style={{ float: "left" }}>
+            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+          </label>
+          <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
+            {documentFronFile.file.name}
+          </span>
+          <button
+            className={style.removeFile}
+            onClick={() => {
+              this.setState({ documentFronFile: null });
+            }}
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      );
     } else if (documentBackFile !== null && name === "documentBack") {
-      return documentBackFile.file.name;
+      return (
+        <div>
+          <label style={{ float: "left" }}>
+            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+          </label>
+          <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
+            {documentBackFile.file.name}
+          </span>
+          <button
+            className={style.removeFile}
+            onClick={() => {
+              this.setState({ documentBackFile: null });
+            }}
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      );
     } else if (documentSelfieFile !== null && name === "documentSelfie") {
-      return documentSelfieFile.file.name;
-    } else {
-      return false;
+      return (
+        <div>
+          <label style={{ float: "left" }}>
+            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+          </label>
+          <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
+            {documentSelfieFile.file.name}
+          </span>
+          <button
+            className={style.removeFile}
+            onClick={() => {
+              this.setState({ documentSelfieFile: null });
+            }}
+          >
+            <span>&times;</span>
+          </button>
+        </div>
+      );
     }
-
-    
+    return (
+      <label htmlFor={name + "InputFile"} style={{cursor:"pointer"}}>
+        <div style={{ float: "left" }}>
+          <img src="images/icons/camera/camera@2x.png" alt="camera" />
+        </div>
+        <span
+          style={{ marginLeft: "15px", color: "#654fa4", fontSize: "12px" }}
+        >
+          {value}
+        </span>
+      </label>
+    );
   };
 
   customProgressRenderer(progress, hasError, cancelHandler) {
@@ -292,7 +402,7 @@ class KYC extends React.Component {
           <div style={inputStyle.progressWrapper}>
             <div style={barStyle} />
           </div>
-          <button style={inputStyle.cancelButton} onClick={cancelHandler}>
+          <button style={inputStyle.cancelButton}>
             <span>&times;</span>
           </button>
           <div style={{ clear: "left" }}>{message}</div>
@@ -465,10 +575,10 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                <Grid item xs={12} sm={10} className={style.wrapperKYC}>
+                <Grid item xs={12} sm={12} className={style.wrapperKYC}>
                   <Grid container className={style.contentKYC}>
                     <Grid container className={style.boxKYC_1}>
-                      <Grid item xs={12} sm={5}>
+                      <Grid item xs={12} sm={6}>
                         <p>{i18n.t("KYC_FULL_NAME")}</p>
                         <Input
                           value={this.state.fullName}
@@ -480,7 +590,8 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={2}>
+                      
+                      <Grid item xs={3} sm={2}>
                         <p>{i18n.t("KYC_DDI")}</p>
                         <Input
                           value={this.state.countryCode}
@@ -492,7 +603,7 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={2}>
+                      <Grid item xs={3} sm={2}>
                         <p>{i18n.t("KYC_DDD")}</p>
                         <Input
                           value={this.state.areaCode}
@@ -504,7 +615,7 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={3}>
+                      <Grid item xs={3} sm={3}>
                         <p>{i18n.t("KYC_PHONE")}</p>
                         <Input
                           value={this.state.phoneNumber}
@@ -516,12 +627,8 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
+
                       <Grid item xs={12} sm={6}>
-                        <Hidden smUp>
-                          <div>
-                            <img src="images/icons/security/anexo@1x.png" />
-                          </div>
-                        </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
                         <Input
                           value={this.state.street}
@@ -534,11 +641,6 @@ class KYC extends React.Component {
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Hidden xsDown>
-                          <div>
-                            <img src="images/icons/security/anexo@1x.png" />
-                          </div>
-                        </Hidden>
                         <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
 
                         <Input
@@ -603,7 +705,7 @@ class KYC extends React.Component {
                         </Select>
                       </Grid>
                     </Grid>
-                    <Grid item xs={12} lg={6} className={style.boxKYC_3}>
+                    <Grid item xs={12} lg={5} className={style.boxKYC_3}>
                       {loadingKyc ? (
                         <Loading />
                       ) : (
@@ -643,9 +745,6 @@ class KYC extends React.Component {
                   <Grid item className={style.contentKYC_2}>
                     <Grid container className={style.boxKYC_2}>
                       <Grid item xs={12}>
-                        <div>
-                          <img src="images/icons/security/anexo@1x.png" />
-                        </div>
                         <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
                         <Input
                           value={this.state.cnpj}
