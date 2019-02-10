@@ -446,7 +446,7 @@
 }
 
 :local(.containerKYC p) {
-  color: white;
+  color: #68f285;
   margin: 0;
 }
 
@@ -509,13 +509,12 @@ input[type="file"]::-webkit-file-upload-button {
   }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 720px) {
   :local(.boxKYC_1) {
     display: block;
   }
 
   :local(.containerKYC p) {
-    color: #68f285;
     font-size: 10px;
   }
 

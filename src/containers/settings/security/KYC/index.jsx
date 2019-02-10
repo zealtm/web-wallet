@@ -231,14 +231,6 @@ class KYC extends React.Component {
               accept=".png"
               name={fileType}
             />
-
-            {/* <img
-            src="images/icons/security/anexo@1x.png"
-            alt="anexo"
-            style={{ float: "right" }}
-            onClick={() => this.uploadImage(value, fileType)}
-          /> */}
-
         </div>
       </form>
     );
@@ -273,7 +265,7 @@ class KYC extends React.Component {
       return (
         <div>
           <label style={{ float: "left" }}>
-            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+            <img src="images/icons/security/green_clip@2x.png" alt="camera" />
           </label>
           <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
             {addressFile.file.name}
@@ -292,7 +284,7 @@ class KYC extends React.Component {
       return (
         <div>
           <label style={{ float: "left" }}>
-            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+            <img src="images/icons/security/green_clip@2x.png" alt="camera" />
           </label>
           <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
             {documentFronFile.file.name}
@@ -311,7 +303,7 @@ class KYC extends React.Component {
       return (
         <div>
           <label style={{ float: "left" }}>
-            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+            <img src="images/icons/security/green_clip@2x.png" alt="camera" />
           </label>
           <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
             {documentBackFile.file.name}
@@ -330,7 +322,7 @@ class KYC extends React.Component {
       return (
         <div>
           <label style={{ float: "left" }}>
-            <img src="images/icons/security/anexo@1x.png" alt="camera" />
+            <img src="images/icons/security/green_clip@2x.png" alt="camera" />
           </label>
           <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
             {documentSelfieFile.file.name}
@@ -359,6 +351,7 @@ class KYC extends React.Component {
       </label>
     );
   };
+
 
   customProgressRenderer(progress, hasError, cancelHandler) {
     if (hasError || progress > -1) {
@@ -575,10 +568,10 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                <Grid item xs={12} sm={12} className={style.wrapperKYC}>
+                <Grid item xs={12} sm={12}className={style.wrapperKYC}>
                   <Grid container className={style.contentKYC}>
                     <Grid container className={style.boxKYC_1}>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={12} md={6}>
                         <p>{i18n.t("KYC_FULL_NAME")}</p>
                         <Input
                           value={this.state.fullName}
@@ -590,8 +583,9 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      
-                      <Grid item xs={3} sm={2}>
+                      <Grid item xs={12} sm={12} md={6}>
+                      <div style={{display:"flex"}}>
+                      <Grid item xs={3} sm={3}>
                         <p>{i18n.t("KYC_DDI")}</p>
                         <Input
                           value={this.state.countryCode}
@@ -603,7 +597,7 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={3} sm={2}>
+                      <Grid item xs={3} sm={3}>
                         <p>{i18n.t("KYC_DDD")}</p>
                         <Input
                           value={this.state.areaCode}
@@ -615,7 +609,7 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={3} sm={3}>
+                      <Grid item xs={6} sm={6}>
                         <p>{i18n.t("KYC_PHONE")}</p>
                         <Input
                           value={this.state.phoneNumber}
@@ -627,8 +621,9 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-
-                      <Grid item xs={12} sm={6}>
+                      </div>
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={6}>
                         <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
                         <Input
                           value={this.state.street}
@@ -640,7 +635,7 @@ class KYC extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
+                      <Grid item xs={12} sm={12} md={6}>
                         <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
 
                         <Input
@@ -656,7 +651,7 @@ class KYC extends React.Component {
                       </Grid>
                     </Grid>
                     <Grid container className={style.boxKYC_2}>
-                      <Grid item xs={6} sm={6}>
+                      <Grid item xs={12} sm={12} md={6}>
                         <p>{i18n.t("SETTINGS_USER_CITY")}</p>
                         <Select
                           classes={{ selectMenu: classes.underlineItems }}
@@ -680,7 +675,7 @@ class KYC extends React.Component {
                           {this.listStates()}
                         </Select>
                       </Grid>
-                      <Grid item xs={6} sm={6}>
+                      <Grid item xs={12} sm={12} md={6}>
                         <p>{i18n.t("SETTINGS_USER_STATE")}</p>
                         <Select
                           classes={{ selectMenu: classes.underlineItems }}
@@ -705,7 +700,7 @@ class KYC extends React.Component {
                         </Select>
                       </Grid>
                     </Grid>
-                    <Grid item xs={12} lg={5} className={style.boxKYC_3}>
+                    <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
                       {loadingKyc ? (
                         <Loading />
                       ) : (
