@@ -219,18 +219,18 @@ class KYC extends React.Component {
     let style = this.renderInputFileStyle(fileType);
     return (
       <form className="customForm" style={inputStyle.alignForm}>
-        <div  style={style}>
-            {this.renderFileName(fileType, value)}
+        <div style={style}>
+          {this.renderFileName(fileType, value)}
 
-            <input
-              aria-label
-              style={{ display: "none" }}
-              type="file"
-              id={id}
-              onChange={this.fileUpload}
-              accept=".png"
-              name={fileType}
-            />
+          <input
+            aria-label
+            style={{ display: "none" }}
+            type="file"
+            id={id}
+            onChange={this.fileUpload}
+            accept=".png"
+            name={fileType}
+          />
         </div>
       </form>
     );
@@ -339,7 +339,7 @@ class KYC extends React.Component {
       );
     }
     return (
-      <label htmlFor={name + "InputFile"} style={{cursor:"pointer"}}>
+      <label htmlFor={name + "InputFile"} style={{ cursor: "pointer" }}>
         <div style={{ float: "left" }}>
           <img src="images/icons/camera/camera@2x.png" alt="camera" />
         </div>
@@ -351,7 +351,6 @@ class KYC extends React.Component {
       </label>
     );
   };
-
 
   customProgressRenderer(progress, hasError, cancelHandler) {
     if (hasError || progress > -1) {
@@ -405,6 +404,364 @@ class KYC extends React.Component {
       return;
     }
   }
+
+  renderKycForm = () => {
+    const { classes, loadingKyc, loadingCreate } = this.props;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          color: "#fff",
+          maxHeight: 40 * 4.5,
+          marginTop: "45px",
+          backgroundColor: "#473088",
+          width: "10%"
+        }
+      }
+    };
+    return (
+      <Grid item xs={12} sm={12} className={style.wrapperKYC}>
+      <Grid container className={style.contentKYC}>
+        <Grid container className={style.boxKYC_1}>
+          <Grid item xs={12} sm={12} md={6}>
+            <p>{i18n.t("KYC_FULL_NAME")}</p>
+            <div className={style.textInput}>
+              <Input
+                value={this.state.fullName}
+                onChange={this.handleInput("fullName")}
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={11} sm={12} md={6}>
+            <div style={{ display: "flex" }}>
+              <Grid item xs={4} sm={3}>
+                <p>{i18n.t("KYC_DDI")}</p>
+                <Input
+                  value={this.state.countryCode}
+                  onChange={this.handleInput("countryCode")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </Grid>
+              <Grid item xs={4} sm={3}>
+                <p>{i18n.t("KYC_DDD")}</p>
+                <Input
+                  value={this.state.areaCode}
+                  onChange={this.handleInput("areaCode")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <p>{i18n.t("KYC_PHONE")}</p>
+                <Input
+                  value={this.state.phoneNumber}
+                  onChange={this.handleInput("phoneNumber")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
+            <div className={style.textInput}>
+              <Input
+                value={this.state.street}
+                onChange={this.handleInput("street")}
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
+            <div className={style.textInput}>
+              <Input
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+                value={this.state.zipcode}
+                inputComponent={CEP}
+                onChange={this.handleInput("zipcode")}
+              />
+            </div>
+          </Grid>
+        </Grid>
+        <Grid container className={style.boxKYC_2}>
+          <Grid item xs={12} sm={12} md={6}>
+            <p>{i18n.t("SETTINGS_USER_CITY")}</p>
+            <div className={style.textInput}>
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                value={this.state.city}
+                MenuProps={MenuProps}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("city")}
+              >
+                {this.listStates()}
+              </Select>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <p>{i18n.t("SETTINGS_USER_STATE")}</p>
+            <div className={style.textInput}>
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                value={this.state.state}
+                MenuProps={MenuProps}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("state")}
+              >
+                {this.listStates()}
+              </Select>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={6}
+          lg={6}
+          className={style.boxKYC_3}
+        >
+          {loadingKyc ? (
+            <Loading />
+          ) : (
+            <FileUploadProgress
+              isRequired
+              id="fileupkeyload"
+              key="ex1"
+              url=""
+              onProgress={(e, request, progress) => {
+                console.warn("progress", e, request, progress);
+              }}
+              onLoad={(e, request) => {
+                console.warn("load", e, request);
+              }}
+              onError={(e, request) => {
+                console.warn("error", e, request);
+              }}
+              onAbort={(e, request) => {
+                console.warn("abort", e, request);
+              }}
+              formGetter={this.formGetter.bind(this)}
+              formRenderer={e =>
+                this.customFormRenderer(
+                  e,
+                  i18n.t("KYC_UPLOAD_ADDRESS"),
+                  "address"
+                )
+              }
+              progressRenderer={this.customProgressRenderer.bind(
+                this
+              )}
+            />
+          )}
+        </Grid>
+      </Grid>
+
+      <Grid item className={style.contentKYC_2}>
+        <Grid container className={style.boxKYC_2}>
+          <Grid item xs={12}>
+            <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
+            <div className={style.textInput}>
+              <Input
+                value={this.state.cnpj}
+                onChange={this.handleInput("cnpj")}
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+              />
+            </div>
+          </Grid>
+        </Grid>
+        <Grid item className={style.displayBox_3}>
+          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+            {loadingKyc ? (
+              <Loading />
+            ) : (
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex2"
+                url=""
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(
+                    e,
+                    i18n.t("KYC_UPLOAD_FRONT"),
+                    "documentFront"
+                  )
+                }
+                progressRenderer={this.customProgressRenderer.bind(
+                  this
+                )}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+            {loadingKyc ? (
+              <Loading />
+            ) : (
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex3"
+                url=""
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(
+                    e,
+                    i18n.t("KYC_UPLOAD_BACK"),
+                    "documentBack"
+                  )
+                }
+                progressRenderer={this.customProgressRenderer.bind(
+                  this
+                )}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+            {loadingKyc ? (
+              <Loading />
+            ) : (
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex4"
+                url="http://localhost:6000/api/upload"
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(
+                    e,
+                    i18n.t("KYC_UPLOAD_SELFIE"),
+                    "documentSelfie"
+                  )
+                }
+                progressRenderer={this.customProgressRenderer.bind(
+                  this
+                )}
+              />
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <center>
+          <Grid item xs={12} sm={6}>
+            {this.checkAllInputs() ? (
+              <button
+                className={style.buttonEnableSecurity}
+                onClick={() => this.handleClick()}
+              >
+                {loadingCreate ? (
+                  <Loading />
+                ) : (
+                  i18n.t("BTN_CONFIRM")
+                )}
+              </button>
+            ) : (
+              <button
+                className={style.buttonDisabledSecurity}
+                disabled
+              >
+                {i18n.t("BTN_CONFIRM")}
+              </button>
+            )}
+          </Grid>
+        </center>
+      </Grid>
+    </Grid>      
+    );
+  };
+  renderComponents = () => {
+    return(
+      this.renderKycForm()  
+    );
+  };
 
   listStates = () => {
     const { classes } = this.props;
@@ -504,18 +861,7 @@ class KYC extends React.Component {
   };
 
   render() {
-    const { classes, loadingKyc, loadingCreate } = this.props;
-    const MenuProps = {
-      PaperProps: {
-        style: {
-          color: "#fff",
-          maxHeight: 40 * 4.5,
-          marginTop: "45px",
-          backgroundColor: "#473088",
-          width: "10%"
-        }
-      }
-    };
+
 
     return (
       <div>
@@ -568,325 +914,8 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                <Grid item xs={12} sm={12}className={style.wrapperKYC}>
-                  <Grid container className={style.contentKYC}>
-                    <Grid container className={style.boxKYC_1}>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <p>{i18n.t("KYC_FULL_NAME")}</p>
-                        <Input
-                          value={this.state.fullName}
-                          onChange={this.handleInput("fullName")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6}>
-                      <div style={{display:"flex"}}>
-                      <Grid item xs={3} sm={3}>
-                        <p>{i18n.t("KYC_DDI")}</p>
-                        <Input
-                          value={this.state.countryCode}
-                          onChange={this.handleInput("countryCode")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={3} sm={3}>
-                        <p>{i18n.t("KYC_DDD")}</p>
-                        <Input
-                          value={this.state.areaCode}
-                          onChange={this.handleInput("areaCode")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={6} sm={6}>
-                        <p>{i18n.t("KYC_PHONE")}</p>
-                        <Input
-                          value={this.state.phoneNumber}
-                          onChange={this.handleInput("phoneNumber")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                      </div>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
-                        <Input
-                          value={this.state.street}
-                          onChange={this.handleInput("street")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
-
-                        <Input
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                          value={this.state.zipcode}
-                          inputComponent={CEP}
-                          onChange={this.handleInput("zipcode")}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid container className={style.boxKYC_2}>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <p>{i18n.t("SETTINGS_USER_CITY")}</p>
-                        <Select
-                          classes={{ selectMenu: classes.underlineItems }}
-                          value={this.state.city}
-                          MenuProps={MenuProps}
-                          input={
-                            <Input
-                              classes={{
-                                underline: classes.underline
-                              }}
-                            />
-                          }
-                          inputProps={{
-                            classes: {
-                              icon: classes.icon
-                            }
-                          }}
-                          renderValue={value => value}
-                          onChange={this.handleInput("city")}
-                        >
-                          {this.listStates()}
-                        </Select>
-                      </Grid>
-                      <Grid item xs={12} sm={12} md={6}>
-                        <p>{i18n.t("SETTINGS_USER_STATE")}</p>
-                        <Select
-                          classes={{ selectMenu: classes.underlineItems }}
-                          value={this.state.state}
-                          MenuProps={MenuProps}
-                          input={
-                            <Input
-                              classes={{
-                                underline: classes.underline
-                              }}
-                            />
-                          }
-                          inputProps={{
-                            classes: {
-                              icon: classes.icon
-                            }
-                          }}
-                          renderValue={value => value}
-                          onChange={this.handleInput("state")}
-                        >
-                          {this.listStates()}
-                        </Select>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
-                      {loadingKyc ? (
-                        <Loading />
-                      ) : (
-                        <FileUploadProgress
-                          isRequired
-                          id="fileupkeyload"
-                          key="ex1"
-                          url=""
-                          onProgress={(e, request, progress) => {
-                            console.warn("progress", e, request, progress);
-                          }}
-                          onLoad={(e, request) => {
-                            console.warn("load", e, request);
-                          }}
-                          onError={(e, request) => {
-                            console.warn("error", e, request);
-                          }}
-                          onAbort={(e, request) => {
-                            console.warn("abort", e, request);
-                          }}
-                          formGetter={this.formGetter.bind(this)}
-                          formRenderer={e =>
-                            this.customFormRenderer(
-                              e,
-                              i18n.t("KYC_UPLOAD_ADDRESS"),
-                              "address"
-                            )
-                          }
-                          progressRenderer={this.customProgressRenderer.bind(
-                            this
-                          )}
-                        />
-                      )}
-                    </Grid>
-                  </Grid>
-
-                  <Grid item className={style.contentKYC_2}>
-                    <Grid container className={style.boxKYC_2}>
-                      <Grid item xs={12}>
-                        <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
-                        <Input
-                          value={this.state.cnpj}
-                          onChange={this.handleInput("cnpj")}
-                          classes={{
-                            root: classes.root,
-                            underline: classes.cssUnderline,
-                            input: classes.cssInput
-                          }}
-                        />
-                      </Grid>
-                    </Grid>
-                    <Grid item className={style.displayBox_3}>
-                      <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        {loadingKyc ? (
-                          <Loading />
-                        ) : (
-                          <FileUploadProgress
-                            isRequired
-                            id="fileupload"
-                            key="ex2"
-                            url=""
-                            onProgress={(e, request, progress) => {
-                              console.warn("progress", e, request, progress);
-                            }}
-                            onLoad={(e, request) => {
-                              console.warn("load", e, request);
-                            }}
-                            onError={(e, request) => {
-                              console.warn("error", e, request);
-                            }}
-                            onAbort={(e, request) => {
-                              console.warn("abort", e, request);
-                            }}
-                            formGetter={this.formGetter.bind(this)}
-                            formRenderer={e =>
-                              this.customFormRenderer(
-                                e,
-                                i18n.t("KYC_UPLOAD_FRONT"),
-                                "documentFront"
-                              )
-                            }
-                            progressRenderer={this.customProgressRenderer.bind(
-                              this
-                            )}
-                          />
-                        )}
-                      </Grid>
-                      <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        {loadingKyc ? (
-                          <Loading />
-                        ) : (
-                          <FileUploadProgress
-                            isRequired
-                            id="fileupload"
-                            key="ex3"
-                            url=""
-                            onProgress={(e, request, progress) => {
-                              console.warn("progress", e, request, progress);
-                            }}
-                            onLoad={(e, request) => {
-                              console.warn("load", e, request);
-                            }}
-                            onError={(e, request) => {
-                              console.warn("error", e, request);
-                            }}
-                            onAbort={(e, request) => {
-                              console.warn("abort", e, request);
-                            }}
-                            formGetter={this.formGetter.bind(this)}
-                            formRenderer={e =>
-                              this.customFormRenderer(
-                                e,
-                                i18n.t("KYC_UPLOAD_BACK"),
-                                "documentBack"
-                              )
-                            }
-                            progressRenderer={this.customProgressRenderer.bind(
-                              this
-                            )}
-                          />
-                        )}
-                      </Grid>
-                      <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-                        {loadingKyc ? (
-                          <Loading />
-                        ) : (
-                          <FileUploadProgress
-                            isRequired
-                            id="fileupload"
-                            key="ex4"
-                            url="http://localhost:6000/api/upload"
-                            onProgress={(e, request, progress) => {
-                              console.warn("progress", e, request, progress);
-                            }}
-                            onLoad={(e, request) => {
-                              console.warn("load", e, request);
-                            }}
-                            onError={(e, request) => {
-                              console.warn("error", e, request);
-                            }}
-                            onAbort={(e, request) => {
-                              console.warn("abort", e, request);
-                            }}
-                            formGetter={this.formGetter.bind(this)}
-                            formRenderer={e =>
-                              this.customFormRenderer(
-                                e,
-                                i18n.t("KYC_UPLOAD_SELFIE"),
-                                "documentSelfie"
-                              )
-                            }
-                            progressRenderer={this.customProgressRenderer.bind(
-                              this
-                            )}
-                          />
-                        )}
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <center>
-                      <Grid item xs={12} sm={6}>
-                        {this.checkAllInputs() ? (
-                          <button
-                            className={style.buttonEnableSecurity}
-                            onClick={() => this.handleClick()}
-                          >
-                            {loadingCreate ? (
-                              <Loading />
-                            ) : (
-                              i18n.t("BTN_CONFIRM")
-                            )}
-                          </button>
-                        ) : (
-                          <button
-                            className={style.buttonDisabledSecurity}
-                            disabled
-                          >
-                            {i18n.t("BTN_CONFIRM")}
-                          </button>
-                        )}
-                      </Grid>
-                    </center>
-                  </Grid>
-                </Grid>
-              </Grid>
+                {this.renderComponents()}
+              </Grid> 
             </Grid>
           </Grid>
         </div>
