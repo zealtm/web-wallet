@@ -437,6 +437,7 @@
   "RECHARGE_TAB_TITLE_HISTORY": "Histórico",
   "RECHARGE_SELECT_TITLE_OPERATOR": "Operadora",
   "RECHARGE_SELECT_TITLE_VALUE": "Valor",
+  "RECHARGE_ERROR_MESSAGE": "Não foi possível obter o valor dos pacotes de recarga",
   "ALIAS_CREATED_SUCCESS": "Alias criado com sucesso!",
   "ALIAS_BALANCE_INSUFICIENT": "Saldo Insuficiente.",
   "ALIAS_ALREADY_CLAIMED": "Este alias já esta sendo utilizado",
