@@ -104,10 +104,19 @@ export function* getValuesCreditSaga(payload) {
       payload
     );
 
-    yield put({
-      type: "GET_VALORES_REDUCER",
-      valores: response
-    });
+    if (Array.isArray(response)) {
+      yield put({
+        type: "GET_VALORES_REDUCER",
+        valores: response,
+        valueError: false
+      });
+    }else{
+      yield put({
+        type: "GET_VALORES_REDUCER",
+        valores: [],
+        valueError: true
+      });
+    }
 
     return;
   } catch (error) {
