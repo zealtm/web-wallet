@@ -51,6 +51,7 @@ export const kycUpload = upload => ({
   type: "KYC_UPLOAD",
   upload
 });
+
 export const getKyc = () => ({
   type: "GET_KYC_API"
 });
