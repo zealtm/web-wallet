@@ -41,3 +41,7 @@ export const setAliasLoading = state => ({
   type: "SET_WALLET_ALIAS_LOADING",
   state: state
 });
+
+export const getKyc = () => ({
+  type: "GET_KYC_API"
+});

@@ -14,10 +14,12 @@ import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
+import KycService from "../../../services/kycService";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
+const kycService = new KycService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -200,4 +202,20 @@ export function* getAliases(action) {
     console.warn("error", error);
     yield put(internalServerError());
   }
+}
+
+export function* getKyc(){
+  try {
+    const token = yield call(getAuthToken);
+    const response = yield call(kycService.getKyc,token);
+   // console.log("Get Kyc",response.data.data);
+    
+    yield put({
+      type: "GET_KYC_REDUCER",
+      kyc: response.data.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+
 }
