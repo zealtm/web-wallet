@@ -470,6 +470,11 @@
   "KYC_DDD": "DDD",
   "KYC_PHONE": "Phone",
 
+  "KYC_INFOCONFIRM_IMG": "Confirmed Information",
+  "KYC_INFOCONFIRM_TITLE": "Approved Address",
+  "KYC_INFOCONFIRM_TEXT": "Your address has been approved and will be used to improve your security.",
+  "KYC_REJECTED_TEXT": "Documents not approved.",
+  
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
