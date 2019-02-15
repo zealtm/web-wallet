@@ -223,6 +223,7 @@ class CardOffer extends React.Component {
     const defaultFiat = getDefaultFiat();
     const unitValue = order.unitValue[defaultFiat.toLowerCase()];
     const total = unitValue * orderSell.amount;
+    const criptoValue = orderBuy.amount;
 
     return (
       <div className={style.baseUser} onClick={this.handleClick}>
@@ -281,7 +282,7 @@ class CardOffer extends React.Component {
             <ArrowForward className={style.arrowPrice} />
 
             <span className={style.numberText}>
-              {defaultFiat} {parseFloat(total).toFixed(2)}
+              {orderBuy.coin.toUpperCase()} {parseFloat(criptoValue).toFixed(8)}
             </span>
             <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
