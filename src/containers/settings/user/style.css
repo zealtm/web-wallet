@@ -181,6 +181,11 @@
   width: 25%;
 }
 
+:local(.marginPhoneNumber){
+  float: left;
+  width: 50%
+}
+
 :local(.pUserStatus_1) {
   composes: textDefault;
   margin: 1rem 0 0 0;
@@ -224,6 +229,13 @@
   composes: textDefault;
   display: block;
   position: relative;
+  width: 65%
+}
+:local(.selectLabelPhoneNumber) {
+  composes: textDefault;
+  display: block;
+  position: relative;
+  width: 40%
 }
 
 /* 4 AVATAR */
@@ -287,7 +299,7 @@ input::-webkit-inner-spin-button {
 
 :local(.inputUserNumber) {
   composes: inputTextDefault;
-  width: 63%;
+  width: 83%;
 }
 
 /* ------------------------------------------------------------------------- */

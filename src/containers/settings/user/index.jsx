@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-
 // REDUX
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -15,7 +14,7 @@ import {
 // UTILS
 import i18n from "../../../utils/i18n";
 import compose from "recompose/compose";
-import { getProfileImg } from "./../../../utils/user.js"
+import { getProfileImg } from "./../../../utils/user.js";
 
 // STYLE
 import colors from "../../../components/bases/colors";
@@ -76,6 +75,7 @@ class User extends React.Component {
       birthYear: "",
       phone: "",
       directDistanceDialing: "",
+      countryCode:"",
       address: "",
       city: "",
       zipcode: "",
@@ -99,10 +99,13 @@ class User extends React.Component {
     this.setState({
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
-      phone: !user.phone ? "" : user.phone.toString().substring(2),
+      phone: !user.phone ? "" : user.phone.toString().substring(4),
       directDistanceDialing: !user.phone
         ? ""
-        : user.phone.toString().substring(2, 0),
+        : user.phone.toString().substring(4, 2),
+      countryCode: !user.phone
+      ? ""
+      : user.phone.toString().substring(2, 0),
       address: !user.street ? "" : user.street,
       city: !user.city ? "" : user.city,
       zipcode: !user.zipcode ? "" : user.zipcode,
@@ -126,7 +129,8 @@ class User extends React.Component {
         value = value.replace(/([\d\\/])/g, "");
         break;
       case "phone":
-      case "directDistanceDialing":
+      case "areaCode":
+      case "countryCode":
       case "zipcode":
         value = value.replace(/([^\d/])/g, "");
         break;
@@ -161,6 +165,7 @@ class User extends React.Component {
       surname,
       phone,
       directDistanceDialing,
+      countryCode,
       address,
       city,
       zipcode,
@@ -174,7 +179,7 @@ class User extends React.Component {
       name,
       surname,
       birthday: `${birthMonth}/${birthDay}/${birthYear}`,
-      phone: `${directDistanceDialing}${phone}`,
+      phone: `${countryCode}${directDistanceDialing}${phone}`,
       street: address,
       city,
       state,
@@ -275,6 +280,7 @@ class User extends React.Component {
       surname,
       city,
       directDistanceDialing,
+      countryCode,
       phone,
       address,
       zipcode,
@@ -441,7 +447,7 @@ class User extends React.Component {
           </Grid>
 
           {/* USER INFO */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={9}>
             <Grid item xs={12} className={style.row}>
               <Grid container>
                 <Grid item xs={12} md={6}>
@@ -582,68 +588,100 @@ class User extends React.Component {
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
                       <div className={style.marginUserContact}>
+                        <div className={style.selectLabel}>{i18n.t("SETTINGS_COUNTRY_CODE")}</div>
+                        <input
+                          maxLength="2"
+                          className={style.inputUserContact}
+                          onChange={event =>
+                            this.handleSelectChange(
+                              "countryCode",
+                              event.target.value
+                            )
+                          }
+                          value={countryCode}
+                        />
+                      </div>
+                      <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_CODE")}
+                        {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
                           className={style.inputUserContact}
                           onChange={event =>
                             this.handleSelectChange(
-                              "direct",
+                              "areaCode",
                               event.target.value
                             )
                           }
                           value={directDistanceDialing}
                         />
                       </div>
-                      <div className={style.selectLabel}>
-                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      <div className={style.marginPhoneNumber}>
+                        <div className={style.selectLabelPhoneNumber}>
+                          {i18n.t("SETTINGS_USER_NUMBER")}
+                        </div>
+                        <input
+                          className={style.inputUserNumber}
+                          maxLength="9"
+                          onChange={event =>
+                            this.handleSelectChange("phone", event.target.value)
+                          }
+                          value={phone}
+                        />
                       </div>
-                      <input
-                        className={style.inputUserNumber}
-                        maxLength="9"
-                        onChange={event =>
-                          this.handleSelectChange("phone", event.target.value)
-                        }
-                        value={phone}
-                      />
                     </div>
                   </Grid>
                 </Hidden>
                 <Hidden mdUp>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} >
                     <div className={style.content}>
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
                       <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_CODE")}
+                        {i18n.t("SETTINGS_COUNTRY_CODE")}
                         </div>
                         <input
                           maxLength="2"
                           className={style.inputUserContact}
                           onChange={event =>
                             this.handleSelectChange(
-                              "direct",
+                              "countryCode",
+                              event.target.value
+                            )
+                          }
+                          value={countryCode}
+                        />
+                      </div>
+                      <div className={style.marginUserContact}>
+                        <div className={style.selectLabel}>{i18n.t("SETTINGS_USER_CODE")}</div>
+                        <input
+                          maxLength="2"
+                          className={style.inputUserContact}
+                          onChange={event =>
+                            this.handleSelectChange(
+                              "areaCode",
                               event.target.value
                             )
                           }
                           value={directDistanceDialing}
                         />
                       </div>
-                      <div className={style.selectLabel}>
-                        {i18n.t("SETTINGS_USER_NUMBER")}
+                      <div className={style.marginPhoneNumber}>
+                        <div className={style.selectLabelPhoneNumber}>
+                          {i18n.t("SETTINGS_USER_NUMBER")}
+                        </div>
+                        <input
+                          className={style.inputUserNumber}
+                          maxLength="9"
+                          onChange={event =>
+                            this.handleSelectChange("phone", event.target.value)
+                          }
+                          value={phone}
+                        />
                       </div>
-                      <input
-                        className={style.inputUserNumber}
-                        maxLength="9"
-                        onChange={event =>
-                          this.handleSelectChange("phone", event.target.value)
-                        }
-                        value={phone}
-                      />
                     </div>
                   </Grid>
                 </Hidden>
