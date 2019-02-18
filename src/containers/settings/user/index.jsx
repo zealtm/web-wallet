@@ -74,7 +74,7 @@ class User extends React.Component {
       birthMonth: "",
       birthYear: "",
       phone: "",
-      directDistanceDialing: "",
+      areaCode: "",
       countryCode:"",
       address: "",
       city: "",
@@ -100,7 +100,7 @@ class User extends React.Component {
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
       phone: !user.phone ? "" : user.phone.toString().substring(4),
-      directDistanceDialing: !user.phone
+      areaCode: !user.phone
         ? ""
         : user.phone.toString().substring(4, 2),
       countryCode: !user.phone
@@ -164,7 +164,7 @@ class User extends React.Component {
       name,
       surname,
       phone,
-      directDistanceDialing,
+      areaCode,
       countryCode,
       address,
       city,
@@ -179,7 +179,7 @@ class User extends React.Component {
       name,
       surname,
       birthday: `${birthMonth}/${birthDay}/${birthYear}`,
-      phone: `${countryCode}${directDistanceDialing}${phone}`,
+      phone: `${countryCode}${areaCode}${phone}`,
       street: address,
       city,
       state,
@@ -279,7 +279,7 @@ class User extends React.Component {
       name,
       surname,
       city,
-      directDistanceDialing,
+      areaCode,
       countryCode,
       phone,
       address,
@@ -602,8 +602,9 @@ class User extends React.Component {
                         />
                       </div>
                       <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>
+                        <div className={style.selectLabel} >
                         {i18n.t("SETTINGS_USER_CODE")}
+
                         </div>
                         <input
                           maxLength="2"
@@ -614,7 +615,7 @@ class User extends React.Component {
                               event.target.value
                             )
                           }
-                          value={directDistanceDialing}
+                          value={areaCode}
                         />
                       </div>
                       <div className={style.marginPhoneNumber}>
@@ -656,7 +657,7 @@ class User extends React.Component {
                         />
                       </div>
                       <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>{i18n.t("SETTINGS_USER_CODE")}</div>
+                        <div className={style.selectLabel} style={{width:"52%"}}>{i18n.t("SETTINGS_USER_CODE")} </div>
                         <input
                           maxLength="2"
                           className={style.inputUserContact}
@@ -666,7 +667,7 @@ class User extends React.Component {
                               event.target.value
                             )
                           }
-                          value={directDistanceDialing}
+                          value={areaCode}
                         />
                       </div>
                       <div className={style.marginPhoneNumber}>
