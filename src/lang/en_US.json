@@ -656,5 +656,6 @@
   "P2P_USER_DESCRIPTION": "Describe yourself in a few words",
   "P2P_STATUS_PLAN": "Active",
   "P2P_DESC_PLAN": "This plan will allow you to use P2P's system for",
-  "P2P_CANCEL_ORDER": "Cancel done!"
+  "P2P_CANCEL_ORDER": "Cancel done!",
+  "P2P_ADDRESS_TO_SEND": "Address to send"
 }
