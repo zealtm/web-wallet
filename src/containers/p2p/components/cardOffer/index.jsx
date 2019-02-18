@@ -282,7 +282,7 @@ class CardOffer extends React.Component {
             <ArrowForward className={style.arrowPrice} />
 
             <span className={style.numberText}>
-              {orderBuy.coin.toUpperCase()} {parseFloat(criptoValue).toFixed(8)}
+               {criptoValue}
             </span>
             <span className={style.textSmall}>{i18n.t("P2P_SELLS")}</span>
             <div className={style.offerText}>
