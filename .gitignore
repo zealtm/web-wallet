@@ -25,9 +25,11 @@ yarn-error.log*
 yarn.lock
 .eslintcache
 package-lock.json
-.eslintcache
-.eslintcache
+/.eslintcache
 
 # testnet
 /src/constants/apiBaseUrl.js
 budo
+
+#VSCode
+.history

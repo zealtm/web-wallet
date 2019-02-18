@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -16,21 +15,19 @@ class Error extends React.Component {
   render() {
     return (
       <div className={style.baseMessage}>
-        <img src="../../images/icons/error/imgMessageErro.png" className={style.icon} />
+        <img
+          src="../../images/icons/error/imgMessageErro.png"
+          className={style.icon}
+        />
         <p className={style.messageError}>{i18n.t("INVITE_ERROR_EMAIL")}</p>
-        <a href="#" className={style.buttonEnable} >{i18n.t("BTN_INVITE_ERROR_SEND_CONFIRM")}</a>
+        <a href="#" className={style.buttonEnable}>
+          {i18n.t("BTN_INVITE_ERROR_SEND_CONFIRM")}
+        </a>
       </div>
     );
   }
 }
 
-Error.propTypes = {};
-
-const mapSateToProps = store => ({});
-
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default connect(
-  mapSateToProps,
-  mapDispatchToProps
-)(Error);
+export default connect(mapDispatchToProps)(Error);

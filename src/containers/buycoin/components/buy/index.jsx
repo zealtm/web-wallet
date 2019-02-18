@@ -15,7 +15,7 @@ import ModalBar from "../../../../components/modalBar";
 
 //UTILS
 //import { getDefaultFiat } from "../../../../utils/localStorage";
-import {convertSmallerCoinUnit} from "../../../../utils/numbers";
+import { convertSmallerCoinUnit } from "../../../../utils/numbers";
 import i18n from "../../../../utils/i18n";
 
 // STYLES
@@ -35,12 +35,14 @@ class Buy extends React.Component {
 
     let errors = [];
 
-    if (buypack.idpack == "") errors.push(`${i18n.t("COINSALE_ERROR_PACK")} / `);
+    if (buypack.idpack == "")
+      errors.push(`${i18n.t("COINSALE_ERROR_PACK")} / `);
 
     if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
       errors.push(`${i18n.t("COINSALE_ERROR_COIN")} / `);
 
-    if (buypack.paycoin == "") errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
+    if (buypack.paycoin == "")
+      errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
 
     if (errors.length > 0) {
       this.setState({
@@ -57,22 +59,24 @@ class Buy extends React.Component {
       let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
       const amountPay = buypack.amountFiat / coinPrice;
       let decimalPoint = coins[buypack.paycoin].decimalPoint;
-      
+
       const data = {
-        amount: convertSmallerCoinUnit(amountPay,decimalPoint),
+        amount: convertSmallerCoinUnit(amountPay, decimalPoint),
         coin: buypack.paycoin,
-        address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "", 
-        receiveAddress: coins[buypack.coin.abbreviation] ? coins[buypack.coin.abbreviation].address : "",
+        address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "",
+        receiveAddress: coins[buypack.coin.abbreviation]
+          ? coins[buypack.coin.abbreviation].address
+          : "",
         decimalPoint: decimalPoint
       };
-     
+
       setBuy(data);
     }
   };
 
   render() {
     const { error, messageError } = this.state;
-    const {loading} = this.props;
+    const { loading } = this.props;
 
     return (
       <div>
@@ -100,16 +104,15 @@ class Buy extends React.Component {
 }
 
 Buy.propTypes = {
-  setClearBuy: PropTypes.func.isRequired,
   buypack: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
-  setBuy: PropTypes.func.isRequired, 
+  setBuy: PropTypes.func.isRequired,
   loading: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
   buypack: store.buy.buypackage,
-  coins: store.skeleton.coins,
+  coins: store.buy.coinsBuy,
   loading: store.buy.loading
 });
 

@@ -3,7 +3,8 @@
 1. CONTAINERS
 2. BUTTONCONTINUER
 3. CUSTOMSWITCH
-4. ActionButton
+4. LOGO LUNES 
+
 */
 
 /* 1. CONTAINERS */
@@ -74,6 +75,7 @@
     font-size: 12px;
   }
 }
+
 /* ActionButton */
 :local(.imgAction) {
   opacity: 0.15;
@@ -94,3 +96,15 @@
   }
 }
 
+
+/* 4. LOGO LUNES */
+:local .logoLunes span {
+  margin: auto;
+  font-weight: 500;
+  color: white;
+  font-family: "Offside";
+}
+
+:local .logoLunes span span {
+  color: #4cd566;
+}

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -18,10 +17,8 @@ class EmailSuccess extends React.Component {
           src="../../images/icons/confirm/confirm@2x.png"
           className={style.icon}
         />
-        <p className={style.messageSuccess}>
-          {i18n.t("INVITE_SUCCESS_EMAIL")}
-        </p>
-        <Link to="/login">
+        <p className={style.messageSuccess}>{i18n.t("INVITE_SUCCESS_EMAIL")}</p>
+        <Link to="/">
           <button className={style.buttonLogin}>{i18n.t("BTN_LOGIN")}</button>
         </Link>
       </div>
@@ -29,13 +26,6 @@ class EmailSuccess extends React.Component {
   }
 }
 
-EmailSuccess.propTypes = {};
-
-const mapSateToProps = store => ({});
-
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
-export default connect(
-  mapSateToProps,
-  mapDispatchToProps
-)(EmailSuccess);
+export default connect(mapDispatchToProps)(EmailSuccess);

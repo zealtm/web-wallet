@@ -8,7 +8,6 @@ import Rooms from "./rooms.jsx";
 
 //REDUX
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 // GLOBAL COMPONENTS
 import Loading from "../../../components/loading";
@@ -100,9 +99,7 @@ const mapStateToProps = store => ({
   chatDetails: store.p2p.chatDetails
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Chat);

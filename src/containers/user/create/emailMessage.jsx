@@ -1,10 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-//REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+// COMPONENTS
+import LogoLunes from "../../../components/logoLunes";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -19,7 +16,10 @@ class EmailMessage extends React.Component {
     }, 6000);
     return (
       <div className={style.contNewAccount}>
-        <img src="../../images/logo.svg" className={style.logo} />
+        <center>
+          <LogoLunes medium />
+        </center>
+
         <div>
           <img
             src="../../../../images/icons/email/email@2x.png"
@@ -43,21 +43,4 @@ class EmailMessage extends React.Component {
   }
 }
 
-EmailMessage.propTypes = {
-  clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
-};
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      clearMessage,
-      errorInput
-    },
-    dispatch
-  );
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(EmailMessage);
+export default EmailMessage;

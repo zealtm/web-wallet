@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import PropTypes from "prop-types"
 
 // REDUX
 import {bindActionCreators} from "redux";
@@ -99,7 +100,10 @@ class Consent extends React.Component {
     );
   }
 }
-
+Consent.propTypes = {
+  user: PropTypes.object,
+  updateUserConsents: PropTypes.func.isRequired
+}
 const mapStateToProps = store => ({
   user: store.user.user
 });

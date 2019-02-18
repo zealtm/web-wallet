@@ -153,7 +153,6 @@ class Invoice extends React.Component {
   };
 
   handleInvoiceNumberChange = value => {
-    console.warn(value)
     const { getInvoice, setClearPayment } = this.props;
     const { invoice, disableNumberInput } = this.state;
     const newValue = value.replace(/\D/, "");
@@ -241,6 +240,7 @@ class Invoice extends React.Component {
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
     const { invoice, coin } = this.state;
+
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
@@ -327,15 +327,39 @@ class Invoice extends React.Component {
     return;
   };
 
+  currentDateTransform = value => {
+    let strDate = value ? value.replace(/[^\d]+/g, "") : "";
+    if (value == undefined || value == "") return "";
+
+    let day = strDate.substring(0, 2);
+    let month = strDate.substring(2, 4);
+    let year = strDate.substring(4, 8);
+    if (strDate.length == 7) {
+      day = strDate.substring(0, 1);
+      month = strDate.substring(1, 3);
+      year = strDate.substring(3, 7);
+    }
+    let numDay = Number(day);
+
+    if (numDay < 10) {
+      day = "0" + numDay;
+    }
+
+    return day + "/" + month + "/" + year;
+  };
+
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
     const { coin, invoice, errors } = this.state;
-    const title = coin.name || "Select a coin..";
+    const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
+    let dueDatePayment = invoice.dueDate
+      ? this.currentDateTransform(invoice.dueDate)
+      : (dueDatePayment = this.currentDateTransform(payment.dueDate));
 
     return (
       <Grid container direction="row" justify="center">
-        <Grid item xs={12} className={style.box}>
+        <Grid item xs={11} className={style.box}>
           <div className={style.row}>
             <Grid item xs={11} md={12}>
               <Input
@@ -348,9 +372,30 @@ class Invoice extends React.Component {
                 inputProps={{ maxLength: 48, required: true }}
                 value={invoice.number || payment.number}
                 onChange={e => this.handleInvoiceNumberChange(e.target.value)}
-                onBlur={this.normalizeInvoiceNumber}
                 error={errors.includes("number")}
               />
+            </Grid>
+            <Grid item xs={1}>
+              <div className={style.cameraIconMargin}>
+                <label
+                  htmlFor="file-upload"
+                  className={style.labelCameraUpload}
+                >
+                  <img
+                    className={style.cameraIcon}
+                    src="images/icons/camera/camera-white.png"
+                    alt="Camera"
+                  />
+                  <span>Max. 3MB</span>
+                </label>
+                <input
+                  id="file-upload"
+                  className={style.cameraInput}
+                  type="file"
+                  accept="image/*"
+                  onChange={this.fileUpload}
+                />
+              </div>
             </Grid>
           </div>
 
@@ -399,7 +444,7 @@ class Invoice extends React.Component {
                   input: classes.inputCss
                 }}
                 placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={payment.dueDate || invoice.dueDate}
+                value={dueDatePayment}
                 onChange={this.handleInvoiceDefaultChange("dueDate")}
                 error={errors.includes("dueDate")}
                 inputComponent={DateMask}

@@ -92,7 +92,7 @@ class MultiSelect extends React.Component {
     componentDidMount() {
         document.addEventListener("click", this.handleClick);
     }
-
+    //NAO SEI SE AQUI ERA PRA SER REMOVELISTENER
     componentWillUnmount() {
         document.removeEventListener("click", this.handleClick);
     }
@@ -164,7 +164,8 @@ class MultiSelect extends React.Component {
 MultiSelect.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectItems: PropTypes.func.isRequired,
-    wrapperStyle: PropTypes.object
+    wrapperStyle: PropTypes.object,
+    width: PropTypes.string
 };
 
 export default MultiSelect;
