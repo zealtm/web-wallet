@@ -109,14 +109,14 @@ class Header extends React.Component {
           <Grid container>
             <Grid item xs={3} />
             <Grid item xs={4}>
-              <div className={style.card}>{order.sell.amount}</div>
+              <div className={style.card}>{order.buy.amount}</div>
             </Grid>
             <Grid item xs={1}>
               <ArrowForward className={style.arrowPrice} />
             </Grid>
             <Grid item xs={4}>
               <div className={style.card}>
-                {defaultFiat} {total.toFixed(2)}
+                {order.sell.amount}
               </div>
             </Grid>
             <Grid

@@ -105,7 +105,7 @@ class HeaderDetails extends React.Component {
           <Grid item xs={9}>
             <input
               type="text"
-              placeholder="address to send"
+              placeholder={i18n.t("P2P_ADDRESS_TO_SEND")}
               className={style.inputCenter}
               value={this.state.addressBuyer}
               name="addressBuyer"
