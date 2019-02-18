@@ -19,6 +19,7 @@ import { getProfileImg } from "./../../../utils/user.js";
 // STYLE
 import colors from "../../../components/bases/colors";
 import style from "./style.css";
+import "react-phone-number-input/style.css";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
@@ -29,6 +30,7 @@ import { Grid, Avatar } from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
+import PhoneInput from "react-phone-number-input";
 
 // STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
@@ -75,7 +77,7 @@ class User extends React.Component {
       birthYear: "",
       phone: "",
       areaCode: "",
-      countryCode:"",
+      countryCode: "",
       address: "",
       city: "",
       zipcode: "",
@@ -100,12 +102,8 @@ class User extends React.Component {
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
       phone: !user.phone ? "" : user.phone.toString().substring(4),
-      areaCode: !user.phone
-        ? ""
-        : user.phone.toString().substring(4, 2),
-      countryCode: !user.phone
-      ? ""
-      : user.phone.toString().substring(2, 0),
+      areaCode: !user.phone ? "" : user.phone.toString().substring(4, 2),
+      countryCode: !user.phone ? "" : user.phone.toString().substring(2, 0),
       address: !user.street ? "" : user.street,
       city: !user.city ? "" : user.city,
       zipcode: !user.zipcode ? "" : user.zipcode,
@@ -587,8 +585,10 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>{i18n.t("SETTINGS_COUNTRY_CODE")}</div>
+                      {/* <div className={style.marginUserContact}>
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_COUNTRY_CODE")}
+                        </div>
                         <input
                           maxLength="2"
                           className={style.inputUserContact}
@@ -602,9 +602,8 @@ class User extends React.Component {
                         />
                       </div>
                       <div className={style.marginUserContact}>
-                        <div className={style.selectLabel} >
-                        {i18n.t("SETTINGS_USER_CODE")}
-
+                        <div className={style.selectLabel}>
+                          {i18n.t("SETTINGS_USER_CODE")}
                         </div>
                         <input
                           maxLength="2"
@@ -630,19 +629,25 @@ class User extends React.Component {
                           }
                           value={phone}
                         />
-                      </div>
+                      </div> */}
+                      <PhoneInput
+                        placeholder="Enter phone number"
+                        inputClassName={style.inputTextDefault}
+                        value={this.state.phone}
+                        onChange={phone => this.setState({ phone })}
+                      />
                     </div>
                   </Grid>
                 </Hidden>
                 <Hidden mdUp>
-                  <Grid item xs={12} >
+                  <Grid item xs={12}>
                     <div className={style.content}>
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
                       <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
-                        {i18n.t("SETTINGS_COUNTRY_CODE")}
+                          {i18n.t("SETTINGS_COUNTRY_CODE")}
                         </div>
                         <input
                           maxLength="2"
@@ -657,7 +662,12 @@ class User extends React.Component {
                         />
                       </div>
                       <div className={style.marginUserContact}>
-                        <div className={style.selectLabel} style={{width:"52%"}}>{i18n.t("SETTINGS_USER_CODE")} </div>
+                        <div
+                          className={style.selectLabel}
+                          style={{ width: "52%" }}
+                        >
+                          {i18n.t("SETTINGS_USER_CODE")}{" "}
+                        </div>
                         <input
                           maxLength="2"
                           className={style.inputUserContact}

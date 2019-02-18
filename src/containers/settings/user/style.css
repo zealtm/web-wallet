@@ -280,12 +280,12 @@ input::-webkit-inner-spin-button {
 
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../../components/bases/inputBase.css";
-  background-color: transparent;
-  border-radius: 0;
-  padding: 0;
-  border-bottom: 1px solid #3b1878;
-  height: 30px;
-  color: white;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #3b1878 !important;
+  height: 30px !important;
+  color: white !important;
 }
 
 :local(.inputTextDefault::placeholder) {
