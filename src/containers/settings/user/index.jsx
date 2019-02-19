@@ -33,6 +33,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import PhoneInput from "react-phone-number-input";
 
+import CountrySelectNative from "./select/phoneSelect";
 
 // STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
@@ -532,7 +533,7 @@ class User extends React.Component {
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_USER_MONTH")}
                         </div>
-                        <FormControl className={classes.formControl}>
+                        <FormControl>
                           <Select
                             classes={{
                               selectMenu: classes.underlineItems
@@ -635,11 +636,13 @@ class User extends React.Component {
                       <FormControl className={classes.formControl}>
                         <PhoneInput
                           placeholder="Enter phone number"
-                          inputClassName={style.inputTextDefault}
+                          inputClassName={style.inputTextPhone}
+                          countrySelectComponent={CountrySelectNative}
                           className={style.phoneNumberSelect}
-                          value={this.state.phone}
+                          value={phone}
                           onChange={phone => this.setState({ phone })}
                         />
+
                       </FormControl>
                     </div>
                   </Grid>
@@ -650,7 +653,7 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      <div className={style.marginUserContact}>
+                      {/* <div className={style.marginUserContact}>
                         <div className={style.selectLabel}>
                           {i18n.t("SETTINGS_COUNTRY_CODE")}
                         </div>
@@ -697,7 +700,17 @@ class User extends React.Component {
                           }
                           value={phone}
                         />
-                      </div>
+                      </div> */}
+                      <FormControl className={classes.formControl}>
+                        <PhoneInput
+                          placeholder="Enter phone number"
+                          inputClassName={style.inputTextPhone}
+                          countrySelectComponent={CountrySelectNative}
+                          className={style.phoneNumberSelect}
+                          value={this.state.phone}
+                          onChange={phone => this.setState({ phone })}
+                        />
+                      </FormControl>
                     </div>
                   </Grid>
                 </Hidden>

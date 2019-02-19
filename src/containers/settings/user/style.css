@@ -181,9 +181,9 @@
   width: 25%;
 }
 
-:local(.marginPhoneNumber){
+:local(.marginPhoneNumber) {
   float: left;
-  width: 50%
+  width: 50%;
 }
 
 :local(.pUserStatus_1) {
@@ -229,13 +229,13 @@
   composes: textDefault;
   display: block;
   position: relative;
-  width: 70%
+  width: 70%;
 }
 :local(.selectLabelPhoneNumber) {
   composes: textDefault;
   display: block;
   position: relative;
-  width: 40%
+  width: 40%;
 }
 
 /* 4 AVATAR */
@@ -280,30 +280,30 @@ input::-webkit-inner-spin-button {
 
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../../components/bases/inputBase.css";
+  background-color: transparent;
+  border-radius: 0;
+  padding: 0;
+  border-bottom: 1px solid #3b1878;
+  height: 30px;
+  color: white;
+}
+
+:local(.inputTextPhone) {
+  composes: inputTextDefault from "../../../components/bases/inputBase.css";
   background-color: transparent !important;
   border-radius: 0 !important;
   padding: 0 !important;
   border-bottom: 1px solid #3b1878 !important;
   height: 30px !important;
   color: white !important;
+  position: relative;
+  top: 9px;
+  left: 11%;
 }
 
-:local(.phoneNumberSelect) {
-  height: 60px;
+:local(.inputTextPhone::placeholder) {
+  font-size: 10px;
 }
-:local(.phoneNumberSelect path) {
-  color: #654ea6;
-}
-
-:local(.phoneNumberSelect select){
-  border-bottom: 1px solid ;
-  border-bottom-color: rgb(71, 48, 136) !important;
-  font-size: 16px !important; 
-  color:#fff;
-  background-color: #473088;
-  width: 68px
-}
-
 :local(.inputTextDefault::placeholder) {
   font-size: 10px;
 }
