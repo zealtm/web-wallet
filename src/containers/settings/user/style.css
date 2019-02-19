@@ -288,6 +288,22 @@ input::-webkit-inner-spin-button {
   color: white !important;
 }
 
+:local(.phoneNumberSelect) {
+  height: 60px;
+}
+:local(.phoneNumberSelect path) {
+  color: #654ea6;
+}
+
+:local(.phoneNumberSelect select){
+  border-bottom: 1px solid ;
+  border-bottom-color: rgb(71, 48, 136) !important;
+  font-size: 16px !important; 
+  color:#fff;
+  background-color: #473088;
+  width: 68px
+}
+
 :local(.inputTextDefault::placeholder) {
   font-size: 10px;
 }

@@ -20,6 +20,7 @@ import { getProfileImg } from "./../../../utils/user.js";
 import colors from "../../../components/bases/colors";
 import style from "./style.css";
 import "react-phone-number-input/style.css";
+//import "react-responsive-ui/style.css";
 
 // COMPONENTS
 import Loading from "../../../components/loading";
@@ -31,6 +32,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import PhoneInput from "react-phone-number-input";
+
 
 // STYLE DO MATERIAL UI (Permitido)
 const customStyle = {
@@ -630,12 +632,15 @@ class User extends React.Component {
                           value={phone}
                         />
                       </div> */}
-                      <PhoneInput
-                        placeholder="Enter phone number"
-                        inputClassName={style.inputTextDefault}
-                        value={this.state.phone}
-                        onChange={phone => this.setState({ phone })}
-                      />
+                      <FormControl className={classes.formControl}>
+                        <PhoneInput
+                          placeholder="Enter phone number"
+                          inputClassName={style.inputTextDefault}
+                          className={style.phoneNumberSelect}
+                          value={this.state.phone}
+                          onChange={phone => this.setState({ phone })}
+                        />
+                      </FormControl>
                     </div>
                   </Grid>
                 </Hidden>
