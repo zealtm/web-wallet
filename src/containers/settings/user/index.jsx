@@ -32,7 +32,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import PhoneInput from "react-phone-number-input";
-import { parsePhoneNumber} from "libphonenumber-js"
+import { parsePhoneNumber,  AsYouType} from "libphonenumber-js"
 
 import CountrySelectNative from "./select/phoneSelect";
 
@@ -299,7 +299,9 @@ class User extends React.Component {
     }catch(error){
       phoneNumber= ""
     }
+    const asYouType = new AsYouType(country);
     
+    const teste = asYouType.input(phone);
     return (
       <div>
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -652,7 +654,7 @@ class User extends React.Component {
                           onChange={phone => this.setState({ phone })}
                           onCountryChange={country => this.setState({country})}
                         />
-                        
+                        {console.log(teste)}
                       </FormControl>
                     </div>
                   </Grid>
