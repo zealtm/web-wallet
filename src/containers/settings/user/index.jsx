@@ -32,6 +32,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import PhoneInput from "react-phone-number-input";
+import { parsePhoneNumber} from "libphonenumber-js"
 
 import CountrySelectNative from "./select/phoneSelect";
 
@@ -87,7 +88,8 @@ class User extends React.Component {
       state: "",
       password: "",
       newPassword: "",
-      confirmNewPassword: ""
+      confirmNewPassword: "",
+      country: ""
     };
   }
 
@@ -288,9 +290,16 @@ class User extends React.Component {
       state,
       password,
       newPassword,
-      confirmNewPassword
+      confirmNewPassword,
+      country
     } = this.state;
-
+    let phoneNumber;
+    try{
+       phoneNumber = parsePhoneNumber(phone, country);
+    }catch(error){
+      phoneNumber= ""
+    }
+    
     return (
       <div>
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -641,8 +650,9 @@ class User extends React.Component {
                           className={style.phoneNumberSelect}
                           value={phone}
                           onChange={phone => this.setState({ phone })}
+                          onCountryChange={country => this.setState({country})}
                         />
-
+                        
                       </FormControl>
                     </div>
                   </Grid>
