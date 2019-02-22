@@ -8,23 +8,23 @@ import {
   HEADER_RESPONSE,
   HEADER_REQUEST_FORM,
   TETHER_URL
-} from "../../constants/apiBaseUrl";
-import { networks } from "../../constants/network";
+} from "../constants/apiBaseUrl";
+import { networks } from "../constants/network";
 
 // ERROR
 import {
   internalServerError,
   modalError
-} from "../../containers/errors/statusCodeMessage";
+} from "../containers/errors/statusCodeMessage";
 
 // COINS
-import { BtcTransaction, LunesTransaction, EthTransaction } from "./coins";
-import CoinService from "../../services/coinService";
+import { BtcServices, LunesServices, EthServices } from "./coins";
+import CoinService from "./coinService";
 
 // UTILS
-import i18n from "../../utils/i18n";
-import { setAuthToken } from "../../utils/localStorage";
-import { convertSmallerCoinUnit } from "../../utils/numbers";
+import i18n from "../utils/i18n";
+import { setAuthToken } from "../utils/localStorage";
+import { convertSmallerCoinUnit } from "../utils/numbers";
 
 class TransactionService {
   async utxo(address, coin, token) {
@@ -174,7 +174,7 @@ class TransactionService {
         coin === "nmc" ||
         coin === "mona" 
       ) {
-        let transactionBtc = new BtcTransaction();
+        let transactionBtc = new BtcServices();
         let responseBtc = await transactionBtc.createTransaction({
           fromAddress: fromAddress,
           toAddress: toAddress,
@@ -215,7 +215,7 @@ class TransactionService {
         );
         return responseSaveBtc;
       } else if (coin === "eth") {
-        let transactionEth = new EthTransaction();
+        let transactionEth = new EthServices();
         let responseEth = await transactionEth.createTransaction({
           fromAddress: fromAddress,
           toAddress: toAddress,
@@ -252,8 +252,8 @@ class TransactionService {
         );
         return responseSaveEth;
       } else if (coin === "lunes") {
-        let transactionLunes = new LunesTransaction();
-        let respondeLunes = await transactionLunes.createLunesTransaction({
+        let transactionLunes = new LunesServices();
+        let respondeLunes = await transactionLunes.createLunesServices({
           network: network,
           seed: seed,
           fromAddress: fromAddress,
@@ -287,7 +287,7 @@ class TransactionService {
   }
 
   async createLeasing(amount, fee, address, seed, token) {
-    let lunes = new LunesTransaction();
+    let lunes = new LunesServices();
     let coinService = new CoinService();
 
     let response = await lunes.createLeasing({
@@ -320,7 +320,7 @@ class TransactionService {
 
   async cancelLeasing(txId, fee, seed, token) {
     try {
-      let lunes = new LunesTransaction();
+      let lunes = new LunesServices();
       let coinService = new CoinService();
 
       let response = await lunes.cancelLeasing({
@@ -491,7 +491,7 @@ class TransactionService {
 
   async createAlias(alias, seed) {
     try {
-      let transaction = new LunesTransaction();
+      let transaction = new LunesServices();
       let response = await transaction.createAlias({
         alias,
         seed,
@@ -507,7 +507,7 @@ class TransactionService {
 
   async getAliases(address) {
     try {
-      let transaction = new LunesTransaction();
+      let transaction = new LunesServices();
       let response = await transaction.getAliases({
         address,
         network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
@@ -521,7 +521,7 @@ class TransactionService {
 
   async getAddressByAlias(alias) {
     try {
-      let transaction = new LunesTransaction();
+      let transaction = new LunesServices();
       let response = await transaction.getAddressByAlias({
         alias,
         network: TESTNET ? networks.LUNESTESTNET : networks.LUNES

@@ -5,7 +5,7 @@ import bip39 from "bip39";
 
 import TransactionService from "../transactionService";
 
-class BtcTransaction {
+class BtcServices {
   getKeyPair(mnemonic, networks) {
     const hdNode = bitcoin.HDNode.fromSeedHex(
       bip39.mnemonicToSeedHex(mnemonic),
@@ -130,4 +130,4 @@ class BtcTransaction {
   }
 }
 
-export default BtcTransaction;
+export default BtcServices;

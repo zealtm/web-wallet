@@ -1,8 +1,8 @@
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 import { create } from "lunes-js-api";
 
-class LunesTransaction {
-  async createLunesTransaction(data) {
+class LunesServices {
+  async createLunesServices(data) {
     try {
       const Lunes = await create(data.network.APICONFIG);
       const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
@@ -89,4 +89,4 @@ class LunesTransaction {
   }
 }
 
-export default LunesTransaction;
+export default LunesServices;

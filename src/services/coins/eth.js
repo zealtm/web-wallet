@@ -8,7 +8,7 @@ import bip39 from "bip39";
 const bs = require("biggystring");
 /* eslint-enable */
 
-class EthTransaction {
+class EthServices {
   async createTransaction(data) {
     try {
       let wallet = await this.mnemonicToWallet(
@@ -69,4 +69,4 @@ class EthTransaction {
   }
 }
 
-export default EthTransaction;
+export default EthServices;
