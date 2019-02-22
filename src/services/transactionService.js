@@ -253,7 +253,7 @@ class TransactionService {
         return responseSaveEth;
       } else if (coin === "lunes") {
         let transactionLunes = new LunesServices();
-        let respondeLunes = await transactionLunes.createLunesServices({
+        let respondeLunes = await transactionLunes.createLunesTransaction({
           network: network,
           seed: seed,
           fromAddress: fromAddress,

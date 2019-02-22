@@ -1,8 +1,8 @@
-import { internalServerError } from "../../../containers/errors/statusCodeMessage";
+import { internalServerError } from "../../containers/errors/statusCodeMessage";
 import { create } from "lunes-js-api";
 
 class LunesServices {
-  async createLunesServices(data) {
+  async createLunesTransaction(data) {
     try {
       const Lunes = await create(data.network.APICONFIG);
       const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
@@ -86,6 +86,16 @@ class LunesServices {
     let lunes = await create(value.network.APICONFIG);
     let transaction = lunes.API.Node.v1.aliases.byAlias(value.alias);
     return transaction;
+  }
+
+  async getLunesAddress(data) {
+    try{
+    const lunes = await create(data.network.APICONFIG);
+    const seed = await lunes.Seed.fromExistingPhrase(data.seed);
+    return seed.address;
+    }catch(error){
+      return internalServerError();
+    }
   }
 }
 

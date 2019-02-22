@@ -9,6 +9,7 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
+import { networks } from "../constants/network";
 
 // ERROR
 import { internalServerError } from "../containers/errors/statusCodeMessage";
@@ -25,6 +26,9 @@ import {
   convertSmallerCoinUnit
 } from "../utils/numbers";
 import i18n from "../utils/i18n.js";
+
+// COINS
+import { BtcServices, LunesServices, EthServices } from "./coins";
 
 let getPriceHistory = async (coiName, token) => {
   try {
@@ -90,6 +94,27 @@ class CoinService {
           availableCoins[index].price.percent = percentCalcByRange(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           // CREATE ADDRESS
+          let responseTest = "";
+          if (coin.name === "lunes") {
+             let lunes = new LunesServices();
+            responseTest = await lunes.getLunesAddress({
+              seed: seed,
+              network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+            });
+          }else if(coin.name === "ethereum"){
+            let ethereum = new EthServices();
+            responseTest = await ethereum.getEthAddress({
+              seed: seed,
+              network: TESTNET ? networks.ROPSTEN : networks.ETH
+            });
+          }else if(coin.name === "bitcoin"){
+            let bitcoin = new BtcServices();
+            responseTest = await bitcoin.getBtcAddress({
+              seed: seed,
+              network: TESTNET ? networks.BTCTESTNET : networks.BTC
+            });
+          }
+          console.warn(responseTest);
           let responseCreateAddress = await axios.post(
             BASE_URL + "/coin/" + coin.abbreviation + "/address",
             {
@@ -318,7 +343,7 @@ class CoinService {
       return;
     }
   }
-
+  getAddress() {}
   async validateAddress(coin, address) {
     try {
       let valid = false;

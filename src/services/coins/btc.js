@@ -15,6 +15,18 @@ class BtcServices {
     return hdNode.derivePath(networks.derivePath + "/0");
   }
 
+  // getBtcAddress(data){
+  //   try{
+  //   let keyPair = this.getKeyPair(data.seed, data.network);
+
+  //  let address = bitcoin.p2pkh({ pubkey: keyPair.keyPair.network.bip32.public });
+  //  let address = "ola";
+  //   return address
+  //   }catch(error){
+  //     return "oi";
+  //   }
+  // }
+
   async createTransaction(data) {
     try {
       let usdt = false;

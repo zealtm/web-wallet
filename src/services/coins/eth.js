@@ -3,6 +3,7 @@ import EthereumTx from "ethereumjs-tx";
 import hdkey from "ethereumjs-wallet/hdkey";
 import Web3 from "web3";
 import bip39 from "bip39";
+import { internalServerError } from "../../containers/errors/statusCodeMessage";
 
 /* eslint-disable */
 const bs = require("biggystring");
@@ -45,6 +46,24 @@ class EthServices {
     } catch (error) {
       console.warn(error);
       return "error";
+    }
+  }
+
+  async getEthAddress(data) {
+    try {
+      let wallet = await this.mnemonicToWallet(
+        data.network.derivePath,
+        data.seed
+      );
+      // let web3 = await new Web3(
+      //   new Web3.providers.HttpProvider(data.network.apiUrl)
+      // );
+
+      return this.toHex(
+        EthereumUtil.addHexPrefix(wallet.getAddress().toString("hex"))
+      );
+    } catch (error) {
+      internalServerError();
     }
   }
 
