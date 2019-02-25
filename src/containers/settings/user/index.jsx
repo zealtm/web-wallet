@@ -32,7 +32,7 @@ import Hidden from "@material-ui/core/Hidden";
 import { withStyles } from "@material-ui/core/styles";
 import { Done, Close } from "@material-ui/icons";
 import PhoneInput from "react-phone-number-input";
-import { parsePhoneNumber,  AsYouType} from "libphonenumber-js"
+import { parsePhoneNumber } from "libphonenumber-js";
 
 import CountrySelectNative from "./select/phoneSelect";
 
@@ -80,8 +80,6 @@ class User extends React.Component {
       birthMonth: "",
       birthYear: "",
       phone: "",
-      areaCode: "",
-      countryCode: "",
       address: "",
       city: "",
       zipcode: "",
@@ -106,9 +104,7 @@ class User extends React.Component {
     this.setState({
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
-      phone: !user.phone ? "" : user.phone.toString().substring(4),
-      areaCode: !user.phone ? "" : user.phone.toString().substring(4, 2),
-      countryCode: !user.phone ? "" : user.phone.toString().substring(2, 0),
+      phone: !user.phone ? "" : user.phone,
       address: !user.street ? "" : user.street,
       city: !user.city ? "" : user.city,
       zipcode: !user.zipcode ? "" : user.zipcode,
@@ -131,9 +127,6 @@ class User extends React.Component {
       case "city":
         value = value.replace(/([\d\\/])/g, "");
         break;
-      case "phone":
-      case "areaCode":
-      case "countryCode":
       case "zipcode":
         value = value.replace(/([^\d/])/g, "");
         break;
@@ -167,8 +160,6 @@ class User extends React.Component {
       name,
       surname,
       phone,
-      areaCode,
-      countryCode,
       address,
       city,
       zipcode,
@@ -182,7 +173,7 @@ class User extends React.Component {
       name,
       surname,
       birthday: `${birthMonth}/${birthDay}/${birthYear}`,
-      phone: `${countryCode}${areaCode}${phone}`,
+      phone: `${phone}`,
       street: address,
       city,
       state,
@@ -272,6 +263,17 @@ class User extends React.Component {
     ));
   };
 
+  handlePhoneNumber = phone => {
+    const { country } = this.state;
+    let phoneNumber;
+    try {
+      phoneNumber = parsePhoneNumber(phone, country);
+    } catch (error) {
+      phoneNumber = "";
+    }
+    this.setState({ phone: phoneNumber.number });
+  };
+
   render() {
     const { classes, user, isLoading, twoFactor } = this.props;
     const {
@@ -282,8 +284,6 @@ class User extends React.Component {
       name,
       surname,
       city,
-      areaCode,
-      countryCode,
       phone,
       address,
       zipcode,
@@ -293,15 +293,8 @@ class User extends React.Component {
       confirmNewPassword,
       country
     } = this.state;
-    let phoneNumber;
-    try{
-       phoneNumber = parsePhoneNumber(phone, country);
-    }catch(error){
-      phoneNumber= ""
-    }
-    const asYouType = new AsYouType(country);
-    
-    const teste = asYouType.input(phone);
+    console.log(phone);
+
     return (
       <div>
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -599,62 +592,18 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      {/* <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_COUNTRY_CODE")}
-                        </div>
-                        <input
-                          maxLength="2"
-                          className={style.inputUserContact}
-                          onChange={event =>
-                            this.handleSelectChange(
-                              "countryCode",
-                              event.target.value
-                            )
-                          }
-                          value={countryCode}
-                        />
-                      </div>
-                      <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_USER_CODE")}
-                        </div>
-                        <input
-                          maxLength="2"
-                          className={style.inputUserContact}
-                          onChange={event =>
-                            this.handleSelectChange(
-                              "areaCode",
-                              event.target.value
-                            )
-                          }
-                          value={areaCode}
-                        />
-                      </div>
-                      <div className={style.marginPhoneNumber}>
-                        <div className={style.selectLabelPhoneNumber}>
-                          {i18n.t("SETTINGS_USER_NUMBER")}
-                        </div>
-                        <input
-                          className={style.inputUserNumber}
-                          maxLength="9"
-                          onChange={event =>
-                            this.handleSelectChange("phone", event.target.value)
-                          }
-                          value={phone}
-                        />
-                      </div> */}
                       <FormControl className={classes.formControl}>
                         <PhoneInput
-                          placeholder="Enter phone number"
+                          placeholder=""
                           inputClassName={style.inputTextPhone}
                           countrySelectComponent={CountrySelectNative}
                           className={style.phoneNumberSelect}
-                          value={phone}
-                          onChange={phone => this.setState({ phone })}
-                          onCountryChange={country => this.setState({country})}
+                          value={(phone)}
+                          onChange={phone => this.handlePhoneNumber(phone)}
+                          onCountryChange={country =>
+                            this.setState({ country })
+                          }
                         />
-                        {console.log(teste)}
                       </FormControl>
                     </div>
                   </Grid>
@@ -665,62 +614,17 @@ class User extends React.Component {
                       <p className={style.textDefault}>
                         {i18n.t("SETTINGS_USER_CONTACT")}
                       </p>
-                      {/* <div className={style.marginUserContact}>
-                        <div className={style.selectLabel}>
-                          {i18n.t("SETTINGS_COUNTRY_CODE")}
-                        </div>
-                        <input
-                          maxLength="2"
-                          className={style.inputUserContact}
-                          onChange={event =>
-                            this.handleSelectChange(
-                              "countryCode",
-                              event.target.value
-                            )
-                          }
-                          value={countryCode}
-                        />
-                      </div>
-                      <div className={style.marginUserContact}>
-                        <div
-                          className={style.selectLabel}
-                          style={{ width: "52%" }}
-                        >
-                          {i18n.t("SETTINGS_USER_CODE")}{" "}
-                        </div>
-                        <input
-                          maxLength="2"
-                          className={style.inputUserContact}
-                          onChange={event =>
-                            this.handleSelectChange(
-                              "areaCode",
-                              event.target.value
-                            )
-                          }
-                          value={areaCode}
-                        />
-                      </div>
-                      <div className={style.marginPhoneNumber}>
-                        <div className={style.selectLabelPhoneNumber}>
-                          {i18n.t("SETTINGS_USER_NUMBER")}
-                        </div>
-                        <input
-                          className={style.inputUserNumber}
-                          maxLength="9"
-                          onChange={event =>
-                            this.handleSelectChange("phone", event.target.value)
-                          }
-                          value={phone}
-                        />
-                      </div> */}
                       <FormControl className={classes.formControl}>
                         <PhoneInput
-                          placeholder="Enter phone number"
+                          placeholder=""
                           inputClassName={style.inputTextPhone}
                           countrySelectComponent={CountrySelectNative}
                           className={style.phoneNumberSelect}
-                          value={this.state.phone}
-                          onChange={phone => this.setState({ phone })}
+                          value={(phone)}
+                          onChange={phone => this.handlePhoneNumber(phone)}
+                          onCountryChange={country =>
+                            this.setState({ country })
+                          }
                         />
                       </FormControl>
                     </div>
