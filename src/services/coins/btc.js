@@ -15,17 +15,19 @@ class BtcServices {
     return hdNode.derivePath(networks.derivePath + "/0");
   }
 
-  // getBtcAddress(data){
-  //   try{
-  //   let keyPair = this.getKeyPair(data.seed, data.network);
-
-  //  let address = bitcoin.p2pkh({ pubkey: keyPair.keyPair.network.bip32.public });
-  //  let address = "ola";
-  //   return address
-  //   }catch(error){
-  //     return "oi";
-  //   }
-  // }
+  getBtcAddress(data) {
+    try {
+      const hdNode = bitcoin.HDNode.fromSeedBuffer(
+        bip39.mnemonicToSeed(data.seed),
+        data.network.bitcoinjsNetwork
+      );
+      let keyPair = hdNode.derivePath(data.network.derivePath + "/0");
+      let address = keyPair.getAddress();
+      return address;
+    } catch (error) {
+      return "error";
+    }
+  }
 
   async createTransaction(data) {
     try {
@@ -95,7 +97,7 @@ class BtcServices {
 
       if (usdt) {
         broadcastResult = await transService.pushTx(txHex);
-        return broadcastResult.tx
+        return broadcastResult.tx;
       }
 
       broadcastResult = await transService.broadcast(

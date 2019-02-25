@@ -55,10 +55,6 @@ class EthServices {
         data.network.derivePath,
         data.seed
       );
-      // let web3 = await new Web3(
-      //   new Web3.providers.HttpProvider(data.network.apiUrl)
-      // );
-
       return this.toHex(
         EthereumUtil.addHexPrefix(wallet.getAddress().toString("hex"))
       );

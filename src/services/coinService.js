@@ -94,41 +94,65 @@ class CoinService {
           availableCoins[index].price.percent = percentCalcByRange(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           // CREATE ADDRESS
-          let responseTest = "";
+          let network = undefined;
+          if (coin.abbreviation === "btc")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
+
+          if (coin.abbreviation === "ltc")
+            network = TESTNET ? networks.LTCTESTNET : networks.LTC;
+
+          if (coin.abbreviation === "bch")
+            network = TESTNET ? networks.BCHTESTNET : networks.BCH;
+
+          if (coin.abbreviation === "lunes")
+            network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
+
+          if (coin.abbreviation === "dash")
+            network = TESTNET ? undefined : networks.DASH;
+
+          if (coin.abbreviation === "eth")
+            network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
+          if (coin.abbreviation === "usdt")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
+
+          if (coin.abbreviation === "nmc")
+            network = TESTNET ? networks.NMCTESTNET : networks.NMC;
+
+          if (coin.abbreviation === "mona")
+            network = TESTNET ? networks.MONATESTNET : networks.MONA;
+
+          let responseCreateAddress = undefined;
           if (coin.name === "lunes") {
-             let lunes = new LunesServices();
-            responseTest = await lunes.getLunesAddress({
+            let lunes = new LunesServices();
+            responseCreateAddress = await lunes.getLunesAddress({
               seed: seed,
-              network: TESTNET ? networks.LUNESTESTNET : networks.LUNES
+              network: network
             });
-          }else if(coin.name === "ethereum"){
+          } else if (coin.name === "ethereum") {
             let ethereum = new EthServices();
-            responseTest = await ethereum.getEthAddress({
+            responseCreateAddress = await ethereum.getEthAddress({
               seed: seed,
-              network: TESTNET ? networks.ROPSTEN : networks.ETH
+              network: network
             });
-          }else if(coin.name === "bitcoin"){
+          } else if (
+            coin.abbreviation === "btc" ||
+            coin.abbreviation === "ltc" ||
+            coin.abbreviation === "bch" ||
+            coin.abbreviation === "dash" ||
+            coin.abbreviation === "usdt" ||
+            coin.abbreviation === "nmc" ||
+            coin.abbreviation === "mona"
+          ) {
             let bitcoin = new BtcServices();
-            responseTest = await bitcoin.getBtcAddress({
+            responseCreateAddress = await bitcoin.getBtcAddress({
               seed: seed,
-              network: TESTNET ? networks.BTCTESTNET : networks.BTC
+              network: network
             });
           }
-          console.warn(responseTest);
-          let responseCreateAddress = await axios.post(
-            BASE_URL + "/coin/" + coin.abbreviation + "/address",
-            {
-              seed
-            },
-            API_HEADER
-          );
-
-          if (
-            responseCreateAddress.data.data &&
-            responseCreateAddress.data.data.address
-          ) {
+          if (responseCreateAddress) {
             availableCoins[index].address =
-              responseCreateAddress.data.data.address;
+              responseCreateAddress;
           } else {
             availableCoins[index].status = "inactive";
             availableCoins[index].address = undefined;

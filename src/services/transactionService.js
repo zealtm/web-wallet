@@ -139,7 +139,6 @@ class TransactionService {
         modalError(i18n.t("MESSAGE_TRANSACTION_FAILED"));
         return;
       }
-
       if (coin === "btc")
         network = TESTNET ? networks.BTCTESTNET : networks.BTC;
 
