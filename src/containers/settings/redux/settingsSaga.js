@@ -14,7 +14,7 @@ import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import SettingsService from "../../../services/settingsService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();

@@ -5,7 +5,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 import RechargeService from "../../../services/rechargeService";
 import CoinService from "../../../services/coinService";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 // UTILS
 import { getUserSeedWords } from "../../../utils/localStorage";

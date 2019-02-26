@@ -9,6 +9,7 @@ import {
   HEADER_RESPONSE,
   TESTNET
 } from "../constants/apiBaseUrl";
+import { networks } from "../constants/network";
 
 // ERROR
 import { internalServerError } from "../containers/errors/statusCodeMessage";
@@ -25,6 +26,9 @@ import {
   convertSmallerCoinUnit
 } from "../utils/numbers";
 import i18n from "../utils/i18n.js";
+
+// COINS
+import { BtcServices, LunesServices, EthServices } from "./coins";
 
 let getPriceHistory = async (coiName, token) => {
   try {
@@ -90,20 +94,65 @@ class CoinService {
           availableCoins[index].price.percent = percentCalcByRange(1, 3) + "%"; //CALCULAR PORCENTAGEM
 
           // CREATE ADDRESS
-          let responseCreateAddress = await axios.post(
-            BASE_URL + "/coin/" + coin.abbreviation + "/address",
-            {
-              seed
-            },
-            API_HEADER
-          );
+          let network = undefined;
+          if (coin.abbreviation === "btc")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
 
-          if (
-            responseCreateAddress.data.data &&
-            responseCreateAddress.data.data.address
+          if (coin.abbreviation === "ltc")
+            network = TESTNET ? networks.LTCTESTNET : networks.LTC;
+
+          if (coin.abbreviation === "bch")
+            network = TESTNET ? networks.BCHTESTNET : networks.BCH;
+
+          if (coin.abbreviation === "lunes")
+            network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
+
+          if (coin.abbreviation === "dash")
+            network = TESTNET ? undefined : networks.DASH;
+
+          if (coin.abbreviation === "eth")
+            network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
+          if (coin.abbreviation === "usdt")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
+
+          if (coin.abbreviation === "nmc")
+            network = TESTNET ? networks.NMCTESTNET : networks.NMC;
+
+          if (coin.abbreviation === "mona")
+            network = TESTNET ? networks.MONATESTNET : networks.MONA;
+
+          let responseCreateAddress = undefined;
+          if (coin.name === "lunes") {
+            let lunes = new LunesServices();
+            responseCreateAddress = await lunes.getLunesAddress({
+              seed: seed,
+              network: network
+            });
+          } else if (coin.name === "ethereum") {
+            let ethereum = new EthServices();
+            responseCreateAddress = await ethereum.getEthAddress({
+              seed: seed,
+              network: network
+            });
+          } else if (
+            coin.abbreviation === "btc" ||
+            coin.abbreviation === "ltc" ||
+            coin.abbreviation === "bch" ||
+            coin.abbreviation === "dash" ||
+            coin.abbreviation === "usdt" ||
+            coin.abbreviation === "nmc" ||
+            coin.abbreviation === "mona"
           ) {
+            let bitcoin = new BtcServices();
+            responseCreateAddress = await bitcoin.getBtcAddress({
+              seed: seed,
+              network: network
+            });
+          }
+          if (responseCreateAddress) {
             availableCoins[index].address =
-              responseCreateAddress.data.data.address;
+              responseCreateAddress;
           } else {
             availableCoins[index].status = "inactive";
             availableCoins[index].address = undefined;
@@ -318,7 +367,7 @@ class CoinService {
       return;
     }
   }
-
+  getAddress() {}
   async validateAddress(coin, address) {
     try {
       let valid = false;
