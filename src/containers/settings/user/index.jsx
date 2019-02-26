@@ -100,11 +100,11 @@ class User extends React.Component {
     let day = date.substring(10, 8);
     let month = date.substring(7, 5);
     let year = date.substring(0, 4);
-
+    
     this.setState({
       name: !user.name ? "" : user.name,
       surname: !user.surname ? "" : user.surname,
-      phone: !user.phone ? "" : user.phone,
+      phone: !user.phone ? "" : "+"+(user.phone).toString(),
       address: !user.street ? "" : user.street,
       city: !user.city ? "" : user.city,
       zipcode: !user.zipcode ? "" : user.zipcode,
@@ -173,7 +173,7 @@ class User extends React.Component {
       name,
       surname,
       birthday: `${birthMonth}/${birthDay}/${birthYear}`,
-      phone: `${phone}`,
+      phone: phone.toString(),
       street: address,
       city,
       state,
@@ -264,6 +264,7 @@ class User extends React.Component {
   };
 
   handlePhoneNumber = phone => {
+    
     const { country } = this.state;
     let phoneNumber;
     try {
@@ -293,8 +294,7 @@ class User extends React.Component {
       confirmNewPassword,
       country
     } = this.state;
-    console.log(phone);
-
+    
     return (
       <div>
         <Grid item xs={12} className={style.containerHeaderSettings}>
@@ -598,8 +598,8 @@ class User extends React.Component {
                           inputClassName={style.inputTextPhone}
                           countrySelectComponent={CountrySelectNative}
                           className={style.phoneNumberSelect}
-                          value={(phone)}
-                          onChange={phone => this.handlePhoneNumber(phone)}
+                          value={phone}
+                          onChange={ phone => this.handlePhoneNumber(phone)}
                           onCountryChange={country =>
                             this.setState({ country })
                           }
@@ -620,8 +620,8 @@ class User extends React.Component {
                           inputClassName={style.inputTextPhone}
                           countrySelectComponent={CountrySelectNative}
                           className={style.phoneNumberSelect}
-                          value={(phone)}
-                          onChange={phone => this.handlePhoneNumber(phone)}
+                          value={phone}
+                          onChange={ phone => this.handlePhoneNumber(phone)}
                           onCountryChange={country =>
                             this.setState({ country })
                           }
