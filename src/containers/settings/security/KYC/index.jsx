@@ -11,9 +11,20 @@ import { kycCreate, kycUpload } from "../../redux/settingsAction";
 // STYLE
 import style from "../../style.css";
 import colors from "../../../../components/bases/colors";
+import "react-phone-number-input/style.css";
 
 // MATERIAL UI
-import { Grid, Input, Select, MenuItem } from "@material-ui/core";
+import {
+  Grid,
+  Input,
+  Select,
+  MenuItem,
+  Radio,
+  FormControlLabel,
+  FormLabel,
+  FormControl,
+  RadioGroup
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 
@@ -21,11 +32,14 @@ import Hidden from "@material-ui/core/Hidden";
 import i18n from "../../../../utils/i18n";
 
 // ICONS
+import { Lens } from "@material-ui/icons";
 import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
 import { CEP } from "../../../../components/inputMask";
 import Loading from "../../../../components/loading";
+import PhoneInput from "react-phone-number-input";
+import CountrySelectNative from "./select/countrySelect";
 
 const inputStyle = {
   root: {
@@ -37,6 +51,26 @@ const inputStyle = {
     "&:hover:before": {
       borderBottomColor: colors.purple.dark
     }
+  },
+  rootLabel: {
+    fontSize: "11px",
+    color: "#fff",
+    position: "relative",
+    right: "60px",
+    top: "2px"
+  },
+  checked: {
+    color: "#68f285"
+  },
+  rootRadio: {
+    color: "#654fa4",
+    "&$checked": {
+      color: "#68f285"
+    },
+    margin: "0px 55px 0 1px"
+  },
+  rootRadioGroup: {
+    padding: "5px 3px 0px 2px"
   },
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
@@ -156,7 +190,8 @@ class KYC extends React.Component {
       addressFile: null,
       documentFronFile: null,
       documentBackFile: null,
-      documentSelfieFile: null
+      documentSelfieFile: null,
+      selectedValue: ""
     };
   }
 
@@ -407,6 +442,7 @@ class KYC extends React.Component {
 
   renderKycForm = () => {
     const { classes, loadingKyc, loadingCreate } = this.props;
+    const { phoneNumber, selectedValue } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -420,25 +456,25 @@ class KYC extends React.Component {
     };
     return (
       <Grid item xs={12} sm={12} className={style.wrapperKYC}>
-      <Grid container className={style.contentKYC}>
-        <Grid container className={style.boxKYC_1}>
-          <Grid item xs={12} sm={12} md={6}>
-            <p>{i18n.t("KYC_FULL_NAME")}</p>
-            <div className={style.textInput}>
-              <Input
-                value={this.state.fullName}
-                onChange={this.handleInput("fullName")}
-                classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline,
-                  input: classes.cssInput
-                }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={11} sm={12} md={6}>
-            <div style={{ display: "flex" }}>
-              <Grid item xs={4} sm={3}>
+        <Grid container className={style.contentKYC}>
+          <Grid container className={style.boxKYC_1}>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("KYC_FULL_NAME")}</p>
+              <div className={style.textInput}>
+                <Input
+                  value={this.state.fullName}
+                  onChange={this.handleInput("fullName")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              {/* <div style={{ display: "flex" }}> */}
+              {/* <Grid item xs={4} sm={3}>
                 <p>{i18n.t("KYC_DDI")}</p>
                 <Input
                   value={this.state.countryCode}
@@ -473,294 +509,354 @@ class KYC extends React.Component {
                     input: classes.cssInput
                   }}
                 />
+              </Grid> */}
+              <Grid item xs={10} sm={10} md={10}>
+                <p>Telefone</p>
+                <PhoneInput
+                  placeholder=""
+                  inputClassName={style.inputTextPhone}
+                  countrySelectComponent={CountrySelectNative}
+                  value={phoneNumber}
+                  onChange={phoneNumber => this.setState({ phoneNumber })}
+                  //onCountryChange={country => this.setState({ country })}
+                />
               </Grid>
-            </div>
+              {/* </div> */}
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
+              <div className={style.textInput}>
+                <Input
+                  value={this.state.street}
+                  onChange={this.handleInput("street")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
+              <div className={style.textInput}>
+                <Input
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                  value={this.state.zipcode}
+                  inputComponent={CEP}
+                  onChange={this.handleInput("zipcode")}
+                />
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
-            <div className={style.textInput}>
-              <Input
-                value={this.state.street}
-                onChange={this.handleInput("street")}
-                classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline,
-                  input: classes.cssInput
-                }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
-            <div className={style.textInput}>
-              <Input
-                classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline,
-                  input: classes.cssInput
-                }}
-                value={this.state.zipcode}
-                inputComponent={CEP}
-                onChange={this.handleInput("zipcode")}
-              />
-            </div>
-          </Grid>
-        </Grid>
-        <Grid container className={style.boxKYC_2}>
-          <Grid item xs={12} sm={12} md={6}>
-            <p>{i18n.t("SETTINGS_USER_CITY")}</p>
-            <div className={style.textInput}>
-              <Select
-                classes={{ selectMenu: classes.underlineItems }}
-                value={this.state.city}
-                MenuProps={MenuProps}
-                input={
-                  <Input
-                    classes={{
-                      underline: classes.underline
-                    }}
-                  />
-                }
-                inputProps={{
-                  classes: {
-                    icon: classes.icon
+          <Grid container className={style.boxKYC_2}>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_CITY")}</p>
+              <div className={style.textInput}>
+                <Select
+                  classes={{ selectMenu: classes.underlineItems }}
+                  value={this.state.city}
+                  MenuProps={MenuProps}
+                  input={
+                    <Input
+                      classes={{
+                        underline: classes.underline
+                      }}
+                    />
                   }
-                }}
-                renderValue={value => value}
-                onChange={this.handleInput("city")}
-              >
-                {this.listStates()}
-              </Select>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <p>{i18n.t("SETTINGS_USER_STATE")}</p>
-            <div className={style.textInput}>
-              <Select
-                classes={{ selectMenu: classes.underlineItems }}
-                value={this.state.state}
-                MenuProps={MenuProps}
-                input={
-                  <Input
-                    classes={{
-                      underline: classes.underline
-                    }}
-                  />
-                }
-                inputProps={{
-                  classes: {
-                    icon: classes.icon
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon
+                    }
+                  }}
+                  renderValue={value => value}
+                  onChange={this.handleInput("city")}
+                >
+                  {this.listStates()}
+                </Select>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_STATE")}</p>
+              <div className={style.textInput}>
+                <Select
+                  classes={{ selectMenu: classes.underlineItems }}
+                  value={this.state.state}
+                  MenuProps={MenuProps}
+                  input={
+                    <Input
+                      classes={{
+                        underline: classes.underline
+                      }}
+                    />
                   }
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon
+                    }
+                  }}
+                  renderValue={value => value}
+                  onChange={this.handleInput("state")}
+                >
+                  {this.listStates()}
+                </Select>
+              </div>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
+            {loadingKyc ? (
+              <Loading />
+            ) : (
+              <FileUploadProgress
+                isRequired
+                id="fileupkeyload"
+                key="ex1"
+                url=""
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
                 }}
-                renderValue={value => value}
-                onChange={this.handleInput("state")}
-              >
-                {this.listStates()}
-              </Select>
-            </div>
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(
+                    e,
+                    i18n.t("KYC_UPLOAD_ADDRESS"),
+                    "address"
+                  )
+                }
+                progressRenderer={this.customProgressRenderer.bind(this)}
+              />
+            )}
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-          className={style.boxKYC_3}
-        >
-          {loadingKyc ? (
-            <Loading />
-          ) : (
-            <FileUploadProgress
-              isRequired
-              id="fileupkeyload"
-              key="ex1"
-              url=""
-              onProgress={(e, request, progress) => {
-                console.warn("progress", e, request, progress);
-              }}
-              onLoad={(e, request) => {
-                console.warn("load", e, request);
-              }}
-              onError={(e, request) => {
-                console.warn("error", e, request);
-              }}
-              onAbort={(e, request) => {
-                console.warn("abort", e, request);
-              }}
-              formGetter={this.formGetter.bind(this)}
-              formRenderer={e =>
-                this.customFormRenderer(
-                  e,
-                  i18n.t("KYC_UPLOAD_ADDRESS"),
-                  "address"
-                )
-              }
-              progressRenderer={this.customProgressRenderer.bind(
-                this
-              )}
-            />
-          )}
-        </Grid>
-      </Grid>
 
-      <Grid item className={style.contentKYC_2}>
-        <Grid container className={style.boxKYC_2}>
-          <Grid item xs={12}>
-            <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
-            <div className={style.textInput}>
-              <Input
-                value={this.state.cnpj}
-                onChange={this.handleInput("cnpj")}
-                classes={{
-                  root: classes.root,
-                  underline: classes.cssUnderline,
-                  input: classes.cssInput
-                }}
-              />
-            </div>
+        <Grid item className={style.contentKYC_2}>
+          <Grid container className={style.boxKYC_2}>
+            <Grid item xs={12}>
+              <p> Selecione um documento</p>
+              <div className={style.textInput}>
+                {/* <FormControlLabel
+                  value="p2p"
+                  className={style.labelRadio}
+                  classes={{ label: classes.rootLabel }}
+                  control={
+                    <Radio
+                      checked={this.state.selectedValue === "p2p"}
+                      icon={<Lens />}
+                      checkedIcon={<Lens />}
+                      onChange={ () => this.setState({selectedValue:"p2p"})}
+                      classes={{ root: classes.rootRadio, checked: classes.checked }}
+                    />
+                  }
+                  label="P2P (Peer to Peer)"
+                  labelPlacement="end"
+                /> */}
+                <Grid item xs={12} sm={12} md={12}>
+                  <FormControl
+                    component="fieldset"
+                    className={style.labelRadio}
+                  >
+                    <RadioGroup
+                      aria-label="Gender"
+                      name="gender1"
+                      className={classes.group}
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                      row={true}
+                      classes={{ root: classes.rootRadioGroup }}
+                    >
+                      <FormControlLabel
+                        value="CPF"
+                        control={
+                          <Radio
+                            classes={{
+                              root: classes.rootRadio,
+                              checked: classes.checked
+                            }}
+                          />
+                        }
+                        label="CPF"
+                        classes={{ label: classes.rootLabel }}
+                      />
+                      <FormControlLabel
+                        value="CNPJ"
+                        control={
+                          <Radio
+                            classes={{
+                              root: classes.rootRadio,
+                              checked: classes.checked
+                            }}
+                          />
+                        }
+                        label="CNPJ"
+                        classes={{ label: classes.rootLabel }}
+                      />
+                      <FormControlLabel
+                        value="Passaporte"
+                        control={
+                          <Radio
+                            classes={{
+                              root: classes.rootRadio,
+                              checked: classes.checked
+                            }}
+                          />
+                        }
+                        label="Passaporte"
+                        classes={{ label: classes.rootLabel }}
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+                <Input
+                  placeholder="Número do documento"
+                  value={this.state.cnpj}
+                  onChange={this.handleInput("cnpj")}
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                />
+              </div>
+            </Grid>
+          </Grid>
+          <Grid item className={style.displayBox_3}>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              {loadingKyc ? (
+                <Loading />
+              ) : (
+                <FileUploadProgress
+                  isRequired
+                  id="fileupload"
+                  key="ex2"
+                  url=""
+                  onProgress={(e, request, progress) => {
+                    console.warn("progress", e, request, progress);
+                  }}
+                  onLoad={(e, request) => {
+                    console.warn("load", e, request);
+                  }}
+                  onError={(e, request) => {
+                    console.warn("error", e, request);
+                  }}
+                  onAbort={(e, request) => {
+                    console.warn("abort", e, request);
+                  }}
+                  formGetter={this.formGetter.bind(this)}
+                  formRenderer={e =>
+                    this.customFormRenderer(
+                      e,
+                      i18n.t("KYC_UPLOAD_FRONT"),
+                      "documentFront"
+                    )
+                  }
+                  progressRenderer={this.customProgressRenderer.bind(this)}
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              {loadingKyc ? (
+                <Loading />
+              ) : (
+                <FileUploadProgress
+                  isRequired
+                  id="fileupload"
+                  key="ex3"
+                  url=""
+                  onProgress={(e, request, progress) => {
+                    console.warn("progress", e, request, progress);
+                  }}
+                  onLoad={(e, request) => {
+                    console.warn("load", e, request);
+                  }}
+                  onError={(e, request) => {
+                    console.warn("error", e, request);
+                  }}
+                  onAbort={(e, request) => {
+                    console.warn("abort", e, request);
+                  }}
+                  formGetter={this.formGetter.bind(this)}
+                  formRenderer={e =>
+                    this.customFormRenderer(
+                      e,
+                      i18n.t("KYC_UPLOAD_BACK"),
+                      "documentBack"
+                    )
+                  }
+                  progressRenderer={this.customProgressRenderer.bind(this)}
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              {loadingKyc ? (
+                <Loading />
+              ) : (
+                <FileUploadProgress
+                  isRequired
+                  id="fileupload"
+                  key="ex4"
+                  url="http://localhost:6000/api/upload"
+                  onProgress={(e, request, progress) => {
+                    console.warn("progress", e, request, progress);
+                  }}
+                  onLoad={(e, request) => {
+                    console.warn("load", e, request);
+                  }}
+                  onError={(e, request) => {
+                    console.warn("error", e, request);
+                  }}
+                  onAbort={(e, request) => {
+                    console.warn("abort", e, request);
+                  }}
+                  formGetter={this.formGetter.bind(this)}
+                  formRenderer={e =>
+                    this.customFormRenderer(
+                      e,
+                      i18n.t("KYC_UPLOAD_SELFIE"),
+                      "documentSelfie"
+                    )
+                  }
+                  progressRenderer={this.customProgressRenderer.bind(this)}
+                />
+              )}
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item className={style.displayBox_3}>
-          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-            {loadingKyc ? (
-              <Loading />
-            ) : (
-              <FileUploadProgress
-                isRequired
-                id="fileupload"
-                key="ex2"
-                url=""
-                onProgress={(e, request, progress) => {
-                  console.warn("progress", e, request, progress);
-                }}
-                onLoad={(e, request) => {
-                  console.warn("load", e, request);
-                }}
-                onError={(e, request) => {
-                  console.warn("error", e, request);
-                }}
-                onAbort={(e, request) => {
-                  console.warn("abort", e, request);
-                }}
-                formGetter={this.formGetter.bind(this)}
-                formRenderer={e =>
-                  this.customFormRenderer(
-                    e,
-                    i18n.t("KYC_UPLOAD_FRONT"),
-                    "documentFront"
-                  )
-                }
-                progressRenderer={this.customProgressRenderer.bind(
-                  this
-                )}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-            {loadingKyc ? (
-              <Loading />
-            ) : (
-              <FileUploadProgress
-                isRequired
-                id="fileupload"
-                key="ex3"
-                url=""
-                onProgress={(e, request, progress) => {
-                  console.warn("progress", e, request, progress);
-                }}
-                onLoad={(e, request) => {
-                  console.warn("load", e, request);
-                }}
-                onError={(e, request) => {
-                  console.warn("error", e, request);
-                }}
-                onAbort={(e, request) => {
-                  console.warn("abort", e, request);
-                }}
-                formGetter={this.formGetter.bind(this)}
-                formRenderer={e =>
-                  this.customFormRenderer(
-                    e,
-                    i18n.t("KYC_UPLOAD_BACK"),
-                    "documentBack"
-                  )
-                }
-                progressRenderer={this.customProgressRenderer.bind(
-                  this
-                )}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} lg={4} className={style.boxKYC_3}>
-            {loadingKyc ? (
-              <Loading />
-            ) : (
-              <FileUploadProgress
-                isRequired
-                id="fileupload"
-                key="ex4"
-                url="http://localhost:6000/api/upload"
-                onProgress={(e, request, progress) => {
-                  console.warn("progress", e, request, progress);
-                }}
-                onLoad={(e, request) => {
-                  console.warn("load", e, request);
-                }}
-                onError={(e, request) => {
-                  console.warn("error", e, request);
-                }}
-                onAbort={(e, request) => {
-                  console.warn("abort", e, request);
-                }}
-                formGetter={this.formGetter.bind(this)}
-                formRenderer={e =>
-                  this.customFormRenderer(
-                    e,
-                    i18n.t("KYC_UPLOAD_SELFIE"),
-                    "documentSelfie"
-                  )
-                }
-                progressRenderer={this.customProgressRenderer.bind(
-                  this
-                )}
-              />
-            )}
-          </Grid>
+        <Grid item xs={12}>
+          <center>
+            <Grid item xs={12} sm={6}>
+              {this.checkAllInputs() ? (
+                <button
+                  className={style.buttonEnableSecurity}
+                  onClick={() => this.handleClick()}
+                >
+                  {loadingCreate ? <Loading /> : i18n.t("BTN_CONFIRM")}
+                </button>
+              ) : (
+                <button className={style.buttonDisabledSecurity} disabled>
+                  {i18n.t("BTN_CONFIRM")}
+                </button>
+              )}
+            </Grid>
+          </center>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <center>
-          <Grid item xs={12} sm={6}>
-            {this.checkAllInputs() ? (
-              <button
-                className={style.buttonEnableSecurity}
-                onClick={() => this.handleClick()}
-              >
-                {loadingCreate ? (
-                  <Loading />
-                ) : (
-                  i18n.t("BTN_CONFIRM")
-                )}
-              </button>
-            ) : (
-              <button
-                className={style.buttonDisabledSecurity}
-                disabled
-              >
-                {i18n.t("BTN_CONFIRM")}
-              </button>
-            )}
-          </Grid>
-        </center>
-      </Grid>
-    </Grid>      
     );
   };
   renderComponents = () => {
-    return(
-      this.renderKycForm()  
-    );
+    return this.renderKycForm();
   };
 
   listStates = () => {
@@ -861,8 +957,6 @@ class KYC extends React.Component {
   };
 
   render() {
-
-
     return (
       <div>
         <Grid container className={style.containerHeaderSettings}>
@@ -915,7 +1009,7 @@ class KYC extends React.Component {
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
                 {this.renderComponents()}
-              </Grid> 
+              </Grid>
             </Grid>
           </Grid>
         </div>

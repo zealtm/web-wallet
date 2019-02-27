@@ -213,6 +213,41 @@
   text-align: center;
 }
 
+:local(.inputTextPhone) {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #3b1878 !important;
+  height: 30px !important;
+  color: white !important;
+  position: relative;
+  top: 9px;
+  left:5%
+
+}
+@media only screen and (max-width: 959px) {
+  :local(.inputTextPhone) {
+    composes: inputTextDefault from "../../components/bases/inputBase.css";
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #3b1878 !important;
+    height: 30px !important;
+    color: white !important;
+    position: relative;
+    top: 9px;
+    left: 10%
+  }
+}
+:local(.inputTextPhone:hover) {
+  border-bottom: 2px solid #3b1878 !important;
+}
+:local(.inputTextPhone:focus) {
+  border-bottom: 2px solid #3b1878 !important;
+}
+
+
 :local(.inputTwoFactorAuthenticatorError) {
   composes: inputTwoFactorAuthenticator;
   border-bottom: 1px solid #f05252;
@@ -406,7 +441,9 @@
 :local(.containerKYC) {
   padding: 5px;
 }
-
+:local .labelRadio {
+  margin-bottom: 0;
+}
 :local(.wrapperKYC) {
   float: right;
 }
