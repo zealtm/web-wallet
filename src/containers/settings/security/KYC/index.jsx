@@ -21,7 +21,6 @@ import {
   MenuItem,
   Radio,
   FormControlLabel,
-  FormLabel,
   FormControl,
   RadioGroup
 } from "@material-ui/core";
@@ -40,6 +39,12 @@ import { CEP } from "../../../../components/inputMask";
 import Loading from "../../../../components/loading";
 import PhoneInput from "react-phone-number-input";
 import CountrySelectNative from "./select/countrySelect";
+import {
+  parsePhoneNumber,
+  parsePhoneNumberFromString as parseMax
+} from "libphonenumber-js";
+
+
 
 const inputStyle = {
   root: {
@@ -75,7 +80,10 @@ const inputStyle = {
   cssInput: {
     fontFamily: "Noto Sans, sans-serif",
     fontSize: "17px",
-    letterSpacing: "0.5px"
+    letterSpacing: "0.5px",
+    "&::placeholder": {
+      fontSize: "13px"
+    }
   },
   cssUnderline: {
     "&:before, &:after": {
@@ -85,7 +93,10 @@ const inputStyle = {
       borderBottomColor: `${colors.purple.dark} !important`
     }
   },
-  disabled: {},
+  disabled: {
+    opacity: "2",
+    color: "gray"
+  },
   error: {},
   focused: {},
   progressWrapper: {
@@ -183,15 +194,14 @@ class KYC extends React.Component {
       state: "",
       city: "",
       zipcode: "",
-      cnpj: "",
-      countryCode: "",
-      areaCode: "",
+      document: "",
       phoneNumber: "",
       addressFile: null,
       documentFronFile: null,
       documentBackFile: null,
       documentSelfieFile: null,
-      selectedValue: ""
+      documentType: "",
+      country: ""
     };
   }
 
@@ -442,7 +452,7 @@ class KYC extends React.Component {
 
   renderKycForm = () => {
     const { classes, loadingKyc, loadingCreate } = this.props;
-    const { phoneNumber, selectedValue } = this.state;
+    const { phoneNumber, documentType } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -454,6 +464,8 @@ class KYC extends React.Component {
         }
       }
     };
+    console.log(documentType);
+
     return (
       <Grid item xs={12} sm={12} className={style.wrapperKYC}>
         <Grid container className={style.contentKYC}>
@@ -473,43 +485,6 @@ class KYC extends React.Component {
               </div>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-              {/* <div style={{ display: "flex" }}> */}
-              {/* <Grid item xs={4} sm={3}>
-                <p>{i18n.t("KYC_DDI")}</p>
-                <Input
-                  value={this.state.countryCode}
-                  onChange={this.handleInput("countryCode")}
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                />
-              </Grid>
-              <Grid item xs={4} sm={3}>
-                <p>{i18n.t("KYC_DDD")}</p>
-                <Input
-                  value={this.state.areaCode}
-                  onChange={this.handleInput("areaCode")}
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <p>{i18n.t("KYC_PHONE")}</p>
-                <Input
-                  value={this.state.phoneNumber}
-                  onChange={this.handleInput("phoneNumber")}
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                />
-              </Grid> */}
               <Grid item xs={10} sm={10} md={10}>
                 <p>Telefone</p>
                 <PhoneInput
@@ -517,11 +492,10 @@ class KYC extends React.Component {
                   inputClassName={style.inputTextPhone}
                   countrySelectComponent={CountrySelectNative}
                   value={phoneNumber}
-                  onChange={phoneNumber => this.setState({ phoneNumber })}
+                  onChange={phoneNumber => this.handlePhoneNumber(phoneNumber)}
                   //onCountryChange={country => this.setState({ country })}
                 />
               </Grid>
-              {/* </div> */}
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
@@ -647,38 +621,21 @@ class KYC extends React.Component {
             <Grid item xs={12}>
               <p> Selecione um documento</p>
               <div className={style.textInput}>
-                {/* <FormControlLabel
-                  value="p2p"
-                  className={style.labelRadio}
-                  classes={{ label: classes.rootLabel }}
-                  control={
-                    <Radio
-                      checked={this.state.selectedValue === "p2p"}
-                      icon={<Lens />}
-                      checkedIcon={<Lens />}
-                      onChange={ () => this.setState({selectedValue:"p2p"})}
-                      classes={{ root: classes.rootRadio, checked: classes.checked }}
-                    />
-                  }
-                  label="P2P (Peer to Peer)"
-                  labelPlacement="end"
-                /> */}
                 <Grid item xs={12} sm={12} md={12}>
                   <FormControl
                     component="fieldset"
                     className={style.labelRadio}
                   >
                     <RadioGroup
-                      aria-label="Gender"
-                      name="gender1"
-                      className={classes.group}
-                      value={this.state.value}
-                      onChange={this.handleChange}
+                      aria-label="Documentos"
+                      name="documentos"
+                      value={documentType}
+                      onChange={this.handleRadioChange}
                       row={true}
                       classes={{ root: classes.rootRadioGroup }}
                     >
                       <FormControlLabel
-                        value="CPF"
+                        value="cpf"
                         control={
                           <Radio
                             classes={{
@@ -691,7 +648,7 @@ class KYC extends React.Component {
                         classes={{ label: classes.rootLabel }}
                       />
                       <FormControlLabel
-                        value="CNPJ"
+                        value="cnpj"
                         control={
                           <Radio
                             classes={{
@@ -704,7 +661,7 @@ class KYC extends React.Component {
                         classes={{ label: classes.rootLabel }}
                       />
                       <FormControlLabel
-                        value="Passaporte"
+                        value="passport"
                         control={
                           <Radio
                             classes={{
@@ -721,13 +678,16 @@ class KYC extends React.Component {
                 </Grid>
                 <Input
                   placeholder="Número do documento"
+                  className={style.inputText}
                   value={this.state.cnpj}
                   onChange={this.handleInput("cnpj")}
                   classes={{
                     root: classes.root,
                     underline: classes.cssUnderline,
-                    input: classes.cssInput
+                    input: classes.cssInput,
+                    disabled: classes.disabled
                   }}
+                  disabled={documentType ? false : true}
                 />
               </div>
             </Grid>
@@ -882,6 +842,21 @@ class KYC extends React.Component {
     });
   };
 
+  handlePhoneNumber = phone => {
+    const { country } = this.state;
+    let parseNumber;
+    try {
+      parseNumber = parsePhoneNumber(phone, country);
+    } catch (error) {
+      parseNumber = "";
+    }
+    this.setState({ phone: parseNumber.number });
+  };
+
+  handleRadioChange = event => {
+    this.setState({ documentType: event.target.value });
+  };
+
   checkAllInputs = () => {
     const {
       street,
@@ -890,8 +865,6 @@ class KYC extends React.Component {
       zipcode,
       fullName,
       cnpj,
-      countryCode,
-      areaCode,
       phoneNumber,
       addressFile,
       documentFronFile,
@@ -906,8 +879,6 @@ class KYC extends React.Component {
       zipcode &&
       fullName &&
       cnpj &&
-      countryCode &&
-      areaCode &&
       phoneNumber &&
       addressFile &&
       documentFronFile &&

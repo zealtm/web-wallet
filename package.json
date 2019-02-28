@@ -93,6 +93,7 @@
     "ethereumjs-wallet": "^0.6.2",
     "i18next": "^11.3.3",
     "i18next-browser-languagedetector": "^2.2.0",
+    "libphonenumber-js": "^1.7.9",
     "lodash": "^4.17.4",
     "lunes-js-api": "^0.31.8",
     "prop-types": "^15.6.2",
