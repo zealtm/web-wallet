@@ -43,7 +43,7 @@ import {
   parsePhoneNumber,
   parsePhoneNumberFromString as parseMax
 } from "libphonenumber-js";
-
+import {CpfMask, CnpjMask} from "../../../../components/inputMask";
 
 
 const inputStyle = {
@@ -464,6 +464,12 @@ class KYC extends React.Component {
         }
       }
     };
+    let inputMask = null
+    if(documentType === 'cnpj'){
+      inputMask = CnpjMask;
+    }else if(documentType === 'cpf'){
+      inputMask = CpfMask;
+    }
     console.log(documentType);
 
     return (
@@ -679,8 +685,8 @@ class KYC extends React.Component {
                 <Input
                   placeholder="Número do documento"
                   className={style.inputText}
-                  value={this.state.cnpj}
-                  onChange={this.handleInput("cnpj")}
+                  value={this.state.document}
+                  onChange={this.handleInput("document")}
                   classes={{
                     root: classes.root,
                     underline: classes.cssUnderline,
@@ -688,6 +694,7 @@ class KYC extends React.Component {
                     disabled: classes.disabled
                   }}
                   disabled={documentType ? false : true}
+                  inputComponent={inputMask}
                 />
               </div>
             </Grid>
@@ -864,7 +871,7 @@ class KYC extends React.Component {
       city,
       zipcode,
       fullName,
-      cnpj,
+      document,
       phoneNumber,
       addressFile,
       documentFronFile,
@@ -878,7 +885,7 @@ class KYC extends React.Component {
       city &&
       zipcode &&
       fullName &&
-      cnpj &&
+      document &&
       phoneNumber &&
       addressFile &&
       documentFronFile &&
@@ -895,7 +902,7 @@ class KYC extends React.Component {
       city,
       zipcode,
       fullName,
-      cnpj,
+      document,
       countryCode,
       areaCode,
       phoneNumber,
@@ -906,7 +913,7 @@ class KYC extends React.Component {
     } = this.state;
     const payload = {
       fullName,
-      cnpj,
+      document,
       phone: {
         countryCode,
         areaCode,
