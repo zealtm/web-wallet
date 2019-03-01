@@ -690,7 +690,7 @@ class KYC extends React.Component {
                             }}
                           />
                         }
-                        label="Passaporte"
+                        label={i18n.t("KYC_PASSPORT")}
                         classes={{ label: classes.rootLabel }}
                       />
                     </RadioGroup>

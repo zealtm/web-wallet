@@ -471,6 +471,7 @@
   "KYC_INVALID_PASSPORT": "Verifique seu passaporte",
   "KYC_INVALID_PASSPORT_PHONE": "Verifique seu passaporte e telefone",
   "KYC_DOCUMENT_PLACEHOLDER": "Número do documento",
+  "KYC_PASSPORT": "Passaporte",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",

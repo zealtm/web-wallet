@@ -473,6 +473,7 @@
   "KYC_INVALID_PASSPORT": "Check your passport",
   "KYC_INVALID_PASSPORT_PHONE": "Check your passport and your phone",
   "KYC_DOCUMENT_PLACEHOLDER": "Document number",
+  "KYC_PASSPORT": "Passport",
 
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
