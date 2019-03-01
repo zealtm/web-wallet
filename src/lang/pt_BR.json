@@ -467,6 +467,10 @@
   "KYC_DDI": "DDI",
   "KYC_DDD": "DDD",
   "KYC_PHONE": "Telefone",
+  "KYC_INVALID_PHONE": "Verifique o seu telefone",
+  "KYC_INVALID_PASSPORT": "Verifique seu passaporte",
+  "KYC_INVALID_PASSPORT_PHONE": "Verifique seu passaporte e telefone",
+  "KYC_DOCUMENT_PLACEHOLDER": "Número do documento",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",

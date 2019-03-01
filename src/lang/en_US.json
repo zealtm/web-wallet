@@ -469,6 +469,10 @@
   "KYC_DDI": "DDI",
   "KYC_DDD": "DDD",
   "KYC_PHONE": "Phone",
+  "KYC_INVALID_PHONE": "Check your phone number",
+  "KYC_INVALID_PASSPORT": "Check your passport",
+  "KYC_INVALID_PASSPORT_PHONE": "Check your passport and your phone",
+  "KYC_DOCUMENT_PLACEHOLDER": "Document number",
 
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",

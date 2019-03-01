@@ -697,7 +697,7 @@ class KYC extends React.Component {
                   </FormControl>
                 </Grid>
                 <Input
-                  placeholder="Número do documento"
+                  placeholder={i18n.t("KYC_DOCUMENT_PLACEHOLDER")}
                   className={style.inputText}
                   value={this.state.document}
                   onChange={this.handleInput("document")}
@@ -974,11 +974,11 @@ class KYC extends React.Component {
     const { invalidPassport, invalidPhone } = this.state;
     let errorMessage = "";
     if (invalidPassport && !invalidPhone)
-      errorMessage = "Verifique seu passaporte";
+      errorMessage = i18n.t("KYC_INVALID_PASSPORT");
     else if (invalidPhone && !invalidPassport)
-      errorMessage = "Verifique o seu telefone";
+      errorMessage = i18n.t("KYC_INVALID_PHONE");
     else if (invalidPassport && invalidPhone)
-      errorMessage = "Verifique seu passaporte e telefone";
+      errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
     return (
       <div>
         {invalidPassport || invalidPhone ? (
