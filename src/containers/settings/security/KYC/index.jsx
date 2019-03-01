@@ -867,9 +867,16 @@ class KYC extends React.Component {
         if (documentType === "passport") value = value.replace(/[^A-Z0-9]/, "");
         break;
     }
-    this.setState({
-      [property]: value
-    });
+    if (documentType === "passport") {
+      if (value.length < 10)
+        this.setState({
+          [property]: value
+        });
+    } else {
+      this.setState({
+        [property]: value
+      });
+    }
   };
 
   handlePhoneNumber = phone => {
@@ -960,14 +967,13 @@ class KYC extends React.Component {
     } else {
       this.setState({ invalidPassport: false });
     }
-    if(!this.state.invalidPassport && !this.state.invalidPassport){
+    if (!this.state.invalidPassport && !this.state.invalidPassport) {
       this.uploadImage(addressFile.file, addressFile.fileType);
       this.uploadImage(documentFronFile.file, documentFronFile.fileType);
       this.uploadImage(documentBackFile.file, documentBackFile.fileType);
       this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
       kycCreate(payload);
     }
-
   };
 
   render() {
