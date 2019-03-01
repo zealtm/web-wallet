@@ -39,12 +39,10 @@ import { CEP } from "../../../../components/inputMask";
 import Loading from "../../../../components/loading";
 import PhoneInput from "react-phone-number-input";
 import CountrySelectNative from "./select/countrySelect";
-import {
-  parsePhoneNumber,
-  parsePhoneNumberFromString as parseMax
-} from "libphonenumber-js";
-import {CpfMask, CnpjMask} from "../../../../components/inputMask";
-
+import { parsePhoneNumber } from "libphonenumber-js";
+import { parsePhoneNumberFromString as parseMax } from "libphonenumber-js/max";
+import ModalBar from "../../../../components/modalBar";
+import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
 const inputStyle = {
   root: {
@@ -201,7 +199,9 @@ class KYC extends React.Component {
       documentBackFile: null,
       documentSelfieFile: null,
       documentType: "",
-      country: ""
+      country: "",
+      invalidPhone: false,
+      invalidPassport: false
     };
   }
 
@@ -452,7 +452,12 @@ class KYC extends React.Component {
 
   renderKycForm = () => {
     const { classes, loadingKyc, loadingCreate } = this.props;
-    const { phoneNumber, documentType } = this.state;
+    const {
+      phoneNumber,
+      documentType,
+      invalidPassport,
+      invalidPhone
+    } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -464,13 +469,12 @@ class KYC extends React.Component {
         }
       }
     };
-    let inputMask = null
-    if(documentType === 'cnpj'){
+    let inputMask = null;
+    if (documentType === "cnpj") {
       inputMask = CnpjMask;
-    }else if(documentType === 'cpf'){
+    } else if (documentType === "cpf") {
       inputMask = CpfMask;
     }
-    console.log(documentType);
 
     return (
       <Grid item xs={12} sm={12} className={style.wrapperKYC}>
@@ -495,11 +499,15 @@ class KYC extends React.Component {
                 <p>Telefone</p>
                 <PhoneInput
                   placeholder=""
-                  inputClassName={style.inputTextPhone}
+                  inputClassName={
+                    invalidPhone
+                      ? style.inputTextPhoneError
+                      : style.inputTextPhone
+                  }
                   countrySelectComponent={CountrySelectNative}
                   value={phoneNumber}
                   onChange={phoneNumber => this.handlePhoneNumber(phoneNumber)}
-                  //onCountryChange={country => this.setState({ country })}
+                  onCountryChange={country => this.setState({ country })}
                 />
               </Grid>
             </Grid>
@@ -644,6 +652,8 @@ class KYC extends React.Component {
                         value="cpf"
                         control={
                           <Radio
+                            icon={<Lens />}
+                            checkedIcon={<Lens />}
                             classes={{
                               root: classes.rootRadio,
                               checked: classes.checked
@@ -657,6 +667,8 @@ class KYC extends React.Component {
                         value="cnpj"
                         control={
                           <Radio
+                            icon={<Lens />}
+                            checkedIcon={<Lens />}
                             classes={{
                               root: classes.rootRadio,
                               checked: classes.checked
@@ -670,6 +682,8 @@ class KYC extends React.Component {
                         value="passport"
                         control={
                           <Radio
+                            icon={<Lens />}
+                            checkedIcon={<Lens />}
                             classes={{
                               root: classes.rootRadio,
                               checked: classes.checked
@@ -693,6 +707,7 @@ class KYC extends React.Component {
                     input: classes.cssInput,
                     disabled: classes.disabled
                   }}
+                  error={invalidPassport}
                   disabled={documentType ? false : true}
                   inputComponent={inputMask}
                 />
@@ -844,8 +859,16 @@ class KYC extends React.Component {
   };
 
   handleInput = property => e => {
+    const { documentType } = this.state;
+    let value = e.target.value;
+
+    switch (property) {
+      case "document":
+        if (documentType === "passport") value = value.replace(/[^A-Z0-9]/, "");
+        break;
+    }
     this.setState({
-      [property]: e.target.value
+      [property]: value
     });
   };
 
@@ -857,7 +880,7 @@ class KYC extends React.Component {
     } catch (error) {
       parseNumber = "";
     }
-    this.setState({ phone: parseNumber.number });
+    this.setState({ phoneNumber: parseNumber.number });
   };
 
   handleRadioChange = event => {
@@ -903,40 +926,64 @@ class KYC extends React.Component {
       zipcode,
       fullName,
       document,
-      countryCode,
-      areaCode,
       phoneNumber,
+      documentType,
       addressFile,
       documentFronFile,
       documentBackFile,
-      documentSelfieFile
+      documentSelfieFile,
+      country
     } = this.state;
     const payload = {
       fullName,
       document,
-      phone: {
-        countryCode,
-        areaCode,
-        phoneNumber
-      },
+      documentType,
+      phoneNumber,
       address: {
         street,
         city,
         state,
-        country: "Brasil",
+        country,
         zipcode
       }
     };
-    this.uploadImage(addressFile.file, addressFile.fileType);
-    this.uploadImage(documentFronFile.file, documentFronFile.fileType);
-    this.uploadImage(documentBackFile.file, documentBackFile.fileType);
-    this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
-    kycCreate(payload);
+    let passport = new RegExp("^[A-Z][0-9]{8}$");
+
+    if (!parseMax(phoneNumber).isValid()) {
+      this.setState({ invalidPhone: true });
+    } else {
+      this.setState({ invalidPhone: false });
+    }
+
+    if (document.match(passport) === null && documentType === "passport") {
+      this.setState({ invalidPassport: true });
+    } else {
+      this.setState({ invalidPassport: false });
+    }
+    if(!this.state.invalidPassport && !this.state.invalidPassport){
+      this.uploadImage(addressFile.file, addressFile.fileType);
+      this.uploadImage(documentFronFile.file, documentFronFile.fileType);
+      this.uploadImage(documentBackFile.file, documentBackFile.fileType);
+      this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
+      kycCreate(payload);
+    }
+
   };
 
   render() {
+    const { invalidPassport, invalidPhone } = this.state;
+    let errorMessage = "";
+    if (invalidPassport && !invalidPhone)
+      errorMessage = "Verifique seu passaporte";
+    else if (invalidPhone && !invalidPassport)
+      errorMessage = "Verifique o seu telefone";
+    else if (invalidPassport && invalidPhone)
+      errorMessage = "Verifique seu passaporte e telefone";
     return (
       <div>
+        {invalidPassport || invalidPhone ? (
+          <ModalBar type="error" message={errorMessage} timer />
+        ) : null}
         <Grid container className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>

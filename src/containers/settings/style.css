@@ -224,7 +224,18 @@
   position: relative;
   top: 9px;
   left:5%
-
+}
+:local(.inputTextPhoneError) {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border-bottom: 2px solid #f44336 !important;
+  height: 30px !important;
+  color: white !important;
+  position: relative;
+  top: 9px;
+  left:5%
 }
 @media only screen and (max-width: 959px) {
   :local(.inputTextPhone) {
@@ -239,6 +250,18 @@
     top: 9px;
     left: 10%
   }
+  :local(.inputTextPhoneError) {
+    composes: inputTextDefault from "../../components/bases/inputBase.css";
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    border-bottom: 2px solid #f44336 !important;
+    height: 30px !important;
+    color: white !important;
+    position: relative;
+    top: 9px;
+    left: 10%
+  } 
 }
 :local(.inputTextPhone:hover) {
   border-bottom: 2px solid #3b1878 !important;
