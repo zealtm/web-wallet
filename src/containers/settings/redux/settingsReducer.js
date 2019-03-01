@@ -11,7 +11,8 @@ const initialState = {
   payload: {},
   upload: {},
   loadingKyc: false,
-  loadingCreate: false
+  loadingCreate: false,
+  countries: []
 };
 
 const settings = (state = initialState, action) => {
@@ -54,13 +55,13 @@ const settings = (state = initialState, action) => {
         }
       };
 
-      case "SET_LOADING_KYC":
+    case "SET_LOADING_KYC":
       return {
         ...state,
         loadingKyc: action.loadingKyc
       };
 
-      case "SET_LOADING_CREATE_KYC":
+    case "SET_LOADING_CREATE_KYC":
       return {
         ...state,
         loadingCreate: action.loadingCreate
@@ -73,11 +74,16 @@ const settings = (state = initialState, action) => {
         loadingCreate: false
       };
 
-      case "KYC_UPLOAD_REDUCER":
+    case "KYC_UPLOAD_REDUCER":
       return {
         ...state,
         upload: action.upload,
         loadingKyc: false
+      };
+    case "KYC_SET_COUNTRIES":
+      return {
+        ...state,
+        countries: action.response.data
       };
 
     default: {

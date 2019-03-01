@@ -247,3 +247,21 @@ export function* kycUpload(payload) {
     yield put(internalServerError());
   }
 }
+
+export function* kycGetCountries(){
+  try{
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycGetCountries, token);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    // yield put({
+    //   type: "KYC_SET_COUNTRIES",
+    //   response
+    // });
+    return response;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}

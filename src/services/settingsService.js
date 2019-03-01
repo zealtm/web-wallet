@@ -42,6 +42,24 @@ class SettingsService {
       return;
     }
   }
+  async kycGetCountries(token){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"listcountries",
+        },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
 }
 
 export default SettingsService;

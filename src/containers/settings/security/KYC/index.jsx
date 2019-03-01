@@ -6,7 +6,7 @@ import FileUploadProgress from "react-fileupload-progress";
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { kycCreate, kycUpload } from "../../redux/settingsAction";
+import { kycCreate, kycUpload, kycGetCountries } from "../../redux/settingsAction";
 
 // STYLE
 import style from "../../style.css";
@@ -54,6 +54,9 @@ const inputStyle = {
     "&:hover:before": {
       borderBottomColor: colors.purple.dark
     }
+  },
+  rootSelect:{
+    padding: "5px",
   },
   rootLabel: {
     fontSize: "11px",
@@ -451,7 +454,7 @@ class KYC extends React.Component {
   }
 
   renderKycForm = () => {
-    const { classes, loadingKyc, loadingCreate } = this.props;
+    const { classes, loadingKyc, loadingCreate, kycGetCountries} = this.props;
     const {
       phoneNumber,
       documentType,
@@ -475,7 +478,8 @@ class KYC extends React.Component {
     } else if (documentType === "cpf") {
       inputMask = CpfMask;
     }
-
+   console.log( kycGetCountries());
+   
     return (
       <Grid item xs={12} sm={12} className={style.wrapperKYC}>
         <Grid container className={style.contentKYC}>
@@ -542,37 +546,11 @@ class KYC extends React.Component {
             </Grid>
           </Grid>
           <Grid container className={style.boxKYC_2}>
-            <Grid item xs={12} sm={12} md={6}>
-              <p>{i18n.t("SETTINGS_USER_CITY")}</p>
+          <Grid item xs={12} sm={12} md={6}>
+              <p>País</p>
               <div className={style.textInput}>
                 <Select
-                  classes={{ selectMenu: classes.underlineItems }}
-                  value={this.state.city}
-                  MenuProps={MenuProps}
-                  input={
-                    <Input
-                      classes={{
-                        underline: classes.underline
-                      }}
-                    />
-                  }
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon
-                    }
-                  }}
-                  renderValue={value => value}
-                  onChange={this.handleInput("city")}
-                >
-                  {this.listStates()}
-                </Select>
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <p>{i18n.t("SETTINGS_USER_STATE")}</p>
-              <div className={style.textInput}>
-                <Select
-                  classes={{ selectMenu: classes.underlineItems }}
+                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect }}
                   value={this.state.state}
                   MenuProps={MenuProps}
                   input={
@@ -594,8 +572,59 @@ class KYC extends React.Component {
                 </Select>
               </div>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
+          <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_STATE")}</p>
+              <div className={style.textInput}>
+                <Select
+                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect  }}
+                  value={this.state.state}
+                  MenuProps={MenuProps}
+                  input={
+                    <Input
+                      classes={{
+                        underline: classes.underline
+                      }}
+                    />
+                  }
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon
+                    }
+                  }}
+                  renderValue={value => value}
+                  onChange={this.handleInput("state")}
+                >
+                  {this.listStates()}
+                </Select>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_CITY")}</p>
+              <div className={style.textInput}>
+                <Select
+                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect  }}
+                  value={this.state.city}
+                  MenuProps={MenuProps}
+                  input={
+                    <Input
+                      classes={{
+                        underline: classes.underline
+                      }}
+                    />
+                  }
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon
+                    }
+                  }}
+                  renderValue={value => value}
+                  onChange={this.handleInput("city")}
+                >
+                  {this.listStates()}
+                </Select>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
             {loadingKyc ? (
               <Loading />
             ) : (
@@ -629,6 +658,8 @@ class KYC extends React.Component {
             )}
           </Grid>
         </Grid>
+          </Grid>
+
 
         <Grid item className={style.contentKYC_2}>
           <Grid container className={style.boxKYC_2}>
@@ -840,7 +871,10 @@ class KYC extends React.Component {
   renderComponents = () => {
     return this.renderKycForm();
   };
-
+  listCountries = () => {
+    const {classes, countries} = this.props;
+    
+  };
   listStates = () => {
     const { classes } = this.props;
     const states = ["São Paulo", "Rio de Janeiro"];
@@ -1048,19 +1082,23 @@ KYC.propTypes = {
   kycCreate: PropTypes.func.isRequired,
   kycUpload: PropTypes.func.isRequired,
   loadingKyc: PropTypes.bool.isRequired,
-  loadingCreate: PropTypes.bool.isRequired
+  loadingCreate: PropTypes.bool.isRequired,
+  kycGetCountries: PropTypes.func.isRequired,
+  countries: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   loadingKyc: store.settings.loadingKyc,
-  loadingCreate: store.settings.loadingCreate
+  loadingCreate: store.settings.loadingCreate,
+  countries: store.settings.countries
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       kycCreate,
-      kycUpload
+      kycUpload,
+      kycGetCountries
     },
     dispatch
   );
