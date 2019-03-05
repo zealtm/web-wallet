@@ -892,7 +892,7 @@ class KYC extends React.Component {
   };
 
   handleRadioChange = event => {
-    this.setState({ documentType: event.target.value });
+    this.setState({ documentType: event.target.value, document: "" });
   };
 
   checkAllInputs = () => {
@@ -986,6 +986,9 @@ class KYC extends React.Component {
       errorMessage = i18n.t("KYC_INVALID_PHONE");
     else if (invalidPassport && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
+    
+    console.log(this.state.document);
+    
     return (
       <div>
         {invalidPassport || invalidPhone ? (
