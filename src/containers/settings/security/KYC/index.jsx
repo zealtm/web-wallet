@@ -987,7 +987,7 @@ class KYC extends React.Component {
     else if (invalidPassport && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
     
-    console.log(this.state.document);
+    
     
     return (
       <div>
