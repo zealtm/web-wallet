@@ -55,3 +55,13 @@ export const kycUpload = upload => ({
 export const kycGetCountries = () => ({
   type: "KYC_GET_COUNTRIES_API"
 });
+
+export const kycGetStates = country => ({
+  type: "KYC_GET_STATES_API",
+  country
+});
+
+export const kycGetCities = location => ({
+  type: "KYC_GET_CITY_API",
+  location
+});

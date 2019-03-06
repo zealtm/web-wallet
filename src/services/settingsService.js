@@ -52,7 +52,49 @@ class SettingsService {
         },
         API_HEADER
       );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
 
+  async kycGetStates(token, country){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"liststates",
+        params:{
+          country
+        }
+        },
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async kycGetCity(token, country, state){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"listcities",
+        params:{
+          country,
+          state
+        }
+        },
+        API_HEADER
+      );
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response.data;
     } catch (error) {

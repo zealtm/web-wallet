@@ -42,11 +42,11 @@ class Security extends React.Component {
               </Link>
             </Grid>
 
-            <Grid item xs={12} sm={3} className={style.cardsSettings}>
+            {/* <Grid item xs={12} sm={3} className={style.cardsSettings}>
               <Link to="/MobileAuthenticator">
                 <Grid className={style.cards}>{i18n.t("CARD_SECURITY_2")}</Grid>
               </Link>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12} sm={3} className={style.cardsSettings}>
               <Link to="/KYC">

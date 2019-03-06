@@ -12,7 +12,13 @@ const initialState = {
   upload: {},
   loadingKyc: false,
   loadingCreate: false,
-  countries: []
+  loadingState: false,
+  loadingCity: false,
+  location: {
+    countries: [],
+    states: [],
+    city: []
+  }
 };
 
 const settings = (state = initialState, action) => {
@@ -60,7 +66,6 @@ const settings = (state = initialState, action) => {
         ...state,
         loadingKyc: action.loadingKyc
       };
-
     case "SET_LOADING_CREATE_KYC":
       return {
         ...state,
@@ -83,7 +88,38 @@ const settings = (state = initialState, action) => {
     case "KYC_SET_COUNTRIES":
       return {
         ...state,
-        countries: action.response.data
+        location: {
+          ...state.location,
+          countries: action.response.data
+        }
+      };
+    case "KYC_SET_STATE":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          states: action.response.data
+        },
+        loadingState: false
+      };
+    case "KYC_SET_CITY":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          city: action.response.data
+        },
+        loadingCity: false
+      };
+    case "SET_LOADING_STATE":
+      return {
+        ...state,
+        loadingState: true
+      };
+    case "SET_LOADING_CITY":
+      return {
+        ...state,
+        loadingCity: true
       };
 
     default: {

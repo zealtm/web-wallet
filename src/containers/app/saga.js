@@ -39,7 +39,9 @@ import {
   createAlias,
   kycCreate,
   kycUpload,
-  kycGetCountries
+  kycGetCountries,
+  kycGetStates,
+  kycGetCity
 } from "../settings/redux/settingsSaga";
 import {
   getProfessionalNode,
@@ -175,6 +177,8 @@ export default function* rootSaga() {
     fork(takeLatest, "KYC_CREATE", kycCreate),
     fork(takeLatest, "KYC_UPLOAD", kycUpload),
     fork(takeLatest, "KYC_GET_COUNTRIES_API", kycGetCountries),
+    fork(takeLatest, "KYC_GET_STATES_API", kycGetStates),
+    fork(takeLatest, "KYC_GET_CITY_API", kycGetCity),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),

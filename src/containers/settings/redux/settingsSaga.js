@@ -256,11 +256,50 @@ export function* kycGetCountries(){
       yield put(internalServerError());
       return ;
     }
-    // yield put({
-    //   type: "KYC_SET_COUNTRIES",
-    //   response
-    // });
-    return response;
+    yield put({
+      type: "KYC_SET_COUNTRIES",
+      response
+    });
+    return ;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* kycGetStates(payload){
+  try{
+    yield put({ type: "SET_LOADING_STATE"});
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycGetStates, token, payload.country);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "KYC_SET_STATE",
+      response
+    });
+    return ;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* kycGetCity(payload){
+  try{
+    yield put({ type: "SET_LOADING_CITY"});
+    let token = yield call(getAuthToken);
+    let {country, state} = payload.location;
+    let response = yield call(settingsService.kycGetCity, token, country, state);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "KYC_SET_CITY",
+      response
+    });
+    return ;
   }catch(error){
     yield put(internalServerError());
   }

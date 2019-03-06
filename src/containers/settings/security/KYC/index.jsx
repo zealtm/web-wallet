@@ -6,7 +6,13 @@ import FileUploadProgress from "react-fileupload-progress";
 //REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { kycCreate, kycUpload, kycGetCountries } from "../../redux/settingsAction";
+import {
+  kycCreate,
+  kycUpload,
+  kycGetCountries,
+  kycGetStates,
+  kycGetCities
+} from "../../redux/settingsAction";
 
 // STYLE
 import style from "../../style.css";
@@ -55,8 +61,8 @@ const inputStyle = {
       borderBottomColor: colors.purple.dark
     }
   },
-  rootSelect:{
-    padding: "5px",
+  rootSelect: {
+    padding: "5px"
   },
   rootLabel: {
     fontSize: "11px",
@@ -182,6 +188,9 @@ const inputStyle = {
   },
   icon: {
     fill: colors.purple.dark
+  },
+  menuItemRoot: {
+    color: colors.messages.info
   }
 };
 class KYC extends React.Component {
@@ -202,10 +211,15 @@ class KYC extends React.Component {
       documentBackFile: null,
       documentSelfieFile: null,
       documentType: "",
-      country: "",
+      phoneCountry: "",
       invalidPhone: false,
-      invalidPassport: false
+      invalidPassport: false,
+      country: ""
     };
+  }
+  componentDidMount() {
+    let { kycGetCountries } = this.props;
+    kycGetCountries();
   }
 
   formGetter() {
@@ -454,12 +468,21 @@ class KYC extends React.Component {
   }
 
   renderKycForm = () => {
-    const { classes, loadingKyc, loadingCreate, kycGetCountries} = this.props;
+    const {
+      classes,
+      loadingKyc,
+      loadingCreate,
+      loadingState,
+      loadingCity
+    } = this.props;
     const {
       phoneNumber,
       documentType,
       invalidPassport,
-      invalidPhone
+      invalidPhone,
+      country,
+      state,
+      city
     } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -478,8 +501,7 @@ class KYC extends React.Component {
     } else if (documentType === "cpf") {
       inputMask = CpfMask;
     }
-   console.log( kycGetCountries());
-   
+
     return (
       <Grid item xs={12} sm={12} className={style.wrapperKYC}>
         <Grid container className={style.contentKYC}>
@@ -511,7 +533,9 @@ class KYC extends React.Component {
                   countrySelectComponent={CountrySelectNative}
                   value={phoneNumber}
                   onChange={phoneNumber => this.handlePhoneNumber(phoneNumber)}
-                  onCountryChange={country => this.setState({ country })}
+                  onCountryChange={phoneCountry =>
+                    this.setState({ phoneCountry })
+                  }
                 />
               </Grid>
             </Grid>
@@ -546,12 +570,15 @@ class KYC extends React.Component {
             </Grid>
           </Grid>
           <Grid container className={style.boxKYC_2}>
-          <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <p>País</p>
               <div className={style.textInput}>
                 <Select
-                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect }}
-                  value={this.state.state}
+                  classes={{
+                    selectMenu: classes.underlineItems,
+                    root: classes.rootSelect
+                  }}
+                  value={country}
                   MenuProps={MenuProps}
                   input={
                     <Input
@@ -565,101 +592,113 @@ class KYC extends React.Component {
                       icon: classes.icon
                     }
                   }}
-                  renderValue={value => value}
-                  onChange={this.handleInput("state")}
+                  onChange={this.handleInput("country")}
                 >
-                  {this.listStates()}
+                  {this.listCountries()}
                 </Select>
               </div>
             </Grid>
-          <Grid item xs={12} sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_STATE")}</p>
               <div className={style.textInput}>
-                <Select
-                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect  }}
-                  value={this.state.state}
-                  MenuProps={MenuProps}
-                  input={
-                    <Input
-                      classes={{
-                        underline: classes.underline
-                      }}
-                    />
-                  }
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon
+                {loadingState ? (
+                  <Loading />
+                ) : (
+                  <Select
+                    classes={{
+                      selectMenu: classes.underlineItems,
+                      root: classes.rootSelect
+                    }}
+                    value={state}
+                    MenuProps={MenuProps}
+                    input={
+                      <Input
+                        classes={{
+                          underline: classes.underline
+                        }}
+                      />
                     }
-                  }}
-                  renderValue={value => value}
-                  onChange={this.handleInput("state")}
-                >
-                  {this.listStates()}
-                </Select>
+                    inputProps={{
+                      classes: {
+                        icon: classes.icon
+                      }
+                    }}
+                    disabled={country !== "" ? false : true}
+                    onChange={this.handleInput("state")}
+                  >
+                    {this.listStates()}
+                  </Select>
+                )}
               </div>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_CITY")}</p>
               <div className={style.textInput}>
-                <Select
-                  classes={{ selectMenu: classes.underlineItems, root:classes.rootSelect  }}
-                  value={this.state.city}
-                  MenuProps={MenuProps}
-                  input={
-                    <Input
-                      classes={{
-                        underline: classes.underline
-                      }}
-                    />
-                  }
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon
+                {loadingCity ? (
+                  <Loading />
+                ) : (
+                  <Select
+                    classes={{
+                      selectMenu: classes.underlineItems,
+                      root: classes.rootSelect
+                    }}
+                    value={city}
+                    MenuProps={MenuProps}
+                    input={
+                      <Input
+                        classes={{
+                          underline: classes.underline
+                        }}
+                      />
                     }
-                  }}
-                  renderValue={value => value}
-                  onChange={this.handleInput("city")}
-                >
-                  {this.listStates()}
-                </Select>
+                    inputProps={{
+                      classes: {
+                        icon: classes.icon
+                      }
+                    }}
+                    disabled={state !== "" ? false : true}
+                    onChange={this.handleInput("city")}
+                  >
+                    {this.listStates()}
+                  </Select>
+                )}
               </div>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} className={style.boxKYC_3}>
-            {loadingKyc ? (
-              <Loading />
-            ) : (
-              <FileUploadProgress
-                isRequired
-                id="fileupkeyload"
-                key="ex1"
-                url=""
-                onProgress={(e, request, progress) => {
-                  console.warn("progress", e, request, progress);
-                }}
-                onLoad={(e, request) => {
-                  console.warn("load", e, request);
-                }}
-                onError={(e, request) => {
-                  console.warn("error", e, request);
-                }}
-                onAbort={(e, request) => {
-                  console.warn("abort", e, request);
-                }}
-                formGetter={this.formGetter.bind(this)}
-                formRenderer={e =>
-                  this.customFormRenderer(
-                    e,
-                    i18n.t("KYC_UPLOAD_ADDRESS"),
-                    "address"
-                  )
-                }
-                progressRenderer={this.customProgressRenderer.bind(this)}
-              />
-            )}
+            <Grid item xs={12} sm={12} md={6} lg={6} style={{padding: "15px 25px 0 0"}}>
+                {loadingKyc ? (
+                  <Loading />
+                ) : (
+                  <FileUploadProgress
+                    isRequired
+                    id="fileupkeyload"
+                    key="ex1"
+                    url=""
+                    onProgress={(e, request, progress) => {
+                      console.warn("progress", e, request, progress);
+                    }}
+                    onLoad={(e, request) => {
+                      console.warn("load", e, request);
+                    }}
+                    onError={(e, request) => {
+                      console.warn("error", e, request);
+                    }}
+                    onAbort={(e, request) => {
+                      console.warn("abort", e, request);
+                    }}
+                    formGetter={this.formGetter.bind(this)}
+                    formRenderer={e =>
+                      this.customFormRenderer(
+                        e,
+                        i18n.t("KYC_UPLOAD_ADDRESS"),
+                        "address"
+                      )
+                    }
+                    progressRenderer={this.customProgressRenderer.bind(this)}
+                  />
+                )}
+            </Grid>
           </Grid>
         </Grid>
-          </Grid>
-
 
         <Grid item className={style.contentKYC_2}>
           <Grid container className={style.boxKYC_2}>
@@ -872,45 +911,100 @@ class KYC extends React.Component {
     return this.renderKycForm();
   };
   listCountries = () => {
-    const {classes, countries} = this.props;
-    
-  };
-  listStates = () => {
-    const { classes } = this.props;
-    const states = ["São Paulo", "Rio de Janeiro"];
+    const { classes, countries } = this.props;
 
-    return states.map((item, index) => (
+    return countries.map((item, index) => (
       <MenuItem
-        value={item}
+        value={item.shortName}
         key={index}
         classes={{
           root: classes.menuItemRoot
         }}
       >
-        {item}
+        {item.name}
       </MenuItem>
     ));
   };
+  listStates = () => {
+    const { classes, states } = this.props;
+    if (states) {
+      return states.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
+  };
+  listCities = () => {
+    const { classes, city } = this.props;
+    if (city) {
+      return city.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
+  };
 
   handleInput = property => e => {
-    const { documentType } = this.state;
+    const { kycGetStates, kycGetCities } = this.props;
+    const { documentType, country } = this.state;
     let value = e.target.value;
-
+    let location = {};
     switch (property) {
       case "document":
-        if (documentType === "passport") value = value.replace(/[^A-Z0-9]/, "");
+        if (documentType === "passport") {
+          value = value.replace(/[^A-Z0-9]/, "");
+          if (value.length < 10) {
+            this.setState({
+              [property]: value
+            });
+          }
+        }
+        break;
+      case "country":
+        this.setState({
+          [property]: value
+        });
+        kycGetStates(value);
+        break;
+      case "state":
+        location = {
+          country: country,
+          state: value
+        };
+        this.setState({
+          [property]: value
+        });
+        kycGetCities(location);
+        break;
+      default:
+        this.setState({
+          [property]: value
+        });
         break;
     }
-    this.setState({
-      [property]: value
-    });
   };
 
   handlePhoneNumber = phone => {
-    const { country } = this.state;
+    const { phoneCountry } = this.state;
     let parseNumber;
     try {
-      parseNumber = parsePhoneNumber(phone, country);
+      parseNumber = parsePhoneNumber(phone, phoneCountry);
     } catch (error) {
       parseNumber = "";
     }
@@ -918,7 +1012,7 @@ class KYC extends React.Component {
   };
 
   handleRadioChange = event => {
-    this.setState({ documentType: event.target.value });
+    this.setState({ documentType: event.target.value, document: "" });
   };
 
   checkAllInputs = () => {
@@ -994,14 +1088,13 @@ class KYC extends React.Component {
     } else {
       this.setState({ invalidPassport: false });
     }
-    if(!this.state.invalidPassport && !this.state.invalidPassport){
+    if (!this.state.invalidPassport && !this.state.invalidPassport) {
       this.uploadImage(addressFile.file, addressFile.fileType);
       this.uploadImage(documentFronFile.file, documentFronFile.fileType);
       this.uploadImage(documentBackFile.file, documentBackFile.fileType);
       this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
       kycCreate(payload);
     }
-
   };
 
   render() {
@@ -1083,14 +1176,24 @@ KYC.propTypes = {
   kycUpload: PropTypes.func.isRequired,
   loadingKyc: PropTypes.bool.isRequired,
   loadingCreate: PropTypes.bool.isRequired,
+  loadingState: PropTypes.bool.isRequired,
+  loadingCity: PropTypes.bool.isRequired,
   kycGetCountries: PropTypes.func.isRequired,
-  countries: PropTypes.array
+  kycGetStates: PropTypes.func.isRequired,
+  kycGetCities: PropTypes.func.isRequired,
+  countries: PropTypes.array,
+  states: PropTypes.array,
+  city: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   loadingKyc: store.settings.loadingKyc,
   loadingCreate: store.settings.loadingCreate,
-  countries: store.settings.countries
+  loadingState: store.settings.loadingState,
+  loadingCity: store.settings.loadingCity,
+  countries: store.settings.location.countries,
+  states: store.settings.location.states,
+  city: store.settings.location.city
 });
 
 const mapDispatchToProps = dispatch =>
@@ -1098,7 +1201,9 @@ const mapDispatchToProps = dispatch =>
     {
       kycCreate,
       kycUpload,
-      kycGetCountries
+      kycGetCountries,
+      kycGetStates,
+      kycGetCities
     },
     dispatch
   );
