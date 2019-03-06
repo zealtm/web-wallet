@@ -167,6 +167,7 @@ const inputStyle = {
   },
   underline: {
     width: "90%",
+    marginBottom: "21px",
     "&:hover": {
       backgroundColor: colors.purple.dark
     },
@@ -571,7 +572,7 @@ class KYC extends React.Component {
           </Grid>
           <Grid container className={style.boxKYC_2}>
             <Grid item xs={12} sm={12} md={6}>
-              <p>País</p>
+              <p>{i18n.t("SETTINGS_USER_COUNTRY")}</p>
               <div className={style.textInput}>
                 <Select
                   classes={{
@@ -701,9 +702,9 @@ class KYC extends React.Component {
         </Grid>
 
         <Grid item className={style.contentKYC_2}>
-          <Grid container className={style.boxKYC_2}>
+          <Grid container className={style.boxKYC_1}>
             <Grid item xs={12}>
-              <p> Selecione um documento</p>
+              <p>{i18n.t("SECURITY_INSERT_DOC")}</p>
               <div className={style.textInput}>
                 <Grid item xs={12} sm={12} md={12}>
                   <FormControl

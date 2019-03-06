@@ -489,12 +489,12 @@
 
 :local(.boxKYC_1) {
   display: flex;
-  padding: 10px 25px;
+  padding: 16px 25px;
 }
 
 :local(.boxKYC_2) {
   display: flex;
-  padding: 10px 25px;
+  padding: 0px 25px;
 }
 
 :local(.boxKYC_3) {
