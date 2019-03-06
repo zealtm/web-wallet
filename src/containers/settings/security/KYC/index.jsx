@@ -564,7 +564,7 @@ class KYC extends React.Component {
                   }}
                   value={this.state.zipcode}
                   onChange={this.handleInput("zipcode")}
-                  inputProps={{ maxlength: "12" }}
+                  inputProps={{ maxLength: "12" }}
                 />
               </div>
             </Grid>
@@ -992,6 +992,8 @@ class KYC extends React.Component {
           [property]: value
         });
         kycGetStates(value);
+        this.setState({state: ""});
+        this.setState({city: ""});
         break;
       case "state":
         location = {
@@ -1002,6 +1004,7 @@ class KYC extends React.Component {
           [property]: value
         });
         kycGetCities(location);
+        this.setState({city: ""});
         break;
       case "zipcode":
         value = value.replace(/\W/, "");
