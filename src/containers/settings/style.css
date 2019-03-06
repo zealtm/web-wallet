@@ -494,7 +494,7 @@
 
 :local(.boxKYC_2) {
   display: flex;
-  padding: 0px 25px;
+  padding: 0px 25px 13px;
 }
 
 :local(.boxKYC_3) {
