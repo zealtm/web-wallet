@@ -660,7 +660,7 @@ class KYC extends React.Component {
                     disabled={state !== "" ? false : true}
                     onChange={this.handleInput("city")}
                   >
-                    {this.listStates()}
+                    {this.listCities()}
                   </Select>
                 )}
               </div>
