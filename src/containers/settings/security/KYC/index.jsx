@@ -1123,7 +1123,7 @@ class KYC extends React.Component {
 
             <Grid item xs={6} sm={2}>
               <Link to="security">
-                <p>{i18n.t("SECURITY_LINK_RETURN")}</p>
+                <p>{i18n.t("SECURITY_USER_BACK")}</p>
               </Link>
             </Grid>
             <Hidden xsDown>
