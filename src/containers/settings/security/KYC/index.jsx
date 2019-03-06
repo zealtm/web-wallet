@@ -41,7 +41,6 @@ import { Lens } from "@material-ui/icons";
 import Done from "@material-ui/icons/Done";
 
 // COMPONENTS
-import { CEP } from "../../../../components/inputMask";
 import Loading from "../../../../components/loading";
 import PhoneInput from "react-phone-number-input";
 import CountrySelectNative from "./select/countrySelect";
@@ -291,7 +290,7 @@ class KYC extends React.Component {
             type="file"
             id={id}
             onChange={this.fileUpload}
-            accept=".png"
+            accept=".png, .pdf, .jpg"
             name={fileType}
           />
         </div>
@@ -564,8 +563,8 @@ class KYC extends React.Component {
                     input: classes.cssInput
                   }}
                   value={this.state.zipcode}
-                  inputComponent={CEP}
                   onChange={this.handleInput("zipcode")}
+                  inputProps={{ maxlength: "12" }}
                 />
               </div>
             </Grid>
@@ -665,38 +664,45 @@ class KYC extends React.Component {
                 )}
               </div>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} style={{padding: "15px 25px 0 0"}}>
-                {loadingKyc ? (
-                  <Loading />
-                ) : (
-                  <FileUploadProgress
-                    isRequired
-                    id="fileupkeyload"
-                    key="ex1"
-                    url=""
-                    onProgress={(e, request, progress) => {
-                      console.warn("progress", e, request, progress);
-                    }}
-                    onLoad={(e, request) => {
-                      console.warn("load", e, request);
-                    }}
-                    onError={(e, request) => {
-                      console.warn("error", e, request);
-                    }}
-                    onAbort={(e, request) => {
-                      console.warn("abort", e, request);
-                    }}
-                    formGetter={this.formGetter.bind(this)}
-                    formRenderer={e =>
-                      this.customFormRenderer(
-                        e,
-                        i18n.t("KYC_UPLOAD_ADDRESS"),
-                        "address"
-                      )
-                    }
-                    progressRenderer={this.customProgressRenderer.bind(this)}
-                  />
-                )}
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              style={{ padding: "15px 25px 0 0" }}
+            >
+              {loadingKyc ? (
+                <Loading />
+              ) : (
+                <FileUploadProgress
+                  isRequired
+                  id="fileupkeyload"
+                  key="ex1"
+                  url=""
+                  onProgress={(e, request, progress) => {
+                    console.warn("progress", e, request, progress);
+                  }}
+                  onLoad={(e, request) => {
+                    console.warn("load", e, request);
+                  }}
+                  onError={(e, request) => {
+                    console.warn("error", e, request);
+                  }}
+                  onAbort={(e, request) => {
+                    console.warn("abort", e, request);
+                  }}
+                  formGetter={this.formGetter.bind(this)}
+                  formRenderer={e =>
+                    this.customFormRenderer(
+                      e,
+                      i18n.t("KYC_UPLOAD_ADDRESS"),
+                      "address"
+                    )
+                  }
+                  progressRenderer={this.customProgressRenderer.bind(this)}
+                />
+              )}
             </Grid>
           </Grid>
         </Grid>
@@ -975,6 +981,10 @@ class KYC extends React.Component {
               [property]: value
             });
           }
+        } else {
+          this.setState({
+            [property]: value
+          });
         }
         break;
       case "country":
@@ -992,6 +1002,12 @@ class KYC extends React.Component {
           [property]: value
         });
         kycGetCities(location);
+        break;
+      case "zipcode":
+        value = value.replace(/\W/, "");
+        this.setState({
+          [property]: value
+        });
         break;
       default:
         this.setState({
