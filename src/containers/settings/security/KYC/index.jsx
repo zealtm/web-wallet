@@ -1164,17 +1164,17 @@ class KYC extends React.Component {
                 <Grid item xs={12} className={style.counterItemsKYC}>
                   <Grid item xs={12} sm={3} className={style.columItems}>
                     <Grid className={style.indicatorItemKYC}>
-                      {"1"} <p>{i18n.t("SECURITY_ITEM_1")}</p>
+                      {"1"} <p>{i18n.t("KYC_STEP_1")}</p>
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.columItems}>
                     <Grid className={style.indicatorItemKYC}>
-                      {"2"} <p> {i18n.t("SECURITY_ITEM_2")} </p>
+                      {"2"} <p> {i18n.t("KYC_STEP_2")} </p>
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={3} className={style.columItems}>
                     <Grid className={style.indicatorItemKYC}>
-                      {"3"} <p>{i18n.t("SECURITY_ITEM_3")}</p>
+                      {"3"} <p>{i18n.t("KYC_STEP_3")}</p>
                     </Grid>
                   </Grid>
                 </Grid>
