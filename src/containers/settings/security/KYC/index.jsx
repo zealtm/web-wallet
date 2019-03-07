@@ -1108,7 +1108,7 @@ class KYC extends React.Component {
     } else {
       this.setState({ invalidPassport: false });
     }
-    if (!this.state.invalidPassport && !this.state.invalidPassport) {
+    if (!this.state.invalidPassport && !this.state.invalidPhone) {
       this.uploadImage(addressFile.file, addressFile.fileType);
       this.uploadImage(documentFronFile.file, documentFronFile.fileType);
       this.uploadImage(documentBackFile.file, documentBackFile.fileType);
