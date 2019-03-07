@@ -18,7 +18,8 @@ const initialState = {
     countries: [],
     states: [],
     city: []
-  }
+  },
+  sendRequest: 0
 };
 
 const settings = (state = initialState, action) => {
@@ -120,6 +121,11 @@ const settings = (state = initialState, action) => {
       return {
         ...state,
         loadingCity: true
+      };
+    case "COUNT_KYC_SEND_REQUEST":
+      return {
+        ...state,
+        sendRequest: state.sendRequest + 1
       };
 
     default: {

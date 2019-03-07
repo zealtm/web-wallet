@@ -187,7 +187,7 @@ const inputStyle = {
     }
   },
   icon: {
-    fill: colors.purple.dark
+    fill: colors.messages.info
   },
   menuItemRoot: {
     color: colors.messages.info
@@ -1119,6 +1119,7 @@ class KYC extends React.Component {
 
   render() {
     const { invalidPassport, invalidPhone } = this.state;
+    const {sendRequest} = this.props;
     let errorMessage = "";
     if (invalidPassport && !invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT");
@@ -1131,6 +1132,7 @@ class KYC extends React.Component {
         {invalidPassport || invalidPhone ? (
           <ModalBar type="error" message={errorMessage} timer />
         ) : null}
+        {sendRequest === 2 ? <ModalBar type="success" message={i18n.t("SEND_MAIL_INVITE_SUCCESS")} timer /> : null}
         <Grid container className={style.containerHeaderSettings}>
           <Grid item xs={12} className={style.headerSettingsDefault}>
             <Hidden smUp>
@@ -1203,7 +1205,8 @@ KYC.propTypes = {
   kycGetCities: PropTypes.func.isRequired,
   countries: PropTypes.array,
   states: PropTypes.array,
-  city: PropTypes.array
+  city: PropTypes.array,
+  sendRequest: PropTypes.number
 };
 
 const mapStateToProps = store => ({
@@ -1213,7 +1216,8 @@ const mapStateToProps = store => ({
   loadingCity: store.settings.loadingCity,
   countries: store.settings.location.countries,
   states: store.settings.location.states,
-  city: store.settings.location.city
+  city: store.settings.location.city,
+  sendRequest: store.settings.sendRequest
 });
 
 const mapDispatchToProps = dispatch =>
