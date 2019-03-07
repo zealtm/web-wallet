@@ -42,6 +42,29 @@ export const setAliasLoading = state => ({
   state: state
 });
 
+export const kycCreate = payload => ({
+  type: "KYC_CREATE",
+  payload
+});
+
+export const kycUpload = upload => ({
+  type: "KYC_UPLOAD",
+  upload
+});
+
+export const kycGetCountries = () => ({
+  type: "KYC_GET_COUNTRIES_API"
+});
+
+export const kycGetStates = country => ({
+  type: "KYC_GET_STATES_API",
+  country
+});
+
+export const kycGetCities = location => ({
+  type: "KYC_GET_CITY_API",
+  location
+});
 export const getKyc = () => ({
   type: "GET_KYC_API"
 });

@@ -37,6 +37,11 @@ import {
   verifyTwoFactorAuthSettings,
   getAliases,
   createAlias,
+  kycCreate,
+  kycUpload,
+  kycGetCountries,
+  kycGetStates,
+  kycGetCity,
   getKyc
 } from "../settings/redux/settingsSaga";
 import {
@@ -170,6 +175,11 @@ export default function* rootSaga() {
     fork(takeLatest, "SET_LEASING_START_API", createLeasing),
     fork(takeLatest, "SET_LEASING_CANCEL_API", cancelLeasing),
     fork(takeLatest, "GET_INFO_LEASING_API", getLeasingInfo),
+    fork(takeLatest, "KYC_CREATE", kycCreate),
+    fork(takeLatest, "KYC_UPLOAD", kycUpload),
+    fork(takeLatest, "KYC_GET_COUNTRIES_API", kycGetCountries),
+    fork(takeLatest, "KYC_GET_STATES_API", kycGetStates),
+    fork(takeLatest, "KYC_GET_CITY_API", kycGetCity),
     fork(takeLatest, "GET_KYC_API", getKyc),
 
     //payment-saga

@@ -9,16 +9,20 @@ import {
 import i18next from "../../../utils/i18n";
 import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 // SERVICES
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
+import SettingsService from "../../../services/settingsService";
+import { errorInput, successRequest } from "../../errors/redux/errorAction";
 import KycService from "../../../services/kycService";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
+const settingsService = new SettingsService();
 const kycService = new KycService();
 
 export function* getTwoFactorAuth() {
@@ -204,6 +208,104 @@ export function* getAliases(action) {
   }
 }
 
+export function* kycCreate(payload) {
+  try {
+    yield put({ type: "SET_LOADING_CREATE_KYC", loadingCreate: true });
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycCreate, token, payload);
+
+    yield put({
+      type: "KYC_CREATE_REDUCER",
+      payload
+    });
+
+    if (response.code != 200) {
+      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+    } else {
+      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    }
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* kycUpload(payload) {
+  try {
+    yield put({ type: "SET_LOADING_KYC", loadingKyc: true });
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycUpload, token, payload);
+
+    yield put({
+      type: "KYC_UPLOAD_REDUCER",
+      payload
+    });
+
+    if (response.code != 200) {
+      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+    } else {
+      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+    }
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* kycGetCountries(){
+  try{
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycGetCountries, token);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "KYC_SET_COUNTRIES",
+      response
+    });
+    return ;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* kycGetStates(payload){
+  try{
+    yield put({ type: "SET_LOADING_STATE"});
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.kycGetStates, token, payload.country);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "KYC_SET_STATE",
+      response
+    });
+    return ;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+
+export function* kycGetCity(payload){
+  try{
+    yield put({ type: "SET_LOADING_CITY"});
+    let token = yield call(getAuthToken);
+    let {country, state} = payload.location;
+    let response = yield call(settingsService.kycGetCity, token, country, state);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "KYC_SET_CITY",
+      response
+    });
+    return ;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
 export function* getKyc(){
   try {
     const token = yield call(getAuthToken);
