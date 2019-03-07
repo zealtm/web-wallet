@@ -17,11 +17,13 @@ import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 import SettingsService from "../../../services/settingsService";
 import { errorInput, successRequest } from "../../errors/redux/errorAction";
+import KycService from "../../../services/kycService";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
 const settingsService = new SettingsService();
+const kycService = new KycService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -303,4 +305,19 @@ export function* kycGetCity(payload){
   }catch(error){
     yield put(internalServerError());
   }
+}
+export function* getKyc(){
+  try {
+    const token = yield call(getAuthToken);
+    const response = yield call(kycService.getKyc,token);
+   // console.log("Get Kyc",response.data.data);
+    
+    yield put({
+      type: "GET_KYC_REDUCER",
+      kyc: response.data.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+
 }

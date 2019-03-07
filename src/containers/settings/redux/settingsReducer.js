@@ -18,10 +18,12 @@ const initialState = {
     countries: [],
     states: [],
     city: []
-  }
+  },
+  kyc: {}
 };
 
 const settings = (state = initialState, action) => {
+  
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
@@ -59,6 +61,11 @@ const settings = (state = initialState, action) => {
           modalAlias: state.wallet.modalAlias,
           loadingAlias: action.state ? true : false
         }
+      };
+    case "GET_KYC_REDUCER":
+      return {
+        ...state,
+        kyc: action.kyc
       };
 
     case "SET_LOADING_KYC":

@@ -65,3 +65,6 @@ export const kycGetCities = location => ({
   type: "KYC_GET_CITY_API",
   location
 });
+export const getKyc = () => ({
+  type: "GET_KYC_API"
+});
