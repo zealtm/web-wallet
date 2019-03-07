@@ -589,7 +589,7 @@ class KYC extends React.Component {
               </Select>
             </Grid>
           </Grid>
-          <Grid item xs={12} lg={6} className={style.boxKYC_3}>
+          <Grid item xs={12} lg={6} style={{ padding: "15px 25px 0 0" }}>
             <FileUploadProgress
               isRequired
               id="fileupkeyload"
@@ -1199,9 +1199,7 @@ class KYC extends React.Component {
       </Grid>
     );
   };
-  renderComponents = () => {
-    return this.renderKycForm();
-  };
+
   listCountries = () => {
     const { classes, countries } = this.props;
 
@@ -1393,7 +1391,7 @@ class KYC extends React.Component {
     } else {
       this.setState({ invalidPassport: false });
     }
-    if (!this.state.invalidPassport && !this.state.invalidPassport) {
+    if (!this.state.invalidPassport && !this.state.invalidPhone) {
       this.uploadImage(addressFile.file, addressFile.fileType);
       this.uploadImage(documentFronFile.file, documentFronFile.fileType);
       this.uploadImage(documentBackFile.file, documentBackFile.fileType);
