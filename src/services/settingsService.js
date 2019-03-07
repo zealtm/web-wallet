@@ -102,6 +102,18 @@ class SettingsService {
       return;
     }
   }
+  async getKyc(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const request = `${BASE_URL}/kyc`;
+      let response = await axios.get(request, API_HEADER);
+      
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response;
+    } catch (error) {
+      return internalServerError();
+    }
+  }
 }
 
 export default SettingsService;
