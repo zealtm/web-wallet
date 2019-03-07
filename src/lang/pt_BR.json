@@ -473,6 +473,9 @@
   "KYC_INVALID_PASSPORT_PHONE": "Verifique seu passaporte e telefone",
   "KYC_DOCUMENT_PLACEHOLDER": "Número do documento",
   "KYC_PASSPORT": "Passaporte",
+  "KYC_STEP_1": "Envie seus documentos e comprovante de residência com boa resolução, temos que ver com clareza o conteúdo dos arquivos",
+  "KYC_STEP_2": "Nosso time irá checar os dados enviados em até 48 horas",
+  "KYC_STEP_3": "Após seus dados serem validados, você estará habilitado a realizar transações com reais",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
