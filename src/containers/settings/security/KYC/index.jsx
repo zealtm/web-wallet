@@ -11,7 +11,8 @@ import {
   kycUpload,
   kycGetCountries,
   kycGetStates,
-  kycGetCities
+  kycGetCities,
+  getKyc
 } from "../../redux/settingsAction";
 
 // STYLE
@@ -32,6 +33,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
+import ErrorOutline from "@material-ui/icons/ErrorOutline";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -48,6 +50,9 @@ import { parsePhoneNumber } from "libphonenumber-js";
 import { parsePhoneNumberFromString as parseMax } from "libphonenumber-js/max";
 import ModalBar from "../../../../components/modalBar";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
+import { CEP } from "../../../../components/inputMask";
+import InfoContainer from "../infoContainer";
+import InfoConfirm from "../infoCorfirm";
 
 const inputStyle = {
   root: {
@@ -194,8 +199,8 @@ const inputStyle = {
   }
 };
 class KYC extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       enableButtonUpload: false,
       enableButtonConfirm: false,
@@ -219,7 +224,9 @@ class KYC extends React.Component {
   }
   componentDidMount() {
     let { kycGetCountries } = this.props;
+    const { getKyc } = this.props;
     kycGetCountries();
+    getKyc();
   }
 
   formGetter() {
@@ -414,7 +421,7 @@ class KYC extends React.Component {
     );
   };
 
-  customProgressRenderer(progress, hasError, cancelHandler) {
+  customProgressRenderer(progress, hasError) {
     if (hasError || progress > -1) {
       let barStyle = Object.assign({}, inputStyle.progressBar);
       barStyle.width = progress + "%";
@@ -466,6 +473,284 @@ class KYC extends React.Component {
       return;
     }
   }
+  renderKycForm = () => {
+    const { classes, kyc } = this.props;
+    const { enableButtonConfirm } = this.state;
+    const MenuProps = {
+      PaperProps: {
+        style: {
+          color: "#fff",
+          maxHeight: 40 * 4.5,
+          marginTop: "45px",
+          backgroundColor: "#473088",
+          width: "10%"
+        }
+      }
+    };
+
+    return (
+      <Grid item xs={12} sm={10} className={style.wrapperKYC}>
+        <span
+          className={style.statusRejected}
+          style={
+            kyc.status !== "rejected"
+              ? { display: "none" }
+              : { display: "flex" }
+          }
+        >
+          <p>{i18n.t("KYC_REJECTED_TEXT")}</p>
+          <ErrorOutline style={{ color: "#f36161" }} />
+        </span>
+
+        <Grid container className={style.contentKYC}>
+          <Grid container className={style.boxKYC_1}>
+            <Grid item xs={12} sm={6}>
+              <Hidden smUp>
+                <div>
+                  <img src="images/icons/security/anexo@1x.png" />
+                </div>
+              </Hidden>
+              <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
+              <Input
+                value={this.state.address}
+                onChange={this.handleInput("address")}
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Hidden xsDown>
+                <div>
+                  <img src="images/icons/security/anexo@1x.png" />
+                </div>
+              </Hidden>
+              <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
+
+              <Input
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+                inputComponent={CEP}
+              />
+            </Grid>
+          </Grid>
+          <Grid container className={style.boxKYC_2}>
+            <Grid item xs={6} sm={6}>
+              <p>{i18n.t("SETTINGS_USER_CITY")}</p>
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                value={this.state.city}
+                MenuProps={MenuProps}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("city")}
+              >
+                {this.listStates()}
+              </Select>
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <p>{i18n.t("SETTINGS_USER_STATE")}</p>
+              <Select
+                classes={{ selectMenu: classes.underlineItems }}
+                value={this.state.state}
+                MenuProps={MenuProps}
+                input={
+                  <Input
+                    classes={{
+                      underline: classes.underline
+                    }}
+                  />
+                }
+                inputProps={{
+                  classes: {
+                    icon: classes.icon
+                  }
+                }}
+                renderValue={value => value}
+                onChange={this.handleInput("state")}
+              >
+                {this.listStates()}
+              </Select>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} lg={6} className={style.boxKYC_3}>
+            <FileUploadProgress
+              isRequired
+              id="fileupkeyload"
+              key="ex1"
+              url=""
+              onProgress={(e, request, progress) => {
+                console.warn("progress", e, request, progress);
+              }}
+              onLoad={(e, request) => {
+                console.warn("load", e, request);
+              }}
+              onError={(e, request) => {
+                console.warn("error", e, request);
+              }}
+              onAbort={(e, request) => {
+                console.warn("abort", e, request);
+              }}
+              formGetter={this.formGetter.bind(this)}
+              formRenderer={e =>
+                this.customFormRenderer(e, i18n.t("KYC_UPLOAD_ADDRESS"))
+              }
+              progressRenderer={this.customProgressRenderer.bind(this)}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item className={style.contentKYC_2}>
+          <Grid container className={style.boxKYC_2}>
+            <Grid item xs={12}>
+              <div>
+                <img src="images/icons/security/anexo@1x.png" />
+              </div>
+              <p> {i18n.t("SECURITY_INSERT_DOC")}</p>
+              <Input
+                classes={{
+                  root: classes.root,
+                  underline: classes.cssUnderline,
+                  input: classes.cssInput
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid item className={style.displayBox_3}>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex1"
+                url=""
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(e, i18n.t("KYC_UPLOAD_FRONT"))
+                }
+                progressRenderer={this.customProgressRenderer.bind(this)}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex1"
+                url=""
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(e, i18n.t("KYC_UPLOAD_BACK"))
+                }
+                progressRenderer={this.customProgressRenderer.bind(this)}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+              <FileUploadProgress
+                isRequired
+                id="fileupload"
+                key="ex1"
+                url="http://localhost:6000/api/upload"
+                onProgress={(e, request, progress) => {
+                  console.warn("progress", e, request, progress);
+                }}
+                onLoad={(e, request) => {
+                  console.warn("load", e, request);
+                }}
+                onError={(e, request) => {
+                  console.warn("error", e, request);
+                }}
+                onAbort={(e, request) => {
+                  console.warn("abort", e, request);
+                }}
+                formGetter={this.formGetter.bind(this)}
+                formRenderer={e =>
+                  this.customFormRenderer(e, i18n.t("KYC_UPLOAD_SELFIE"))
+                }
+                progressRenderer={this.customProgressRenderer.bind(this)}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <center>
+            <Grid item xs={12} sm={6}>
+              {enableButtonConfirm ? (
+                <button className={style.buttonEnableSecurity}>
+                  {i18n.t("BTN_CONFIRM")}
+                </button>
+              ) : (
+                <button disabled className={style.buttonDisabledSecurity}>
+                  {i18n.t("BTN_CONFIRM")}
+                </button>
+              )}
+            </Grid>
+          </center>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  renderComponents = () => {
+    const { kyc } = this.props;
+    const imgUrl = "images/icons/security/kyc_documentConfirm.png";
+    if (kyc.status === "waiting") {
+      return (
+        <InfoContainer
+          imageUrl={imgUrl}
+          title={i18n.t("KYC_INFOCONTAINER_TITLE")}
+          description={i18n.t("KYC_INFOCONTAINER_TEXT")}
+        />
+      );
+    } else if (kyc.status === "confirmed") {
+      return (
+        <InfoConfirm
+          title={i18n.t("KYC_INFOCONFIRM_TITLE")}
+          description={i18n.t("KYC_INFOCONFIRM_TEXT")}
+        />
+      );
+    } else {
+      return this.renderKycForm();
+    }
+  };
 
   renderKycForm = () => {
     const {
@@ -1206,7 +1491,9 @@ KYC.propTypes = {
   countries: PropTypes.array,
   states: PropTypes.array,
   city: PropTypes.array,
-  sendRequest: PropTypes.number
+  sendRequest: PropTypes.number,
+  getKyc: PropTypes.func,
+  kyc: PropTypes.object.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -1217,7 +1504,8 @@ const mapStateToProps = store => ({
   countries: store.settings.location.countries,
   states: store.settings.location.states,
   city: store.settings.location.city,
-  sendRequest: store.settings.sendRequest
+  sendRequest: store.settings.sendRequest,
+  kyc: store.settings.kyc
 });
 
 const mapDispatchToProps = dispatch =>
@@ -1227,7 +1515,8 @@ const mapDispatchToProps = dispatch =>
       kycUpload,
       kycGetCountries,
       kycGetStates,
-      kycGetCities
+      kycGetCities,
+      getKyc
     },
     dispatch
   );

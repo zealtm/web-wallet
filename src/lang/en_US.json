@@ -479,6 +479,11 @@
   "KYC_STEP_2": "Our team will validate the data within 48 hours",
   "KYC_STEP_3": "After validation your account will be able to do fiat transactions",
 
+  "KYC_INFOCONFIRM_IMG": "Confirmed Information",
+  "KYC_INFOCONFIRM_TITLE": "Approved Address",
+  "KYC_INFOCONFIRM_TEXT": "Your address has been approved and will be used to improve your security.",
+  "KYC_REJECTED_TEXT": "Documents not approved.",
+  
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",

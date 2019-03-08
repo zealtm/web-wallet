@@ -477,6 +477,11 @@
   "KYC_STEP_2": "Nosso time irá checar os dados enviados em até 48 horas",
   "KYC_STEP_3": "Após seus dados serem validados, você estará habilitado a realizar transações com reais",
 
+  "KYC_INFOCONFIRM_IMG": "Informações Confirmadas",
+  "KYC_INFOCONFIRM_TITLE": "Endereço Aprovado",
+  "KYC_INFOCONFIRM_TEXT": "O seu endereço foi aprovado e sera usado para melhorar sua segurança.",
+  "KYC_REJECTED_TEXT": "Documentos não aprovados.",
+  
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
   "BUYCOINS_FEE_TEXT_1": "Você está enviando ",
