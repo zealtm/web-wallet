@@ -975,7 +975,7 @@ class KYC extends React.Component {
                   {loadingCreate ? <Loading /> : i18n.t("BTN_CONFIRM")}
                 </button>
               ) : (
-                <a href="#top" style={{textDecoration:"none"}}>
+                <a href="#requiredFields" style={{textDecoration:"none"}}>
                   <button
                     className={style.buttonDisabledSecurity}
                     onClick={() => this.setState({ checkInputs: !checkInputs })}
@@ -1192,7 +1192,7 @@ class KYC extends React.Component {
   };
 
   render() {
-    const { invalidPassport, invalidPhone } = this.state;
+    const { invalidPassport, invalidPhone, checkInputs } = this.state;
     const { sendRequest } = this.props;
     let errorMessage = "";
     if (invalidPassport && !invalidPhone)
@@ -1262,7 +1262,7 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                <span id="top">Teste </span>
+                { checkInputs ? <span style={{color: "red"}} id="requiredFields">{i18n.t("KYC_CHECK_INPUT")} </span>: null}
                 {this.renderComponents()}
               </Grid>
             </Grid>
