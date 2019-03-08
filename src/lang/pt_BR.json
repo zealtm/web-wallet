@@ -461,6 +461,7 @@
   "KYC_UPLOAD_FRONT": "Frente Documento",
   "KYC_UPLOAD_BACK": "Verso Documento",
   "KYC_UPLOAD_SELFIE": "Selfie Documento",
+  "KYC_UPLOAD_SOCIAL_CONTRACT": "Contrato Social",
   "KYC_INFOCONTAINER_TITLE": "Parabéns, você enviou todos os documentos.",
   "KYC_INFOCONTAINER_TEXT": "Agora aguarde a aprovação de seus dados. Fique atento ao seu e-mail!",
   "KYC_INFOCONTAINER_IMG": "Informações",

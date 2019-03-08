@@ -219,7 +219,7 @@ class KYC extends React.Component {
       document: "",
       phoneNumber: "",
       addressFile: null,
-      documentFronFile: null,
+      documentFrontFile: null,
       documentBackFile: null,
       documentSelfieFile: null,
       documentType: "",
@@ -265,7 +265,7 @@ class KYC extends React.Component {
           break;
         case "documentFront":
           this.setState({
-            documentFronFile: {
+            documentFrontFile: {
               file: e.target.files[0],
               fileType: e.target.name
             }
@@ -315,7 +315,7 @@ class KYC extends React.Component {
   renderInputFileStyle = fileType => {
     const {
       addressFile,
-      documentFronFile,
+      documentFrontFile,
       documentBackFile,
       documentSelfieFile,
       checkInputs
@@ -323,7 +323,7 @@ class KYC extends React.Component {
 
     if (fileType === "address" && addressFile !== null) {
       return inputStyle.inputWithFile;
-    } else if (fileType === "documentFront" && documentFronFile !== null) {
+    } else if (fileType === "documentFront" && documentFrontFile !== null) {
       return inputStyle.inputWithFile;
     } else if (fileType === "documentBack" && documentBackFile !== null) {
       return inputStyle.inputWithFile;
@@ -333,7 +333,7 @@ class KYC extends React.Component {
       return inputStyle.inputFileWithError;
     } else if (
       fileType === "documentFront" &&
-      documentFronFile === null &&
+      documentFrontFile === null &&
       checkInputs
     ) {
       return inputStyle.inputFileWithError;
@@ -355,7 +355,7 @@ class KYC extends React.Component {
   renderFileName = (name, value) => {
     const {
       addressFile,
-      documentFronFile,
+      documentFrontFile,
       documentBackFile,
       documentSelfieFile
     } = this.state;
@@ -378,19 +378,19 @@ class KYC extends React.Component {
           </button>
         </div>
       );
-    } else if (documentFronFile !== null && name === "documentFront") {
+    } else if (documentFrontFile !== null && name === "documentFront") {
       return (
         <div>
           <label style={{ float: "left" }}>
             <img src="images/icons/security/green_clip@2x.png" alt="camera" />
           </label>
           <span style={{ marginLeft: "15px", color: "#000", fontSize: "12px" }}>
-            {documentFronFile.file.name}
+            {documentFrontFile.file.name}
           </span>
           <button
             className={style.removeFile}
             onClick={() => {
-              this.setState({ documentFronFile: null });
+              this.setState({ documentFrontFile: null });
             }}
           >
             <span>&times;</span>
@@ -506,24 +506,24 @@ class KYC extends React.Component {
   renderComponents = () => {
     const { kyc } = this.props;
     const imgUrl = "images/icons/security/kyc_documentConfirm.png";
-    // if (kyc.status === "waiting") {
-    //   return (
-    //     <InfoContainer
-    //       imageUrl={imgUrl}
-    //       title={i18n.t("KYC_INFOCONTAINER_TITLE")}
-    //       description={i18n.t("KYC_INFOCONTAINER_TEXT")}
-    //     />
-    //   );
-    // } else if (kyc.status === "confirmed") {
-    //   return (
-    //     <InfoConfirm
-    //       title={i18n.t("KYC_INFOCONFIRM_TITLE")}
-    //       description={i18n.t("KYC_INFOCONFIRM_TEXT")}
-    //     />
-    //   );
-    // } else {
+    if (kyc.status === "waiting") {
+      return (
+        <InfoContainer
+          imageUrl={imgUrl}
+          title={i18n.t("KYC_INFOCONTAINER_TITLE")}
+          description={i18n.t("KYC_INFOCONTAINER_TEXT")}
+        />
+      );
+    } else if (kyc.status === "confirmed") {
+      return (
+        <InfoConfirm
+          title={i18n.t("KYC_INFOCONFIRM_TITLE")}
+          description={i18n.t("KYC_INFOCONFIRM_TEXT")}
+        />
+      );
+    } else {
     return this.renderKycForm();
-    // }
+    }
   };
 
   renderKycForm = () => {
@@ -561,9 +561,9 @@ class KYC extends React.Component {
     } else if (documentType === "cpf") {
       inputMask = CpfMask;
     }
-
+    let isCnpj = documentType === "cnpj";
     return (
-      <Grid item xs={12} sm={12} className={style.wrapperKYC}>
+      <Grid item xs={12} sm={12}  className={style.wrapperKYC}>
         <Grid container className={style.contentKYC}>
           <Grid container className={style.boxKYC_1}>
             <Grid item xs={12} sm={12} md={6}>
@@ -862,8 +862,8 @@ class KYC extends React.Component {
               </div>
             </Grid>
           </Grid>
-          <Grid item className={style.displayBox_3}>
-            <Grid item xs={12} lg={4} className={style.boxKYC_3}>
+          <Grid item className={!isCnpj ? style.displayBox_3 : null}>
+            <Grid item xs={12} lg={isCnpj ? 12 : 4} className={style.boxKYC_3}>
               {loadingKyc ? (
                 <Loading />
               ) : (
@@ -888,6 +888,7 @@ class KYC extends React.Component {
                   formRenderer={e =>
                     this.customFormRenderer(
                       e,
+                      isCnpj ? i18n.t("KYC_UPLOAD_SOCIAL_CONTRACT") :
                       i18n.t("KYC_UPLOAD_FRONT"),
                       "documentFront"
                     )
@@ -899,7 +900,8 @@ class KYC extends React.Component {
             <Grid item xs={12} lg={4} className={style.boxKYC_3}>
               {loadingKyc ? (
                 <Loading />
-              ) : (
+              ) : isCnpj ? null : (
+                
                 <FileUploadProgress
                   isRequired
                   id="fileupload"
@@ -932,7 +934,7 @@ class KYC extends React.Component {
             <Grid item xs={12} lg={4} className={style.boxKYC_3}>
               {loadingKyc ? (
                 <Loading />
-              ) : (
+              ) : isCnpj ? null : (
                 <FileUploadProgress
                   isRequired
                   id="fileupload"
@@ -1119,7 +1121,7 @@ class KYC extends React.Component {
       document,
       phoneNumber,
       addressFile,
-      documentFronFile,
+      documentFrontFile,
       documentBackFile,
       documentSelfieFile
     } = this.state;
@@ -1133,7 +1135,7 @@ class KYC extends React.Component {
       document &&
       phoneNumber &&
       addressFile &&
-      documentFronFile &&
+      documentFrontFile &&
       documentBackFile &&
       documentSelfieFile
     );
@@ -1151,7 +1153,7 @@ class KYC extends React.Component {
       phoneNumber,
       documentType,
       addressFile,
-      documentFronFile,
+      documentFrontFile,
       documentBackFile,
       documentSelfieFile,
       country
@@ -1184,7 +1186,7 @@ class KYC extends React.Component {
     }
     if (!this.state.invalidPassport && !this.state.invalidPhone) {
       this.uploadImage(addressFile.file, addressFile.fileType);
-      this.uploadImage(documentFronFile.file, documentFronFile.fileType);
+      this.uploadImage(documentFrontFile.file, documentFrontFile.fileType);
       this.uploadImage(documentBackFile.file, documentBackFile.fileType);
       this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
       kycCreate(payload);
