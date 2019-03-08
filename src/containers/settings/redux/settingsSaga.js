@@ -16,14 +16,12 @@ import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
 import SettingsService from "../../../services/settingsService";
-import { errorInput, successRequest } from "../../errors/redux/errorAction";
-import KycService from "../../../services/kycService";
+import errorInput from "../../errors/redux/errorAction";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();
 const coinService = new CoinService();
 const settingsService = new SettingsService();
-const kycService = new KycService();
 
 export function* getTwoFactorAuth() {
   try {
@@ -222,7 +220,7 @@ export function* kycCreate(payload) {
     if (response.code != 200) {
       yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
     } else {
-      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+      yield put({ type: "COUNT_KYC_SEND_REQUEST" });
     }
   } catch (error) {
     yield put(internalServerError());
@@ -234,84 +232,89 @@ export function* kycUpload(payload) {
     yield put({ type: "SET_LOADING_KYC", loadingKyc: true });
     let token = yield call(getAuthToken);
     let response = yield call(settingsService.kycUpload, token, payload);
-
     yield put({
       type: "KYC_UPLOAD_REDUCER",
       payload
     });
-
     if (response.code != 200) {
       yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
     } else {
-      yield put(successRequest(i18n.t("SEND_MAIL_INVITE_SUCCESS")));
+      yield put({ type: "COUNT_KYC_SEND_REQUEST" });
     }
   } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* kycGetCountries(){
-  try{
+export function* kycGetCountries() {
+  try {
     let token = yield call(getAuthToken);
     let response = yield call(settingsService.kycGetCountries, token);
-    if(response.code !== 200){
+    if (response.code !== 200) {
       yield put(internalServerError());
-      return ;
+      return;
     }
     yield put({
       type: "KYC_SET_COUNTRIES",
       response
     });
-    return ;
-  }catch(error){
+    return;
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* kycGetStates(payload){
-  try{
-    yield put({ type: "SET_LOADING_STATE"});
+export function* kycGetStates(payload) {
+  try {
+    yield put({ type: "SET_LOADING_STATE" });
     let token = yield call(getAuthToken);
-    let response = yield call(settingsService.kycGetStates, token, payload.country);
-    if(response.code !== 200){
+    let response = yield call(
+      settingsService.kycGetStates,
+      token,
+      payload.country
+    );
+    if (response.code !== 200) {
       yield put(internalServerError());
-      return ;
+      return;
     }
     yield put({
       type: "KYC_SET_STATE",
       response
     });
-    return ;
-  }catch(error){
+    return;
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 
-export function* kycGetCity(payload){
-  try{
-    yield put({ type: "SET_LOADING_CITY"});
+export function* kycGetCity(payload) {
+  try {
+    yield put({ type: "SET_LOADING_CITY" });
     let token = yield call(getAuthToken);
-    let {country, state} = payload.location;
-    let response = yield call(settingsService.kycGetCity, token, country, state);
-    if(response.code !== 200){
+    let { country, state } = payload.location;
+    let response = yield call(
+      settingsService.kycGetCity,
+      token,
+      country,
+      state
+    );
+    if (response.code !== 200) {
       yield put(internalServerError());
-      return ;
+      return;
     }
     yield put({
       type: "KYC_SET_CITY",
       response
     });
-    return ;
-  }catch(error){
+    return;
+  } catch (error) {
     yield put(internalServerError());
   }
 }
 export function* getKyc(){
   try {
     const token = yield call(getAuthToken);
-    const response = yield call(kycService.getKyc,token);
-   // console.log("Get Kyc",response.data.data);
-    
+    const response = yield call(settingsService.getKyc, token);
     yield put({
       type: "GET_KYC_REDUCER",
       kyc: response.data.data
