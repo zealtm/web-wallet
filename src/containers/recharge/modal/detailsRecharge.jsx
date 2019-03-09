@@ -68,12 +68,12 @@ class DetailsRecharge extends React.Component {
     const ddd = recharge.number.substring(0, 2);
     const totalnumero = recharge.number.length;
     const numero = recharge.number.substring(2, totalnumero);
-
+    
     return `(${ddd}) ${numero}`;
   }
 
   render() {
-    const { loading, recharge } = this.props;
+    const { loading, recharge, valueError } = this.props;
     const { user, error, errorMsg } = this.state;
 
     if (loading) {
@@ -87,11 +87,12 @@ class DetailsRecharge extends React.Component {
         <div className={style.modalBox}>
           <div>
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
+            
           </div>
           {i18n.t("RECHARGE_DETAILS_1")}
           <div className={style.strongText} style={{ marginTop: 20 }}>
             <span className={style.textGreen}>
-              {recharge.amount.toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
+              {parseFloat(recharge.amount).toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
             </span>
             {i18n.t("RECHARGE_DETAILS_2")}
             <span className={style.textGreen}>R$ {recharge.value}</span>
