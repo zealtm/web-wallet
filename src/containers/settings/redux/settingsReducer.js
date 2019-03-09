@@ -8,6 +8,19 @@ const initialState = {
   },
   loading: false,
   errors: [],
+  payload: {},
+  upload: {},
+  loadingKyc: false,
+  loadingCreate: false,
+  loadingState: false,
+  loadingCity: false,
+  location: {
+    countries: [],
+    states: [],
+    city: []
+  },
+  sendRequest: 0,
+  kyc: {},
   loadingP2P: false,
   signatures: [],
   signature: {},
@@ -45,6 +58,7 @@ const initialState = {
 };
 
 const settings = (state = initialState, action) => {
+  
   switch (action.type) {
     case "POST_USER_AUTHENTICATE":
       return {
@@ -82,6 +96,77 @@ const settings = (state = initialState, action) => {
           modalAlias: state.wallet.modalAlias,
           loadingAlias: action.state ? true : false
         }
+      };
+    case "GET_KYC_REDUCER":
+      return {
+        ...state,
+        kyc: action.kyc
+      };
+
+    case "SET_LOADING_KYC":
+      return {
+        ...state,
+        loadingKyc: action.loadingKyc
+      };
+    case "SET_LOADING_CREATE_KYC":
+      return {
+        ...state,
+        loadingCreate: action.loadingCreate
+      };
+
+    case "KYC_CREATE_REDUCER":
+      return {
+        ...state,
+        payload: action.payload,
+        loadingCreate: false
+      };
+
+    case "KYC_UPLOAD_REDUCER":
+      return {
+        ...state,
+        upload: action.upload,
+        loadingKyc: false
+      };
+    case "KYC_SET_COUNTRIES":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          countries: action.response.data
+        }
+      };
+    case "KYC_SET_STATE":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          states: action.response.data
+        },
+        loadingState: false
+      };
+    case "KYC_SET_CITY":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          city: action.response.data
+        },
+        loadingCity: false
+      };
+    case "SET_LOADING_STATE":
+      return {
+        ...state,
+        loadingState: true
+      };
+    case "SET_LOADING_CITY":
+      return {
+        ...state,
+        loadingCity: true
+      };
+    case "COUNT_KYC_SEND_REQUEST":
+      return {
+        ...state,
+        sendRequest: state.sendRequest + 1
       };
 
     case "SET_LOADING_P2P":

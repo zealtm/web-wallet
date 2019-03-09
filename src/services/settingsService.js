@@ -10,6 +10,98 @@ import { internalServerError } from "../containers/errors/statusCodeMessage";
 import { setAuthToken } from "../utils/localStorage";
 
 class SettingsService {
+  async kycCreate(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/kyc`,
+        payload.payload,
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async kycUpload(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/kyc/upload`,
+        payload.upload,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+  async kycGetCountries(token){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"listcountries",
+        },
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async kycGetStates(token, country){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"liststates",
+        params:{
+          country
+        }
+        },
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async kycGetCity(token, country, state){
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/util/countrystatecity`,
+        {
+        method:"listcities",
+        params:{
+          country,
+          state
+        }
+        },
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
   async getSignatures(token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -51,6 +143,18 @@ class SettingsService {
     } catch (error) {
       internalServerError();
       return;
+    }
+  }
+  async getKyc(token) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const request = `${BASE_URL}/kyc`;
+      let response = await axios.get(request, API_HEADER);
+      
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response;
+    } catch (error) {
+      return internalServerError();
     }
   }
 }
