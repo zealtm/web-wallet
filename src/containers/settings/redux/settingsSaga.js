@@ -218,7 +218,7 @@ export function* kycCreate(payload) {
     });
 
     if (response.code != 200) {
-      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+      yield put(errorInput(i18n.t("KYC_INFO_FAILURE_CREATE")));
     } else {
       yield put({ type: "COUNT_KYC_SEND_REQUEST" });
     }
@@ -237,7 +237,7 @@ export function* kycUpload(payload) {
       payload
     });
     if (response.code != 200) {
-      yield put(errorInput(i18n.t("SEND_MAIL_INVITE_ERROR")));
+      yield put(errorInput(i18n.t("KYC_INFO_FAILURE_UPLOAD")));
     } else {
       yield put({ type: "COUNT_KYC_SEND_REQUEST" });
     }
