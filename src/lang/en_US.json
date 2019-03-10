@@ -485,11 +485,13 @@
   "KYC_STEP_3": "After validation your account will be able to do fiat transactions",
 
   "KYC_INFOCONFIRM_IMG": "Confirmed Information",
-  "KYC_INFOCONFIRM_TITLE": "Approved Address",
-  "KYC_INFOCONFIRM_TEXT": "Your address has been approved and will be used to improve your security.",
+  "KYC_INFOCONFIRM_TITLE": "Your information is confirmed",
+  "KYC_INFOCONFIRM_TEXT": "Your documents were approved and your account is allowed to make fiat transactions",
   "KYC_REJECTED_TEXT": "Documents not approved.",
   "KYC_CHECK_INPUT": "Required fields are empty",
-  
+  "KYC_INFO_FAILURE_UPLOAD": "Failed to upload file.",
+  "KYC_INFO_FAILURE_CREATE": "Failed to send kyc information.",
+
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
