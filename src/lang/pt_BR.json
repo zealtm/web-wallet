@@ -481,11 +481,13 @@
   "KYC_STEP_3": "Após seus dados serem validados, você estará habilitado a realizar transações com reais",
 
   "KYC_INFOCONFIRM_IMG": "Informações Confirmadas",
-  "KYC_INFOCONFIRM_TITLE": "Endereço Aprovado",
-  "KYC_INFOCONFIRM_TEXT": "O seu endereço foi aprovado e sera usado para melhorar sua segurança.",
+  "KYC_INFOCONFIRM_TITLE": "Suas informações foram confirmadas",
+  "KYC_INFOCONFIRM_TEXT": "Seus documentos foram aprovados e você está habilitado a realizar transações com reais.",
   "KYC_REJECTED_TEXT": "Documentos não aprovados.",
   "KYC_CHECK_INPUT": "Campos obrigatórios não preenchidos",
-  
+  "KYC_INFO_FAILURE_UPLOAD": "Falha ao realizar upload dos arquivos",
+  "KYC_INFO_FAILURE_CREATE": "Falha ao salvar as informações de kyc",
+
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",
   "BUYCOINS_FEE_TEXT_1": "Você está enviando ",
