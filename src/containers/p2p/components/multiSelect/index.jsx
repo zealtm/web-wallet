@@ -56,11 +56,11 @@ class MultiSelect extends React.Component {
     };
 
     renderItems = () => {
-        const { list } = this.props;
+        let { list } = this.props;
 
         const listStyle = {
-            width: "148px"
-        };
+          width: "148px"
+        }
 
         return (
             <ul className={style.list} style={listStyle}>
@@ -89,13 +89,12 @@ class MultiSelect extends React.Component {
         }
     };
 
-    //NAO USAR COMPONENT WILL MOUNT
-    componentWillMount() {
+    componentDidMount() {
         document.addEventListener("click", this.handleClick);
     }
     //NAO SEI SE AQUI ERA PRA SER REMOVELISTENER
     componentWillUnmount() {
-        document.addEventListener("click", this.handleClick);
+        document.removeEventListener("click", this.handleClick);
     }
     renderListCoins = () => {
         const { listCoins } = this.state;
@@ -130,11 +129,12 @@ class MultiSelect extends React.Component {
         );
     }
     render() {
-        const { width } = this.props;
+        const { width, error, wrapperStyle: tmp } = this.props;
         const { listOpen } = this.state;
 
         const wrapperStyle = {
             width: width ? width : "50px",
+            ...tmp
         };
 
         return (
@@ -164,6 +164,7 @@ class MultiSelect extends React.Component {
 MultiSelect.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectItems: PropTypes.func.isRequired,
+    wrapperStyle: PropTypes.object,
     width: PropTypes.string
 };
 

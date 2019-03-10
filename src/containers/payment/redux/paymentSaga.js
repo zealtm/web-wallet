@@ -15,7 +15,7 @@ import i18n from "../../../utils/i18n";
 // SERVICES
 import PaymentService from "../../../services/paymentService";
 import CoinService from "../../../services/coinService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 const paymentService = new PaymentService();
 const coinService = new CoinService();

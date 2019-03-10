@@ -14,7 +14,7 @@ import i18n from "../../../utils/i18n";
 // SERVICES
 import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 import SettingsService from "../../../services/settingsService";
 import errorInput from "../../errors/redux/errorAction";
 
@@ -246,6 +246,32 @@ export function* kycUpload(payload) {
   }
 }
 
+export function* getSignaturesSaga() {
+  try {
+    yield put({
+      type: "SET_LOADING_P2P",
+      loadingP2P: true
+    });
+
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.getSignatures, token);
+
+    let signatures = [];
+    if (response) {
+      signatures = response.data;
+    }
+
+    yield put({
+      type: "GET_SIGNATURES_P2P_REDUCER",
+      signatures: signatures
+    });
+
+    yield put({ type: "SET_LOADING_P2P", loadingP2P: false });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* kycGetCountries() {
   try {
     let token = yield call(getAuthToken);
@@ -259,6 +285,25 @@ export function* kycGetCountries() {
       response
     });
     return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* getSignatureSaga() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(settingsService.getSignature, token);
+
+    let mySignature = [];
+    if (response) {
+      mySignature = response.data;
+    }
+
+    yield put({
+      type: "GET_SIGNATURE_P2P_REDUCER",
+      mySignature: mySignature
+    });
   } catch (error) {
     yield put(internalServerError());
   }
@@ -282,6 +327,100 @@ export function* kycGetStates(payload) {
       response
     });
     return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+export function* signSignatureSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      loading: true
+    });
+
+    try {
+      let seed = yield call(getUserSeedWords);
+      let token = yield call(getAuthToken);
+
+      const coin = payload.data.coin;
+
+      // pega o servico disponivel
+      let lunesWallet = yield call(transactionService.p2pService, coin, token);
+
+      const payloadTransaction = {
+        coin: coin,
+        fromAddress: payload.data.fromAddress,
+        toAddress: lunesWallet.address,
+        lunesUserAddress: payload.data.lunesUserAddress,
+        amount: payload.data.amount,
+        fee: payload.data.fee,
+        feePerByte: payload.data.feePerByte,
+        feeLunes: payload.data.feeLunes,
+        price: payload.data.price,
+        decimalPoint: payload.data.decimalPoint
+      };
+
+      if (lunesWallet) {
+        let response = yield call(
+          transactionService.transaction,
+          lunesWallet.id,
+          payloadTransaction,
+          lunesWallet,
+          decryptAes(seed, payload.data.user),
+          token
+        );
+
+        const transacao_obj = JSON.parse(response.config.data);
+
+        if (response) {
+          const payload_elastic = {
+            txID: transacao_obj.txID,
+            planId: payload.data.planId
+          };
+
+          let response_elastic = yield call(
+            settingsService.signSignature,
+            token,
+            payload_elastic
+          );
+
+          yield put({
+            type: "SET_LOADING_REDUCER",
+            loading: false
+          });
+
+          if (response_elastic.data.errorMessage) {
+            yield put({
+              type: "SET_MODAL_FLOW_STEP_REDUCER",
+              step: 4
+            });
+            yield put(internalServerError());
+          } else {
+            yield put({
+              type: "SET_MODAL_FLOW_STEP_REDUCER",
+              step: 3
+            });
+          }
+
+          return;
+        }
+      }
+
+      yield put(internalServerError());
+      return;
+    } catch (error) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        loading: false
+      });
+
+      yield put({
+        type: "SET_MODAL_FLOW_STEP_REDUCER",
+        step: 4
+      });
+
+      yield put(internalServerError());
+    }
   } catch (error) {
     yield put(internalServerError());
   }
@@ -311,6 +450,40 @@ export function* kycGetCity(payload) {
     yield put(internalServerError());
   }
 }
+
+export function* getFeeP2PSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      loading: true
+    });
+
+    let response = yield call(
+      coinService.getFee,
+      payload.coin,
+      payload.fromAddress,
+      payload.toAddress,
+      payload.amount,
+      payload.decimalPoint
+    );
+
+    if (!response.fee) {
+      yield put({
+        type: "SET_LOADING_REDUCER",
+        loading: false
+      });
+      yield put(internalServerError());
+    }
+
+    yield put({
+      type: "GET_FEE_P2P_REDUCER",
+      fee: response
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getKyc(){
   try {
     const token = yield call(getAuthToken);
@@ -322,5 +495,11 @@ export function* getKyc(){
   } catch (error) {
     yield put(internalServerError());
   }
+}
 
+export function* setFeeP2PSaga(payload) {
+  yield put({
+    type: "SET_FEE_P2P_REDUCER",
+    fee: payload
+  });
 }

@@ -18,6 +18,7 @@ import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
 import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
+import ModalBar from "../../components/modalBar";
 
 // MATERIAL
 import { Grid, Input } from "@material-ui/core";
@@ -295,15 +296,19 @@ class Invoice extends React.Component {
       coinsRedux,
       operadoras,
       valores,
-      loadingValores
+      loadingValores,
+      valueError
     } = this.props;
     const { coin, errors, invoice } = this.state;
 
     const title = coin.name || "Select a coin..";
     const img = coin.img || "";
 
-    return (
+    return (      
       <Grid container direction="row" justify="center">
+      <div>
+        {valueError ? <ModalBar type="error" message= {i18n.t("RECHARGE_ERROR_MESSAGE")} timer /> : null}
+      </div>
         <Grid item xs={12} className={style.box} style={{ padding: 5 }}>
           <Grid container direction="row" justify="center">
             <Grid item xs={8}>
@@ -334,7 +339,7 @@ class Invoice extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
             <Select
-              list={valores}
+              list={valores ? valores : ""}
               title={invoice.valor.title}
               error={errors.includes("valor")}
               selectItem={this.handleValor}
@@ -412,7 +417,8 @@ Invoice.propTypes = {
   getValoresRecarga: PropTypes.func.isRequired,
   getOperators: PropTypes.func.isRequired,
   setClearRecharge: PropTypes.func.isRequired,
-  coins: PropTypes.array
+  coins: PropTypes.array,
+  valueError: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
@@ -421,7 +427,9 @@ const mapStateToProps = store => ({
   loadingValores: store.recharge.loadingValores,
   operadoras: store.recharge.operadoras,
   valores: store.recharge.valores,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  valueError: store.recharge.valueError,
+  
 });
 
 const mapDispatchToProps = dispatch =>
