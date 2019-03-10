@@ -522,7 +522,7 @@ class KYC extends React.Component {
         />
       );
     } else {
-    return this.renderKycForm();
+      return this.renderKycForm();
     }
   };
 
@@ -563,7 +563,7 @@ class KYC extends React.Component {
     }
     let isCnpj = documentType === "cnpj";
     return (
-      <Grid item xs={12} sm={12}  className={style.wrapperKYC}>
+      <Grid item xs={12} sm={12} className={style.wrapperKYC}>
         <Grid container className={style.contentKYC}>
           <Grid container className={style.boxKYC_1}>
             <Grid item xs={12} sm={12} md={6}>
@@ -888,8 +888,9 @@ class KYC extends React.Component {
                   formRenderer={e =>
                     this.customFormRenderer(
                       e,
-                      isCnpj ? i18n.t("KYC_UPLOAD_SOCIAL_CONTRACT") :
-                      i18n.t("KYC_UPLOAD_FRONT"),
+                      isCnpj
+                        ? i18n.t("KYC_UPLOAD_SOCIAL_CONTRACT")
+                        : i18n.t("KYC_UPLOAD_FRONT"),
                       "documentFront"
                     )
                   }
@@ -901,7 +902,6 @@ class KYC extends React.Component {
               {loadingKyc ? (
                 <Loading />
               ) : isCnpj ? null : (
-                
                 <FileUploadProgress
                   isRequired
                   id="fileupload"
@@ -977,7 +977,7 @@ class KYC extends React.Component {
                   {loadingCreate ? <Loading /> : i18n.t("BTN_CONFIRM")}
                 </button>
               ) : (
-                <a href="#requiredFields" style={{textDecoration:"none"}}>
+                <a href="#requiredFields" style={{ textDecoration: "none" }}>
                   <button
                     className={style.buttonDisabledSecurity}
                     onClick={() => this.setState({ checkInputs: !checkInputs })}
@@ -1119,13 +1119,26 @@ class KYC extends React.Component {
       zipcode,
       fullName,
       document,
+      documentType,
       phoneNumber,
       addressFile,
       documentFrontFile,
       documentBackFile,
       documentSelfieFile
     } = this.state;
-
+    if (documentType === "cnpj") {
+      return (
+        street &&
+        state &&
+        city &&
+        zipcode &&
+        fullName &&
+        document &&
+        phoneNumber &&
+        addressFile &&
+        documentFrontFile
+      );
+    }
     return (
       street &&
       state &&
@@ -1264,7 +1277,11 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                { checkInputs ? <span style={{color: "red"}} id="requiredFields">{i18n.t("KYC_CHECK_INPUT")} </span>: null}
+                {checkInputs ? (
+                  <span style={{ color: "red" }} id="requiredFields">
+                    {i18n.t("KYC_CHECK_INPUT")}{" "}
+                  </span>
+                ) : null}
                 {this.renderComponents()}
               </Grid>
             </Grid>
