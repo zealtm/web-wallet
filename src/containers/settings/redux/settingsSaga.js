@@ -16,7 +16,7 @@ import AuthService from "../../../services/authService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transactionService";
 import SettingsService from "../../../services/settingsService";
-import errorInput from "../../errors/redux/errorAction";
+import { errorInput } from "../../errors/redux/errorAction";
 
 const authService = new AuthService();
 const transactionService = new TransactionService();

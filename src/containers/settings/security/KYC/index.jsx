@@ -33,7 +33,6 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
-import ErrorOutline from "@material-ui/icons/ErrorOutline";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -50,7 +49,6 @@ import { parsePhoneNumber } from "libphonenumber-js";
 import { parsePhoneNumberFromString as parseMax } from "libphonenumber-js/max";
 import ModalBar from "../../../../components/modalBar";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
-import { CEP } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
 import InfoConfirm from "../infoCorfirm";
 
