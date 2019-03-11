@@ -14,7 +14,9 @@ import { getAuthToken } from "../../../utils/localStorage";
 import AssetService from "../../../services/assetService";
 import CoinService from "../../../services/coinService";
 import TransactionService from "../../../services/transaction/transactionService";
+
 const assetService = new AssetService();
+const coinService = new CoinService();
 
 export function* getAssetGeneralInfo(action) {
   try {
@@ -106,7 +108,6 @@ export function* reloadAsset(action) {
   }
 }
 
-const coinService = new CoinService();
 const transactionService = new TransactionService();
 
 export function* validateAddressAssets(action) {
@@ -202,6 +203,14 @@ export function* getAssetsSendModalFee(action) {
       type: "CHANGE_WALLET_ERROR_STATE",
       state: true
     });
+    yield put(internalServerError());
+  }
+}
+
+export function* shareTokenAddress(action) {
+  try {    
+    yield call(coinService.shareCoinAddress, action.name, action.address);
+  } catch (error) {
     yield put(internalServerError());
   }
 }

@@ -266,7 +266,7 @@
 /* 2.3 BUTTONS */
 :local(.alignButtons) {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 2%;
 }
 :local(.receiveButton) {
@@ -505,6 +505,12 @@
   :local .modalBox {
     font-size: 12px;
   }
+  :local .baseStep {
+    padding: 30px 0;
+  }
+  :local .boxReceive .address{
+    font-size: 14px;
+  }
 }
 
 :local .boxQr {
@@ -729,8 +735,9 @@
 :local .boxReceive .spacingBox{
   align-items: center;
   padding: 5% 2% 2% 2%;
-  max-width: 50%;
-  margin-left: 23%;
+  max-width: 90%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 :local .boxReceive .buttonReceive {
@@ -740,6 +747,10 @@
 
 :local .boxReceive .buttonReceive:hover {
   opacity: 1;
+}
+
+:local .buttonReceiveImgShare{
+  width: 38px;
 }
 
 :local .boxReceive span {

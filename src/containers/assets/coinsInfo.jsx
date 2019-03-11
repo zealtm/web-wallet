@@ -18,6 +18,7 @@ import style from "./style.css";
 
 // COMPONENTS
 import SendModal from "./modal/sendModal";
+import ReceiveModal from "./modal/receiveModal/";
 import Modal from "../../components/modal";
 
 // MATERIAL UI
@@ -73,8 +74,9 @@ class CoinsInfo extends React.Component {
   };
 
   renderBalance = () => {
-    let { coins } = this.props;
-    let asset = coins["lunes"];
+    let { assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItem}>
@@ -87,8 +89,9 @@ class CoinsInfo extends React.Component {
   };
 
   renderBalanceMobile = () => {
-    let { coins } = this.props;
-    let asset = coins["lunes"];
+    let { assets: assetsRoute } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItemMobile}>
@@ -103,7 +106,14 @@ class CoinsInfo extends React.Component {
     let { setAssetsSendModalOpen } = this.props;
     return (
       <Grid item className={style.alignButtons}>
-        <button className={style.receiveButton}>{i18n.t("BTN_RECEIVE")}</button>
+        <button
+          className={style.receiveButton}
+          onClick={() => {
+            this.handleReceiveModal();
+          }}
+        >
+          {i18n.t("BTN_RECEIVE")}
+        </button>
 
         <button
           className={style.sentButton}
@@ -117,7 +127,12 @@ class CoinsInfo extends React.Component {
   renderButtonMobile = () => {
     return (
       <Grid item xs={11} className={style.alignButtons}>
-        <button className={style.receiveButtonMobile}>
+        <button
+          className={style.receiveButtonMobile}
+          onClick={() => {
+            this.handleReceiveModal();
+          }}
+        >
           {i18n.t("BTN_RECEIVE")}
         </button>
         <button className={style.sentButtonMobile}>{i18n.t("BTN_SEND")}</button>
@@ -125,24 +140,49 @@ class CoinsInfo extends React.Component {
     );
   };
 
+  renderReceiveModal = coin => {
+    return (
+      <Modal
+        title={i18n.t("WALLET_MODAL_RECEIVE_TITLE")}
+        content={<ReceiveModal coin={coin} />}
+        show={this.state.modalReceive}
+        close={() => {
+          this.handleReceiveModal();
+        }}
+      />
+    );
+  };
+  handleReceiveModal = () => {
+    this.setState({ modalReceive: !this.state.modalReceive });
+  };
   render() {
-    let { assets } = this.props;
-    let step = assets.modal.step;
+    let { assets: assetsRoute, skeleton } = this.props;
+    let { assets, selectedCoin } = assetsRoute;
+    let asset = assets[selectedCoin];
+    let coin = skeleton.coins.lunes;
+    let step = assetsRoute.modal.step;
+
+    if (selectedCoin === undefined) return null;
 
     return (
       <div>
-        <Modal
-          title={i18n.t("WALLET_MODAL_SEND_TITLE")}
-          content={<SendModal />}
-          show={assets.modal.open}
-          close={this.handleModalSendClose}
-          back={
-            step === 0 || step === 4 || step === 5 || step === 6
-              ? null
-              : () => this.previousStep()
-          }
-        />
-
+        <div>
+          <Modal
+            title={i18n.t("WALLET_MODAL_SEND_TITLE")}
+            content={<SendModal />}
+            show={assetsRoute.modal.open}
+            close={this.handleModalSendClose}
+            back={
+              step === 0 || step === 4 || step === 5 || step === 6
+                ? null
+                : () => this.previousStep()
+            }
+          />
+        </div>
+        <div>
+          {this.renderReceiveModal(coin)}
+        </div>
+        
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
@@ -173,14 +213,16 @@ CoinsInfo.propTypes = {
   setAssetsSendModalOpen: PropTypes.func.isRequired,
   setAssetsReceiveModalOpen: PropTypes.func.isRequired,
   resetModalSend: PropTypes.func.isRequired,
-  setAddressModalStep: PropTypes.func.isRequired
+  setAddressModalStep: PropTypes.func.isRequired,
+  skeleton: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
   modal: store.assets.modal,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  skeleton: store.skeleton
 });
 
 const mapDispatchToProps = dispatch =>
