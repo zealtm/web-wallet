@@ -87,4 +87,9 @@ export const setAssetsSendModalSelectedFeePerByte = fee => ({
 
 export const resetModalSend = () => ({
   type: "SET_RESET_MODAL_SEND"
-})
+});
+export const shareTokenAddress = (name, address) => ({
+  type: "GET_TOKEN_ADRESS_API",
+  name,
+  address
+});
