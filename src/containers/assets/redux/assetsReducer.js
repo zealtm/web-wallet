@@ -31,7 +31,7 @@ const initialModalSendState = {
 };
 
 const initialState = {
-  selectedCoin: "lunes",
+  selectedCoin: undefined,
   isBalanceLoading: false,
   isTxHistoryLoading: false,
   assets: [],
