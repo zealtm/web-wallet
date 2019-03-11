@@ -491,7 +491,8 @@
   "KYC_CHECK_INPUT": "Required fields are empty",
   "KYC_INFO_FAILURE_UPLOAD": "Failed to upload file.",
   "KYC_INFO_FAILURE_CREATE": "Failed to send kyc information.",
-
+  "KYC_REJECTED_MESSAGE": "Your information was not validated. Please send your documents again considering the following reason:",
+  
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
