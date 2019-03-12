@@ -1,10 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-// REDUX
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { setModalStep } from "../../../p2p/redux/p2pAction";
+// UTILS
+import i18n from "../../../../utils/i18n";
 
 // STYLE
 import style from "./style.css";
@@ -21,37 +18,11 @@ class DoneModal extends React.Component {
           className={style.iconInfor}
         />
         <div className={style.totalConfirm}>
-          <span>{"Você acabou de debitar um boleto"}</span>
-          <span>{"no valor de R$ 30,00 em sua Wallet Lunes"}</span>
-        </div>
-
-        <div className={style.confirmFee}>
-          <div>
-            {
-              "Você pode visualizar a transação em sua aba “Históricos” desse boleto."
-            }
-          </div>
+          <span>{i18n.t("P2P_SIGNATURE_CONFIRM")}</span>
         </div>
       </div>
     );
   }
 }
-DoneModal.propTypes = {
-  setModalStep: PropTypes.func.isRequired
-};
-const mapStateToProps = store => ({
-  modalStep: store.p2p.modalStep
-});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      setModalStep
-    },
-    dispatch
-  );
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DoneModal);
+export default DoneModal;

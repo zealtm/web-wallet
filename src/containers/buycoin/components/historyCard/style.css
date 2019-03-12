@@ -47,6 +47,11 @@
   text-align: right;
 }
 
+:local(.payInfo) {
+  margin:  0 15px;
+  display: flex;
+}
+
 /* CARD */
 
 :local .wrapper1 {

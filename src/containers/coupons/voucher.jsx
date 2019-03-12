@@ -228,6 +228,8 @@ class Voucher extends React.Component {
   }
 }
 
+
+
 Voucher.propTypes = {
   coins: PropTypes.array.isRequired,
   voucher: PropTypes.object.isRequired,
