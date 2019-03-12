@@ -4,7 +4,7 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 // SERVICES
 import BuyService from "../../../services/buyService";
 import CoinService from "../../../services/coinService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";

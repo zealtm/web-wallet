@@ -101,3 +101,22 @@ export const PhoneMask = (props) => {
     />
   );
 }
+
+export const CEP = (props) => {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value,
+          },
+        });
+      }}
+      format="##### ###"
+    />
+  );
+}
