@@ -9,14 +9,20 @@ import i18n from "../../../utils/i18n";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 
 // Services
 import AssetService from "../../../services/assetService";
 import CoinService from "../../../services/coinService";
+import { LunesServices } from "../../../services/coins";
 import TransactionService from "../../../services/transactionService";
+//CONTANTS
+import { TESTNET } from "../../../constants/apiBaseUrl";
+import { networks } from "../../../constants/network";
 
 const assetService = new AssetService();
 const coinService = new CoinService();
+const lunesService = new LunesServices();
 
 export function* getAssetGeneralInfo(action) {
   try {
@@ -25,9 +31,12 @@ export function* getAssetGeneralInfo(action) {
       isBalanceLoading: true
     });
 
+    let network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
     let token = getAuthToken();
-    let { lunesAddress } = action;
-
+    let lunesAddress = yield call(lunesService.getLunesAddress, {
+      seed: decryptAes(action.lunesAddress.seed, action.lunesAddress.password),
+      network: network
+    });
     let response = yield call(
       [assetService, assetService.getBalances],
       lunesAddress,
@@ -208,7 +217,7 @@ export function* getAssetsSendModalFee(action) {
 }
 
 export function* shareTokenAddress(action) {
-  try {    
+  try {
     yield call(coinService.shareCoinAddress, action.name, action.address);
   } catch (error) {
     yield put(internalServerError());
