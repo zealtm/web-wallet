@@ -4,9 +4,22 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import {
+  setAssetsSendModalOpen,
+  setAssetsReceiveModalOpen,
+  setAddressModalStep,
+  resetModalSend
+} from "./redux/assetsAction";
+
+import { loadWalletInfo } from "../skeleton/redux/skeletonAction";
 
 // STYLE
 import style from "./style.css";
+
+// COMPONENTS
+import SendModal from "./modal/sendModal";
+import ReceiveModal from "./modal/receiveModal/";
+import Modal from "../../components/modal";
 
 // MATERIAL UI
 import Grid from "@material-ui/core/Grid";
@@ -16,11 +29,6 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../utils/i18n";
-import { convertBiggestCoinUnit } from "../../utils/numbers";
-
-//COMPONENTS
-import Modal from "../../components/modal";
-import ReceiveModal from "./modal/receiveModal/";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -39,6 +47,32 @@ class CoinsInfo extends React.Component {
     }
   };
 
+  previousStep = () => {
+    let { step } = this.props.assets.modal;
+    let { setAddressModalStep } = this.props;
+    if (step >= 0) {
+      setAddressModalStep(step - 1);
+    }
+
+    return;
+  };
+
+  handleModalSendClose = () => {
+    this.props.resetModalSend();
+    let { user, assets, setAssetsSendModalOpen, loadWalletInfo } = this.props;
+    let step = assets.modal.step;
+
+    if (step === 4) {
+      return null;
+    } else if (step === 5 || step === 6) {
+      return () => {
+        setAssetsSendModalOpen(), loadWalletInfo(user.password);
+      };
+    } else {
+      return () => setAssetsReceiveModalOpen();
+    }
+  };
+
   renderBalance = () => {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
@@ -47,12 +81,13 @@ class CoinsInfo extends React.Component {
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItem}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+          <p>{asset.balance.available}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
     );
   };
+
   renderBalanceMobile = () => {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
@@ -61,13 +96,14 @@ class CoinsInfo extends React.Component {
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItemMobile}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{convertBiggestCoinUnit(asset.balance, 8)}</p>
+          <p>{asset.balance.available}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
     );
   };
   renderButton = () => {
+    let { setAssetsSendModalOpen } = this.props;
     return (
       <Grid item className={style.alignButtons}>
         <button
@@ -79,7 +115,12 @@ class CoinsInfo extends React.Component {
           {i18n.t("BTN_RECEIVE")}
         </button>
 
-        <button className={style.sentButton}>{i18n.t("BTN_SEND")}</button>
+        <button
+          className={style.sentButton}
+          onClick={() => setAssetsSendModalOpen()}
+        >
+          {i18n.t("BTN_SEND")}
+        </button>
       </Grid>
     );
   };
@@ -119,23 +160,36 @@ class CoinsInfo extends React.Component {
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
     let coin = skeleton.coins.lunes;
-    
+    let step = assetsRoute.modal.step;
+
     if (selectedCoin === undefined) return null;
 
     return (
       <div>
-        {this.renderReceiveModal(coin)}
+        <div>
+          <Modal
+            title={i18n.t("WALLET_MODAL_SEND_TITLE")}
+            content={<SendModal />}
+            show={assetsRoute.modal.open}
+            close={this.handleModalSendClose}
+            back={
+              step === 0 || step === 4 || step === 5 || step === 6
+                ? null
+                : () => this.previousStep()
+            }
+          />
+        </div>
+        <div>
+          {this.renderReceiveModal(coin)}
+        </div>
+        
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                <h3>{asset.tokenName.toUpperCase()}</h3>
+                {/* <h3>{asset.tokenName.toUpperCase()}</h3> */}
                 <img
-                  src={
-                    asset.image
-                      ? asset.image
-                      : "images/icons/tokens/default.png"
-                  }
+                  src={"images/icons/tokens/default.png"}
                   className={style.iconCoinSelected}
                 />
               </Grid>
@@ -144,8 +198,8 @@ class CoinsInfo extends React.Component {
 
             <Hidden smUp>{this.renderBalanceMobile()}</Hidden>
           </Grid>
-          <Hidden smUp>{this.renderButtonMobile()}</Hidden>
         </Grid>
+        <Hidden smUp>{this.renderButtonMobile()}</Hidden>
       </div>
     );
   }
@@ -153,17 +207,35 @@ class CoinsInfo extends React.Component {
 
 CoinsInfo.propTypes = {
   user: PropTypes.object.isRequired,
+  coins: PropTypes.array.isRequired,
   assets: PropTypes.object.isRequired,
+  loadWalletInfo: PropTypes.func.isRequired,
+  setAssetsSendModalOpen: PropTypes.func.isRequired,
+  setAssetsReceiveModalOpen: PropTypes.func.isRequired,
+  resetModalSend: PropTypes.func.isRequired,
+  setAddressModalStep: PropTypes.func.isRequired,
   skeleton: PropTypes.object.isRequired
 };
 
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
+  modal: store.assets.modal,
+  coins: store.skeleton.coins,
   skeleton: store.skeleton
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setAssetsSendModalOpen,
+      setAssetsReceiveModalOpen,
+      resetModalSend,
+      setAddressModalStep,
+      loadWalletInfo
+    },
+    dispatch
+  );
 
 export default connect(
   mapSateToProps,
