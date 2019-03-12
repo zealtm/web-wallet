@@ -12,7 +12,13 @@
     2.4 INPUTS
     2.5 BUTTONS
     2.6 HEADER SETTINGS
-
+3.  CELL PHONE
+    3.1 BASES
+    3.2 TEXTS
+4.  KYC
+    4.1 BASES
+    4.2 TEXTS
+    4.3 BUTTONS
 */
 
 /* ------------------------------------------------------------------------- */
@@ -85,6 +91,19 @@
   :local(.headerSettings h2) {
     font-size: 9px;
   }
+}
+
+:local(.statusRejected) {
+  float: right;
+  position: relative;
+  bottom: 6px;
+}
+:local(.statusRejected p) {
+  color: #f36161 !important;
+  position: relative;
+  right: 5px;
+  font-size: 13px;
+  top: 2px;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -207,6 +226,64 @@
   text-align: center;
 }
 
+:local(.inputTextPhone) {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #3b1878 !important;
+  height: 30px !important;
+  color: white !important;
+  position: relative;
+  top: 9px;
+  left:5%
+}
+:local(.inputTextPhoneError) {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border-bottom: 2px solid #f44336 !important;
+  height: 30px !important;
+  color: white !important;
+  position: relative;
+  top: 9px;
+  left:5%
+}
+@media only screen and (max-width: 959px) {
+  :local(.inputTextPhone) {
+    composes: inputTextDefault from "../../components/bases/inputBase.css";
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #3b1878 !important;
+    height: 30px !important;
+    color: white !important;
+    position: relative;
+    top: 9px;
+    left: 10%
+  }
+  :local(.inputTextPhoneError) {
+    composes: inputTextDefault from "../../components/bases/inputBase.css";
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    border-bottom: 2px solid #f44336 !important;
+    height: 30px !important;
+    color: white !important;
+    position: relative;
+    top: 9px;
+    left: 10%
+  } 
+}
+:local(.inputTextPhone:hover) {
+  border-bottom: 2px solid #3b1878 !important;
+}
+:local(.inputTextPhone:focus) {
+  border-bottom: 2px solid #3b1878 !important;
+}
+
+
 :local(.inputTwoFactorAuthenticatorError) {
   composes: inputTwoFactorAuthenticator;
   border-bottom: 1px solid #f05252;
@@ -260,7 +337,7 @@
     width: 45%;
   }
   :local(.containerItems) {
-    margin-bottom: 0;
+    margin-bottom: 20px;
   }
   :local(.headerSecurity p) {
     float: left;
@@ -334,3 +411,246 @@
 }
 
 /* ------------------------------------------------------------------------- */
+
+/* 3.  CELL PHONE */
+
+/* 3.1 BASES */
+:local(.buttonEnableSecurity) {
+  composes: buttonEnable;
+  font-weight: bold;
+  margin: 0;
+}
+
+:local(.alignButtonMobile) {
+  display: flex;
+  align-items: flex-end;
+}
+
+:local(.counterItemsMobile) {
+  display: flex;
+  justify-content: space-between;
+}
+
+:local(.alignNumberField) {
+  display: flex;
+  align-items: flex-end;
+}
+
+:local(.indicatorItemMobile) {
+  composes: indicatorItem;
+}
+
+:local(.contentMobile) {
+  padding: 50px 0 0;
+}
+
+/* 3.2 TEXTS */
+:local(.contentMobile h3) {
+  color: #68f285;
+}
+
+:local(.fontSizeInput) {
+  font-size: 32px !important;
+}
+
+@media screen and (max-width: 599px) {
+  :local(.indicatorItemMobile) {
+    color: #68f285;
+    text-align: left;
+    display: flex;
+  }
+  :local(.alignButtonMobile) {
+    margin-top: 35px;
+  }
+  :local(.contentMobile h3) {
+    font-size: 10px;
+  }
+  :local(.fontSizeInput) {
+    font-size: 18px !important;
+  }
+}
+/* ------------------------------------------------------------------------- */
+
+/* 4.  KYC */
+
+/* 4.1 BASE */
+:local(.containerKYC) {
+  padding: 5px;
+}
+:local .labelRadio {
+  margin-bottom: 0;
+}
+:local(.wrapperKYC) {
+  float: right;
+}
+
+:local(.contentKYC) {
+  composes: bgPurpleDefault from "../../components/bases/colorBase.css";
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+:local(.contentKYC_2) {
+  composes: contentKYC;
+  margin-bottom: 40px;
+}
+
+:local(.counterItemsKYC) {
+  display: flex;
+  justify-content: space-between;
+}
+
+:local(.boxKYC_1) {
+  display: flex;
+  padding: 16px 25px;
+}
+
+:local(.boxKYC_2) {
+  display: flex;
+  padding: 0px 25px 13px;
+}
+
+:local(.boxKYC_3) {
+  padding: 15px 25px;
+}
+
+:local(.displayBox_3) {
+  display: flex;
+}
+
+:local(.containerKYC p) {
+  color: #68f285;
+  margin: 0;
+}
+
+:local(.contentKYC img) {
+  float: right;
+  width: 20px;
+}
+
+/* 4.2 TEXT */
+:local(.indicatorItemKYC) {
+  composes: indicatorItem;
+}
+@media screen and (max-width: 599px) {
+  :local(.textInput){
+    width: calc(100% - -7%) !important;
+  }
+}
+
+
+/* 4.3 BUTTON */
+input[type="file"]::-webkit-file-upload-button {
+  background-color: transparent;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  color: #68f285;
+}
+
+:local(.buttonDisabledSecurity) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+}
+:local(.enableButtonUpload) {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
+}
+
+:local(.disabledButtonUpload) {
+  composes: buttonBorderGreen from "../../components/bases/buttonBase.css";
+  width: 80px;
+  max-height: 30px;
+  padding: 5px;
+}
+
+:local(.removeFile){
+  -webkit-appearance: none;
+  position: relative;
+  right:  6px;
+  top: 2px;
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  float: right;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  color: #f05252;
+}
+
+@media screen and (max-width: 1279px) {
+  :local(.displayBox_3) {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  :local(.boxKYC_1) {
+    display: block;
+  }
+
+  :local(.containerKYC p) {
+    font-size: 10px;
+  }
+
+  :local(.indicatorItemKYC) {
+    color: #68f285;
+    text-align: left;
+    display: flex;
+  }
+}
+
+/* INFOCONTAINER */
+
+:local .infoTitle {
+  font-size: 24px;
+}
+
+:local .infoText {
+  font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  :local .infoTitle {
+    font-size: 14px;
+  }
+
+  :local .infoText {
+    font-size: 12px;
+  }
+
+  :local .infoBoxText {
+    margin-left: 20px;
+  }
+}
+/* INFOCONFIRM */
+
+:local .infoConfirmTitle {
+font-size: 24px;
+}
+
+:local .infoConfirmImg {
+  width: 80%;
+}
+
+:local .infoConfirmText {
+font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  :local .infoConfirmTitle {
+    font-size: 14px;
+  }
+  
+  :local .infoConfirmText {
+    font-size: 12px;
+  }
+
+  :local .infoConfirmBoxText {
+    margin-left: 20px;
+  }
+}

@@ -3,12 +3,13 @@ import EthereumTx from "ethereumjs-tx";
 import hdkey from "ethereumjs-wallet/hdkey";
 import Web3 from "web3";
 import bip39 from "bip39";
+import { internalServerError } from "../../containers/errors/statusCodeMessage";
 
 /* eslint-disable */
 const bs = require("biggystring");
 /* eslint-enable */
 
-class EthTransaction {
+class EthServices {
   async createTransaction(data) {
     try {
       let wallet = await this.mnemonicToWallet(
@@ -48,6 +49,20 @@ class EthTransaction {
     }
   }
 
+  async getEthAddress(data) {
+    try {
+      let wallet = await this.mnemonicToWallet(
+        data.network.derivePath,
+        data.seed
+      );
+      return this.toHex(
+        EthereumUtil.addHexPrefix(wallet.getAddress().toString("hex"))
+      );
+    } catch (error) {
+      internalServerError();
+    }
+  }
+
   toHex(num) {
     if (num.isHex) {
       return num;
@@ -69,4 +84,4 @@ class EthTransaction {
   }
 }
 
-export default EthTransaction;
+export default EthServices;

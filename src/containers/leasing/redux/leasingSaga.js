@@ -8,7 +8,7 @@ import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import i18n from "../../../utils/i18n";
 import { decryptAes } from "../../../utils/cryptography";
 import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 import LeasingService from "../../../services/leasingService";
 import CoinService from "../../../services/coinService";
 const leasingService = new LeasingService();

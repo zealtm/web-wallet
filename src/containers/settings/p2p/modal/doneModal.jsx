@@ -1,5 +1,8 @@
 import React from "react";
 
+// UTILS
+import i18n from "../../../../utils/i18n";
+
 // STYLE
 import style from "./style.css";
 
@@ -15,16 +18,7 @@ class DoneModal extends React.Component {
           className={style.iconInfor}
         />
         <div className={style.totalConfirm}>
-          <span>{"Você acabou de debitar um boleto"}</span>
-          <span>{"no valor de R$ 30,00 em sua Wallet Lunes"}</span>
-        </div>
-
-        <div className={style.confirmFee}>
-          <div>
-            {
-              "Você pode visualizar a transação em sua aba “Históricos” desse boleto."
-            }
-          </div>
+          <span>{i18n.t("P2P_SIGNATURE_CONFIRM")}</span>
         </div>
       </div>
     );

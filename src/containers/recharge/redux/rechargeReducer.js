@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   loadingValores: false,
   modalStep: 1,
+  valueError: false,
   recharge: {
     value: 0,
     number: '',
@@ -67,7 +68,8 @@ const recharge = (state=initialState, action) => {
         return {
           ...state,
           valores: action.valores,
-          loadingValores: false
+          loadingValores: false,
+          valueError: action.valueError
         }
 
       case "SET_RECHARGE_REDUCER":

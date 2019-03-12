@@ -33,6 +33,15 @@ export const API_HEADER = {
   }
 };
 
+
+export const chat = {
+  ENV: 'PROD', //DEV || PROD
+  CHAT_DEV: 'http://localhost:6005',
+  CHAT_PROD: 'https://chat.luneswallet.app',
+  getUrl: function(componentId, namespace, adId, adOwnerId, buyerId) {
+    return `${this['CHAT_'+this.ENV]}/serve/chat?root=${componentId}&namespace=${namespace}&adId=${adId}&adOwnerId=${adOwnerId}&buyerId=${buyerId}`
+  }
+}
 export const blockexplorer = {
   lunes: TESTNET
     ? "https://blockexplorer-testnet.lunes.io/tx/"
