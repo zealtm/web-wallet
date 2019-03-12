@@ -81,7 +81,7 @@ class CoinsInfo extends React.Component {
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItem}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{asset.balance.available}</p>
+          <p>{asset.balance}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
@@ -96,7 +96,7 @@ class CoinsInfo extends React.Component {
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItemMobile}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{asset.balance.available}</p>
+          <p>{asset.balance}</p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
@@ -187,7 +187,7 @@ class CoinsInfo extends React.Component {
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
               <Grid item>
-                {/* <h3>{asset.tokenName.toUpperCase()}</h3> */}
+                {<h3>{asset.tokenName.toUpperCase()}</h3>}
                 <img
                   src={"images/icons/tokens/default.png"}
                   className={style.iconCoinSelected}
