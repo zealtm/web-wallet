@@ -229,8 +229,7 @@ class KYC extends React.Component {
     };
   }
   componentDidMount() {
-    let { kycGetCountries } = this.props;
-    const { getKyc } = this.props;
+    let { kycGetCountries, getKyc } = this.props;
     kycGetCountries();
     getKyc();
   }
@@ -1206,7 +1205,7 @@ class KYC extends React.Component {
 
   render() {
     const { invalidPassport, invalidPhone, checkInputs } = this.state;
-    const { sendRequest } = this.props;
+    const { sendRequest, kyc } = this.props;
     let errorMessage = "";
     if (invalidPassport && !invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT");
@@ -1275,6 +1274,17 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
+                {(kyc.status == "rejected") ? (
+                  <div style={{ color: "red" }} id="rejectedMessage">
+                    <div>
+                      {i18n.t("KYC_REJECTED_MESSAGE")}{" "}
+                    </div>
+                    <div>
+                      {kyc.comment}
+                    </div>
+                  </div>
+
+                ) : null}
                 {checkInputs ? (
                   <span style={{ color: "red" }} id="requiredFields">
                     {i18n.t("KYC_CHECK_INPUT")}{" "}
