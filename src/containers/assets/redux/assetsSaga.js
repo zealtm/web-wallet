@@ -13,7 +13,7 @@ import { getAuthToken } from "../../../utils/localStorage";
 // Services
 import AssetService from "../../../services/assetService";
 import CoinService from "../../../services/coinService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 const assetService = new AssetService();
 const coinService = new CoinService();
