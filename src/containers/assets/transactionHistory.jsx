@@ -60,7 +60,8 @@ class TransactionHistory extends React.Component {
     let address = blockexplorer["lunes"]
       ? blockexplorer["lunes"].replace(/tx/, "address")
       : false;
-
+    let {selectedCoin} = assetsRoute;
+    
     if (!history.assets) return this.renderEmpty();
 
     if (history.assets && history.assets.constructor.name !== "Array")
@@ -69,11 +70,13 @@ class TransactionHistory extends React.Component {
     if (history.assets.length < 1) return this.renderEmpty();
 
     let lunesAddress = skeleton.coins.lunes.address;
-
+    let decimalPoint = assetsRoute.assets[selectedCoin].decimals;
+    
     return history.assets.map((val, index) => {
       let transaction = history.assets[index];
       let type = lunesAddress === transaction.toAddress ? "SENT" : "RECEIVED";
-      let decimalPoint = 8;
+      
+      
       return (
         <div key={index}>
           <div>

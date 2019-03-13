@@ -29,6 +29,7 @@ import Hidden from "@material-ui/core/Hidden";
 
 // UTILS
 import i18n from "../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class CoinsInfo extends React.Component {
   constructor() {
@@ -77,11 +78,16 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
+    let decimalPoint = asset.decimals;
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItem}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{asset.balance}</p>
+          <p>
+            {convertBiggestCoinUnit(asset.balance, decimalPoint).toFixed(
+              decimalPoint
+            )}
+          </p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
@@ -179,10 +185,8 @@ class CoinsInfo extends React.Component {
             }
           />
         </div>
-        <div>
-          {this.renderReceiveModal(coin)}
-        </div>
-        
+        <div>{this.renderReceiveModal(coin)}</div>
+
         <Grid container className={style.containerInfo}>
           <Grid item xs={11} sm={7} md={6} className={style.contentInfo}>
             <Grid item xs={4} className={style.coinSel}>
