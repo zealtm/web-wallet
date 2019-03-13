@@ -89,7 +89,7 @@ class BoxFee extends React.Component {
     return (
       <div className={style.modalBox}>
         <img
-          src={"/images/icons/coins/" + coin + ".png"}
+          src={"images/icons/tokens/default.png"}
           className={style.modalIconCoin}
         />
         <div>
