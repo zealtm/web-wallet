@@ -94,3 +94,9 @@ export const shareTokenAddress = (name, address) => ({
   name,
   address
 });
+
+export const setAssetTransaction = (transaction, password) => ({
+  type: "SET_ASSET_TRANSACTION_API",
+  transaction,
+  password
+});

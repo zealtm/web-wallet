@@ -165,11 +165,12 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute, skeleton } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
+
     let coin = skeleton.coins.lunes;
     let step = assetsRoute.modal.step;
 
     if (selectedCoin === undefined) return null;
-
+  
     return (
       <div>
         <div>

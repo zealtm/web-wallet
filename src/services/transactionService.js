@@ -252,6 +252,9 @@ class TransactionService {
         return responseSaveEth;
       } else if (coin === "lunes") {
         let transactionLunes = new LunesServices();
+        // if(transaction.assetId){
+        //   console.log("oi");
+        // }
         let respondeLunes = await transactionLunes.createLunesTransaction({
           network: network,
           seed: seed,

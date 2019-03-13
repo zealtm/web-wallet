@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAddressModalStep } from "../../redux/assetsAction";
+import { setAddressModalStep, setAssetTransaction} from "../../redux/assetsAction";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
@@ -18,7 +18,27 @@ import i18n from "../../../../utils/i18n";
 class BoxProcess extends React.Component {
   doTransaction = () => {
     const { setAddressModalStep } = this.props;
-    setAddressModalStep(5);
+    let {assets, user, modal, coins, setAssetTransaction } = this.props;
+    let {selectedCoin} = assets;
+    let assetId = assets.assets[selectedCoin].assetId;
+    setAssetTransaction(
+      {
+        coin: "lunes",
+        fromAddress: coins['lunes'].address,
+        lunesUserAddress: coins["lunes"].address,
+        toAddress: modal.address,
+        amount: modal.sendAmount,
+        fee: modal.feeValue.selectedFee,
+        feePerByte: modal.feeValue.selectedFeePerByte,
+        feeLunes: modal.feeValue.selectedFeeLunes,
+        price: coins['lunes'].price,
+        decimalPoint: coins["lunes"].decimalPoint,
+        assetId: assetId
+      },
+      user.password
+    );
+    //setAddressModalStep(5);
+    return ;
   };
 
   componentDidMount() {
@@ -55,23 +75,27 @@ class BoxProcess extends React.Component {
 }
 
 BoxProcess.propTypes = {
+  assets: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   modal: PropTypes.object.isRequired,
-  setAddressModalStep: PropTypes.func.isRequired
+  setAddressModalStep: PropTypes.func.isRequired,
+  setAssetTransaction: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
+  assets: store.assets,
   user: store.user.user,
-  modal: store.wallet.modal,
+  modal: store.assets.modal,
   coins: store.skeleton.coins
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setAddressModalStep
+      setAddressModalStep,
+      setAssetTransaction
     },
     dispatch
   );

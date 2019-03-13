@@ -8,7 +8,7 @@ import {
 import i18n from "../../../utils/i18n";
 
 // UTILS
-import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 
 // Services
@@ -23,6 +23,7 @@ import { networks } from "../../../constants/network";
 const assetService = new AssetService();
 const coinService = new CoinService();
 const lunesService = new LunesServices();
+const transactionService = new TransactionService();
 
 export function* getAssetGeneralInfo(action) {
   try {
@@ -117,7 +118,7 @@ export function* reloadAsset(action) {
   }
 }
 
-const transactionService = new TransactionService();
+
 
 export function* validateAddressAssets(action) {
   try {
@@ -220,6 +221,64 @@ export function* shareTokenAddress(action) {
   try {
     yield call(coinService.shareCoinAddress, action.name, action.address);
   } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+
+export function* setAssetTransaction(action) {
+  try {
+    let seed = yield call(getUserSeedWords);
+    let token = yield call(getAuthToken);
+
+    let lunesWallet = yield call(
+      transactionService.transactionService,
+      action.transaction.coin,
+      token
+    );
+
+    if (lunesWallet) {
+      let response = yield call(
+        transactionService.transaction,
+        lunesWallet.id,
+        action.transaction,
+        lunesWallet,
+        decryptAes(seed, action.password),
+        token
+      );
+
+      if (response) {
+        yield put({
+          type: "SET_ADDRESS_MODAL_STEP",
+          step: 5
+        });
+
+        yield put({
+          type: "SET_ASSET_TRANSACTION",
+          response: response
+        });
+
+        return;
+      }
+    }
+
+    yield put({
+      type: "SET_ADDRESS_MODAL_STEP",
+      step: 6
+    });
+
+    // yield put({
+    //   type: "CHANGE_WALLET_ERROR_STATE",
+    //   state: true
+    // });
+    yield put(internalServerError());
+
+    return;
+  } catch (error) {
+    // yield put({
+    //   type: "CHANGE_WALLET_ERROR_STATE",
+    //   state: true
+    // });
     yield put(internalServerError());
   }
 }
