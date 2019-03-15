@@ -34,10 +34,18 @@ export function* getAssetGeneralInfo(action) {
 
     let network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
     let token = getAuthToken();
-    let lunesAddress = yield call(lunesService.getLunesAddress, {
-      seed: decryptAes(action.lunesAddress.seed, action.lunesAddress.password),
-      network: network
-    });
+    let lunesAddress = undefined;
+    if (action.lunesAddress.seed) {
+      lunesAddress = yield call(lunesService.getLunesAddress, {
+        seed: decryptAes(
+          action.lunesAddress.seed,
+          action.lunesAddress.password
+        ),
+        network: network
+      });
+    }else{
+      lunesAddress = action.lunesAddress;
+    }
     let response = yield call(
       [assetService, assetService.getBalances],
       lunesAddress,
@@ -72,7 +80,6 @@ export function* getAssetHistory(action) {
 
     let token = yield call(getAuthToken);
     let { assetId, lunesAddress } = action;
-
     let response = yield call(
       [assetService, assetService.getTxHistory],
       lunesAddress,
@@ -117,8 +124,6 @@ export function* reloadAsset(action) {
     console.warn(error);
   }
 }
-
-
 
 export function* validateAddressAssets(action) {
   try {
@@ -225,7 +230,6 @@ export function* shareTokenAddress(action) {
   }
 }
 
-
 export function* setAssetTransaction(action) {
   try {
     let seed = yield call(getUserSeedWords);
@@ -246,7 +250,7 @@ export function* setAssetTransaction(action) {
         decryptAes(seed, action.password),
         token
       );
-
+      
       if (response) {
         yield put({
           type: "SET_ADDRESS_MODAL_STEP",

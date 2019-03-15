@@ -252,10 +252,36 @@ class TransactionService {
         return responseSaveEth;
       } else if (coin === "lunes") {
         let transactionLunes = new LunesServices();
-        // if(transaction.assetId){
-        //   console.log("oi");
-        // }
-        let respondeLunes = await transactionLunes.createLunesTransaction({
+        if(transaction.assetId){
+          let responseAssetLunes = await transactionLunes.createLunesTransaction({
+            network: network,
+            seed: seed,
+            fromAddress: fromAddress,
+            toAddress: toAddress,
+            amount: convertSmallerCoinUnit(amount, decimalPoint),
+            fee: convertSmallerCoinUnit(fee, decimalPoint),
+            assetId: transaction.assetId
+          });
+          //console.log('responseAssetLunes',responseAssetLunes);
+          if (responseAssetLunes === "error" || !responseAssetLunes) {
+            return;
+          }
+          return ;
+          // let responseSaveAssetLunes = await coinService.saveTransaction(
+          //   serviceId,
+          //   feeLunes,
+          //   responseAssetLunes,
+          //   coin,
+          //   transaction.price,
+          //   lunesUserAddress,
+          //   describe ? describe : "P2P",
+          //   token
+          // );
+          // console.log("oi",responseSaveAssetLunes);
+          // return responseSaveAssetLunes;
+          
+        }
+        let responseLunes = await transactionLunes.createLunesTransaction({
           network: network,
           seed: seed,
           fromAddress: fromAddress,
@@ -264,14 +290,14 @@ class TransactionService {
           fee: convertSmallerCoinUnit(fee, decimalPoint)
         });
 
-        if (respondeLunes === "error" || !respondeLunes) {
+        if (responseLunes === "error" || !responseLunes) {
           return;
         }
 
         let responseSaveLunes = await coinService.saveTransaction(
           serviceId,
           feeLunes,
-          respondeLunes,
+          responseLunes,
           coin,
           transaction.price,
           lunesUserAddress,

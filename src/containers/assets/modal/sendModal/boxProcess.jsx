@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setAddressModalStep, setAssetTransaction} from "../../redux/assetsAction";
+import {
+  setAddressModalStep,
+  setAssetTransaction
+} from "../../redux/assetsAction";
 
 // COMPONENTS
 import Loading from "../../../../components/loading";
@@ -18,27 +21,30 @@ import i18n from "../../../../utils/i18n";
 class BoxProcess extends React.Component {
   doTransaction = () => {
     const { setAddressModalStep } = this.props;
-    let {assets, user, modal, coins, setAssetTransaction } = this.props;
-    let {selectedCoin} = assets;
+    let { assets, user, modal, coins, setAssetTransaction } = this.props;
+    let { selectedCoin } = assets;
     let assetId = assets.assets[selectedCoin].assetId;
-    setAssetTransaction(
-      {
-        coin: "lunes",
-        fromAddress: coins['lunes'].address,
-        lunesUserAddress: coins["lunes"].address,
-        toAddress: modal.address,
-        amount: modal.sendAmount,
-        fee: modal.feeValue.selectedFee,
-        feePerByte: modal.feeValue.selectedFeePerByte,
-        feeLunes: modal.feeValue.selectedFeeLunes,
-        price: coins['lunes'].price,
-        decimalPoint: coins["lunes"].decimalPoint,
-        assetId: assetId
-      },
-      user.password
-    );
+    if (assetId) {
+      setAssetTransaction(
+        {
+          coin: "lunes",
+          fromAddress: coins["lunes"].address,
+          lunesUserAddress: coins["lunes"].address,
+          toAddress: modal.address,
+          amount: modal.sendAmount,
+          fee: modal.feeValue.selectedFee,
+          feePerByte: modal.feeValue.selectedFeePerByte,
+          feeLunes: modal.feeValue.selectedFeeLunes,
+          price: coins["lunes"].price,
+          decimalPoint: coins["lunes"].decimalPoint,
+          assetId: assetId
+        },
+        user.password
+      );
+    }
+
     //setAddressModalStep(5);
-    return ;
+    return;
   };
 
   componentDidMount() {
