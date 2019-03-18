@@ -1,4 +1,3 @@
-
 //UTILS
 import i18n from "../../../utils/i18n";
 const initialModalSendState = {
@@ -190,6 +189,36 @@ const asset = (state = initialState, action) => {
           feeValue: {
             ...state.modal.feeValue,
             selectedFeePerByte: action.fee
+          },
+          loading: false
+        }
+      };
+    case "SET_ASSET_TRANSACTION":
+      return {
+        ...state,
+        modal: {
+          open: true,
+          step: state.modal.step,
+          address: undefined,
+          sendAmount: undefined,
+          feeValue: {
+            fee: {
+              low: 0.001,
+              medium: 0.001,
+              high: 0.001
+            },
+            feePerByte: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            feeLunes: {
+              low: 0,
+              medium: 0,
+              high: 0
+            },
+            selectedFee: undefined,
+            selectedFeePerByte: undefined
           },
           loading: false
         }

@@ -505,6 +505,7 @@ class CoinService {
         to: transaction.recipient,
         amount: transaction.amount,
         fee: transaction.fee,
+        assetId: transaction.assetId ? transaction.assetId : null,
         describe: describe ? describe : null,
         cashback: { address: lunesUserAddress },
         price: {

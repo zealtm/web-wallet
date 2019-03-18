@@ -80,22 +80,22 @@ class BoxFee extends React.Component {
   };
 
   render() {
-    let { coin, modal } = this.props;
+    let { coin, modal, assets } = this.props;
     let selectedFee = modal.feeValue.selectedFee
       ? modal.feeValue.selectedFee
       : 0;
-    let amount = (modal.sendAmount + selectedFee).toFixed(8);
-
+    let amount = modal.sendAmount.toFixed(8);
+    let { selectedCoin } = assets;
     return (
       <div className={style.modalBox}>
         <img
-          src={"/images/icons/coins/" + coin + ".png"}
+          src={"images/icons/tokens/default.png"}
           className={style.modalIconCoin}
         />
         <div>
           <span>{i18n.t("MODAL_SEND_TO_SEND")}</span>
           <span className={style.totalConfirm}>
-            {" " + amount + " " + coin.toUpperCase()}
+          {amount + " " + assets.assets[selectedCoin].tokenName.toUpperCase()}
           </span>
         </div>
         <div>
@@ -145,6 +145,7 @@ class BoxFee extends React.Component {
 }
 
 BoxFee.propTypes = {
+  assets: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
@@ -158,6 +159,7 @@ BoxFee.propTypes = {
 };
 
 const mapSateToProps = store => ({
+  assets: store.assets,
   modal: store.assets.modal,
   coins: store.skeleton.coins
 });

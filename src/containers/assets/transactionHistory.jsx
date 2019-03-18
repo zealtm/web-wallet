@@ -4,10 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  getAssetGeneralInfo,
-  reloadAsset
-} from "./redux/assetsAction";
+import { getAssetGeneralInfo, reloadAsset } from "./redux/assetsAction";
 
 // STYLE
 import style from "./style.css";
@@ -18,6 +15,8 @@ import Grid from "@material-ui/core/Grid";
 // COMPONENTS
 import Loading from "../../components/loading";
 
+// CONSTANTS
+import { blockexplorer } from "../../constants/apiBaseUrl";
 // UTILS
 import i18n from "../../utils/i18n";
 import { formatDate } from "../../utils/numbers";
@@ -45,31 +44,38 @@ class TransactionHistory extends React.Component {
     let { selectedCoin } = assets;
     let address = skeleton.coins.lunes.address;
 
-    reloadAsset(assets.assets[selectedCoin].assetId, address)
+    reloadAsset(assets.assets[selectedCoin].assetId, address);
   };
 
   renderEmpty = () => {
-    return <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
-  }
+    return (
+      <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
+    );
+  };
 
   renderHistory = () => {
     let { toggleHistory } = this.state;
     let { assets: assetsRoute, skeleton } = this.props;
     let { history } = assetsRoute;
-
+    let address = blockexplorer["lunes"]
+      ? blockexplorer["lunes"].replace(/tx/, "address")
+      : false;
+    let {selectedCoin} = assetsRoute;
+    
     if (!history.assets) return this.renderEmpty();
 
-    if (history.assets && history.assets.constructor.name !== 'Array')
+    if (history.assets && history.assets.constructor.name !== "Array")
       return this.renderEmpty();
 
     if (history.assets.length < 1) return this.renderEmpty();
 
     let lunesAddress = skeleton.coins.lunes.address;
-
+    let decimalPoint = assetsRoute.assets[selectedCoin].decimals;
+    
     return history.assets.map((val, index) => {
       let transaction = history.assets[index];
-      let type = lunesAddress === transaction.toAddress ? "SENT" : "RECEIVED";
-      let decimalPoint = 8;
+      let type = lunesAddress === transaction.to ? "RECEIVED" : "SENT";
+      
       return (
         <div key={index}>
           <div>
@@ -85,13 +91,7 @@ class TransactionHistory extends React.Component {
             >
               <Grid item xs={3} sm={2} className={style.typeItems}>
                 <div>
-                  <img
-                    src={
-                      "./images/wallet/" +
-                      type.toLowerCase() +
-                      ".png"
-                    }
-                  />
+                  <img src={"./images/wallet/" + type.toLowerCase() + ".png"} />
                 </div>
                 <div className={style.dateHistory}>
                   {formatDate(transaction.date, "DM")}
@@ -140,9 +140,17 @@ class TransactionHistory extends React.Component {
                       <p> {i18n.t("TEXT_ID")} </p>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <p className={style.idTransactionHistory}>
+                      <a
+                        target="blanck"
+                        href={
+                          blockexplorer["lunes"]
+                            ? blockexplorer["lunes"] + transaction.txID
+                            : ""
+                        }
+                        className={style.idTransactionHistory}
+                      >
                         {transaction.txID.substring(0, 33) + "..." || "-"}
-                      </p>
+                      </a>
                     </Grid>
                   </Grid>
 
@@ -153,8 +161,14 @@ class TransactionHistory extends React.Component {
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <div className={style.fromTransactionHistory}>
-                        {transaction.from || "-"}
+                      <div>
+                        <a
+                          className={style.fromTransactionHistory}
+                          target="blanck"
+                          href={address ? address + transaction.from : ""}
+                        >
+                          {transaction.from || "-"}
+                        </a>
                       </div>
                     </Grid>
                   </Grid>
@@ -166,8 +180,14 @@ class TransactionHistory extends React.Component {
                       </div>
                     </Grid>
                     <Grid item xs={10} className={style.descriptionHistory}>
-                      <div className={style.forTransactionHistory}>
-                        {transaction.to || "-"}
+                      <div>
+                        <a
+                          className={style.forTransactionHistory}
+                          target="blanck"
+                          href={address ? address + transaction.to : ""}
+                        >
+                          {transaction.to || "-"}
+                        </a>
                       </div>
                     </Grid>
                   </Grid>
@@ -199,8 +219,7 @@ class TransactionHistory extends React.Component {
     let { isTxHistoryLoading } = this.props.assets;
     let { selectedCoin } = this.props.assets;
 
-    if (selectedCoin === undefined)
-      return null;
+    if (selectedCoin === undefined) return null;
 
     return (
       <div>
@@ -245,7 +264,7 @@ TransactionHistory.propTypes = {
 
 const mapSateToProps = store => ({
   skeleton: store.skeleton,
-  assets: store.assets,
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>

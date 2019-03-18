@@ -91,7 +91,6 @@ class AssetService {
         address, assetId), { headers: { Authorization: token } });
       let { data } = result ? result : {};
       let { assets } = data ? data : {};
-
       this.responseValidation({...result, axiosStatus: status});
 
       if (!assets)

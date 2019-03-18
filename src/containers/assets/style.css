@@ -443,13 +443,13 @@
 }
 
 :local(.fromTransactionHistory) {
-  composes: clError from "../../components/bases/colorBase.css";
+  color: #f05252 !important;
   padding: 0px 15px;
   font-size: 9px;
 }
 
 :local(.forTransactionHistory) {
-  composes: clGreenLight from "../../components/bases/colorBase.css";
+  color: #68f285 !important;
   padding: 0px 15px;
   font-size: 9px;
 }

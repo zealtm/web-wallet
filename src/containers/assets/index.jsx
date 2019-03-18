@@ -27,11 +27,10 @@ import style from "./style.css";
 
 class Assets extends React.Component {
   componentDidMount() {
-    let { getAssetGeneralInfo, skeleton } = this.props;
+    let { getAssetGeneralInfo, user } = this.props;
     let { selectedCoin } = this.props.assets;
-    let { address } = skeleton.coins.lunes;
 
-    getAssetGeneralInfo(address);
+    getAssetGeneralInfo({seed: user.seed,password: user.password});
     this.setState({ lastAsset: selectedCoin });
   }
 
@@ -95,7 +94,9 @@ class Assets extends React.Component {
   render() {
     let { assets } = this.props;
     let { isBalanceLoading, isTxHistoryLoading } = assets;
-
+    if (assets.assets.length === 0) {
+      return this.renderEmptyAssets();
+    }
     if (isBalanceLoading || isTxHistoryLoading) {
       return (
         <div>
@@ -117,7 +118,7 @@ Assets.propTypes = {
   getAssetGeneralInfo: PropTypes.func,
   getAssetHistory: PropTypes.func,
   setSelectedCoin: PropTypes.func.isRequired,
-  reloadAsset: PropTypes.func.isRequired,
+  reloadAsset: PropTypes.func.isRequired
 };
 
 const mapSateToProps = store => ({
