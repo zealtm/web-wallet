@@ -43,8 +43,9 @@ class BoxConfirm extends React.Component {
 
   render() {
     let { password } = this.state;
-    let { coin, modal } = this.props;
-
+    let { coin, modal,assets } = this.props;
+    let { selectedCoin } = assets;
+    let amount = (modal.sendAmount).toFixed(8);
     return (
       <div className={style.modalBox}>
         <img
@@ -54,7 +55,7 @@ class BoxConfirm extends React.Component {
         <div>
           <span>{i18n.t("MODAL_SEND_INFO_TRANSACTION")} </span>
           <span className={style.totalConfirm}>
-            {modal.finalAmount + " " + coin.toUpperCase()}
+            {amount + " " + assets.assets[selectedCoin].tokenName.toUpperCase()}
           </span>
           <span> {i18n.t("MODAL_SEND_TO_ADDRESS")} </span>
           <span className={style.addressConfirm}>{modal.address}</span>
@@ -81,6 +82,7 @@ class BoxConfirm extends React.Component {
 }
 
 BoxConfirm.propTypes = {
+  assets: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
@@ -90,7 +92,8 @@ BoxConfirm.propTypes = {
 
 const mapSateToProps = store => ({
   modal: store.assets.modal,
-  user: store.user.user
+  user: store.user.user,
+  assets: store.assets,
 });
 
 const mapDispatchToProps = dispatch =>

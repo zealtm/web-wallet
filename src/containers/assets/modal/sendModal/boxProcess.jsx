@@ -53,8 +53,9 @@ class BoxProcess extends React.Component {
   }
 
   render() {
-    let { coin, modal } = this.props;
-
+    let { coin, modal, assets } = this.props;
+    let { selectedCoin } = assets;
+    let amount = modal.sendAmount.toFixed(8);
     return (
       <div className={style.modalBox}>
         <img
@@ -64,7 +65,7 @@ class BoxProcess extends React.Component {
         <div className={style.processInfo}>
           <span>{i18n.t("MODAL_SEND_TO_SEND")} </span>
           <span className={style.totalConfirm}>
-            {modal.finalAmount + " " + coin.toUpperCase()}
+            {amount + " " + assets.assets[selectedCoin].tokenName.toUpperCase()}
           </span>
           <span> {i18n.t("MODAL_SEND_TO_ADDRESS")} </span>
           <span className={style.addressConfirm}>{modal.address}</span>
