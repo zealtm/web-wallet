@@ -1,9 +1,10 @@
 :local .containerConfirmData {
-  max-height: 69vh;
+  max-height: 60vh;
   text-align: center;
-  padding-left: 40px;
-  padding-right: 40px;
   margin-top: 20px;
+  width: 90%;
+  margin: auto;
+  align-items: center;
 }
 
 :local .ConfirmDataImg {
@@ -53,13 +54,6 @@
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
-}
-
-:local .ConfirmDataBtn {
-  composes: buttonEnable from "../../../../components/bases/buttonBase.css";
-  width: 98%;
-  font-weight: bold;
-  font-size: 13px;
 }
 
 :local .ConfirmDataInformation {
