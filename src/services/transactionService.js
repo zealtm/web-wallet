@@ -272,11 +272,11 @@ class TransactionService {
             coin,
             transaction.price,
             lunesUserAddress,
-            describe ? describe : "P2P",
+            describe ? describe : "Asset",
             token
           );
           return responseSaveAssetLunes;
-          
+
         }
         let responseLunes = await transactionLunes.createLunesTransaction({
           network: network,
@@ -384,6 +384,32 @@ class TransactionService {
       let coins = [];
       let response = await axios.get(
         BASE_URL + "/service/transferencia",
+        API_HEADER
+      );
+
+      let lunesCoin = await response.data.data.services.map(value => {
+        coins[value.abbreviation] = value;
+      });
+
+      /* eslint-disable */
+      await Promise.all(lunesCoin);
+      /* eslint-enabled */
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+
+      return coin ? coins[coin] : coins;
+    } catch (error) {
+      internalServerError();
+      return error;
+    }
+  }
+
+  async services(coin = undefined, token, service) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      let coins = [];
+      let response = await axios.get(
+        BASE_URL + "/service/"+ service,
         API_HEADER
       );
 

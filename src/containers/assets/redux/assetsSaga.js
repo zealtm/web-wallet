@@ -234,18 +234,18 @@ export function* setAssetTransaction(action) {
     let seed = yield call(getUserSeedWords);
     let token = yield call(getAuthToken);
 
-    let lunesWallet = yield call(
-      transactionService.transactionService,
+    let lunesAsset = yield call(
+      transactionService.services,
       action.transaction.coin,
-      token
+      token,
+      "asset"
     );
-
-    if (lunesWallet) {
+    if (lunesAsset) {
       let response = yield call(
         transactionService.transaction,
-        lunesWallet.id,
+        lunesAsset.id,
         action.transaction,
-        lunesWallet,
+        lunesAsset,
         decryptAes(seed, action.password),
         token
       );
