@@ -111,7 +111,6 @@ export function* getAssetHistory(action) {
 export function* reloadAsset(action) {
   try {
     let { assetId, lunesAddress } = action;
-
     yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress });
 
     yield put({
@@ -270,19 +269,10 @@ export function* setAssetTransaction(action) {
       type: "SET_ADDRESS_MODAL_STEP",
       step: 6
     });
-
-    // yield put({
-    //   type: "CHANGE_WALLET_ERROR_STATE",
-    //   state: true
-    // });
     yield put(internalServerError());
 
     return;
   } catch (error) {
-    // yield put({
-    //   type: "CHANGE_WALLET_ERROR_STATE",
-    //   state: true
-    // });
     yield put(internalServerError());
   }
 }

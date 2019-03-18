@@ -262,23 +262,20 @@ class TransactionService {
             fee: convertSmallerCoinUnit(fee, decimalPoint),
             assetId: transaction.assetId
           });
-          //console.log('responseAssetLunes',responseAssetLunes);
           if (responseAssetLunes === "error" || !responseAssetLunes) {
             return;
           }
-          return ;
-          // let responseSaveAssetLunes = await coinService.saveTransaction(
-          //   serviceId,
-          //   feeLunes,
-          //   responseAssetLunes,
-          //   coin,
-          //   transaction.price,
-          //   lunesUserAddress,
-          //   describe ? describe : "P2P",
-          //   token
-          // );
-          // console.log("oi",responseSaveAssetLunes);
-          // return responseSaveAssetLunes;
+          let responseSaveAssetLunes = await coinService.saveTransaction(
+            serviceId,
+            feeLunes,
+            responseAssetLunes,
+            coin,
+            transaction.price,
+            lunesUserAddress,
+            describe ? describe : "P2P",
+            token
+          );
+          return responseSaveAssetLunes;
           
         }
         let responseLunes = await transactionLunes.createLunesTransaction({
