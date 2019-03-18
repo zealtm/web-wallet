@@ -326,7 +326,7 @@
   "PAYMENT_PAY_NOW": "Pagar Agora",
   "PAYMENT_UNAUTHORIZED": "Recibo inválido ou não autorizado",
   "MODAL_TITLE_INSTRUCIONS": "Informações",
-  "MODAL_SEND_INFO_TRANSACTION": "Para confirmar sua transação, insira sua senha e complete o",
+  "MODAL_SEND_INFO_TRANSACTION": "Para confirmar sua transação, insira sua senha e complete o envio de",
   "MODAL_SEND_FEE_TRANSACTION": "Sua taxa de transação na rede",
   "MODAL_SEND_INFO_BLOCKCHAIN": "Sua transação está sendo processada na Blockchain",
   "RECHARGE_DETAILS": " em créditos para recarregar o número abaixo: ",

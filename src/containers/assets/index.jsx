@@ -15,7 +15,9 @@ import {
 import CoinsBar from "./coinsBar";
 import CoinsInfo from "./coinsInfo";
 import TransactionHistory from "./transactionHistory";
+import SendModal from "./modal/sendModal";
 import Loading from "../../components/loading.jsx";
+import Modal from "../../components/modal";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -25,21 +27,23 @@ import style from "./style.css";
 
 class Assets extends React.Component {
   componentDidMount() {
-    let { getAssetGeneralInfo, skeleton } = this.props;
+    let { getAssetGeneralInfo, user } = this.props;
     let { selectedCoin } = this.props.assets;
-    let { address } = skeleton.coins.lunes;
 
-    getAssetGeneralInfo(address);
+    getAssetGeneralInfo({seed: user.seed,password: user.password});
     this.setState({ lastAsset: selectedCoin });
   }
 
   componentDidUpdate() {
     let { assets, getAssetHistory, skeleton } = this.props;
-    let { lastAsset } = this.state; 
+    let { lastAsset } = this.state;
     let { selectedCoin } = this.props.assets;
 
     if (lastAsset !== selectedCoin) {
-      getAssetHistory(assets.assets[selectedCoin].assetId, skeleton.coins.lunes.address);
+      getAssetHistory(
+        assets.assets[selectedCoin].assetId,
+        skeleton.coins.lunes.address
+      );
       this.setState({ lastAsset: selectedCoin });
     }
   }
@@ -74,16 +78,8 @@ class Assets extends React.Component {
       </div>
     );
   }
+
   renderContent = () => {
-    let { setSelectedCoin } = this.props;
-    let { selectedCoin, assets } = this.props.assets;
-    if (!assets || (assets && assets.length < 1))
-      return this.renderEmptyAssets();
-
-    if (selectedCoin === undefined) {
-      setSelectedCoin(0);
-    }
-
     return (
       <div>
         <CoinsBar />
@@ -98,7 +94,9 @@ class Assets extends React.Component {
   render() {
     let { assets } = this.props;
     let { isBalanceLoading, isTxHistoryLoading } = assets;
-
+    if (assets.assets.length === 0) {
+      return this.renderEmptyAssets();
+    }
     if (isBalanceLoading || isTxHistoryLoading) {
       return (
         <div>
@@ -106,7 +104,7 @@ class Assets extends React.Component {
         </div>
       );
     }
-    
+
     return this.renderContent();
   }
 }
@@ -126,7 +124,8 @@ Assets.propTypes = {
 const mapSateToProps = store => ({
   user: store.user.user,
   assets: store.assets,
-  skeleton: store.skeleton
+  skeleton: store.skeleton,
+  modal: store.assets.modal
 });
 
 const mapDispatchToProps = dispatch =>

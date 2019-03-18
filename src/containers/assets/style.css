@@ -200,7 +200,6 @@
   text-align: right;
   border-radius: 8px;
   padding: 5px 10px;
-  margin-left: 10px!important;
 }
 
 :local(.balanceItemMobile) {
@@ -261,13 +260,13 @@
   margin: 0;
 }
 :local(.balanceItem h2) {
-  margin: 0;
+  margin: 0 0 15px 0;
 }
 
 /* 2.3 BUTTONS */
 :local(.alignButtons) {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 2%;
 }
 :local(.receiveButton) {
@@ -444,13 +443,13 @@
 }
 
 :local(.fromTransactionHistory) {
-  composes: clError from "../../components/bases/colorBase.css";
+  color: #f05252 !important;
   padding: 0px 15px;
   font-size: 9px;
 }
 
 :local(.forTransactionHistory) {
-  composes: clGreenLight from "../../components/bases/colorBase.css";
+  color: #68f285 !important;
   padding: 0px 15px;
   font-size: 9px;
 }
@@ -505,6 +504,12 @@
 @media only screen and (max-width: 400px) {
   :local .modalBox {
     font-size: 12px;
+  }
+  :local .baseStep {
+    padding: 30px 0;
+  }
+  :local .boxReceive .address{
+    font-size: 14px;
   }
 }
 
@@ -730,8 +735,9 @@
 :local .boxReceive .spacingBox{
   align-items: center;
   padding: 5% 2% 2% 2%;
-  max-width: 50%;
-  margin-left: 23%;
+  max-width: 90%;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 :local .boxReceive .buttonReceive {
@@ -741,6 +747,10 @@
 
 :local .boxReceive .buttonReceive:hover {
   opacity: 1;
+}
+
+:local .buttonReceiveImgShare{
+  width: 38px;
 }
 
 :local .boxReceive span {
