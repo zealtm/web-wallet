@@ -326,7 +326,7 @@
   "PAYMENT_PAY_NOW": "Pagar Agora",
   "PAYMENT_UNAUTHORIZED": "Recibo inválido ou não autorizado",
   "MODAL_TITLE_INSTRUCIONS": "Informações",
-  "MODAL_SEND_INFO_TRANSACTION": "Para confirmar sua transação, insira sua senha e complete o",
+  "MODAL_SEND_INFO_TRANSACTION": "Para confirmar sua transação, insira sua senha e complete o envio de",
   "MODAL_SEND_FEE_TRANSACTION": "Sua taxa de transação na rede",
   "MODAL_SEND_INFO_BLOCKCHAIN": "Sua transação está sendo processada na Blockchain",
   "RECHARGE_DETAILS": " em créditos para recarregar o número abaixo: ",
@@ -487,6 +487,7 @@
   "KYC_CHECK_INPUT": "Campos obrigatórios não preenchidos",
   "KYC_INFO_FAILURE_UPLOAD": "Falha ao realizar upload dos arquivos",
   "KYC_INFO_FAILURE_CREATE": "Falha ao salvar as informações de kyc",
+  "KYC_REJECTED_MESSAGE": "Suas informações não foram validadas. Por favor envie sua documentação novamente considerando a explicação abaixo:",
 
   "MENU_BUYCOINS": "Comprar",
   "BUYCOINS_DESCRIPTION": "Compre suas criptomoedas de forma rápida, simples e segura.",

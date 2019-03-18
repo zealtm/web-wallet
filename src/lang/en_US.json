@@ -331,7 +331,7 @@
   "PAYMENT_PAY_NOW": "Pay now",
   "PAYMENT_UNAUTHORIZED": "Unauthorized or invalid receipt",
   "MODAL_TITLE_INSTRUCIONS": "Information",
-  "MODAL_SEND_INFO_TRANSACTION": "To confirm your transaction, enter your password and complete the ",
+  "MODAL_SEND_INFO_TRANSACTION": "To confirm your transaction, enter your password and complete the sending of ",
   "MODAL_SEND_FEE_TRANSACTION": "Your transaction fee on the network",
   "MODAL_SEND_INFO_BLOCKCHAIN": "Your transaction is being processed within Blockchain",
   "RECHARGE_DETAILS": " in credits to recharge the number below: ",
@@ -491,7 +491,8 @@
   "KYC_CHECK_INPUT": "Required fields are empty",
   "KYC_INFO_FAILURE_UPLOAD": "Failed to upload file.",
   "KYC_INFO_FAILURE_CREATE": "Failed to send kyc information.",
-
+  "KYC_REJECTED_MESSAGE": "Your information was not validated. Please send your documents again considering the following reason:",
+  
   "MENU_BUYCOINS": "Buy",
   "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
