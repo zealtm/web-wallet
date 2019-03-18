@@ -8,15 +8,22 @@ import {
 import i18n from "../../../utils/i18n";
 
 // UTILS
-import { getAuthToken } from "../../../utils/localStorage";
+import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
+import { decryptAes } from "../../../utils/cryptography";
 
 // Services
 import AssetService from "../../../services/assetService";
 import CoinService from "../../../services/coinService";
+import { LunesServices } from "../../../services/coins";
 import TransactionService from "../../../services/transactionService";
+//CONTANTS
+import { TESTNET } from "../../../constants/apiBaseUrl";
+import { networks } from "../../../constants/network";
 
 const assetService = new AssetService();
 const coinService = new CoinService();
+const lunesService = new LunesServices();
+const transactionService = new TransactionService();
 
 export function* getAssetGeneralInfo(action) {
   try {
@@ -25,9 +32,20 @@ export function* getAssetGeneralInfo(action) {
       isBalanceLoading: true
     });
 
+    let network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
     let token = getAuthToken();
-    let { lunesAddress } = action;
-
+    let lunesAddress = undefined;
+    if (action.lunesAddress.seed) {
+      lunesAddress = yield call(lunesService.getLunesAddress, {
+        seed: decryptAes(
+          action.lunesAddress.seed,
+          action.lunesAddress.password
+        ),
+        network: network
+      });
+    }else{
+      lunesAddress = action.lunesAddress;
+    }
     let response = yield call(
       [assetService, assetService.getBalances],
       lunesAddress,
@@ -62,7 +80,6 @@ export function* getAssetHistory(action) {
 
     let token = yield call(getAuthToken);
     let { assetId, lunesAddress } = action;
-
     let response = yield call(
       [assetService, assetService.getTxHistory],
       lunesAddress,
@@ -94,7 +111,6 @@ export function* getAssetHistory(action) {
 export function* reloadAsset(action) {
   try {
     let { assetId, lunesAddress } = action;
-
     yield put({ type: "GET_ASSET_GENERAL_INFO_API", lunesAddress });
 
     yield put({
@@ -107,8 +123,6 @@ export function* reloadAsset(action) {
     console.warn(error);
   }
 }
-
-const transactionService = new TransactionService();
 
 export function* validateAddressAssets(action) {
   try {
@@ -208,8 +222,56 @@ export function* getAssetsSendModalFee(action) {
 }
 
 export function* shareTokenAddress(action) {
-  try {    
+  try {
     yield call(coinService.shareCoinAddress, action.name, action.address);
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
+export function* setAssetTransaction(action) {
+  try {
+    let seed = yield call(getUserSeedWords);
+    let token = yield call(getAuthToken);
+
+    let lunesAsset = yield call(
+      transactionService.services,
+      action.transaction.coin,
+      token,
+      "asset"
+    );
+    if (lunesAsset) {
+      let response = yield call(
+        transactionService.transaction,
+        lunesAsset.id,
+        action.transaction,
+        lunesAsset,
+        decryptAes(seed, action.password),
+        token
+      );
+      
+      if (response) {
+        yield put({
+          type: "SET_ADDRESS_MODAL_STEP",
+          step: 5
+        });
+
+        yield put({
+          type: "SET_ASSET_TRANSACTION",
+          response: response
+        });
+
+        return;
+      }
+    }
+
+    yield put({
+      type: "SET_ADDRESS_MODAL_STEP",
+      step: 6
+    });
+    yield put(internalServerError());
+
+    return;
   } catch (error) {
     yield put(internalServerError());
   }
