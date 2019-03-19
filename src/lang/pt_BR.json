@@ -626,6 +626,7 @@
   "DEPOSIT_RECURRENT": "Recorrente",
   "DEPOSIT_INVOICE": "Boleto",
   "DEPOSIT_CREDIT": "Crédito",
+  "DEPOSIT_DEBIT": "Débito",
   "DEPOSIT_SELECT_DATE": "Escolha a data",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",

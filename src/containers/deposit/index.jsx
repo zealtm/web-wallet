@@ -3,7 +3,7 @@ import React from "react";
 // REDUX
 import { connect } from "react-redux";
 import { setModalSteps } from "./redux/depositAction";
-import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
 // UTILS
 import i18n from "../../utils/i18n";
@@ -15,12 +15,15 @@ import style from "./style.css";
 import Tabs from "../../components/tabs";
 import Invoice from "./invoice";
 import History from "./history";
-import ConfirmData from "./modal/confirmData";
+import DepositModal from "./modal/";
 import Modal from "../../components/modal";
 
 // MATERIAL UI
 import { Grid } from "@material-ui/core";
-import { bindActionCreators } from "redux";
+
+
+import PropTypes from "prop-types";
+
 
 class Deposit extends React.Component {
   constructor() {
@@ -63,7 +66,7 @@ class Deposit extends React.Component {
       <Grid container justify="center">
         <Modal
           title={i18n.t("DEPOSIT_INF_MODAL_HEADER")}
-          content={<ConfirmData />}
+          content={<DepositModal />}
           show={isOpen}
           close={() => this.closeModal()}
           back={() => this.handleSteps(modalStep)}

@@ -3,7 +3,6 @@ export const getPackages = () => ({
 });
 
 export const setModalSteps = step => (
-  console.warn(step),
   {
     type: "SET_MODAL_STEP",
     step
@@ -22,4 +21,9 @@ export const setUserData = user => ({
 
 export const getDepositHistory = () => ({
   type: "GET_DEPOSIT_HISTORY"
+});
+
+export const setPaymentMethod = (method) => ({
+  type: "SET_PAYMENT_METHOD",
+  method
 });

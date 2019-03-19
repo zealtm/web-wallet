@@ -5,7 +5,7 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages } from "../redux/depositAction";
+import { getPackages, setPaymentMethod } from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
@@ -33,7 +33,7 @@ const customStyle = theme => ({
     fontSize: "1em",
     width: "8em",
     [theme.breakpoints.down("sm")]: {
-      width: "14em"
+      width: "6em"
     },
     icon: {
       fill: "green"
@@ -92,7 +92,7 @@ class Invoice extends React.Component {
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
       days: [...Array(31).keys()],
       payment: i18n.t("DEPOSIT_INVOICE"),
-      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_CREDIT")]
+      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")]
     };
   }
 
@@ -270,13 +270,20 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal } = this.props;
-
+    const { openModal, setPaymentMethod } = this.props;
+    const {payment} = this.state;
+    setPaymentMethod(payment);
+    
+    
+    
     //validações
     openModal();
   };
 
   render() {
+    const {payment} = this.state;
+    //console.log(payment);
+    
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -366,6 +373,7 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   getPackages: PropTypes.func,
+  setPaymentMethod: PropTypes.func,
   openModal: PropTypes.func
 };
 
@@ -376,7 +384,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getPackages
+      getPackages,
+      setPaymentMethod
     },
     dispatch
   );
