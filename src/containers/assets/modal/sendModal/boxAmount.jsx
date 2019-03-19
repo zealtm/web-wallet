@@ -43,9 +43,6 @@ class BoxAmount extends React.Component {
     let { selectedCoin } = assets;
     let assetBalance = assets.assets[selectedCoin].balance;
     let decimalPoint = assets.assets[selectedCoin].decimals;
-    // let calcPercent = ((assetBalance / 100) * value).toFixed(
-    //   assets.assets[selectedCoin].decimals
-    // );
     let calcPercent = convertBiggestCoinUnit(
       (assetBalance / 100) * value,
       decimalPoint
@@ -62,15 +59,17 @@ class BoxAmount extends React.Component {
       errorInput,
       setAssetsSendModalLoading,
       getAssetsSendModalFee,
-      setAssetsSendModalAmount
+      setAssetsSendModalAmount,
+      assets
     } = this.props;
-    let coinBalance = coins[coin].balance.available;
+    let { selectedCoin } = assets;
+    let assetBalance = assets.assets[selectedCoin].balance;
 
     if (coin !== "lunes" && coin !== "eth" && amount < 0.0002) {
       return errorInput(i18n.t("MODAL_SEND_MIN_AMOUNT") + " Min: 0.00020000");
     }
 
-    if (parseFloat(amount) <= coinBalance) {
+    if (parseFloat(amount) <= assetBalance) {
       setAssetsSendModalLoading();
       setAssetsSendModalAmount(parseFloat(amount));
       getAssetsSendModalFee(
