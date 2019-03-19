@@ -90,7 +90,10 @@ class CoinsBar extends React.Component {
         ? (coinBalance * coin.price[defaultFiat].price).toFixed(0)
         : 0;
       let coinPercent = coinStatus ? coin.price.percent : 0;
-
+      let imgUrl = "images/icons/coins/" + coin.abbreviation + ".png";
+      if (wallet.selectedCoin === coin.abbreviation) {
+        imgUrl = "images/icons/coins/colorful/" + coin.abbreviation + ".png";
+      }
       return (
         <div
           className={coinStatus ? null : style.boxCoinDisabled}
@@ -111,7 +114,7 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={"images/icons/coins/" + coin.abbreviation + ".png"}
+                src={imgUrl}
               />
             </div>
             <Hidden smDown>
