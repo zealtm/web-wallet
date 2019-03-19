@@ -38,7 +38,6 @@ class Assets extends React.Component {
     let { assets, getAssetHistory, skeleton } = this.props;
     let { lastAsset } = this.state;
     let { selectedCoin } = this.props.assets;
-
     if (lastAsset !== selectedCoin) {
       getAssetHistory(
         assets.assets[selectedCoin].assetId,

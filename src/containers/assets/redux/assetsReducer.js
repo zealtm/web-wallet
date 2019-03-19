@@ -47,6 +47,11 @@ const initialState = {
 
 const asset = (state = initialState, action) => {
   switch (action.type) {
+    case "SET_SELECTED_COIN":
+    return {
+      ...state,
+      selectedCoin: 0
+    };
     case "SET_RESET_MODAL_SEND":
       return {
         ...state,
