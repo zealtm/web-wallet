@@ -39,14 +39,14 @@ class BoxFee extends React.Component {
       setAssetsSendModalSelectedFeePerByte,
       errorInput,
       modal,
-      coin,
-      coins
+      assets
     } = this.props;
+    let { selectedCoin } = assets;
     if (
       modal.feeValue.fee[type] + modal.sendAmount >=
-      coins[coin].balance.available
+      assets.assets[selectedCoin].balance
     ) {
-      errorInput("Insufficient funds");
+      errorInput(i18n.t("MESSAGE_INSUFFICIENT_FOUNDS"));
       return;
     }
 

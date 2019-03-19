@@ -19,6 +19,7 @@
   "MESSAGE_LOGIN_FAILED": "Usuário ou senha incorretos.",
   "MESSAGE_INVALID_VOUCHER": "Voucher Inválido",
   "MESSAGE_INVALID_AMOUNT": "Quantia Inválida",
+  "MESSAGE_INSUFFICIENT_FOUNDS": "Fundos insuficiente",
   "WALLET_MY_AMOUNT": "Saldo",
   "LEASING_TITLE_AMOUNT": "Em Leasing",
   "PAYMENT_FEE_AMOUNT": "Taxa da sua transação na rede ",

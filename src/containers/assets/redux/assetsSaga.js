@@ -57,7 +57,6 @@ export function* getAssetGeneralInfo(action) {
       yield put({ type: "SET_ASSET_DATA", isBalanceLoading: false });
       return;
     }
-
     let assets = response.data.balances;
 
     yield put({
@@ -65,6 +64,11 @@ export function* getAssetGeneralInfo(action) {
       assets: assets,
       isBalanceLoading: false
     });
+    if(assets.length > 0){
+      yield put({
+        type: "SET_SELECTED_COIN"
+      });
+    }
   } catch (error) {
     yield put({ type: "REQUEST_FAILED", message: error.message });
     console.warn(error);
