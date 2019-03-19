@@ -38,10 +38,11 @@ class BoxAmount extends React.Component {
   };
 
   calcPercent = value => {
-    let { coins, coin } = this.props;
-    let coinBalance = coins[coin].balance.available;
-    let calcPercent = ((coinBalance / 100) * value).toFixed(
-      coins[coin].decimalPoint
+    let { assets } = this.props;
+    let {selectedCoin} = assets;
+    let assetBalance = assets.assets[selectedCoin].balance;
+    let calcPercent = ((assetBalance / 100) * value).toFixed(
+      assets.assets[selectedCoin].decimals
     );
     this.setAmount(calcPercent.toString());
   };
@@ -124,6 +125,7 @@ class BoxAmount extends React.Component {
 }
 
 BoxAmount.propTypes = {
+  assets: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
@@ -136,7 +138,8 @@ BoxAmount.propTypes = {
 
 const mapSateToProps = store => ({
   modal: store.assets.modal,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>

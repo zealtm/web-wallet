@@ -488,17 +488,23 @@
 }
 
 :local .modalBox {
-  width: 100%;
+  width: 130%;
+  position: relative;
+  right: 50px;
   padding-top: 30px;
   padding-bottom: 30px;
   color: #fff;
 }
 
-:local .modalBox {
-  width: 100%;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  color: #fff;
+@media only screen and (max-width: 1279px) {
+  :local .modalBox {
+    width: 100%;
+    position: none;
+    right: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -680,7 +686,19 @@
   font-size: 42px;
   text-align: center;
 }
-
+@media only screen and (max-width: 699px) {
+  :local .txtamount {
+    composes: inputTextDefault from "../../components/bases/inputBase.css";
+    background: transparent;
+    font-size: 19px;
+    text-align: center;
+  }
+  
+  :local .txtamount::placeholder {
+    font-size: 19px;
+    text-align: center;
+  }
+}
 :local(.inputTextDefault) {
   composes: inputTextDefault from "../../components/bases/inputBase.css";
   max-width: 260px;
