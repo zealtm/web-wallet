@@ -515,7 +515,7 @@ export const networks = {
     gasPrice: 10000000000,
     gasLimit: 21000,
     chainID: 1,
-    apiUrl: "https://api.myetherwallet.com/eth"
+    apiUrl: "https://mainnet.infura.io/"
   },
   ROPSTEN: {
     coinSymbol: "ETH",
@@ -524,7 +524,7 @@ export const networks = {
     gasPrice: 10000000000,
     gasLimit: 21000,
     chainID: 3,
-    apiUrl: "https://api.myetherwallet.com/rop"
+    apiUrl: "https://ropsten.infura.io"
   },
   USDT: {
     coinSymbol: "USDT",
