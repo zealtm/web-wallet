@@ -488,23 +488,10 @@
 }
 
 :local .modalBox {
-  width: 130%;
-  position: relative;
-  right: 50px;
+  width: 100%;
   padding-top: 30px;
   padding-bottom: 30px;
   color: #fff;
-}
-
-@media only screen and (max-width: 1279px) {
-  :local .modalBox {
-    width: 100%;
-    position: none;
-    right: 0px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    color: #fff;
-  }
 }
 
 @media only screen and (max-width: 400px) {

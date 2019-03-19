@@ -17,6 +17,7 @@ import ButtonContinue from "./buttonContinue.jsx";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../../../utils/numbers";
 
 // STYLE
 import style from "../../style.css";
@@ -39,11 +40,16 @@ class BoxAmount extends React.Component {
 
   calcPercent = value => {
     let { assets } = this.props;
-    let {selectedCoin} = assets;
+    let { selectedCoin } = assets;
     let assetBalance = assets.assets[selectedCoin].balance;
-    let calcPercent = ((assetBalance / 100) * value).toFixed(
-      assets.assets[selectedCoin].decimals
-    );
+    let decimalPoint = assets.assets[selectedCoin].decimals;
+    // let calcPercent = ((assetBalance / 100) * value).toFixed(
+    //   assets.assets[selectedCoin].decimals
+    // );
+    let calcPercent = convertBiggestCoinUnit(
+      (assetBalance / 100) * value,
+      decimalPoint
+    ).toFixed(decimalPoint);
     this.setAmount(calcPercent.toString());
   };
 
@@ -82,8 +88,8 @@ class BoxAmount extends React.Component {
 
   render() {
     let { amount } = this.state;
-    let { modal, coin } = this.props;
-
+    let { modal, coin, assets } = this.props;
+    let { selectedCoin } = assets;
     return (
       <div className={style.modalBox}>
         <img
