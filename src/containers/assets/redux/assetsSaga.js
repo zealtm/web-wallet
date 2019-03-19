@@ -64,7 +64,7 @@ export function* getAssetGeneralInfo(action) {
       assets: assets,
       isBalanceLoading: false
     });
-    if(assets.length > 0){
+    if(assets.length > 0 && action.lunesAddress.seed){
       yield put({
         type: "SET_SELECTED_COIN"
       });
