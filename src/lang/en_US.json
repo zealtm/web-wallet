@@ -20,6 +20,7 @@
   "MESSAGE_LOGIN_FAILED": "Incorrect username or password.",
   "MESSAGE_INVALID_VOUCHER": "Invalid Voucher",
   "MESSAGE_INVALID_AMOUNT": "Invalid Amount",
+  "MESSAGE_INSUFFICIENT_FOUNDS": "Insufficient funds",
   "WALLET_MY_AMOUNT": "Balance",
   "LEASING_TITLE_AMOUNT": "Leased",
   "PAYMENT_FEE_AMOUNT": "Your transaction fee on the network ",
@@ -494,7 +495,6 @@
   "KYC_REJECTED_MESSAGE": "Your information was not validated. Please send your documents again considering the following reason:",
   
   "MENU_BUYCOINS": "Buy",
-  "SETTINGS_P2P": "Configurações P2P",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
   "BUYCOINS_DESCRIPTION": "Buy your cryptos quickly, easily and safely.",
   "BUYCOINS_FEE_TEXT_1": "You are sending ",

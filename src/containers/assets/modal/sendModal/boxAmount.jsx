@@ -17,6 +17,7 @@ import ButtonContinue from "./buttonContinue.jsx";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../../../utils/numbers";
 
 // STYLE
 import style from "../../style.css";
@@ -38,11 +39,14 @@ class BoxAmount extends React.Component {
   };
 
   calcPercent = value => {
-    let { coins, coin } = this.props;
-    let coinBalance = coins[coin].balance.available;
-    let calcPercent = ((coinBalance / 100) * value).toFixed(
-      coins[coin].decimalPoint
-    );
+    let { assets } = this.props;
+    let { selectedCoin } = assets;
+    let assetBalance = assets.assets[selectedCoin].balance;
+    let decimalPoint = assets.assets[selectedCoin].decimals;
+    let calcPercent = convertBiggestCoinUnit(
+      (assetBalance / 100) * value,
+      decimalPoint
+    ).toFixed(decimalPoint);
     this.setAmount(calcPercent.toString());
   };
 
@@ -55,15 +59,14 @@ class BoxAmount extends React.Component {
       errorInput,
       setAssetsSendModalLoading,
       getAssetsSendModalFee,
-      setAssetsSendModalAmount
+      setAssetsSendModalAmount,
+      assets
     } = this.props;
-    let coinBalance = coins[coin].balance.available;
+    let { selectedCoin } = assets;
+    let assetBalance = assets.assets[selectedCoin].balance;
 
-    if (coin !== "lunes" && coin !== "eth" && amount < 0.0002) {
-      return errorInput(i18n.t("MODAL_SEND_MIN_AMOUNT") + " Min: 0.00020000");
-    }
 
-    if (parseFloat(amount) <= coinBalance) {
+    if (parseFloat(amount) <= assetBalance) {
       setAssetsSendModalLoading();
       setAssetsSendModalAmount(parseFloat(amount));
       getAssetsSendModalFee(
@@ -81,8 +84,8 @@ class BoxAmount extends React.Component {
 
   render() {
     let { amount } = this.state;
-    let { modal, coin } = this.props;
-
+    let { modal, coin, assets } = this.props;
+    let { selectedCoin } = assets;
     return (
       <div className={style.modalBox}>
         <img
@@ -124,6 +127,7 @@ class BoxAmount extends React.Component {
 }
 
 BoxAmount.propTypes = {
+  assets: PropTypes.object.isRequired,
   modal: PropTypes.object.isRequired,
   coin: PropTypes.string.isRequired,
   coins: PropTypes.array.isRequired,
@@ -136,7 +140,8 @@ BoxAmount.propTypes = {
 
 const mapSateToProps = store => ({
   modal: store.assets.modal,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  assets: store.assets
 });
 
 const mapDispatchToProps = dispatch =>
