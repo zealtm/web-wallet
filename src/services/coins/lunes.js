@@ -6,11 +6,12 @@ class LunesServices {
     try {
       const Lunes = await create(data.network.APICONFIG);
       const seed = await Lunes.Seed.fromExistingPhrase(data.seed);
+
       const transaction = await Lunes.API.Node.v1.assets
         .transfer(
           {
             recipient: data.toAddress,
-            assetId: "WAVES",
+            assetId: data.assetId ? data.assetId : "WAVES",
             amount: data.amount,
             fee: data.fee
           },
@@ -89,11 +90,11 @@ class LunesServices {
   }
 
   async getLunesAddress(data) {
-    try{
-    const lunes = await create(data.network.APICONFIG);
-    const seed = await lunes.Seed.fromExistingPhrase(data.seed);
-    return seed.address;
-    }catch(error){
+    try {
+      const lunes = await create(data.network.APICONFIG);
+      const seed = await lunes.Seed.fromExistingPhrase(data.seed);
+      return seed.address;
+    } catch (error) {
       return internalServerError();
     }
   }
