@@ -90,9 +90,9 @@ class CoinsBar extends React.Component {
         ? (coinBalance * coin.price[defaultFiat].price).toFixed(0)
         : 0;
       let coinPercent = coinStatus ? coin.price.percent : 0;
-      let imgUrl = "images/icons/coins/" + coin.abbreviation + ".png";
+      let imgUrl = "images/icons/coins/whiteIcons/" + coin.abbreviation + ".png";
       if (wallet.selectedCoin === coin.abbreviation) {
-        imgUrl = "images/icons/coins/colorful/" + coin.abbreviation + ".png";
+        imgUrl = "images/icons/coins/" + coin.abbreviation + ".png";
       }
       return (
         <div
