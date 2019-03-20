@@ -29,7 +29,7 @@ const Store = createStore(
     payment,
     error,
     assets,
-    recharge, 
+    recharge,
     p2p,
     buy,
     invite,
