@@ -65,6 +65,30 @@ let security = Loadable({
   serverSideRequirePath: path.resolve(__dirname, "../../settings/security")
 });
 
+let twoFactoryAuthenticate = Loadable({
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/2FA")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/2FA")
+});
+
+let mobileAuthenticator = Loadable({
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/mobile")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(
+    __dirname,
+    "../../settings/security/mobile"
+  )
+});
+
+let KYC = Loadable({
+  loader: () =>
+    fakeDelay(400).then(() => import("../../settings/security/KYC")),
+  loading: loading,
+  serverSideRequirePath: path.resolve(__dirname, "../../settings/security/KYC")
+});
+
 let walletSettings = Loadable({
   loader: () => fakeDelay(400).then(() => import("../../settings/wallet")),
   loading: loading,
@@ -167,6 +191,16 @@ class App extends Component {
               <Route path="/invoices" component={invoices} />
               <Route path="/recharge" component={recharge} />
               <Route path="/assets" component={assets} />
+              <Route
+                path="/twoFactoryAuthenticate"
+                component={twoFactoryAuthenticate}
+              />
+              <Route
+                path="/mobileAuthenticator"
+                component={mobileAuthenticator}
+              />
+              <Route path="/KYC" component={KYC} />
+
               <Route path="/setp2p" component={p2pSettings} />
               <Route path="/coinsale" component={buycoin} />
               <Route path="/invite" component={invite} />

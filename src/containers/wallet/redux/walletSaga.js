@@ -8,7 +8,7 @@ import i18n from "../../../utils/i18n";
 import { getAuthToken, getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
-import TransactionService from "../../../services/transaction/transactionService";
+import TransactionService from "../../../services/transactionService";
 
 const coinService = new CoinService();
 const transactionService = new TransactionService();
