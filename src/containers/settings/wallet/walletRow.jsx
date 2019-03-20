@@ -87,7 +87,7 @@ class WalletRow extends React.Component {
       favorites[favorites.indexOf(coinAbbreviation)] === coinAbbreviation
     ) {
       imgUrl =
-        "images/icons/coins/colorful/" +
+        "images/icons/coins/whiteIcons/" +
         favorites[favorites.indexOf(coinAbbreviation)] +
         ".png";
     }
