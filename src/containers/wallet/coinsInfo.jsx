@@ -151,7 +151,7 @@ class CoinsInfo extends React.Component {
               <Grid item>
                 <h3>{coin.name.toUpperCase()}</h3>
                 <img
-                  src={"./images/icons/coins/colorful/" + coin.abbreviation + ".png"}
+                  src={"./images/icons/coins/" + coin.abbreviation + ".png"}
                   className={style.iconCoinSelected}
                 />
                 <div className={style.percentageCoinSelected}>

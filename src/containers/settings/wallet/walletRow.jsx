@@ -81,13 +81,13 @@ class WalletRow extends React.Component {
     const { coin } = this.props;
     let coinAbbreviation = coin.abbreviation;
     let favorites = getFavoritesCrypto();
-    let imgUrl = "images/icons/coins/" + coinAbbreviation + ".png";
+    let imgUrl = "images/icons/coins/whiteIcons/" + coinAbbreviation + ".png";
     if (
       favorites && favorites.length > 0 &&
       favorites[favorites.indexOf(coinAbbreviation)] === coinAbbreviation
     ) {
       imgUrl =
-        "images/icons/coins/colorful/" +
+        "images/icons/coins/" +
         favorites[favorites.indexOf(coinAbbreviation)] +
         ".png";
     }
