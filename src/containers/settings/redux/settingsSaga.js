@@ -30,7 +30,8 @@ export function* getTwoFactorAuth() {
 
     yield put({
       type: "POST_SETTINGS_CREATE_2FA",
-      url: response.qrcode
+      urlQrCode: response.qrcode,
+      uri: decodeURIComponent(response.uri)
     });
     yield put({
       type: "CHANGE_LOADING_SETTINGS"
