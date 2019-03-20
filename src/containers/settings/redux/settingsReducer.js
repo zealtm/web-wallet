@@ -75,7 +75,8 @@ const settings = (state = initialState, action) => {
       return {
         ...state,
         security: {
-          urlImage: action.url
+          urlImage: action.urlQrCode,
+          uriQrCode: action.uri
         },
         loading: !state.loading
       };
