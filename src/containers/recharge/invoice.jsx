@@ -326,11 +326,11 @@ class Invoice extends React.Component {
       selectedPaymentMethod
     } = this.state;
 
-    const title = coin.name || i18n.t("RECHARGE_COIN_PAYMENT");
+    const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
-      : i18n.t("RECHARGE_PAYMENT");
+      : i18n.t("SELECT_PAYMENT");
 
     return (
       <Grid container direction="row" justify="center">
@@ -402,7 +402,6 @@ class Invoice extends React.Component {
               <Select
                 list={paymentMethod}
                 title={paymentTitle}
-                titleImg={img}
                 selectItem={this.handlePayment}
                 error={errors.includes("Payment Method")}
               />

@@ -96,9 +96,17 @@ class Invoice extends React.Component {
         name: undefined,
         value: undefined,
         img: undefined
+      },
+      paymentMethod: [
+        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
+        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
+      ],
+      selectedPaymentMethod: {
+        title: undefined,
+        value: undefined
       }
     };
-
+    this.handlePayment = this.handlePayment.bind(this);
     this.coinSelected = this.coinSelected.bind(this);
   }
 
@@ -121,6 +129,15 @@ class Invoice extends React.Component {
       invoice: {
         ...invoice,
         coin: value
+      }
+    });
+  };
+  handlePayment = (value, title) => {
+    this.setState({
+      ...this.state,
+      selectedPaymentMethod: {
+        value: value,
+        title: title
       }
     });
   };
@@ -350,12 +367,21 @@ class Invoice extends React.Component {
 
   render() {
     const { classes, loading, coinsRedux, payment } = this.props;
-    const { coin, invoice, errors } = this.state;
+    const {
+      coin,
+      invoice,
+      errors,
+      paymentMethod,
+      selectedPaymentMethod
+    } = this.state;
     const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
       ? this.currentDateTransform(invoice.dueDate)
       : (dueDatePayment = this.currentDateTransform(payment.dueDate));
+    const paymentTitle = selectedPaymentMethod.title
+      ? selectedPaymentMethod.title
+      : i18n.t("SELECT_PAYMENT");
 
     return (
       <Grid container direction="row" justify="center">
@@ -485,19 +511,32 @@ class Invoice extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
+        <Grid item xs={12} className={style.paymentType}>
+          <Grid item xs={12} className="payments">
+            <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
+          </Grid>
+        </Grid>
         <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container justify={"center"}>
-            <Grid item xs={12} sm={6}>
+          <Grid container >
+            <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
               <Select
-                list={coinsRedux}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={errors.includes("coin")}
-                width={"100%"}
+                list={paymentMethod}
+                title={paymentTitle}
+                selectItem={this.handlePayment}
+                error={errors.includes("Payment Method")}
               />
             </Grid>
+            {selectedPaymentMethod.value === "coin" ? (
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                <Select
+                  list={coinsRedux}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={errors.includes("coin")}
+                />
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
 

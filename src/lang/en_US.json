@@ -138,7 +138,7 @@
   "RECHARGE_TITLE": "Mobile Credits Recharge",
   "RECHARGE_CREDIT_PAYMENT": "Credit",
   "RECHARGE_COIN_PAYMENT": "Cryptocoins",
-  "RECHARGE_PAYMENT": "Payment",
+  "SELECT_PAYMENT": "Payment",
   "SETTINGS_CARD": "WALLETS",
   "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
   "SETTINGS_USER": "User profile",
