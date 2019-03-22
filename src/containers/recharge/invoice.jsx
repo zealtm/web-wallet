@@ -97,12 +97,21 @@ class Invoice extends React.Component {
           value: null,
           title: i18n.t("RECHARGE_SELECT_TITLE_VALUE")
         }
+      },
+      paymentMethod: [
+        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
+        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
+      ],
+      selectedPaymentMethod: {
+        title: undefined,
+        value: undefined
       }
     };
 
     this.coinSelected = this.coinSelected.bind(this);
     this.handleOperadora = this.handleOperadora.bind(this);
     this.handleValor = this.handleValor.bind(this);
+    this.handlePayment = this.handlePayment.bind(this);
   }
 
   componentDidMount() {
@@ -122,6 +131,16 @@ class Invoice extends React.Component {
       invoice: {
         ...this.state.invoice,
         coin: value
+      }
+    });
+  };
+
+  handlePayment = (value, title) => {
+    this.setState({
+      ...this.state,
+      selectedPaymentMethod: {
+        value: value,
+        title: title
       }
     });
   };
@@ -299,16 +318,31 @@ class Invoice extends React.Component {
       loadingValores,
       valueError
     } = this.props;
-    const { coin, errors, invoice } = this.state;
+    const {
+      coin,
+      errors,
+      invoice,
+      paymentMethod,
+      selectedPaymentMethod
+    } = this.state;
 
-    const title = coin.name || "Select a coin..";
+    const title = coin.name || i18n.t("RECHARGE_COIN_PAYMENT");
     const img = coin.img || "";
+    const paymentTitle = selectedPaymentMethod.title
+      ? selectedPaymentMethod.title
+      : i18n.t("RECHARGE_PAYMENT");
 
-    return (      
+    return (
       <Grid container direction="row" justify="center">
-      <div>
-        {valueError ? <ModalBar type="error" message= {i18n.t("RECHARGE_ERROR_MESSAGE")} timer /> : null}
-      </div>
+        <div>
+          {valueError ? (
+            <ModalBar
+              type="error"
+              message={i18n.t("RECHARGE_ERROR_MESSAGE")}
+              timer
+            />
+          ) : null}
+        </div>
         <Grid item xs={12} className={style.box} style={{ padding: 5 }}>
           <Grid container direction="row" justify="center">
             <Grid item xs={8}>
@@ -352,24 +386,38 @@ class Invoice extends React.Component {
             </div>
           ) : null}
         </Grid>
-
+        <Grid item xs={12} className={style.paymentType}>
+          <Grid item xs={12} className="payments">
+            <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
+          </Grid>
+        </Grid>
         <Grid
           item
           xs={12}
           className={style.box}
-          style={{ marginTop: "10px", paddingTop: 40, paddingBottom: 40 }}
+          style={{ paddingTop: 19, paddingBottom: 19 }}
         >
-          <Grid container justify={"center"}>
-            <Grid item xs={12} sm={6}>
+          <Grid container>
+            <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
               <Select
-                list={coinsRedux}
-                title={title}
+                list={paymentMethod}
+                title={paymentTitle}
                 titleImg={img}
-                selectItem={this.coinSelected}
-                error={errors.includes("coin")}
-                width={"100%"}
+                selectItem={this.handlePayment}
+                error={errors.includes("Payment Method")}
               />
             </Grid>
+            {selectedPaymentMethod.value  === "coin" ? (
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                <Select
+                  list={coinsRedux}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={errors.includes("coin")}
+                />
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
 
@@ -428,8 +476,7 @@ const mapStateToProps = store => ({
   operadoras: store.recharge.operadoras,
   valores: store.recharge.valores,
   coins: store.skeleton.coins,
-  valueError: store.recharge.valueError,
-  
+  valueError: store.recharge.valueError
 });
 
 const mapDispatchToProps = dispatch =>

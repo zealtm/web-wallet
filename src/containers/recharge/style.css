@@ -28,10 +28,16 @@
   :local .box {
     max-width: 60vw !important;
   }
+  :local .paymentType{
+    max-width: 60vw !important;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   :local .box {
+    max-width: 40vw !important;
+  }
+  :local .paymentType{
     max-width: 40vw !important;
   }
 }
