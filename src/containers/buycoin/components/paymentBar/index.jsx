@@ -47,7 +47,15 @@ class PaymentBar extends React.Component {
     super(props);
     this.state = {
       title: i18n.t("COINSALE_SEL_COIN"),
-      img: null
+      img: null,
+      paymentMethod: [
+        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
+        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
+      ],
+      selectedPaymentMethod: {
+        title: undefined,
+        value: undefined
+      }
     };
   }
 
@@ -61,12 +69,23 @@ class PaymentBar extends React.Component {
 
     setCoinSelected(title.toLowerCase(), coins[value].address, coins[value].id);
   };
+  handlePayment = (value, title) => {
+    this.setState({
+      ...this.state,
+      selectedPaymentMethod: {
+        value: value,
+        title: title
+      }
+    });
+  };
 
   render() {
-    const { title, img } = this.state;
+    const { title, img, paymentMethod, selectedPaymentMethod } = this.state;
     const { classes, coins, coinsActive } = this.props;
     let coinspayment = [];
-
+    const paymentTitle = selectedPaymentMethod.title
+      ? selectedPaymentMethod.title
+      : i18n.t("SELECT_PAYMENT");
     Object.keys(coins).map(key => {
       const val = coins[key];
       let item = {
@@ -81,47 +100,41 @@ class PaymentBar extends React.Component {
         coinspayment.push(item);
       }
     });
-
     return (
       <div className={style.baseBar}>
         <Grid container>
           <Grid item xs={12} md={8}>
             <span className={style.label}>
-              {i18n.t("COINSALE_PAYMENT_SELECT")}
+              {i18n.t("DEPOSIT_PAYMENT_METHODS")}
             </span>
+
             <div className={style.baseBackgroundFlex}>
-              <FormControlLabel
-                value="cripto"
-                classes={{ label: classes.rootLabel }}
-                control={
-                  <Checkbox
-                    checked={true}
-                    color="primary"
-                    icon={<Lens />}
-                    checkedIcon={<Lens />}
-                    classes={{ root: classes.root, checked: classes.checked }}
-                  />
-                }
-                label={i18n.t("COINSALE_METHOD_COIN")}
-                labelPlacement="start"
-              />
+                <Select
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  width={"100%"}
+                />
+
             </div>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <span className={style.label}>
-              {i18n.t("COINSALE_PAYMENT_COIN")}
-            </span>
-            <div className={style.baseBackground}>
-              <Select
-                list={coinspayment}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={null}
-                width={"100%"}
-              />
-            </div>
-          </Grid>
+          {selectedPaymentMethod.value === "coin" ? (
+            <Grid item xs={12} md={4}>
+              <span className={style.label}>
+                {i18n.t("COINSALE_PAYMENT_COIN")}
+              </span>
+              <div className={style.baseBackground}>
+                <Select
+                  list={coinspayment}
+                  title={title}
+                  titleImg={img}
+                  selectItem={this.coinSelected}
+                  error={null}
+                  width={"100%"}
+                />
+              </div>
+            </Grid>
+          ) : null}
         </Grid>
       </div>
     );

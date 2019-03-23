@@ -21,7 +21,7 @@ import { PhoneMask } from "../../components/inputMask";
 import ModalBar from "../../components/modalBar";
 
 // MATERIAL
-import { Grid, Input } from "@material-ui/core";
+import { Grid, Input, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // UTILS
@@ -364,20 +364,46 @@ class Invoice extends React.Component {
 
         <Grid container className={style.box} style={{ marginTop: "10px" }}>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
-            <Select
-              list={operadoras}
-              title={invoice.operadora.title}
-              error={errors.includes(i18n.t("RECHARGE_SELECT_TITLE_OPERATOR"))}
-              selectItem={this.handleOperadora}
-            />
+            <Hidden smUp>
+              <Select
+                list={operadoras}
+                title={invoice.operadora.title}
+                error={errors.includes(
+                  i18n.t("RECHARGE_SELECT_TITLE_OPERATOR")
+                )}
+                selectItem={this.handleOperadora}
+                width={"100%"}
+              />
+            </Hidden>
+            <Hidden xsDown>
+              <Select
+                list={operadoras}
+                title={invoice.operadora.title}
+                error={errors.includes(
+                  i18n.t("RECHARGE_SELECT_TITLE_OPERATOR")
+                )}
+                selectItem={this.handleOperadora}
+              />
+            </Hidden>
           </Grid>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
-            <Select
-              list={valores ? valores : ""}
-              title={invoice.valor.title}
-              error={errors.includes("valor")}
-              selectItem={this.handleValor}
-            />
+            <Hidden smUp>
+              <Select
+                list={valores ? valores : ""}
+                title={invoice.valor.title}
+                error={errors.includes("valor")}
+                selectItem={this.handleValor}
+                width={"100%"}
+              />
+            </Hidden>
+            <Hidden xsDown>
+              <Select
+                list={valores ? valores : ""}
+                title={invoice.valor.title}
+                error={errors.includes("valor")}
+                selectItem={this.handleValor}
+              />
+            </Hidden>
           </Grid>
 
           {loadingValores ? (
@@ -399,22 +425,45 @@ class Invoice extends React.Component {
         >
           <Grid container>
             <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
-              <Select
-                list={paymentMethod}
-                title={paymentTitle}
-                selectItem={this.handlePayment}
-                error={errors.includes("Payment Method")}
-              />
-            </Grid>
-            {selectedPaymentMethod.value  === "coin" ? (
-              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+              <Hidden smUp>
                 <Select
-                  list={coinsRedux}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={errors.includes("coin")}
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  error={errors.includes("Payment Method")}
+                  width={"100%"}
                 />
+              </Hidden>
+              <Hidden xsDown>
+                <Select
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  error={errors.includes("Payment Method")}
+                />
+              </Hidden>
+            </Grid>
+            {selectedPaymentMethod.value === "coin" ? (
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                <Hidden smUp>
+                  <Select
+                    list={coinsRedux}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={errors.includes("coin")}
+                    width={"94%"}
+                  />
+                </Hidden>
+                <Hidden xsDown>
+                  <Select
+                    list={coinsRedux}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={errors.includes("coin")}
+                  />
+                </Hidden>
               </Grid>
             ) : null}
           </Grid>

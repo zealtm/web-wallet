@@ -21,7 +21,7 @@ import Loading from "../../components/loading";
 import { DateMask, MoneyBrlMask } from "../../components/inputMask";
 
 // MATERIAL
-import { Grid, Input, InputAdornment } from "@material-ui/core";
+import { Grid, Input, InputAdornment, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // STYLES
@@ -517,24 +517,47 @@ class Invoice extends React.Component {
           </Grid>
         </Grid>
         <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container >
+          <Grid container>
             <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
-              <Select
-                list={paymentMethod}
-                title={paymentTitle}
-                selectItem={this.handlePayment}
-                error={errors.includes("Payment Method")}
-              />
+              <Hidden smUp>
+                <Select
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  error={errors.includes("Payment Method")}
+                  width={"100%"}
+                />
+              </Hidden>
+              <Hidden xsDown>
+                <Select
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  error={errors.includes("Payment Method")}
+                />
+              </Hidden>
             </Grid>
             {selectedPaymentMethod.value === "coin" ? (
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
-                <Select
-                  list={coinsRedux}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={errors.includes("coin")}
-                />
+                <Hidden smUp>
+                  <Select
+                    list={coinsRedux}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={errors.includes("coin")}
+                    width={"94%"}
+                  />
+                </Hidden>
+                <Hidden xsDown>
+                  <Select
+                    list={coinsRedux}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    error={errors.includes("coin")}
+                  />
+                </Hidden>
               </Grid>
             ) : null}
           </Grid>
