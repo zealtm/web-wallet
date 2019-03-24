@@ -9,7 +9,16 @@ class DepositService {
     try {
       API_HEADER.headers.Authorization = token;
 
-      const packages = [15, 30, 45, 60, 100, 250, 500, 1000];
+      const packages = [
+        { id: 1, amount: 15 },
+        { id: 2, amount: 30 },
+        {id: 3, amount:45},
+        {id: 4, amount:60},
+        {id: 5, amount:100},
+        {id: 6, amount:250},
+        {id: 7, amount:500},
+        {id: 8, amount:1000}
+      ];
 
       return packages;
     } catch (error) {

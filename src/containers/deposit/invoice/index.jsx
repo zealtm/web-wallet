@@ -92,7 +92,9 @@ class Invoice extends React.Component {
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
       days: [...Array(31).keys()],
       payment: i18n.t("DEPOSIT_INVOICE"),
-      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")]
+      paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
+      activeCard: undefined,
+      depositValue: undefined
     };
   }
 
@@ -105,12 +107,26 @@ class Invoice extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
-
+  handleCard = (id, amount) => {
+    this.setState({
+      ...this.state,
+      activeCard: id,
+      depositValue: amount
+    });
+  };
   renderPacks = () => {
     const { packages } = this.props;
-
+    const { activeCard } = this.state;
     return packages.map((val, index) => {
-      return <CardPack key={index} pack={val} />;
+      const active = activeCard == val.id ? true : false;
+      return (
+        <CardPack
+          key={index}
+          pack={val}
+          onSelect={this.handleCard}
+          active={active}
+        />
+      );
     });
   };
 
@@ -271,18 +287,16 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { openModal, setPaymentMethod } = this.props;
-    const {payment} = this.state;
+    const { payment } = this.state;
     setPaymentMethod(payment);
-    
-    
-    
+
     //validações
     openModal();
   };
 
   render() {
-    const {payment} = this.state;
-    //console.log(payment);
+    const { payment, depositValue } = this.state;
+    console.log(depositValue);
     
     return (
       <div>

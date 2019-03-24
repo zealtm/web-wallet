@@ -13,9 +13,13 @@ class CardPack extends React.Component {
   }
 
   render() {
-    const { pack } = this.props;
+    const { pack, onSelect, active } = this.props;
+    const styleCard = active ? style.cardActive : style.card;
     return (
-      <div className={style.card}>
+      <div
+        className={styleCard}
+         onClick={() => onSelect(pack.id, pack.amount)}
+      >
         <img
           src={`/images/icons/coins/btc.png`}
           alt={"bitcoin"}
@@ -24,7 +28,7 @@ class CardPack extends React.Component {
         <p className={style.paragraph}>{i18n.t("DEPOSIT_PACK_TEXT")}</p>
         <div className={style.valueCard}>
           <span className={style.dollarSign}>R$</span>
-          <span className={style.value}>{pack}</span>
+          <span className={style.value}>{pack.amount}</span>
           <span className={style.decimals}>,00</span>
         </div>
       </div>
@@ -33,7 +37,9 @@ class CardPack extends React.Component {
 }
 
 CardPack.propTypes = {
-  pack: PropTypes.number
+  pack: PropTypes.object,
+  onSelect: PropTypes.func.isRequired,
+  active: PropTypes.bool
 };
 
 export default CardPack;
