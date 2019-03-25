@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import QrCode from "qrcode.react";
 
 // REDUX
 import { connect } from "react-redux";
@@ -25,7 +26,7 @@ import Loading from "../../../../components/loading";
 class TwoFactoryAuthenticate extends React.Component {
   componentDidMount() {
     let { getTwoFactorAuth, settings, twoFactor } = this.props;
-    if (!twoFactor && !settings.security.urlImage) getTwoFactorAuth();
+    if (!twoFactor && !settings.security.uriQrCode) getTwoFactorAuth();
   }
 
   renderTwoFactor = () => {
@@ -38,8 +39,18 @@ class TwoFactoryAuthenticate extends React.Component {
       <Grid item xs={8} className={style.twoFactorQr}>
         <Grid item xs={3} className={style.item}>
           <Grid className={style.contentItem}>
-            {settings.security.urlImage ? (
-              <img width="200px" src={settings.security.urlImage} />
+            {settings.security.uriQrCode ? (
+               <div className={style.boxReceive}>
+               <QrCode
+                 className={style.bgQrCode}
+                 value={settings.security.uriQrCode}
+                 size={176}
+                 bgColor={"#fff"}
+                 fgColor={"#000"}
+                 level={"L"}
+                 renderAs="svg"
+               />
+             </div>
             ) : (
               <Loading />
             )}
