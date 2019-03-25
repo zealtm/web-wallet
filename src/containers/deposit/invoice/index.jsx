@@ -5,7 +5,12 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages, setPaymentMethod } from "../redux/depositAction";
+import {
+  getPackages,
+  setPaymentMethod,
+  getKycData,
+  setKycValidation
+} from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
@@ -99,8 +104,9 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getPackages } = this.props;
+    const { getPackages, getKycData } = this.props;
     getPackages();
+    getKycData();
   }
 
   moveSlide = (direction = "next") => {
@@ -286,17 +292,19 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod } = this.props;
-    const { payment } = this.state;
+    const { openModal, setPaymentMethod,setKycValidation } = this.props;
+    const { payment, depositValue } = this.state;
     setPaymentMethod(payment);
-
+    if(depositValue > 100){
+      setKycValidation();
+    }
     //validações
     openModal();
   };
 
   render() {
     const { payment, depositValue } = this.state;
-    
+
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -387,7 +395,9 @@ class Invoice extends React.Component {
 Invoice.propTypes = {
   getPackages: PropTypes.func,
   setPaymentMethod: PropTypes.func,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  getKycData: PropTypes.func.isRequired,
+  setKycValidation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -398,7 +408,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPackages,
-      setPaymentMethod
+      setPaymentMethod,
+      getKycData,
+      setKycValidation
     },
     dispatch
   );

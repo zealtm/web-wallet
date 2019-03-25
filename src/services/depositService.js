@@ -110,11 +110,12 @@ class DepositService {
 
   async getKycData(token) {
     try {
+
       API_HEADER.headers.Authorization = token;
       let response = await axios.get(BASE_URL + "/deposit/user", API_HEADER);
 
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      return response;
+      return response.data;
     } catch (error) {
       internalServerError();
     }

@@ -43,8 +43,15 @@ export function* getKycData(){
   try{
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getKycData, token);
-    // console.log(response);
-    return response;
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "SET_KYC_DATA",
+      response
+    });
+
   }catch(error){
     yield put(internalServerError());
   }
