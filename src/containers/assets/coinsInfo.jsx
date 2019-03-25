@@ -136,6 +136,7 @@ class CoinsInfo extends React.Component {
     );
   };
   renderButtonMobile = () => {
+    let { setAssetsSendModalOpen } = this.props; 
     return (
       <Grid item xs={11} className={style.alignButtons}>
         <button
@@ -146,7 +147,12 @@ class CoinsInfo extends React.Component {
         >
           {i18n.t("BTN_RECEIVE")}
         </button>
-        <button className={style.sentButtonMobile}>{i18n.t("BTN_SEND")}</button>
+        <button
+          className={style.sentButtonMobile}
+          onClick={() => setAssetsSendModalOpen()}
+        >
+          {i18n.t("BTN_SEND")}
+        </button>
       </Grid>
     );
   };
