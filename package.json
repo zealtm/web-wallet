@@ -32,7 +32,7 @@
     "lint"
   ],
   "devDependencies": {
-    "@babel/runtime": "7.0.0",
+    "@babel/runtime": "^7.0.0",
     "@sucrase/webpack-object-rest-spread-plugin": "^1.0.1",
     "awesome-typescript-loader": "^5.2.0",
     "babel-cli": "^6.26.0",
