@@ -11,7 +11,8 @@ import {
   Grid,
   Checkbox,
   FormControlLabel,
-  withStyles
+  withStyles,
+  Hidden
 } from "@material-ui/core/";
 
 // ICONS
@@ -101,42 +102,55 @@ class PaymentBar extends React.Component {
       }
     });
     return (
-      <div className={style.baseBar}>
-        <Grid container>
-          <Grid item xs={12} md={8}>
-            <span className={style.label}>
-              {i18n.t("DEPOSIT_PAYMENT_METHODS")}
-            </span>
-
-            <div className={style.baseBackgroundFlex}>
+      <Grid container direction="row" justify="center">
+        <Grid item xs={12} className={style.paymentType}>
+          <Grid item xs={12} className="payments">
+            <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={10} className={style.box} style={{ marginBottom: "20px" }}>
+          <Grid container>
+            <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
+              <Hidden smUp>
                 <Select
                   list={paymentMethod}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   width={"100%"}
                 />
-
-            </div>
-          </Grid>
-          {selectedPaymentMethod.value === "coin" ? (
-            <Grid item xs={12} md={4}>
-              <span className={style.label}>
-                {i18n.t("COINSALE_PAYMENT_COIN")}
-              </span>
-              <div className={style.baseBackground}>
+              </Hidden>
+              <Hidden xsDown>
                 <Select
-                  list={coinspayment}
-                  title={title}
-                  titleImg={img}
-                  selectItem={this.coinSelected}
-                  error={null}
-                  width={"100%"}
+                  list={paymentMethod}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
                 />
-              </div>
+              </Hidden>
             </Grid>
-          ) : null}
+            {selectedPaymentMethod.value === "coin" ? (
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                <Hidden smUp>
+                  <Select
+                    list={coinspayment}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    width={"94%"}
+                  />
+                </Hidden>
+                <Hidden xsDown>
+                  <Select
+                    list={coinspayment}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                  />
+                </Hidden>
+              </Grid>
+            ) : null}
+          </Grid>
         </Grid>
-      </div>
+      </Grid>
     );
   }
 }
