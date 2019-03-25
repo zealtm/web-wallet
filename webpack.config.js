@@ -47,7 +47,7 @@ console.log("\n", "\x1b[0m", "\x1b[21m");
 
 module.exports = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -56,7 +56,7 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", "env"],
+          presets: ["react", ["env",{"modules":false}]],
           plugins: ["syntax-dynamic-import", "transform-class-properties", "transform-object-rest-spread"]
         }
       },

@@ -78,6 +78,7 @@ console.log("\n", "\x1b[0m", "\x1b[21m");
 
 module.exports = {
   mode: 'production',
+  devtool: 'source-map',
   entry: ["babel-polyfill", "./src/index.jsx"],
   module: {
     rules: [
@@ -87,7 +88,7 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", "env"],
+          presets: ["react", ["env",{"modules":false}]],
           plugins: [
             "syntax-dynamic-import",
             "transform-class-properties",
