@@ -27,3 +27,7 @@ export const setPaymentMethod = (method) => ({
   type: "SET_PAYMENT_METHOD",
   method
 });
+
+export const getKycData = () => ({
+  type: "GET_KYC_DATA_API"
+});

@@ -38,3 +38,14 @@ export function* getDepositHistorySaga() {
     yield put(internalServerError());
   }
 }
+
+export function* getKycData(){
+  try{
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getKycData, token);
+    // console.log(response);
+    return response;
+  }catch(error){
+    yield put(internalServerError());
+  }
+}

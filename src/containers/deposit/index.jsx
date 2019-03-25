@@ -2,7 +2,7 @@ import React from "react";
 
 // REDUX
 import { connect } from "react-redux";
-import { setModalSteps } from "./redux/depositAction";
+import { setModalSteps, getKycData } from "./redux/depositAction";
 import { bindActionCreators } from "redux";
 
 // UTILS
@@ -33,6 +33,10 @@ class Deposit extends React.Component {
       isOpen: false
     };
   }
+  componentDidMount = () => {
+    const {getKycData} = this.props;
+    getKycData();
+  };
 
   handleSteps = step => {
     const { setModalSteps } = this.props;
@@ -85,7 +89,8 @@ class Deposit extends React.Component {
 
 Deposit.propTypes = {
   modalStep: PropTypes.number,
-  setModalSteps: PropTypes.func
+  setModalSteps: PropTypes.func,
+  getKycData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -95,7 +100,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setModalSteps
+      setModalSteps,
+      getKycData
     },
     dispatch
   );

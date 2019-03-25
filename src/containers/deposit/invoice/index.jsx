@@ -296,7 +296,6 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-    console.log(depositValue);
     
     return (
       <div>
