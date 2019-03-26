@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { resetUser } from "../redux/userAction";
+import { resetUser, sendVerifyEmail } from "../redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
@@ -61,6 +61,25 @@ class ResetUser extends React.Component {
     return;
   };
 
+ validatorVerify = () => {
+    let { sendVerifyEmail, clearMessage, errorInput } = this.props;
+    let { inputs } = this.state;
+    let { messageError, errors } = inputValidator(inputs);
+
+    if (errors.length > 0) {
+      errorInput(messageError);
+      this.setState({
+        ...this.state,
+        errors
+      });
+    } else {
+      clearMessage();
+      sendVerifyEmail(this.state.inputs.emailUsername.value);
+    }
+
+    return;
+  };
+
   handleKeyPress = target => {
     if (target.charCode == 13) {
       this.inputValidator();
@@ -104,7 +123,6 @@ class ResetUser extends React.Component {
               : style.inputTextDefault
           }
         />
-
         <div className={style.resetInstruction}>
           {i18n.t("RESET_INSTRUCTIONS")}
           <br />
@@ -121,6 +139,7 @@ class ResetUser extends React.Component {
         >
           {loading ? <Loading /> : i18n.t("BTN_RESET")}
         </button>
+        <div className={style.textVerify}>{i18n.t("VERIFY_EMAIL_HEADER")}{" "} <a className={style.linkVerifyEmail} href="#" onClick={() => this.validatorVerify()}> {i18n.t("VERIFY_EMAIL_HEADER_1")} </a></div>
       </div>
     );
   }
@@ -131,7 +150,8 @@ ResetUser.propTypes = {
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   user: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  sendVerifyEmail: PropTypes.func,
 };
 
 const mapSateToProps = store => ({
@@ -143,7 +163,8 @@ const mapDispatchToProps = dispatch =>
     {
       resetUser,
       clearMessage,
-      errorInput
+      errorInput,
+      sendVerifyEmail
     },
     dispatch
   );
