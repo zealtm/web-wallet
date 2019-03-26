@@ -7,6 +7,12 @@ const initialState = {
   paymentMethod: null,
   kycData: {
     kycValidation: false
+  },
+  loadingState: false,
+  loadingCity: false,
+  location: {
+    states: [],
+    city: []
   }
 };
 
@@ -56,7 +62,34 @@ const deposit = (state = initialState, action) => {
           kycValidation: true
         }
       };
-
+    case "DEPOSIT_SET_STATE":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          states: action.response.data
+        },
+        loadingState: false
+      };
+    case "DEPOSIT_SET_CITY":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          city: action.response.data
+        },
+        loadingCity: false
+      };
+    case "SET_LOADING_DEPOSIT_STATE":
+      return {
+        ...state,
+        loadingState: true
+      };
+    case "SET_LOADING_DEPOSIT_CITY":
+      return {
+        ...state,
+        loadingCity: true
+      };
     default: {
       return {
         ...state

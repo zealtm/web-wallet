@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import PropTypes from "prop-types";
 
 //REDUX
@@ -7,7 +7,9 @@ import { bindActionCreators } from "redux";
 import {
   setLoading,
   setUserData,
-  setModalSteps
+  setModalSteps,
+  DepositGetStates,
+  DepositGetCities
 } from "../../redux/depositAction";
 
 // STYLE
@@ -20,6 +22,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 //COMPONENTS
 import ButtonContinue from "../../../../components/buttonContinue";
+import Loading from "../../../../components/loading";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -108,7 +111,10 @@ class InformationModal extends React.Component {
       addressNumber: ""
     };
   }
-
+  componentDidMount() {
+    const { DepositGetStates } = this.props;
+    DepositGetStates("BR");
+  }
   checkAllInputs = () => {
     const {
       fullName,
@@ -133,6 +139,7 @@ class InformationModal extends React.Component {
 
   handleInput = property => e => {
     let value = null;
+    const { DepositGetCities } = this.props;
     switch (property) {
       case "fullName":
         value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
@@ -149,9 +156,13 @@ class InformationModal extends React.Component {
       case "addressNumbe":
         value = e.target.value.replace(/\D/, "");
         break;
+      case "state":
+        value = e.target.value;
+        DepositGetCities({ country: 'BR', state: value });
+        break;
       default:
         value = e.target.value;
-        break
+        break;
     }
     this.setState({
       [property]: value
@@ -169,20 +180,38 @@ class InformationModal extends React.Component {
   };
 
   listStates = () => {
-    const { classes } = this.props;
-    const states = ["São Paulo", "Rio de Janeiro"];
-
-    return states.map((item, index) => (
-      <MenuItem
-        value={item}
-        key={index}
-        classes={{
-          root: classes.menuItemRoot
-        }}
-      >
-        {item}
-      </MenuItem>
-    ));
+    const { classes, states } = this.props;
+    if (states) {
+      return states.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
+  };
+  listCities = () => {
+    const { classes, city } = this.props;
+    if (city) {
+      return city.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
   };
 
   render() {
@@ -242,7 +271,7 @@ class InformationModal extends React.Component {
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
                 value={this.state.personalNumber}
                 onChange={this.handleInput("personalNumber")}
-                inputProps={{maxLength: 14}}
+                inputProps={{ maxLength: 14 }}
               />
             </Grid>
           </Grid>
@@ -342,26 +371,10 @@ class InformationModal extends React.Component {
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
                 value={this.state.cep}
                 onChange={this.handleInput("cep")}
-                inputProps={{maxLength: 9}}
+                inputProps={{ maxLength: 9 }}
               />
             </Grid>
             <Grid item sm={1} />
-            <Grid item xs={6} sm={2}>
-              <div className={style.textGreen}>
-                {i18n.t("DEPOSIT_INF_MODAL_ADDRESS_NUMBER")}
-              </div>
-
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS_NUMBER")}
-                value={this.state.addressNumber}
-                onChange={this.handleInput("addressNumber")}
-              />
-            </Grid>
           </Grid>
 
           <Grid container justify="center">
@@ -384,11 +397,19 @@ InformationModal.propTypes = {
   loading: PropTypes.bool,
   setLoading: PropTypes.func,
   setUserData: PropTypes.func,
-  setModalSteps: PropTypes.func
+  setModalSteps: PropTypes.func,
+  DepositGetStates: PropTypes.func.isRequired,
+  DepositGetCities: PropTypes.func.isRequired,
+  states: PropTypes.array,
+  city: PropTypes.array
 };
 
 const mapStateToProps = store => ({
-  loading: store.deposit.loading
+  loading: store.deposit.loading,
+  states: store.deposit.location.states,
+  city: store.deposit.location.city,
+  loadingState: store.deposit.loadingState,
+  loadingCity: store.deposit.loadingState
 });
 
 const mapDispatchToProps = dispatch =>
@@ -396,7 +417,9 @@ const mapDispatchToProps = dispatch =>
     {
       setLoading,
       setUserData,
-      setModalSteps
+      setModalSteps,
+      DepositGetStates,
+      DepositGetCities
     },
     dispatch
   );

@@ -45,6 +45,7 @@ class Deposit extends React.Component {
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   };
 
+  
   closeModal = () => {
     const { setModalSteps } = this.props;
 
@@ -58,7 +59,7 @@ class Deposit extends React.Component {
     const titles = [
       i18n.t("DEPOSIT_TAB_TITLE"),
       i18n.t("DEPOSIT_TAB_HISTORY_TITLE")
-    ];
+    ]; 
     const contents = [
       <Invoice openModal={() => this.handleModal()} key={0} />,
       <History key={1} />
