@@ -243,6 +243,7 @@
   "RESET_HEADER": "Esqueceu sua senha",
   "VERIFY_EMAIL_HEADER": "Não recebeu o e-mail de confirmação de conta?",
   "VERIFY_EMAIL_HEADER_1" : "Solicite o reenvio",
+  "VERIFY_EMAIL_HEADER_2" : "Limite de requisições excedido. Tente novamente após 15 minutos",
   "RESET_NEW_PASSWORD_HEADER": "Digite sua nova senha",
   "LOGIN_FORGET_PASSWORD_LINK": "Esqueceu sua senha?",
   "LOGIN_SINGUP_ACCOUNT_LINK": "Registrar-se",

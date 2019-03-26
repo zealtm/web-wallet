@@ -463,7 +463,7 @@ export function* sendVerifyEmailSaga(data) {
       yield put({
         type: changeLoadingState
       });
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("VERIFY_EMAIL_HEADER_2")));
     }
     return;
   } catch (error) {
