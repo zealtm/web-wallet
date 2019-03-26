@@ -23,7 +23,8 @@ class InternalError extends React.Component {
         timer: this.state.timer - 1
       });
     } else if (timer <= 0) {
-      location.reload();
+      //location.reload();
+      window.location.href ="/";
     }
   };
 

@@ -152,6 +152,22 @@ class UserService {
       return internalServerError();
     }
   }
+
+  async sendVerifyEmail(email){
+    try {
+      let response = await axios.post(
+        `${BASE_URL}/user/email-verify`,
+        {
+          email
+        },
+        API_HEADER
+      );
+      
+      return response;
+    }catch(error){
+      return internalServerError();
+    }
+  }
 }
 
 export default UserService;
