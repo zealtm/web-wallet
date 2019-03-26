@@ -460,10 +460,15 @@ export function* sendVerifyEmailSaga(data) {
         type: changeLoadingState
       });
     } else {
+      
       yield put({
         type: changeLoadingState
       });
-      yield put(modalError(i18n.t("VERIFY_EMAIL_HEADER_2")));
+      if(response.data.code && response.data.code === 405){
+        yield put(modalError(i18n.t("ERROR_EMAIL_ALREADY_VERIFIED")));
+      }else{
+        yield put(modalError(i18n.t("VERIFY_EMAIL_HEADER_2")));
+      }
     }
     return;
   } catch (error) {

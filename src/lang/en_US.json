@@ -249,6 +249,7 @@
   "VERIFY_EMAIL_HEADER": "Did you receive your verification email?",
   "VERIFY_EMAIL_HEADER_1":"Send the verification again",
   "VERIFY_EMAIL_HEADER_2" : "Request limit exceeded, try again after 15 minutes",
+  "ERROR_EMAIL_ALREADY_VERIFIED": "Your email is already verified",
   "RESET_NEW_PASSWORD_HEADER": "Type your new password",
   "LOGIN_FORGET_PASSWORD_LINK": "Forgot your password?",
   "LOGIN_SINGUP_ACCOUNT_LINK": "Sign up",
