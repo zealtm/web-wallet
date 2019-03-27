@@ -15,7 +15,7 @@ const initialState = {
     states: [],
     city: []
   },
-  selectedValue: ""
+  selectedValue: 0
 };
 
 const deposit = (state = initialState, action) => {

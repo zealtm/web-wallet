@@ -49,6 +49,13 @@
   font-size: 13px;
   display: block;
 }
+:local .clickHere {
+  font-size: 16px;
+}
+:local(.clickHere a, .clickHere a:visited) {
+  text-decoration: none !important;
+  color: #68f285 !important;
+}
 
 /* 3. BUTTONS */
 :local .buttonBorderGreen {
