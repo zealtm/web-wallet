@@ -17,12 +17,23 @@ import style from "./style.css";
 import colors from "../../../../components/bases/colors";
 
 // MATERIAL
-import { Grid, Input, Select, MenuItem } from "@material-ui/core";
+import {
+  Grid,
+  Input,
+  Select,
+  MenuItem,
+  Radio,
+  FormControlLabel,
+  FormControl,
+  RadioGroup
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Lens } from "@material-ui/icons";
 
 //COMPONENTS
 import ButtonContinue from "../../../../components/buttonContinue";
 import Loading from "../../../../components/loading";
+import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -72,7 +83,7 @@ const customStyle = theme => ({
     fontSize: "1em",
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      width: "14em"
+      width: "15em"
     },
     icon: {
       fill: "green"
@@ -95,6 +106,26 @@ const customStyle = theme => ({
   },
   icon: {
     fill: "#68f285"
+  },
+  checked: {
+    color: "#68f285"
+  },
+  rootRadio: {
+    color: "#654fa4",
+    "&$checked": {
+      color: "#68f285"
+    },
+    margin: "0px 55px 0 1px"
+  },
+  rootRadioGroup: {
+    padding: "5px 3px 0px 2px"
+  },
+  rootLabel: {
+    fontSize: "11px",
+    color: "#fff",
+    position: "relative",
+    right: "60px",
+    top: "2px"
   }
 });
 
@@ -103,12 +134,13 @@ class InformationModal extends React.Component {
     super();
     this.state = {
       fullName: "",
-      personalNumber: "",
+      document: "",
       city: "",
       state: "",
       cep: "",
       address: "",
-      addressNumber: ""
+      addressNumber: "",
+      documentType: ""
     };
   }
   componentDidMount() {
@@ -118,7 +150,7 @@ class InformationModal extends React.Component {
   checkAllInputs = () => {
     const {
       fullName,
-      personalNumber,
+      document,
       state,
       city,
       cep,
@@ -127,13 +159,7 @@ class InformationModal extends React.Component {
     } = this.state;
 
     return (
-      fullName &&
-      personalNumber &&
-      state &&
-      city &&
-      cep &&
-      address &&
-      addressNumber
+      fullName && document && state && city && cep && address && addressNumber
     );
   };
 
@@ -144,8 +170,19 @@ class InformationModal extends React.Component {
       case "fullName":
         value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
         break;
-      case "personalNumber":
-        value = e.target.value.replace(/\D/, "");
+      case "document":
+        if (documentType === "passport") {
+          value = value.replace(/[^A-Z0-9]/, "");
+          if (value.length < 10) {
+            this.setState({
+              [property]: value
+            });
+          }
+        } else {
+          this.setState({
+            [property]: value
+          });
+        }
         break;
       case "cep":
         value = e.target.value.replace(/[^0-9-]/, "");
@@ -158,7 +195,7 @@ class InformationModal extends React.Component {
         break;
       case "state":
         value = e.target.value;
-        DepositGetCities({ country: 'BR', state: value });
+        DepositGetCities({ country: "BR", state: value });
         break;
       default:
         value = e.target.value;
@@ -178,7 +215,9 @@ class InformationModal extends React.Component {
     // remove in the future
     window.setTimeout(() => setUserData(this.state), 3000);
   };
-
+  handleRadioChange = event => {
+    this.setState({ documentType: event.target.value, document: "" });
+  };
   listStates = () => {
     const { classes, states } = this.props;
     if (states) {
@@ -216,6 +255,7 @@ class InformationModal extends React.Component {
 
   render() {
     const { classes, loading } = this.props;
+    const { documentType } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -227,7 +267,12 @@ class InformationModal extends React.Component {
         }
       }
     };
-
+    let inputMask = null;
+    if (documentType === "cnpj") {
+      inputMask = CnpjMask;
+    } else if (documentType === "cpf") {
+      inputMask = CpfMask;
+    }
     return (
       <div>
         <Grid container className={style.container}>
@@ -236,13 +281,8 @@ class InformationModal extends React.Component {
               {i18n.t("DEPOSIT_INF_MODAL_TITLE")}
             </p>
           </Grid>
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            className={style.formGroup}
-          >
-            <Grid item xs={12} sm={5}>
+          <Grid container direction="row" className={style.formGroup}>
+            <Grid item xs={12} sm={12}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_FULLNAME")}
               </div>
@@ -257,21 +297,78 @@ class InformationModal extends React.Component {
                 onChange={this.handleInput("fullName")}
               />
             </Grid>
-            <Grid item sm={1} />
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={12}>
               <div className={style.textGreen}>
-                {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
+                {i18n.t("SECURITY_INSERT_DOC")}
               </div>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormControl component="fieldset" className={style.labelRadio}>
+                  <RadioGroup
+                    aria-label="Documentos"
+                    name="documentos"
+                    value={documentType}
+                    onChange={this.handleRadioChange}
+                    row={true}
+                    classes={{ root: classes.rootRadioGroup }}
+                  >
+                    <FormControlLabel
+                      value="cpf"
+                      control={
+                        <Radio
+                          icon={<Lens />}
+                          checkedIcon={<Lens />}
+                          classes={{
+                            root: classes.rootRadio,
+                            checked: classes.checked
+                          }}
+                        />
+                      }
+                      label="CPF"
+                      classes={{ label: classes.rootLabel }}
+                    />
+                    <FormControlLabel
+                      value="cnpj"
+                      control={
+                        <Radio
+                          icon={<Lens />}
+                          checkedIcon={<Lens />}
+                          classes={{
+                            root: classes.rootRadio,
+                            checked: classes.checked
+                          }}
+                        />
+                      }
+                      label="CNPJ"
+                      classes={{ label: classes.rootLabel }}
+                    />
+                    <FormControlLabel
+                      value="passport"
+                      control={
+                        <Radio
+                          icon={<Lens />}
+                          checkedIcon={<Lens />}
+                          classes={{
+                            root: classes.rootRadio,
+                            checked: classes.checked
+                          }}
+                        />
+                      }
+                      label={i18n.t("KYC_PASSPORT")}
+                      classes={{ label: classes.rootLabel }}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
               <Input
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
                   input: classes.inputCssCenter
                 }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber}
-                onChange={this.handleInput("personalNumber")}
-                inputProps={{ maxLength: 14 }}
+                placeholder={i18n.t("KYC_DOCUMENT_PLACEHOLDER")}
+                value={this.state.document}
+                onChange={this.handleInput("document")}
+                inputComponent={inputMask}
               />
             </Grid>
           </Grid>
@@ -281,7 +378,7 @@ class InformationModal extends React.Component {
             justify="space-around"
             className={style.formGroup}
           >
-            <Grid item xs={5} sm={5}>
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_STATE")}
               </div>
@@ -308,7 +405,7 @@ class InformationModal extends React.Component {
               </Select>
             </Grid>
             <Grid item xs={1} />
-            <Grid item xs={5} sm={5}>
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
               </div>
@@ -357,8 +454,8 @@ class InformationModal extends React.Component {
                 onChange={this.handleInput("address")}
               />
             </Grid>
-            <Grid item sm={1} />
-            <Grid item xs={6} sm={2}>
+            <Grid item sm={2} />
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CEP")}
               </div>
