@@ -9,7 +9,8 @@ import {
   getPackages,
   setPaymentMethod,
   getKycData,
-  setKycValidation
+  setKycValidation,
+  setSelectedValue
 } from "../redux/depositAction";
 
 // COMPONENTS
@@ -91,7 +92,6 @@ const settings = {
 class Invoice extends React.Component {
   constructor() {
     super();
-
     this.state = {
       checkBox: false,
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
@@ -99,7 +99,7 @@ class Invoice extends React.Component {
       payment: i18n.t("DEPOSIT_INVOICE"),
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
       activeCard: undefined,
-      depositValue: undefined
+      depositValue: ""
     };
   }
 
@@ -113,16 +113,24 @@ class Invoice extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
+  handleSelectedValue = (amount) =>{
+    const {setSelectedValue} = this.props;
+    
+    setSelectedValue(amount);
+  };
   handleCard = (id, amount) => {
     this.setState({
       ...this.state,
       activeCard: id,
       depositValue: amount
     });
+    
+    this.handleSelectedValue(amount);
   };
   renderPacks = () => {
     const { packages } = this.props;
     const { activeCard } = this.state;
+    
     return packages.map((val, index) => {
       const active = activeCard == val.id ? true : false;
       return (
@@ -292,10 +300,10 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod,setKycValidation } = this.props;
+    const { openModal, setPaymentMethod, setKycValidation } = this.props;
     const { payment, depositValue } = this.state;
     setPaymentMethod(payment);
-    if(depositValue > 100){
+    if (depositValue > 100) {
       setKycValidation();
     }
     //validações
@@ -397,7 +405,8 @@ Invoice.propTypes = {
   setPaymentMethod: PropTypes.func,
   openModal: PropTypes.func,
   getKycData: PropTypes.func.isRequired,
-  setKycValidation: PropTypes.func.isRequired
+  setKycValidation: PropTypes.func.isRequired,
+  setSelectedValue: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -410,7 +419,8 @@ const mapDispatchToProps = dispatch =>
       getPackages,
       setPaymentMethod,
       getKycData,
-      setKycValidation
+      setKycValidation,
+      setSelectedValue
     },
     dispatch
   );

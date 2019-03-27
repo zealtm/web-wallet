@@ -36,12 +36,17 @@ export const setKycValidation = () => ({
   type: "SET_KYC_TRUE"
 });
 
-export const DepositGetStates = country => ({
+export const depositGetStates = country => ({
   type: "DEPOSIT_GET_STATES_API",
   country
 });
 
-export const DepositGetCities = location => ({
+export const depositGetCity = location => ({
   type: "DEPOSIT_GET_CITY_API",
   location
 });
+
+export const setSelectedValue = value => ({
+  type: "SET_SELECTED_VALUE",
+  value
+})

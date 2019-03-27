@@ -58,7 +58,7 @@ export function* getKycData(){
     yield put(internalServerError());
   }
 }
-export function* DepositGetStates(payload) {
+export function* depositGetStates(payload) {
   try {
     yield put({ type: "SET_LOADING_DEPOSIT_STATE" });
     let token = yield call(getAuthToken);
@@ -80,7 +80,7 @@ export function* DepositGetStates(payload) {
     yield put(internalServerError());
   }
 }
-export function* DepositGetCity(payload) {
+export function* depositGetCity(payload) {
   try {
     yield put({ type: "SET_LOADING_DEPOSIT_CITY" });
     let token = yield call(getAuthToken);

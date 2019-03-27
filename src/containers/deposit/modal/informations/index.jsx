@@ -8,8 +8,8 @@ import {
   setLoading,
   setUserData,
   setModalSteps,
-  DepositGetStates,
-  DepositGetCities
+  depositGetStates,
+  depositGetCity
 } from "../../redux/depositAction";
 
 // STYLE
@@ -144,8 +144,8 @@ class InformationModal extends React.Component {
     };
   }
   componentDidMount() {
-    const { DepositGetStates } = this.props;
-    DepositGetStates("BR");
+    const { depositGetStates } = this.props;
+    depositGetStates("BR");
   }
   checkAllInputs = () => {
     const {
@@ -165,7 +165,7 @@ class InformationModal extends React.Component {
 
   handleInput = property => e => {
     let value = null;
-    const { DepositGetCities } = this.props;
+    const { depositGetCity } = this.props;
     switch (property) {
       case "fullName":
         value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
@@ -195,7 +195,7 @@ class InformationModal extends React.Component {
         break;
       case "state":
         value = e.target.value;
-        DepositGetCities({ country: "BR", state: value });
+        depositGetCity({ country: "BR", state: value });
         break;
       default:
         value = e.target.value;
@@ -495,8 +495,8 @@ InformationModal.propTypes = {
   setLoading: PropTypes.func,
   setUserData: PropTypes.func,
   setModalSteps: PropTypes.func,
-  DepositGetStates: PropTypes.func.isRequired,
-  DepositGetCities: PropTypes.func.isRequired,
+  depositGetStates: PropTypes.func.isRequired,
+  depositGetCity: PropTypes.func.isRequired,
   states: PropTypes.array,
   city: PropTypes.array
 };
@@ -515,8 +515,8 @@ const mapDispatchToProps = dispatch =>
       setLoading,
       setUserData,
       setModalSteps,
-      DepositGetStates,
-      DepositGetCities
+      depositGetStates,
+      depositGetCity
     },
     dispatch
   );

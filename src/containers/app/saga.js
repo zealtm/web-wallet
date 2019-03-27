@@ -143,8 +143,8 @@ import {
   getPackagesSaga,
   getDepositHistorySaga,
   getKycData,
-  DepositGetStates,
-  DepositGetCity
+  depositGetStates,
+  depositGetCity
 } from "../deposit/redux/depositSaga";
 
 export default function* rootSaga() {
@@ -303,7 +303,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
     fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
     fork(takeLatest, "GET_KYC_DATA_API", getKycData),
-    fork(takeLatest, "DEPOSIT_GET_STATES_API", DepositGetStates),
-    fork(takeLatest, "DEPOSIT_GET_CITY_API", DepositGetCity),
+    fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
+    fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
   ];
 }

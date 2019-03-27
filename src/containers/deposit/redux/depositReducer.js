@@ -14,7 +14,8 @@ const initialState = {
   location: {
     states: [],
     city: []
-  }
+  },
+  selectedValue: ""
 };
 
 const deposit = (state = initialState, action) => {
@@ -90,6 +91,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         loadingCity: true
+      };
+    case "SET_SELECTED_VALUE":
+      return {
+        ...state,
+        selectedValue: action.value
       };
     default: {
       return {
