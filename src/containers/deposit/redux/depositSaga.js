@@ -25,6 +25,10 @@ export function* getPackagesSaga() {
 
 export function* getDepositHistorySaga() {
   try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getDepositHistory, token);
 
@@ -34,7 +38,15 @@ export function* getDepositHistorySaga() {
       type: "GET_HISTORY_DEPOSIT_REDUCER",
       history: response.data
     });
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: false
+    });
   } catch (error) {
     yield put(internalServerError());
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: false
+    });
   }
 }
