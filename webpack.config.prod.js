@@ -88,7 +88,7 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", ["env",{"modules":false}]],
+          presets: ["react", "env"],
           plugins: [
             "syntax-dynamic-import",
             "transform-class-properties",
