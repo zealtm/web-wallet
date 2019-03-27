@@ -5,7 +5,8 @@ const initialState = {
   modalStep: 1,
   loading: false,
   paymentMethod: null,
-  kycData: {
+  kyc: {
+    data: {},
     kycValidation: false
   },
   loadingState: false,
@@ -52,13 +53,13 @@ const deposit = (state = initialState, action) => {
     case "SET_KYC_DATA":
       return {
         ...state,
-        kycData: action.response.data
+        kyc: { ...state.kyc, data: action.response.data }
       };
     case "SET_KYC_TRUE":
       return {
         ...state,
-        kycData: {
-          ...state.kycData,
+        kyc: {
+          ...state.kyc,
           kycValidation: true
         }
       };
