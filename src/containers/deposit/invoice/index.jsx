@@ -116,9 +116,8 @@ class Invoice extends React.Component {
   };
   renderPacks = () => {
     const { packages } = this.props;
-    const { activeCard } = this.state;
     return packages.map((val, index) => {
-      const active = activeCard == val.id ? true : false;
+      const active = val.status;
       return (
         <CardPack
           key={index}
@@ -296,7 +295,7 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-    
+    const { packages } = this.props;
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -321,9 +320,18 @@ class Invoice extends React.Component {
               </Hidden>
 
               <Grid item xs={12} sm={10} style={{ minHeight: 300 }}>
-                <Slider ref={c => (this.slider = c)} {...settings}>
-                  {this.renderPacks()}
-                </Slider>
+                {(!packages.length) ?
+                <div className={style.boxContainer}>
+                  <div className={style.box}>
+                    <h1 className={style.textCenter}>
+                      {i18n.t("DEPOSIT_INF_NOT_FOUND")}
+                    </h1> 
+                  </div>                  
+                </div>:
+                  <Slider ref={c => (this.slider = c)} {...settings}>
+                    {this.renderPacks()}
+                  </Slider>
+                }
               </Grid>
 
               <Hidden xsDown>

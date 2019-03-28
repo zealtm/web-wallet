@@ -1,26 +1,40 @@
+import axios from "axios";
+
 // CONSTANTS
-import { API_HEADER } from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 
 // ERROS
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
+// UTILS
+import { setAuthToken } from "../utils/localStorage";
+
 class DepositService {
+
   async getPackages(token) {
     try {
+      let packages = [];
+
       API_HEADER.headers.Authorization = token;
 
-      const packages = [
-        { id: 1, amount: 15 },
-        { id: 2, amount: 30 },
-        {id: 3, amount:45},
-        {id: 4, amount:60},
-        {id: 5, amount:100},
-        {id: 6, amount:250},
-        {id: 7, amount:500},
-        {id: 8, amount:1000}
-      ];
+      let response = await axios.get(
+        BASE_URL + "/deposit/packages",
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      console.log(JSON.stringify(response));
+      if (response.data.code !== 200) {
+        return packages;
+      }
 
-      return packages;
+      
+      response.data.data.packages.map(val => {
+        packages.push(val);
+      });
+
+      return {
+        packages
+      };
     } catch (error) {
       return internalServerError();
     }

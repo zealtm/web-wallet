@@ -18,7 +18,7 @@ class CardPack extends React.Component {
     return (
       <div
         className={styleCard}
-         onClick={() => onSelect(pack.id, pack.amount)}
+         onClick={() => onSelect(pack.id, pack.value)}
       >
         <img
           src={`/images/icons/coins/btc.png`}
@@ -28,7 +28,7 @@ class CardPack extends React.Component {
         <p className={style.paragraph}>{i18n.t("DEPOSIT_PACK_TEXT")}</p>
         <div className={style.valueCard}>
           <span className={style.dollarSign}>R$</span>
-          <span className={style.value}>{pack.amount}</span>
+          <span className={style.value}>{pack.value}</span>
           <span className={style.decimals}>,00</span>
         </div>
       </div>
