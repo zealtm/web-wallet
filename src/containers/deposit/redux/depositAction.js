@@ -27,3 +27,7 @@ export const setPaymentMethod = (method) => ({
   type: "SET_PAYMENT_METHOD",
   method
 });
+export const createDepositBill = (payload) => ({
+  type: "CREATE_DEPOSIT_BILL",
+  payload
+});

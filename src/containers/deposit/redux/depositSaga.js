@@ -38,3 +38,19 @@ export function* getDepositHistorySaga() {
     yield put(internalServerError());
   }
 }
+
+export function* createDepositBillSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.createDepositBill, token,payload);
+
+    if (response.status !== 200) return yield put(internalServerError());
+
+    yield put({
+      type: "SET_BUY_ID",
+      id: response.data
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

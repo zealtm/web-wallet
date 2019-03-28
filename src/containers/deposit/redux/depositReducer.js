@@ -1,10 +1,28 @@
 const initialState = {
   packages: [],
   history: [],
-  user: {},
+  user: {
+    fullName: null,
+    document: null,
+    address: {
+      street: null,
+      city: null,
+      state: null,
+      country: null,
+      zipcode: null
+    }
+  },
+  buyID: 0,
   modalStep: 1,
   loading: false,
-  paymentMethod: null
+  paymentMethod: null,
+  payloadPayment: {
+    service: null, //(descrição do serviço, ex: Deposit, Recarga, Compra)
+    packageId: 0,//(endpoint: /deposit/package)
+    paymentMethodId: null,//(endpoint: /deposit/paymentMethods)
+    userData: this.user
+  },
+  depositBill: {}
 };
 
 const deposit = (state = initialState, action) => {
@@ -40,6 +58,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         paymentMethod: action.method
+      };
+    case "SET_BUY_ID":
+      return {
+        ...state,
+        buyID: action.id
       };
 
     default: {

@@ -1,8 +1,13 @@
+import axios from "axios";
+
 // CONSTANTS
-import { API_HEADER } from "../constants/apiBaseUrl";
+import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
 
 // ERROS
 import { internalServerError } from "../containers/errors/statusCodeMessage";
+
+// UTILS
+import { setAuthToken } from "../utils/localStorage";
 
 class DepositService {
   async getPackages(token) {
@@ -12,12 +17,12 @@ class DepositService {
       const packages = [
         { id: 1, amount: 15 },
         { id: 2, amount: 30 },
-        {id: 3, amount:45},
-        {id: 4, amount:60},
-        {id: 5, amount:100},
-        {id: 6, amount:250},
-        {id: 7, amount:500},
-        {id: 8, amount:1000}
+        { id: 3, amount: 45 },
+        { id: 4, amount: 60 },
+        { id: 5, amount: 100 },
+        { id: 6, amount: 250 },
+        { id: 7, amount: 500 },
+        { id: 8, amount: 1000 }
       ];
 
       return packages;
@@ -103,6 +108,24 @@ class DepositService {
       return history;
     } catch (error) {
       return internalServerError();
+    }
+  }
+
+  async createDepositBill(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/deposit/bill`,
+        payload,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
     }
   }
 }
