@@ -75,7 +75,10 @@ const customStyle = theme => ({
       display: "none"
     }
   },
-  disabled: {},
+  disabled: {
+    opacity: "2",
+    color: "gray"
+  },
   error: {},
   focused: {},
   underlineItems: {
@@ -143,7 +146,8 @@ class InformationModal extends React.Component {
       addressNumber: "",
       documentType: "",
       statusKyc: "",
-      disabled: true
+      disabled: true,
+      checkInputs: false
     };
   }
   setInputValue = () => {
@@ -168,8 +172,9 @@ class InformationModal extends React.Component {
       }
       this.setState({
         fullName: fullName ? fullName : "",
-        documentType: documentType ? documentType : "",
-        document: document ? document : "",
+        documentType:
+          documentType && documentType !== "passport" ? documentType : "",
+        document: document && documentType !== "passport" ? document : "",
         state: state ? state : "",
         city: city ? city : "",
         cep: zipcode ? zipcode : "",
@@ -195,20 +200,6 @@ class InformationModal extends React.Component {
       case "fullName":
         value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
         break;
-      case "document":
-        if (documentType === "passport") {
-          value = value.replace(/[^A-Z0-9]/, "");
-          if (value.length < 10) {
-            this.setState({
-              [property]: value
-            });
-          }
-        } else {
-          this.setState({
-            [property]: value
-          });
-        }
-        break;
       case "cep":
         value = e.target.value.replace(/[^0-9-]/, "");
         break;
@@ -233,12 +224,29 @@ class InformationModal extends React.Component {
 
   validateForm = () => {
     const { setLoading, setUserData, setModalSteps } = this.props;
-
+    let {
+      fullName,
+      documentType,
+      document,
+      state,
+      city,
+      cep,
+      address
+    } = this.state;
+    let user = {
+      fullName,
+      documentType,
+      document,
+      state,
+      city,
+      cep,
+      address
+    };
     setLoading(true);
     setModalSteps(2);
 
     // remove in the future
-    window.setTimeout(() => setUserData(this.state), 3000);
+    setUserData(user);
   };
   handleRadioChange = event => {
     this.setState({ documentType: event.target.value, document: "" });
@@ -280,7 +288,7 @@ class InformationModal extends React.Component {
 
   render() {
     const { classes, loading, selectedValue } = this.props;
-    const { documentType, disabled, statusKyc } = this.state;
+    const { documentType, disabled, statusKyc, checkInputs } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -306,19 +314,19 @@ class InformationModal extends React.Component {
     }
     let infoMessage = i18n.t("DEPOSIT_INF_MODAL_TITLE");
     if (selectedValue === 0) {
-      infoMessage =
-        "Por favor, selecione um valor de depósito para poder prosseguir.";
+      infoMessage = i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE");
     } else if (selectedValue > 100 && statusKyc === "rejected") {
-
       infoMessage = (
         <div className={style.clickHere}>
-          {"Seu KYC, foi rejeitado, para realizar o processo novamente "}
+          {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED")}
 
-          <a href="/KYC" >
-            <span className={style.clickHere}>{"clique aqui."}</span>
-          </a>
+          <Link to="/KYC">
+            <span className={style.clickHere}>{i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK_HERE")}</span>
+          </Link>
         </div>
       );
+    } else if (selectedValue > 100 && statusKyc === "waiting") {
+      infoMessage = i18n.t("DEPOSIT_INF_MODAL_KYC_WAITING");
     }
     return (
       <div>
@@ -335,7 +343,8 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_FULLNAME")}
                 value={this.state.fullName}
@@ -347,6 +356,7 @@ class InformationModal extends React.Component {
                     ? true
                     : false
                 }
+                error={checkInputs && this.state.fullName === ""}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -393,21 +403,6 @@ class InformationModal extends React.Component {
                       label="CNPJ"
                       classes={{ label: classes.rootLabel }}
                     />
-                    <FormControlLabel
-                      value="passport"
-                      control={
-                        <Radio
-                          icon={<Lens />}
-                          checkedIcon={<Lens />}
-                          classes={{
-                            root: classes.rootRadio,
-                            checked: classes.checked
-                          }}
-                        />
-                      }
-                      label={i18n.t("KYC_PASSPORT")}
-                      classes={{ label: classes.rootLabel }}
-                    />
                   </RadioGroup>
                 </FormControl>
               </Grid>
@@ -415,7 +410,8 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("KYC_DOCUMENT_PLACEHOLDER")}
                 value={this.state.document}
@@ -426,8 +422,11 @@ class InformationModal extends React.Component {
                     ? true
                     : this.state.document && disabled
                     ? true
+                    : this.state.documentType
+                    ? true
                     : false
                 }
+                error={checkInputs && this.state.document === ""}
               />
             </Grid>
           </Grid>
@@ -448,7 +447,8 @@ class InformationModal extends React.Component {
                 input={
                   <Input
                     classes={{
-                      underline: classes.underline
+                      underline: classes.underline,
+                      disabled: classes.disabled
                     }}
                   />
                 }
@@ -466,6 +466,7 @@ class InformationModal extends React.Component {
                     ? true
                     : false
                 }
+                error={checkInputs && this.state.state === ""}
               >
                 {this.listStates()}
               </Select>
@@ -482,7 +483,8 @@ class InformationModal extends React.Component {
                 input={
                   <Input
                     classes={{
-                      underline: classes.underline
+                      underline: classes.underline,
+                      disabled: classes.disabled
                     }}
                   />
                 }
@@ -496,6 +498,7 @@ class InformationModal extends React.Component {
                 disabled={
                   isDisabled ? true : this.state.city && disabled ? true : false
                 }
+                error={checkInputs && this.state.city === ""}
               >
                 {this.listStates()}
               </Select>
@@ -516,7 +519,8 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
                 value={this.state.address}
@@ -528,6 +532,7 @@ class InformationModal extends React.Component {
                     ? true
                     : false
                 }
+                error={checkInputs && this.state.address === ""}
               />
             </Grid>
             <Grid item sm={2} />
@@ -539,7 +544,8 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
                 value={this.state.cep}
@@ -548,6 +554,7 @@ class InformationModal extends React.Component {
                 disabled={
                   isDisabled ? true : this.state.cep && disabled ? true : false
                 }
+                error={checkInputs && this.state.cep === ""}
               />
             </Grid>
             <Grid item sm={1} />
@@ -557,7 +564,11 @@ class InformationModal extends React.Component {
             <Grid item xs={5}>
               <ButtonContinue
                 label={i18n.t("DEPOSIT_INF_MODAL_BTN_CONTINUE")}
-                action={this.checkAllInputs() ? this.validateForm : () => null}
+                action={
+                  this.checkAllInputs()
+                    ? this.validateForm
+                    : () => this.setState({ checkInputs: !checkInputs })
+                }
                 loading={loading}
               />
             </Grid>

@@ -226,7 +226,7 @@ class Invoice extends React.Component {
         </Grid>
 
         <Grid container spacing={8}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12}>
             <div className={style.containerInput}>
               <Select
                 classes={{
@@ -248,16 +248,16 @@ class Invoice extends React.Component {
             </div>
           </Grid>
 
-          <Grid item xs={6} sm={4}>
+          {/* <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
               <CustomCheckbox onChange={() => this.handleChangeRecurrent()} />
               <div className={style.paddingTop}>
                 {i18n.t("DEPOSIT_RECURRENT")}
               </div>
             </div>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={6} sm={4}>
+          {/* <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
               <Grid item className={style.selectImageDate}>
                 <div className={!checkBox ? style.desable : ""}>
@@ -293,7 +293,7 @@ class Invoice extends React.Component {
                 </div>
               </Grid>
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );

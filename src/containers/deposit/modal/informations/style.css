@@ -52,7 +52,7 @@
 :local .clickHere {
   font-size: 16px;
 }
-:local(.clickHere a, .clickHere a:visited) {
+:local(.clickHere a) {
   text-decoration: none !important;
   color: #68f285 !important;
 }

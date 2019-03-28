@@ -699,6 +699,10 @@
   "DEPOSIT_INF_MODAL_ADDRESS": "Endereço",
   "DEPOSIT_INF_MODAL_ADDRESS_NUMBER": "Nº",
   "DEPOSIT_INF_MODAL_BTN_CONTINUE": "Continuar",
+  "DEPOSIT_INF_MODAL_NO_SELECTED_VALUE":"Por favor, selecione um valor de depósito para poder prosseguir.",
+  "DEPOSIT_INF_MODAL_KYC_REJECTED": "Seu KYC foi rejeitado. Envie suas informaçoes novamente ",
+  "DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK_HERE": "clicando aqui",
+  "DEPOSIT_INF_MODAL_KYC_WAITING": "Seu KYC está aguardando aprovação",
 
   "DEPOSIT_PAYMODAL_TEXT": "Boleto gerado e enviado para o e-mail cadastrado. Após o pagamento, o dinheiro estará disponível para uso na plataforma em até 2 dias úteis",
   "DEPOSIT_PAYMODAL_TITLE": "Linha digitável copiada",
