@@ -5,7 +5,7 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages, setPaymentMethod } from "../redux/depositAction";
+import { getPackages, getPaymentsMethods,setPaymentMethod } from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
@@ -99,8 +99,9 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getPackages } = this.props;
+    const { getPackages,getPaymentsMethods  } = this.props;
     getPackages();
+    getPaymentsMethods();
   }
 
   moveSlide = (direction = "next") => {
@@ -131,7 +132,7 @@ class Invoice extends React.Component {
   };
 
   listPaymentMethods = () => {
-    const { classes } = this.props;
+    const { classes, methods } = this.props;
     const { paymentMethods } = this.state;
 
     return paymentMethods.map((method, index) => (
@@ -286,9 +287,9 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod } = this.props;
-    const { payment } = this.state;
-    setPaymentMethod(payment);
+    const { openModal,setPaymentMethod } = this.props;
+    const {payment} = this.state;
+    setPaymentMethod(payment);    
 
     //validações
     openModal();
@@ -386,18 +387,22 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   getPackages: PropTypes.func,
+  getPaymentsMethods: PropTypes.func.isRequired,
+  openModal: PropTypes.func,
   setPaymentMethod: PropTypes.func,
-  openModal: PropTypes.func
+  methods: PropTypes.array
 };
 
 const mapStateToProps = store => ({
-  packages: store.deposit.packages
+  packages: store.deposit.packages,
+  methods: store.deposit.paymentMethods
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPackages,
+      getPaymentsMethods,
       setPaymentMethod
     },
     dispatch

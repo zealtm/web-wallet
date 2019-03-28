@@ -38,3 +38,20 @@ export function* getDepositHistorySaga() {
     yield put(internalServerError());
   }
 }
+
+export function* getPaymentsMethods() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getPaymentsMethods, token);
+    if (response.code !== "200") {
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "SET_PAYMENT_METHODS",
+      response
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
