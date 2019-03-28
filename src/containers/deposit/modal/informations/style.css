@@ -1,9 +1,15 @@
 /* BASE */
 :local .container {
-  max-height: 69vh;
+  max-height: 53vh;
   padding-left: 40px;
   padding-right: 40px;
-  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+@media screen and (min-width: 1400px) {
+  :local .container {
+    margin-bottom: 0
+  }
 }
 :local(.information) {
   composes: textDefault from "../../../../components/bases/textBase.css";

@@ -321,7 +321,9 @@ class InformationModal extends React.Component {
           {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED")}
 
           <Link to="/KYC">
-            <span className={style.clickHere}>{i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK_HERE")}</span>
+            <span className={style.clickHere}>
+              {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK_HERE")}
+            </span>
           </Link>
         </div>
       );
@@ -383,6 +385,13 @@ class InformationModal extends React.Component {
                             root: classes.rootRadio,
                             checked: classes.checked
                           }}
+                          disabled={
+                            isDisabled
+                              ? true
+                              : this.state.document && disabled
+                              ? true
+                              : false
+                          }
                         />
                       }
                       label="CPF"
@@ -398,6 +407,13 @@ class InformationModal extends React.Component {
                             root: classes.rootRadio,
                             checked: classes.checked
                           }}
+                          disabled={
+                            isDisabled
+                              ? true
+                              : this.state.document && disabled
+                              ? true
+                              : false
+                          }
                         />
                       }
                       label="CNPJ"
