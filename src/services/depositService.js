@@ -22,7 +22,6 @@ class DepositService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      console.log(JSON.stringify(response));
       if (response.data.code !== 200) {
         return packages;
       }
