@@ -99,7 +99,7 @@ class Invoice extends React.Component {
       days: [...Array(31).keys()],
       payment: i18n.t("DEPOSIT_INVOICE"),
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
-      activeCard: undefined,
+      activecard: null,
       depositValue: ""
     };
   }
@@ -134,7 +134,7 @@ class Invoice extends React.Component {
     const { activeCard } = this.state;
     
     return packages.map((val, index) => {
-      const active = val.status;
+      const active = activeCard == val.id ? true : false;
       return (
         <CardPack
           key={index}

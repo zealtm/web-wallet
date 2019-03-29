@@ -142,6 +142,10 @@ export function* getPaymentsMethods() {
 
 export function* createDepositBillSaga(payload) {
   try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
     let token = yield call(getAuthToken);
     let response = yield call(depositService.createDepositBill, token,payload);
 
@@ -154,4 +158,8 @@ export function* createDepositBillSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
+  yield put({
+    type: "SET_LOADING_DEPOSIT",
+    loading: false
+  });
 }
