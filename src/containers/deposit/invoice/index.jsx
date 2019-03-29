@@ -11,7 +11,8 @@ import {
   getPaymentsMethods,
   getKycData,
   setKycValidation,
-  setSelectedValue
+  setSelectedValue,
+  setUserData
 } from "../redux/depositAction";
 
 // COMPONENTS
@@ -99,6 +100,7 @@ class Invoice extends React.Component {
       days: [...Array(31).keys()],
       payment: i18n.t("DEPOSIT_INVOICE"),
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
+      paymentName: i18n.t("DEPOSIT_INVOICE"),
       activeCard: undefined,
       depositValue: ""
     };
@@ -135,11 +137,13 @@ class Invoice extends React.Component {
     
     return packages.map((val, index) => {
       const active = val.status;
+      const selected = val.id === activeCard ? true : false;
       return (
         <CardPack
           key={index}
           pack={val}
           onSelect={this.handleCard}
+          selected={selected}
           active={active}
         />
       );
@@ -152,7 +156,7 @@ class Invoice extends React.Component {
 
     return paymentMethods.map((method, index) => (
       <MenuItem
-        value={method}
+        value={methods ? methods[index].id : ""}
         key={index}
         classes={{
           root: classes.menuItemRoot
@@ -198,9 +202,14 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
+    const {methods} = this.props;
+    let index = methods.indexOf({id:value});
+    let name = this.state.paymentMethods[index];
+    
     this.setState({
       ...this.state,
-      payment: value
+      payment: methods[value].name,
+      paymentName: name
     });
   };
 
@@ -236,7 +245,7 @@ class Invoice extends React.Component {
                 }}
                 MenuProps={MenuProps}
                 value={this.state.payment}
-                renderValue={value => value}
+                renderValue={() => this.state.paymentName}
                 onChange={event =>
                   this.handleChangePaymentMethod(event.target.value)
                 }
@@ -302,12 +311,13 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod, setKycValidation } = this.props;
+    const { openModal, setPaymentMethod, setKycValidation,setUserData } = this.props;
     const { payment, depositValue } = this.state;
     setPaymentMethod(payment);
     if (depositValue > 100) {
       setKycValidation();
     }
+    setUserData()
     //validações
     openModal();
   };
@@ -442,7 +452,8 @@ const mapDispatchToProps = dispatch =>
       setKycValidation,
       setSelectedValue,
       getPaymentsMethods,
-      setPaymentMethod
+      setPaymentMethod,
+      setUserData
     },
     dispatch
   );
