@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import {
   getPackages,
   setPaymentMethod,
+  getPaymentsMethods,
   getKycData,
   setKycValidation,
   setSelectedValue
@@ -19,7 +20,7 @@ import CustomCheckbox from "../../../components/checkBox";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import Loading from "../../../components/loading";
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -104,8 +105,9 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getPackages, getKycData } = this.props;
+    const { getPackages, getKycData, getPaymentsMethods } = this.props;
     getPackages();
+    getPaymentsMethods();
     getKycData();
   }
 
@@ -132,7 +134,7 @@ class Invoice extends React.Component {
     const { activeCard } = this.state;
     
     return packages.map((val, index) => {
-      const active = activeCard == val.id ? true : false;
+      const active = val.status;
       return (
         <CardPack
           key={index}
@@ -145,7 +147,7 @@ class Invoice extends React.Component {
   };
 
   listPaymentMethods = () => {
-    const { classes } = this.props;
+    const { classes, methods } = this.props;
     const { paymentMethods } = this.state;
 
     return paymentMethods.map((method, index) => (
@@ -312,7 +314,19 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-    
+    const { packages, loading } = this.props;
+
+    if (loading) return <Loading />;
+    if (!packages.length)
+      return (
+        <div className={style.boxContainer}>
+          <div className={style.box1}>
+            <h1 className={style.textCenter}>
+              {i18n.t("DEPOSIT_INF_NOT_FOUND")}
+            </h1>
+          </div>
+        </div>
+      );
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -402,15 +416,21 @@ class Invoice extends React.Component {
 
 Invoice.propTypes = {
   getPackages: PropTypes.func,
+  getPaymentsMethods: PropTypes.func.isRequired,
+  openModal: PropTypes.func,
   setPaymentMethod: PropTypes.func,
   openModal: PropTypes.func,
   getKycData: PropTypes.func.isRequired,
   setKycValidation: PropTypes.func.isRequired,
-  setSelectedValue: PropTypes.func.isRequired
+  setSelectedValue: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  methods: PropTypes.array
 };
 
 const mapStateToProps = store => ({
-  packages: store.deposit.packages
+  packages: store.deposit.packages,
+  loading: store.deposit.loading,
+  methods: store.deposit.paymentMethods
 });
 
 const mapDispatchToProps = dispatch =>
@@ -420,7 +440,9 @@ const mapDispatchToProps = dispatch =>
       setPaymentMethod,
       getKycData,
       setKycValidation,
-      setSelectedValue
+      setSelectedValue,
+      getPaymentsMethods,
+      setPaymentMethod
     },
     dispatch
   );

@@ -13,16 +13,23 @@ const settingsService = new SettingsService();
 
 export function* getPackagesSaga() {
   try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
     let token = yield call(getAuthToken);
-    let response = yield call(depositService.getPackages, token);
-
+    let response = yield call(depositService.getPackages, token);    
     yield put({
       type: "GET_PACKAGES_REDUCER",
       packages: response
     });
   } catch (error) {
-    yield put(internalServerError());
+    yield put(internalServerError());    
   }
+  yield put({
+    type: "SET_LOADING_DEPOSIT",
+    loading: false
+  });
 }
 
 export function* getDepositHistorySaga() {
@@ -100,6 +107,22 @@ export function* depositGetCity(payload) {
       response
     });
     return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+export function* getPaymentsMethods() {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getPaymentsMethods, token);
+    if (response.code !== "200") {
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "SET_PAYMENT_METHODS",
+      response
+    });
   } catch (error) {
     yield put(internalServerError());
   }

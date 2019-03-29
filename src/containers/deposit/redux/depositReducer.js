@@ -15,7 +15,9 @@ const initialState = {
     states: [],
     city: []
   },
-  selectedValue: 0
+  selectedValue: 0,
+  paymentMethods: undefined,
+  SelectedPaymentMethod: undefined
 };
 
 const deposit = (state = initialState, action) => {
@@ -46,10 +48,15 @@ const deposit = (state = initialState, action) => {
         ...state,
         loading: action.loading
       };
+    case "SET_PAYMENT_METHODS":
+      return {
+        ...state,
+        paymentMethods: action.response.data
+      };
     case "SET_PAYMENT_METHOD":
       return {
         ...state,
-        paymentMethod: action.method
+        SelectedPaymentMethod: action.method
       };
     case "SET_KYC_DATA":
       return {

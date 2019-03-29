@@ -71,3 +71,20 @@
   background-color: transparent;
   composes: buttonBorderGreen from "../../../components/bases/buttonBase.css";
 }
+
+:local .boxContainer {
+  max-width: 40vw !important;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+}
+/* 2. TEXT */
+
+:local .textCenter {
+  text-align: center;  
+  composes: textDefault from "../../../components/bases/textBase.css";
+}
+/* BASE */
+:local .box1 {
+  composes: box1 from "../style.css";
+}

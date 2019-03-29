@@ -40,7 +40,7 @@ DepositModal.propTypes = {
 
 const mapStateToProps = store => ({
   modalStep: store.deposit.modalStep,
-  paymentMethod: store.deposit.paymentMethod
+  paymentMethod: store.deposit.SelectedPaymentMethod
 });
 
 export default connect(
