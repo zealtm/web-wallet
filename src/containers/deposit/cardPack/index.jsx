@@ -13,12 +13,12 @@ class CardPack extends React.Component {
   }
 
   render() {
-    const { pack, onSelect, active } = this.props;
-    const styleCard = active ? style.cardActive : style.card;
+    const { pack, onSelect, selected, active } = this.props;
+    const styleCard = selected ? style.cardActive : style.card;
     return (
       <div
         className={styleCard}
-         onClick={() => onSelect(pack.id, pack.value)}
+         onClick={active === "active" ? () => onSelect(pack.id, pack.value) : () => onSelect(0,0)}
       >
         <img
           src={`/images/icons/coins/btc.png`}
@@ -39,7 +39,8 @@ class CardPack extends React.Component {
 CardPack.propTypes = {
   pack: PropTypes.object,
   onSelect: PropTypes.func.isRequired,
-  active: PropTypes.bool
+  selected: PropTypes.bool,
+  active: PropTypes.string
 };
 
 export default CardPack;
