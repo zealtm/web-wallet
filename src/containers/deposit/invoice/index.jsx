@@ -11,8 +11,7 @@ import {
   getPaymentsMethods,
   getKycData,
   setKycValidation,
-  setSelectedValue,
-  setUserData
+  setSelectedValue
 } from "../redux/depositAction";
 
 // COMPONENTS
@@ -204,6 +203,8 @@ class Invoice extends React.Component {
   handleChangePaymentMethod = value => {
     const {methods} = this.props;
     let index = methods.indexOf({id:value});
+    console.log(index);
+    
     let name = this.state.paymentMethods[index];
     
     this.setState({
@@ -311,13 +312,12 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod, setKycValidation,setUserData } = this.props;
+    const { openModal, setPaymentMethod, setKycValidation } = this.props;
     const { payment, depositValue } = this.state;
     setPaymentMethod(payment);
     if (depositValue > 100) {
       setKycValidation();
     }
-    setUserData()
     //validações
     openModal();
   };
@@ -452,8 +452,7 @@ const mapDispatchToProps = dispatch =>
       setKycValidation,
       setSelectedValue,
       getPaymentsMethods,
-      setPaymentMethod,
-      setUserData
+      setPaymentMethod
     },
     dispatch
   );
