@@ -1,13 +1,10 @@
 import axios from "axios";
-
 // CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
-
-// ERROS
-import { internalServerError } from "../containers/errors/statusCodeMessage";
-
 // UTILS
 import { setAuthToken } from "../utils/localStorage";
+// ERROS
+import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 class DepositService {
 
@@ -110,6 +107,16 @@ class DepositService {
       return history;
     } catch (error) {
       return internalServerError();
+    }
+  }
+  async getPaymentsMethods(token){
+    try{
+      API_HEADER.headers.Authorization = token;
+      let response = await axios.get(`${BASE_URL}/deposit/paymentmethods`, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data;
+    }catch(error){
+      internalServerError();
     }
   }
 }
