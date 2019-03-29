@@ -202,14 +202,19 @@ class Invoice extends React.Component {
 
   handleChangePaymentMethod = value => {
     const {methods} = this.props;
-    let index = methods.indexOf({id:value});
-    console.log(index);
+    const {paymentMethods} = this.state
+    let index = 0;
+    for(let i = 0; i < methods.length; i++){
+      if(methods[i].id === value){
+        index = i;
+      }
+    }
     
-    let name = this.state.paymentMethods[index];
-    
+    let name = paymentMethods[index];
+    let payment = methods ?  methods[index].name : "";
     this.setState({
       ...this.state,
-      payment: methods[value].name,
+      payment: payment,
       paymentName: name
     });
   };
@@ -313,8 +318,8 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { openModal, setPaymentMethod, setKycValidation } = this.props;
-    const { payment, depositValue } = this.state;
-    setPaymentMethod(payment);
+    const { paymentName, depositValue } = this.state;
+    setPaymentMethod(paymentName);
     if (depositValue > 100) {
       setKycValidation();
     }

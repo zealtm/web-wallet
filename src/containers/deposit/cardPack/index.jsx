@@ -18,7 +18,7 @@ class CardPack extends React.Component {
     return (
       <div
         className={styleCard}
-         onClick={active === "active" ? () => onSelect(pack.id, pack.value) : () => onSelect()}
+         onClick={active === "active" ? () => onSelect(pack.id, pack.value) : () => onSelect(0,0)}
       >
         <img
           src={`/images/icons/coins/btc.png`}
