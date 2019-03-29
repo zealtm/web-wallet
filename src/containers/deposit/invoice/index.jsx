@@ -13,7 +13,7 @@ import CustomCheckbox from "../../../components/checkBox";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import Loading from "../../../components/loading";
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -295,7 +295,19 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-    const { packages } = this.props;
+    const { packages, loading } = this.props;
+
+    if (loading) return <Loading />;
+    if (!packages.length)
+      return (
+        <div className={style.boxContainer}>
+          <div className={style.box1}>
+            <h1 className={style.textCenter}>
+              {i18n.t("DEPOSIT_INF_NOT_FOUND")}
+            </h1>
+          </div>
+        </div>
+      );
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -320,18 +332,9 @@ class Invoice extends React.Component {
               </Hidden>
 
               <Grid item xs={12} sm={10} style={{ minHeight: 300 }}>
-                {(!packages.length) ?
-                <div className={style.boxContainer}>
-                  <div className={style.box}>
-                    <h1 className={style.textCenter}>
-                      {i18n.t("DEPOSIT_INF_NOT_FOUND")}
-                    </h1> 
-                  </div>                  
-                </div>:
-                  <Slider ref={c => (this.slider = c)} {...settings}>
-                    {this.renderPacks()}
-                  </Slider>
-                }
+                <Slider ref={c => (this.slider = c)} {...settings}>
+                  {this.renderPacks()}
+                </Slider>
               </Grid>
 
               <Hidden xsDown>
@@ -395,11 +398,13 @@ class Invoice extends React.Component {
 Invoice.propTypes = {
   getPackages: PropTypes.func,
   setPaymentMethod: PropTypes.func,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
-  packages: store.deposit.packages
+  packages: store.deposit.packages,
+  loading: store.deposit.loading
 });
 
 const mapDispatchToProps = dispatch =>

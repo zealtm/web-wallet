@@ -77,9 +77,4 @@
   text-align: end;
 }
 
-/* 2. TEXT */
 
-:local .textCenter {
-  text-align: center;
-  composes: textDefault from "../../../components/bases/textBase.css";
-}

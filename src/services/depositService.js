@@ -22,18 +22,12 @@ class DepositService {
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-      if (response.data.code !== 200) {
+
+      if (response.data.code !== "200") {
         return packages;
       }
 
-      
-      response.data.data.packages.map(val => {
-        packages.push(val);
-      });
-
-      return {
-        packages
-      };
+      return response.data.data;
     } catch (error) {
       return internalServerError();
     }
