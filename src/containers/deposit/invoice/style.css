@@ -1,0 +1,90 @@
+/* 1. BASE */
+
+:local .arrowControl {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+:local .transparentBox {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  background-color: transparent;
+  padding: 0;
+}
+
+:local .information {
+  text-align: center;
+}
+
+:local .information a {
+  text-decoration: none;
+  color: white;
+}
+
+:local .information img {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
+
+:local .selectImageDate{
+  text-align: center;
+}
+:local .selectImageDate img{
+  position: absolute;
+}
+:local .selectImageDate img:nth-child(1){
+  max-width: 20px;
+  position: absolute;
+  top: 21px;
+}
+
+:local .containerInput {
+  position: relative;
+  background: #473088;
+  border-radius: 5px;
+  padding: 10px 15px;
+  min-height: 48px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+:local .desable{
+  opacity: .4;
+}
+:local .desable img:nth-child(1){
+  filter: grayscale(1);
+}
+@media screen and (min-width: 600px) {
+  :local .box {
+    max-width: 70vw !important;
+  }
+}
+/* 2. TEXT */
+
+/* 3. BUTTONS */
+
+:local .buttonBorderGreen {
+  background-color: transparent;
+  composes: buttonBorderGreen from "../../../components/bases/buttonBase.css";
+}
+
+:local .boxContainer {
+  max-width: 40vw !important;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto;
+}
+/* 2. TEXT */
+
+:local .textCenter {
+  text-align: center;  
+  composes: textDefault from "../../../components/bases/textBase.css";
+}
+/* BASE */
+:local .box1 {
+  composes: box1 from "../style.css";
+}

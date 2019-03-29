@@ -22,16 +22,26 @@
     justify-content: initial;
     padding-left: 0;
   }
+  :local(.alignSelectItem_1) {
+    justify-content: initial;
+    padding-right: 0;
+  }
 }
 
 @media screen and (min-width: 600px) {
   :local .box {
     max-width: 60vw !important;
   }
+  :local .paymentType{
+    max-width: 60vw !important;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   :local .box {
+    max-width: 40vw !important;
+  }
+  :local .paymentType{
     max-width: 40vw !important;
   }
 }

@@ -139,6 +139,15 @@ import {
   sendWithdrawSaga
 } from "../invite/redux/inviteSaga";
 
+import {
+  getPackagesSaga,
+  getDepositHistorySaga,
+  getKycData,
+  depositGetStates,
+  depositGetCity,
+  getPaymentsMethods
+} from "../deposit/redux/depositSaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -164,6 +173,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+    
 
     // Wallet-Saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
@@ -289,6 +299,14 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
     fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
     fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
-    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga)
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
+
+    // deposit
+    fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
+    fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
+    fork(takeLatest, "GET_KYC_DATA_API", getKycData),
+    fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
+    fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
+    fork(takeLatest, "GET_PAYMENT_METHODS_API", getPaymentsMethods),
   ];
 }
