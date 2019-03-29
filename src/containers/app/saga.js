@@ -142,7 +142,11 @@ import {
 import {
   getPackagesSaga,
   getDepositHistorySaga,
-  createDepositBillSaga
+  createDepositBillSaga,
+  getKycData,
+  depositGetStates,
+  depositGetCity,
+  getPaymentsMethods
 } from "../deposit/redux/depositSaga";
 
 export default function* rootSaga() {
@@ -170,6 +174,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+    
 
     // Wallet-Saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
@@ -300,6 +305,10 @@ export default function* rootSaga() {
     // deposit
     fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
     fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
-    fork(takeLatest, "CREATE_DEPOSIT_BILL", createDepositBillSaga)
+    fork(takeLatest, "CREATE_DEPOSIT_BILL", createDepositBillSaga),
+    fork(takeLatest, "GET_KYC_DATA_API", getKycData),
+    fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
+    fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
+    fork(takeLatest, "GET_PAYMENT_METHODS_API", getPaymentsMethods),
   ];
 }

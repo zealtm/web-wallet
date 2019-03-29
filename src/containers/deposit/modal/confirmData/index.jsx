@@ -11,7 +11,7 @@ import ButtonContinue from "../../../../components/buttonContinue";
 
 class ConfirmData extends React.Component {
   render() {
-    const { setModalSteps } = this.props;
+    const { setModalSteps, userData, selectedValue } = this.props;
 
     return (
       <div>
@@ -26,9 +26,7 @@ class ConfirmData extends React.Component {
               <span className={style.ConfirmDataDecimal}>
                 {i18n.t("DEPOSIT_CONFIRMDATA_CIFRA")}
               </span>
-              <span className={style.ConfirmDataNum}>
-                {i18n.t("DEPOSIT_CONFIRMDATA_VALUE")}
-              </span>
+              <span className={style.ConfirmDataNum}>{selectedValue}</span>
               <span className={style.ConfirmDataDecimal}>
                 {i18n.t("DEPOSIT_CONFIRMDATA_DECIMAL")}
               </span>
@@ -48,16 +46,16 @@ class ConfirmData extends React.Component {
               {i18n.t("DEPOSIT_CONFIRMDATA_NAME_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_NAME")}
+              {userData.fullName}
             </span>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <div className={style.ConfirmDataDiv}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_CPF_TITLE")}
+              {userData.documentType.toUpperCase()}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_CPF")}
+              {userData.document}
             </span>
           </Grid>
 
@@ -66,7 +64,7 @@ class ConfirmData extends React.Component {
               {i18n.t("DEPOSIT_CONFIRMDATA_STATE_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_STATE")}
+              {userData.state}
             </span>
           </Grid>
 
@@ -75,7 +73,7 @@ class ConfirmData extends React.Component {
               {i18n.t("DEPOSIT_CONFIRMDATA_CITY_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_CITY")}
+              {userData.city}
             </span>
           </Grid>
 
@@ -84,47 +82,39 @@ class ConfirmData extends React.Component {
               {i18n.t("DEPOSIT_CONFIRMDATA_CEP_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_CEP")}
+              {userData.cep}
             </span>
           </Grid>
 
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_ADDRESS_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_ADDRESS")}
+              {userData.address}
             </span>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <div className={style.ConfirmDataDiv}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_NUMBER_TITLE")}
-            </div>
-            <span className={style.ConfirmDataField}>
-              {i18n.t("DEPOSIT_CONFIRMDATA_NUMBER")}
-            </span>
-          </Grid>
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_RECURRENT_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
               {i18n.t("DEPOSIT_CONFIRMDATA_RECURRENT")}
             </span>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_SCHEDULING_TITLE")}
             </div>
             <span className={style.ConfirmDataField}>
               {i18n.t("DEPOSIT_CONFIRMDATA_SCHEDULING")}
             </span>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} style={{ }}>
+          <Grid item xs={12} style={{}}>
             <ButtonContinue
               label={i18n.t("DEPOSIT_CONFIRMDATA_BTN_CONFIRM")}
               action={() => setModalSteps(3)}
@@ -154,11 +144,15 @@ class ConfirmData extends React.Component {
 ConfirmData.propTypes = {
   modalStep: PropTypes.number,
   setModalSteps: PropTypes.func,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  userData: PropTypes.object,
+  selectedValue: PropTypes.number
 };
 
 const mapStateToProps = store => ({
-  modalStep: store.deposit.modalStep
+  modalStep: store.deposit.modalStep,
+  userData: store.deposit.user,
+  selectedValue: store.deposit.selectedValue
 });
 
 const mapDispatchToProps = dispatch =>
