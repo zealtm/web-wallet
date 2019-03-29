@@ -211,10 +211,10 @@ class Invoice extends React.Component {
     }
     
     let name = paymentMethods[index];
-    let payment = methods ?  methods[index].name : "";
+
     this.setState({
       ...this.state,
-      payment: payment,
+      payment: value,
       paymentName: name
     });
   };
