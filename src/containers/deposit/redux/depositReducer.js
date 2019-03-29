@@ -4,6 +4,18 @@ const initialState = {
   user: {},
   modalStep: 1,
   loading: false,
+  paymentMethod: null,
+  kyc: {
+    data: {},
+    kycValidation: false
+  },
+  loadingState: false,
+  loadingCity: false,
+  location: {
+    states: [],
+    city: []
+  },
+  selectedValue: 0,
   paymentMethods: undefined,
   SelectedPaymentMethod: undefined
 };
@@ -41,13 +53,57 @@ const deposit = (state = initialState, action) => {
         ...state,
         paymentMethods: action.response.data
       };
-      case "SET_PAYMENT_METHOD":
-
+    case "SET_PAYMENT_METHOD":
       return {
         ...state,
         SelectedPaymentMethod: action.method
       };
-
+    case "SET_KYC_DATA":
+      return {
+        ...state,
+        kyc: { ...state.kyc, data: action.response.data }
+      };
+    case "SET_KYC_TRUE":
+      return {
+        ...state,
+        kyc: {
+          ...state.kyc,
+          kycValidation: true
+        }
+      };
+    case "DEPOSIT_SET_STATE":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          states: action.response.data
+        },
+        loadingState: false
+      };
+    case "DEPOSIT_SET_CITY":
+      return {
+        ...state,
+        location: {
+          ...state.location,
+          city: action.response.data
+        },
+        loadingCity: false
+      };
+    case "SET_LOADING_DEPOSIT_STATE":
+      return {
+        ...state,
+        loadingState: true
+      };
+    case "SET_LOADING_DEPOSIT_CITY":
+      return {
+        ...state,
+        loadingCity: true
+      };
+    case "SET_SELECTED_VALUE":
+      return {
+        ...state,
+        selectedValue: action.value
+      };
     default: {
       return {
         ...state

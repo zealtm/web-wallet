@@ -3,11 +3,13 @@ import { internalServerError } from "../../errors/statusCodeMessage";
 
 // SERVICES
 import DepositService from "../../../services/depositService";
+import SettingsService from "../../../services/settingsService";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
 
 const depositService = new DepositService();
+const settingsService = new SettingsService();
 
 export function* getPackagesSaga() {
   try {
@@ -46,6 +48,69 @@ export function* getDepositHistorySaga() {
   }
 }
 
+export function* getKycData(){
+  try{
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getKycData, token);
+    if(response.code !== 200){
+      yield put(internalServerError());
+      return ;
+    }
+    yield put({
+      type: "SET_KYC_DATA",
+      response
+    });
+
+  }catch(error){
+    yield put(internalServerError());
+  }
+}
+export function* depositGetStates(payload) {
+  try {
+    yield put({ type: "SET_LOADING_DEPOSIT_STATE" });
+    let token = yield call(getAuthToken);
+    let response = yield call(
+      settingsService.kycGetStates,
+      token,
+      payload.country
+    );
+    if (response.code !== 200) {
+      yield put(internalServerError());
+      return;
+    }
+    yield put({
+      type: "DEPOSIT_SET_STATE",
+      response
+    });
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+export function* depositGetCity(payload) {
+  try {
+    yield put({ type: "SET_LOADING_DEPOSIT_CITY" });
+    let token = yield call(getAuthToken);
+    let { country, state } = payload.location;
+    let response = yield call(
+      settingsService.kycGetCity,
+      token,
+      country,
+      state
+    );
+    if (response.code !== 200) {
+      yield put(internalServerError());
+      return;
+    }
+    yield put({
+      type: "DEPOSIT_SET_CITY",
+      response
+    });
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
 export function* getPaymentsMethods() {
   try {
     let token = yield call(getAuthToken);

@@ -5,7 +5,14 @@ import Slider from "react-slick";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getPackages, getPaymentsMethods,setPaymentMethod } from "../redux/depositAction";
+import {
+  getPackages,
+  setPaymentMethod,
+  getPaymentsMethods,
+  getKycData,
+  setKycValidation,
+  setSelectedValue
+} from "../redux/depositAction";
 
 // COMPONENTS
 import CardPack from "../cardPack";
@@ -86,7 +93,6 @@ const settings = {
 class Invoice extends React.Component {
   constructor() {
     super();
-
     this.state = {
       checkBox: false,
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
@@ -94,19 +100,25 @@ class Invoice extends React.Component {
       payment: i18n.t("DEPOSIT_INVOICE"),
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
       activeCard: undefined,
-      depositValue: undefined
+      depositValue: ""
     };
   }
 
   componentDidMount() {
-    const { getPackages,getPaymentsMethods  } = this.props;
+    const { getPackages, getKycData, getPaymentsMethods } = this.props;
     getPackages();
     getPaymentsMethods();
+    getKycData();
   }
 
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
+  };
+  handleSelectedValue = (amount) =>{
+    const {setSelectedValue} = this.props;
+    
+    setSelectedValue(amount);
   };
   handleCard = (id, amount) => {
     this.setState({
@@ -114,9 +126,13 @@ class Invoice extends React.Component {
       activeCard: id,
       depositValue: amount
     });
+    
+    this.handleSelectedValue(amount);
   };
   renderPacks = () => {
     const { packages } = this.props;
+    const { activeCard } = this.state;
+    
     return packages.map((val, index) => {
       const active = val.status;
       return (
@@ -212,7 +228,7 @@ class Invoice extends React.Component {
         </Grid>
 
         <Grid container spacing={8}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12}>
             <div className={style.containerInput}>
               <Select
                 classes={{
@@ -234,16 +250,16 @@ class Invoice extends React.Component {
             </div>
           </Grid>
 
-          <Grid item xs={6} sm={4}>
+          {/* <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
               <CustomCheckbox onChange={() => this.handleChangeRecurrent()} />
               <div className={style.paddingTop}>
                 {i18n.t("DEPOSIT_RECURRENT")}
               </div>
             </div>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={6} sm={4}>
+          {/* <Grid item xs={6} sm={4}>
             <div className={style.containerInput}>
               <Grid item className={style.selectImageDate}>
                 <div className={!checkBox ? style.desable : ""}>
@@ -279,17 +295,19 @@ class Invoice extends React.Component {
                 </div>
               </Grid>
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );
   };
 
   inputValidator = () => {
-    const { openModal,setPaymentMethod } = this.props;
-    const {payment} = this.state;
-    setPaymentMethod(payment);    
-
+    const { openModal, setPaymentMethod, setKycValidation } = this.props;
+    const { payment, depositValue } = this.state;
+    setPaymentMethod(payment);
+    if (depositValue > 100) {
+      setKycValidation();
+    }
     //validações
     openModal();
   };
@@ -401,6 +419,10 @@ Invoice.propTypes = {
   getPaymentsMethods: PropTypes.func.isRequired,
   openModal: PropTypes.func,
   setPaymentMethod: PropTypes.func,
+  openModal: PropTypes.func,
+  getKycData: PropTypes.func.isRequired,
+  setKycValidation: PropTypes.func.isRequired,
+  setSelectedValue: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   methods: PropTypes.array
 };
@@ -415,6 +437,10 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPackages,
+      setPaymentMethod,
+      getKycData,
+      setKycValidation,
+      setSelectedValue,
       getPaymentsMethods,
       setPaymentMethod
     },
