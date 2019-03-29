@@ -11,16 +11,23 @@ const depositService = new DepositService();
 
 export function* getPackagesSaga() {
   try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
     let token = yield call(getAuthToken);
-    let response = yield call(depositService.getPackages, token);
-
+    let response = yield call(depositService.getPackages, token);    
     yield put({
       type: "GET_PACKAGES_REDUCER",
       packages: response
     });
   } catch (error) {
-    yield put(internalServerError());
+    yield put(internalServerError());    
   }
+  yield put({
+    type: "SET_LOADING_DEPOSIT",
+    loading: false
+  });
 }
 
 export function* getDepositHistorySaga() {

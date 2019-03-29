@@ -5,9 +5,298 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2018-12-15T21:52:54.838Z\n"
-"PO-Revision-Date: 2018-12-15T21:52:54.839Z\n"
+"POT-Creation-Date: 2019-03-28T03:13:11.666Z\n"
+"PO-Revision-Date: 2019-03-28T03:13:11.666Z\n"
 "Language: en_US\n"
+
+msgctxt "TITLE"
+msgid "NAVIGATOR"
+msgstr "Lunes Wallet - It's not a bank. It's not an exchange. It's Lunes!"
+
+msgctxt "TITLE"
+msgid "COUPON"
+msgid_plural "COUPON"
+msgstr[0] "Coupon"
+msgstr[1] "Voucher"
+msgstr[2] "Promotion"
+
+msgctxt "TITLE"
+msgid "SETTING_WALLETS"
+msgstr "Wallets"
+
+msgctxt "TITLE"
+msgid "SECURITY"
+msgstr "2FA Authenticator"
+
+msgctxt "TITLE"
+msgid "DEFINITIONS"
+msgstr "Definitions"
+
+msgctxt "TITLE"
+msgid "CONSENT"
+msgstr "Consent"
+
+msgctxt "TITLE"
+msgid "SET_SEED"
+msgstr "ACCOUNT INFORMATION BACKUP"
+
+msgctxt "TITLE"
+msgid "CARD_HOME"
+msgid_plural "CARD_HOME"
+msgstr[0] "Recharges"
+msgstr[1] "Invoices"
+msgstr[2] "Favorites Coins"
+msgstr[3] "Withdrawal"
+msgstr[4] "Wallet"
+msgstr[5] "Leasing"
+
+msgctxt "TITLE"
+msgid "2FA_INSTRUCTIONS"
+msgstr "Device verification"
+
+msgctxt "TITLE"
+msgid "WALLET_MODAL_SEND"
+msgstr "Transaction"
+
+msgctxt "TITLE"
+msgid "WALLET_MODAL_RECEIVE"
+msgstr "Receive"
+
+msgctxt "TITLE"
+msgid "TRANSACTION_HISTORY"
+msgstr "Transactions"
+
+msgctxt "TITLE"
+msgid "SETTINGS"
+msgstr "Choose the right privacy settings for you"
+
+msgctxt "TITLE"
+msgid "PAYMENT_MODAL"
+msgstr "Invoice Payment"
+
+msgctxt "TITLE"
+msgid "PAYMENT_TERMS"
+msgstr "GDPR Term"
+
+msgctxt "TITLE"
+msgid "PAYMENT_HEADER"
+msgstr "Invoice Payment"
+
+msgctxt "TITLE"
+msgid "PAYMENT"
+msgstr "Invoices"
+
+msgctxt "TITLE"
+msgid "RECHARGE"
+msgstr "Mobile Credits Recharge"
+
+msgctxt "TITLE"
+msgid "KYC_INFOCONTAINER"
+msgstr "Congratulation, you sent all the documents."
+
+msgctxt "TITLE"
+msgid "KYC_INFOCONFIRM"
+msgstr "Your information is confirmed"
+
+msgctxt "TITLE"
+msgid "BUYCOINS"
+msgstr "BUY CRYPTOCURRENCIES"
+
+msgctxt "TITLE"
+msgid "BUYCOINS_PURCHASE_TAB"
+msgstr "Buy coins"
+
+msgctxt "TITLE"
+msgid "BUYCOINS_HISTORY_TAB"
+msgstr "History"
+
+msgctxt "TITLE"
+msgid "COINSALE"
+msgstr "BUY CRYPTOCURRENCIES"
+
+msgctxt "TITLE"
+msgid "COINSALE_PURCHASE_TAB"
+msgstr "Buy coins"
+
+msgctxt "TITLE"
+msgid "COINSALE_HISTORY_TAB"
+msgstr "History"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_TAB"
+msgstr "Deposit"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_TAB_HISTORY"
+msgstr "History"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_HEADER"
+msgstr "DEPOSIT LUNES' WALLET"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_NAME"
+msgstr "Full name"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_CPF"
+msgstr "CPF"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_STATE"
+msgstr "State"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_CITY"
+msgstr "City"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_CEP"
+msgstr "CEP"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_ADDRESS"
+msgstr "Address"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_NUMBER"
+msgstr "Number"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_RECURRENT"
+msgstr "Recurrent"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_CONFIRMDATA_SCHEDULING"
+msgstr "Scheduling"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_ACCOUNT_MODAL"
+msgstr "Deposit with Debit"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "Check the informations below and correct/fill if necessary:"
+
+msgctxt "TITLE"
+msgid "DEPOSIT_PAYMODAL"
+msgstr "Digitable line copied"
+
+msgctxt "TITLE"
+msgid "P2P_SORT"
+msgstr "Filter"
+
+msgctxt "TITLE"
+msgid "P2P_INFORMATION_SIGNATURE"
+msgid_plural "P2P_INFORMATION_SIGNATURE"
+msgstr[0] "To use P2P you must sign the service"
+msgstr[1] "To use Escrow, additional amounts are charged"
+
+msgctxt "DESCRIPTION"
+msgid "NAVIGATOR"
+msgstr ""
+"Store your cryptocurrencies, pay invoices, recharge your phone and buy "
+"cryptos in a safe, fast and easy to use wallet."
+
+msgctxt "DESCRIPTION"
+msgid "LOGIN_SLIDE"
+msgid_plural "LOGIN_SLIDE"
+msgstr[0] ""
+"Perform cell phone credit recharges with your virtual coins quickly and "
+"securely."
+msgstr[1] "Manage your favorite cryptocurrencies all on the same place"
+msgstr[2] ""
+"Make the payment using your favorite cryptocurrency in an easy and "
+"intuitive way."
+msgstr[3] ""
+"Turn digital currencies into Reais by electronic transfer to major banks in "
+"Brazil."
+
+msgctxt "DESCRIPTION"
+msgid "SETTINGS_CONSENTS_TERMS"
+msgstr "Do you accept the GDPR terms?"
+
+msgctxt "DESCRIPTION"
+msgid "SET_ALIAS"
+msgstr ""
+"You can customize a name for your wallet Lunes, if you prefer. If you make "
+"this change, the amount to be deducted from your balance is 5 LUNES."
+
+msgctxt "DESCRIPTION"
+msgid "CARD_HOME"
+msgid_plural "CARD_HOME"
+msgstr[0] ""
+"Recharge your cell phone, anywhere, anytime, using the available "
+"cryptomedas in the Lunes wallet, quickly, easily and safely."
+msgstr[1] ""
+"Pay your bank cards with cryptos in the simplest way possible. A quick and "
+"easy procedure, with all the security and confidence that only Lunes has."
+msgstr[2] ""
+"Now you can choose and favor your favorite coins. Work only with the coins "
+"you want, without the need to view all."
+msgstr[3] ""
+"Complete the step-by-step and redeem your purchased coins through the "
+"coupon or voucher at one of the crypto-coin sales outlets."
+msgstr[4] ""
+"The Lunes wallet is the safest way to store your crypto coins. Import "
+"wallets, see your history, transfer, receive, check out quotes and more."
+msgstr[5] ""
+"Make the low risk investment that returns you up to 5% per year. Have total "
+"security and control of your coins, with a better income than savings."
+
+msgctxt "DESCRIPTION"
+msgid "PAYMENT_SHORT"
+msgstr "Short description"
+
+msgctxt "DESCRIPTION"
+msgid "RECHARGE"
+msgstr "Recharge your mobile phone with credits and pay with cryptocurrency"
+
+msgctxt "DESCRIPTION"
+msgid "BUYCOINS"
+msgstr "Buy your cryptos quickly, easily and safely."
+
+msgctxt "DESCRIPTION"
+msgid "COINSALE"
+msgstr "Buy your cryptos quickly, easily and safely."
+
+msgctxt "DESCRIPTION"
+msgid "P2P_CREATE_OFFER"
+msgstr "Description"
+
+msgctxt "DESCRIPTION"
+msgid "P2P_PROFILE"
+msgstr "Description"
+
+msgctxt "DESCRIPTION"
+msgid "P2P_HEADER"
+msgstr "Description"
+
+msgctxt "DESCRIPTION"
+msgid "P2P_PLANS"
+msgstr ""
+"Purchase your package paying with Lunes and get full access to the Lunes "
+"P2P system"
+
+msgctxt "DESCRIPTION"
+msgid "P2P_MONTHLY_SIGNATURE"
+msgstr "The P2P basic plan will allow you to use the service for one month."
+
+msgctxt "DESCRIPTION"
+msgid "P2P_QUARTERLY_SIGNATURE"
+msgstr "The P2P basic plan will allow you to use the service for three months."
+
+msgctxt "DESCRIPTION"
+msgid "P2P_SEMESTER_SIGNATURE"
+msgstr "The P2P basic plan will allow you to use the service for six months."
+
+msgctxt "DESCRIPTION"
+msgid "P2P_YEARLY_SIGNATURE"
+msgstr "The P2P basic plan will allow you to use the service for one year."
+
+msgctxt "DESCRIPTION"
+msgid "P2P_USER"
+msgstr "Describe yourself in a few words"
 
 msgid "FEBRUARY"
 msgstr "February"
@@ -121,6 +410,10 @@ msgctxt "AMOUNT"
 msgid "MODAL_SEND_MIN"
 msgstr "You are trying to send a very low amount."
 
+msgctxt "FOUNDS"
+msgid "MESSAGE_INSUFFICIENT"
+msgstr "Insufficient funds"
+
 msgctxt "PASSWORD"
 msgid "MESSAGE_INVALID"
 msgstr "Invalid Password"
@@ -185,9 +478,17 @@ msgctxt "FOUND"
 msgid "MESSAGE_NOTHING"
 msgstr "Nothing Found"
 
+msgctxt "FOUND"
+msgid "DEPOSIT_INF_NOT"
+msgstr "Packages not available"
+
 msgctxt "YET"
 msgid "MESSAGE_NOT_SERVICE"
 msgstr "Service not available yet."
+
+msgctxt "YET"
+msgid "P2P_CHAT_NOBODY_WAS_INSTERESTED"
+msgstr "Nobody was interested in your offer yet"
 
 msgctxt "TERMS"
 msgid "MESSAGE"
@@ -289,103 +590,6 @@ msgctxt "SOON"
 msgid "P2P_COMING"
 msgstr "Rating coming soon !"
 
-msgctxt "DESCRIPTION"
-msgid "LOGIN_SLIDE"
-msgid_plural "LOGIN_SLIDE"
-msgstr[0] ""
-"Perform cell phone credit recharges with your virtual coins quickly and "
-"securely."
-msgstr[1] "Manage your favorite cryptocurrencies all on the same place"
-msgstr[2] ""
-"Make the payment using your favorite cryptocurrency in an easy and "
-"intuitive way."
-msgstr[3] ""
-"Turn digital currencies into Reais by electronic transfer to major banks in "
-"Brazil."
-
-msgctxt "DESCRIPTION"
-msgid "SETTINGS_CONSENTS_TERMS"
-msgstr "Do you accept the GDPR terms?"
-
-msgctxt "DESCRIPTION"
-msgid "SET_ALIAS"
-msgstr ""
-"You can customize a name for your wallet Lunes, if you prefer. If you make "
-"this change, the amount to be deducted from your balance is 5 LUNES."
-
-msgctxt "DESCRIPTION"
-msgid "CARD_HOME"
-msgid_plural "CARD_HOME"
-msgstr[0] ""
-"Recharge your cell phone, anywhere, anytime, using the available "
-"cryptomedas in the Lunes wallet, quickly, easily and safely."
-msgstr[1] ""
-"Pay your bank cards with cryptos in the simplest way possible. A quick and "
-"easy procedure, with all the security and confidence that only Lunes has."
-msgstr[2] ""
-"Now you can choose and favor your favorite coins. Work only with the coins "
-"you want, without the need to view all."
-msgstr[3] ""
-"Complete the step-by-step and redeem your purchased coins through the "
-"coupon or voucher at one of the crypto-coin sales outlets."
-msgstr[4] ""
-"The Lunes wallet is the safest way to store your crypto coins. Import "
-"wallets, see your history, transfer, receive, check out quotes and more."
-msgstr[5] ""
-"Make the low risk investment that returns you up to 5% per year. Have total "
-"security and control of your coins, with a better income than savings."
-
-msgctxt "DESCRIPTION"
-msgid "PAYMENT_SHORT"
-msgstr "Short description"
-
-msgctxt "DESCRIPTION"
-msgid "RECHARGE"
-msgstr "Recharge your mobile phone with credits and pay with cryptocurrency"
-
-msgctxt "DESCRIPTION"
-msgid "BUYCOINS"
-msgstr "Buy your cryptos quickly, easily and safely."
-
-msgctxt "DESCRIPTION"
-msgid "COINSALE"
-msgstr "Buy your cryptos quickly, easily and safely."
-
-msgctxt "DESCRIPTION"
-msgid "P2P_CREATE_OFFER"
-msgstr "Description"
-
-msgctxt "DESCRIPTION"
-msgid "P2P_PROFILE"
-msgstr "Description"
-
-msgctxt "DESCRIPTION"
-msgid "P2P_HEADER"
-msgstr "Description"
-
-msgctxt "DESCRIPTION"
-msgid "P2P_PLANS"
-msgstr ""
-"The signature of the P2P service will be open in a beta test for one month "
-"to all wallet users. After this period, to negotiate on the P2P platform "
-"will require buying a signature with Lunes payment."
-
-msgctxt "DESCRIPTION"
-msgid "P2P_MONTHLY_SIGNATURE"
-msgstr "The P2P basic plan will allow you to use the service for one month."
-
-msgctxt "DESCRIPTION"
-msgid "P2P_QUARTERLY_SIGNATURE"
-msgstr "The P2P basic plan will allow you to use the service for three months."
-
-msgctxt "DESCRIPTION"
-msgid "P2P_SEMESTER_SIGNATURE"
-msgstr "The P2P basic plan will allow you to use the service for six months."
-
-msgctxt "DESCRIPTION"
-msgid "P2P_YEARLY_SIGNATURE"
-msgstr "The P2P basic plan will allow you to use the service for one year."
-
 msgctxt "RULES"
 msgid "ALIAS"
 msgid_plural "ALIAS"
@@ -417,6 +621,10 @@ msgid "MODAL_SEND_TO"
 msgstr " to the address "
 
 msgctxt "ADDRESS"
+msgid "KYC_UPLOAD"
+msgstr "Proof of residence"
+
+msgctxt "ADDRESS"
 msgid "P2P_INPUT_PUT_YOUR"
 msgstr "Put your address"
 
@@ -427,6 +635,14 @@ msgstr "Payment address"
 msgctxt "ADDRESS"
 msgid "P2P_CHANGE"
 msgstr "Fill the address for receive"
+
+msgctxt "ADDRESS"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Av. Jorge ben jor"
+
+msgctxt "ADDRESS"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "Address"
 
 msgctxt "INSTRUCTIONS"
 msgid "2FA"
@@ -563,7 +779,7 @@ msgstr[6] "Enter the coin to sell"
 
 msgctxt "BARCODE"
 msgid "PAYMENT_MESSAGE"
-msgstr "Barcode could not be mistaken. Start the numbers manually."
+msgstr "Barcode could not be read. Type the numbers manually."
 
 msgctxt "SIZE"
 msgid "PAYMENT_FILE"
@@ -595,7 +811,7 @@ msgctxt "SUCCESS"
 msgid "RECHARGE"
 msgid_plural "RECHARGE"
 msgstr[0] "You have successfully loaded your cell phone!"
-msgstr[1] "View your refill history on the History tab"
+msgstr[1] " "
 
 msgctxt "SUCCESS"
 msgid "ALIAS_CREATED"
@@ -629,107 +845,6 @@ msgstr[1] "Rescue"
 msgstr[2] "Choose which option you have"
 msgstr[3] "Enter your mobile phone number with DDD and carrier (Only voucher)"
 
-msgctxt "TITLE"
-msgid "COUPON"
-msgid_plural "COUPON"
-msgstr[0] "Coupon"
-msgstr[1] "Voucher"
-msgstr[2] "Promotion"
-
-msgctxt "TITLE"
-msgid "SETTING_WALLETS"
-msgstr "Wallets"
-
-msgctxt "TITLE"
-msgid "SECURITY"
-msgstr "2FA Authenticator"
-
-msgctxt "TITLE"
-msgid "DEFINITIONS"
-msgstr "Definitions"
-
-msgctxt "TITLE"
-msgid "CONSENT"
-msgstr "Consent"
-
-msgctxt "TITLE"
-msgid "SET_SEED"
-msgstr "ACCOUNT INFORMATION BACKUP"
-
-msgctxt "TITLE"
-msgid "CARD_HOME"
-msgid_plural "CARD_HOME"
-msgstr[0] "Recharges"
-msgstr[1] "Invoices"
-msgstr[2] "Favorites Coins"
-msgstr[3] "Withdrawal"
-msgstr[4] "Wallet"
-msgstr[5] "Leasing"
-
-msgctxt "TITLE"
-msgid "2FA_INSTRUCTIONS"
-msgstr "Device verification"
-
-msgctxt "TITLE"
-msgid "WALLET_MODAL_SEND"
-msgstr "Transaction"
-
-msgctxt "TITLE"
-msgid "WALLET_MODAL_RECEIVE"
-msgstr "Receive"
-
-msgctxt "TITLE"
-msgid "TRANSACTION_HISTORY"
-msgstr "Transactions"
-
-msgctxt "TITLE"
-msgid "SETTINGS"
-msgstr "Choose the right privacy settings for you"
-
-msgctxt "TITLE"
-msgid "PAYMENT_MODAL"
-msgstr "Invoice Payment"
-
-msgctxt "TITLE"
-msgid "PAYMENT_TERMS"
-msgstr "GDPR Term"
-
-msgctxt "TITLE"
-msgid "PAYMENT_HEADER"
-msgstr "Invoice Payment"
-
-msgctxt "TITLE"
-msgid "PAYMENT"
-msgstr "Invoices"
-
-msgctxt "TITLE"
-msgid "RECHARGE"
-msgstr "Mobile Credits Recharge"
-
-msgctxt "TITLE"
-msgid "BUYCOINS"
-msgstr "BUY CRYPTOCURRENCIES"
-
-msgctxt "TITLE"
-msgid "BUYCOINS_PURCHASE_TAB"
-msgstr "Buy coins"
-
-msgctxt "TITLE"
-msgid "BUYCOINS_HISTORY_TAB"
-msgstr "History"
-
-msgctxt "TITLE"
-msgid "COINSALE"
-msgstr "BUY CRYPTOCURRENCIES"
-
-msgctxt "TITLE"
-msgid "COINSALE_PURCHASE_TAB"
-msgstr "Buy coins"
-
-msgctxt "TITLE"
-msgid "COINSALE_HISTORY_TAB"
-msgstr "History"
-
 msgctxt "CARD"
 msgid "SETTINGS"
 msgid_plural "SETTINGS"
@@ -738,19 +853,35 @@ msgstr[1] "CONSENT"
 msgstr[2] "DEFINITIONS"
 msgstr[3] "P2P"
 msgstr[4] "USER DATA"
-msgstr[5] "2FA AUTHENTICATION"
+msgstr[5] "SECURITY"
 
 msgctxt "USER"
 msgid "SETTINGS"
 msgstr "User profile"
+
+msgctxt "USER"
+msgid "P2P_CHAT_SELECT_AN"
+msgstr "Select an user"
 
 msgctxt "BACK"
 msgid "SETTINGS_USER"
 msgstr "Back to the settings"
 
 msgctxt "BACK"
+msgid "SECURITY_USER"
+msgstr "Back to the security"
+
+msgctxt "BACK"
 msgid "BTN"
 msgstr "Back"
+
+msgctxt "BACK"
+msgid "TEXT"
+msgstr "Back"
+
+msgctxt "BACK"
+msgid "KYC_UPLOAD"
+msgstr "Back Document"
 
 msgctxt "IMAGE"
 msgid "SETTINGS_USER"
@@ -824,6 +955,14 @@ msgctxt "NAME"
 msgid "PAYMENT_FIND"
 msgstr "Find by name"
 
+msgctxt "NAME"
+msgid "KYC_FULL"
+msgstr "Full Name"
+
+msgctxt "NAME"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Lucia almeida Alves santos"
+
 msgctxt "SURNAME"
 msgid "SETTINGS_USER"
 msgstr "Surname"
@@ -855,6 +994,18 @@ msgstr "Phone"
 msgctxt "NUMBER"
 msgid "VOUCHER"
 msgstr "Number"
+
+msgctxt "NUMBER"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "123"
+
+msgctxt "NUMBER"
+msgid "DEPOSIT_INF_MODAL_PERSONAL"
+msgstr "CPF/CNPJ"
+
+msgctxt "NUMBER"
+msgid "DEPOSIT_INF_MODAL_ADDRESS"
+msgstr "Nº"
 
 msgctxt "BIRTHDATE"
 msgid "SETTINGS_USER"
@@ -888,9 +1039,29 @@ msgctxt "CITY"
 msgid "SETTINGS_USER"
 msgstr "City"
 
+msgctxt "CITY"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Barueri"
+
+msgctxt "CITY"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "City"
+
 msgctxt "STATE"
 msgid "SETTINGS_USER"
 msgstr "State"
+
+msgctxt "STATE"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "São Paulo"
+
+msgctxt "STATE"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "State"
+
+msgctxt "COUNTRY"
+msgid "SETTINGS_USER"
+msgstr "Country"
 
 msgctxt "DATA"
 msgid "SETTINGS_USER_SAVE"
@@ -917,7 +1088,7 @@ msgstr "Back to the settings"
 
 msgctxt "RETURN"
 msgid "SECURITY_LINK"
-msgstr "Back to the settings"
+msgstr "Back to the security"
 
 msgctxt "REGISTRED"
 msgid "SECURITY_2FA"
@@ -1019,6 +1190,10 @@ msgctxt "COIN"
 msgid "P2P_FAILED_TO_BUY"
 msgstr "Failed to buy this coin, try again later or contact us"
 
+msgctxt "COIN"
+msgid "SELECT"
+msgstr "Select a coin"
+
 msgctxt "REDIRECT"
 msgid "PAGE_ERROR_500"
 msgstr "Redirecting in"
@@ -1073,6 +1248,14 @@ msgctxt "CONFIRM"
 msgid "P2P_BUTTON"
 msgstr "Conclude"
 
+msgctxt "CONFIRM"
+msgid "DEPOSITDATA_BTN_CONFIRM"
+msgstr "Confirm"
+
+msgctxt "CONFIRM"
+msgid "P2P_SIGNATURE"
+msgstr "Signature successfully completed"
+
 msgctxt "FAILURE"
 msgid "MODAL_LEASING_MESSAGE"
 msgstr "Could not start the leasing"
@@ -1093,8 +1276,7 @@ msgctxt "SEED"
 msgid "PLACEHOLDER"
 msgstr ""
 "Write down the seed you have generated (12 words in English) in a safe "
-"place. Only you have access to it and through the 12 words you can access "
-"your wallet in blockchain."
+"place."
 
 msgctxt "SEED"
 msgid "BTN_IMPORT"
@@ -1128,12 +1310,20 @@ msgctxt "SEND"
 msgid "INVITE_BUTTON"
 msgstr "Send"
 
+msgctxt "SEND"
+msgid "P2P_ADDRESS_TO"
+msgstr "Address to send"
+
 msgctxt "DISABLED"
 msgid "BTN"
 msgstr "Disabled"
 
 msgctxt "LOADING"
 msgid "BTN_SEND"
+msgstr "Loading..."
+
+msgctxt "LOADING"
+msgid "P2P_CHAT_ROOM"
 msgstr "Loading..."
 
 msgctxt "RECEIVE"
@@ -1147,6 +1337,10 @@ msgstr "Create"
 msgctxt "CREATE"
 msgid "PIN"
 msgstr "CREATE your PIN"
+
+msgctxt "CREATE"
+msgid "KYC_INFO_FAILURE"
+msgstr "Failed to send kyc information."
 
 msgctxt "NEXT"
 msgid "BTN"
@@ -1196,6 +1390,10 @@ msgctxt "CONTINUE"
 msgid "BTN"
 msgstr "Continue"
 
+msgctxt "CONTINUE"
+msgid "DEPOSIT_INF_MODAL_BTN"
+msgstr "Continue"
+
 msgctxt "HOME"
 msgid "BTN"
 msgstr "Home"
@@ -1231,6 +1429,18 @@ msgstr "Forgot your password"
 msgctxt "HEADER"
 msgid "RESET_NEW_PASSWORD"
 msgstr "Type your new password"
+
+msgctxt "HEADER"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Return to previous step"
+
+msgctxt "HEADER"
+msgid "DEPOSIT_ACCOUNT_MODAL"
+msgstr "Click the Bank Icon"
+
+msgctxt "HEADER"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "Go Back"
 
 msgctxt "LINK"
 msgid "LOGIN_FORGET_PASSWORD"
@@ -1276,13 +1486,21 @@ msgctxt "FOOTER"
 msgid "LOGIN"
 msgstr "2018 lunes.io All Rights Reserved"
 
+msgctxt "FOOTER"
+msgid "P2P_INFORMATION"
+msgstr ""
+"You will receive notifications by email when your purchase or sale takes "
+"effect, you will also receive an email for new chats that are open with you."
+
 msgctxt "ENTER"
 msgid "PIN"
 msgstr "ENTER your PIN"
 
 msgctxt "SENDED"
 msgid "NEW_ACCOUNT_MESSAGE"
-msgstr "Account created successfully."
+msgstr ""
+"You need to confirm your e-mail to complete the sign up process, please "
+"check your inbox"
 
 msgctxt "SENDED"
 msgid "RESET_EMAIL"
@@ -1291,6 +1509,10 @@ msgstr "A message with a temporary password has been sent to your email address"
 msgctxt "DOWNLOAD"
 msgid "NEW_ACCOUNT_TERMS"
 msgstr "Click Here to download and finish the registration"
+
+msgctxt "DOWNLOAD"
+msgid "DEPOSIT_PAYMODAL"
+msgstr "Download"
 
 msgctxt "AUTHORIZED"
 msgid "COUPON_USER_NOT"
@@ -1386,6 +1608,10 @@ msgctxt "SETTING"
 msgid "MENU"
 msgstr "Settings"
 
+msgctxt "DEPOSIT"
+msgid "MENU"
+msgstr "Deposit"
+
 msgctxt "LEASING"
 msgid "MENU"
 msgstr "Leasing"
@@ -1408,8 +1634,26 @@ msgctxt "MESSAGE"
 msgid "MODAL_RECEIVE"
 msgstr "Address copied"
 
+msgctxt "MESSAGE"
+msgid "RECHARGE_ERROR"
+msgstr "Unable to load the recharge packages"
+
+msgctxt "MESSAGE"
+msgid "KYC_REJECTED"
+msgstr ""
+"Your information was not validated. Please send your documents again "
+"considering the following reason:"
+
+msgctxt "MESSAGE"
+msgid "P2P_CHAT_STATIC_BUYER"
+msgstr "Hello, I saw your offer, and I'd want to talk with you"
+
 msgctxt "COPY"
 msgid "BTN_RECEIVE"
+msgstr "Copy"
+
+msgctxt "COPY"
+msgid "DEPOSIT_PAYMODAL"
 msgstr "Copy"
 
 msgctxt "PRINT"
@@ -1423,6 +1667,10 @@ msgstr "Share"
 msgctxt "SHARE"
 msgid "INVITE_LINK"
 msgstr "Share link"
+
+msgctxt "SHARE"
+msgid "DEPOSIT_PAYMODAL"
+msgstr "To share"
 
 msgctxt "BALANCE"
 msgid "WALLET"
@@ -1468,6 +1716,20 @@ msgstr[0] "You are sending "
 msgstr[1] " for "
 
 msgctxt "TEXT"
+msgid "KYC_INFOCONTAINER"
+msgstr "Now wait for the approval. Stay alert to your e-mail!."
+
+msgctxt "TEXT"
+msgid "KYC_INFOCONFIRM"
+msgstr ""
+"Your documents were approved and your account is allowed to make fiat "
+"transactions"
+
+msgctxt "TEXT"
+msgid "KYC_REJECTED"
+msgstr "Documents not approved."
+
+msgctxt "TEXT"
 msgid "BUYCOINS_FEE"
 msgid_plural "BUYCOINS_FEE"
 msgstr[0] "You are sending "
@@ -1477,8 +1739,8 @@ msgctxt "TEXT"
 msgid "INVITE"
 msgstr ""
 "You and the invited user will earn 5 LUNES after the invited user register "
-"and make at least one transaction inside the wallet , by receiving some "
-"coins or using a service"
+"and make at least one transaction inside the wallet, by sending some coins "
+"or using a service"
 
 msgctxt "TEXT"
 msgid "COINSALE_FEE"
@@ -1511,9 +1773,36 @@ msgstr[9] "The fee of your transaction on the Lunes network is"
 msgstr[10] ""
 "Congratulations, you just made a sale! Once you make sure the deposit was "
 "successful, confirm the transaction."
-msgstr[11] "Evaluate the buyer"
-msgstr[12] "Sucess creating order"
-msgstr[13] "Finish and go back"
+msgstr[11] ""
+"Congratulations, you just made a purchase! Once you make sure the deposit "
+"was successful, confirm the transaction."
+msgstr[12] "Evaluate the buyer"
+msgstr[13] "Sucess creating order"
+msgstr[14] "Finish and go back"
+
+msgctxt "TEXT"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr ""
+"For the ticket to be executed it is necessary that the information is "
+"correct"
+
+msgctxt "TEXT"
+msgid "DEPOSIT_PACK"
+msgstr "You'll receive money the equivalent of"
+
+msgctxt "TEXT"
+msgid "DEPOSIT_PAYMODAL"
+msgstr ""
+"Ticket generated and sent to the registered e-mail. After payment, the "
+"money will be available for use on the platform within 2 business days"
+
+msgctxt "TEXT"
+msgid "P2P_FEE"
+msgid_plural "P2P_FEE"
+msgstr[0] "to sign P2P service for"
+msgstr[1] "days"
+msgstr[2] "You are sending"
+msgstr[3] "LUNES"
 
 msgctxt "START"
 msgid "LEASING_BT"
@@ -1523,6 +1812,18 @@ msgctxt "CANCEL"
 msgid "LEASING_BT"
 msgstr "Cancel"
 
+msgctxt "CANCEL"
+msgid "DEPOSIT_TITLE"
+msgstr "Cancellation Alert"
+
+msgctxt "CANCEL"
+msgid "DEPOSIT_TEXT"
+msgstr "You have clicked to cancel your deposit recurring value:"
+
+msgctxt "CANCEL"
+msgid "DEPOSIT_BTN"
+msgstr "I want to cancel"
+
 msgctxt "EXPLORER"
 msgid "LEASING_TITLE"
 msgstr "Blockexplorer"
@@ -1530,6 +1831,10 @@ msgstr "Blockexplorer"
 msgctxt "ACTIVE"
 msgid "LEASING_BALANCE"
 msgstr "Leasing"
+
+msgctxt "ACTIVE"
+msgid "P2P_SIGNATURE"
+msgstr "You don't have an active signature"
 
 msgctxt "NEW"
 msgid "LEASING_TITLE"
@@ -1669,9 +1974,17 @@ msgctxt "DATE"
 msgid "P2P_PROFILE_USER"
 msgstr "User since"
 
+msgctxt "DATE"
+msgid "DEPOSIT_SELECT"
+msgstr "Select date"
+
 msgctxt "DOC"
 msgid "PAYMENT_TITLE"
 msgstr "CPF/CNPJ"
+
+msgctxt "DOC"
+msgid "SECURITY_INSERT"
+msgstr "Select a document"
 
 msgctxt "VALUE"
 msgid "PAYMENT_TITLE"
@@ -1684,6 +1997,10 @@ msgstr "Value"
 msgctxt "VALUE"
 msgid "RECHARGE_SELECT_TITLE"
 msgstr "Value"
+
+msgctxt "VALUE"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "30"
 
 msgctxt "LIMIT"
 msgid "PAYMENT_AMOUNT"
@@ -1701,6 +2018,10 @@ msgctxt "SUBTITLE"
 msgid "PAYMENT_HEADER"
 msgstr "Make your payments online with cryptocurrencies"
 
+msgctxt "SUBTITLE"
+msgid "DEPOSIT_HEADER"
+msgstr "Deposit FIAT's money to use in Lunes services"
+
 msgctxt "INVOICE"
 msgid "PAYMENT"
 msgstr "Pay Invoice"
@@ -1708,6 +2029,10 @@ msgstr "Pay Invoice"
 msgctxt "INVOICE"
 msgid "RECHARGE_TITLE"
 msgstr "Mobile Credits Recharge "
+
+msgctxt "INVOICE"
+msgid "DEPOSIT"
+msgstr "Invoice"
 
 msgctxt "ASSIGNOR"
 msgid "PAYMENT"
@@ -1739,7 +2064,9 @@ msgstr "Information"
 
 msgctxt "TRANSACTION"
 msgid "MODAL_SEND_INFO"
-msgstr "To confirm your transaction, enter your password and complete the "
+msgstr ""
+"To confirm your transaction, enter your password and complete the sending "
+"of "
 
 msgctxt "TRANSACTION"
 msgid "MODAL_SEND_FEE"
@@ -1751,7 +2078,7 @@ msgstr "Could not make a transaction from"
 
 msgctxt "TRANSACTION"
 msgid "ALIAS_MODAL"
-msgstr "To confirm your transaction, insert your password: "
+msgstr "To confirm your transaction, enter your password: "
 
 msgctxt "BLOCKCHAIN"
 msgid "MODAL_SEND_INFO"
@@ -1840,6 +2167,113 @@ msgctxt "INCORRECT"
 msgid "ALIAS_INFORMED"
 msgstr "The informed alias is incorrect!"
 
+msgctxt "SECURITY"
+msgid "TITLE"
+msgid_plural "TITLE"
+msgstr[0] "KYC"
+msgstr[1] "2FA AUTHENTICATOR"
+msgstr[2] "MOBILE"
+
+msgctxt "SECURITY"
+msgid "CARD"
+msgid_plural "CARD"
+msgstr[0] "KYC"
+msgstr[1] "2FA AUTHENTICATOR "
+msgstr[2] "MOBILE "
+
+msgctxt "PHONE"
+msgid "SECURITY_INSERT"
+msgstr "Insert your phone"
+
+msgctxt "PHONE"
+msgid "KYC"
+msgstr "Phone"
+
+msgctxt "PHONE"
+msgid "KYC_INVALID"
+msgstr "Check your phone number"
+
+msgctxt "PHONE"
+msgid "KYC_INVALID_PASSPORT"
+msgstr "Check your passport and your phone"
+
+msgctxt "UPLOAD"
+msgid "TEXT"
+msgstr "Upload"
+
+msgctxt "UPLOAD"
+msgid "TEXT_FAILED"
+msgstr "Failed to upload ..."
+
+msgctxt "UPLOAD"
+msgid "KYC_INFO_FAILURE"
+msgstr "Failed to upload file."
+
+msgctxt "FRONT"
+msgid "TEXT"
+msgstr "Front"
+
+msgctxt "FRONT"
+msgid "KYC_UPLOAD"
+msgstr "Front Document"
+
+msgctxt "SELFIE"
+msgid "KYC_UPLOAD"
+msgstr "Selfie Document"
+
+msgctxt "CONTRACT"
+msgid "KYC_UPLOAD_SOCIAL"
+msgstr "Social Contract"
+
+msgctxt "IMG"
+msgid "KYC_INFOCONTAINER"
+msgstr "Information"
+
+msgctxt "IMG"
+msgid "KYC_INFOCONFIRM"
+msgstr "Confirmed Information"
+
+msgctxt "DDI"
+msgid "KYC"
+msgstr "DDI"
+
+msgctxt "DDD"
+msgid "KYC"
+msgstr "DDD"
+
+msgctxt "PASSPORT"
+msgid "KYC_INVALID"
+msgstr "Check your passport"
+
+msgctxt "PASSPORT"
+msgid "KYC"
+msgstr "Passport"
+
+msgctxt "PLACEHOLDER"
+msgid "KYC_DOCUMENT"
+msgstr "Document number"
+
+msgctxt "PLACEHOLDER"
+msgid "P2P_CREATE_OFFER_DESCRIPTION"
+msgstr "Enter additional info about the ad that potential buyers need to know."
+
+msgctxt "PLACEHOLDER"
+msgid "P2P_CREATE_OFFER_ADDRESS"
+msgstr "Address"
+
+msgctxt "STEP"
+msgid "KYC"
+msgid_plural "KYC"
+msgstr[0] "After validation your account will be able to do fiat transactions"
+msgstr[1] ""
+"Upload your document and proof of residence with good resolution, we must "
+"be able to read the content"
+msgstr[2] "Our team will validate the data within 48 hours"
+
+msgctxt "INPUT"
+msgid "KYC_CHECK"
+msgstr "Required fields are empty"
+
 msgctxt "BUYCOINS"
 msgid "MENU"
 msgstr "Buy"
@@ -1908,6 +2342,10 @@ msgctxt "CREDIT"
 msgid "COINSALE"
 msgstr "Payment"
 
+msgctxt "CREDIT"
+msgid "DEPOSIT"
+msgstr "Credit"
+
 msgctxt "INVITE"
 msgid "MENU"
 msgstr "Invites"
@@ -1950,7 +2388,7 @@ msgstr "Redeemed"
 
 msgctxt "RESEND"
 msgid "BTN_INVITE"
-msgstr ""
+msgstr "Resend"
 
 msgctxt "COINSALE"
 msgid "MENU"
@@ -1968,6 +2406,10 @@ msgctxt "METHODS"
 msgid "P2P_NO_PAYMENT"
 msgstr "Application error. There's no payment methods to be used"
 
+msgctxt "METHODS"
+msgid "DEPOSIT_PAYMENT"
+msgstr "Payment methods"
+
 msgctxt "BTN"
 msgid "P2P_BUY"
 msgstr "Buy"
@@ -1981,14 +2423,6 @@ msgid "P2P_HEADER"
 msgid_plural "P2P_HEADER"
 msgstr[0] "Buy"
 msgstr[1] "Buy"
-
-msgctxt "PLACEHOLDER"
-msgid "P2P_CREATE_OFFER_DESCRIPTION"
-msgstr "Enter additional info about the ad that potential buyers need to know."
-
-msgctxt "PLACEHOLDER"
-msgid "P2P_CREATE_OFFER_ADDRESS"
-msgstr "Address"
 
 msgctxt "NEGOTIATION"
 msgid "P2P_CREATE_OFFER"
@@ -2014,6 +2448,14 @@ msgctxt "ORDER"
 msgid "P2P_NO"
 msgstr "No listing found"
 
+msgctxt "ORDER"
+msgid "P2P_FAILED_TO_FIND"
+msgstr "Failed to find order"
+
+msgctxt "ORDER"
+msgid "P2P_CANCEL"
+msgstr "Cancel done!"
+
 msgctxt "NEGOTIATIONS"
 msgid "P2P_PROFILE"
 msgstr "Negotiations"
@@ -2037,6 +2479,10 @@ msgstr "Accept"
 msgctxt "NEGOTIATE"
 msgid "P2P_BUTTON"
 msgstr "Negotiate"
+
+msgctxt "OFFERS"
+msgid "P2P_BUTTON_SEE"
+msgstr "See offers"
 
 msgctxt "UNITY"
 msgid "P2P_VALUE"
@@ -2062,9 +2508,101 @@ msgctxt "SIGNATURE"
 msgid "P2P_YEARLY"
 msgstr "Yearly"
 
+msgctxt "SIGNATURE"
+msgid "P2P_CONFIRM_PASSWORD"
+msgstr "Enter your password to confirm delivery and"
+
+msgctxt "SIGNATURE"
+msgid "P2P_CONFIRM"
+msgstr " SIGNATURE"
+
 msgctxt "LISTING"
 msgid "P2P_MY"
 msgstr "My listings"
+
+msgctxt "CHAT"
+msgid "P2P_FAILED_TO_OPEN_CHAT"
+msgstr "Failed to open chat"
+
+msgctxt "CHAT"
+msgid "P2P_SELECT_AN_USER_TO_CHAT"
+msgstr "Select an user above to chat with"
+
+msgctxt "ORDERS"
+msgid "P2P_NO_USER"
+msgstr "You don't have any orders or an error has occurred"
+
+msgctxt "ORDERS"
+msgid "P2P_FAILED_TO_GET"
+msgstr "Could not get list of orders, try again later on"
+
+msgctxt "OPEN"
+msgid "P2P_CHAT_FAILED_TO"
+msgstr "Failed to open chat, try again"
+
+msgctxt "AT"
+msgid "P2P_CHAT_NEGOTIATION_FINISHED"
+msgstr "This negotitation was ended at "
+
+msgctxt "AT"
+msgid "P2P_CHAT_NEGOTIATION_CANCELED"
+msgstr "This negotitation was canceled at "
+
+msgctxt "CIFRA"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "R$"
+
+msgctxt "DECIMAL"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr ",00"
+
+msgctxt "CPF"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "315.315.315-20"
+
+msgctxt "CEP"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "06532-123"
+
+msgctxt "CEP"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "CEP"
+
+msgctxt "RECURRENT"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Yes"
+
+msgctxt "RECURRENT"
+msgid "DEPOSIT"
+msgstr "Recurrent"
+
+msgctxt "SCHEDULING"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "10/05/2019"
+
+msgctxt "INFORMATION"
+msgid "DEPOSIT_CONFIRMDATA"
+msgstr "Information"
+
+msgctxt "INFORMATION"
+msgid "P2P"
+msgstr "Information"
+
+msgctxt "DEBIT"
+msgid "DEPOSIT"
+msgstr "Debit"
+
+msgctxt "CONTENT"
+msgid "DEPOSIT_ACCOUNT_MODAL"
+msgstr "You will be directed to the Bank's site that makes your payment in debt"
+
+msgctxt "ICON"
+msgid "BANK"
+msgstr "Bank icon"
+
+msgctxt "FULLNAME"
+msgid "DEPOSIT_INF_MODAL"
+msgstr "Full Name"
 
 msgctxt "SALE"
 msgid "P2P_TAB"
@@ -2073,3 +2611,60 @@ msgstr "Sale"
 msgctxt "RECEIPT"
 msgid "P2P_BUTTON_CONFIRM"
 msgstr "Confirm receipt"
+
+msgctxt "BUYER"
+msgid "P2P_BUTTON_RATE"
+msgstr "Rate buyer"
+
+msgctxt "SELLER"
+msgid "P2P_BUTTON_RATE"
+msgstr "Rate seller"
+
+msgctxt "ASCENDING"
+msgid "P2P_SORT"
+msgstr "Ascending price"
+
+msgctxt "DESCENDING"
+msgid "P2P_SORT"
+msgstr "Descending price"
+
+msgctxt "NEWEST"
+msgid "P2P_SORT"
+msgstr "Newest"
+
+msgctxt "OLDEST"
+msgid "P2P_SORT"
+msgstr "Oldest"
+
+msgctxt "MONTHS"
+msgid "P2P_INFORMATION_SIGNATURE_PLANS_12"
+msgstr "12 months for 24 reais."
+
+msgctxt "MONTHS"
+msgid "P2P_INFORMATION_SIGNATURE_PLANS_06"
+msgstr "6 months for 18 reais."
+
+msgctxt "MONTHS"
+msgid "P2P_INFORMATION_SIGNATURE_PLANS_03"
+msgstr "3 months for 10 reais."
+
+msgctxt "MONTHS"
+msgid "P2P_INFORMATION_SIGNATURE_PLANS_01"
+msgstr "1 month for 4 reais."
+
+msgctxt "ESCROW"
+msgid "P2P_INFORMATION"
+msgid_plural "P2P_INFORMATION"
+msgstr[0] ""
+"To ensure the agility and security of the system, in Escrow the seller "
+"makes the payment in advance."
+msgstr[1] "The minimum order value in escrow is $ 5.00 per order."
+msgstr[2] "The rate paid by the seller in escrow is 1%."
+
+msgctxt "PLAN"
+msgid "P2P_STATUS"
+msgstr "Active"
+
+msgctxt "PLAN"
+msgid "P2P_DESC"
+msgstr "This plan will allow you to use P2P's system for"

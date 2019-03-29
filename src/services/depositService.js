@@ -7,22 +7,24 @@ import { setAuthToken } from "../utils/localStorage";
 import { internalServerError } from "../containers/errors/statusCodeMessage";
 
 class DepositService {
+
   async getPackages(token) {
     try {
+      let packages = [];
+
       API_HEADER.headers.Authorization = token;
 
-      const packages = [
-        { id: 1, amount: 15 },
-        { id: 2, amount: 30 },
-        {id: 3, amount:45},
-        {id: 4, amount:60},
-        {id: 5, amount:100},
-        {id: 6, amount:250},
-        {id: 7, amount:500},
-        {id: 8, amount:1000}
-      ];
+      let response = await axios.get(
+        BASE_URL + "/deposit/packages",
+        API_HEADER
+      );
+      setAuthToken(response.headers[HEADER_RESPONSE]);
 
-      return packages;
+      if (response.data.code !== "200") {
+        return packages;
+      }
+
+      return response.data.data;
     } catch (error) {
       return internalServerError();
     }

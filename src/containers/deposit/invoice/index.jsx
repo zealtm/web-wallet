@@ -13,7 +13,7 @@ import CustomCheckbox from "../../../components/checkBox";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
+import Loading from "../../../components/loading";
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -117,9 +117,8 @@ class Invoice extends React.Component {
   };
   renderPacks = () => {
     const { packages } = this.props;
-    const { activeCard } = this.state;
     return packages.map((val, index) => {
-      const active = activeCard == val.id ? true : false;
+      const active = val.status;
       return (
         <CardPack
           key={index}
@@ -297,7 +296,19 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-    
+    const { packages, loading } = this.props;
+
+    if (loading) return <Loading />;
+    if (!packages.length)
+      return (
+        <div className={style.boxContainer}>
+          <div className={style.box1}>
+            <h1 className={style.textCenter}>
+              {i18n.t("DEPOSIT_INF_NOT_FOUND")}
+            </h1>
+          </div>
+        </div>
+      );
     return (
       <div>
         <Grid container direction="row" justify="center">
@@ -390,11 +401,13 @@ Invoice.propTypes = {
   getPaymentsMethods: PropTypes.func.isRequired,
   openModal: PropTypes.func,
   setPaymentMethod: PropTypes.func,
+  loading: PropTypes.bool,
   methods: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   packages: store.deposit.packages,
+  loading: store.deposit.loading,
   methods: store.deposit.paymentMethods
 });
 
