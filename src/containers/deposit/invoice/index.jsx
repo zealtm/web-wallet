@@ -312,7 +312,7 @@ class Invoice extends React.Component {
 
   render() {
     const { payment, depositValue } = this.state;
-
+    
     return (
       <div>
         <Grid container direction="row" justify="center">
