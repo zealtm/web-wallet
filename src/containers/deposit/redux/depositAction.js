@@ -53,3 +53,8 @@ export const setSelectedValue = value => ({
   type: "SET_SELECTED_VALUE",
   value
 })
+
+export const getPaymentMethodService = (serviceId) => ({
+  type: "GET_PAYMENT_METHOD_SERVICE_CREDIT",
+  serviceId
+});
