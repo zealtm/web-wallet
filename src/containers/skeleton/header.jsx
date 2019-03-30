@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -28,9 +29,49 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      openBalancePopup: false,
       notifications: 0
     };
   }
+
+  handleClick = () => {
+    this.setState({ ...this.state, openBalancePopup: !this.state.openBalancePopup });
+  };
+
+  renderBalancePopup = () => {
+    const { openBalancePopup } = this.state;
+    const { actionLogout } = this.props;
+
+    if (openBalancePopup) {
+      setTimeout(() => {
+        this.setState({ ...this.state, openBalancePopup: false });
+      }, 3000);
+
+      return (
+        <div className={style.menuUserDeposit}>
+          <div className={style.arrowUp}/>
+
+          <div>
+          <p className={style.textBalanceDeposit}>Meu Saldo</p>
+            <span className={style.boxBalanceDeposit}>
+              <img src="../../images/icons/deposit/balance_deposit-1.png"  className={style.imgBalanceDeposit} />
+              <p>5.000,00</p>
+              <button className={style.btnBalanceDeposit}>{i18n.t("MENU_DEPOSIT")}</button>
+            </span>            
+          </div>
+
+          <div>
+            <span className={style.boxBalanceDeposit}>
+              <img src="../../images/icons/deposit/balance_deposit-2.png"  className={style.imgBalanceDeposit}/>
+              <p>142,5 milhões de Lunes</p>
+            </span> 
+            <p className={style.texGreentBalanceDeposit}>Total: 142,000,00</p>
+          </div>
+
+        </div>
+      );
+    }
+  };
 
   renderNotifications = () => {
     const { notifications } = this.state;
@@ -92,14 +133,15 @@ class Header extends React.Component {
     return (
       <div className={style.boxBalance}>
         <Hidden xsDown>
-          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")} </span>
+          <span className={style.textGreen} onClick={() => this.handleClick()}>{i18n.t("WALLET_MY_AMOUNT")} </span>
         </Hidden>
-        <span className={style.textBalance}>
+        <span className={style.textBalance} onClick={() => this.handleClick()}>
           {coinBalance + " " + coinName}
         </span>
-        <span className={style.textBalanceFiat}>
+        <span className={style.textBalanceFiat} onClick={() => this.handleClick()}>
           {coinFiatSymbol + coinFiat}
         </span>
+        {this.renderBalancePopup()}
       </div>
     );
   };
@@ -127,6 +169,7 @@ class Header extends React.Component {
             {!TESTNET || <span className={style.textGreen}>Testnet</span>}
           </div>
           {this.renderBalance()}
+
 
           <Hidden mdDown>
             <UserControl actionLogout={actionLogout} />
