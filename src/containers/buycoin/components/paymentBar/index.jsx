@@ -5,7 +5,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { setCoinSelected } from "../../redux/buyAction";
-
+import {
+  getPaymentMethodService
+} from "../../../deposit/redux/depositAction";
 // MATERIAL
 import {
   Grid,
@@ -79,10 +81,13 @@ class PaymentBar extends React.Component {
       }
     });
   };
-
+  componentDidMount() {
+    const { getPaymentMethodService } = this.props;
+    getPaymentMethodService(10);
+  }
   render() {
-    const { title, img, paymentMethod, selectedPaymentMethod } = this.state;
-    const { classes, coins, coinsActive } = this.props;
+    const { title, img, selectedPaymentMethod } = this.state;
+    const { classes, coins, coinsActive, methodPaymentsList } = this.props;
     let coinspayment = [];
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
@@ -113,7 +118,7 @@ class PaymentBar extends React.Component {
             <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
               <Hidden smUp>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   width={"100%"}
@@ -121,7 +126,7 @@ class PaymentBar extends React.Component {
               </Hidden>
               <Hidden xsDown>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                 />
@@ -159,18 +164,21 @@ PaymentBar.propTypes = {
   classes: PropTypes.object.isRequired,
   setCoinSelected: PropTypes.func.isRequired,
   coins: PropTypes.array.isRequired,
-  coinsActive: PropTypes.array.isRequired
+  coinsActive: PropTypes.array.isRequired,
+  methodPaymentsList: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   coins: store.buy.coinsPayment || [],
-  coinsActive: store.skeleton.coins || []
+  coinsActive: store.skeleton.coins || [],
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setCoinSelected
+      setCoinSelected,
+      getPaymentMethodService
     },
     dispatch
   );

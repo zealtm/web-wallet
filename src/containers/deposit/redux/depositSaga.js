@@ -7,6 +7,7 @@ import SettingsService from "../../../services/settingsService";
 
 // UTILS
 import { getAuthToken } from "../../../utils/localStorage";
+import i18n from "../../../utils/i18n";
 
 const depositService = new DepositService();
 const settingsService = new SettingsService();
@@ -134,6 +135,45 @@ export function* getPaymentsMethods() {
     yield put({
       type: "SET_PAYMENT_METHODS",
       response
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+export function* getPaymentsMethodsServiceCreditSaga(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getPaymentsMethodsServiceCredit, token, payload.serviceId);
+    
+    if (response.code !== 200) {
+      yield put(internalServerError());
+      return ;
+    }
+    const services = response.data.servicePaymentMethods;
+   
+    const methods = services.reduce((availableMethod, method) => {
+      if (method.status === "active") {
+        let titleMethod = undefined;
+        if(method.paymentMethodName === 'coin'){
+          titleMethod =  i18n.t("RECHARGE_COIN_PAYMENT");
+        }
+        if(method.paymentMethodName === 'credit'){
+          titleMethod =  i18n.t("RECHARGE_CREDIT_PAYMENT");
+        }
+        const active = {
+          id: method.id,
+          title: titleMethod,
+          value: method.paymentMethodName
+        };
+        availableMethod.push(active);
+      }
+
+      return availableMethod;
+    }, []);
+
+    yield put({
+      type: "SET_METHODS_SERVICE_CREDIT_REDUCER",
+      data: methods
     });
   } catch (error) {
     yield put(internalServerError());

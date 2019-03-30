@@ -17,7 +17,8 @@ const initialState = {
   },
   selectedValue: 0,
   paymentMethods: undefined,
-  SelectedPaymentMethod: undefined
+  SelectedPaymentMethod: undefined,
+  paymentsMethodsService:[]
 };
 
 const deposit = (state = initialState, action) => {
@@ -103,6 +104,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         selectedValue: action.value
+      };
+    case "SET_METHODS_SERVICE_CREDIT_REDUCER":
+      return {
+        ...state,
+        paymentsMethodsService: action.data
       };
     default: {
       return {
