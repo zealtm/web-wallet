@@ -45,7 +45,7 @@ class Header extends React.Component {
     if (openBalancePopup) {
       setTimeout(() => {
         this.setState({ ...this.state, openBalancePopup: false });
-      }, 3000);
+      }, 200000);
 
       return (
         <div className={style.menuUserDeposit}>
