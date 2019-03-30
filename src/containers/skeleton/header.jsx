@@ -12,7 +12,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
-
+import { Grid } from "@material-ui/core";
 //STYLE
 import style from "./style.css";
 
@@ -52,11 +52,16 @@ class Header extends React.Component {
           <div className={style.arrowUp}/>
 
           <div>
+          
           <p className={style.textBalanceDeposit}>{i18n.t("MY_BALANCE_DEPOSIT")}</p>
             <span className={style.boxBalanceDeposit}>
               <img src="../../images/icons/deposit/balance_deposit-1.png"  className={style.imgBalanceDeposit} />
               <p>{i18n.t("BALANCE_DEPOSIT_CASH")}</p>
-              <button className={style.btnBalanceDeposit}>{i18n.t("MENU_DEPOSIT")}</button>
+              <Link
+                to="/deposit"
+              >
+                <button className={style.btnBalanceDeposit}>{i18n.t("MENU_DEPOSIT")}</button>
+              </Link>
             </span>            
           </div>
 
@@ -131,18 +136,29 @@ class Header extends React.Component {
       : "USD";
 
     return (
-      <div className={style.boxBalance}>
-        <Hidden xsDown>
-          <span className={style.textGreen} onClick={() => this.handleClick()}>{i18n.t("WALLET_MY_AMOUNT")} </span>
-        </Hidden>
-        <span className={style.textBalance} onClick={() => this.handleClick()}>
-          {coinBalance + " " + coinName}
-        </span>
-        <span className={style.textBalanceFiat} onClick={() => this.handleClick()}>
-          {coinFiatSymbol + coinFiat}
-        </span>
-        {this.renderBalancePopup()}
-      </div>
+      <Grid container justify="flex-end" spacing={8} className={style.boxBalance}>
+        <Grid item>
+          <Hidden xsDown>
+            <Link
+              to="/deposit"
+            >
+              <button className={style.btnBalanceDeposit}>{i18n.t("MENU_DEPOSIT")}</button>
+            </Link>
+          </Hidden>
+        </Grid>
+        <Grid item>
+          <Hidden xsDown>
+            <span className={style.textGreen} onClick={() => this.handleClick()}>{i18n.t("WALLET_MY_AMOUNT")} </span>
+          </Hidden>
+          <span className={style.textBalance} onClick={() => this.handleClick()}>
+            {coinBalance + " " + coinName}
+          </span>
+          <span className={style.textBalanceFiat} onClick={() => this.handleClick()}>
+            {coinFiatSymbol + coinFiat}
+          </span>
+          {this.renderBalancePopup()}
+        </Grid>
+      </Grid>
     );
   };
 
