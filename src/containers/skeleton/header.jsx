@@ -52,10 +52,10 @@ class Header extends React.Component {
           <div className={style.arrowUp}/>
 
           <div>
-          <p className={style.textBalanceDeposit}>Meu Saldo</p>
+          <p className={style.textBalanceDeposit}>{i18n.t("MY_BALANCE_DEPOSIT")}</p>
             <span className={style.boxBalanceDeposit}>
               <img src="../../images/icons/deposit/balance_deposit-1.png"  className={style.imgBalanceDeposit} />
-              <p>5.000,00</p>
+              <p>{i18n.t("BALANCE_DEPOSIT_CASH")}</p>
               <button className={style.btnBalanceDeposit}>{i18n.t("MENU_DEPOSIT")}</button>
             </span>            
           </div>
@@ -63,9 +63,9 @@ class Header extends React.Component {
           <div>
             <span className={style.boxBalanceDeposit}>
               <img src="../../images/icons/deposit/balance_deposit-2.png"  className={style.imgBalanceDeposit}/>
-              <p>142,5 milhões de Lunes</p>
+              <p>{i18n.t("BALANCE_DEPOSIT_CASH_COIN")}</p>
             </span> 
-            <p className={style.texGreentBalanceDeposit}>Total: 142,000,00</p>
+            <p className={style.texGreentBalanceDeposit}>{i18n.t("BALANCE_DEPOSIT_TOTAL_COIN")}</p>
           </div>
 
         </div>
