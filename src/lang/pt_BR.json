@@ -451,6 +451,10 @@
   "SETTINGS_P2P": "Configurações P2P",
   "ALIAS_ERROR_TRANSACTION": "Não foi possível fazer a transação de Alias",
   "ALIAS_MODAL_TRANSACTION": "Para confirmar sua transação, insira sua senha: ",
+  "RECHARGE_ALERT_CONFIRM_CREDIT": "Confirme a compra de recarga utilizando os créditos de sua carteira Lunes",
+  "PAYMENT_ALERT_CONFIRM_BILL": "Confirme o pagamento de boleto utilizando os créditos de sua carteira Lunes",
+  "BUY_ALERT_CONFIRM_COIN": "Confirme a compra de criptomoeda utilizando os créditos de sua carteira Lunes",
+  "BT_CENCEL_CONFIRM":"Cancelar",
 
   "TITLE_SECURITY_1": "2FA AUTENTICAÇÃO",
   "TITLE_SECURITY_2": "CELULAR",

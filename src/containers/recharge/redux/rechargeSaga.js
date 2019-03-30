@@ -137,13 +137,13 @@ export function* setRechargeSaga(payload) {
     const amountResponse = yield call(
       rechargeService.getCoinAmountPay,
       token,
-      abbreviation,
+      (abbreviation === undefined? "lbrl":abbreviation),
       parseFloat(payload.recharge.value)
     );
 
     const balanceResponse = yield call(
       coinService.getCoinBalance,
-      abbreviation,
+      (abbreviation === undefined? "lbrl":abbreviation),
       payload.recharge.address,
       token
     );

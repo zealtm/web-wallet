@@ -41,7 +41,8 @@ const initialState = {
     amount: "", // qtde a receber
     operator: "",
     address: "", // endereco para enviar o pgto
-    receiveAddress: "" // endereco onde o usuario vai receber a moeda comprada
+    receiveAddress: "", // endereco onde o usuario vai receber a moeda comprada
+    servicePaymentMethodId: undefined
   }
 };
 

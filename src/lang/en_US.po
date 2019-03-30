@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2019-03-28T03:13:11.666Z\n"
-"PO-Revision-Date: 2019-03-28T03:13:11.666Z\n"
+"POT-Creation-Date: 2019-03-30T19:02:31.494Z\n"
+"PO-Revision-Date: 2019-03-30T19:02:31.495Z\n"
 "Language: en_US\n"
 
 msgctxt "TITLE"
@@ -845,6 +845,26 @@ msgstr[1] "Rescue"
 msgstr[2] "Choose which option you have"
 msgstr[3] "Enter your mobile phone number with DDD and carrier (Only voucher)"
 
+msgctxt "PAYMENT"
+msgid "RECHARGE_CREDIT"
+msgstr "Credit"
+
+msgctxt "PAYMENT"
+msgid "RECHARGE_COIN"
+msgstr "Cryptocoins"
+
+msgctxt "PAYMENT"
+msgid "SELECT"
+msgstr "Payment"
+
+msgctxt "PAYMENT"
+msgid "P2P_CREATE_OFFER_COIN"
+msgstr "Coin accepted"
+
+msgctxt "PAYMENT"
+msgid "P2P_HEADER"
+msgstr "Payment"
+
 msgctxt "CARD"
 msgid "SETTINGS"
 msgid_plural "SETTINGS"
@@ -1153,6 +1173,12 @@ msgstr "Standard Fiat currency"
 msgctxt "COIN"
 msgid "SET_DEFINITIONS_LABEL"
 msgstr "Default Currency"
+
+msgctxt "COIN"
+msgid "BUY_ALERT_CONFIRM"
+msgstr ""
+"Confirm the purchase of cryptocurrency using the credits of your wallet "
+"LUNES"
 
 msgctxt "COIN"
 msgid "BUY_SEL"
@@ -2002,6 +2028,10 @@ msgctxt "VALUE"
 msgid "DEPOSIT_CONFIRMDATA"
 msgstr "30"
 
+msgctxt "VALUE"
+msgid "DEPOSIT_INF_MODAL_NO_SELECTED"
+msgstr "Please, select a deposit amount to proceed."
+
 msgctxt "LIMIT"
 msgid "PAYMENT_AMOUNT"
 msgstr "Amount exceeds the daily limit of R$ 3,000.00"
@@ -2132,6 +2162,26 @@ msgstr "BUY"
 msgctxt "OPERATOR"
 msgid "RECHARGE_SELECT_TITLE"
 msgstr "Operator"
+
+msgctxt "CREDIT"
+msgid "RECHARGE_ALERT_CONFIRM"
+msgstr "Confirm the recharge purchase using the credits from your wallet LUNES"
+
+msgctxt "CREDIT"
+msgid "BUY"
+msgstr "Payment"
+
+msgctxt "CREDIT"
+msgid "COINSALE"
+msgstr "Payment"
+
+msgctxt "CREDIT"
+msgid "DEPOSIT"
+msgstr "Credit"
+
+msgctxt "BILL"
+msgid "PAYMENT_ALERT_CONFIRM"
+msgstr "Confirm the payment of the billet using the credits of your wallet LUNES"
 
 msgctxt "TOKEN"
 msgid "ASSETS_USER_DOESNT_HAVE"
@@ -2286,6 +2336,10 @@ msgctxt "WAITING"
 msgid "COINSALE_STATUS"
 msgstr "Waiting"
 
+msgctxt "WAITING"
+msgid "DEPOSIT_INF_MODAL_KYC"
+msgstr "KYC is awaiting approval"
+
 msgctxt "CONFIRMED"
 msgid "BUYCOINS_STATUS"
 msgstr "Confirmed"
@@ -2333,18 +2387,6 @@ msgstr "Error. Try reload page."
 msgctxt "RELOAD"
 msgid "COINSALE_ERROR"
 msgstr "Error. Try reload page."
-
-msgctxt "CREDIT"
-msgid "BUY"
-msgstr "Payment"
-
-msgctxt "CREDIT"
-msgid "COINSALE"
-msgstr "Payment"
-
-msgctxt "CREDIT"
-msgid "DEPOSIT"
-msgstr "Credit"
 
 msgctxt "INVITE"
 msgid "MENU"
@@ -2431,14 +2473,6 @@ msgstr "Negotiation type"
 msgctxt "ANNOUNCED"
 msgid "P2P_CREATE_OFFER_COIN"
 msgstr "Coin announced"
-
-msgctxt "PAYMENT"
-msgid "P2P_CREATE_OFFER_COIN"
-msgstr "Coin accepted"
-
-msgctxt "PAYMENT"
-msgid "P2P_HEADER"
-msgstr "Payment"
 
 msgctxt "VALUES"
 msgid "P2P_CREATE_OFFER_COIN"
@@ -2603,6 +2637,14 @@ msgstr "Bank icon"
 msgctxt "FULLNAME"
 msgid "DEPOSIT_INF_MODAL"
 msgstr "Full Name"
+
+msgctxt "REJECTED"
+msgid "DEPOSIT_INF_MODAL_KYC"
+msgstr "Your KYC was rejected. Send your information again "
+
+msgctxt "HERE"
+msgid "DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK"
+msgstr "clicking here."
 
 msgctxt "SALE"
 msgid "P2P_TAB"

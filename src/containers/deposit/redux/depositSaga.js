@@ -163,7 +163,7 @@ export function* getPaymentsMethodsServiceCreditSaga(payload) {
         const active = {
           id: method.id,
           title: titleMethod,
-          value: method.paymentMethodName
+          value: method.id
         };
         availableMethod.push(active);
       }
@@ -178,4 +178,11 @@ export function* getPaymentsMethodsServiceCreditSaga(payload) {
   } catch (error) {
     yield put(internalServerError());
   }
+}
+
+export function* setMethodServiceIDSaga(payload) {
+  yield put({
+    type: "SET_METHOD_SERVICE_ID_REDUCE",
+    id: payload.id
+  });
 }
