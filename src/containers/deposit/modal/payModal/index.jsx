@@ -43,6 +43,7 @@ class PayModal extends Component {
               <img
                 src="/images/icons/deposit/paymodal_copy@1x.png"
                 className={style.payModalIconsCopy}
+                alt={"copy"}
               />
               <p className={style.payModalTextIcon}>
                 {i18n.t("DEPOSIT_PAYMODAL_COPY")}
@@ -55,6 +56,7 @@ class PayModal extends Component {
               <img
                 src="/images/icons/deposit/paymodal_download@1x.png"
                 className={style.payModalIconsDownload}
+                alt={"download"}
               />
               <p className={style.payModalTextIcon}>
                 {i18n.t("DEPOSIT_PAYMODAL_DOWNLOAD")}
@@ -68,6 +70,7 @@ class PayModal extends Component {
                 <img
                   src="/images/icons/deposit/paymodal_share@1x.png"
                   className={style.payModalIconsShare}
+                  alt={"share"}
                 />
                 <p className={style.payModalTextIcon}>
                   {i18n.t("DEPOSIT_PAYMODAL_SHARE")}

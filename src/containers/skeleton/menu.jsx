@@ -66,6 +66,9 @@ const menuItens = [
 class Menu extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeP2p: false,
+    }
   }
 
   onClickFunction = error => {
@@ -80,6 +83,11 @@ class Menu extends React.Component {
   openP2PComponent = () => {
     const { actionP2PComponent } = this.props;
     actionP2PComponent();
+
+    this.setState({
+      ...this.state,
+      activeP2p: !this.state.activeP2p,
+    })
   };
 
   renderMenu = () => {
@@ -111,8 +119,15 @@ class Menu extends React.Component {
 
   render() {
     const { openMenu, user, actionLogout, actionMenu } = this.props;
+    const {activeP2p} = this.state;
 
-    return <div className={style.colMenu} style={{ left: +openMenu ? " 0px " : "-232px" }}>
+    const p2pStyleMenu = activeP2p ? style.linkMenuP2P : style.linkMenuP2PActive;
+    
+    return (
+      <div
+        className={style.colMenu}
+        style={{ left: +openMenu ? " 0px " : "-232px" }}
+      >
         <Hidden lgUp>
           <Grid container className={style.boxUserMenu}>
             <Grid item xs={4} className={style.boxAvatarUser}>
@@ -148,12 +163,18 @@ class Menu extends React.Component {
         </Hidden>
         {this.renderMenu()}
         <div className={style.menuP2P}>
-          <button className={style.linkMenuP2P} onClick={() => this.openP2PComponent()}>
-            <img src={"../../images/icons/general/p2p@3x.png"} className={style.iconP2p} />
-            <div>{"  "}</div>
+          <button
+            className={p2pStyleMenu}
+            onClick={() => this.openP2PComponent()}
+          >
+            <img
+              src={"../../images/icons/general/p2p@3x.png"}
+              className={style.iconP2p}
+            />
           </button>
         </div>
-      </div>;
+      </div>
+    )
   }
 }
 

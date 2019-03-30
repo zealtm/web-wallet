@@ -7,18 +7,18 @@ import { bindActionCreators } from "redux";
 import {
   loadingSettings,
   verifyTwoFactorAuthSettings
-} from "../redux/settingsAction";
-import { clearMessage, errorInput } from "../../errors/redux/errorAction";
+} from "../../redux/settingsAction";
+import { clearMessage, errorInput } from "../../../errors/redux/errorAction";
 
 // COMPONENTS
-import Loading from "../../../components/loading";
+import Loading from "../../../../components/loading";
 
 // UTILS
-import { inputValidator } from "../../../utils/inputValidator";
-import i18n from "../../../utils/i18n";
+import { inputValidator } from "../../../../utils/inputValidator";
+import i18n from "../../../../utils/i18n";
 
 // STYLE
-import style from "../style.css";
+import style from "../../style.css";
 
 class InputSecurity extends React.Component {
   constructor() {

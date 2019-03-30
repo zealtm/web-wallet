@@ -89,10 +89,10 @@ class History extends React.Component {
   };
 
   renderDepositHistory = () => {
-    const { history } = this.props;
+    const { history,loading } = this.props;
 
-    if (!history.length) return <Loading />;
-
+    if (loading) return <Loading />;
+    if (!history.length) return (<div></div>);
     return (
       <Grid item xs={12} sm={7} className={style.boxHistory}>
         {history.map((item, index) => {
@@ -164,11 +164,13 @@ class History extends React.Component {
 
 History.propTypes = {
   history: PropTypes.array,
-  getDepositHistory: PropTypes.func
+  getDepositHistory: PropTypes.func,
+  loading : PropTypes.bool
 };
 
 const mapStateToProps = store => ({
-  history: store.deposit.history
+  history: store.deposit.history,
+  loading: store.deposit.loading
 });
 
 const mapDispatchToProps = dispatch =>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 //REDUX
 import { connect } from "react-redux";
@@ -7,7 +8,9 @@ import { bindActionCreators } from "redux";
 import {
   setLoading,
   setUserData,
-  setModalSteps
+  setModalSteps,
+  depositGetStates,
+  depositGetCity
 } from "../../redux/depositAction";
 
 // STYLE
@@ -15,11 +18,23 @@ import style from "./style.css";
 import colors from "../../../../components/bases/colors";
 
 // MATERIAL
-import { Grid, Input, Select, MenuItem } from "@material-ui/core";
+import {
+  Grid,
+  Input,
+  Select,
+  MenuItem,
+  Radio,
+  FormControlLabel,
+  FormControl,
+  RadioGroup
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Lens } from "@material-ui/icons";
 
 //COMPONENTS
 import ButtonContinue from "../../../../components/buttonContinue";
+import Loading from "../../../../components/loading";
+import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -60,7 +75,10 @@ const customStyle = theme => ({
       display: "none"
     }
   },
-  disabled: {},
+  disabled: {
+    opacity: "2",
+    color: "gray"
+  },
   error: {},
   focused: {},
   underlineItems: {
@@ -69,7 +87,7 @@ const customStyle = theme => ({
     fontSize: "1em",
     width: "100%",
     [theme.breakpoints.down("sm")]: {
-      width: "14em"
+      width: "15em"
     },
     icon: {
       fill: "green"
@@ -92,6 +110,26 @@ const customStyle = theme => ({
   },
   icon: {
     fill: "#68f285"
+  },
+  checked: {
+    color: "#68f285"
+  },
+  rootRadio: {
+    color: "#654fa4",
+    "&$checked": {
+      color: "#68f285"
+    },
+    margin: "0px 55px 0 1px"
+  },
+  rootRadioGroup: {
+    padding: "5px 3px 0px 2px"
+  },
+  rootLabel: {
+    fontSize: "11px",
+    color: "#fff",
+    position: "relative",
+    right: "60px",
+    top: "2px"
   }
 });
 
@@ -100,72 +138,157 @@ class InformationModal extends React.Component {
     super();
     this.state = {
       fullName: "",
-      personalNumber: "",
+      document: "",
       city: "",
       state: "",
       cep: "",
       address: "",
-      addressNumber: ""
+      addressNumber: "",
+      documentType: "",
+      statusKyc: "",
+      disabled: true,
+      checkInputs: false
     };
   }
-
+  setInputValue = () => {
+    const { userData, selectedValue, depositGetCity } = this.props;
+    const { data } = userData;
+    const { fullName, document, documentType, address, status } = data;
+    const { city, state, country, street, zipcode } = address;
+    if (selectedValue > 100 && status !== "confirmed") {
+      this.setState({
+        fullName: "",
+        documentType: "",
+        document: "",
+        state: "",
+        city: "",
+        cep: "",
+        address: "",
+        statusKyc: status
+      });
+    } else if (selectedValue > 0) {
+      if (state) {
+        depositGetCity({ country: "BR", state: state });
+      }
+      this.setState({
+        fullName: fullName ? fullName : "",
+        documentType:
+          documentType && documentType !== "passport" ? documentType : "",
+        document: document && documentType !== "passport" ? document : "",
+        state: state ? state : "",
+        city: city ? city : "",
+        cep: zipcode ? zipcode : "",
+        address: street ? street : ""
+      });
+    }
+  };
+  componentDidMount() {
+    const { depositGetStates } = this.props;
+    this.setInputValue();
+    depositGetStates("BR");
+  }
   checkAllInputs = () => {
-    const {
-      fullName,
-      personalNumber,
-      state,
-      city,
-      cep,
-      address,
-      addressNumber
-    } = this.state;
+    const { fullName, document, state, city, cep, address } = this.state;
 
-    return (
-      fullName &&
-      personalNumber &&
-      state &&
-      city &&
-      cep &&
-      address &&
-      addressNumber
-    );
+    return fullName && document && state && city && cep && address;
   };
 
   handleInput = property => e => {
+    let value = null;
+    const { depositGetCity } = this.props;
+    switch (property) {
+      case "fullName":
+        value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
+        break;
+      case "cep":
+        value = e.target.value.replace(/[^0-9-]/, "");
+        break;
+      case "address":
+        value = e.target.value.replace(/[^0-9a-zA-Z.-]/, "");
+        break;
+      case "addressNumbe":
+        value = e.target.value.replace(/\D/, "");
+        break;
+      case "state":
+        value = e.target.value;
+        depositGetCity({ country: "BR", state: value });
+        break;
+      default:
+        value = e.target.value;
+        break;
+    }
     this.setState({
-      [property]: e.target.value
+      [property]: value
     });
   };
 
   validateForm = () => {
     const { setLoading, setUserData, setModalSteps } = this.props;
-
+    let {
+      fullName,
+      documentType,
+      document,
+      state,
+      city,
+      cep,
+      address
+    } = this.state;
+    let user = {
+      fullName,
+      documentType,
+      document,
+      state,
+      city,
+      cep,
+      address
+    };
     setLoading(true);
     setModalSteps(2);
 
     // remove in the future
-    window.setTimeout(() => setUserData(this.state), 3000);
+    setUserData(user);
   };
-
+  handleRadioChange = event => {
+    this.setState({ documentType: event.target.value, document: "" });
+  };
   listStates = () => {
-    const { classes } = this.props;
-    const states = ["São Paulo", "Rio de Janeiro"];
-
-    return states.map((item, index) => (
-      <MenuItem
-        value={item}
-        key={index}
-        classes={{
-          root: classes.menuItemRoot
-        }}
-      >
-        {item}
-      </MenuItem>
-    ));
+    const { classes, states } = this.props;
+    if (states) {
+      return states.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
+  };
+  listCities = () => {
+    const { classes, city } = this.props;
+    if (city) {
+      return city.map((item, index) => (
+        <MenuItem
+          value={item}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {item}
+        </MenuItem>
+      ));
+    }
+    return "";
   };
 
   render() {
-    const { classes, loading } = this.props;
+    const { classes, loading, selectedValue } = this.props;
+    const { documentType, disabled, statusKyc, checkInputs } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -177,22 +300,44 @@ class InformationModal extends React.Component {
         }
       }
     };
+    let isDisabled =
+      selectedValue > 100 && statusKyc !== "confirmed" && disabled
+        ? true
+        : selectedValue === 0
+        ? true
+        : false;
+    let inputMask = null;
+    if (documentType === "cnpj") {
+      inputMask = CnpjMask;
+    } else if (documentType === "cpf") {
+      inputMask = CpfMask;
+    }
+    let infoMessage = i18n.t("DEPOSIT_INF_MODAL_TITLE");
+    if (selectedValue === 0) {
+      infoMessage = i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE");
+    } else if (selectedValue > 100 && statusKyc === "rejected") {
+      infoMessage = (
+        <div className={style.clickHere}>
+          {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED")}
 
+          <Link to="/KYC">
+            <span className={style.clickHere}>
+              {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK_HERE")}
+            </span>
+          </Link>
+        </div>
+      );
+    } else if (selectedValue > 100 && statusKyc === "waiting") {
+      infoMessage = i18n.t("DEPOSIT_INF_MODAL_KYC_WAITING");
+    }
     return (
       <div>
         <Grid container className={style.container}>
           <Grid item xs={12}>
-            <p className={style.formGroup}>
-              {i18n.t("DEPOSIT_INF_MODAL_TITLE")}
-            </p>
+            <div className={style.formGroup}>{infoMessage}</div>
           </Grid>
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            className={style.formGroup}
-          >
-            <Grid item xs={12} sm={5}>
+          <Grid container direction="row" className={style.formGroup}>
+            <Grid item xs={12} sm={12}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_FULLNAME")}
               </div>
@@ -200,27 +345,104 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_FULLNAME")}
                 value={this.state.fullName}
                 onChange={this.handleInput("fullName")}
+                disabled={
+                  isDisabled
+                    ? true
+                    : this.state.fullName && disabled
+                    ? true
+                    : false
+                }
+                error={checkInputs && this.state.fullName === ""}
               />
             </Grid>
-            <Grid item sm={1} />
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={12}>
               <div className={style.textGreen}>
-                {i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
+                {i18n.t("SECURITY_INSERT_DOC")}
               </div>
+              <Grid item xs={12} sm={12} md={12}>
+                <FormControl component="fieldset" className={style.labelRadio}>
+                  <RadioGroup
+                    aria-label="Documentos"
+                    name="documentos"
+                    value={documentType}
+                    onChange={this.handleRadioChange}
+                    row={true}
+                    classes={{ root: classes.rootRadioGroup }}
+                  >
+                    <FormControlLabel
+                      value="cpf"
+                      control={
+                        <Radio
+                          icon={<Lens />}
+                          checkedIcon={<Lens />}
+                          classes={{
+                            root: classes.rootRadio,
+                            checked: classes.checked
+                          }}
+                          disabled={
+                            isDisabled
+                              ? true
+                              : this.state.document && disabled
+                              ? true
+                              : false
+                          }
+                        />
+                      }
+                      label="CPF"
+                      classes={{ label: classes.rootLabel }}
+                    />
+                    <FormControlLabel
+                      value="cnpj"
+                      control={
+                        <Radio
+                          icon={<Lens />}
+                          checkedIcon={<Lens />}
+                          classes={{
+                            root: classes.rootRadio,
+                            checked: classes.checked
+                          }}
+                          disabled={
+                            isDisabled
+                              ? true
+                              : this.state.document && disabled
+                              ? true
+                              : false
+                          }
+                        />
+                      }
+                      label="CNPJ"
+                      classes={{ label: classes.rootLabel }}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
               <Input
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_PERSONAL_NUMBER")}
-                value={this.state.personalNumber}
-                onChange={this.handleInput("personalNumber")}
+                placeholder={i18n.t("KYC_DOCUMENT_PLACEHOLDER")}
+                value={this.state.document}
+                onChange={this.handleInput("document")}
+                inputComponent={inputMask}
+                disabled={
+                  isDisabled
+                    ? true
+                    : this.state.document && disabled
+                    ? true
+                    : this.state.documentType
+                    ? true
+                    : false
+                }
+                error={checkInputs && this.state.document === ""}
               />
             </Grid>
           </Grid>
@@ -230,7 +452,7 @@ class InformationModal extends React.Component {
             justify="space-around"
             className={style.formGroup}
           >
-            <Grid item xs={5} sm={5}>
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_STATE")}
               </div>
@@ -241,7 +463,8 @@ class InformationModal extends React.Component {
                 input={
                   <Input
                     classes={{
-                      underline: classes.underline
+                      underline: classes.underline,
+                      disabled: classes.disabled
                     }}
                   />
                 }
@@ -252,12 +475,20 @@ class InformationModal extends React.Component {
                 }}
                 renderValue={value => value}
                 onChange={this.handleInput("state")}
+                disabled={
+                  isDisabled
+                    ? true
+                    : this.state.state && disabled
+                    ? true
+                    : false
+                }
+                error={checkInputs && this.state.state === ""}
               >
                 {this.listStates()}
               </Select>
             </Grid>
             <Grid item xs={1} />
-            <Grid item xs={5} sm={5}>
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
               </div>
@@ -268,7 +499,8 @@ class InformationModal extends React.Component {
                 input={
                   <Input
                     classes={{
-                      underline: classes.underline
+                      underline: classes.underline,
+                      disabled: classes.disabled
                     }}
                   />
                 }
@@ -279,6 +511,10 @@ class InformationModal extends React.Component {
                 }}
                 renderValue={value => value}
                 onChange={this.handleInput("city")}
+                disabled={
+                  isDisabled ? true : this.state.city && disabled ? true : false
+                }
+                error={checkInputs && this.state.city === ""}
               >
                 {this.listStates()}
               </Select>
@@ -299,15 +535,24 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
                 value={this.state.address}
                 onChange={this.handleInput("address")}
+                disabled={
+                  isDisabled
+                    ? true
+                    : this.state.address && disabled
+                    ? true
+                    : false
+                }
+                error={checkInputs && this.state.address === ""}
               />
             </Grid>
-            <Grid item sm={1} />
-            <Grid item xs={6} sm={2}>
+            <Grid item sm={2} />
+            <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CEP")}
               </div>
@@ -315,37 +560,31 @@ class InformationModal extends React.Component {
                 classes={{
                   root: classes.inputRoot,
                   underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
                 value={this.state.cep}
                 onChange={this.handleInput("cep")}
+                inputProps={{ maxLength: 9 }}
+                disabled={
+                  isDisabled ? true : this.state.cep && disabled ? true : false
+                }
+                error={checkInputs && this.state.cep === ""}
               />
             </Grid>
             <Grid item sm={1} />
-            <Grid item xs={6} sm={2}>
-              <div className={style.textGreen}>
-                {i18n.t("DEPOSIT_INF_MODAL_ADDRESS_NUMBER")}
-              </div>
-
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS_NUMBER")}
-                value={this.state.addressNumber}
-                onChange={this.handleInput("addressNumber")}
-              />
-            </Grid>
           </Grid>
 
           <Grid container justify="center">
             <Grid item xs={5}>
               <ButtonContinue
                 label={i18n.t("DEPOSIT_INF_MODAL_BTN_CONTINUE")}
-                action={this.checkAllInputs() ? this.validateForm : () => null}
+                action={
+                  this.checkAllInputs()
+                    ? this.validateForm
+                    : () => this.setState({ checkInputs: !checkInputs })
+                }
                 loading={loading}
               />
             </Grid>
@@ -361,11 +600,23 @@ InformationModal.propTypes = {
   loading: PropTypes.bool,
   setLoading: PropTypes.func,
   setUserData: PropTypes.func,
-  setModalSteps: PropTypes.func
+  setModalSteps: PropTypes.func,
+  depositGetStates: PropTypes.func.isRequired,
+  depositGetCity: PropTypes.func.isRequired,
+  states: PropTypes.array,
+  city: PropTypes.array,
+  userData: PropTypes.object,
+  selectedValue: PropTypes.number
 };
 
 const mapStateToProps = store => ({
-  loading: store.deposit.loading
+  loading: store.deposit.loading,
+  states: store.deposit.location.states,
+  city: store.deposit.location.city,
+  loadingState: store.deposit.loadingState,
+  loadingCity: store.deposit.loadingState,
+  userData: store.deposit.kyc,
+  selectedValue: store.deposit.selectedValue
 });
 
 const mapDispatchToProps = dispatch =>
@@ -373,7 +624,9 @@ const mapDispatchToProps = dispatch =>
     {
       setLoading,
       setUserData,
-      setModalSteps
+      setModalSteps,
+      depositGetStates,
+      depositGetCity
     },
     dispatch
   );
