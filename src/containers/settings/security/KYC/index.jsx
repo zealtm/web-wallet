@@ -1005,18 +1005,20 @@ class KYC extends React.Component {
       </MenuItem>
     ));
   };
+
+
   listStates = () => {
     const { classes, states } = this.props;
     if (states) {
       return states.map((item, index) => (
         <MenuItem
-          value={item}
+          value={item.name}
           key={index}
           classes={{
             root: classes.menuItemRoot
           }}
         >
-          {item}
+          {item.name}
         </MenuItem>
       ));
     }
