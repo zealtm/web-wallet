@@ -10,8 +10,7 @@ import {
   setUserData,
   setModalSteps,
   depositGetStates,
-  depositGetCity,
-  createDepositBill
+  depositGetCity
 } from "../../redux/depositAction";
 
 // STYLE

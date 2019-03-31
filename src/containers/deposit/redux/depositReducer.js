@@ -20,7 +20,6 @@ const initialState = {
     service: null, //(descrição do serviço, ex: Deposit, Recarga, Compra)
     packageId: 0,//(endpoint: /deposit/package)
     paymentMethodId: null,//(endpoint: /deposit/paymentMethods)
-    userData: this.user
   },
   depositBill: {},
   kyc: {
@@ -35,7 +34,6 @@ const initialState = {
   },
   selectedValue: 0,
   paymentMethods: undefined,
-  SelectedPaymentMethod: undefined
 };
 
 const deposit = (state = initialState, action) => {
@@ -71,10 +69,10 @@ const deposit = (state = initialState, action) => {
         ...state,
         paymentMethods: action.response.data
       };
-    case "SET_PAYMENT_METHOD":
+    case "SET_PAYMENT_INFORMATION":
       return {
         ...state,
-        SelectedPaymentMethod: action.method
+        payloadPayment: action.method
       };
     case "SET_KYC_DATA":
       return {

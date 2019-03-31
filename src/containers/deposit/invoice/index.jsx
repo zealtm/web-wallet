@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getPackages,
-  setPaymentMethod,
+  setPaymentInformation,
   getPaymentsMethods,
   getKycData,
   setKycValidation,
@@ -302,9 +302,9 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod, setKycValidation } = this.props;
+    const { openModal, setPaymentInformation, setKycValidation } = this.props;
     const { payment, depositValue } = this.state;
-    setPaymentMethod(payment);
+    setPaymentInformation(payment);
     if (depositValue > 100) {
       setKycValidation();
     }
@@ -418,7 +418,7 @@ Invoice.propTypes = {
   getPackages: PropTypes.func,
   getPaymentsMethods: PropTypes.func.isRequired,
   openModal: PropTypes.func,
-  setPaymentMethod: PropTypes.func,
+  setPaymentInformation: PropTypes.func,
   openModal: PropTypes.func,
   getKycData: PropTypes.func.isRequired,
   setKycValidation: PropTypes.func.isRequired,
@@ -437,12 +437,12 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPackages,
-      setPaymentMethod,
+      setPaymentInformation,
       getKycData,
       setKycValidation,
       setSelectedValue,
       getPaymentsMethods,
-      setPaymentMethod
+      setPaymentInformation
     },
     dispatch
   );
