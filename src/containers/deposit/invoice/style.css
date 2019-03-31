@@ -53,12 +53,12 @@
   position: relative;
   background: #473088;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 10px 20px;
   min-height: 48px;
   display: flex;
   align-content: center;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 :local .desable{
   opacity: .4;
