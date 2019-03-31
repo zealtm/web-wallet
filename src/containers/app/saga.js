@@ -12,7 +12,8 @@ import {
   editUserData,
   updateUserPasswordSaga,
   verifyInviteSaga,
-  verifyEmailSaga
+  verifyEmailSaga,
+  sendVerifyEmailSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -71,7 +72,11 @@ import {
 import {
   getAssetGeneralInfo,
   getAssetHistory,
-  reloadAsset
+  reloadAsset,
+  validateAddressAssets,
+  getAssetsSendModalFee,
+  shareTokenAddress,
+  setAssetTransaction
 } from "../assets/redux/assetsSaga";
 import {
   setModalStepSaga as setModalStepRechargeSaga,
@@ -153,6 +158,7 @@ export default function* rootSaga() {
     fork(takeLatest, "PATH_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "PATH_USER_DATA_API", editUserData),
     fork(takeLatest, "PATH_USER_PASSWORD_API", updateUserPasswordSaga),
+    fork(takeLatest, "SEND_VERIFY_EMAIL_SAGA", sendVerifyEmailSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
@@ -229,6 +235,10 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_ASSET_HISTORY_API", getAssetHistory),
     fork(takeLatest, "GET_RELOAD_ASSET_API", reloadAsset),
     fork(takeLatest, "SET_MODAL_PAY_STEP", setModalStepSaga),
+    fork(takeLatest, "GET_ADDRESS_VALIDATE_ADDRESS_API", validateAddressAssets),
+    fork(takeLatest, "GET_ASSETS_MODAL_SEND_FEE_API", getAssetsSendModalFee),
+    fork(takeLatest, "GET_TOKEN_ADRESS_API",shareTokenAddress),
+    fork(takeLatest, "SET_ASSET_TRANSACTION_API", setAssetTransaction),
 
     // p2pchat
     fork(takeLatest, "SAGA_PREPARE_OR_OPEN_CHAT", prepareOrOpenChat),
