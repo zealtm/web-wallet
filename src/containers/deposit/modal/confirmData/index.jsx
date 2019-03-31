@@ -1,18 +1,62 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalSteps, setLoading } from "../../redux/depositAction";
+import {
+  setModalSteps,
+  setLoading,
+  createDepositBill
+} from "../../redux/depositAction";
 import PropTypes from "prop-types";
 import i18n from "../../../../utils/i18n";
 import style from "./style.css";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import ButtonContinue from "../../../../components/buttonContinue";
+import { splitRange } from "ts-utils";
 
 class ConfirmData extends React.Component {
-  render() {
-    const { setModalSteps, userData, selectedValue } = this.props;
+  constructor() {
+    super();
+    this.state = {
+      loading: false
+    };
+  }
+  confirmDeposit = () => {
+    const {
+      payloadPayment,
+      userData,
+      createDepositBill,
+      setModalSteps
+    } = this.props;
+    this.setState({loading: true});
+    let payload = {
+      service: payloadPayment.service,
+      packageId: payloadPayment.packageId,
+      paymentMethodId: payloadPayment.paymentMethodId,
+      userData: {
+        fullName: userData.fullName,
+        document: userData.document,
+        address: {
+          street: userData.address,
+          city: userData.city,
+          state: userData.state,
+          country: "BR",
+          zipcode: userData.cep
+        }
+      }
+    };
+    if (payloadPayment.paymentMethodId === 1) {
+      createDepositBill(payload);
+    }
 
+    setTimeout(() => {
+      this.setState({ loading: false });
+      setModalSteps(3);
+    }, 9000);
+  };
+  render() {
+    const { userData, selectedValue } = this.props;
+    const {loading} = this.state;
     return (
       <div>
         <Grid container className={style.containerConfirmData}>
@@ -45,56 +89,43 @@ class ConfirmData extends React.Component {
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_NAME_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.fullName}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.fullName}</span>
           </Grid>
 
           <Grid item xs={12} sm={6}>
             <div className={style.ConfirmDataDiv}>
               {userData.documentType.toUpperCase()}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.document}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.document}</span>
           </Grid>
 
           <Grid item xs={12} sm={4}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_STATE_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.state}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.state}</span>
           </Grid>
 
           <Grid item xs={12} sm={4}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_CITY_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.city}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.city}</span>
           </Grid>
 
           <Grid item xs={12} sm={4}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_CEP_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.cep}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.cep}</span>
           </Grid>
 
           <Grid item xs={12} sm={12}>
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_ADDRESS_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>
-              {userData.address}
-            </span>
+            <span className={style.ConfirmDataField}>{userData.address}</span>
           </Grid>
-
 
           {/* <Grid item xs={12} sm={6}>
             <div className={style.ConfirmDataDiv}>
@@ -117,7 +148,8 @@ class ConfirmData extends React.Component {
           <Grid item xs={12} style={{}}>
             <ButtonContinue
               label={i18n.t("DEPOSIT_CONFIRMDATA_BTN_CONFIRM")}
-              action={() => setModalSteps(3)}
+              action={() => this.confirmDeposit()}
+              loading={loading}
             />
           </Grid>
 
@@ -146,20 +178,25 @@ ConfirmData.propTypes = {
   setModalSteps: PropTypes.func,
   loading: PropTypes.bool,
   userData: PropTypes.object,
-  selectedValue: PropTypes.number
+  selectedValue: PropTypes.number,
+  createDepositBill: PropTypes.func.isRequired,
+  payloadPayment: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   modalStep: store.deposit.modalStep,
   userData: store.deposit.user,
-  selectedValue: store.deposit.selectedValue
+  selectedValue: store.deposit.selectedValue,
+  payloadPayment: store.deposit.payloadPayment,
+  loading: store.deposit.loading
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setLoading,
-      setModalSteps
+      setModalSteps,
+      createDepositBill
     },
     dispatch
   );

@@ -71,6 +71,24 @@ class DepositService {
     }
   }
 
+  async getDepositBill(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/deposit/bill/pdf`,
+        {buyId:payload },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
   async getKycData(token) {
     try {
 

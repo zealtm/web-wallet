@@ -97,9 +97,10 @@ class Invoice extends React.Component {
       checkBox: false,
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
       days: [...Array(31).keys()],
-      payment: i18n.t("DEPOSIT_INVOICE"),
+      payment: 1,
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
-      activecard: null,
+      paymentName: i18n.t("DEPOSIT_INVOICE"),
+      activeCard: null,
       depositValue: ""
     };
   }
@@ -115,9 +116,9 @@ class Invoice extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
-  handleSelectedValue = (amount) =>{
-    const {setSelectedValue} = this.props;
-    
+  handleSelectedValue = amount => {
+    const { setSelectedValue } = this.props;
+
     setSelectedValue(amount);
   };
   handleCard = (id, amount) => {
@@ -126,13 +127,13 @@ class Invoice extends React.Component {
       activeCard: id,
       depositValue: amount
     });
-    
+
     this.handleSelectedValue(amount);
   };
   renderPacks = () => {
     const { packages } = this.props;
     const { activeCard } = this.state;
-    
+
     return packages.map((val, index) => {
       const active = activeCard == val.id ? true : false;
       return (
@@ -152,7 +153,7 @@ class Invoice extends React.Component {
 
     return paymentMethods.map((method, index) => (
       <MenuItem
-        value={method}
+        value={methods ? methods[index].id : ""}
         key={index}
         classes={{
           root: classes.menuItemRoot
@@ -162,7 +163,6 @@ class Invoice extends React.Component {
       </MenuItem>
     ));
   };
-
   listDays = () => {
     const { classes } = this.props;
     const { days } = this.state;
@@ -198,12 +198,23 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
+    const { methods } = this.props;
+    const { paymentMethods } = this.state;
+    let index = 0;
+    for (let i = 0; i < methods.length; i++) {
+      if (methods[i].id === value) {
+        index = i;
+      }
+    }
+
+    let name = paymentMethods[index];
+
     this.setState({
       ...this.state,
-      payment: value
+      payment: value,
+      paymentName: name
     });
   };
-
   renderPaymentMethods = () => {
     const { classes } = this.props;
     const { checkBox } = this.state;
@@ -236,7 +247,7 @@ class Invoice extends React.Component {
                 }}
                 MenuProps={MenuProps}
                 value={this.state.payment}
-                renderValue={value => value}
+                renderValue={() => this.state.paymentName}
                 onChange={event =>
                   this.handleChangePaymentMethod(event.target.value)
                 }
@@ -303,8 +314,12 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { openModal, setPaymentInformation, setKycValidation } = this.props;
-    const { payment, depositValue } = this.state;
-    setPaymentInformation(payment);
+    const { payment, depositValue, activeCard } = this.state;
+    setPaymentInformation({
+      service: "Deposit",
+      packageId: activeCard,
+      paymentMethodId: payment
+    });
     if (depositValue > 100) {
       setKycValidation();
     }

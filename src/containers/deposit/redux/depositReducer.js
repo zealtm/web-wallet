@@ -15,11 +15,12 @@ const initialState = {
   buyID: 0,
   modalStep: 1,
   loading: false,
+  loadingPdf: false,
   paymentMethod: null,
   payloadPayment: {
     service: null, //(descrição do serviço, ex: Deposit, Recarga, Compra)
-    packageId: 0,//(endpoint: /deposit/package)
-    paymentMethodId: null,//(endpoint: /deposit/paymentMethods)
+    packageId: 0, //(endpoint: /deposit/package)
+    paymentMethodId: null //(endpoint: /deposit/paymentMethods)
   },
   depositBill: {},
   kyc: {
@@ -34,6 +35,7 @@ const initialState = {
   },
   selectedValue: 0,
   paymentMethods: undefined,
+  depositReturn: {}
 };
 
 const deposit = (state = initialState, action) => {
@@ -124,6 +126,16 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         buyID: action.id
+      };
+    case "SET_PDF_LOADING":
+      return {
+        ...state,
+        loadingPdf: true
+      };
+    case "SET_DEPOSIT_RETURN":
+      return {
+        ...state,
+        depositReturn: action.depositReturn,
       };
     default: {
       return {

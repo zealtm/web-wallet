@@ -58,3 +58,7 @@ export const setSelectedValue = value => ({
   type: "SET_SELECTED_VALUE",
   value
 })
+export const getDepositBill = (buyID) => ({
+  type: "GET_DEPOSIT_BILL_API",
+  buyID
+});

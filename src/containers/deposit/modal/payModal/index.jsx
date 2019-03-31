@@ -1,10 +1,20 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 import style from "./style.css";
 import i18n from "../../../../utils/i18n";
 import { Grid, Hidden } from "@material-ui/core";
-
+import { getDepositBill } from "../../redux/depositAction";
+import Loading from "../../../../components/loading";
 class PayModal extends Component {
+  componentDidMount() {
+    const { getDepositBill, buyID } = this.props;
+    getDepositBill(buyID);
+  }
   render() {
+    const { depositReturn, loading } = this.props;
+    if (loading) return <Loading width={"30px"} />;
     return (
       <Grid item xs={12} sm={12} container className={style.containerPayModal}>
         <Grid item xs={12} sm={12}>
@@ -22,7 +32,7 @@ class PayModal extends Component {
         </Grid>
 
         <Grid item xs={12} sm={12} className={style.payModalField}>
-          <span>1232154646465465000000213210013</span>
+          <span>{depositReturn.barcode}</span>
         </Grid>
 
         <Grid item xs={12} sm={12}>
@@ -52,7 +62,7 @@ class PayModal extends Component {
           </Grid>
 
           <Grid className={style.payModalIconsBoxDownload}>
-            <a href="#">
+            <a href={depositReturn.pdf_url} target="_blank">
               <img
                 src="/images/icons/deposit/paymodal_download@1x.png"
                 className={style.payModalIconsDownload}
@@ -83,5 +93,29 @@ class PayModal extends Component {
     );
   }
 }
+PayModal.propTypes = {
+  getDepositBill: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  loadingPdf: PropTypes.bool,
+  depositReturn: PropTypes.object,
+  buyID: PropTypes.number
+};
+const mapStateToProps = store => ({
+  loading: store.deposit.loading,
+  loadingPdf: store.deposit.loadingPdf,
+  depositReturn: store.deposit.depositReturn,
+  buyID: store.deposit.buyID
+});
 
-export default PayModal;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getDepositBill
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PayModal);
