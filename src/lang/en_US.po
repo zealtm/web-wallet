@@ -2646,6 +2646,10 @@ msgctxt "HERE"
 msgid "DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK"
 msgstr "clicking here."
 
+msgctxt "HIT"
+msgid "DEPOSIT_INF_NOT_FOUND"
+msgstr "There are no deposit histories"
+
 msgctxt "SALE"
 msgid "P2P_TAB"
 msgstr "Sale"

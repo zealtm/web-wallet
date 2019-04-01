@@ -142,12 +142,14 @@ import {
 import {
   getPackagesSaga,
   getDepositHistorySaga,
+  createDepositBillSaga,
   getKycData,
   depositGetStates,
   depositGetCity,
   getPaymentsMethods,
   getPaymentsMethodsServiceCreditSaga,
-  setMethodServiceIDSaga
+  setMethodServiceIDSaga,
+  getDepositBillSaga
 } from "../deposit/redux/depositSaga";
 
 export default function* rootSaga() {
@@ -306,11 +308,14 @@ export default function* rootSaga() {
     // deposit
     fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
     fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
+    fork(takeLatest, "CREATE_DEPOSIT_BILL", createDepositBillSaga),
     fork(takeLatest, "GET_KYC_DATA_API", getKycData),
     fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
     fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
     fork(takeLatest, "GET_PAYMENT_METHODS_API", getPaymentsMethods),
     fork(takeLatest, "GET_PAYMENT_METHOD_SERVICE_CREDIT", getPaymentsMethodsServiceCreditSaga),
     fork(takeLatest, "SET_METHOD_SERVICE_ID", setMethodServiceIDSaga),
+    fork(takeLatest, "GET_DEPOSIT_BILL_API", getDepositBillSaga),
+    fork(takeLatest, "GET_PAYMENT_METHOD_SERVICE_CREDIT", getPaymentsMethodsServiceCreditSaga)
   ];
 }

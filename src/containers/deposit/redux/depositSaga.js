@@ -140,6 +140,33 @@ export function* getPaymentsMethods() {
     yield put(internalServerError());
   }
 }
+
+export function* createDepositBillSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.createDepositBill, token,payload.payload);
+
+    if (response.status !== 200) return yield put(internalServerError());
+
+    yield put({
+      type: "SET_BUY_ID",
+      id: response.data.data.buyID
+
+    });
+
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: false
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getPaymentsMethodsServiceCreditSaga(payload) {
   try {
     let token = yield call(getAuthToken);
@@ -185,4 +212,28 @@ export function* setMethodServiceIDSaga(payload) {
     type: "SET_METHOD_SERVICE_ID_REDUCE",
     id: payload.id
   });
+}
+
+export function* getDepositBillSaga(payload) {
+  try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.getDepositBill, token,payload.buyID);
+    if (response.status !== 200) return yield put(internalServerError());
+    let data = response.data.data;
+    yield put ({
+      type: "SET_DEPOSIT_RETURN",
+      depositReturn: data
+    });
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: false
+    });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+
 }

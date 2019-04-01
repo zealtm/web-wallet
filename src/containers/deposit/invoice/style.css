@@ -14,6 +14,14 @@
   padding: 0;
 }
 
+:local .transparentBoxFooter {
+  margin-left: 9%;
+  margin-right: 9%;
+  margin-top: 40px;
+  background-color: transparent;
+  padding: 0;
+}
+
 :local .information {
   text-align: center;
 }
@@ -45,12 +53,12 @@
   position: relative;
   background: #473088;
   border-radius: 5px;
-  padding: 10px 15px;
+  padding: 10px 20px;
   min-height: 48px;
   display: flex;
   align-content: center;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 :local .desable{
   opacity: .4;
@@ -61,6 +69,13 @@
 @media screen and (min-width: 600px) {
   :local .box {
     max-width: 70vw !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  :local .transparentBoxFooter {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 /* 2. TEXT */
