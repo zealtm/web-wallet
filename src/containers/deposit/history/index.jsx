@@ -12,6 +12,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import style from "./style.css";
 // COMPONENTS
 import Loading from "../../../components/loading";
+// UTILS
+import i18n from "../../../utils/i18n";
+
 class History extends React.Component {
   constructor(props) {
     super(props);
@@ -92,7 +95,16 @@ class History extends React.Component {
     const { history,loading } = this.props;
 
     if (loading) return <Loading />;
-    if (!history.length) return (<div></div>);
+    if (!history.length)
+    return (
+      <div className={style.boxContainer}>
+        <div className={style.box1}>
+          <h1 className={style.textCenter}>
+            {i18n.t("DEPOSIT_INF_NOT_FOUND_HIT")}
+          </h1>
+        </div>
+      </div>
+    );
     return (
       <Grid item xs={12} sm={7} className={style.boxHistory}>
         {history.map((item, index) => {

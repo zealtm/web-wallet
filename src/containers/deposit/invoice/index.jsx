@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   getPackages,
-  setPaymentMethod,
+  setPaymentInformation,
   getPaymentsMethods,
   getKycData,
   setKycValidation,
@@ -97,10 +97,10 @@ class Invoice extends React.Component {
       checkBox: false,
       dayPayment: i18n.t("DEPOSIT_SELECT_DATE"),
       days: [...Array(31).keys()],
-      payment: i18n.t("DEPOSIT_INVOICE"),
+      payment: 1,
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
       paymentName: i18n.t("DEPOSIT_INVOICE"),
-      activeCard: undefined,
+      activeCard: null,
       depositValue: ""
     };
   }
@@ -116,9 +116,9 @@ class Invoice extends React.Component {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
   };
-  handleSelectedValue = (amount) =>{
-    const {setSelectedValue} = this.props;
-    
+  handleSelectedValue = amount => {
+    const { setSelectedValue } = this.props;
+
     setSelectedValue(amount);
   };
   handleCard = (id, amount) => {
@@ -127,13 +127,13 @@ class Invoice extends React.Component {
       activeCard: id,
       depositValue: amount
     });
-    
+
     this.handleSelectedValue(amount);
   };
   renderPacks = () => {
     const { packages } = this.props;
     const { activeCard } = this.state;
-    
+
     return packages.map((val, index) => {
       const active = val.status;
       const selected = val.id === activeCard ? true : false;
@@ -152,20 +152,21 @@ class Invoice extends React.Component {
   listPaymentMethods = () => {
     const { classes, methods } = this.props;
     const { paymentMethods } = this.state;
-
-    return paymentMethods.map((method, index) => (
-      <MenuItem
-        value={methods ? methods[index].id : ""}
-        key={index}
-        classes={{
-          root: classes.menuItemRoot
-        }}
-      >
-        {method}
-      </MenuItem>
-    ));
+    if (methods) {
+      return methods.map((method, index) => (
+        <MenuItem
+          value={method ? method.id : ""}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {paymentMethods[index]}
+        </MenuItem>
+      ));
+    }
+    return ;
   };
-
   listDays = () => {
     const { classes } = this.props;
     const { days } = this.state;
@@ -201,15 +202,15 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
-    const {methods} = this.props;
-    const {paymentMethods} = this.state
+    const { methods } = this.props;
+    const { paymentMethods } = this.state;
     let index = 0;
-    for(let i = 0; i < methods.length; i++){
-      if(methods[i].id === value){
+    for (let i = 0; i < methods.length; i++) {
+      if (methods[i].id === value) {
         index = i;
       }
     }
-    
+
     let name = paymentMethods[index];
 
     this.setState({
@@ -218,7 +219,6 @@ class Invoice extends React.Component {
       paymentName: name
     });
   };
-
   renderPaymentMethods = () => {
     const { classes } = this.props;
     const { checkBox } = this.state;
@@ -317,9 +317,13 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentMethod, setKycValidation } = this.props;
-    const { paymentName, depositValue } = this.state;
-    setPaymentMethod(paymentName);
+    const { openModal, setPaymentInformation, setKycValidation } = this.props;
+    const { payment, depositValue, activeCard } = this.state;
+    setPaymentInformation({
+      service: "Deposit",
+      packageId: activeCard,
+      paymentMethodId: payment
+    });
     if (depositValue > 100) {
       setKycValidation();
     }
@@ -433,8 +437,7 @@ Invoice.propTypes = {
   getPackages: PropTypes.func,
   getPaymentsMethods: PropTypes.func.isRequired,
   openModal: PropTypes.func,
-  setPaymentMethod: PropTypes.func,
-  openModal: PropTypes.func,
+  setPaymentInformation: PropTypes.func,
   getKycData: PropTypes.func.isRequired,
   setKycValidation: PropTypes.func.isRequired,
   setSelectedValue: PropTypes.func.isRequired,
@@ -452,12 +455,11 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPackages,
-      setPaymentMethod,
+      setPaymentInformation,
       getKycData,
       setKycValidation,
       setSelectedValue,
-      getPaymentsMethods,
-      setPaymentMethod
+      getPaymentsMethods
     },
     dispatch
   );
