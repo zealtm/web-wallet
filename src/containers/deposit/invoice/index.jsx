@@ -438,7 +438,6 @@ Invoice.propTypes = {
   getPaymentsMethods: PropTypes.func.isRequired,
   openModal: PropTypes.func,
   setPaymentInformation: PropTypes.func,
-  openModal: PropTypes.func,
   getKycData: PropTypes.func.isRequired,
   setKycValidation: PropTypes.func.isRequired,
   setSelectedValue: PropTypes.func.isRequired,
@@ -460,8 +459,7 @@ const mapDispatchToProps = dispatch =>
       getKycData,
       setKycValidation,
       setSelectedValue,
-      getPaymentsMethods,
-      setPaymentInformation
+      getPaymentsMethods
     },
     dispatch
   );
