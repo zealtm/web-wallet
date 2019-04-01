@@ -80,8 +80,9 @@ class Header extends React.Component {
             </p>
             <span className={style.boxBalanceDeposit}>
               <img
-                src="../../images/icons/deposit/balance_deposit-1.png"
+                src="../../images/icons/deposit/balance_deposit-2x.png"
                 className={style.imgBalanceDeposit}
+                style={{ "max-width":"31px", "max-height" : "31px" }}
               />
               <p>{convertBiggestCoinUnit(credit.available, 8).toFixed(2)}</p>
               <div style={{ position: "relative", top: "8px", left: "8%" }}>

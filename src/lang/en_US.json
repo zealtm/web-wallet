@@ -687,7 +687,7 @@
   "DEPOSIT_CONFIRMDATA_CIFRA": "R$",
   "DEPOSIT_CONFIRMDATA_VALUE": "30",
   "DEPOSIT_CONFIRMDATA_DECIMAL": ",00",
-  "DEPOSIT_CONFIRMDATA_TEXT": "For the ticket to be executed it is necessary that the information is correct",
+  "DEPOSIT_CONFIRMDATA_TEXT": "Check your personal information so that your payment bill is generated correctly",
   "DEPOSIT_CONFIRMDATA_NAME_TITLE": "Full name",
   "DEPOSIT_CONFIRMDATA_NAME": "Lucia almeida Alves santos",
   "DEPOSIT_CONFIRMDATA_CPF_TITLE": "CPF",

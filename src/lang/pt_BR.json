@@ -661,7 +661,7 @@
   "DEPOSIT_CONFIRMDATA_CIFRA": "R$",
   "DEPOSIT_CONFIRMDATA_VALUE": "30",
   "DEPOSIT_CONFIRMDATA_DECIMAL": ",00",
-  "DEPOSIT_CONFIRMDATA_TEXT": "Para o boleto ser executado é necessário que as informações estejam corretas",
+  "DEPOSIT_CONFIRMDATA_TEXT": "Cheque seus dados para que o boleto seja registrado com sucesso",
   "DEPOSIT_CONFIRMDATA_NAME_TITLE": "Nome Completo",
   "DEPOSIT_CONFIRMDATA_NAME": "Lucia almeida Alves santos",
   "DEPOSIT_CONFIRMDATA_CPF_TITLE": "CPF",
