@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // REDUX
 import { connect } from "react-redux";
@@ -11,26 +12,104 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
-
+import { Grid } from "@material-ui/core";
 //STYLE
 import style from "./style.css";
 
 //COMPONENTS
 import UserControl from "./userControl.jsx";
-import LogoLunes from  "../../components/logoLunes";
+import LogoLunes from "../../components/logoLunes";
 
 //UTILS
 import { TESTNET } from "../../constants/apiBaseUrl";
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import i18n from "../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      openBalancePopup: false,
       notifications: 0
     };
   }
+
+  handleClick = () => {
+    this.setState({
+      ...this.state,
+      openBalancePopup: !this.state.openBalancePopup
+    });
+  };
+
+  renderBalancePopup = () => {
+    const { openBalancePopup } = this.state;
+    const { actionLogout, credit, coins } = this.props;
+    let coinSelected = getDefaultCrypto();
+    let fiatSelected = getDefaultFiat();
+
+    let coinName = coins[coinSelected]
+      ? coins[coinSelected].abbreviation.toUpperCase()
+      : "UNDEFINED";
+
+    let coinBalance =
+      coins[coinSelected] && coins[coinSelected].balance
+        ? coins[coinSelected].balance.available
+        : 0;
+
+    let coinFiat = coins[coinSelected]
+      ? (coins[coinSelected].price["BRL"].price * coinBalance).toFixed(2)
+      : 0;
+
+    let coinFiatSymbol = coins[coinSelected]
+      ? coins[coinSelected].price[fiatSelected].symbol
+      : "USD";
+    if (openBalancePopup) {
+      setTimeout(() => {
+        this.setState({ ...this.state, openBalancePopup: false });
+      }, 8000);
+      let total = (Number(coinFiat)) + convertBiggestCoinUnit(credit.available, 8);
+      
+      return (
+        <div className={style.menuUserDeposit}>
+          <div className={style.arrowUp} />
+
+          <div>
+            <p className={style.textBalanceDeposit}>
+              {i18n.t("MY_BALANCE_DEPOSIT")}
+            </p>
+            <span className={style.boxBalanceDeposit}>
+              <img
+                src="../../images/icons/deposit/balance_deposit-1.png"
+                className={style.imgBalanceDeposit}
+              />
+              <p>{convertBiggestCoinUnit(credit.available, 8).toFixed(2)}</p>
+              <div style={{ position: "relative", top: "8px", left: "8%" }}>
+                <Link to="/deposit">
+                  <button className={style.btnBalanceDeposit}>
+                    {i18n.t("MENU_DEPOSIT")}
+                  </button>
+                </Link>
+              </div>
+            </span>
+          </div>
+
+          <div>
+            <span className={style.boxBalanceDeposit}>
+              <img
+                src="../../images/icons/deposit/balance_deposit-2.png"
+                className={style.imgBalanceDeposit}
+              />
+              <p>{coinBalance + " " + coinName}</p>
+            </span>
+            <p className={style.texGreentBalanceDeposit}>
+              {i18n.t("AMOUNT_CREDIT") + (total).toFixed(2)}
+            </p>
+          </div>
+        </div>
+      );
+    }
+  };
 
   renderNotifications = () => {
     const { notifications } = this.state;
@@ -77,9 +156,10 @@ class Header extends React.Component {
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
 
-    let coinBalance = coins[coinSelected] && coins[coinSelected].balance
-      ? coins[coinSelected].balance.available
-      : 0;
+    let coinBalance =
+      coins[coinSelected] && coins[coinSelected].balance
+        ? coins[coinSelected].balance.available
+        : 0;
 
     let coinFiat = coins[coinSelected]
       ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
@@ -90,17 +170,45 @@ class Header extends React.Component {
       : "USD";
 
     return (
-      <div className={style.boxBalance}>
-        <Hidden xsDown>
-          <span className={style.textGreen}>{i18n.t("WALLET_MY_AMOUNT")} </span>
-        </Hidden>
-        <span className={style.textBalance}>
-          {coinBalance + " " + coinName}
-        </span>
-        <span className={style.textBalanceFiat}>
-          {coinFiatSymbol + coinFiat}
-        </span>
-      </div>
+      <Grid
+        container
+        justify="flex-end"
+        spacing={8}
+        className={style.boxBalance}
+      >
+        <Grid item>
+          <Hidden xsDown>
+            <Link to="/deposit">
+              <button className={style.btnBalanceDeposit}>
+                {i18n.t("MENU_DEPOSIT")}
+              </button>
+            </Link>
+          </Hidden>
+        </Grid>
+        <Grid item>
+          <Hidden xsDown>
+            <span
+              className={style.textGreen}
+              onClick={() => this.handleClick()}
+            >
+              {i18n.t("WALLET_MY_AMOUNT")}{" "}
+            </span>
+          </Hidden>
+          <span
+            className={style.textBalance}
+            onClick={() => this.handleClick()}
+          >
+            {coinBalance + " " + coinName}
+          </span>
+          <span
+            className={style.textBalanceFiat}
+            onClick={() => this.handleClick()}
+          >
+            {coinFiatSymbol + coinFiat}
+          </span>
+          {this.renderBalancePopup()}
+        </Grid>
+      </Grid>
     );
   };
 
@@ -122,8 +230,7 @@ class Header extends React.Component {
             </div>
           </Hidden>
           <div className={style.boxLogo}>
-
-          <LogoLunes />
+            <LogoLunes />
             {!TESTNET || <span className={style.textGreen}>Testnet</span>}
           </div>
           {this.renderBalance()}
@@ -140,11 +247,13 @@ class Header extends React.Component {
 Header.propTypes = {
   actionMenu: PropTypes.func.isRequired,
   actionLogout: PropTypes.func.isRequired,
-  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
+  coins: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  credit: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
 };
 
 const mapSateToProps = store => ({
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  credit: store.skeleton.creditBalance
 });
 
 export default connect(
