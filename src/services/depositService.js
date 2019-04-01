@@ -1,12 +1,14 @@
 import axios from "axios";
 // CONSTANTS
 import { BASE_URL, API_HEADER, HEADER_RESPONSE } from "../constants/apiBaseUrl";
+
 // UTILS
 import {
   setAuthToken
 } from "../utils/localStorage";
 // ERROS
 import { internalServerError } from "../containers/errors/statusCodeMessage";
+
 
 class DepositService {
 
@@ -47,6 +49,43 @@ class DepositService {
 
     } catch (error) {
       return internalServerError();
+    }
+  }
+
+
+  async createDepositBill(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/deposit/bill`,
+        payload,
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
+
+  async getDepositBill(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/deposit/bill/pdf`,
+        {buyId:payload },
+        API_HEADER
+      );
+
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
     }
   }
 
