@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"POT-Creation-Date: 2019-03-28T03:13:15.636Z\n"
-"PO-Revision-Date: 2019-03-28T03:13:15.636Z\n"
+"POT-Creation-Date: 2019-03-29T03:49:13.599Z\n"
+"PO-Revision-Date: 2019-03-29T03:49:13.599Z\n"
 "Language: pt_BR\n"
 
 msgctxt "TITLE"
@@ -810,6 +810,26 @@ msgstr[0] "Digite o código de 4 dígitos do seu cupom"
 msgstr[1] "Resgatar"
 msgstr[2] "Escolha qual opção você tem"
 msgstr[3] "Digite seu número de telefone celular com DDD e operadora (somente Voucher)"
+
+msgctxt "PAYMENT"
+msgid "RECHARGE_CREDIT"
+msgstr "Crédito"
+
+msgctxt "PAYMENT"
+msgid "RECHARGE_COIN"
+msgstr "Criptomoedas"
+
+msgctxt "PAYMENT"
+msgid "SELECT"
+msgstr "Pagamento"
+
+msgctxt "PAYMENT"
+msgid "P2P_CREATE_OFFER_COIN"
+msgstr "Moeda de pagamento"
+
+msgctxt "PAYMENT"
+msgid "P2P_HEADER"
+msgstr "Pagamento"
 
 msgctxt "CARD"
 msgid "SETTINGS"
@@ -1970,6 +1990,10 @@ msgctxt "VALUE"
 msgid "DEPOSIT_CONFIRMDATA"
 msgstr "30"
 
+msgctxt "VALUE"
+msgid "DEPOSIT_INF_MODAL_NO_SELECTED"
+msgstr "Por favor, selecione um valor de depósito para poder prosseguir."
+
 msgctxt "LIMIT"
 msgid "PAYMENT_AMOUNT"
 msgstr "Valor excede o limite diário de R$ 3.000,00"
@@ -2350,6 +2374,10 @@ msgctxt "WAITING"
 msgid "COINSALE_STATUS"
 msgstr "Aguardando"
 
+msgctxt "WAITING"
+msgid "DEPOSIT_INF_MODAL_KYC"
+msgstr "Seu KYC está aguardando aprovação"
+
 msgctxt "CONFIRMED"
 msgid "COINSALE_STATUS"
 msgstr "Confirmado"
@@ -2365,14 +2393,6 @@ msgstr "Método de negociação"
 msgctxt "ANNOUNCED"
 msgid "P2P_CREATE_OFFER_COIN"
 msgstr "Moeda anunciada"
-
-msgctxt "PAYMENT"
-msgid "P2P_CREATE_OFFER_COIN"
-msgstr "Moeda de pagamento"
-
-msgctxt "PAYMENT"
-msgid "P2P_HEADER"
-msgstr "Pagamento"
 
 msgctxt "VALUES"
 msgid "P2P_CREATE_OFFER_COIN"
@@ -2525,6 +2545,18 @@ msgstr "Icone do banco"
 msgctxt "FULLNAME"
 msgid "DEPOSIT_INF_MODAL"
 msgstr "Nome Completo"
+
+msgctxt "REJECTED"
+msgid "DEPOSIT_INF_MODAL_KYC"
+msgstr "Seu KYC foi rejeitado. Envie suas informaçoes novamente "
+
+msgctxt "HERE"
+msgid "DEPOSIT_INF_MODAL_KYC_REJECTED_CLICK"
+msgstr "clicando aqui"
+
+msgctxt "HIT"
+msgid "DEPOSIT_INF_NOT_FOUND"
+msgstr "Não há históricos"
 
 msgctxt "SALE"
 msgid "P2P_TAB"

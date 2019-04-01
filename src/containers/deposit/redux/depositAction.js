@@ -26,9 +26,14 @@ export const getDepositHistory = () => ({
 export const getPaymentsMethods = () => ({
   type: "GET_PAYMENT_METHODS_API"
 });
-export const setPaymentMethod = (method) => ({
-  type: "SET_PAYMENT_METHOD",
+export const setPaymentInformation = (method) => ({
+  type: "SET_PAYMENT_INFORMATION",
   method
+});
+
+export const createDepositBill = (payload) => ({
+  type: "CREATE_DEPOSIT_BILL",
+  payload
 });
 
 export const getKycData = () => ({
@@ -53,6 +58,10 @@ export const setSelectedValue = value => ({
   type: "SET_SELECTED_VALUE",
   value
 })
+export const getDepositBill = (buyID) => ({
+  type: "GET_DEPOSIT_BILL_API",
+  buyID
+});
 
 export const getPaymentMethodService = (serviceId) => ({
   type: "GET_PAYMENT_METHOD_SERVICE_CREDIT",
