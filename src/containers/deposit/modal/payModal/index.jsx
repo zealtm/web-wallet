@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import style from "./style.css";
 import i18n from "../../../../utils/i18n";
+import { successRequest } from "../../../errors/redux/errorAction";
 import { Grid, Hidden } from "@material-ui/core";
 import { getDepositBill } from "../../redux/depositAction";
 import Loading from "../../../../components/loading";
@@ -12,6 +13,16 @@ class PayModal extends Component {
     const { getDepositBill, buyID } = this.props;
     getDepositBill(buyID);
   }
+  copyBarCode = () => {
+    let { depositReturn, successRequest } = this.props;
+    const element = document.createElement("textarea");
+    element.value = depositReturn.barcode;
+    document.body.appendChild(element);
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+    successRequest(i18n.t("MODAL_RECEIVE_MESSAGE"));
+  };
   render() {
     const { depositReturn, loading } = this.props;
     if (loading) return <Loading width={"30px"} />;
@@ -49,7 +60,7 @@ class PayModal extends Component {
           style={{ marginTop: 25 }}
         >
           <Grid>
-            <a href="#">
+            <div style={{ cursor: "pointer" }} onClick={() => this.copyBarCode()}>
               <img
                 src="/images/icons/deposit/paymodal_copy@1x.png"
                 className={style.payModalIconsCopy}
@@ -58,7 +69,7 @@ class PayModal extends Component {
               <p className={style.payModalTextIcon}>
                 {i18n.t("DEPOSIT_PAYMODAL_COPY")}
               </p>
-            </a>
+            </div>
           </Grid>
 
           <Grid className={style.payModalIconsBoxDownload}>
@@ -98,7 +109,8 @@ PayModal.propTypes = {
   loading: PropTypes.bool,
   loadingPdf: PropTypes.bool,
   depositReturn: PropTypes.object,
-  buyID: PropTypes.number
+  buyID: PropTypes.number,
+  successRequest: PropTypes.func
 };
 const mapStateToProps = store => ({
   loading: store.deposit.loading,
@@ -110,7 +122,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getDepositBill
+      getDepositBill,
+      successRequest
     },
     dispatch
   );

@@ -36,7 +36,6 @@ const initialState = {
   selectedValue: 0,
   paymentMethods: undefined,
   depositReturn: {},
-  SelectedPaymentMethod: undefined,
   paymentsMethodsService:[]
 };
 

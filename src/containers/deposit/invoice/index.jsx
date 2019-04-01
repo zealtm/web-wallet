@@ -135,7 +135,8 @@ class Invoice extends React.Component {
     const { activeCard } = this.state;
 
     return packages.map((val, index) => {
-      const active = activeCard == val.id ? true : false;
+      const active = val.status;
+      const selected = val.id === activeCard ? true : false;
       return (
         <CardPack
           key={index}
@@ -151,18 +152,20 @@ class Invoice extends React.Component {
   listPaymentMethods = () => {
     const { classes, methods } = this.props;
     const { paymentMethods } = this.state;
-
-    return paymentMethods.map((method, index) => (
-      <MenuItem
-        value={methods ? methods[index].id : ""}
-        key={index}
-        classes={{
-          root: classes.menuItemRoot
-        }}
-      >
-        {method}
-      </MenuItem>
-    ));
+    if (methods) {
+      return methods.map((method, index) => (
+        <MenuItem
+          value={method ? method.id : ""}
+          key={index}
+          classes={{
+            root: classes.menuItemRoot
+          }}
+        >
+          {paymentMethods[index]}
+        </MenuItem>
+      ));
+    }
+    return ;
   };
   listDays = () => {
     const { classes } = this.props;
