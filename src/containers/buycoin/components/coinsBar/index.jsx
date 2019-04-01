@@ -91,7 +91,10 @@ class CoinsBar extends React.Component {
 
       const coinPrice = coins[val.value.abbreviation].price[defaultCoin].price;
       const active = val.title === selected.toUpperCase() ? true : false;
-
+      let imgUrl = "images/icons/coins/whiteIcons/" +val.value.abbreviation +".png";
+      if(active){
+        imgUrl = "images/icons/coins/" +val.value.abbreviation +".png";
+      }
       return (
         <div
           className={null}
@@ -108,7 +111,7 @@ class CoinsBar extends React.Component {
             <div className={style.boxIconCoin}>
               <img
                 className={style.iconCoin}
-                src={"images/icons/coins/" + val.value.abbreviation + ".png"}
+                src={imgUrl}
               />
             </div>
 

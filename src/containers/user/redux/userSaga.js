@@ -445,3 +445,33 @@ export function* verifyEmailSaga(data) {
     yield put(internalServerError());
   }
 }
+
+export function* sendVerifyEmailSaga(data) {
+  try {
+    yield put({
+      type: changeLoadingState
+    });
+    
+    const response = yield call(userService.sendVerifyEmail, data.email);
+
+    if (response.data.code === 200) {
+      yield put(modalSuccess(i18n.t("MODAL_SEND_INFO_SUCCESS")));
+      yield put({
+        type: changeLoadingState
+      });
+    } else {
+      
+      yield put({
+        type: changeLoadingState
+      });
+      if(response.data.code && response.data.code === 405){
+        yield put(modalError(i18n.t("ERROR_EMAIL_ALREADY_VERIFIED")));
+      }else{
+        yield put(modalError(i18n.t("VERIFY_EMAIL_HEADER_2")));
+      }
+    }
+    return;
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}

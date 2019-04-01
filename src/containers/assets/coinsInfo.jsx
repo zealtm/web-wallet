@@ -98,11 +98,16 @@ class CoinsInfo extends React.Component {
     let { assets: assetsRoute } = this.props;
     let { assets, selectedCoin } = assetsRoute;
     let asset = assets[selectedCoin];
+    let decimalPoint = asset.decimals;
     return (
       <Grid item xs={8} className={style.floatRight}>
         <Grid item className={style.balanceItemMobile}>
           <h2>{i18n.t("WALLET_BALANCE")}</h2>
-          <p>{asset.balance}</p>
+          <p>
+            {convertBiggestCoinUnit(asset.balance, decimalPoint).toFixed(
+              decimalPoint
+            )}
+          </p>
         </Grid>
         <Hidden xsDown> {this.renderButton()}</Hidden>
       </Grid>
@@ -131,6 +136,7 @@ class CoinsInfo extends React.Component {
     );
   };
   renderButtonMobile = () => {
+    let { setAssetsSendModalOpen } = this.props; 
     return (
       <Grid item xs={11} className={style.alignButtons}>
         <button
@@ -141,7 +147,12 @@ class CoinsInfo extends React.Component {
         >
           {i18n.t("BTN_RECEIVE")}
         </button>
-        <button className={style.sentButtonMobile}>{i18n.t("BTN_SEND")}</button>
+        <button
+          className={style.sentButtonMobile}
+          onClick={() => setAssetsSendModalOpen()}
+        >
+          {i18n.t("BTN_SEND")}
+        </button>
       </Grid>
     );
   };
@@ -169,9 +180,8 @@ class CoinsInfo extends React.Component {
     let coin = skeleton.coins.lunes;
     let step = assetsRoute.modal.step;
 
-      
     if (selectedCoin === undefined) return null;
-  
+
     return (
       <div>
         <div>

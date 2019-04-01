@@ -1,7 +1,7 @@
 /* eslint-disable */
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ObjectRestSpreadPlugin = require('@sucrase/webpack-object-rest-spread-plugin');
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log("------------------------------------------------------------------------------------------");
@@ -46,8 +46,8 @@ console.log("\n", "\x1b[0m", "\x1b[21m");
 
 
 module.exports = {
-  mode: 'development',
-  devtool: 'inline-source-map',
+  entry: ["babel-polyfill","./src/index.jsx"],
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -82,7 +82,7 @@ module.exports = {
     port: 6001
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new ObjectRestSpreadPlugin(),
     new HtmlWebpackPlugin({
       template: "public/index.html"
     })

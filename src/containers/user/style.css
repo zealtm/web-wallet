@@ -410,3 +410,17 @@
   font-weight: 700;
   font-size: 11px;
 }
+:local(.linkVerifyEmail){
+  font-weight: 900;
+  text-align: center;
+  composes: clSuccess from "../../components/bases/colorBase.css";
+  cursor: pointer;
+  text-decoration:none; 
+}
+
+:local(.textVerify) {
+  composes: textDefault from "../../components/bases/textBase.css";
+  text-align: center;
+  margin: 35px 5px 35px 5px;
+  font-weight: bold;
+}
