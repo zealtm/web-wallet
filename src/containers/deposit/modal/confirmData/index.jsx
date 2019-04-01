@@ -52,7 +52,7 @@ class ConfirmData extends React.Component {
     setTimeout(() => {
       this.setState({ loading: false });
       setModalSteps(3);
-    }, 9000);
+    }, 15000);
   };
   render() {
     const { userData, selectedValue } = this.props;
