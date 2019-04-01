@@ -709,6 +709,7 @@
   "DEPOSIT_CREDIT": "Credit",
   "DEPOSIT_DEBIT": "Debit",
   "DEPOSIT_SELECT_DATE": "Select date",
+  "AMOUNT_CREDIT": "Amount ",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",

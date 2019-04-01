@@ -24,6 +24,7 @@ import LogoLunes from "../../components/logoLunes";
 import { TESTNET } from "../../constants/apiBaseUrl";
 import { getDefaultFiat, getDefaultCrypto } from "../../utils/localStorage";
 import i18n from "../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../utils/numbers";
 
 class Header extends React.Component {
   constructor(props) {
@@ -67,6 +68,7 @@ class Header extends React.Component {
       setTimeout(() => {
         this.setState({ ...this.state, openBalancePopup: false });
       }, 8000);
+      let total = coinFiat + credit.available;
 
       return (
         <div className={style.menuUserDeposit}>
@@ -81,12 +83,14 @@ class Header extends React.Component {
                 src="../../images/icons/deposit/balance_deposit-1.png"
                 className={style.imgBalanceDeposit}
               />
-              <p>{credit.available}</p>
-              <Link to="/deposit">
-                <button className={style.btnBalanceDeposit}>
-                  {i18n.t("MENU_DEPOSIT")}
-                </button>
-              </Link>
+              <p>{convertBiggestCoinUnit(credit.available, 8).toFixed(2)}</p>
+              <div style={{ position: "relative", top: "8px", left: "8%" }}>
+                <Link to="/deposit">
+                  <button className={style.btnBalanceDeposit}>
+                    {i18n.t("MENU_DEPOSIT")}
+                  </button>
+                </Link>
+              </div>
             </span>
           </div>
 
@@ -99,7 +103,7 @@ class Header extends React.Component {
               <p>{coinBalance + " " + coinName}</p>
             </span>
             <p className={style.texGreentBalanceDeposit}>
-              {"Total "+ (coinFiat+ credit.available) }
+              {i18n.t("AMOUNT_CREDIT") + convertBiggestCoinUnit(credit.available, 8).toFixed(2)}
             </p>
           </div>
         </div>
