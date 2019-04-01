@@ -107,7 +107,7 @@ Select.propTypes = {
   titleImg: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
-  error: PropTypes.string
+  error: PropTypes.bool
 };
 
 export default Select;
