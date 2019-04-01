@@ -58,7 +58,7 @@ class Header extends React.Component {
         : 0;
 
     let coinFiat = coins[coinSelected]
-      ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
+      ? (coins[coinSelected].price["BRL"].price * coinBalance).toFixed(2)
       : 0;
 
     let coinFiatSymbol = coins[coinSelected]
@@ -68,8 +68,8 @@ class Header extends React.Component {
       setTimeout(() => {
         this.setState({ ...this.state, openBalancePopup: false });
       }, 8000);
-      let total = coinFiat + credit.available;
-
+      let total = (Number(coinFiat)) + convertBiggestCoinUnit(credit.available, 8);
+      
       return (
         <div className={style.menuUserDeposit}>
           <div className={style.arrowUp} />
@@ -103,7 +103,7 @@ class Header extends React.Component {
               <p>{coinBalance + " " + coinName}</p>
             </span>
             <p className={style.texGreentBalanceDeposit}>
-              {i18n.t("AMOUNT_CREDIT") + convertBiggestCoinUnit(credit.available, 8).toFixed(2)}
+              {i18n.t("AMOUNT_CREDIT") + (total).toFixed(2)}
             </p>
           </div>
         </div>
