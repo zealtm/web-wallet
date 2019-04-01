@@ -4,7 +4,8 @@ import {
   setAuthToken,
   getAuthToken,
   getUserSeedWords,
-  getDefaultCrypto
+  getDefaultCrypto,
+  getUserId
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
@@ -19,7 +20,7 @@ export function* loadGeneralInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
-
+    let userId = yield call(getUserId);
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -30,6 +31,13 @@ export function* loadGeneralInfo(action) {
     let pictureUser = yield call(
       userService.getUserPicture,
       responseUser.data.data.email
+    );
+
+    let responseCredits = yield call(
+      coinService.getCoinBalance,
+      "lbrl",
+      userId,
+      token
     );
 
     setAuthToken(responseCoins.token);
@@ -48,6 +56,8 @@ export function* loadGeneralInfo(action) {
         alias: firstAlias
       });
     }
+
+    yield put({ type: "SET_CREDIT_BALANCE", responseCredits });
 
     yield put({
       type: "SET_USER_INFO",
