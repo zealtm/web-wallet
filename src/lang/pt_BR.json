@@ -714,6 +714,11 @@
   "DEPOSIT_PAYMODAL_COPY": "Copiar", 
   "DEPOSIT_PAYMODAL_DOWNLOAD": "Baixar",
   "DEPOSIT_PAYMODAL_SHARE": "Compartilhar",
+
+  "MY_BALANCE_DEPOSIT": "Meu Saldo",
+  "BALANCE_DEPOSIT_CASH": "5.000,00",
+  "BALANCE_DEPOSIT_CASH_COIN": "142,5 milhões de Lunes",
+  "BALANCE_DEPOSIT_TOTAL_COIN": "Total: 142,000,00",
   
   "P2P_COMING_SOON": "Avaliação disponível em breve!",
   "P2P_TAB_PURCHASE": "Compra",

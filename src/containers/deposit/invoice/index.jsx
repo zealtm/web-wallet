@@ -141,6 +141,7 @@ class Invoice extends React.Component {
           key={index}
           pack={val}
           onSelect={this.handleCard}
+          selected={selected}
           active={active}
         />
       );
@@ -386,7 +387,7 @@ class Invoice extends React.Component {
               <Grid
                 item
                 xs={12}
-                className={style.transparentBox}
+                className={style.transparentBoxFooter}
                 style={{ marginTop: "10px", marginBottom: "10px" }}
               >
                 {this.renderPaymentMethods()}
@@ -395,7 +396,7 @@ class Invoice extends React.Component {
               <Grid
                 item
                 xs={12}
-                className={style.transparentBox}
+                className={style.transparentBoxFooter}
                 style={{ marginTop: "10px" }}
               >
                 <button

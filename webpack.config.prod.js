@@ -3,7 +3,8 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-const ObjectRestSpreadPlugin = require("@sucrase/webpack-object-rest-spread-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log(
@@ -76,6 +77,7 @@ console.log("                         ");
 console.log("\n", "\x1b[0m", "\x1b[21m");
 
 module.exports = {
+  mode: 'production',
   entry: ["babel-polyfill", "./src/index.jsx"],
   module: {
     rules: [
@@ -120,7 +122,7 @@ module.exports = {
       minimize: true,
       debug: false
     }),
-    new ObjectRestSpreadPlugin(),
+    new CleanWebpackPlugin(),
     new UglifyJSPlugin({
       uglifyOptions: {
         beautify: false,

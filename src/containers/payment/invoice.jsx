@@ -12,6 +12,9 @@ import {
   uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
+import {
+  getPaymentMethodService
+} from "../deposit/redux/depositAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -97,10 +100,6 @@ class Invoice extends React.Component {
         value: undefined,
         img: undefined
       },
-      paymentMethod: [
-        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
-        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
-      ],
       selectedPaymentMethod: {
         title: undefined,
         value: undefined
@@ -111,9 +110,10 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearPayment } = this.props;
+    const { getCoinsEnabled, setClearPayment, getPaymentMethodService} = this.props;
     setClearPayment();
     getCoinsEnabled();
+    getPaymentMethodService(4);
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -366,12 +366,11 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment } = this.props;
+    const { classes, loading, coinsRedux, payment, methodPaymentsList } = this.props;
     const {
       coin,
       invoice,
       errors,
-      paymentMethod,
       selectedPaymentMethod
     } = this.state;
     const title = coin.name || i18n.t("SELECT_COIN");
@@ -521,7 +520,7 @@ class Invoice extends React.Component {
             <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
               <Hidden smUp>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   error={errors.includes("Payment Method")}
@@ -530,7 +529,7 @@ class Invoice extends React.Component {
               </Hidden>
               <Hidden xsDown>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   error={errors.includes("Payment Method")}
@@ -606,14 +605,16 @@ Invoice.propTypes = {
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
   errorInput: PropTypes.func.isRequired,
-  uploadBarcode: PropTypes.func.isRequired
+  uploadBarcode: PropTypes.func.isRequired,
+  methodPaymentsList: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
   payment: store.payment.payment,
   loading: store.payment.loading,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
@@ -624,7 +625,8 @@ const mapDispatchToProps = dispatch =>
       setPayment,
       setClearPayment,
       errorInput,
-      uploadBarcode
+      uploadBarcode,
+      getPaymentMethodService
     },
     dispatch
   );

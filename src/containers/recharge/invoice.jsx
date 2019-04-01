@@ -11,7 +11,9 @@ import {
   setRecharge,
   setClearRecharge
 } from "./redux/rechargeAction";
-
+import {
+  getPaymentMethodService
+} from "../deposit/redux/depositAction";
 // COMPONENTS
 import Select from "../../components/select";
 import colors from "../../components/bases/colors";
@@ -98,10 +100,6 @@ class Invoice extends React.Component {
           title: i18n.t("RECHARGE_SELECT_TITLE_VALUE")
         }
       },
-      paymentMethod: [
-        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
-        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
-      ],
       selectedPaymentMethod: {
         title: undefined,
         value: undefined
@@ -115,9 +113,10 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearRecharge } = this.props;
+    const { getCoinsEnabled, setClearRecharge, getPaymentMethodService } = this.props;
     setClearRecharge();
     getCoinsEnabled();
+    getPaymentMethodService(3);
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -316,13 +315,13 @@ class Invoice extends React.Component {
       operadoras,
       valores,
       loadingValores,
-      valueError
+      valueError,
+      methodPaymentsList
     } = this.props;
     const {
       coin,
       errors,
       invoice,
-      paymentMethod,
       selectedPaymentMethod
     } = this.state;
 
@@ -427,7 +426,7 @@ class Invoice extends React.Component {
             <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
               <Hidden smUp>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   error={errors.includes("Payment Method")}
@@ -436,7 +435,7 @@ class Invoice extends React.Component {
               </Hidden>
               <Hidden xsDown>
                 <Select
-                  list={paymentMethod}
+                  list={methodPaymentsList}
                   title={paymentTitle}
                   selectItem={this.handlePayment}
                   error={errors.includes("Payment Method")}
@@ -514,7 +513,8 @@ Invoice.propTypes = {
   getOperators: PropTypes.func.isRequired,
   setClearRecharge: PropTypes.func.isRequired,
   coins: PropTypes.array,
-  valueError: PropTypes.bool
+  valueError: PropTypes.bool,
+  methodPaymentsList: PropTypes.array
 };
 
 const mapStateToProps = store => ({
@@ -524,7 +524,8 @@ const mapStateToProps = store => ({
   operadoras: store.recharge.operadoras,
   valores: store.recharge.valores,
   coins: store.skeleton.coins,
-  valueError: store.recharge.valueError
+  valueError: store.recharge.valueError,
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
@@ -534,7 +535,8 @@ const mapDispatchToProps = dispatch =>
       getValoresRecarga,
       getCoinsEnabled,
       setRecharge,
-      setClearRecharge
+      setClearRecharge,
+      getPaymentMethodService
     },
     dispatch
   );

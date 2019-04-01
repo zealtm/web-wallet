@@ -62,3 +62,7 @@ export const getDepositBill = (buyID) => ({
   type: "GET_DEPOSIT_BILL_API",
   buyID
 });
+export const getPaymentMethodService = (serviceId) => ({
+  type: "GET_PAYMENT_METHOD_SERVICE_CREDIT",
+  serviceId
+});
