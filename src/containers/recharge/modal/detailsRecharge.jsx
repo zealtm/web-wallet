@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setModalStep } from "../redux/rechargeAction";
+import { setModalStep, confirmRecharge } from "../redux/rechargeAction";
+
 import { updateUserConsents } from "../../user/redux/userAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
@@ -34,15 +35,35 @@ class DetailsRecharge extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage } = this.props;
+    const { setModalStep, errorInput, clearMessage, recharge, confirmRecharge } = this.props;
     const { user } = this.state;
-
+    
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
+    if (recharge.servicePaymentMethodId === 2) {
+     let payload = {
+        coin: 'lbrl',
+        fromAddress: null,
+        toAddress: null,
+        lunesUserAddress: null,
+        amount: recharge.amount,
+        fee: null,
+        feePerByte: null,
+        feeLunes: null,
+        price: recharge.amount,
+        decimalPoint: null,
+        user: user.password,
+        recharge: recharge,
+        servicePaymentMethodId: recharge.servicePaymentMethodId,
+        serviceCoinId: recharge.serviceCoinId
+      };
+      confirmRecharge(payload);
+    } else {
+      setModalStep(2);
+    }
 
-    setModalStep(2);
     clearMessage();
   };
 
@@ -68,9 +89,38 @@ class DetailsRecharge extends React.Component {
     const ddd = recharge.number.substring(0, 2);
     const totalnumero = recharge.number.length;
     const numero = recharge.number.substring(2, totalnumero);
-    
+
     return `(${ddd}) ${numero}`;
   }
+  renderCredit = () => {
+    const { recharge } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        {"Será debitado "}
+        <span className={style.textGreen}>
+          {"R$ "} {recharge.amount}
+        </span>
+        {" de seu saldo para realizar uma recarga no valor de  "}
+        <span className={style.textGreen}>R$ {recharge.value}</span>
+        {" para o número abaixo:"}
+      </div>
+    );
+  };
+  renderCrypto = () => {
+    const { recharge } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        <span className={style.textGreen}>
+          {parseFloat(recharge.amount).toFixed(8)}{" "}
+          {recharge.coin.abbreviation.toUpperCase()}
+        </span>
+        {i18n.t("RECHARGE_DETAILS_2")}
+        <span className={style.textGreen}>R$ {recharge.value}</span>
+
+        {i18n.t("RECHARGE_DETAILS_3")}
+      </div>
+    );
+  };
 
   render() {
     const { loading, recharge, valueError } = this.props;
@@ -87,18 +137,11 @@ class DetailsRecharge extends React.Component {
         <div className={style.modalBox}>
           <div>
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
-            
           </div>
           {i18n.t("RECHARGE_DETAILS_1")}
-          <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>
-              {parseFloat(recharge.amount).toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
-            </span>
-            {i18n.t("RECHARGE_DETAILS_2")}
-            <span className={style.textGreen}>R$ {recharge.value}</span>
-
-            {i18n.t("RECHARGE_DETAILS_3")}
-          </div>
+          {recharge.servicePaymentMethodId === 2
+            ? this.renderCredit()
+            : this.renderCrypto()}
 
           <div
             style={{
@@ -137,7 +180,8 @@ DetailsRecharge.propTypes = {
   recharge: PropTypes.object.isRequired,
   updateUserConsents: PropTypes.func.isRequired,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  confirmRecharge: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -152,7 +196,8 @@ const mapDispatchToProps = dispatch =>
       setModalStep,
       updateUserConsents,
       clearMessage,
-      errorInput
+      errorInput,
+      confirmRecharge
     },
     dispatch
   );

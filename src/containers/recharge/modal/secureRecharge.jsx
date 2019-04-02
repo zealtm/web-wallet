@@ -34,21 +34,41 @@ class SecureRecharge extends React.Component {
     let { user, errorInput, recharge, coins, confirmRecharge } = this.props;
 
     const coin = recharge.coin.abbreviation;
-
-    const payload = {
-      coin: coin,
-      fromAddress: coins[coin].address,
-      toAddress: recharge.coin.address,
-      lunesUserAddress: coins["lunes"].address,
-      amount: recharge.amount,
-      fee: recharge.fee.fee.fee,
-      feePerByte: recharge.fee.fee.feePerByte,
-      feeLunes: recharge.fee.fee.feeLunes,
-      price: coins[coin].price,
-      decimalPoint: coins[coin].decimalPoint,
-      user: user.password,
-      recharge: recharge
-    };
+    let  payload = {}
+    if(recharge.servicePaymentMethodId === 2){
+      payload = {
+        coin: coin,
+        fromAddress: null,
+        toAddress: null,
+        lunesUserAddress: null,
+        amount: recharge.amount,
+        fee: null,
+        feePerByte: null,
+        feeLunes: null,
+        price: recharge.amount,
+        decimalPoint: null,
+        user: user.password,
+        recharge: recharge,
+        servicePaymentMethodId: recharge.servicePaymentMethodId
+      };
+    }else{
+      payload = {
+        coin: coin,
+        fromAddress: coins[coin].address,
+        toAddress: recharge.coin.address,
+        lunesUserAddress: coins["lunes"].address,
+        amount: recharge.amount,
+        fee: recharge.fee.fee.fee,
+        feePerByte: recharge.fee.fee.feePerByte,
+        feeLunes: recharge.fee.fee.feeLunes,
+        price: coins[coin].price,
+        decimalPoint: coins[coin].decimalPoint,
+        user: user.password,
+        recharge: recharge,
+        servicePaymentMethodId: recharge.servicePaymentMethodId
+      };
+    }
+     
 
     if (user.password === encryptHmacSha512Key(password)) {
       confirmRecharge(payload);
@@ -58,7 +78,26 @@ class SecureRecharge extends React.Component {
     errorInput(i18n.t("MESSAGE_INVALID_PASSWORD"));
     return;
   };
-
+  renderCredit = () => {
+    const { recharge } = this.props;
+    return (
+      <span className={style.totalConfirm}>
+        {" R$"}
+        {recharge.amount}{" "}
+        {"em crédito"}
+      </span>
+    );
+  }
+  renderCrypto = () => {
+    const { recharge } = this.props;
+    return (
+      <span className={style.totalConfirm}>
+        {" "}
+        {recharge.amount + recharge.fee.fee.fee}{" "}
+        {recharge.coin.abbreviation.toUpperCase()}
+      </span>
+    );
+  }
   render() {
     let { password } = this.state;
     let { recharge, loading } = this.props;
@@ -71,11 +110,7 @@ class SecureRecharge extends React.Component {
         />
         <div>
           <span>{i18n.t("RECHARGE_PASS_CONFIRMATION")}</span>
-          <span className={style.totalConfirm}>
-            {" "}
-            {recharge.amount + recharge.fee.fee.fee}{" "}
-            {recharge.coin.abbreviation.toUpperCase()}
-          </span>
+          {recharge.servicePaymentMethodId === 2?this.renderCredit():this.renderCrypto()}
           <span> {i18n.t("RECHARGE_PASS_TO")} </span>
           <span className={style.addressConfirm}>
             {i18n.t("RECHARGE_TITLE")}

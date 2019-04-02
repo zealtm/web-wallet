@@ -110,7 +110,7 @@ export function* getValuesCreditSaga(payload) {
         valores: response,
         valueError: false
       });
-    }else{
+    } else {
       yield put({
         type: "GET_VALORES_REDUCER",
         valores: [],
@@ -133,41 +133,61 @@ export function* setRechargeSaga(payload) {
 
     const { abbreviation } = payload.recharge.coin;
     const token = yield call(getAuthToken);
+    if (abbreviation !== undefined) {
+      const amountResponse = yield call(
+        rechargeService.getCoinAmountPay,
+        token,
+        abbreviation,
+        parseFloat(payload.recharge.value)
+      );
 
-    const amountResponse = yield call(
-      rechargeService.getCoinAmountPay,
-      token,
-      abbreviation,
-      parseFloat(payload.recharge.value)
-    );
+      const balanceResponse = yield call(
+        coinService.getCoinBalance,
+        abbreviation,
+        payload.recharge.address,
+        token
+      );
 
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      abbreviation,
-      payload.recharge.address,
-      token
-    );
+      const balance = balanceResponse.data.data.available;
+      const amount = amountResponse.data.data.value;
+      const decimalPoint = payload.recharge.decimalPoint;
+        
+      const data = {
+        number: payload.recharge.number,
+        coin: payload.recharge.coin,
+        balance: convertBiggestCoinUnit(balance, decimalPoint),
+        amount: convertBiggestCoinUnit(amount, decimalPoint),
+        value: payload.recharge.value,
+        servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+        operator: {
+          id: payload.recharge.operatorId,
+          name: payload.recharge.operatorName
+        }
+      };
 
-    const balance = balanceResponse.data.data.available;
-    const amount = amountResponse.data.data.value;
-    const decimalPoint = payload.recharge.decimalPoint;
-
-    const data = {
-      number: payload.recharge.number,
-      coin: payload.recharge.coin,
-      balance: convertBiggestCoinUnit(balance, decimalPoint),
-      amount: convertBiggestCoinUnit(amount, decimalPoint),
-      value: payload.recharge.value,
-      operator: {
-        id: payload.recharge.operatorId,
-        name: payload.recharge.operatorName
-      }
-    };
-
-    yield put({
-      type: "SET_RECHARGE_REDUCER",
-      payload: data
-    });
+      yield put({
+        type: "SET_RECHARGE_REDUCER",
+        payload: data
+      });
+    } else {
+      const data = {
+        number: payload.recharge.number,
+        coin: payload.recharge.coin,
+        balance: payload.recharge.value,
+        amount: payload.recharge.value,
+        value: payload.recharge.value,
+        servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+        operator: {
+          id: payload.recharge.operatorId,
+          name: payload.recharge.operatorName
+        },
+        serviceCoinId: payload.recharge.serviceCoinId
+      };
+      yield put({
+        type: "SET_RECHARGE_REDUCER",
+        payload: data
+      });
+    }
   } catch (error) {
     yield put(internalServerError());
   }
@@ -230,48 +250,54 @@ export function* confirmRechargeSaga(payload) {
       feePerByte: payload.recharge.feePerByte,
       feeLunes: payload.recharge.feeLunes,
       price: payload.recharge.price,
-      decimalPoint: payload.recharge.decimalPoint
+      decimalPoint: payload.recharge.decimalPoint,
+      servicePaymentMethodId: payload.recharge.servicePaymentMethodId
     };
 
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
-
-      // pega o servico disponivel
-      let lunesWallet = yield call(
-        transactionService.rechargeService,
-        payloadTransaction.coin,
-        token
-      );
-
-      if (lunesWallet) {
-        let response = yield call(
-          transactionService.transaction,
-          lunesWallet.id,
-          payloadTransaction,
-          lunesWallet,
-          decryptAes(seed, payload.recharge.user),
+      let lunesWallet = null;
+      let response = null;
+      if (payload.recharge.servicePaymentMethodId !== 2) {
+        // pega o servico disponivel
+        lunesWallet = yield call(
+          transactionService.rechargeService,
+          payloadTransaction.coin,
           token
         );
+      }
 
-        const transacao_obj = JSON.parse(response.config.data);
+      if (lunesWallet || payload.recharge.servicePaymentMethodId === 2) {
+        if (lunesWallet) {
+          response = yield call(
+            transactionService.transaction,
+            lunesWallet.id,
+            payloadTransaction,
+            lunesWallet,
+            decryptAes(seed, payload.recharge.user),
+            token
+          );
+        }
+        const transacao_obj = response ? JSON.parse(response.config.data): null;
         const ddd = payload.recharge.recharge.number.substring(0, 2);
         const totalnumero = payload.recharge.recharge.number.length;
         const numero = payload.recharge.recharge.number.substring(
           2,
           totalnumero
         );
-
-        if (response) {
+        if (response || payload.recharge.servicePaymentMethodId === 2) {
+          
           const payloadElastic = {
             ddd: ddd,
             operatorId: payload.recharge.recharge.operator.id,
             operatorName: payload.recharge.recharge.operator.name,
             phone: numero,
             value: parseFloat(payload.recharge.recharge.value),
-            txID: transacao_obj.txID,
+            txID: response ? transacao_obj.txID : null,
             describe: "Recarga",
-            serviceId: payload.recharge.recharge.coin.id
+            serviceId: response ? payload.recharge.recharge.coin.id : payload.recharge.serviceCoinId,
+            servicePaymentMethodId: payload.recharge.servicePaymentMethodId
           };
 
           let response_elastic = yield call(
