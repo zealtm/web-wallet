@@ -133,41 +133,62 @@ export function* setRechargeSaga(payload) {
 
     const { abbreviation } = payload.recharge.coin;
     const token = yield call(getAuthToken);
-
-    const amountResponse = yield call(
-      rechargeService.getCoinAmountPay,
-      token,
-      (abbreviation === undefined? "lbrl":abbreviation),
-      parseFloat(payload.recharge.value)
-    );
-
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      (abbreviation === undefined? "lbrl":abbreviation),
-      payload.recharge.address,
-      token
-    );
-
-    const balance = balanceResponse.data.data.available;
-    const amount = amountResponse.data.data.value;
-    const decimalPoint = payload.recharge.decimalPoint;
-
-    const data = {
-      number: payload.recharge.number,
-      coin: payload.recharge.coin,
-      balance: convertBiggestCoinUnit(balance, decimalPoint),
-      amount: convertBiggestCoinUnit(amount, decimalPoint),
-      value: payload.recharge.value,
-      operator: {
-        id: payload.recharge.operatorId,
-        name: payload.recharge.operatorName
-      }
-    };
-
-    yield put({
-      type: "SET_RECHARGE_REDUCER",
-      payload: data
-    });
+    if(abbreviation !== undefined){
+      const amountResponse = yield call(
+        rechargeService.getCoinAmountPay,
+        token,
+        abbreviation,
+        parseFloat(payload.recharge.value)
+      );
+  
+      const balanceResponse = yield call(
+        coinService.getCoinBalance,
+        abbreviation,
+        payload.recharge.address,
+        token
+      );
+  
+      const balance = balanceResponse.data.data.available;
+      const amount = amountResponse.data.data.value;
+      const decimalPoint = payload.recharge.decimalPoint;
+  
+      const data = {
+        number: payload.recharge.number,
+        coin: payload.recharge.coin,
+        balance: convertBiggestCoinUnit(balance, decimalPoint),
+        amount: convertBiggestCoinUnit(amount, decimalPoint),
+        value: payload.recharge.value,
+        servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+        operator: {
+          id: payload.recharge.operatorId,
+          name: payload.recharge.operatorName
+        }
+      };
+  
+      yield put({
+        type: "SET_RECHARGE_REDUCER",
+        payload: data
+      });
+    }else{
+      const data = {
+        number: payload.recharge.number,
+        coin: payload.recharge.coin,
+        balance: payload.recharge.value,
+        amount: payload.recharge.value,
+        value: payload.recharge.value,
+        servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+        operator: {
+          id: payload.recharge.operatorId,
+          name: payload.recharge.operatorName
+        }
+      };
+      yield put({
+        type: "SET_RECHARGE_REDUCER",
+        payload: data
+      });
+    }
+    
+    
   } catch (error) {
     yield put(internalServerError());
   }
@@ -230,7 +251,8 @@ export function* confirmRechargeSaga(payload) {
       feePerByte: payload.recharge.feePerByte,
       feeLunes: payload.recharge.feeLunes,
       price: payload.recharge.price,
-      decimalPoint: payload.recharge.decimalPoint
+      decimalPoint: payload.recharge.decimalPoint,
+      servicePaymentMethodId: payload.recharge.servicePaymentMethodId
     };
 
     try {

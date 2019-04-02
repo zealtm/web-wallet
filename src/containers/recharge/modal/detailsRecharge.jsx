@@ -34,15 +34,18 @@ class DetailsRecharge extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage } = this.props;
+    const { setModalStep, errorInput, clearMessage, recharge } = this.props;
     const { user } = this.state;
 
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
-
-    setModalStep(2);
+    if(recharge.servicePaymentMethodId === 2)
+      setModalStep(4);
+    else
+      setModalStep(2);
+    
     clearMessage();
   };
 
@@ -68,8 +71,36 @@ class DetailsRecharge extends React.Component {
     const ddd = recharge.number.substring(0, 2);
     const totalnumero = recharge.number.length;
     const numero = recharge.number.substring(2, totalnumero);
-    
+
     return `(${ddd}) ${numero}`;
+  }
+  renderCredit = () => {
+    const { recharge } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        {"Será debitado "}
+        <span className={style.textGreen}>
+          {"R$ "} {recharge.amount}
+        </span>
+        {" de seu saldo para realizar uma recarga no valor de  "}
+        <span className={style.textGreen}>R$ {recharge.value}</span>
+        {" para o número abaixo:"}
+      </div>
+    );
+  }
+  renderCrypto = () => {
+    const { recharge } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        <span className={style.textGreen}>
+          {parseFloat(recharge.amount).toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
+        </span>
+        {i18n.t("RECHARGE_DETAILS_2")}
+        <span className={style.textGreen}>R$ {recharge.value}</span>
+
+        {i18n.t("RECHARGE_DETAILS_3")}
+      </div>
+    );
   }
 
   render() {
@@ -87,18 +118,10 @@ class DetailsRecharge extends React.Component {
         <div className={style.modalBox}>
           <div>
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
-            
+
           </div>
           {i18n.t("RECHARGE_DETAILS_1")}
-          <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>
-              {parseFloat(recharge.amount).toFixed(8)} {recharge.coin.abbreviation.toUpperCase()}
-            </span>
-            {i18n.t("RECHARGE_DETAILS_2")}
-            <span className={style.textGreen}>R$ {recharge.value}</span>
-
-            {i18n.t("RECHARGE_DETAILS_3")}
-          </div>
+          {recharge.servicePaymentMethodId === 2?this.renderCredit():this.renderCrypto()}
 
           <div
             style={{

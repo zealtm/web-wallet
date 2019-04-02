@@ -242,14 +242,12 @@ class CoinService {
   async getCoinBalance(coinName, address, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      let url = coinName==="lbrl"?
-          `${BASE_URL}/coin/balance/${coinName}` :
-          `${BASE_URL}/coin/${coinName}/balance/${address}`;
-
+      
       let response = await axios.get(
-        url,
+        `${BASE_URL}/coin/${coinName}/balance/${address}`,
         API_HEADER
       );
+      
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;
