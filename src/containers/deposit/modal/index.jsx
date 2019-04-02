@@ -20,9 +20,9 @@ class DepositModal extends Component {
     if (modalStep === 1) return <Information />;
     if (modalStep === 2) return <ConfirmData />;
 
-    if (modalStep === 3 && paymentMethod === i18n.t("DEPOSIT_INVOICE"))
+    if (modalStep === 3 && paymentMethod === 1)
       return <PayModal />;
-    if (modalStep === 3 && paymentMethod === i18n.t("DEPOSIT_DEBIT"))
+    if (modalStep === 3 && paymentMethod === 2)
       return <BankModal />;
 
     return <DebitCancel />;
@@ -35,12 +35,12 @@ class DepositModal extends Component {
 
 DepositModal.propTypes = {
   modalStep: PropTypes.number,
-  paymentMethod: PropTypes.string
+  paymentMethod: PropTypes.number
 };
 
 const mapStateToProps = store => ({
   modalStep: store.deposit.modalStep,
-  paymentMethod: store.deposit.SelectedPaymentMethod
+  paymentMethod: store.deposit.payloadPayment.paymentMethodId
 });
 
 export default connect(

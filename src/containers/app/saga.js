@@ -12,7 +12,8 @@ import {
   editUserData,
   updateUserPasswordSaga,
   verifyInviteSaga,
-  verifyEmailSaga
+  verifyEmailSaga,
+  sendVerifyEmailSaga
 } from "../user/redux/userSaga";
 
 import {
@@ -142,12 +143,14 @@ import {
 import {
   getPackagesSaga,
   getDepositHistorySaga,
+  createDepositBillSaga,
   getKycData,
   depositGetStates,
   depositGetCity,
   getPaymentsMethods,
-  getPaymentsMethodsServiceCreditSaga,
-  setMethodServiceIDSaga
+  setMethodServiceIDSaga,
+  getDepositBillSaga,
+  getPaymentsMethodsServiceCreditSaga
 } from "../deposit/redux/depositSaga";
 
 export default function* rootSaga() {
@@ -168,6 +171,7 @@ export default function* rootSaga() {
     fork(takeLatest, "PATH_USER_CONSENTS_API", updateUserConsentsSaga),
     fork(takeLatest, "PATH_USER_DATA_API", editUserData),
     fork(takeLatest, "PATH_USER_PASSWORD_API", updateUserPasswordSaga),
+    fork(takeLatest, "SEND_VERIFY_EMAIL_SAGA", sendVerifyEmailSaga),
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
@@ -306,11 +310,14 @@ export default function* rootSaga() {
     // deposit
     fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
     fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
+    fork(takeLatest, "CREATE_DEPOSIT_BILL", createDepositBillSaga),
     fork(takeLatest, "GET_KYC_DATA_API", getKycData),
     fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
     fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
     fork(takeLatest, "GET_PAYMENT_METHODS_API", getPaymentsMethods),
-    fork(takeLatest, "GET_PAYMENT_METHOD_SERVICE_CREDIT", getPaymentsMethodsServiceCreditSaga),
     fork(takeLatest, "SET_METHOD_SERVICE_ID", setMethodServiceIDSaga),
+    fork(takeLatest, "GET_DEPOSIT_BILL_API", getDepositBillSaga),
+    fork(takeLatest, "GET_PAYMENT_METHOD_SERVICE_CREDIT", getPaymentsMethodsServiceCreditSaga)
+
   ];
 }

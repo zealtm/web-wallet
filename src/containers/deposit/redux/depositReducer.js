@@ -1,10 +1,28 @@
 const initialState = {
   packages: [],
   history: [],
-  user: {},
+  user: {
+    fullName: null,
+    document: null,
+    address: {
+      street: null,
+      city: null,
+      state: null,
+      country: null,
+      zipcode: null
+    }
+  },
+  buyID: 0,
   modalStep: 1,
   loading: false,
+  loadingPdf: false,
   paymentMethod: null,
+  payloadPayment: {
+    service: null, //(descrição do serviço, ex: Deposit, Recarga, Compra)
+    packageId: 0, //(endpoint: /deposit/package)
+    paymentMethodId: null //(endpoint: /deposit/paymentMethods)
+  },
+  depositBill: {},
   kyc: {
     data: {},
     kycValidation: false
@@ -18,8 +36,9 @@ const initialState = {
   selectedValue: 0,
   paymentMethods: undefined,
   SelectedPaymentMethod: undefined,
-  paymentsMethodsService:[],
-  selectMethodId : 0
+  selectMethodId : 0,
+  depositReturn: {},
+  paymentsMethodsService:[]
 };
 
 const deposit = (state = initialState, action) => {
@@ -55,10 +74,10 @@ const deposit = (state = initialState, action) => {
         ...state,
         paymentMethods: action.response.data
       };
-    case "SET_PAYMENT_METHOD":
+    case "SET_PAYMENT_INFORMATION":
       return {
         ...state,
-        SelectedPaymentMethod: action.method
+        payloadPayment: action.method
       };
     case "SET_KYC_DATA":
       return {
@@ -105,6 +124,21 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         selectedValue: action.value
+      };
+    case "SET_BUY_ID":
+      return {
+        ...state,
+        buyID: action.id
+      };
+    case "SET_PDF_LOADING":
+      return {
+        ...state,
+        loadingPdf: true
+      };
+    case "SET_DEPOSIT_RETURN":
+      return {
+        ...state,
+        depositReturn: action.depositReturn,
       };
     case "SET_METHODS_SERVICE_CREDIT_REDUCER":
       return {
