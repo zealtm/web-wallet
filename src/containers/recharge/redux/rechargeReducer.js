@@ -18,7 +18,8 @@ const initialState = {
     amount: '',
     operator: '',
     address: '',
-    servicePaymentMethodId: undefined
+    servicePaymentMethodId: undefined,
+    serviceCoinId: null
   },
   fee: {
     fee: {

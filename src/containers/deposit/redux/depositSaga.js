@@ -190,7 +190,8 @@ export function* getPaymentsMethodsServiceCreditSaga(payload) {
         const active = {
           id: method.id,
           title: titleMethod,
-          value: method.id
+          value: method.id,
+          serviceCoinId: method.serviceCoinId
         };
         availableMethod.push(active);
       }
