@@ -697,7 +697,7 @@
   "CREDIT_MODAL_TEXT_2": " de seu saldo para realizar uma recarga no valor de ",
   "CREDIT_MODAL_TEXT_3": " para o número abaixo: ",
   "CREDIT_MODAL_TEXT_4": " de seu saldo para realizar a compra de  ",
-
+  "INSUFFICIENT_CREDIT": "Você não possui créditos suficientes",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Banco",

@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getFeeBuy, setFeeBuy, setModalStep, confirmBuy } from "../redux/buyAction";
+import {
+  getFeeBuy,
+  setFeeBuy,
+  setModalStep,
+  confirmBuy
+} from "../redux/buyAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
@@ -74,8 +79,13 @@ class FeeBuy extends React.Component {
       buypack,
       user,
       lunes,
-      confirmBuy
+      confirmBuy,
+      creditBalance
     } = this.props;
+    let creditsAvailable = convertBiggestCoinUnit(
+      creditBalance.available,
+      8
+    ).toFixed(2);
     const { feeSelect } = this.state;
     if (buypack.servicePaymentMethodId !== 6) {
       let coinBalance = coins[buypack.paycoin].balance.available;
@@ -104,18 +114,24 @@ class FeeBuy extends React.Component {
         fee: null,
         feePerByte: null,
         feeLunes: null,
-        price:null,
+        price: null,
         decimalPoint: null,
         user: user.password,
         buypack: buypack,
         servicePaymentMethodId: buypack.servicePaymentMethodId,
         serviceCoinId: buypack.serviceCoinId,
         receiveAddress: coins[buypack.coin.abbreviation]
-        ? coins[buypack.coin.abbreviation].address
-        : "",
+          ? coins[buypack.coin.abbreviation].address
+          : ""
       };
-      
-      confirmBuy(payload);
+      if (creditsAvailable > buypack.amountFiat) {
+        confirmBuy(payload);
+      } else {
+        this.setState({
+          error: true,
+          messageError: i18n.t("INSUFFICIENT_CREDIT")
+        });
+      }
     }
   };
 
@@ -223,6 +239,9 @@ class FeeBuy extends React.Component {
     } else {
       return (
         <div className={style.modalBox}>
+          <div>
+            {error ? <ModalBar type="error" message={messageError} timer /> : null}
+          </div>
           {buypack.servicePaymentMethodId === 6
             ? this.renderCreditPayment()
             : this.renderFee()}
@@ -250,7 +269,8 @@ FeeBuy.propTypes = {
   coins: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   lunes: PropTypes.object,
-  confirmBuy: PropTypes.func
+  confirmBuy: PropTypes.func,
+  creditBalance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
@@ -261,7 +281,8 @@ const mapStateToProps = store => ({
   price: store.skeleton.coins,
   coins: store.buy.coinsBuy,
   user: store.user.user,
-  lunes: store.skeleton.coins.lunes
+  lunes: store.skeleton.coins.lunes,
+  creditBalance: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>

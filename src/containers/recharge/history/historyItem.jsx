@@ -16,7 +16,9 @@ class HistoryItem extends React.Component {
 
   render() {
     const { item, skeleton } = this.props;
-    let decimalPoint = skeleton.coins[item.coin.toLowerCase()].decimalPoint;
+    let decimalPoint = skeleton.coins[item.coin.toLowerCase()]
+      ? skeleton.coins[item.coin.toLowerCase()].decimalPoint
+      : 8;
     let date =
       formatDate(item.date, "DMY", true) + " " + formatDate(item.date, "HM");
 
@@ -24,7 +26,9 @@ class HistoryItem extends React.Component {
       <Grid container>
         <Grid item xs={12} className={style.row}>
           <div className={style.itemLeft}>
-            <p className={style.description}>{`${item.describe} (${item.ddd}) ${item.phone}`}</p>
+            <p className={style.description}>{`${item.describe} (${item.ddd}) ${
+              item.phone
+            }`}</p>
             <p className={style.defaultText}>{date}</p>
             <p className={style.statusConfirmed}>{item.status}</p>
           </div>
@@ -36,7 +40,7 @@ class HistoryItem extends React.Component {
               />{" "}
               <span className={style.coinName}>{item.coin}</span>
             </p>
-            
+
             <p className={style.coinValue}>
               {convertBiggestCoinUnit(item.amountCripto, decimalPoint).toFixed(
                 decimalPoint

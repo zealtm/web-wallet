@@ -11,7 +11,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
-
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 // STYLES
 import style from "./style.css";
 
@@ -41,10 +41,14 @@ class DetailsRecharge extends React.Component {
       clearMessage,
       recharge,
       confirmRecharge,
-      lunes
+      lunes,
+      creditBalance
     } = this.props;
     const { user } = this.state;
-
+    let creditsAvailable = convertBiggestCoinUnit(
+      creditBalance.available,
+      8
+    ).toFixed(2);
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
@@ -66,7 +70,12 @@ class DetailsRecharge extends React.Component {
         servicePaymentMethodId: recharge.servicePaymentMethodId,
         serviceCoinId: recharge.serviceCoinId
       };
-      confirmRecharge(payload);
+      
+      if(creditsAvailable > Number(recharge.amount)){
+        confirmRecharge(payload);
+      }else{
+        this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
+      }
     } else {
       setModalStep(2);
     }
@@ -189,14 +198,16 @@ DetailsRecharge.propTypes = {
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
   confirmRecharge: PropTypes.func.isRequired,
-  lunes: PropTypes.object
+  lunes: PropTypes.object,
+  creditBalance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   loading: store.recharge.loading,
   user: store.user.user,
   recharge: store.recharge.recharge,
-  lunes: store.skeleton.coins.lunes
+  lunes: store.skeleton.coins.lunes,
+  creditBalance: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>

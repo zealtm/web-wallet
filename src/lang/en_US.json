@@ -724,7 +724,7 @@
   "CREDIT_MODAL_TEXT_2": " from your reais balance to do a recharge in the value of ",
   "CREDIT_MODAL_TEXT_3": " to the number below: ",
   "CREDIT_MODAL_TEXT_4": " from your reais balance to make the purchase of  ",
-
+  "INSUFFICIENT_CREDIT": "You don't have enough credits",
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",
   "DEPOSIT_ACCOUNT_MODAL_CONTENT": "You will be directed to the Bank's site that makes your payment in debt",
