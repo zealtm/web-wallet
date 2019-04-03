@@ -93,20 +93,91 @@ class FeeBuy extends React.Component {
 
   componentDidMount = () => {
     const { getFeeBuy, buypack, wallet } = this.props;
+    if (buypack.servicePaymentMethodId !== 6) {
+      const fromAddress = wallet.coins[buypack.paycoin].address;
+      const toAddress = buypack.address;
+      const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
 
-    const fromAddress = wallet.coins[buypack.paycoin].address;
-    const toAddress = buypack.address;
-    const decimalPoint = wallet.coins[buypack.paycoin].decimalPoint;
+      getFeeBuy(
+        buypack.paycoin,
+        buypack.amountPay,
+        fromAddress,
+        toAddress,
+        decimalPoint
+      );
+    }
+  };
+  renderFee = () => {
+    const { loading, buypack, fee } = this.props;
+    const { error, messageError, feeSelect } = this.state;
+    return (
+      <div>
+        <div>
+          {error ? (
+            <ModalBar type="error" message={messageError} timer />
+          ) : null}
+        </div>
+        <img
+          src={`/images/icons/coins/${buypack.paycoin}.png`}
+          className={style.modalIconCoin}
+        />
+        <div>
+          <span>{i18n.t("COINSALE_FEE_TEXT_1")}</span>
+          <span className={style.totalConfirm}>
+            {buypack.amountPay.toFixed(8)} {buypack.paycoin.toUpperCase()}
+          </span>
+        </div>
+        <div>
+          <span>{i18n.t("COINSALE_FEE_TEXT_2")}</span>
+          <span className={style.addressConfirm}>
+            {i18n.t("COINSALE_TITLE")}
+          </span>
+        </div>
 
-    getFeeBuy(
-      buypack.paycoin,
-      buypack.amountPay,
-      fromAddress,
-      toAddress,
-      decimalPoint
+        <div className={style.confirmFee}>
+          <div>
+            {i18n.t("PAYMENT_FEE_AMOUNT")}
+            <span> {buypack.paycoin} </span> é
+          </div>
+          <div className={style.txtamount}>{feeSelect}</div>
+        </div>
+
+        <div className={style.boxFee}>
+          <span
+            className={style.greenLabelFee}
+            onClick={() => this.calcFee("low")}
+          >
+            {i18n.t("FEE_LOW")} {fee.fee.low}
+          </span>
+          <span
+            className={style.yellowLabelFee}
+            onClick={() => this.calcFee("medium")}
+          >
+            {i18n.t("FEE_MEDIUM")} {fee.fee.medium}
+          </span>
+          <span
+            className={style.redLabelFee}
+            onClick={() => this.calcFee("high")}
+          >
+            {i18n.t("FEE_HIGH")} {fee.fee.high}
+          </span>
+        </div>
+      </div>
     );
   };
-
+  renderCreditPayment = () => {
+    const { buypack } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        {"Será debitado "}
+        <span className={style.textGreen}>
+          {"R$ "} {buypack.amountFiat}
+        </span>
+        {" de seu saldo para realizar uma compra no valor de  "}
+        <span className={style.textGreen}>R$ {buypack.amountFiat}</span>
+      </div>
+    );
+  };
   render() {
     const { loading, buypack, fee } = this.props;
     const { error, messageError, feeSelect } = this.state;
@@ -120,57 +191,9 @@ class FeeBuy extends React.Component {
     } else {
       return (
         <div className={style.modalBox}>
-          <div>
-            {error ? (
-              <ModalBar type="error" message={messageError} timer />
-            ) : null}
-          </div>
-          <img
-            src={`/images/icons/coins/${buypack.paycoin}.png`}
-            className={style.modalIconCoin}
-          />
-          <div>
-            <span>{i18n.t("COINSALE_FEE_TEXT_1")}</span>
-            <span className={style.totalConfirm}>
-              {buypack.amountPay.toFixed(8)} {buypack.paycoin.toUpperCase()}
-            </span>
-          </div>
-          <div>
-            <span>{i18n.t("COINSALE_FEE_TEXT_2")}</span>
-            <span className={style.addressConfirm}>
-              {i18n.t("COINSALE_TITLE")}
-            </span>
-          </div>
-
-          <div className={style.confirmFee}>
-            <div>
-              {i18n.t("PAYMENT_FEE_AMOUNT")}
-              <span> {buypack.paycoin} </span> é
-            </div>
-            <div className={style.txtamount}>{feeSelect}</div>
-          </div>
-
-          <div className={style.boxFee}>
-            <span
-              className={style.greenLabelFee}
-              onClick={() => this.calcFee("low")}
-            >
-              {i18n.t("FEE_LOW")} {fee.fee.low}
-            </span>
-            <span
-              className={style.yellowLabelFee}
-              onClick={() => this.calcFee("medium")}
-            >
-              {i18n.t("FEE_MEDIUM")} {fee.fee.medium}
-            </span>
-            <span
-              className={style.redLabelFee}
-              onClick={() => this.calcFee("high")}
-            >
-              {i18n.t("FEE_HIGH")} {fee.fee.high}
-            </span>
-          </div>
-
+          {buypack.servicePaymentMethodId === 6
+            ? this.renderCreditPayment()
+            : this.renderFee()}
           <ButtonContinue
             label={i18n.t("BTN_CONTINUE")}
             action={() => this.validateForm()}
