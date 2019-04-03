@@ -110,7 +110,7 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearPayment, getPaymentMethodService} = this.props;
+    const { getCoinsEnabled, setClearPayment, getPaymentMethodService } = this.props;
     setClearPayment();
     getCoinsEnabled();
     getPaymentMethodService(4);
@@ -129,16 +129,31 @@ class Invoice extends React.Component {
       invoice: {
         ...invoice,
         coin: value
-      }
+      },
+      serviceCoinId: null
     });
   };
-  handlePayment = (value, title) => {    
+  searchServiceCoinId = value => {
+    const { methodPaymentsList } = this.props;
+    let id = null;
+    methodPaymentsList.forEach((element, index) => {
+      if (element.id === value) {
+        id = element.serviceCoinId;
+      }
+    });
+    if (id !== null) return id;
+
+    return ;
+  };
+  handlePayment = (value, title) => {
+    let serviceCoinId = this.searchServiceCoinId(value);
     this.setState({
       ...this.state,
       selectedPaymentMethod: {
         value: value,
         title: title
-      }
+      },
+      serviceCoinId
     });
   };
 
@@ -256,24 +271,36 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
-    const { invoice, coin } = this.state;
-
+    const { invoice, coin, selectedPaymentMethod, serviceCoinId} = this.state;
+    console.log(JSON.stringify(coins));
+    const coinBLRL =
+     selectedPaymentMethod.value === 4
+        ? payment.value
+        : coins[invoice.coin.abbreviation].decimalPoint;
+    const addr =
+    selectedPaymentMethod.value === 4
+        ? ""
+        : ( coins[invoice.coin.abbreviation]
+        ? coins[invoice.coin.abbreviation].address
+        : undefined )
     const invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
-      decimalPoint: coins[invoice.coin.abbreviation].decimalPoint,
-      address: coins[invoice.coin.abbreviation]
-        ? coins[invoice.coin.abbreviation].address
-        : undefined
+      decimalPoint: coinBLRL,
+      address: addr,
+      servicePaymentMethodId: selectedPaymentMethod.value,
+      serviceCoinId: serviceCoinId
     };
-
-    if (invoiceData.value > coin.value.limit) {
-      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
-      return;
+    if(selectedPaymentMethod.value === 3){
+      if (invoiceData.value > coin.value.limit) {
+        errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
+        return;
+      }
     }
+    
 
     const invoiceInputs = {};
 
@@ -292,27 +319,28 @@ class Invoice extends React.Component {
         invoiceInputs[key]["minLength"] = 47;
       }
     }
+    if (selectedPaymentMethod.value === 3) {
+      const coinInput = {
+        type: "text",
+        name: "coin",
+        placeholder: "coin",
+        value: invoiceData.coin.abbreviation || coin.name || "",
+        required: true
+      };
 
-    const coinInput = {
-      type: "text",
-      name: "coin",
-      placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.name || "",
-      required: true
-    };
+      const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
-    const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+      if (payment.error) {
+        errors.push("number");
+      }
 
-    if (payment.error) {
-      errors.push("number");
-    }
-
-    if (errors.length > 0) {
-      this.setState({
-        ...this.state,
-        errors
-      });
-      return;
+      if (errors.length > 0) {
+        this.setState({
+          ...this.state,
+          errors
+        });
+        return;
+      }
     }
 
     this.setPayment(invoiceData);
@@ -323,9 +351,8 @@ class Invoice extends React.Component {
   };
 
   checkAllInputs = () => {
-    const { invoice, coin } = this.state;
+    const { invoice, coin, selectedPaymentMethod } = this.state;
     const { payment } = this.props;
-
     return (
       invoice.number &&
       invoice.name &&
@@ -334,7 +361,7 @@ class Invoice extends React.Component {
       (payment.description || invoice.description) &&
       (payment.dueDate || invoice.dueDate) &&
       (payment.value || invoice.value) &&
-      coin.value
+      (coin.value || selectedPaymentMethod.value === 4)
     );
   };
 
