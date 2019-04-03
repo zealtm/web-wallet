@@ -70,54 +70,72 @@ export function* setPaymentSaga(payload) {
       payload: true
     });
 
+    let data = {};
     const value = parseFloat(payload.pay.value);
-    const { abbreviation } = payload.pay.coin;
 
-    const token = yield call(getAuthToken);
+    if (payload.pay.servicePaymentMethodId === 3) {
 
-    const amountResponse = yield call(
-      paymentService.getCoinAmountPay,
-      token,
-      abbreviation,
-      value
-    );
+      const { abbreviation } = payload.pay.coin;
+      const token = yield call(getAuthToken);
 
-    const balanceResponse = yield call(
-      coinService.getCoinBalance,
-      abbreviation,
-      payload.pay.address,
-      token
-    );
+      const amountResponse = yield call(
+        paymentService.getCoinAmountPay,
+        token,
+        abbreviation,
+        value
+      );
 
-    const balance = balanceResponse.data.data.available;
-    const amount = amountResponse.data.data.value;
-    const decimalPoint = payload.pay.decimalPoint;
+      const balanceResponse = yield call(
+        coinService.getCoinBalance,
+        abbreviation,
+        payload.pay.address,
+        token
+      );
 
-    const data = {
-      number: payload.pay.number,
-      coin: payload.pay.coin,
-      balance: convertBiggestCoinUnit(balance, decimalPoint),
-      amount: convertBiggestCoinUnit(amount, decimalPoint),
-      value: value,
-      assignor: payload.pay.assignor,
-      name: payload.pay.name,
-      dueDate: payload.pay.dueDate,
-      description: payload.pay.description,
-      cpfCnpj: payload.pay.cpfCnpj
-    };
+      const balance = balanceResponse.data.data.available;
+      const amount = amountResponse.data.data.value;
+      const decimalPoint = payload.pay.decimalPoint;
 
+      data = {
+        number: payload.pay.number,
+        coin: payload.pay.coin,
+        balance: convertBiggestCoinUnit(balance, decimalPoint),
+        amount: convertBiggestCoinUnit(amount, decimalPoint),
+        value: value,
+        assignor: payload.pay.assignor,
+        name: payload.pay.name,
+        dueDate: payload.pay.dueDate,
+        description: payload.pay.description,
+        cpfCnpj: payload.pay.cpfCnpj,
+        servicePaymentMethodId: payload.pay.servicePaymentMethodId,
+        serviceCoinId: payload.pay.serviceCoinId
+      };
+    } else {
+      data = {
+        number: payload.pay.number,
+        coin: payload.pay.coin,
+        balance: value,
+        amount: value,
+        value: value + (value / 100), //1%
+        assignor: payload.pay.assignor,
+        name: payload.pay.name,
+        dueDate: payload.pay.dueDate,
+        description: payload.pay.description,
+        cpfCnpj: payload.pay.cpfCnpj,
+        servicePaymentMethodId: payload.pay.servicePaymentMethodId,
+        serviceCoinId: payload.pay.serviceCoinId
+      };
+    }
     yield put({
       type: "SET_PAYMENT_REDUCER",
       payload: data
     });
   } catch (error) {
-    console.warn(error);
     yield put(internalServerError());
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
       state: true
     });
-
     return;
   }
 }
@@ -301,7 +319,6 @@ export function* uploadBarcodeSaga(payload) {
       payload: false
     });
   } catch (error) {
-    console.warn(error);
     yield put(internalServerError());
     yield put({
       type: "SET_LOADING_REDUCER",
@@ -316,7 +333,6 @@ export function* confirmPaySaga(payload) {
       type: "SET_LOADING_REDUCER",
       payload: true
     });
-
     const payloadTransaction = {
       coin: payload.payment.coin,
       fromAddress: payload.payment.fromAddress,
@@ -333,70 +349,75 @@ export function* confirmPaySaga(payload) {
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
-
-      // pega o servico disponivel
-      let lunesWallet = yield call(
-        transactionService.invoiceService,
-        payloadTransaction.coin,
-        token
-      );
-
-      if (lunesWallet) {
-        // transaciona
-        let response = yield call(
-          transactionService.transaction,
-          lunesWallet.id,
-          payloadTransaction,
-          lunesWallet,
-          decryptAes(seed, payload.payment.user),
+      let lunesWallet = null;
+      let response = null;
+      if (payload.payment.servicePaymentMethodId !== 4) {
+        // pega o servico disponivel
+        lunesWallet = yield call(
+          transactionService.invoiceService,
+          payloadTransaction.coin,
           token
         );
+      }
+      if (lunesWallet || payload.payment.servicePaymentMethodId === 4) {
+        if (lunesWallet) {
+          // transaciona
+          response = yield call(
+            transactionService.transaction,
+            lunesWallet.id,
+            payloadTransaction,
+            lunesWallet,
+            decryptAes(seed, payload.payment.user),
+            token
+          );
+        }
 
-        const transacao_obj = JSON.parse(response.config.data);
+        const transacao_obj = response ? JSON.parse(response.config.data): null;
         const dueDate = payload.payment.payment.dueDate.split("/");
         const dueDateFormat = dueDate.reverse().join("-");
         const dataIso = new Date(dueDateFormat).toISOString();
+        if (response || payload.payment.servicePaymentMethodId === 4) {
+          
+            const payload_elastic = {
+              barCode: payload.payment.payment.number,
+              dueDate: dataIso,
+              amount: payload.payment.payment.value,
+              name: payload.payment.payment.name,
+              document: payload.payment.payment.cpfCnpj,
+              txID: response ? transacao_obj.txID : null,
+              describe: payload.payment.payment.description,
+              serviceId: response ? payload.payment.payment.coin.id : payload.payment.serviceCoinId,
+              servicePaymentMethodId: payload.payment.servicePaymentMethodId,
+              userLunesAddress: payload.payment.lunesUserAddress
+            };
 
-        if (response) {
-          const payload_elastic = {
-            barCode: payload.payment.payment.number,
-            dueDate: dataIso,
-            amount: payload.payment.payment.value,
-            name: payload.payment.payment.name,
-            document: payload.payment.payment.cpfCnpj,
-            txID: transacao_obj.txID,
-            describe: payload.payment.payment.description,
-            serviceId: payload.payment.payment.coin.id
-          };
+            // chamar api pra salvar a transacao
+            let response_elastic = yield call(
+              paymentService.sendPay,
+              token,
+              payload_elastic
+            );
 
-          // chamar api pra salvar a transacao
-          let response_elastic = yield call(
-            paymentService.sendPay,
-            token,
-            payload_elastic
-          );
-
-          yield put({
-            type: "SET_CLEAR_PAYMENT_REDUCER"
-          });
-
-          if (response_elastic.data.errorMessage) {
             yield put({
-              type: "SET_MODAL_PAY_STEP_REDUCER",
-              step: 6
+              type: "SET_CLEAR_PAYMENT_REDUCER"
             });
-            yield put(internalServerError());
-          } else {
-            yield put({
-              type: "SET_MODAL_PAY_STEP_REDUCER",
-              step: 5
-            });
-          }
 
-          return;
-        }
+            if (response_elastic.data.errorMessage) {
+              yield put({
+                type: "SET_MODAL_PAY_STEP_REDUCER",
+                step: 6
+              });
+              yield put(internalServerError());
+            } else {
+              yield put({
+                type: "SET_MODAL_PAY_STEP_REDUCER",
+                step: 5
+              });
+            }
+
+            return;
+          }        
       }
-
       yield put({
         type: "SET_CLEAR_PAYMENT_REDUCER"
       });
@@ -420,7 +441,6 @@ export function* confirmPaySaga(payload) {
 
       return;
     } catch (error) {
-      console.warn(error);
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
@@ -434,7 +454,6 @@ export function* confirmPaySaga(payload) {
       yield put(internalServerError());
     }
   } catch (error) {
-    console.warn(error);
     yield put(internalServerError());
   }
 }
