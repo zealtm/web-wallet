@@ -720,6 +720,10 @@
   "DEPOSIT_DEBIT": "Debit",
   "DEPOSIT_SELECT_DATE": "Select date",
   "AMOUNT_CREDIT": "Amount ",
+  "CREDIT_MODAL_TEXT_1": "You will be charged ",
+  "CREDIT_MODAL_TEXT_2": " of your balance to perform a recharge in the amount of ",
+  "CREDIT_MODAL_TEXT_3": " to the number below: ",
+  "CREDIT_MODAL_TEXT_4": " of your balance to make the purchase of  ",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Deposit with Debit",
   "DEPOSIT_ACCOUNT_MODAL_HEADER": "Click the Bank Icon",

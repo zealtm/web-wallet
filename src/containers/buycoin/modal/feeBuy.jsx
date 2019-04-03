@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getFeeBuy, setFeeBuy, setModalStep } from "../redux/buyAction";
+import { getFeeBuy, setFeeBuy, setModalStep, confirmBuy } from "../redux/buyAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 //COMPONENTS
@@ -14,6 +14,7 @@ import Loading from "../../../components/loading";
 
 //UTILS
 import i18n from "../../../utils/i18n";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 
 // STYLE
 import style from "./style.css";
@@ -70,25 +71,52 @@ class FeeBuy extends React.Component {
       errorInput,
       clearMessage,
       coins,
-      buypack
+      buypack,
+      user,
+      lunes,
+      confirmBuy
     } = this.props;
     const { feeSelect } = this.state;
+    if (buypack.servicePaymentMethodId !== 6) {
+      let coinBalance = coins[buypack.paycoin].balance.available;
+      let amount = buypack.amountPay + feeSelect;
 
-    let coinBalance = coins[buypack.paycoin].balance.available;
-    let amount = buypack.amountPay + feeSelect;
-
-    if (feeSelect > 0) {
-      if (parseFloat(amount) <= coinBalance) {
-        setModalStep(2);
+      if (feeSelect > 0) {
+        if (parseFloat(amount) <= coinBalance) {
+          setModalStep(2);
+        } else {
+          errorInput(i18n.t("PAYMENT_AMOUNT_ERROR"));
+          return;
+        }
       } else {
-        errorInput(i18n.t("PAYMENT_AMOUNT_ERROR"));
+        errorInput(i18n.t("MESSAGE_SELECT_FEE"));
         return;
       }
+      clearMessage();
     } else {
-      errorInput(i18n.t("MESSAGE_SELECT_FEE"));
-      return;
+      const payload = {
+        coin: null,
+        fromAddress: null,
+        toAddress: null,
+        lunesUserAddress: lunes.address,
+        amount: buypack.amountFiat,
+        amountReceive: buypack.amount,
+        fee: null,
+        feePerByte: null,
+        feeLunes: null,
+        price:null,
+        decimalPoint: null,
+        user: user.password,
+        buypack: buypack,
+        servicePaymentMethodId: buypack.servicePaymentMethodId,
+        serviceCoinId: buypack.serviceCoinId,
+        receiveAddress: coins[buypack.coin.abbreviation]
+        ? coins[buypack.coin.abbreviation].address
+        : "",
+      };
+      
+      confirmBuy(payload);
     }
-    clearMessage();
   };
 
   componentDidMount = () => {
@@ -169,12 +197,16 @@ class FeeBuy extends React.Component {
     const { buypack } = this.props;
     return (
       <div className={style.strongText} style={{ marginTop: 20 }}>
-        {"Será debitado "}
+        {i18n.t("CREDIT_MODAL_TEXT_1")}
         <span className={style.textGreen}>
           {"R$ "} {buypack.amountFiat}
         </span>
-        {" de seu saldo para realizar uma compra no valor de  "}
-        <span className={style.textGreen}>R$ {buypack.amountFiat}</span>
+        {i18n.t("CREDIT_MODAL_TEXT_4")}
+        <span className={style.textGreen}>
+          {" "}
+          {convertBiggestCoinUnit(buypack.amount, 8).toFixed(8)}{" "}
+          {" " + buypack.coin.abbreviation.toUpperCase()}
+        </span>
       </div>
     );
   };
@@ -215,7 +247,10 @@ FeeBuy.propTypes = {
   buypack: PropTypes.object.isRequired,
   wallet: PropTypes.any.isRequired,
   loading: PropTypes.bool.isRequired,
-  coins: PropTypes.array.isRequired
+  coins: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  lunes: PropTypes.object,
+  confirmBuy: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -224,7 +259,9 @@ const mapStateToProps = store => ({
   loading: store.buy.loading,
   fee: store.buy.fee,
   price: store.skeleton.coins,
-  coins: store.buy.coinsBuy
+  coins: store.buy.coinsBuy,
+  user: store.user.user,
+  lunes: store.skeleton.coins.lunes
 });
 
 const mapDispatchToProps = dispatch =>
@@ -234,7 +271,8 @@ const mapDispatchToProps = dispatch =>
       setFeeBuy,
       setModalStep,
       clearMessage,
-      errorInput
+      errorInput,
+      confirmBuy
     },
     dispatch
   );
