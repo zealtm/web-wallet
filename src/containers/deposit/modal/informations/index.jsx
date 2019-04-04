@@ -181,14 +181,16 @@ class InformationModal extends React.Component {
           state: state ? state : "",
           city: city ? city : "",
           cep: zipcode ? zipcode : "",
-          address: street ? street : ""
+          address: street ? street : "",
+          statusKyc: status
         });
       } else {
         this.setState({
           fullName: fullName ? fullName : "",
           documentType:
             documentType && documentType !== "passport" ? documentType : "",
-          document: document && documentType !== "passport" ? document : ""
+          document: document && documentType !== "passport" ? document : "",
+          statusKyc: status
         });
       }
     }
@@ -339,6 +341,7 @@ class InformationModal extends React.Component {
         }
       }
     };
+    
     let isDisabled =
       statusKyc === "confirmed" && disabled
         ? true

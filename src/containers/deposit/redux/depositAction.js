@@ -67,3 +67,8 @@ export const getPaymentMethodService = (serviceId) => ({
   type: "GET_PAYMENT_METHOD_SERVICE_CREDIT",
   serviceId
 });
+
+export const setMethodServiceId = id => ({
+  type: "SET_METHOD_SERVICE_ID",
+  id
+});
