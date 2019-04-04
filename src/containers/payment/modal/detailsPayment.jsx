@@ -128,9 +128,9 @@ class DetailsPayment extends React.Component {
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
           </div>
           {i18n.t("PAYMENT_DETAILS_TEXT_1")}
-          {payment.servicePaymentMethodId === 4
-            ? this.renderCredit()
-            : this.renderCrypto()}
+          {payment.servicePaymentMethodId === 3
+            ? this.renderCrypto()
+            : this.renderCredit()}
           <Grid container className={style.inlineInfo}>
             <Grid item xs={6} md={3}>
               <label className={style.inlineInfoLabel}>
