@@ -35,6 +35,8 @@ const initialState = {
   },
   selectedValue: 0,
   paymentMethods: undefined,
+  SelectedPaymentMethod: undefined,
+  selectMethodId : 0,
   depositReturn: {},
   paymentsMethodsService:[]
 };
@@ -142,6 +144,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         paymentsMethodsService: action.data
+      };
+    case "SET_METHOD_SERVICE_ID_REDUCE":
+      return {
+        ...state,
+        selectMethodId: action.id
       };
     default: {
       return {

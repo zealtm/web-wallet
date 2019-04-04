@@ -12,9 +12,7 @@ import {
   uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
-import {
-  getPaymentMethodService
-} from "../deposit/redux/depositAction";
+import { getPaymentMethodService } from "../deposit/redux/depositAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -110,7 +108,11 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearPayment, getPaymentMethodService} = this.props;
+    const {
+      getCoinsEnabled,
+      setClearPayment,
+      getPaymentMethodService
+    } = this.props;
     setClearPayment();
     getCoinsEnabled();
     getPaymentMethodService(4);
@@ -129,16 +131,31 @@ class Invoice extends React.Component {
       invoice: {
         ...invoice,
         coin: value
-      }
+      },
+      serviceCoinId: null
     });
   };
+  searchServiceCoinId = value => {
+    const { methodPaymentsList } = this.props;
+    let id = null;
+    methodPaymentsList.forEach((element, index) => {
+      if (element.id === value) {
+        id = element.serviceCoinId;
+      }
+    });
+    if (id !== null) return id;
+
+    return;
+  };
   handlePayment = (value, title) => {
+    let serviceCoinId = this.searchServiceCoinId(value);
     this.setState({
       ...this.state,
       selectedPaymentMethod: {
         value: value,
         title: title
-      }
+      },
+      serviceCoinId
     });
   };
 
@@ -256,23 +273,33 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
-    const { invoice, coin } = this.state;
-
-    const invoiceData = {
+    const { invoice, coin, selectedPaymentMethod, serviceCoinId } = this.state;
+    
+    const coinBLRL =
+      selectedPaymentMethod.value === 4
+        ? payment.value
+        : coins[invoice.coin.abbreviation].decimalPoint;
+    const addr =
+      selectedPaymentMethod.value === 4
+        ? ""
+        : coins[invoice.coin.abbreviation]
+        ? coins[invoice.coin.abbreviation].address
+        : undefined;
+    let invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
-      decimalPoint: coins[invoice.coin.abbreviation].decimalPoint,
-      address: coins[invoice.coin.abbreviation]
-        ? coins[invoice.coin.abbreviation].address
-        : undefined
+      decimalPoint: coinBLRL,
+      address: addr,
+      servicePaymentMethodId: selectedPaymentMethod.value
     };
-
-    if (invoiceData.value > coin.value.limit) {
-      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
-      return;
+    if (selectedPaymentMethod.value === 3) {
+      if (invoiceData.value > coin.value.limit) {
+        errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
+        return;
+      }
     }
 
     const invoiceInputs = {};
@@ -292,29 +319,34 @@ class Invoice extends React.Component {
         invoiceInputs[key]["minLength"] = 47;
       }
     }
+    if (selectedPaymentMethod.value === 3) {
+      const coinInput = {
+        type: "text",
+        name: "coin",
+        placeholder: "coin",
+        value: invoiceData.coin.abbreviation || coin.name || "",
+        required: true
+      };
 
-    const coinInput = {
-      type: "text",
-      name: "coin",
-      placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.name || "",
-      required: true
-    };
+      const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
-    const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+      if (payment.error) {
+        errors.push("number");
+      }
 
-    if (payment.error) {
-      errors.push("number");
+      if (errors.length > 0) {
+        this.setState({
+          ...this.state,
+          errors
+        });
+        return;
+      }
+    } else {
+      invoiceData = {
+        ...invoiceData,
+        serviceCoinId: serviceCoinId
+      };
     }
-
-    if (errors.length > 0) {
-      this.setState({
-        ...this.state,
-        errors
-      });
-      return;
-    }
-
     this.setPayment(invoiceData);
     this.openModal();
     this.setDefaultState();
@@ -323,9 +355,8 @@ class Invoice extends React.Component {
   };
 
   checkAllInputs = () => {
-    const { invoice, coin } = this.state;
+    const { invoice, coin, selectedPaymentMethod } = this.state;
     const { payment } = this.props;
-
     return (
       invoice.number &&
       invoice.name &&
@@ -334,7 +365,7 @@ class Invoice extends React.Component {
       (payment.description || invoice.description) &&
       (payment.dueDate || invoice.dueDate) &&
       (payment.value || invoice.value) &&
-      coin.value
+      (coin.value || selectedPaymentMethod.value === 4)
     );
   };
 
@@ -366,13 +397,14 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment, methodPaymentsList } = this.props;
     const {
-      coin,
-      invoice,
-      errors,
-      selectedPaymentMethod
-    } = this.state;
+      classes,
+      loading,
+      coinsRedux,
+      payment,
+      methodPaymentsList
+    } = this.props;
+    const { coin, invoice, errors, selectedPaymentMethod } = this.state;
     const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
@@ -536,7 +568,7 @@ class Invoice extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {selectedPaymentMethod.value === "coin" ? (
+            {selectedPaymentMethod.value === 3 ? (
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select

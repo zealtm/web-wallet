@@ -37,7 +37,7 @@ class Deposit extends React.Component {
 
   handleSteps = step => {
     const { setModalSteps } = this.props;
-
+    if(step === 4) return;
     if (step > 1) return setModalSteps(step - 1);
   };
 

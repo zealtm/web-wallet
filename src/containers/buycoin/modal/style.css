@@ -81,7 +81,7 @@
 
 :local .textGreen {
   composes: clGreenDefault from "../../../components/bases/colorBase.css";
-  composes: textDefault from "../../../components/bases/textBase.css";
+  /* composes: textDefault from "../../../components/bases/textBase.css"; */
 }
 
 :local .strongTextGreen {

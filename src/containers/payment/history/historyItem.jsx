@@ -16,7 +16,9 @@ class HistoryItem extends React.Component {
 
   render() {
     const { item, skeleton } = this.props;
-    let decimalPoint = skeleton.coins[item.coin.toLowerCase()].decimalPoint;
+    let decimalPoint = skeleton.coins[item.coin.toLowerCase()]
+      ? skeleton.coins[item.coin.toLowerCase()].decimalPoint
+      : 8;
     let date =
       formatDate(item.date, "DMY", true) + " " + formatDate(item.date, "HM");
 
@@ -33,7 +35,7 @@ class HistoryItem extends React.Component {
               <img
                 src={"/images/icons/coins/" + item.coin.toLowerCase() + ".png"}
                 alt={item.coin}
-                style={{width:"14px",height:"14px"}}
+                style={{ width: "14px", height: "14px" }}
               />{" "}
               {item.coin}
             </p>

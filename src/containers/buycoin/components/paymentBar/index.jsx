@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setCoinSelected } from "../../redux/buyAction";
+import { setCoinSelected, setPaymentCreditInformation } from "../../redux/buyAction";
 import {
-  getPaymentMethodService
+  getPaymentMethodService,
+  setMethodServiceId
 } from "../../../deposit/redux/depositAction";
 // MATERIAL
 import {
@@ -58,7 +59,8 @@ class PaymentBar extends React.Component {
       selectedPaymentMethod: {
         title: undefined,
         value: undefined
-      }
+      },
+      serviceCoinId: null
     };
   }
 
@@ -72,14 +74,31 @@ class PaymentBar extends React.Component {
 
     setCoinSelected(title.toLowerCase(), coins[value].address, coins[value].id);
   };
+  searchServiceCoinId = value => {
+    const { methodPaymentsList } = this.props;
+    let id = null;
+    methodPaymentsList.forEach((element, index) => {
+      if (element.id === value) {
+        id = element.serviceCoinId;
+      }
+    });
+    if (id !== null) return id;
+
+    return ;
+  };
   handlePayment = (value, title) => {
+    const {setMethodServiceId, setPaymentCreditInformation} = this.props;
+    let serviceCoinId = this.searchServiceCoinId(value);
     this.setState({
       ...this.state,
       selectedPaymentMethod: {
         value: value,
         title: title
-      }
+      },
+      serviceCoinId
     });
+    setPaymentCreditInformation({paymentMethoId: value, serviceCoinId});
+    setMethodServiceId(value);
   };
   componentDidMount() {
     const { getPaymentMethodService } = this.props;
@@ -132,7 +151,7 @@ class PaymentBar extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {selectedPaymentMethod.value === "coin" ? (
+            {selectedPaymentMethod.value === 5 ? (
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
@@ -165,7 +184,9 @@ PaymentBar.propTypes = {
   setCoinSelected: PropTypes.func.isRequired,
   coins: PropTypes.array.isRequired,
   coinsActive: PropTypes.array.isRequired,
-  methodPaymentsList: PropTypes.array
+  methodPaymentsList: PropTypes.array,
+  setMethodServiceId: PropTypes.func.isRequired,
+  setPaymentCreditInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -178,7 +199,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       setCoinSelected,
-      getPaymentMethodService
+      getPaymentMethodService,
+      setMethodServiceId,
+      setPaymentCreditInformation
     },
     dispatch
   );

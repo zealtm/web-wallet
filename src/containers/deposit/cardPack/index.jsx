@@ -21,8 +21,8 @@ class CardPack extends React.Component {
          onClick={active === "active" ? () => onSelect(pack.id, pack.value) : () => onSelect(0,0)}
       >
         <img
-          src={`/images/icons/deposit/balance_deposit-1.png`}
-          alt={"bitcoin"}
+          src={`/images/icons/deposit/balance_deposit-2x.png`}
+          alt={"lbrl"}
           className={style.cardIcon}
         />
         <p className={style.paragraph}>{i18n.t("DEPOSIT_PACK_TEXT")}</p>

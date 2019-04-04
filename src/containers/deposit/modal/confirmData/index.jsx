@@ -26,7 +26,6 @@ class ConfirmData extends React.Component {
       payloadPayment,
       userData,
       createDepositBill,
-      setModalSteps
     } = this.props;
     this.setState({loading: true});
     let payload = {
@@ -48,15 +47,11 @@ class ConfirmData extends React.Component {
     if (payloadPayment.paymentMethodId === 1) {
       createDepositBill(payload);
     }
-
-    setTimeout(() => {
-      this.setState({ loading: false });
-      setModalSteps(3);
-    }, 15000);
   };
   render() {
     const { userData, selectedValue } = this.props;
     const {loading} = this.state;
+    
     return (
       <div>
         <Grid container className={style.containerConfirmData}>
@@ -103,7 +98,7 @@ class ConfirmData extends React.Component {
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_STATE_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>{userData.state}</span>
+            <span className={style.ConfirmDataField}>{userData.stateName}</span>
           </Grid>
 
           <Grid item xs={12} sm={4}>

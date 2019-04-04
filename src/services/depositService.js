@@ -84,6 +84,7 @@ class DepositService {
       
       return response;
     } catch (error) {
+
       internalServerError();
       return;
     }

@@ -10,22 +10,24 @@ import DebitCancel from "./debitCancel";
 import Information from "./informations";
 import ConfirmData from "./confirmData";
 import BankModal from "./bankModal";
-
+import ErrorDeposit from "./error/errorDeposit";
 // UTILS
 import i18n from "../../../utils/i18n";
 class DepositModal extends Component {
   renderModalContent = () => {
-    const { modalStep, paymentMethod } = this.props;
-
+    const { modalStep } = this.props;
+    console.log("slep : "+ modalStep);
     if (modalStep === 1) return <Information />;
     if (modalStep === 2) return <ConfirmData />;
 
-    if (modalStep === 3 && paymentMethod === 1)
+    if (modalStep === 3)
       return <PayModal />;
-    if (modalStep === 3 && paymentMethod === 2)
+    if (modalStep === 5)
       return <BankModal />;
-
-    return <DebitCancel />;
+    if(modalStep === 4)
+      return <ErrorDeposit />
+    else 
+      return <ErrorDeposit />
   };
 
   render() {
@@ -40,7 +42,6 @@ DepositModal.propTypes = {
 
 const mapStateToProps = store => ({
   modalStep: store.deposit.modalStep,
-  paymentMethod: store.deposit.payloadPayment.paymentMethodId
 });
 
 export default connect(
