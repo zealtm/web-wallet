@@ -258,6 +258,7 @@ class InformationModal extends React.Component {
 
   validateForm = () => {
     const { setLoading, setUserData, setModalSteps } = this.props;
+    const {stateName} = this.state;
     let {
       fullName,
       documentType,
@@ -267,12 +268,12 @@ class InformationModal extends React.Component {
       cep,
       address
     } = this.state;
-    let shortName = this.searchStates();
+    //let shortName = this.searchStates();
     let user = {
       fullName,
       documentType,
       document,
-      state:shortName,
+      state: stateName,
       city,
       cep,
       address

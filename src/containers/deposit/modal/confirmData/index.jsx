@@ -26,7 +26,6 @@ class ConfirmData extends React.Component {
       payloadPayment,
       userData,
       createDepositBill,
-      setModalSteps
     } = this.props;
     this.setState({loading: true});
     let payload = {
@@ -48,11 +47,6 @@ class ConfirmData extends React.Component {
     if (payloadPayment.paymentMethodId === 1) {
       createDepositBill(payload);
     }
-
-    setTimeout(() => {
-      this.setState({ loading: false });
-      setModalSteps(3);
-    }, 15000);
   };
   render() {
     const { userData, selectedValue } = this.props;
