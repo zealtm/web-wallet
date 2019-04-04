@@ -251,7 +251,8 @@ export function* confirmRechargeSaga(payload) {
       feeLunes: payload.recharge.feeLunes,
       price: payload.recharge.price,
       decimalPoint: payload.recharge.decimalPoint,
-      servicePaymentMethodId: payload.recharge.servicePaymentMethodId
+      servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+      describe: "Recarga"
     };
 
     try {
