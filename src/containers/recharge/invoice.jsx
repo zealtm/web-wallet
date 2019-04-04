@@ -149,7 +149,7 @@ class Invoice extends React.Component {
     });
     if (id !== null) return id;
 
-    return ;
+    return;
   };
   handlePayment = (value, title) => {
     const { setMethodServiceId } = this.props;
@@ -275,7 +275,7 @@ class Invoice extends React.Component {
         ? coins[invoice.coin.abbreviation].address
         : "";
 
-    const invoiceData = {
+    let invoiceData = {
       value: invoice.valor.value,
       number: invoice.phone,
       coin: invoice.coin === null ? "lbrl" : invoice.coin,
@@ -283,8 +283,7 @@ class Invoice extends React.Component {
       operatorName: invoice.operadora.title,
       decimalPoint: coinBLRL,
       address: addr,
-      servicePaymentMethodId: selectedPaymentMethod.value,
-      serviceCoinId: serviceCoinId
+      servicePaymentMethodId: selectedPaymentMethod.value
     };
 
     const invoiceInputs = {};
@@ -323,7 +322,13 @@ class Invoice extends React.Component {
         return;
       }
     }
-
+    if (selectedPaymentMethod.value === 2) {
+      invoiceData = {
+        ...invoiceData,
+        serviceCoinId: serviceCoinId 
+      };
+    }
+    
     openModal();
     setRecharge(invoiceData);
     this.setDefaultState();
