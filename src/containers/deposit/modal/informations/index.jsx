@@ -36,7 +36,6 @@ import ButtonContinue from "../../../../components/buttonContinue";
 import Loading from "../../../../components/loading";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
-
 // UTILS
 import i18n from "../../../../utils/i18n";
 
@@ -201,21 +200,12 @@ class InformationModal extends React.Component {
     depositGetStates("BR");
   }
   checkAllInputs = () => {
-    const {
-      fullName,
-      document,
-      state,
-      city,
-      cep,
-      address
-    } = this.state;
+    const { fullName, document, state, city, cep, address } = this.state;
 
-    return (
-      fullName && document && state && city && cep && address
-    );
+    return fullName && document && state && city && cep && address;
   };
 
-  searchStatesName = (value) => {
+  searchStatesName = value => {
     const { states } = this.props;
     let name = null;
     states.forEach((element, index) => {
@@ -233,7 +223,7 @@ class InformationModal extends React.Component {
     const { depositGetCity } = this.props;
     switch (property) {
       case "fullName":
-        value = e.target.value.replace(/[^0-9a-z A-Z-]/, "");
+        value = e.target.value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
         break;
       case "cep":
         value = e.target.value.replace(/[^0-9-]/, "");
@@ -244,9 +234,10 @@ class InformationModal extends React.Component {
         break;
       case "state":
         value = e.target.value;
-        depositGetCity({ country: "BR", state: value });
-        this.setState({state: value, city: ""});
+        this.setState({ state: value });
         break;
+      case "city":
+        value = e.target.value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
       default:
         value = e.target.value;
         break;
@@ -304,32 +295,17 @@ class InformationModal extends React.Component {
     }
     return "";
   };
-  listCities = () => {
-    const { classes, city } = this.props;
-    if (city) {
-      return city.map((item, index) => (
-        <MenuItem
-          value={item}
-          key={index}
-          classes={{
-            root: classes.menuItemRoot
-          }}
-        >
-          {item}
-        </MenuItem>
-      ));
-    }
-    return "";
-  };
 
   render() {
-    const { classes, loading, selectedValue, userData, loadingState, loadingCity } = this.props;
     const {
-      documentType,
-      disabled,
-      statusKyc,
-      checkInputs,
-    } = this.state;
+      classes,
+      loading,
+      selectedValue,
+      userData,
+      loadingState,
+      loadingCity
+    } = this.props;
+    const { documentType, disabled, statusKyc, checkInputs } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -341,7 +317,7 @@ class InformationModal extends React.Component {
         }
       }
     };
-    
+
     let isDisabled =
       statusKyc === "confirmed" && disabled
         ? true
@@ -487,67 +463,53 @@ class InformationModal extends React.Component {
                 {i18n.t("DEPOSIT_INF_MODAL_STATE")}
               </div>
               {loadingState ? (
-                  <Loading />
-                ) : (
-              <Select
-                classes={{ selectMenu: classes.underlineItems }}
-                MenuProps={MenuProps}
-                value={this.state.state}
-                renderValue={value => this.searchStatesName(value)}
-                input={
-                  <Input
-                    classes={{
-                      underline: classes.underline,
-                      disabled: classes.disabled
-                    }}
-                  />
-                }
-                inputProps={{
-                  classes: {
-                    icon: classes.icon
+                <Loading />
+              ) : (
+                <Select
+                  classes={{ selectMenu: classes.underlineItems }}
+                  MenuProps={MenuProps}
+                  value={this.state.state}
+                  renderValue={value => this.searchStatesName(value)}
+                  input={
+                    <Input
+                      classes={{
+                        root: classes.inputRoot,
+                        underline: classes.underline,
+                        disabled: classes.disabled
+                      }}
+                    />
                   }
-                }}
-                onChange={this.handleInput("state")}
-                disabled={isDisabled}
-                error={checkInputs && this.state.state === ""}
-              >
-                {this.listStates()}
-              </Select>
-                )}
+                  inputProps={{
+                    classes: {
+                      icon: classes.icon
+                    }
+                  }}
+                  onChange={this.handleInput("state")}
+                  disabled={isDisabled}
+                  error={checkInputs && this.state.state === ""}
+                >
+                  {this.listStates()}
+                </Select>
+              )}
             </Grid>
             <Grid item xs={1} />
             <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
               </div>
-              {loadingCity ? (
-                  <Loading />
-                ) : (
-              <Select
-                classes={{ selectMenu: classes.underlineItems }}
-                MenuProps={MenuProps}
-                value={this.state.city}
-                input={
-                  <Input
-                    classes={{
-                      underline: classes.underline,
-                      disabled: classes.disabled
-                    }}
-                  />
-                }
-                inputProps={{
-                  classes: {
-                    icon: classes.icon
-                  }
+              <Input
+                classes={{
+                  root: classes.inputRoot,
+                  underline: classes.inputCssUnderline,
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
                 }}
-                renderValue={value => value}
+                placeholder={i18n.t("DEPOSIT_INF_MODAL_CITY")}
+                value={this.state.city}
                 onChange={this.handleInput("city")}
                 disabled={isDisabled}
                 error={checkInputs && this.state.city === ""}
-              >
-                {this.listCities()}
-              </Select>
-                )}
+              />
             </Grid>
           </Grid>
 

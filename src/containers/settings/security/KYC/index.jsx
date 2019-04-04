@@ -1038,7 +1038,7 @@ class KYC extends React.Component {
         });
         break;
       case "city":
-        value = value.replace(/[^0-9a-z A-Z-]/, "");
+        value = value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
         this.setState({
           [property]: value
         });
