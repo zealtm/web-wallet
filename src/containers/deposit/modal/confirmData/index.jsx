@@ -57,6 +57,7 @@ class ConfirmData extends React.Component {
   render() {
     const { userData, selectedValue } = this.props;
     const {loading} = this.state;
+    
     return (
       <div>
         <Grid container className={style.containerConfirmData}>
@@ -103,7 +104,7 @@ class ConfirmData extends React.Component {
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_STATE_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>{userData.state}</span>
+            <span className={style.ConfirmDataField}>{userData.stateName}</span>
           </Grid>
 
           <Grid item xs={12} sm={4}>
