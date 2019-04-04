@@ -132,7 +132,7 @@ class PaymentBar extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {selectedPaymentMethod.value === "coin" ? (
+            {selectedPaymentMethod.value === 5 ? (
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
