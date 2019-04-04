@@ -21,6 +21,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Loading from "../../../components/loading";
+import ModalBar from "../../../components/modalBar";
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -101,7 +102,9 @@ class Invoice extends React.Component {
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
       paymentName: i18n.t("DEPOSIT_INVOICE"),
       activeCard: null,
-      depositValue: ""
+      depositValue: 0,
+      error: false,
+      errorMsg: ""
     };
   }
 
@@ -165,7 +168,7 @@ class Invoice extends React.Component {
         </MenuItem>
       ));
     }
-    return ;
+    return;
   };
   listDays = () => {
     const { classes } = this.props;
@@ -317,22 +320,37 @@ class Invoice extends React.Component {
   };
 
   inputValidator = () => {
-    const { openModal, setPaymentInformation, setKycValidation } = this.props;
+    const {
+      openModal,
+      setPaymentInformation,
+      setKycValidation,
+      userData
+    } = this.props;
     const { payment, depositValue, activeCard } = this.state;
     setPaymentInformation({
       service: "Deposit",
       packageId: activeCard,
       paymentMethodId: payment
     });
-    if (depositValue > 100) {
-      setKycValidation();
+    if (depositValue > 300 && userData.status !== "confirmed") {
+      this.setState({
+        error: true,
+        errorMsg:i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
+      });
+    } else if (depositValue == 0) {
+      this.setState({
+        error: true,
+        errorMsg: i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE")
+      });
+    } else {
+      this.setState({ error: false });
+      //validações
+      openModal();
     }
-    //validações
-    openModal();
   };
 
   render() {
-    const { payment, depositValue } = this.state;
+    const { payment, depositValue, error, errorMsg } = this.state;
     const { packages, loading } = this.props;
 
     if (loading) return <Loading />;
@@ -348,6 +366,7 @@ class Invoice extends React.Component {
       );
     return (
       <div>
+        <div>{error ? <ModalBar type="error" message={errorMsg} /> : null}</div>
         <Grid container direction="row" justify="center">
           <Grid
             item
@@ -442,13 +461,15 @@ Invoice.propTypes = {
   setKycValidation: PropTypes.func.isRequired,
   setSelectedValue: PropTypes.func.isRequired,
   loading: PropTypes.bool,
-  methods: PropTypes.array
+  methods: PropTypes.array,
+  userData: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   packages: store.deposit.packages,
   loading: store.deposit.loading,
-  methods: store.deposit.paymentMethods
+  methods: store.deposit.paymentMethods,
+  userData: store.deposit.kyc.data
 });
 
 const mapDispatchToProps = dispatch =>

@@ -714,7 +714,8 @@
   "DEPOSIT_INF_MODAL_KYC_WAITING": "Seu KYC está aguardando aprovação",
   "DEPOSIT_INF_NOT_FOUND": "Não há pacotes disponíveis para depósito",
   "DEPOSIT_INF_NOT_FOUND_HIT": "Não há históricos",
-
+  "DEPOSIT_KYC_CONFIRMATION_REQUIRED": "Para depósitos acima de 300 reais, é necessário ter o KYC confirmado.",
+  
   "DEPOSIT_PAYMODAL_TEXT": "Boleto gerado e enviado para o e-mail cadastrado. Após o pagamento, o dinheiro estará disponível para uso na plataforma em até 2 dias úteis",
   "DEPOSIT_PAYMODAL_TITLE": "Linha digitável copiada",
   "DEPOSIT_PAYMODAL_COPY": "Copiar", 

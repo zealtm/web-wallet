@@ -36,6 +36,7 @@ import ButtonContinue from "../../../../components/buttonContinue";
 import Loading from "../../../../components/loading";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
+
 // UTILS
 import i18n from "../../../../utils/i18n";
 
