@@ -6,13 +6,8 @@ import style from "./style.css";
 import i18n from "../../../../utils/i18n";
 import { successRequest } from "../../../errors/redux/errorAction";
 import { Grid, Hidden } from "@material-ui/core";
-import { getDepositBill } from "../../redux/depositAction";
 import Loading from "../../../../components/loading";
 class PayModal extends Component {
-  componentDidMount() {
-    const { getDepositBill, buyID } = this.props;
-    getDepositBill(buyID);
-  }
   copyBarCode = () => {
     let { depositReturn, successRequest } = this.props;
     const element = document.createElement("textarea");
@@ -122,7 +117,6 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      getDepositBill,
       successRequest
     },
     dispatch
