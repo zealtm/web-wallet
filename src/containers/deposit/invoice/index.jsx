@@ -342,7 +342,12 @@ class Invoice extends React.Component {
         error: true,
         errorMsg: i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE")
       });
-    } else {
+    } else if (userData.status !== null && userData.address.country !== "BR") {
+      this.setState({
+        error:true,
+        errorMsg: i18n.t("DEPOSIT_KYC_COUNTRY_VALIDATION")
+      });
+    }else {
       this.setState({ error: false });
       //validações
       openModal();
