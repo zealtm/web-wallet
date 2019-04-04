@@ -12,9 +12,7 @@ import {
   uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
-import {
-  getPaymentMethodService
-} from "../deposit/redux/depositAction";
+import { getPaymentMethodService } from "../deposit/redux/depositAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -110,7 +108,11 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearPayment, getPaymentMethodService } = this.props;
+    const {
+      getCoinsEnabled,
+      setClearPayment,
+      getPaymentMethodService
+    } = this.props;
     setClearPayment();
     getCoinsEnabled();
     getPaymentMethodService(4);
@@ -143,7 +145,7 @@ class Invoice extends React.Component {
     });
     if (id !== null) return id;
 
-    return ;
+    return;
   };
   handlePayment = (value, title) => {
     let serviceCoinId = this.searchServiceCoinId(value);
@@ -271,19 +273,19 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
-    const { invoice, coin, selectedPaymentMethod, serviceCoinId} = this.state;
-    console.log(JSON.stringify(coins));
+    const { invoice, coin, selectedPaymentMethod, serviceCoinId } = this.state;
+    
     const coinBLRL =
-     selectedPaymentMethod.value === 4
+      selectedPaymentMethod.value === 4
         ? payment.value
         : coins[invoice.coin.abbreviation].decimalPoint;
     const addr =
-    selectedPaymentMethod.value === 4
+      selectedPaymentMethod.value === 4
         ? ""
-        : ( coins[invoice.coin.abbreviation]
+        : coins[invoice.coin.abbreviation]
         ? coins[invoice.coin.abbreviation].address
-        : undefined )
-    const invoiceData = {
+        : undefined;
+    let invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
@@ -291,16 +293,14 @@ class Invoice extends React.Component {
       description: payment.description || invoice.description,
       decimalPoint: coinBLRL,
       address: addr,
-      servicePaymentMethodId: selectedPaymentMethod.value,
-      serviceCoinId: serviceCoinId
+      servicePaymentMethodId: selectedPaymentMethod.value
     };
-    if(selectedPaymentMethod.value === 3){
+    if (selectedPaymentMethod.value === 3) {
       if (invoiceData.value > coin.value.limit) {
         errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
         return;
       }
     }
-    
 
     const invoiceInputs = {};
 
@@ -341,8 +341,12 @@ class Invoice extends React.Component {
         });
         return;
       }
+    } else {
+      invoiceData = {
+        ...invoiceData,
+        serviceCoinId: serviceCoinId
+      };
     }
-
     this.setPayment(invoiceData);
     this.openModal();
     this.setDefaultState();
@@ -393,13 +397,14 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment, methodPaymentsList } = this.props;
     const {
-      coin,
-      invoice,
-      errors,
-      selectedPaymentMethod
-    } = this.state;
+      classes,
+      loading,
+      coinsRedux,
+      payment,
+      methodPaymentsList
+    } = this.props;
+    const { coin, invoice, errors, selectedPaymentMethod } = this.state;
     const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
