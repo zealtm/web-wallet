@@ -17,7 +17,9 @@ const initialState = {
     balance: '',
     amount: '',
     operator: '',
-    address: ''
+    address: '',
+    servicePaymentMethodId: undefined,
+    serviceCoinId: null
   },
   fee: {
     fee: {
@@ -106,7 +108,7 @@ const recharge = (state=initialState, action) => {
           history: action.history,
           loading: false
         };
-
+     
     default: {
       return {
         ...state

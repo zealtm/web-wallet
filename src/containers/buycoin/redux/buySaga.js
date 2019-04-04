@@ -280,40 +280,57 @@ export function* confirmBuySaga(payload) {
       feePerByte: payload.buy.feePerByte,
       feeLunes: payload.buy.feeLunes,
       price: payload.buy.price,
-      decimalPoint: payload.buy.decimalPoint
+      decimalPoint: payload.buy.decimalPoint,
+      describe: "Compra"
     };
 
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
-
-      // pega o servico disponivel
-      let lunesWallet = yield call(
-        transactionService.buyService,
-        payloadTransaction.coin,
-        token
-      );
-
-      if (lunesWallet) {
-        let response = yield call(
-          transactionService.transaction,
-          lunesWallet.id,
-          payloadTransaction,
-          lunesWallet,
-          decryptAes(seed, payload.buy.user),
+      let lunesWallet = null;
+      let response = null;
+      if (payload.buy.buypack.servicePaymentMethodId !== 6) {
+        // pega o servico disponivel
+        lunesWallet = yield call(
+          transactionService.buyService,
+          payloadTransaction.coin,
           token
         );
+      }
 
-        const transacao_obj = JSON.parse(response.config.data);
+      if (lunesWallet || payload.buy.servicePaymentMethodId === 6) {
+        if (lunesWallet) {
+          response = yield call(
+            transactionService.transaction,
+            lunesWallet.id,
+            payloadTransaction,
+            lunesWallet,
+            decryptAes(seed, payload.buy.user),
+            token
+          );
+        }
+        const transacao_obj = response
+          ? JSON.parse(response.config.data)
+          : null;
 
-        if (response) {
+        if (response || payload.buy.servicePaymentMethodId === 6) {
           const payload_elastic = {
-            txID: transacao_obj.txID,
+            txID: response ? transacao_obj.txID : null,
             packageId: payload.buy.buypack.idpack,
-            coinId: payload.buy.buypack.paycoinid, //payload.buy.buypack.coin.id,
-            address: payload.buy.buypack.receiveAddress, //payloadTransaction.fromAddress,
+            coinId: payload.buy.buypack.paycoinid
+              ? payload.buy.buypack.paycoinid
+              : null, 
+            address: payload.buy.buypack.receiveAddress
+              ? payload.buy.buypack.receiveAddress
+              : payload.buy.receiveAddress, //payloadTransaction.fromAddress,
             amount: payloadTransaction.amountReceive,
-            coin: payload.buy.buypack.coin.abbreviation //coin
+            coin: payload.buy.buypack.coin.abbreviation, //coin
+            servicePaymentMethodId: payload.buy.servicePaymentMethodId,
+            userLunesAddress:
+              payload.buy.servicePaymentMethodId === 6
+                ? payload.buy.lunesUserAddress
+                : null,
+            serviceId:payload.buy.serviceCoinId
           };
 
           let response_elastic = yield call(
@@ -404,7 +421,7 @@ export function* getLunesBuyPrices(payload) {
     coins.lunes.price.BRL.price = response.BRL.price;
     coins.lunes.price.EUR.price = response.EUR.price;
     coins.lunes.price.USD.price = response.USD.price;
-   
+
     yield put({
       type: "GET_LUNES_BUY_PRICES",
       coins
