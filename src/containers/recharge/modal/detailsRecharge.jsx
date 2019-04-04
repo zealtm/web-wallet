@@ -11,7 +11,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
-
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 // STYLES
 import style from "./style.css";
 
@@ -35,19 +35,30 @@ class DetailsRecharge extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage, recharge, confirmRecharge } = this.props;
+    const {
+      setModalStep,
+      errorInput,
+      clearMessage,
+      recharge,
+      confirmRecharge,
+      lunes,
+      creditBalance
+    } = this.props;
     const { user } = this.state;
-    
+    let creditsAvailable = convertBiggestCoinUnit(
+      creditBalance.available,
+      8
+    ).toFixed(2);
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
     if (recharge.servicePaymentMethodId === 2) {
-     let payload = {
-        coin: 'lbrl',
+      let payload = {
+        coin: "lbrl",
         fromAddress: null,
         toAddress: null,
-        lunesUserAddress: null,
+        lunesUserAddress: lunes.address,
         amount: recharge.amount,
         fee: null,
         feePerByte: null,
@@ -59,7 +70,12 @@ class DetailsRecharge extends React.Component {
         servicePaymentMethodId: recharge.servicePaymentMethodId,
         serviceCoinId: recharge.serviceCoinId
       };
-      confirmRecharge(payload);
+      
+      if(creditsAvailable > Number(recharge.amount)){
+        confirmRecharge(payload);
+      }else{
+        this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
+      }
     } else {
       setModalStep(2);
     }
@@ -96,13 +112,13 @@ class DetailsRecharge extends React.Component {
     const { recharge } = this.props;
     return (
       <div className={style.strongText} style={{ marginTop: 20 }}>
-        {"Será debitado "}
+        {i18n.t("CREDIT_MODAL_TEXT_1")}
         <span className={style.textGreen}>
           {"R$ "} {recharge.amount}
         </span>
-        {" de seu saldo para realizar uma recarga no valor de  "}
+        {i18n.t("CREDIT_MODAL_TEXT_2")}
         <span className={style.textGreen}>R$ {recharge.value}</span>
-        {" para o número abaixo:"}
+        {i18n.t("CREDIT_MODAL_TEXT_3")}
       </div>
     );
   };
@@ -181,13 +197,17 @@ DetailsRecharge.propTypes = {
   updateUserConsents: PropTypes.func.isRequired,
   clearMessage: PropTypes.func,
   errorInput: PropTypes.func,
-  confirmRecharge: PropTypes.func.isRequired
+  confirmRecharge: PropTypes.func.isRequired,
+  lunes: PropTypes.object,
+  creditBalance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   loading: store.recharge.loading,
   user: store.user.user,
-  recharge: store.recharge.recharge
+  recharge: store.recharge.recharge,
+  lunes: store.skeleton.coins.lunes,
+  creditBalance: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>

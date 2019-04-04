@@ -11,6 +11,7 @@ import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 // UTILS
 import i18n from "../../../utils/i18n";
 import { formatCpfCnpj } from "../../../utils/strings";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 
 // STYLES
 import style from "./style.css";
@@ -37,17 +38,28 @@ class DetailsPayment extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage, payment, coins,confirmPay } = this.props;
+    const {
+      setModalStep,
+      errorInput,
+      clearMessage,
+      payment,
+      coins,
+      confirmPay,
+      creditBalance
+    } = this.props;
     const { user } = this.state;
-
+    let creditsAvailable = convertBiggestCoinUnit(
+      creditBalance.available,
+      8
+    ).toFixed(2);
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
-    if(payment.servicePaymentMethodId === 4){
+    if (payment.servicePaymentMethodId === 4) {
       const payload = {
-        coin: 'lbrl',
-        fromAddress:null,
+        coin: "lbrl",
+        fromAddress: null,
         toAddress: null,
         lunesUserAddress: coins["lunes"].address,
         amount: payment.amount,
@@ -60,8 +72,12 @@ class DetailsPayment extends React.Component {
         serviceCoinId: payment.serviceCoinId,
         payment: payment
       };
-      confirmPay(payload);
-    }else{
+      if (creditsAvailable > payment.amount) {
+        confirmPay(payload);
+      }else {
+        this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
+      }
+    } else {
       setModalStep(2);
     }
     clearMessage();
@@ -87,8 +103,7 @@ class DetailsPayment extends React.Component {
     return (
       <div className={style.strongText} style={{ marginTop: 20 }}>
         <span className={style.textGreen}>
-          {payment.amount.toFixed(8)}{" "}
-          {payment.coin.abbreviation.toUpperCase()}
+          {payment.amount.toFixed(8)} {payment.coin.abbreviation.toUpperCase()}
         </span>
         {i18n.t("PAYMENT_DETAILS_TEXT_2")}
         <span className={style.textGreen}>R$ {payment.value}</span>
@@ -106,7 +121,7 @@ class DetailsPayment extends React.Component {
           {" do seu crédito com 1% de taxa de serviço "}
         </span>
         {i18n.t("PAYMENT_DETAILS_TEXT_2")}
-        <span className={style.textGreen}>{" "}R$ {payment.amount} {" "}</span>
+        <span className={style.textGreen}> R$ {payment.amount} </span>
         {i18n.t("PAYMENT_DETAILS_TEXT_3")}
       </div>
     );
@@ -128,9 +143,9 @@ class DetailsPayment extends React.Component {
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
           </div>
           {i18n.t("PAYMENT_DETAILS_TEXT_1")}
-          {payment.servicePaymentMethodId === 4
-            ? this.renderCredit()
-            : this.renderCrypto()}
+          {payment.servicePaymentMethodId === 3
+            ? this.renderCrypto()
+            : this.renderCredit()}
           <Grid container className={style.inlineInfo}>
             <Grid item xs={6} md={3}>
               <label className={style.inlineInfoLabel}>
@@ -199,13 +214,15 @@ DetailsPayment.propTypes = {
   errorInput: PropTypes.func,
   coins: PropTypes.array.isRequired,
   confirmPay: PropTypes.func.isRequired,
+  creditBalance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading,
   user: store.user.user,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  creditBalance: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>

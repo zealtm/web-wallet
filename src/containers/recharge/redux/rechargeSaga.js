@@ -151,7 +151,7 @@ export function* setRechargeSaga(payload) {
       const balance = balanceResponse.data.data.available;
       const amount = amountResponse.data.data.value;
       const decimalPoint = payload.recharge.decimalPoint;
-        
+
       const data = {
         number: payload.recharge.number,
         coin: payload.recharge.coin,
@@ -251,7 +251,8 @@ export function* confirmRechargeSaga(payload) {
       feeLunes: payload.recharge.feeLunes,
       price: payload.recharge.price,
       decimalPoint: payload.recharge.decimalPoint,
-      servicePaymentMethodId: payload.recharge.servicePaymentMethodId
+      servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+      describe: "Recarga"
     };
 
     try {
@@ -279,7 +280,9 @@ export function* confirmRechargeSaga(payload) {
             token
           );
         }
-        const transacao_obj = response ? JSON.parse(response.config.data): null;
+        const transacao_obj = response
+          ? JSON.parse(response.config.data)
+          : null;
         const ddd = payload.recharge.recharge.number.substring(0, 2);
         const totalnumero = payload.recharge.recharge.number.length;
         const numero = payload.recharge.recharge.number.substring(
@@ -287,7 +290,6 @@ export function* confirmRechargeSaga(payload) {
           totalnumero
         );
         if (response || payload.recharge.servicePaymentMethodId === 2) {
-          
           const payloadElastic = {
             ddd: ddd,
             operatorId: payload.recharge.recharge.operator.id,
@@ -296,8 +298,14 @@ export function* confirmRechargeSaga(payload) {
             value: parseFloat(payload.recharge.recharge.value),
             txID: response ? transacao_obj.txID : null,
             describe: "Recarga",
-            serviceId: response ? payload.recharge.recharge.coin.id : payload.recharge.serviceCoinId,
-            servicePaymentMethodId: payload.recharge.servicePaymentMethodId
+            serviceId: response
+              ? payload.recharge.recharge.coin.id
+              : payload.recharge.serviceCoinId,
+            servicePaymentMethodId: payload.recharge.servicePaymentMethodId,
+            userLunesAddress:
+              payload.recharge.servicePaymentMethodId === 2
+                ? payload.recharge.lunesUserAddress
+                : null
           };
 
           let response_elastic = yield call(
