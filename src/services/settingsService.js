@@ -102,6 +102,14 @@ class SettingsService {
       return;
     }
   }
+
+  // async getCepValidation(cep){
+  //   try{
+  //     const response = await axios.get();
+  //   }catch(error){
+  //     internalServerError();
+  //   }
+  // }
   async getSignatures(token) {
     try {
       API_HEADER.headers.Authorization = token;

@@ -139,7 +139,7 @@
   "RECHARGE_TITLE": "Mobile Credits Recharge",
   "RECHARGE_CREDIT_PAYMENT": "Credit",
   "RECHARGE_COIN_PAYMENT": "Cryptocoins",
-  "SELECT_PAYMENT": "Payment",
+  "SELECT_PAYMENT": "Select...",
   "SETTINGS_CARD": "WALLETS",
   "SETTINGS_CARD_plural": "2FA AUTHENTICATION",
   "SETTINGS_USER": "User profile",
@@ -757,6 +757,8 @@
   "DEPOSIT_PAYMODAL_COPY": "Copy",
   "DEPOSIT_PAYMODAL_DOWNLOAD": "Download",
   "DEPOSIT_PAYMODAL_SHARE": "To share",
+
+  "CEP_VALIDATION": "Sorry, there was a problem validating your zip code",
 
   "MY_BALANCE_DEPOSIT": "My balance",
   "BALANCE_DEPOSIT_CASH": "5.000,00",

@@ -697,35 +697,16 @@ class KYC extends React.Component {
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_CITY")}</p>
               <div className={style.textInput}>
-                {loadingCity ? (
-                  <Loading />
-                ) : (
-                  <Select
-                    classes={{
-                      selectMenu: classes.underlineItems,
-                      root: classes.rootSelect
-                    }}
-                    value={city}
-                    MenuProps={MenuProps}
-                    input={
-                      <Input
-                        classes={{
-                          underline: classes.underline
-                        }}
-                      />
-                    }
-                    inputProps={{
-                      classes: {
-                        icon: classes.icon
-                      }
-                    }}
-                    disabled={state !== "" ? false : true}
-                    onChange={this.handleInput("city")}
-                    error={checkInputs && this.state.city === ""}
-                  >
-                    {this.listCities()}
-                  </Select>
-                )}
+                <Input
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                  value={this.state.city}
+                  error={checkInputs && this.state.city === ""}
+                  onChange={this.handleInput("city")}
+                />
               </div>
             </Grid>
             <Grid
@@ -1006,13 +987,12 @@ class KYC extends React.Component {
     ));
   };
 
-
   listStates = () => {
     const { classes, states } = this.props;
     if (states) {
       return states.map((item, index) => (
         <MenuItem
-          value={item.name}
+          value={item.shortName}
           key={index}
           classes={{
             root: classes.menuItemRoot
@@ -1024,29 +1004,12 @@ class KYC extends React.Component {
     }
     return "";
   };
-  listCities = () => {
-    const { classes, city } = this.props;
-    if (city) {
-      return city.map((item, index) => (
-        <MenuItem
-          value={item}
-          key={index}
-          classes={{
-            root: classes.menuItemRoot
-          }}
-        >
-          {item}
-        </MenuItem>
-      ));
-    }
-    return "";
-  };
+
 
   handleInput = property => e => {
     const { kycGetStates, kycGetCities } = this.props;
     const { documentType, country } = this.state;
     let value = e.target.value;
-    let location = {};
     switch (property) {
       case "document":
         if (documentType === "passport") {
@@ -1068,18 +1031,17 @@ class KYC extends React.Component {
         });
         kycGetStates(value);
         this.setState({ state: "" });
-        this.setState({ city: "" });
         break;
       case "state":
-        location = {
-          country: country,
-          state: value
-        };
         this.setState({
           [property]: value
         });
-        kycGetCities(location);
-        this.setState({ city: "" });
+        break;
+      case "city":
+        value = value.replace(/[^0-9a-z A-Z-]/, "");
+        this.setState({
+          [property]: value
+        });
         break;
       case "zipcode":
         value = value.replace(/\W/, "");
@@ -1276,16 +1238,11 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                {(kyc.status == "rejected") ? (
+                {kyc.status == "rejected" ? (
                   <div style={{ color: "red" }} id="rejectedMessage">
-                    <div>
-                      {i18n.t("KYC_REJECTED_MESSAGE")}{" "}
-                    </div>
-                    <div>
-                      {kyc.comment}
-                    </div>
+                    <div>{i18n.t("KYC_REJECTED_MESSAGE")} </div>
+                    <div>{kyc.comment}</div>
                   </div>
-
                 ) : null}
                 {checkInputs ? (
                   <span style={{ color: "red" }} id="requiredFields">

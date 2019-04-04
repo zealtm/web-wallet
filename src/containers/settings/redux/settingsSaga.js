@@ -247,6 +247,14 @@ export function* kycUpload(payload) {
   }
 }
 
+// export function* getCepValidation(payload){
+//   try{
+    
+//   }catch(error){
+//     yield put(modalError(i18n.t("CEP_VALIDATION")));
+//   }
+// }
+
 export function* getSignaturesSaga() {
   try {
     yield put({
