@@ -19,13 +19,13 @@ export function* getPackagesSaga() {
       loading: true
     });
     let token = yield call(getAuthToken);
-    let response = yield call(depositService.getPackages, token);    
+    let response = yield call(depositService.getPackages, token);
     yield put({
       type: "GET_PACKAGES_REDUCER",
       packages: response
     });
   } catch (error) {
-    yield put(internalServerError());    
+    yield put(internalServerError());
   }
   yield put({
     type: "SET_LOADING_DEPOSIT",
@@ -61,20 +61,20 @@ export function* getDepositHistorySaga() {
   }
 }
 
-export function* getKycData(){
-  try{
+export function* getKycData() {
+  try {
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getKycData, token);
-    if(response.code !== 200){
+    if (response.code !== 200) {
       yield put(internalServerError());
-      return ;
+      return;
     }
     yield put({
       type: "SET_KYC_DATA",
       response
     });
 
-  }catch(error){
+  } catch (error) {
     yield put(internalServerError());
   }
 }
@@ -130,7 +130,7 @@ export function* getPaymentsMethods() {
     let response = yield call(depositService.getPaymentsMethods, token);
     if (response.code !== "200") {
       yield put(internalServerError());
-      return ;
+      return;
     }
     yield put({
       type: "SET_PAYMENT_METHODS",
@@ -142,26 +142,68 @@ export function* getPaymentsMethods() {
 }
 
 export function* createDepositBillSaga(payload) {
+  let timeout = 25000;
+  let endTime = 2000;
+  
   try {
     yield put({
       type: "SET_LOADING_DEPOSIT",
       loading: true
     });
     let token = yield call(getAuthToken);
-    let response = yield call(depositService.createDepositBill, token,payload.payload);
+    let response = yield call(depositService.createDepositBill, token, payload.payload);
+    if (response.data.errorMessage) {
+      yield put({
+        type: "SET_MODAL_STEP",
+        loading: false
+      });
+      yield put({
+        type: "SET_MODAL_STEP",
+        step: 4
+      });
+      yield put(internalServerError());
+    } else {
+      yield put({
+        type: "SET_MODAL_STEP",
+        step: 3
+      });
+      while (true) {
+        setTimeout(() => {
+        }, 2000);
+        
+        endTime = endTime + 2000;
+        token = yield call(getAuthToken);
+        let responseID = yield call(depositService.getDepositBill, token, response.data.data.buyID);
+  
+        if (responseID.data.code === 200) {  
+          let data = responseID.data.data;
+          yield put({
+            type: "SET_DEPOSIT_RETURN",
+            depositReturn: data
+          });
+          yield put({
+            type: "SET_LOADING_DEPOSIT",
+            loading: false
+          });       
+           
+          break;
+        }
+        if (endTime >= timeout && responseID.data.code !== 200) {
+          yield put({
+            type: "SET_MODAL_STEP",
+            step: 4
+          });
+          yield put({
+            type: "SET_LOADING_DEPOSIT",
+            loading: false
+          });
+          yield put(internalServerError());
+          break;
+        }
+      }
 
-    if (response.status !== 200) return yield put(internalServerError());
+    }
 
-    yield put({
-      type: "SET_BUY_ID",
-      id: response.data.data.buyID
-
-    });
-
-    yield put({
-      type: "SET_LOADING_DEPOSIT",
-      loading: false
-    });
   } catch (error) {
     yield put(internalServerError());
   }
@@ -171,21 +213,21 @@ export function* getPaymentsMethodsServiceCreditSaga(payload) {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getPaymentsMethodsServiceCredit, token, payload.serviceId);
-    
+
     if (response.code !== 200) {
       yield put(internalServerError());
-      return ;
+      return;
     }
     const services = response.data.servicePaymentMethods;
-   
+
     const methods = services.reduce((availableMethod, method) => {
       if (method.status === "active") {
         let titleMethod = undefined;
-        if(method.paymentMethodName === 'coin'){
-          titleMethod =  i18n.t("RECHARGE_COIN_PAYMENT");
+        if (method.paymentMethodName === 'coin') {
+          titleMethod = i18n.t("RECHARGE_COIN_PAYMENT");
         }
-        if(method.paymentMethodName === 'credit'){
-          titleMethod =  i18n.t("RECHARGE_CREDIT_PAYMENT");
+        if (method.paymentMethodName === 'credit') {
+          titleMethod = i18n.t("RECHARGE_CREDIT_PAYMENT");
         }
         const active = {
           id: method.id,
@@ -222,17 +264,28 @@ export function* getDepositBillSaga(payload) {
       loading: true
     });
     let token = yield call(getAuthToken);
-    let response = yield call(depositService.getDepositBill, token,payload.buyID);
-    if (response.status !== 200) return yield put(internalServerError());
-    let data = response.data.data;
-    yield put ({
-      type: "SET_DEPOSIT_RETURN",
-      depositReturn: data
-    });
-    yield put({
-      type: "SET_LOADING_DEPOSIT",
-      loading: false
-    });
+    let response = yield call(depositService.getDepositBill, token, payload.buyID);
+    if (response.data.code !== 200) {
+      yield put({
+        type: "SET_LOADING_DEPOSIT",
+        loading: false
+      });
+      yield put({
+        type: "SET_MODAL_STEP",
+        step: 4
+      });
+      yield put(internalServerError());
+    } else {
+      let data = response.data.data;
+      yield put({
+        type: "SET_DEPOSIT_RETURN",
+        depositReturn: data
+      });
+      yield put({
+        type: "SET_LOADING_DEPOSIT",
+        loading: false
+      });
+    }
   } catch (error) {
     yield put(internalServerError());
   }

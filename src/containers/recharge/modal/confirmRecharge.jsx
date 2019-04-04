@@ -34,9 +34,6 @@ class ConfirmRecharge extends React.Component {
     const amount = recharge.amount + recharge.fee.fee.fee;
 
     if (coinBalance > parseFloat(amount)) {
-      if(selectMethodId===1) 
-        this.handleModal(); 
-      else
         setModalStep(4);
     } else {
       errorInput(i18n.t("RECHARGE_AMOUNT_ERROR"));
@@ -68,6 +65,7 @@ class ConfirmRecharge extends React.Component {
 
   render() {
     const { loading, recharge } = this.props;
+    const {isOpen} = this.state;
     return (
       <div className={style.modalBox}>
         <div>{i18n.t("RECHARGE_CONFIRM_1")}</div>
@@ -85,12 +83,12 @@ class ConfirmRecharge extends React.Component {
           action={() => this.confirmPay()}
           loading={loading}
         />
-        <Modal
+        {/* <Modal
           title={"Instructions"}
           content={this.renderConfirm()}
           show={isOpen}
           close={() => this.handleModal()}
-        />
+        /> */}
       </div>
     );
   }
