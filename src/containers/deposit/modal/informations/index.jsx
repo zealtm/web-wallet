@@ -36,6 +36,7 @@ import ButtonContinue from "../../../../components/buttonContinue";
 import Loading from "../../../../components/loading";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 
+
 // UTILS
 import i18n from "../../../../utils/i18n";
 
@@ -141,7 +142,6 @@ class InformationModal extends React.Component {
       document: "",
       city: "",
       state: "",
-      stateName: "",
       cep: "",
       address: "",
       addressNumber: "",
@@ -178,7 +178,6 @@ class InformationModal extends React.Component {
             documentType && documentType !== "passport" ? documentType : "",
           document: document && documentType !== "passport" ? document : "",
           state: state ? state : "",
-          stateName:state ? state : "",
           city: city ? city : "",
           cep: zipcode ? zipcode : "",
           address: street ? street : "",
@@ -214,17 +213,17 @@ class InformationModal extends React.Component {
       fullName && document && state && city && cep && address
     );
   };
-  searchStates = () => {
+
+  searchStatesName = (value) => {
     const { states } = this.props;
-    const { stateName } = this.state;
-    let shortName = null;
+    let name = null;
     states.forEach((element, index) => {
-      if (element.name === stateName) {
-        shortName = element.shortName;
+      if (element.shortName === value) {
+        name = element.name;
       }
     });
-    if (shortName !== null) {
-      return shortName;
+    if (name !== null) {
+      return name;
     }
     return;
   };
@@ -245,7 +244,7 @@ class InformationModal extends React.Component {
       case "state":
         value = e.target.value;
         depositGetCity({ country: "BR", state: value });
-        this.setState({stateName: value, city: ""});
+        this.setState({state: value, city: ""});
         break;
       default:
         value = e.target.value;
@@ -267,12 +266,11 @@ class InformationModal extends React.Component {
       cep,
       address
     } = this.state;
-    let shortName = this.searchStates();
     let user = {
       fullName,
       documentType,
       document,
-      state:shortName,
+      state,
       city,
       cep,
       address
@@ -291,7 +289,7 @@ class InformationModal extends React.Component {
     if (states) {
       return states.map((item, index) => (
         <MenuItem
-          value={item.name}
+          value={item.shortName}
           key={index}
           classes={{
             root: classes.menuItemRoot
@@ -328,7 +326,6 @@ class InformationModal extends React.Component {
       disabled,
       statusKyc,
       checkInputs,
-      stateName
     } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -493,7 +490,7 @@ class InformationModal extends React.Component {
                 classes={{ selectMenu: classes.underlineItems }}
                 MenuProps={MenuProps}
                 value={this.state.state}
-                renderValue={value => value}
+                renderValue={value => this.searchStatesName(value)}
                 input={
                   <Input
                     classes={{
