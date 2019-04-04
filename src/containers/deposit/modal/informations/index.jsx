@@ -142,6 +142,7 @@ class InformationModal extends React.Component {
       document: "",
       city: "",
       state: "",
+      stateName: "",
       cep: "",
       address: "",
       addressNumber: "",
@@ -230,7 +231,7 @@ class InformationModal extends React.Component {
     const { depositGetCity } = this.props;
     switch (property) {
       case "fullName":
-        value = e.target.value.replace(/[^0-9a-zA-Z-]/, "");
+        value = e.target.value.replace(/[^0-9a-z A-Z-]/, "");
         break;
       case "cep":
         value = e.target.value.replace(/[^0-9-]/, "");
@@ -264,11 +265,13 @@ class InformationModal extends React.Component {
       cep,
       address
     } = this.state;
+    let stateName = this.searchStatesName(state);
     let user = {
       fullName,
       documentType,
       document,
       state,
+      stateName,
       city,
       cep,
       address
