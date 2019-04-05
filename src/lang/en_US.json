@@ -757,10 +757,23 @@
   "DEPOSIT_PAYMODAL_DOWNLOAD": "Download",
   "DEPOSIT_PAYMODAL_SHARE": "To share",
 
+  "DEPOSIT_INFO_FEE": "The fee to deposit fiat is:",
+  "DEPOSIT_INFO_FEE_BOLETO": "R$ 4.20 paying with boleto",
+  "DEPOSIT_INFO_FEE_DEBIT": "2.75% paying with debit card",
+  "DEPOSIT_INFO_SERVICE_FEE": "Using fiat to pay for our services will incur in the following fees:",
+  "DEPOSIT_INFO_RECHARGE_FEE": "Recharge: 0%",
+  "DEPOSIT_INFO_PAYMENT_FEE": "Bill Payment: 1%",
+  "DEPOSIT_INFO_BUY_FEE": "Buying cryptocurrency: 5%",
+  "DEPOSIT_INFO_USER": "The required time to process the boleto payment can be up to 72 hours.",
+  "DEPOSIT_INFO_CASHBACK": "You will also receive a cashback amount of 0.5% in Lunes on service payments using fiat.",
+
+  "DEPOSIT_HISTORY_PAYMENT_DEBIT": "Debit",
+  "DEPOSIT_HISTORY_STATUS_CANCEL": "Canceled",
+  "DEPOSIT_HISTORY_STATUS_PENDING": "Pending",
+  "DEPOSIT_HISTORY_STATUS_CONFIRM": "Confirmed",
+  "DEPOSIT_HISTORY_PROTOCOL": "Protocol",
+
   "MY_BALANCE_DEPOSIT": "My balance",
-  "BALANCE_DEPOSIT_CASH": "5.000,00",
-  "BALANCE_DEPOSIT_CASH_COIN": "142,5 millions of Lunes",
-  "BALANCE_DEPOSIT_TOTAL_COIN": "Total: 142,000,00",
   
   "P2P_TAB_PURCHASE": "Purchase",
   "P2P_TAB_SALE": "Sale",

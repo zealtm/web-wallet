@@ -42,7 +42,6 @@ class DepositService {
         BASE_URL + "/deposit/history",
         API_HEADER
       );
-
       setAuthToken(response.headers[HEADER_RESPONSE]);      
 
       return response;

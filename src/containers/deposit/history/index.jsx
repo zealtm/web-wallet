@@ -14,6 +14,7 @@ import style from "./style.css";
 import Loading from "../../../components/loading";
 // UTILS
 import i18n from "../../../utils/i18n";
+import { formatDate } from "../../../utils/numbers";
 
 class History extends React.Component {
   constructor(props) {
@@ -74,9 +75,9 @@ class History extends React.Component {
               <Grid item xs={4} style={{ textAlign: "end" }}>
                 <p
                   className={
-                    item.status === "Cancel"
+                    item.status === "canceled"
                       ? style.txtCancel
-                      : item.status === "Pendent"
+                      : item.status === "waiting"
                       ? style.txtPendent
                       : style.txtConfirm
                   }
@@ -108,12 +109,14 @@ class History extends React.Component {
     return (
       <Grid item xs={12} sm={7} className={style.boxHistory}>
         {history.map((item, index) => {
+          let date =
+          formatDate(item.createdAt, "DMY", true) + " " + formatDate(item.createdAt, "HM");
           return (
             <Grid
               className={style.boxHistoryItems}
               key={index}
               onClick={
-                item.type === "Recorrent"
+                Object.keys(item.recurrence).length !== 0
                   ? () => this.stateDataHistory(index)
                   : null
               }
@@ -125,39 +128,41 @@ class History extends React.Component {
 
               <Grid item xs={5} className={style.boxItem_1}>
                 <p className={style.txtConfirm}>
-                  {item.nameHistory}
+                  {item.paymentMethod == 'bill'?'Boleto':
+                  item.paymentMethod == 'debit'?i18n.t("DEPOSIT_HISTORY_PAYMENT_DEBIT"):""}
 
-                  {item.type === "Recorrent" ? (
-                    <span> {" - " + item.type}</span>
+                  {Object.keys(item.recurrence).length !== 0  ? (
+                    <span> {" - Recorrente"}</span>
                   ) : null}
                 </p>
-                <p className={style.textBold}>{item.info.date}</p>
-                <p>{item.user.cpf}</p>
+                <p className={style.textBold}>{date}</p>
+                <span>{"ID "}</span><span>{item.id}</span>
               </Grid>
 
               <Grid item xs={4} className={style.boxItem_2}>
                 <p
                   className={
-                    item.info.status === "Cancel"
+                    item.status === "canceled"
                       ? style.txtCancel
-                      : item.info.status === "Pendent"
+                      : item.status === "waiting"
                       ? style.txtPendent
                       : style.txtConfirm
                   }
                 >
-                  {item.info.status}
+                  { item.status === "canceled"?i18n.t("DEPOSIT_HISTORY_STATUS_CANCEL"):
+                    item.status === "waiting"?i18n.t("DEPOSIT_HISTORY_STATUS_PENDING"):i18n.t("DEPOSIT_HISTORY_STATUS_CONFIRM")}
                 </p>
 
-                <p className={style.textBold}>{item.info.value}</p>
-                <p>{item.user.id}</p>
+                <p className={style.textBold}>R$ {parseFloat(item.value).toFixed(2)}</p>
+                <span>{i18n.t("DEPOSIT_HISTORY_PROTOCOL")} </span><span>{item.protocol}</span>
               </Grid>
 
               <Grid item xs={1} className={style.boxIcon}>
-                {item.type === "Recorrent" && item.info.status === "Confirm" ? (
+                {Object.keys(item.recurrence).length !== 0  && item.status === "confirm" ? (
                   <CloseIcon color="error" style={{ fontSize: 20 }} />
                 ) : null}
               </Grid>
-              {item.type === "Recorrent" ? this.renderSubItems(index) : null}
+              {Object.keys(item.recurrence).length !== 0  ? this.renderSubItems(index) : null}
             </Grid>
           );
         })}
@@ -175,7 +180,7 @@ class History extends React.Component {
 }
 
 History.propTypes = {
-  history: PropTypes.array,
+  history: PropTypes.array.isRequired,
   getDepositHistory: PropTypes.func,
   loading : PropTypes.bool
 };

@@ -343,8 +343,7 @@ export function* confirmPaySaga(payload) {
       feePerByte: payload.payment.feePerByte,
       feeLunes: payload.payment.feeLunes,
       price: payload.payment.price,
-      decimalPoint: payload.payment.decimalPoint,
-      describe: "Pagamento de Contas"
+      decimalPoint: payload.payment.decimalPoint
     };
 
     try {
