@@ -26,8 +26,8 @@ class Instructions extends React.Component {
       <div>
         <div className={style.instructions}>
           <a href="#" onClick={() => this.handleModal()}>
-            {i18n.t("COUPON_INSTRUCTIONS")}
-            <img src="/images/icons/recharge/ic_instrucoes.png" alt={i18n.t("COUPON_INSTRUCTIONS")} />
+            {i18n.t("DEPOSIT_INSTRUCTIONS")}
+            <img src="/images/icons/recharge/ic_instrucoes.png" alt={i18n.t("DEPOSIT_INSTRUCTIONS")} />
           </a>
         </div>
         <Modal
