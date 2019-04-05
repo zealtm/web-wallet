@@ -12,7 +12,8 @@ import {
   kycGetCountries,
   kycGetStates,
   kycGetCities,
-  getKyc
+  getKyc,
+  validateKycCep
 } from "../../redux/settingsAction";
 
 // STYLE
@@ -1275,7 +1276,8 @@ KYC.propTypes = {
   city: PropTypes.array,
   sendRequest: PropTypes.number,
   getKyc: PropTypes.func,
-  kyc: PropTypes.object.isRequired
+  kyc: PropTypes.object.isRequired,
+  validateKycCep: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -1287,7 +1289,7 @@ const mapStateToProps = store => ({
   states: store.settings.location.states,
   city: store.settings.location.city,
   sendRequest: store.settings.sendRequest,
-  kyc: store.settings.kyc
+  kyc: store.settings.kyc,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -1298,7 +1300,8 @@ const mapDispatchToProps = dispatch =>
       kycGetCountries,
       kycGetStates,
       kycGetCities,
-      getKyc
+      getKyc,
+      validateKycCep
     },
     dispatch
   );

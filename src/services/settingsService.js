@@ -42,13 +42,13 @@ class SettingsService {
       return;
     }
   }
-  async kycGetCountries(token){
+  async kycGetCountries(token) {
     try {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/util/countrystatecity`,
         {
-        method:"listcountries",
+          method: "listcountries"
         },
         API_HEADER
       );
@@ -60,16 +60,16 @@ class SettingsService {
     }
   }
 
-  async kycGetStates(token, country){
+  async kycGetStates(token, country) {
     try {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/util/countrystatecity`,
         {
-        method:"liststates",
-        params:{
-          country
-        }
+          method: "liststates",
+          params: {
+            country
+          }
         },
         API_HEADER
       );
@@ -81,17 +81,17 @@ class SettingsService {
     }
   }
 
-  async kycGetCity(token, country, state){
+  async kycGetCity(token, country, state) {
     try {
       API_HEADER.headers.Authorization = token;
       const response = await axios.post(
         `${BASE_URL}/util/countrystatecity`,
         {
-        method:"listcities",
-        params:{
-          country,
-          state
-        }
+          method: "listcities",
+          params: {
+            country,
+            state
+          }
         },
         API_HEADER
       );
@@ -103,13 +103,16 @@ class SettingsService {
     }
   }
 
-  // async getCepValidation(cep){
-  //   try{
-  //     const response = await axios.get();
-  //   }catch(error){
-  //     internalServerError();
-  //   }
-  // }
+  async getCepValidation(token, cep) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.get(`${BASE_URL}/user/cep/${cep}`, API_HEADER);
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      return response.data.data;
+    } catch (error) {
+      internalServerError();
+    }
+  }
   async getSignatures(token) {
     try {
       API_HEADER.headers.Authorization = token;
@@ -158,7 +161,7 @@ class SettingsService {
       API_HEADER.headers.Authorization = token;
       const request = `${BASE_URL}/kyc`;
       let response = await axios.get(request, API_HEADER);
-      
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
       return response;
     } catch (error) {

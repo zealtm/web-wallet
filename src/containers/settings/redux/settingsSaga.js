@@ -247,13 +247,25 @@ export function* kycUpload(payload) {
   }
 }
 
-// export function* getCepValidation(payload){
-//   try{
-    
-//   }catch(error){
-//     yield put(modalError(i18n.t("CEP_VALIDATION")));
-//   }
-// }
+export function* getCepValidation(payload) {
+  try {
+    let token = yield call(getAuthToken);
+    yield put({
+      type: "SET_LOADING_ADDRESS"
+    });
+    let response = yield call(
+      settingsService.getCepValidation,
+      token,
+      payload.cep
+    );
+    yield put({
+      type: "SET_CEP_VALIDATION_INFORMATION",
+      response
+    });
+  } catch (error) {
+    yield put(modalError(i18n.t("CEP_VALIDATION")));
+  }
+}
 
 export function* getSignaturesSaga() {
   try {
@@ -493,7 +505,7 @@ export function* getFeeP2PSaga(payload) {
   }
 }
 
-export function* getKyc(){
+export function* getKyc() {
   try {
     const token = yield call(getAuthToken);
     const response = yield call(settingsService.getKyc, token);
