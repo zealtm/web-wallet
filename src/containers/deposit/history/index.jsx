@@ -135,7 +135,7 @@ class History extends React.Component {
                   ) : null}
                 </p>
                 <p className={style.textBold}>{date}</p>
-                <span>{"ID "}</span><span>{item.userID}</span>
+                <span>{"ID "}</span><span>{item.id}</span>
               </Grid>
 
               <Grid item xs={4} className={style.boxItem_2}>
