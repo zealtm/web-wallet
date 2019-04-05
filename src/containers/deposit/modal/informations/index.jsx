@@ -170,7 +170,7 @@ class InformationModal extends React.Component {
       });
     } else if (selectedValue > 0) {
       if (state) {
-        depositGetCity({ country: "BR", state: state });
+        depositGetCity({ country: "BR", state: this.searchStatesName(state) });
       }
       if (status !== null) {
         this.setState({
@@ -244,7 +244,7 @@ class InformationModal extends React.Component {
         break;
       case "state":
         value = e.target.value;
-        depositGetCity({ country: "BR", state: value });
+        depositGetCity({ country: "BR", state: this.searchStatesName(value) });
         this.setState({state: value, city: ""});
         break;
       default:
