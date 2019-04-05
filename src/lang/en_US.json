@@ -767,6 +767,8 @@
   "DEPOSIT_INFO_USER": "The required time to process the boleto payment can be up to 72 hours.",
   "DEPOSIT_INFO_CASHBACK": "You will also receive a cashback amount of 0.5% in Lunes on service payments using fiat.",
 
+  "DEPOSIT_INSTRUCTIONS": "Fees and information",
+
   "DEPOSIT_HISTORY_PAYMENT_DEBIT": "Debit",
   "DEPOSIT_HISTORY_STATUS_CANCEL": "Canceled",
   "DEPOSIT_HISTORY_STATUS_PENDING": "Pending",
