@@ -12,30 +12,36 @@ class InstructionsModal extends React.Component {
       <div className={style.alignInstructions}>
         
         <div className={style.infoModal}>
-          <strong>{"depósito"}</strong>
+          <strong>{i18n.t("DEPOSIT_INFO_FEE")}</strong>
         </div>
         <ol>
           <li>
-            <span> {"R$4,20 para depósito com boleto"}</span>
+            <span> {i18n.t("DEPOSIT_INFO_FEE_BOLETO")}</span>
           </li>
           <li>
-            <span> {"2,75% para depósito com débito"}</span>
+            <span> {i18n.t("DEPOSIT_INFO_FEE_DEBIT")}</span>
           </li>
         </ol>
         <div className={style.infoModal}>
-          <strong>{"serviços"}</strong>
+          <strong>{i18n.t("DEPOSIT_INFO_SERVICE_FEE")}</strong>
         </div>
         <ol>
           <li>
-            <span> {"recarga - 0%"}</span>
+            <span> {i18n.t("DEPOSIT_INFO_RECHARGE_FEE")}</span>
           </li>
           <li>
-            <span> {"boleto - 1%"}</span>
+            <span> {i18n.t("DEPOSIT_INFO_PAYMENT_FEE")}</span>
           </li>
           <li>
-            <span> {"compra - 5%"}</span>
+            <span> {i18n.t("DEPOSIT_INFO_BUY_FEE")}</span>
           </li>
-        </ol>        
+        </ol>
+        <div className={style.infoModal}>
+          <strong>
+            {i18n.t("DEPOSIT_INFO_USER")} <br /><br />
+            {i18n.t("DEPOSIT_INFO_CASHBACK")}
+          </strong>
+        </div>       
       </div>
     );
   }

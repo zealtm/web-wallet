@@ -128,7 +128,8 @@ class History extends React.Component {
 
               <Grid item xs={5} className={style.boxItem_1}>
                 <p className={style.txtConfirm}>
-                  {item.paymentMethod == 'bill'?'Boleto':'Deposito'}
+                  {item.paymentMethod == 'bill'?'Boleto':
+                  item.paymentMethod == 'debit'?i18n.t("DEPOSIT_HISTORY_PAYMENT_DEBIT"):""}
 
                   {Object.keys(item.recurrence).length !== 0  ? (
                     <span> {" - Recorrente"}</span>
@@ -148,12 +149,12 @@ class History extends React.Component {
                       : style.txtConfirm
                   }
                 >
-                  { item.status === "canceled"?"Cancelado":
-                    item.status === "waiting"?"Pendente":"Confirmado"}
+                  { item.status === "canceled"?i18n.t("DEPOSIT_HISTORY_STATUS_CANCEL"):
+                    item.status === "waiting"?i18n.t("DEPOSIT_HISTORY_STATUS_PENDING"):i18n.t("DEPOSIT_HISTORY_STATUS_CONFIRM")}
                 </p>
 
                 <p className={style.textBold}>R$ {parseFloat(item.value).toFixed(2)}</p>
-                <span>{"Protocolo "}</span><span>{item.protocol}</span>
+                <span>{i18n.t("DEPOSIT_HISTORY_PROTOCOL")} </span><span>{item.protocol}</span>
               </Grid>
 
               <Grid item xs={1} className={style.boxIcon}>

@@ -731,10 +731,23 @@
   "DEPOSIT_PAYMODAL_DOWNLOAD": "Baixar",
   "DEPOSIT_PAYMODAL_SHARE": "Compartilhar",
 
+  "DEPOSIT_INFO_FEE": "A taxa de depósito é de:",
+  "DEPOSIT_INFO_FEE_BOLETO": "R$ 4.20 utilizando boleto",
+  "DEPOSIT_INFO_FEE_DEBIT": "2.75% utilizando cartão de débito",
+  "DEPOSIT_INFO_SERVICE_FEE": "Utilizando créditos como forma de pagamento dos nossos serviços as taxas são:",
+  "DEPOSIT_INFO_RECHARGE_FEE": "Recarga: 0%",
+  "DEPOSIT_INFO_PAYMENT_FEE": "Pagamento de boletos: 1%",
+  "DEPOSIT_INFO_BUY_FEE": "Compra de criptomoedas: 5%",
+  "DEPOSIT_INFO_USER": "O tempo para compensação bancária pode levar até 72 horas.",
+  "DEPOSIT_INFO_CASHBACK": "Vale lembrar que oferecemos cashback em Lunes de 0.5% para todos os serviços oferecidos na wallet quando forem pagos com Créditos.",
+
+  "DEPOSIT_HISTORY_PAYMENT_DEBIT": "Débito",
+  "DEPOSIT_HISTORY_STATUS_CANCEL": "Cancelado",
+  "DEPOSIT_HISTORY_STATUS_PENDING": "Pendente",
+  "DEPOSIT_HISTORY_STATUS_CONFIRM": "Confirmado",
+  "DEPOSIT_HISTORY_PROTOCOL": "Protocolo",
+
   "MY_BALANCE_DEPOSIT": "Meu Saldo",
-  "BALANCE_DEPOSIT_CASH": "5.000,00",
-  "BALANCE_DEPOSIT_CASH_COIN": "142,5 milhões de Lunes",
-  "BALANCE_DEPOSIT_TOTAL_COIN": "Total: 142,000,00",
   
   "P2P_COMING_SOON": "Avaliação disponível em breve!",
   "P2P_TAB_PURCHASE": "Compra",
