@@ -52,6 +52,7 @@ import ModalBar from "../../../../components/modalBar";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
 import InfoConfirm from "../infoCorfirm";
+import { isCNPJ, isCPF } from "brazilian-values";
 
 const inputStyle = {
   root: {
@@ -225,6 +226,9 @@ class KYC extends React.Component {
       phoneCountry: "",
       invalidPhone: false,
       invalidPassport: false,
+      invalidCPF: false,
+      invalidCNPJ: false,
+      errorMsg: "",
       country: "",
       checkInputs: false
     };
@@ -232,6 +236,8 @@ class KYC extends React.Component {
   componentDidMount() {
     let { kycGetCountries, getKyc } = this.props;
     kycGetCountries();
+    console.log(isCPF("08503536960"));
+
     getKyc();
   }
 
@@ -525,13 +531,7 @@ class KYC extends React.Component {
   };
 
   renderKycForm = () => {
-    const {
-      classes,
-      loadingKyc,
-      loadingCreate,
-      loadingState,
-      loadingCity
-    } = this.props;
+    const { classes, loadingKyc, loadingCreate, loadingState } = this.props;
     const {
       phoneNumber,
       documentType,
@@ -1006,9 +1006,8 @@ class KYC extends React.Component {
     return "";
   };
 
-
   handleInput = property => e => {
-    const { kycGetStates, kycGetCities } = this.props;
+    const { kycGetStates, validateKycCep } = this.props;
     const { documentType, country } = this.state;
     let value = e.target.value;
     switch (property) {
@@ -1030,6 +1029,9 @@ class KYC extends React.Component {
         this.setState({
           [property]: value
         });
+        if(value === "BR"){
+          validateKycCep(this.state.zipcode);
+        }
         kycGetStates(value);
         this.setState({ state: "" });
         break;
@@ -1148,30 +1150,44 @@ class KYC extends React.Component {
     };
     let passport = new RegExp("^[A-Z][0-9]{8}$");
 
-    if (!parseMax(phoneNumber).isValid()) {
-      this.setState({ invalidPhone: true });
-    } else {
-      this.setState({ invalidPhone: false });
+    if (documentType === "cpf" && !isCPF(document)) {
+      this.setState({ invalidCPF: true, errorMsg: "Insira um CPF válido" });
+      return;
+    } else if (documentType === "cnpj" && !isCNPJ(document)) {
+      this.setState({ invalidCNPJ: true, errorMsg: "Insira um CNPJ válido" });
+      return;
     }
+    // if (!parseMax(phoneNumber).isValid()) {
+    //   this.setState({ invalidPhone: true });
+    // } else {
+    //   this.setState({ invalidPhone: false });
+    // }
 
-    if (document.match(passport) === null && documentType === "passport") {
-      this.setState({ invalidPassport: true });
-    } else {
-      this.setState({ invalidPassport: false });
-    }
-    if (!this.state.invalidPassport && !this.state.invalidPhone) {
-      this.uploadImage(addressFile.file, addressFile.fileType);
-      this.uploadImage(documentFrontFile.file, documentFrontFile.fileType);
-      this.uploadImage(documentBackFile.file, documentBackFile.fileType);
-      this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
-      kycCreate(payload);
-    }
+    // if (document.match(passport) === null && documentType === "passport") {
+    //   this.setState({ invalidPassport: true });
+    // } else {
+    //   this.setState({ invalidPassport: false });
+    // }
+    // if (!this.state.invalidPassport && !this.state.invalidPhone) {
+    //   this.uploadImage(addressFile.file, addressFile.fileType);
+    //   this.uploadImage(documentFrontFile.file, documentFrontFile.fileType);
+    //   this.uploadImage(documentBackFile.file, documentBackFile.fileType);
+    //   this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
+    //   kycCreate(payload);
+    // }
   };
 
   render() {
-    const { invalidPassport, invalidPhone, checkInputs } = this.state;
+    const {
+      invalidPassport,
+      invalidPhone,
+      checkInputs,
+      errorMsg,
+      invalidCNPJ,
+      invalidCPF
+    } = this.state;
     const { sendRequest, kyc } = this.props;
-    let errorMessage = "";
+    let errorMessage = errorMsg;
     if (invalidPassport && !invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT");
     else if (invalidPhone && !invalidPassport)
@@ -1180,7 +1196,7 @@ class KYC extends React.Component {
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
     return (
       <div>
-        {invalidPassport || invalidPhone ? (
+        {invalidPassport || invalidPhone || invalidCNPJ || invalidCPF ? (
           <ModalBar type="error" message={errorMessage} timer />
         ) : null}
         {sendRequest === 2 ? (
@@ -1267,7 +1283,6 @@ KYC.propTypes = {
   loadingKyc: PropTypes.bool.isRequired,
   loadingCreate: PropTypes.bool.isRequired,
   loadingState: PropTypes.bool.isRequired,
-  loadingCity: PropTypes.bool.isRequired,
   kycGetCountries: PropTypes.func.isRequired,
   kycGetStates: PropTypes.func.isRequired,
   kycGetCities: PropTypes.func.isRequired,
@@ -1284,12 +1299,11 @@ const mapStateToProps = store => ({
   loadingKyc: store.settings.loadingKyc,
   loadingCreate: store.settings.loadingCreate,
   loadingState: store.settings.loadingState,
-  loadingCity: store.settings.loadingCity,
   countries: store.settings.location.countries,
   states: store.settings.location.states,
   city: store.settings.location.city,
   sendRequest: store.settings.sendRequest,
-  kyc: store.settings.kyc,
+  kyc: store.settings.kyc
 });
 
 const mapDispatchToProps = dispatch =>
