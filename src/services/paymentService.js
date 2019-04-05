@@ -87,7 +87,7 @@ class PaymentService {
 
       let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      
       if (response.data.code === 404) {
         return {
           payments: []
