@@ -14,6 +14,7 @@ import { Grid, Input, InputAdornment, IconButton } from "@material-ui/core";
 // COMPONENTS
 import HistoryItem from "./historyItem";
 import Loading from "../../../components/loading";
+import BalanceLBRL from "../../deposit/component/balanceLBRL";
 
 // STYLES
 import style from "./style.css";
@@ -87,7 +88,9 @@ class History extends React.Component {
     const { search } = this.state;
 
     return (
-      <Grid container direction="row" justify="center">
+      <div>
+        <BalanceLBRL />
+        <Grid container direction="row" justify="center">
         <Grid item xs={12} className={style.transparentBox}>
           <Grid container>
             <Grid item xs={4} sm={3}>
@@ -139,6 +142,8 @@ class History extends React.Component {
           )}
         </Grid>
       </Grid>
+      </div>
+      
     );
   }
 }

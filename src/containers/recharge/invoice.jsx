@@ -22,7 +22,7 @@ import Loading from "../../components/loading";
 import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
 import ModalBar from "../../components/modalBar";
-
+import BalanceLBRL from "../deposit/component/balanceLBRL";
 // MATERIAL
 import { Grid, Input, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -30,7 +30,6 @@ import { withStyles } from "@material-ui/core/styles";
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
 import i18n from "../../utils/i18n";
-
 // STYLES
 import style from "./style.css";
 
@@ -354,18 +353,22 @@ class Invoice extends React.Component {
       valores,
       loadingValores,
       valueError,
-      methodPaymentsList
+      methodPaymentsList,
+      credit,
+      coins
     } = this.props;
     const { coin, errors, invoice, selectedPaymentMethod } = this.state;
 
     const title = coin.name || i18n.t("SELECT_COIN");
-    const img = coin.img || "";
+    const img = coin.img || "";    
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
       : i18n.t("SELECT_PAYMENT");
 
     return (
-      <Grid container direction="row" justify="center">
+      <div>
+        <BalanceLBRL />
+        <Grid container direction="row" justify="center">
         <div>
           {valueError ? (
             <ModalBar
@@ -528,6 +531,7 @@ class Invoice extends React.Component {
           <Instructions />
         </Grid>
       </Grid>
+      </div>      
     );
   }
 }
@@ -547,7 +551,7 @@ Invoice.propTypes = {
   setClearRecharge: PropTypes.func.isRequired,
   coins: PropTypes.array,
   valueError: PropTypes.bool,
-  methodPaymentsList: PropTypes.array
+  methodPaymentsList: PropTypes.array,
 };
 
 const mapStateToProps = store => ({
@@ -558,7 +562,7 @@ const mapStateToProps = store => ({
   valores: store.recharge.valores,
   coins: store.skeleton.coins,
   valueError: store.recharge.valueError,
-  methodPaymentsList: store.deposit.paymentsMethodsService
+  methodPaymentsList: store.deposit.paymentsMethodsService,
 });
 
 const mapDispatchToProps = dispatch =>

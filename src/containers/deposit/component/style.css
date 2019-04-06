@@ -1,0 +1,40 @@
+/* lin balance */
+:local .linBalance{  
+    width: 28vw !important;
+    max-width: 40vw !important;
+    border:0.5px dashed white;
+    float: left;
+  }
+  :local .textBalance{
+    font-weight: bold;
+  }
+  :local .textBalanceGreen{
+    composes: clGreenLight from "../../../components/bases/colorBase.css";
+    margin-left: 5px;
+    
+  }
+  :local .textBalanceBox{
+    float: right;
+  }
+  :local .contentBalance{
+    padding: 10px;
+    max-width: 40vw !important;
+    margin: 0 auto;
+    flex-direction: column;
+    display: block;
+  }
+  @media screen and (max-width: 820px) {
+    :local .contentBalance {
+      padding: 10px;
+      max-width: 120vw !important;
+      margin: 0 auto;
+      flex-direction: column;
+      display: block;
+    }
+    :local .linBalance{  
+      width: 55vw !important;
+      max-width: 60vw !important;
+      border:0.5px dashed white;
+      float: left;
+    }
+  }
