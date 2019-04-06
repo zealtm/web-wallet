@@ -19,7 +19,7 @@ const initialState = {
     states: [],
     city: []
   },
-  cepValidation: {},
+  cepValidation: {cep: true},
   sendRequest: 0,
   kyc: {},
   loadingP2P: false,

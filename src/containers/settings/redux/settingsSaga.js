@@ -246,7 +246,7 @@ export function* kycUpload(payload) {
     yield put(internalServerError());
   }
 }
-
+  
 export function* getCepValidation(payload) {
   try {
     let token = yield call(getAuthToken);
@@ -258,6 +258,8 @@ export function* getCepValidation(payload) {
       token,
       payload.cep
     );
+    if(!response)
+      response = {cep:false};
     yield put({
       type: "SET_CEP_VALIDATION_INFORMATION",
       response
