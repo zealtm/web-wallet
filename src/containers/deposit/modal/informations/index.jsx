@@ -159,7 +159,7 @@ class InformationModal extends React.Component {
     };
   }
   setInputValue = () => {
-    const { userData, selectedValue, depositGetCity } = this.props;
+    const { userData, selectedValue, depositGetCity,methods } = this.props;
     const { data } = userData;
     const { fullName, document, documentType, address, status } = data;
     const { city, state, country, street, zipcode } = address;

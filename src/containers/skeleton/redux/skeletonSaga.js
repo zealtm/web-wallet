@@ -133,7 +133,7 @@ export function* loadWalletInfo(action) {
       responseCoins[defaultCrypto].address,
       token
     );
-
+    yield put({type: "GET_CREDIT_BALANCE_API"});
     yield put({
       type: "GET_GENERAL_INFO",
       coins: responseCoins

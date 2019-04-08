@@ -338,9 +338,7 @@ export function* confirmBuySaga(payload) {
             token,
             payload_elastic
           );
-          if (payload.buy.servicePaymentMethodId === 6) {
-            yield put({type: "GET_CREDIT_BALANCE_API"});
-          }
+
           yield put({
             type: "SET_LOADING_REDUCER", //SET_CLEAR_BUY_REDUCER
             payload: false

@@ -313,9 +313,7 @@ export function* confirmRechargeSaga(payload) {
             token,
             payloadElastic
           );
-          if (payload.recharge.servicePaymentMethodId === 2) {
-            yield put({type: "GET_CREDIT_BALANCE_API"});
-          }
+
           yield put({
             type: "SET_CLEAR_RECHARGE_REDUCER"
           });
