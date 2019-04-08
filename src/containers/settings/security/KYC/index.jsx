@@ -53,7 +53,6 @@ import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
 import InfoConfirm from "../infoCorfirm";
 import { isCNPJ, isCPF } from "brazilian-values";
-import { cps } from "redux-saga/effects";
 
 const inputStyle = {
   root: {
@@ -237,8 +236,6 @@ class KYC extends React.Component {
   componentDidMount() {
     let { kycGetCountries, getKyc } = this.props;
     kycGetCountries();
-    console.log(isCPF("08503536960"));
-
     getKyc();
   }
 
@@ -548,7 +545,9 @@ class KYC extends React.Component {
       country,
       street,
       checkInputs,
-      isCepValid
+      isCepValid,
+      invalidCNPJ,
+      invalidCPF
     } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -867,7 +866,7 @@ class KYC extends React.Component {
                     disabled: classes.disabled
                   }}
                   error={
-                    invalidPassport ||
+                    invalidPassport || invalidCNPJ || invalidCPF ||
                     (checkInputs && this.state.document === "")
                   }
                   disabled={documentType ? false : true}
@@ -1177,7 +1176,7 @@ class KYC extends React.Component {
   };
 
   handleClick = () => {
-    const { kycCreate } = this.props;
+    const { kycCreate, cep } = this.props;
     const {
       street,
       state,
@@ -1215,26 +1214,26 @@ class KYC extends React.Component {
       this.setState({ invalidCNPJ: true });
       return;
     }
-    console.log(payload);
 
-    // if (!parseMax(phoneNumber).isValid()) {
-    //   this.setState({ invalidPhone: true });
-    // } else {
-    //   this.setState({ invalidPhone: false });
-    // }
 
-    // if (document.match(passport) === null && documentType === "passport") {
-    //   this.setState({ invalidPassport: true });
-    // } else {
-    //   this.setState({ invalidPassport: false });
-    // }
-    // if (!this.state.invalidPassport && !this.state.invalidPhone) {
-    //   this.uploadImage(addressFile.file, addressFile.fileType);
-    //   this.uploadImage(documentFrontFile.file, documentFrontFile.fileType);
-    //   this.uploadImage(documentBackFile.file, documentBackFile.fileType);
-    //   this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
-    //   kycCreate(payload);
-    // }
+    if (!parseMax(phoneNumber).isValid()) {
+      this.setState({ invalidPhone: true });
+    } else {
+      this.setState({ invalidPhone: false });
+    }
+
+    if (document.match(passport) === null && documentType === "passport") {
+      this.setState({ invalidPassport: true });
+    } else {
+      this.setState({ invalidPassport: false });
+    }
+    if (!this.state.invalidPassport && !this.state.invalidPhone) {
+      this.uploadImage(addressFile.file, addressFile.fileType);
+      this.uploadImage(documentFrontFile.file, documentFrontFile.fileType);
+      this.uploadImage(documentBackFile.file, documentBackFile.fileType);
+      this.uploadImage(documentSelfieFile.file, documentSelfieFile.fileType);
+      kycCreate(payload);
+    }
   };
 
   render() {

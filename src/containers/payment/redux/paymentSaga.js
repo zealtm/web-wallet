@@ -398,7 +398,9 @@ export function* confirmPaySaga(payload) {
               token,
               payload_elastic
             );
-
+            if (payload.payment.servicePaymentMethodId === 4) {
+              yield put({type: "GET_CREDIT_BALANCE_API"});
+            }
             yield put({
               type: "SET_CLEAR_PAYMENT_REDUCER"
             });

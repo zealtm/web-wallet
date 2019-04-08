@@ -21,7 +21,8 @@ import {
   loadWalletInfo,
   availableCoins,
   balanceCoins,
-  createCoinsAddress
+  createCoinsAddress,
+  loadCreditBalance
 } from "../skeleton/redux/skeletonSaga";
 import {
   validateAddress,
@@ -180,6 +181,7 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+    fork(takeLatest, "GET_CREDIT_BALANCE_API", loadCreditBalance),
     
 
     // Wallet-Saga

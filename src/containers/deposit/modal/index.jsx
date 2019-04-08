@@ -16,7 +16,6 @@ import i18n from "../../../utils/i18n";
 class DepositModal extends Component {
   renderModalContent = () => {
     const { modalStep } = this.props;
-    console.log("slep : "+ modalStep);
     if (modalStep === 1) return <Information />;
     if (modalStep === 2) return <ConfirmData />;
 

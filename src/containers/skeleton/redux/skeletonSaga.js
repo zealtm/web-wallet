@@ -97,6 +97,22 @@ export function* loadGeneralInfo(action) {
   }
 }
 
+export function* loadCreditBalance() {
+  try {
+    let token = yield call(getAuthToken);
+    let userId = yield call(getUserId);
+    let responseCredits = yield call(
+      coinService.getCoinBalance,
+      "lbrl",
+      userId,
+      token
+    );
+    yield put({ type: "SET_CREDIT_BALANCE", responseCredits });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* loadWalletInfo(action) {
   try {
     const token = yield call(getAuthToken);

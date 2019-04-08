@@ -324,15 +324,17 @@ class Invoice extends React.Component {
       openModal,
       setPaymentInformation,
       setKycValidation,
-      userData
+      userData,
+      methods
     } = this.props;
+    
     const { payment, depositValue, activeCard } = this.state;
     setPaymentInformation({
       service: "Deposit",
       packageId: activeCard,
       paymentMethodId: payment
     });
-    if (depositValue > 300 && userData.status !== "confirmed") {
+    if (depositValue > methods[0].limitKycAmount && userData.status !== "confirmed") {
       this.setState({
         error: true,
         errorMsg:i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")

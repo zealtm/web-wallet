@@ -10,7 +10,8 @@ import {
   setUserData,
   setModalSteps,
   depositGetStates,
-  depositGetCity
+  depositGetCity,
+  validateDepositCep
 } from "../../redux/depositAction";
 
 // STYLE
@@ -35,6 +36,8 @@ import { Lens } from "@material-ui/icons";
 import ButtonContinue from "../../../../components/buttonContinue";
 import Loading from "../../../../components/loading";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
+import { isCNPJ, isCPF } from "brazilian-values";
+import ModalBar from "../../../../components/modalBar";
 
 // UTILS
 import i18n from "../../../../utils/i18n";
@@ -148,7 +151,11 @@ class InformationModal extends React.Component {
       documentType: "",
       statusKyc: "",
       disabled: true,
-      checkInputs: false
+      checkInputs: false,
+      invalidCPF: false,
+      invalidCNPJ: false,
+      invalidCEP: false,
+      errorMsg: ""
     };
   }
   setInputValue = () => {
@@ -156,7 +163,7 @@ class InformationModal extends React.Component {
     const { data } = userData;
     const { fullName, document, documentType, address, status } = data;
     const { city, state, country, street, zipcode } = address;
-    if (selectedValue > 300 && status !== "confirmed") {
+    if (selectedValue > methods[0].limitKycAmount && status !== "confirmed") {
       this.setState({
         fullName: "",
         documentType: "",
@@ -220,17 +227,16 @@ class InformationModal extends React.Component {
   };
   handleInput = property => e => {
     let value = null;
-    const { depositGetCity } = this.props;
+    const { validateDepositCep, cep } = this.props;
     switch (property) {
       case "fullName":
         value = e.target.value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
         break;
       case "cep":
-        value = e.target.value.replace(/[^0-9-]/, "");
-        break;
-
-      case "addressNumbe":
-        value = e.target.value.replace(/\D/, "");
+        value = e.target.value.replace(/[^0-9]/, "");
+        if (value.length > 7) {
+          validateDepositCep(value);
+        }
         break;
       case "state":
         value = e.target.value;
@@ -238,6 +244,16 @@ class InformationModal extends React.Component {
         break;
       case "city":
         value = e.target.value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
+        break;
+      case "address":
+        if (cep.cep) {
+          value = e.target.value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
+          this.setState({
+            state: cep.estado ? cep.estado : "",
+            city: cep.cidade ? cep.cidade : ""
+          });
+        }
+        break;
       default:
         value = e.target.value;
         break;
@@ -269,6 +285,15 @@ class InformationModal extends React.Component {
       cep,
       address
     };
+    
+    if (documentType === "cpf" && !isCPF(document)) {
+      this.setState({ invalidCPF: true, errorMsg: i18n.t("INVALID_CPF") });
+      return;
+    } else if (documentType === "cnpj" && !isCNPJ(document)) {
+      this.setState({ invalidCNPJ: true, errorMsg: i18n.t("INVALID_CNPJ") });
+      return;
+    } 
+    
     setLoading(true);
     setModalSteps(2);
 
@@ -303,9 +328,20 @@ class InformationModal extends React.Component {
       selectedValue,
       userData,
       loadingState,
-      loadingCity
+      cep,
+      loadingAddress,
+      methods
     } = this.props;
-    const { documentType, disabled, statusKyc, checkInputs } = this.state;
+    const {
+      documentType,
+      disabled,
+      statusKyc,
+      checkInputs,
+      invalidCNPJ,
+      invalidCPF,
+      invalidCEP,
+      errorMsg
+    } = this.state;
     const MenuProps = {
       PaperProps: {
         style: {
@@ -317,7 +353,8 @@ class InformationModal extends React.Component {
         }
       }
     };
-
+    let state = cep.estado ? cep.estado : this.state.state;
+    let city = cep.cidade ? cep.cidade : this.state.city;
     let isDisabled =
       statusKyc === "confirmed" && disabled
         ? true
@@ -333,7 +370,7 @@ class InformationModal extends React.Component {
     let infoMessage = i18n.t("DEPOSIT_INF_MODAL_TITLE");
     if (selectedValue === 0) {
       infoMessage = i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE");
-    } else if (selectedValue > 300 && statusKyc === "rejected") {
+    } else if (selectedValue > methods[0].limitKycAmount  && statusKyc === "rejected") {
       infoMessage = (
         <div className={style.clickHere}>
           {i18n.t("DEPOSIT_INF_MODAL_KYC_REJECTED")}
@@ -345,11 +382,16 @@ class InformationModal extends React.Component {
           </Link>
         </div>
       );
-    } else if (selectedValue > 300 && statusKyc === "waiting") {
+    } else if (selectedValue > methods[0].limitKycAmount && statusKyc === "waiting") {
       infoMessage = i18n.t("DEPOSIT_INF_MODAL_KYC_WAITING");
     }
+    let message = errorMsg;
+    if(!cep.cep) message = i18n.t("INVALID_CEP");
     return (
       <div>
+        {invalidCNPJ || invalidCPF || invalidCEP || !cep.cep ? (
+          <ModalBar type="error" message={message} />
+        ) : null}
         <Grid container className={style.container}>
           <Grid item xs={12}>
             <div className={style.formGroup}>{infoMessage}</div>
@@ -448,7 +490,11 @@ class InformationModal extends React.Component {
                     ? true
                     : false
                 }
-                error={checkInputs && this.state.document === ""}
+                error={
+                  (checkInputs && this.state.document === "") ||
+                  invalidCNPJ ||
+                  invalidCPF
+                }
               />
             </Grid>
           </Grid>
@@ -460,15 +506,35 @@ class InformationModal extends React.Component {
           >
             <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
+                {i18n.t("DEPOSIT_INF_MODAL_CEP")}
+              </div>
+              <Input
+                classes={{
+                  root: classes.inputRoot,
+                  underline: classes.inputCssUnderline,
+                  input: classes.inputCssCenter,
+                  disabled: classes.disabled
+                }}
+                placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
+                value={this.state.cep}
+                onChange={this.handleInput("cep")}
+                inputProps={{ maxLength: 8 }}
+                disabled={isDisabled}
+                error={(checkInputs && this.state.cep === "") || !cep.cep}
+              />
+            </Grid>
+            <Grid item xs={1} />
+            <Grid item xs={12} sm={5}>
+              <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_STATE")}
               </div>
-              {loadingState ? (
+              {loadingState || loadingAddress ? (
                 <Loading />
               ) : (
                 <Select
                   classes={{ selectMenu: classes.underlineItems }}
                   MenuProps={MenuProps}
-                  value={this.state.state}
+                  value={state}
                   renderValue={value => this.searchStatesName(value)}
                   input={
                     <Input
@@ -485,14 +551,21 @@ class InformationModal extends React.Component {
                     }
                   }}
                   onChange={this.handleInput("state")}
-                  disabled={isDisabled}
+                  disabled={isDisabled ? true : cep.cep && state ? true : false}
                   error={checkInputs && this.state.state === ""}
                 >
                   {this.listStates()}
                 </Select>
               )}
             </Grid>
-            <Grid item xs={1} />
+          </Grid>
+
+          <Grid
+            container
+            direction="row"
+            justify="space-around"
+            className={style.formGroup}
+          >
             <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
@@ -505,20 +578,13 @@ class InformationModal extends React.Component {
                   disabled: classes.disabled
                 }}
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CITY")}
-                value={this.state.city}
+                value={city}
                 onChange={this.handleInput("city")}
-                disabled={isDisabled}
+                disabled={isDisabled ? true : cep.cep && city ? true : false}
                 error={checkInputs && this.state.city === ""}
               />
             </Grid>
-          </Grid>
-
-          <Grid
-            container
-            direction="row"
-            justify="space-around"
-            className={style.formGroup}
-          >
+            <Grid item sm={2} />
             <Grid item xs={12} sm={5}>
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
@@ -537,26 +603,7 @@ class InformationModal extends React.Component {
                 error={checkInputs && this.state.address === ""}
               />
             </Grid>
-            <Grid item sm={2} />
-            <Grid item xs={12} sm={5}>
-              <div className={style.textGreen}>
-                {i18n.t("DEPOSIT_INF_MODAL_CEP")}
-              </div>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter,
-                  disabled: classes.disabled
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_CEP")}
-                value={this.state.cep}
-                onChange={this.handleInput("cep")}
-                inputProps={{ maxLength: 9 }}
-                disabled={isDisabled}
-                error={checkInputs && this.state.cep === ""}
-              />
-            </Grid>
+
             <Grid item sm={1} />
           </Grid>
 
@@ -592,7 +639,10 @@ InformationModal.propTypes = {
   userData: PropTypes.object,
   selectedValue: PropTypes.number,
   loadingState: PropTypes.bool,
-  loadingCity: PropTypes.bool
+  validateDepositCep: PropTypes.func,
+  cep: PropTypes.object,
+  methods: PropTypes.array,
+  loadingAddress: PropTypes.bool
 };
 
 const mapStateToProps = store => ({
@@ -600,9 +650,11 @@ const mapStateToProps = store => ({
   states: store.deposit.location.states,
   city: store.deposit.location.city,
   loadingState: store.deposit.loadingState,
-  loadingCity: store.deposit.loadingState,
   userData: store.deposit.kyc,
-  selectedValue: store.deposit.selectedValue
+  selectedValue: store.deposit.selectedValue,
+  cep: store.settings.cepValidation,
+  loadingAddress: store.settings.loadingAddress,
+  methods: store.deposit.paymentMethods,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -612,7 +664,8 @@ const mapDispatchToProps = dispatch =>
       setUserData,
       setModalSteps,
       depositGetStates,
-      depositGetCity
+      depositGetCity,
+      validateDepositCep
     },
     dispatch
   );
