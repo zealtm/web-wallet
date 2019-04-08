@@ -24,8 +24,10 @@ class DonePayment extends React.Component {
   }
 
   componentDidMount() {
-    const { loadWalletInfo, user, getCreditBalance } = this.props;
+    const { loadWalletInfo, user, getCreditBalance, credit } = this.props;
     loadWalletInfo(user.password);
+    let {available} = credit;
+    getCreditBalance(available);
   }
 
   render() {
@@ -61,12 +63,14 @@ DonePayment.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   loadWalletInfo: PropTypes.func.isRequired,
-  getCreditBalance: PropTypes.func
+  getCreditBalance: PropTypes.func,
+  credit: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
 };
 
 const mapStateToProps = store => ({
   loading: store.payment.loading,
-  user: store.user.user
+  user: store.user.user,
+  credit: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>
