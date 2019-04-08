@@ -436,7 +436,7 @@
   "INSTRUCTION_MODAL_PAY__BTC_1": "Até R$1.000,00 - 3,5%",
   "INSTRUCTION_MODAL_PAY__BTC_2": "De R$1.000,01 a R$3.000,00 - 3%",
   "INSTRUCTION_MODAL_PAY__BTC_3": "Acima de R$3.000,01 - 2,5%",
-  "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Taxa de mineração de rede (O valor varia de acordo com a rede da moeda + 20% da taxa Lunes) + 5% da taxa de serviço.",
+  "INSTRUCTION_MODAL_RECHARGE_INFO_1": " Taxa de mineração de rede (O valor varia de acordo com a rede da moeda + 20% da taxa Lunes).",
   "INSTRUCTION_MODAL_RECHARGE_INFO_2": " Em caso de problemas com o atendimento do pedido, as moedas enviadas serão automaticamente devolvidas ao endereço Lunes da moeda.",
   "RECHARGE_FEE_TEXT_1": "Você está enviando ",
   "RECHARGE_FEE_TEXT_2": " para ",
