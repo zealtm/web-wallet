@@ -55,7 +55,7 @@ const customStyle = theme => ({
   inputCss: {
     color: colors.messages.info,
     fontFamily: "Noto Sans, sans-serif",
-    fontSize: "14px",
+    fontSize: "14px !important",
     letterSpacing: "0.5px",
     textAlign: "left"
   },
@@ -79,8 +79,8 @@ const customStyle = theme => ({
     }
   },
   disabled: {
-    opacity: "2",
-    color: "gray"
+    opacity: "2 !important",
+    color: "gray !important"
   },
   error: {},
   focused: {},
@@ -390,7 +390,7 @@ class InformationModal extends React.Component {
     return (
       <div>
         {invalidCNPJ || invalidCPF || invalidCEP || !cep.cep ? (
-          <ModalBar type="error" message={message} />
+          <ModalBar type="error" message={message} timer clock={"6000"} />
         ) : null}
         <Grid container className={style.container}>
           <Grid item xs={12}>
@@ -540,7 +540,8 @@ class InformationModal extends React.Component {
                     <Input
                       classes={{
                         root: classes.inputRoot,
-                        underline: classes.underline,
+                        underline: classes.inputCssUnderline,
+                        input: classes.inputCss,
                         disabled: classes.disabled
                       }}
                     />
@@ -551,7 +552,7 @@ class InformationModal extends React.Component {
                     }
                   }}
                   onChange={this.handleInput("state")}
-                  disabled={isDisabled ? true : cep.cep && state ? true : false}
+                  disabled={isDisabled ? true : cep.estado && state ? true : false}
                   error={checkInputs && this.state.state === ""}
                 >
                   {this.listStates()}
@@ -580,7 +581,7 @@ class InformationModal extends React.Component {
                 placeholder={i18n.t("DEPOSIT_INF_MODAL_CITY")}
                 value={city}
                 onChange={this.handleInput("city")}
-                disabled={isDisabled ? true : cep.cep && city ? true : false}
+                disabled={isDisabled ? true : cep.cidade && city ? true : false}
                 error={checkInputs && this.state.city === ""}
               />
             </Grid>

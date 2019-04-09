@@ -67,14 +67,14 @@ class ModalBar extends Component {
 
   // VALIDATE CONTENT
   validateContent = () => {
-    let { type, message, timer } = this.props;
+    let { type, message, timer, clock } = this.props;
 
     if (!type) type = "info";
     if (!message) message = "NO TEXT MESSAGE";
     if (timer)
       setTimeout(() => {
         this.modalClose();
-      }, 4000);
+      }, clock ? clock : 4000);
     this.setState({ type, message });
   };
 
@@ -141,7 +141,8 @@ ModalBar.propTypes = {
   classes: PropTypes.object.isRequired,
   type: PropTypes.oneOf(["success", "error", "info"]).isRequired,
   message: PropTypes.string,
-  timer: PropTypes.bool
+  timer: PropTypes.bool,
+  clock: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch =>
