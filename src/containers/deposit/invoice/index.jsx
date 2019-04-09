@@ -22,6 +22,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Loading from "../../../components/loading";
 import ModalBar from "../../../components/modalBar";
+import Instructions from "../../deposit/instructions";
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -441,15 +442,7 @@ class Invoice extends React.Component {
                 className={style.transparentBox}
                 style={{ marginTop: "10px" }}
               >
-                <div className={style.information}>
-                  <a href="#">
-                    {i18n.t("COUPON_INSTRUCTIONS")}
-                    <img
-                      src="/images/icons/recharge/ic_instrucoes.png"
-                      alt={i18n.t("COUPON_INSTRUCTIONS")}
-                    />
-                  </a>
-                </div>
+                <Instructions />
               </Grid>
             </Grid>
           </Grid>
