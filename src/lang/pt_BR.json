@@ -700,8 +700,8 @@
   "INSUFFICIENT_CREDIT": "Você não possui créditos suficientes",
 
   "DEPOSIT_ACCOUNT_MODAL_TITLE": "Depósito via Débito",
-  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Banco",
-  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "Você será direcionado para o site do Banco que efeturá seu pagamento em débito",
+  "DEPOSIT_ACCOUNT_MODAL_HEADER": "Clique no Icone do Cartão",
+  "DEPOSIT_ACCOUNT_MODAL_CONTENT": "Você será direcionado para um ambiente seguro para efetuar o pagamento com seu cartão de débito",
   "BANK_ICON": "Icone do banco",
   "DEPOSIT_TITLE_CANCEL": "Alerta para cancelamento",
   "DEPOSIT_TEXT_CANCEL": "Você clicou em cancelar o seu depósito recorrente no valor de:",
