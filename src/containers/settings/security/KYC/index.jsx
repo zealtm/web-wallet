@@ -228,7 +228,7 @@ class KYC extends React.Component {
       invalidPassport: false,
       invalidCPF: false,
       invalidCNPJ: false,
-      isCepValid: false,
+      invalidCEP: false,
       country: "",
       checkInputs: false
     };
@@ -237,6 +237,18 @@ class KYC extends React.Component {
     let { kycGetCountries, getKyc } = this.props;
     kycGetCountries();
     getKyc();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { country } = this.state;
+    const { cep } = this.props;
+    if (country === "BR" && prevProps.cep.cep !== cep.cep) {
+      this.setState({
+        state: cep.estado ? cep.estado : "",
+        city: cep.cidade ? cep.cidade : "",
+        street: cep.logradouro ? cep.logradouro : ""
+      });
+    }
   }
 
   formGetter() {
@@ -543,9 +555,10 @@ class KYC extends React.Component {
       invalidPassport,
       invalidPhone,
       country,
+      state,
+      city,
       street,
       checkInputs,
-      isCepValid,
       invalidCNPJ,
       invalidCPF
     } = this.state;
@@ -560,8 +573,6 @@ class KYC extends React.Component {
         }
       }
     };
-    let state = cep.estado ? cep.estado : this.state.state;
-    let city = cep.cidade ? cep.cidade : this.state.city;
     let inputMask = null;
     if (documentType === "cnpj") {
       inputMask = CnpjMask;
@@ -688,7 +699,10 @@ class KYC extends React.Component {
                     disabled={
                       country === ""
                         ? true
-                        : country === "BR" && cep.cep && state
+                        : country === "BR" &&
+                          cep.cep &&
+                          state &&
+                          this.state.zipcode.length === 8
                         ? true
                         : false
                     }
@@ -715,7 +729,12 @@ class KYC extends React.Component {
                     }}
                     value={city}
                     disabled={
-                      country === "BR" && cep.cep && city ? true : false
+                      country === "BR" &&
+                      cep.cep &&
+                      city &&
+                      this.state.zipcode.length === 8
+                        ? true
+                        : false
                     }
                     error={checkInputs && this.state.city === ""}
                     onChange={this.handleInput("city")}
@@ -866,7 +885,9 @@ class KYC extends React.Component {
                     disabled: classes.disabled
                   }}
                   error={
-                    invalidPassport || invalidCNPJ || invalidCPF ||
+                    invalidPassport ||
+                    invalidCNPJ ||
+                    invalidCPF ||
                     (checkInputs && this.state.document === "")
                   }
                   disabled={documentType ? false : true}
@@ -982,7 +1003,7 @@ class KYC extends React.Component {
         <Grid item xs={12}>
           <center>
             <Grid item xs={12} sm={6}>
-              {this.checkAllInputs() && isCepValid ? (
+              {this.checkAllInputs() ? (
                 <button
                   className={style.buttonEnableSecurity}
                   onClick={() => this.handleClick()}
@@ -1083,18 +1104,9 @@ class KYC extends React.Component {
         this.setState({
           [property]: value
         });
-        if (country === "BR") {
-          this.setState({
-            isCepValid: false
-          });
-        }
+
         if (country === "BR" && value.length > 7) {
           validateKycCep(value);
-          if (!cep.cep) {
-            this.setState({
-              isCepValid: true
-            });
-          }
         }
         break;
       case "street":
@@ -1102,12 +1114,6 @@ class KYC extends React.Component {
         this.setState({
           [property]: value
         });
-        if (country === "BR") {
-          this.setState({
-            state: cep.estado ? cep.estado : "",
-            city: cep.cidade ? cep.cidade : ""
-          });
-        }
         break;
       default:
         this.setState({
@@ -1213,9 +1219,11 @@ class KYC extends React.Component {
     } else if (documentType === "cnpj" && !isCNPJ(document)) {
       this.setState({ invalidCNPJ: true });
       return;
+    } else if (country === "BR" && (zipcode.length < 8 || !cep.cep)) {
+      this.setState({ invalidCEP: true });
+      return ;
     }
-
-
+   
     if (!parseMax(phoneNumber).isValid()) {
       this.setState({ invalidPhone: true });
     } else {
@@ -1242,7 +1250,8 @@ class KYC extends React.Component {
       invalidPhone,
       checkInputs,
       invalidCNPJ,
-      invalidCPF
+      invalidCPF,
+      invalidCEP
     } = this.state;
     const { sendRequest, kyc, cep } = this.props;
     let errorMessage = "";
@@ -1253,8 +1262,7 @@ class KYC extends React.Component {
     else if (invalidPassport && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
     else if (!cep.cep) errorMessage = i18n.t("INVALID_CEP");
-    else if (invalidCPF && !invalidPhone)
-      errorMessage = i18n.t("INVALID_CPF");
+    else if (invalidCPF && !invalidPhone) errorMessage = i18n.t("INVALID_CPF");
     else if (invalidCPF && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_CPF_PHONE");
     else if (invalidCNPJ && !invalidPhone)
@@ -1267,6 +1275,7 @@ class KYC extends React.Component {
         invalidPhone ||
         invalidCNPJ ||
         invalidCPF ||
+        invalidCEP ||
         !cep.cep ? (
           <ModalBar type="error" message={errorMessage} />
         ) : null}

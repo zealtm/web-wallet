@@ -112,7 +112,7 @@ class ConfirmData extends React.Component {
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_CEP_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>{userData.cep}</span>
+            <span className={style.ConfirmDataField}>{userData.zipcode}</span>
           </Grid>
 
           <Grid item xs={12} sm={12}>
