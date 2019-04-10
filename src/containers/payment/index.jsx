@@ -29,11 +29,6 @@ class Payment extends React.Component {
     };
   }
 
-  componentDidMount(){
-    const { setClearPayment } = this.props;
-    setClearPayment();
-  }
-
   handleModal = () =>
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   openScannerModal = () =>

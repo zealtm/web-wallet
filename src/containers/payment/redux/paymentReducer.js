@@ -28,7 +28,7 @@ const initialState = {
   },
   history: [],
   loading: false,
-  modalStep: 1
+  modalStep: 1,
 };
 
 const payment = (state = initialState, action) => {
