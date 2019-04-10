@@ -76,3 +76,8 @@ export const setMethodServiceId = id => ({
   type: "SET_METHOD_SERVICE_ID",
   id
 });
+
+export const validateDepositCep = cep =>({
+  type: "GET_CEP_VALIDATION_API",
+  cep
+});
