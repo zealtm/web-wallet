@@ -42,7 +42,7 @@ class ConfirmData extends React.Component {
           city: userData.city,
           state: userData.state,
           country: "BR",
-          zipcode: userData.cep
+          zipcode: userData.zipcode
         }
       }
     };
