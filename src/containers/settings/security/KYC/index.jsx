@@ -1221,9 +1221,9 @@ class KYC extends React.Component {
       return;
     } else if (country === "BR" && (zipcode.length < 8 || !cep.cep)) {
       this.setState({ invalidCEP: true });
-      return ;
+      return;
     }
-   
+    
     if (!parseMax(phoneNumber).isValid()) {
       this.setState({ invalidPhone: true });
     } else {
@@ -1261,7 +1261,7 @@ class KYC extends React.Component {
       errorMessage = i18n.t("KYC_INVALID_PHONE");
     else if (invalidPassport && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
-    else if (!cep.cep) errorMessage = i18n.t("INVALID_CEP");
+    else if (invalidCEP) errorMessage = i18n.t("INVALID_CEP");
     else if (invalidCPF && !invalidPhone) errorMessage = i18n.t("INVALID_CPF");
     else if (invalidCPF && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_CPF_PHONE");
@@ -1269,15 +1269,16 @@ class KYC extends React.Component {
       errorMessage = i18n.t("INVALID_CNPJ");
     else if (invalidCPF && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_CNPJ_PHONE");
+
     return (
       <div>
         {invalidPassport ||
         invalidPhone ||
         invalidCNPJ ||
         invalidCPF ||
-        invalidCEP ||
-        !cep.cep ? (
-          <ModalBar type="error" message={errorMessage} />
+        invalidCEP 
+         ? (
+          <ModalBar type="error" message={errorMessage} timer clock={"6000"} />
         ) : null}
         {sendRequest === 2 ? (
           <ModalBar
