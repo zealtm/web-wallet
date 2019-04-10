@@ -28,6 +28,12 @@ class Payment extends React.Component {
       scannerOpen: false
     };
   }
+  
+  componentDidMount(){
+    const { setClearPayment } = this.props;
+    setClearPayment();
+  }
+
   handleModal = () =>
     this.setState({ ...this.state, isOpen: !this.state.isOpen });
   openScannerModal = () =>
