@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadWalletInfo } from "../../skeleton/redux/skeletonAction";
+import {
+  loadWalletInfo,
+  getCreditBalance
+} from "../../skeleton/redux/skeletonAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
@@ -21,8 +24,10 @@ class DonePayment extends React.Component {
   }
 
   componentDidMount() {
-    const { loadWalletInfo, user } = this.props;
+    const { loadWalletInfo, user, getCreditBalance, credit } = this.props;
     loadWalletInfo(user.password);
+    let {available} = credit;
+    getCreditBalance(available);
   }
 
   render() {
@@ -32,7 +37,7 @@ class DonePayment extends React.Component {
         <div className={style.modalBox}>
           <Loading color="lunes" />
         </div>
-      )
+      );
     } else {
       return (
         <div className={style.modalBox}>
@@ -57,18 +62,19 @@ class DonePayment extends React.Component {
 DonePayment.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
-  loadWalletInfo: PropTypes.func.isRequired
-}
+  loadWalletInfo: PropTypes.func.isRequired,
+  getCreditBalance: PropTypes.func,
+  credit: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+};
 
 const mapStateToProps = store => ({
   loading: store.payment.loading,
-  user: store.user.user
+  user: store.user.user,
+  credit: store.skeleton.creditBalance
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  { loadWalletInfo },
-  dispatch
-)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ loadWalletInfo, getCreditBalance }, dispatch);
 
 export default connect(
   mapStateToProps,

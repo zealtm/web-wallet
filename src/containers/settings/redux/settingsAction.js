@@ -68,6 +68,10 @@ export const kycGetCities = location => ({
 export const getKyc = () => ({
   type: "GET_KYC_API"
 });
+export const validateKycCep = cep =>({
+  type: "GET_CEP_VALIDATION_API",
+  cep
+});
 export const getSignatures = () => ({
   type: "GET_SIGNATURES_P2P"
 });

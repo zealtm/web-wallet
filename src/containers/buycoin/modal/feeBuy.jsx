@@ -124,8 +124,10 @@ class FeeBuy extends React.Component {
           ? coins[buypack.coin.abbreviation].address
           : ""
       };
-      if (creditsAvailable > buypack.amountFiat) {
+      
+      if (Number(creditsAvailable) > buypack.amountFiat) {
         confirmBuy(payload);
+        
       } else {
         this.setState({
           error: true,
