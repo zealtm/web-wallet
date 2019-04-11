@@ -203,14 +203,26 @@ class InformationModal extends React.Component {
     this.setInputValue();
     depositGetStates("BR");
   }
-  componentDidUpdate(prevProps) {
-    const {cep} = this.props;
-    if(cep.cep !== prevProps.cep.cep){
-      this.setState({
-        state: cep.estado ? cep.estado : "",
-        city: cep.cidade ? cep.cidade : "",
-        address: cep.logradouro ? cep.logradouro : "" 
-      });
+  componentDidUpdate(prevProps, prevState) {
+    const { country, document, documentType, zipcode } = this.state;
+    const { cep } = this.props;
+    if (cep.cep !== prevProps.cep.cep) {
+      if (!cep.cep) {
+        this.setState({ invalidCEP: true, state: "", city: "", address: "",  errorMsg: i18n.t("INVALID_CEP") });
+      } else {
+        this.setState({
+          state: cep.estado ? cep.estado : "",
+          city: cep.cidade ? cep.cidade : "",
+          address: cep.logradouro ? cep.logradouro : "",
+          invalidCEP: false
+        });
+      }
+    }else if (prevState.document !== document) {
+      if (documentType === "cpf" && document.length === 11) {
+        this.setState({ invalidCPF: !isCPF(document),  errorMsg: i18n.t("INVALID_CPF") });
+      } else if (documentType === "cnpj" && document.length === 14) {
+        this.setState({ invalidCNPJ: !isCNPJ(document),  errorMsg: i18n.t("INVALID_CNPJ") });
+      }
     }
   }
   checkAllInputs = () => {
@@ -292,7 +304,7 @@ class InformationModal extends React.Component {
       zipcode,
       address
     };
-    
+
     if (documentType === "cpf" && !isCPF(document)) {
       this.setState({ invalidCPF: true, errorMsg: i18n.t("INVALID_CPF") });
       return;
@@ -301,9 +313,9 @@ class InformationModal extends React.Component {
       return;
     } else if (zipcode.length < 8) {
       this.setState({ invalidCEP: true, errorMsg: i18n.t("INVALID_CEP") });
-      return ;
-    } else if(cep.cep === false){
-      return ;
+      return;
+    } else if (cep.cep === false) {
+      return;
     }
 
     setLoading(true);
@@ -405,10 +417,10 @@ class InformationModal extends React.Component {
       infoMessage = i18n.t("DEPOSIT_INF_MODAL_KYC_WAITING");
     }
     let message = errorMsg;
-    if (!cep.cep) message = i18n.t("INVALID_CEP");
+    if (invalidCEP) message = i18n.t("INVALID_CEP");
     return (
       <div>
-        {invalidCNPJ || invalidCPF || invalidCEP || !cep.cep ? (
+        {invalidCNPJ || invalidCPF || invalidCEP ? (
           <ModalBar type="error" message={message} timer clock={"6000"} />
         ) : null}
         <Grid container className={style.container}>
@@ -539,8 +551,9 @@ class InformationModal extends React.Component {
                 onChange={this.handleInput("zipcode")}
                 inputProps={{ maxLength: 8 }}
                 disabled={isDisabled}
-                error={(checkInputs && this.state.zipcode === "") || !cep.cep}
+                error={(checkInputs && this.state.zipcode === "") || invalidCEP}
               />
+              
             </Grid>
             <Grid item xs={1} />
             <Grid item xs={12} sm={5}>
@@ -596,26 +609,28 @@ class InformationModal extends React.Component {
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_CITY")}
               </div>
-              { loadingAddress ? (<Loading/>): (
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter,
-                  disabled: classes.disabled
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_CITY")}
-                value={city}
-                onChange={this.handleInput("city")}
-                disabled={
-                  isDisabled
-                    ? true
-                    : cep.cidade && city && this.state.zipcode.length === 8
-                    ? true
-                    : false
-                }
-                error={checkInputs && this.state.city === ""}
-              />
+              {loadingAddress ? (
+                <Loading />
+              ) : (
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCssCenter,
+                    disabled: classes.disabled
+                  }}
+                  placeholder={i18n.t("DEPOSIT_INF_MODAL_CITY")}
+                  value={city}
+                  onChange={this.handleInput("city")}
+                  disabled={
+                    isDisabled
+                      ? true
+                      : cep.cidade && city && this.state.zipcode.length === 8
+                      ? true
+                      : false
+                  }
+                  error={checkInputs && this.state.city === ""}
+                />
               )}
             </Grid>
             <Grid item sm={2} />
@@ -623,20 +638,22 @@ class InformationModal extends React.Component {
               <div className={style.textGreen}>
                 {i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
               </div>
-              { loadingAddress ? (<Loading/>): (
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter,
-                  disabled: classes.disabled
-                }}
-                placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
-                value={this.state.address}
-                onChange={this.handleInput("address")}
-                disabled={isDisabled}
-                error={checkInputs && this.state.address === ""}
-              />
+              {loadingAddress ? (
+                <Loading />
+              ) : (
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCssCenter,
+                    disabled: classes.disabled
+                  }}
+                  placeholder={i18n.t("DEPOSIT_INF_MODAL_ADDRESS")}
+                  value={this.state.address}
+                  onChange={this.handleInput("address")}
+                  disabled={isDisabled}
+                  error={checkInputs && this.state.address === ""}
+                />
               )}
             </Grid>
 

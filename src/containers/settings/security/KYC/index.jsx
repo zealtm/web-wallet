@@ -239,15 +239,26 @@ class KYC extends React.Component {
     getKyc();
   }
 
-  componentDidUpdate(prevProps) {
-    const { country } = this.state;
+  componentDidUpdate(prevProps, prevState) {
+    const { country, document, documentType, zipcode } = this.state;
     const { cep } = this.props;
     if (country === "BR" && prevProps.cep.cep !== cep.cep) {
-      this.setState({
-        state: cep.estado ? cep.estado : "",
-        city: cep.cidade ? cep.cidade : "",
-        street: cep.logradouro ? cep.logradouro : ""
-      });
+      if (!cep.cep) {
+        this.setState({ invalidCEP: true, state: "", city: "", address: "" });
+      } else {
+        this.setState({
+          state: cep.estado ? cep.estado : "",
+          city: cep.cidade ? cep.cidade : "",
+          street: cep.logradouro ? cep.logradouro : "",
+          invalidCEP: false
+        });
+      }
+    } else if (prevState.document !== document) {
+      if (documentType === "cpf" && document.length === 11) {
+        this.setState({ invalidCPF: !isCPF(document) });
+      } else if (documentType === "cnpj" && document.length === 14) {
+        this.setState({ invalidCNPJ: !isCNPJ(document) });
+      }
     }
   }
 
@@ -560,7 +571,8 @@ class KYC extends React.Component {
       street,
       checkInputs,
       invalidCNPJ,
-      invalidCPF
+      invalidCPF,
+      invalidCEP
     } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -660,7 +672,9 @@ class KYC extends React.Component {
                     input: classes.cssInput
                   }}
                   value={this.state.zipcode}
-                  error={(checkInputs && this.state.zipcode === "") || !cep.cep}
+                  error={
+                    (checkInputs && this.state.zipcode === "") || invalidCEP
+                  }
                   onChange={this.handleInput("zipcode")}
                   inputProps={{
                     maxLength: this.state.country === "BR" ? "8" : "12"
@@ -1223,7 +1237,7 @@ class KYC extends React.Component {
       this.setState({ invalidCEP: true });
       return;
     }
-    
+
     if (!parseMax(phoneNumber).isValid()) {
       this.setState({ invalidPhone: true });
     } else {
@@ -1276,8 +1290,7 @@ class KYC extends React.Component {
         invalidPhone ||
         invalidCNPJ ||
         invalidCPF ||
-        invalidCEP 
-         ? (
+        invalidCEP ? (
           <ModalBar type="error" message={errorMessage} timer clock={"6000"} />
         ) : null}
         {sendRequest === 2 ? (
