@@ -35,6 +35,10 @@ export const createDepositBill = (payload) => ({
   type: "CREATE_DEPOSIT_BILL",
   payload
 });
+export const createDepositDebit = (payload) => ({
+  type: "CREATE_DEPOSIT_DEBIT",
+  payload
+});
 
 export const getKycData = () => ({
   type: "GET_KYC_DATA_API"

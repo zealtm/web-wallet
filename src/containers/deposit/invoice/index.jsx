@@ -105,7 +105,11 @@ class Invoice extends React.Component {
       activeCard: null,
       depositValue: 0,
       error: false,
-      errorMsg: ""
+      errorMsg: "",
+      methods: [
+        { id: 1, name: "bill", fee: 0, limitKycAmount: 300 },
+        { id: 2, name: "debit_card", fee: 0, limitKycAmount: 300 }
+      ]
     };
   }
 
@@ -154,8 +158,8 @@ class Invoice extends React.Component {
   };
 
   listPaymentMethods = () => {
-    const { classes, methods } = this.props;
-    const { paymentMethods } = this.state;
+    const { classes } = this.props;
+    const { paymentMethods,methods } = this.state;
     if (methods) {
       return methods.map((method, index) => (
         <MenuItem
@@ -206,8 +210,8 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
-    const { methods } = this.props;
-    const { paymentMethods } = this.state;
+   // const { methods } = this.props;
+    const { paymentMethods, methods} = this.state;
     let index = 0;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === value) {
@@ -338,7 +342,7 @@ class Invoice extends React.Component {
     if (depositValue > methods[0].limitKycAmount && userData.status !== "confirmed") {
       this.setState({
         error: true,
-        errorMsg:i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
+        errorMsg: i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
       });
     } else if (depositValue == 0) {
       this.setState({
