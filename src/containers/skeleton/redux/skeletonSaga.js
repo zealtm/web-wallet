@@ -1,7 +1,7 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 import {
-  setAuthToken,
+ 
   getAuthToken,
   getUserSeedWords,
   getDefaultCrypto,
@@ -26,7 +26,7 @@ export function* loadGeneralInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
+    // console.log(responseCoins);
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(
       userService.getUserPicture,
@@ -40,8 +40,8 @@ export function* loadGeneralInfo(action) {
       token
     );
 
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
+    // setAuthToken(responseCoins.token);
+    // delete responseCoins.token;
 
     let responseAlias = yield call(
       transactionService.getAliases,
@@ -89,10 +89,11 @@ export function* loadGeneralInfo(action) {
 
     return;
   } catch (error) {
-    yield put({
-      type: "CHANGE_SKELETON_ERROR_STATE",
-      state: true
-    });
+    // console.log(error);
+    // yield put({
+    //   type: "CHANGE_SKELETON_ERROR_STATE",
+    //   state: true
+    // });
     yield put(internalServerError());
   }
 }
@@ -107,9 +108,9 @@ export function* loadWalletInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
+      // console.log(responseCoins);
+    // setAuthToken(responseCoins.token);
+    // delete responseCoins.token;
 
     let responseCoinHistory = yield call(
       coinService.getCoinHistory,
@@ -141,10 +142,11 @@ export function* loadWalletInfo(action) {
 
     return;
   } catch (error) {
-    yield put({
-      type: "CHANGE_SKELETON_ERROR_STATE",
-      state: true
-    });
+    // console.log(error);
+    // yield put({
+    //   type: "CHANGE_SKELETON_ERROR_STATE",
+    //   state: true
+    // });
     yield put(internalServerError());
   }
 }

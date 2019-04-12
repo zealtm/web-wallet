@@ -161,7 +161,8 @@ class Header extends React.Component {
       coins[coinSelected] && coins[coinSelected].balance
         ? coins[coinSelected].balance.available
         : 0;
-
+    
+    
     let coinFiat = coins[coinSelected]
       ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
       : 0;
