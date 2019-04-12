@@ -551,7 +551,7 @@ Invoice.propTypes = {
 };
 
 const mapStateToProps = store => ({
-  coinsRedux: store.payment.coins,
+  coinsRedux: store.recharge.coins,
   loading: store.recharge.loading,
   loadingValores: store.recharge.loadingValores,
   operadoras: store.recharge.operadoras,
