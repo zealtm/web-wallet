@@ -21,7 +21,8 @@ import {
   loadWalletInfo,
   availableCoins,
   balanceCoins,
-  createCoinsAddress
+  createCoinsAddress,
+  loadCreditBalance
 } from "../skeleton/redux/skeletonSaga";
 import {
   validateAddress,
@@ -46,6 +47,7 @@ import {
   getKyc,
   getSignaturesSaga,
   getSignatureSaga,
+  getCepValidation,
   signSignatureSaga,
   getFeeP2PSaga,
   setFeeP2PSaga
@@ -140,6 +142,20 @@ import {
   sendWithdrawSaga
 } from "../invite/redux/inviteSaga";
 
+import {
+  getPackagesSaga,
+  getDepositHistorySaga,
+  createDepositBillSaga,
+  getKycData,
+  depositGetStates,
+  depositGetCity,
+  getPaymentsMethods,
+  setMethodServiceIDSaga,
+  getDepositBillSaga,
+  getPaymentsMethodsServiceCreditSaga,
+  createDepositDebitSaga
+} from "../deposit/redux/depositSaga";
+
 export default function* rootSaga() {
   yield [
     // User-Saga
@@ -166,6 +182,8 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
+    fork(takeLatest, "GET_CREDIT_BALANCE_API", loadCreditBalance),
+    
 
     // Wallet-Saga
     fork(takeLatest, "GET_WALLET_VALIDATE_ADDRESS_API", validateAddress),
@@ -205,6 +223,7 @@ export default function* rootSaga() {
     fork(takeLatest, "SIGN_SIGNATURE_P2P", signSignatureSaga),
     fork(takeLatest, "GET_FEE_P2P", getFeeP2PSaga),
     fork(takeLatest, "SET_FEE_P2P", setFeeP2PSaga),
+    fork(takeLatest, "GET_CEP_VALIDATION_API", getCepValidation),
 
     //payment-saga
     fork(takeLatest, "POST_UPLOAD_BARCODE_API", uploadBarcodeSaga),
@@ -291,6 +310,19 @@ export default function* rootSaga() {
     fork(takeLatest, "GET_INVITE_ADDRESS", getInviteAddressSaga),
     fork(takeLatest, "SEND_MAIL_INVITE", sendMailInviteSaga),
     fork(takeLatest, "GET_INVITE_SENT", getInviteSentSaga),
-    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga)
+    fork(takeLatest, "SEND_WITHDRAW_INVITE", sendWithdrawSaga),
+
+    // deposit
+    fork(takeLatest, "GET_PACKAGES", getPackagesSaga),
+    fork(takeLatest, "GET_DEPOSIT_HISTORY", getDepositHistorySaga),
+    fork(takeLatest, "CREATE_DEPOSIT_BILL", createDepositBillSaga),
+    fork(takeLatest, "GET_KYC_DATA_API", getKycData),
+    fork(takeLatest, "DEPOSIT_GET_STATES_API", depositGetStates),
+    fork(takeLatest, "DEPOSIT_GET_CITY_API", depositGetCity),
+    fork(takeLatest, "GET_PAYMENT_METHODS_API", getPaymentsMethods),
+    fork(takeLatest, "SET_METHOD_SERVICE_ID", setMethodServiceIDSaga),
+    fork(takeLatest, "GET_DEPOSIT_BILL_API", getDepositBillSaga),
+    fork(takeLatest, "GET_PAYMENT_METHOD_SERVICE_CREDIT", getPaymentsMethodsServiceCreditSaga),
+    fork(takeLatest, "CREATE_DEPOSIT_DEBIT", createDepositDebitSaga)
   ];
 }

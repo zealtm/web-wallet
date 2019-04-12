@@ -4,7 +4,8 @@ const initialState = {
   errors: false,
   lunesCoin: {
     alias: undefined
-  }
+  },
+  creditBalance: {}
 };
 
 const skeleton = (state = initialState, action) => {
@@ -52,6 +53,11 @@ const skeleton = (state = initialState, action) => {
         lunesCoin: {
           alias: action.alias
         }
+      };
+    case "SET_CREDIT_BALANCE":
+      return {
+        ...state,
+        creditBalance: action.responseCredits.data.data
       };
 
     default:
