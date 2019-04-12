@@ -28,6 +28,12 @@ class HistoryItem extends React.Component {
     let coinFiatSymbol = skeleton.coins[coinSelected]
         ? skeleton.coins[coinSelected].price[fiatSelected].symbol
         : "USD";
+    let valueFiatDefult = skeleton.coins[item.coin.toLowerCase()]
+        ? skeleton.coins[item.coin.toLowerCase()].price[fiatSelected].price
+        : 0;
+    let fiatMont = convertBiggestCoinUnit(item.amountCripto, decimalPoint).toFixed(
+                        decimalPoint
+                      ) * valueFiatDefult;
     return (
       <Grid container>
         <Grid item xs={12} className={style.row}>
@@ -50,7 +56,7 @@ class HistoryItem extends React.Component {
                 decimalPoint
               )}
             </p>
-            <p>{coinFiatSymbol} {parseFloat(item.amountFiat).toFixed(2)}</p>
+            <p>{coinFiatSymbol} {parseFloat(fiatMont).toFixed(2)}</p>
           </div>
         </Grid>
         <div className={style.line} />
