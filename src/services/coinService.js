@@ -82,7 +82,7 @@ class CoinService {
 
         availableCoins[index].coinHistory = undefined;
 
-        if (coin.status === "active" || coin.name === "namecoin") {
+        if (coin.status === "active" ) {
           // CREATE ADDRESS
           let network = undefined;
           if (coin.abbreviation === "btc")
