@@ -123,12 +123,11 @@ class CoinsInfo extends React.Component {
     if (!coins[selectedCoin]) return null;
     
     let coin = coins[wallet.selectedCoin];
-    //console.log(coin.balance,defaultCoin);
 
     
     let coinPrice = coins[selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[selectedCoin].price.percent;
-    let fiatBalance = coin.balance ? (coin.balance.defaultCoin).toFixed(2) : 0;
+    let fiatBalance = coin.balance[defaultCoin].toFixed(2);
     let balance = coin.balance.available;
     let utxos = !wallet.utxos ? {} : wallet.utxos;
     return (

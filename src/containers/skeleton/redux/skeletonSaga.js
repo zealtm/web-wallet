@@ -26,7 +26,6 @@ export function* loadGeneralInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-    // console.log(responseCoins);
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(
       userService.getUserPicture,
@@ -39,10 +38,6 @@ export function* loadGeneralInfo(action) {
       userId,
       token
     );
-
-    // setAuthToken(responseCoins.token);
-    // delete responseCoins.token;
-
     let responseAlias = yield call(
       transactionService.getAliases,
       responseCoins.lunes.address
@@ -89,11 +84,10 @@ export function* loadGeneralInfo(action) {
 
     return;
   } catch (error) {
-    // console.log(error);
-    // yield put({
-    //   type: "CHANGE_SKELETON_ERROR_STATE",
-    //   state: true
-    // });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
@@ -108,9 +102,7 @@ export function* loadWalletInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-      // console.log(responseCoins);
-    // setAuthToken(responseCoins.token);
-    // delete responseCoins.token;
+    
 
     let responseCoinHistory = yield call(
       coinService.getCoinHistory,
@@ -142,11 +134,10 @@ export function* loadWalletInfo(action) {
 
     return;
   } catch (error) {
-    // console.log(error);
-    // yield put({
-    //   type: "CHANGE_SKELETON_ERROR_STATE",
-    //   state: true
-    // });
+    yield put({
+      type: "CHANGE_SKELETON_ERROR_STATE",
+      state: true
+    });
     yield put(internalServerError());
   }
 }
