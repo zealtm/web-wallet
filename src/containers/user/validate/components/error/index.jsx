@@ -19,10 +19,6 @@ class Error extends React.Component {
           src="../../images/icons/error/imgMessageErro.png"
           className={style.icon}
         />
-        <p className={style.messageError}>{i18n.t("INVITE_ERROR_EMAIL")}</p>
-        <a href="#" className={style.buttonEnable}>
-          {i18n.t("BTN_INVITE_ERROR_SEND_CONFIRM")}
-        </a>
       </div>
     );
   }

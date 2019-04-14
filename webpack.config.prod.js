@@ -2,8 +2,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-
 
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log(
@@ -87,7 +85,7 @@ module.exports = {
         loader: "babel-loader",
         options: {
           babelrc: false,
-          presets: ["react", ["env",{"modules":false}]],
+          presets: ["react", "env"],
           plugins: [
             "syntax-dynamic-import",
             "transform-class-properties",

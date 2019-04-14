@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setBuy } from "../../redux/buyAction";
+import { setBuy, openModal } from "../../redux/buyAction";
 
 // COMPONENTS
 import PaymentBar from "../paymentBar";
@@ -31,19 +31,19 @@ class Buy extends React.Component {
   }
 
   validateModal = () => {
-    const { buypack, coins, setBuy } = this.props;
+    const { buypack, coins, setBuy, openModal } = this.props;
 
     let errors = [];
 
     if (buypack.idpack == "")
       errors.push(`${i18n.t("COINSALE_ERROR_PACK")} / `);
+    if (buypack.servicePaymentMethodId !== 6) {
+      if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
+        errors.push(`${i18n.t("COINSALE_ERROR_COIN")} / `);
 
-    if (buypack.coin.address == "" || buypack.coin.abbreviation == "")
-      errors.push(`${i18n.t("COINSALE_ERROR_COIN")} / `);
-
-    if (buypack.paycoin == "")
-      errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
-
+      if (buypack.paycoin == "")
+        errors.push(`${i18n.t("COINSALE_ERROR_COIN_PAY")}`);
+    }
     if (errors.length > 0) {
       this.setState({
         ...this.state,
@@ -55,22 +55,26 @@ class Buy extends React.Component {
     } else {
       // calcular amount de acordo com o valor
       // let defaultCoin = getDefaultFiat();
-      let defaultCoin = "BRL";
-      let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
-      const amountPay = buypack.amountFiat / coinPrice;
-      let decimalPoint = coins[buypack.paycoin].decimalPoint;
+      if (buypack.servicePaymentMethodId === 6) {
+        openModal(true);
+      } else {
+        let defaultCoin = "BRL";
+        let coinPrice = coins[buypack.paycoin].price[defaultCoin].price;
+        const amountPay = buypack.amountFiat / coinPrice;
+        let decimalPoint = coins[buypack.paycoin].decimalPoint;
 
-      const data = {
-        amount: convertSmallerCoinUnit(amountPay, decimalPoint),
-        coin: buypack.paycoin,
-        address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "",
-        receiveAddress: coins[buypack.coin.abbreviation]
-          ? coins[buypack.coin.abbreviation].address
-          : "",
-        decimalPoint: decimalPoint
-      };
+        const data = {
+          amount: convertSmallerCoinUnit(amountPay, decimalPoint),
+          coin: buypack.paycoin,
+          address: coins[buypack.paycoin] ? coins[buypack.paycoin].address : "",
+          receiveAddress: coins[buypack.coin.abbreviation]
+            ? coins[buypack.coin.abbreviation].address
+            : "",
+          decimalPoint: decimalPoint
+        };
 
-      setBuy(data);
+        setBuy(data);
+      }
     }
   };
 
@@ -107,7 +111,8 @@ Buy.propTypes = {
   buypack: PropTypes.object.isRequired,
   coins: PropTypes.array.isRequired,
   setBuy: PropTypes.func.isRequired,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  openModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
@@ -119,7 +124,8 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setBuy
+      setBuy,
+      openModal
     },
     dispatch
   );

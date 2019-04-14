@@ -4,7 +4,8 @@ import {
   setAuthToken,
   getAuthToken,
   getUserSeedWords,
-  getDefaultCrypto
+  getDefaultCrypto,
+  getUserId
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
@@ -19,7 +20,7 @@ export function* loadGeneralInfo(action) {
   try {
     let token = yield call(getAuthToken);
     let seed = yield call(getUserSeedWords);
-
+    let userId = yield call(getUserId);
     let responseCoins = yield call(
       coinService.getGeneralInfo,
       token,
@@ -30,6 +31,13 @@ export function* loadGeneralInfo(action) {
     let pictureUser = yield call(
       userService.getUserPicture,
       responseUser.data.data.email
+    );
+
+    let responseCredits = yield call(
+      coinService.getCoinBalance,
+      "lbrl",
+      userId,
+      token
     );
 
     setAuthToken(responseCoins.token);
@@ -48,6 +56,8 @@ export function* loadGeneralInfo(action) {
         alias: firstAlias
       });
     }
+
+    yield put({ type: "SET_CREDIT_BALANCE", responseCredits });
 
     yield put({
       type: "SET_USER_INFO",
@@ -87,6 +97,31 @@ export function* loadGeneralInfo(action) {
   }
 }
 
+export function* loadCreditBalance(action) {
+  try {
+    let token = yield call(getAuthToken);
+    let userId = yield call(getUserId);
+    let {oldBalance} = action;
+    let responseCredits = {};
+    let timeOut = 25000;
+    let endTime = 2000;
+    do{
+      setTimeout(()=> {}, 2000);
+      endTime +=  2000;
+      responseCredits  = yield call(
+        coinService.getCoinBalance,
+        "lbrl",
+        userId,
+        token
+      );
+    }while(oldBalance === responseCredits.data.data.available && endTime <= timeOut);
+
+    yield put({ type: "SET_CREDIT_BALANCE", responseCredits });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* loadWalletInfo(action) {
   try {
     const token = yield call(getAuthToken);
@@ -107,7 +142,6 @@ export function* loadWalletInfo(action) {
       responseCoins[defaultCrypto].address,
       token
     );
-
     yield put({
       type: "GET_GENERAL_INFO",
       coins: responseCoins

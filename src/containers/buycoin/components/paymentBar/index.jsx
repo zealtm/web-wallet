@@ -4,14 +4,18 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setCoinSelected } from "../../redux/buyAction";
-
+import { setCoinSelected, setPaymentCreditInformation } from "../../redux/buyAction";
+import {
+  getPaymentMethodService,
+  setMethodServiceId
+} from "../../../deposit/redux/depositAction";
 // MATERIAL
 import {
   Grid,
   Checkbox,
   FormControlLabel,
-  withStyles
+  withStyles,
+  Hidden
 } from "@material-ui/core/";
 
 // ICONS
@@ -47,7 +51,16 @@ class PaymentBar extends React.Component {
     super(props);
     this.state = {
       title: i18n.t("COINSALE_SEL_COIN"),
-      img: null
+      img: null,
+      paymentMethod: [
+        { title: i18n.t("RECHARGE_CREDIT_PAYMENT"), value: "credit" },
+        { title: i18n.t("RECHARGE_COIN_PAYMENT"), value: "coin" }
+      ],
+      selectedPaymentMethod: {
+        title: undefined,
+        value: undefined
+      },
+      serviceCoinId: null
     };
   }
 
@@ -61,12 +74,43 @@ class PaymentBar extends React.Component {
 
     setCoinSelected(title.toLowerCase(), coins[value].address, coins[value].id);
   };
+  searchServiceCoinId = value => {
+    const { methodPaymentsList } = this.props;
+    let id = null;
+    methodPaymentsList.forEach((element, index) => {
+      if (element.id === value) {
+        id = element.serviceCoinId;
+      }
+    });
+    if (id !== null) return id;
 
+    return ;
+  };
+  handlePayment = (value, title) => {
+    const {setMethodServiceId, setPaymentCreditInformation} = this.props;
+    let serviceCoinId = this.searchServiceCoinId(value);
+    this.setState({
+      ...this.state,
+      selectedPaymentMethod: {
+        value: value,
+        title: title
+      },
+      serviceCoinId
+    });
+    setPaymentCreditInformation({paymentMethoId: value, serviceCoinId});
+    setMethodServiceId(value);
+  };
+  componentDidMount() {
+    const { getPaymentMethodService } = this.props;
+    getPaymentMethodService(10);
+  }
   render() {
-    const { title, img } = this.state;
-    const { classes, coins, coinsActive } = this.props;
+    const { title, img, selectedPaymentMethod } = this.state;
+    const { classes, coins, coinsActive, methodPaymentsList } = this.props;
     let coinspayment = [];
-
+    const paymentTitle = selectedPaymentMethod.title
+      ? selectedPaymentMethod.title
+      : i18n.t("SELECT_PAYMENT");
     Object.keys(coins).map(key => {
       const val = coins[key];
       let item = {
@@ -81,49 +125,56 @@ class PaymentBar extends React.Component {
         coinspayment.push(item);
       }
     });
-
     return (
-      <div className={style.baseBar}>
-        <Grid container>
-          <Grid item xs={12} md={8}>
-            <span className={style.label}>
-              {i18n.t("COINSALE_PAYMENT_SELECT")}
-            </span>
-            <div className={style.baseBackgroundFlex}>
-              <FormControlLabel
-                value="cripto"
-                classes={{ label: classes.rootLabel }}
-                control={
-                  <Checkbox
-                    checked={true}
-                    color="primary"
-                    icon={<Lens />}
-                    checkedIcon={<Lens />}
-                    classes={{ root: classes.root, checked: classes.checked }}
-                  />
-                }
-                label={i18n.t("COINSALE_METHOD_COIN")}
-                labelPlacement="start"
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <span className={style.label}>
-              {i18n.t("COINSALE_PAYMENT_COIN")}
-            </span>
-            <div className={style.baseBackground}>
-              <Select
-                list={coinspayment}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={null}
-                width={"100%"}
-              />
-            </div>
+      <Grid container direction="row" justify="center">
+        <Grid item xs={12} className={style.paymentType}>
+          <Grid item xs={12} className="payments">
+            <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
           </Grid>
         </Grid>
-      </div>
+        <Grid item xs={12} md={10} className={style.box} style={{ marginBottom: "20px" }}>
+          <Grid container>
+            <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
+              <Hidden smUp>
+                <Select
+                  list={methodPaymentsList}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                  width={"100%"}
+                />
+              </Hidden>
+              <Hidden xsDown>
+                <Select
+                  list={methodPaymentsList}
+                  title={paymentTitle}
+                  selectItem={this.handlePayment}
+                />
+              </Hidden>
+            </Grid>
+            {selectedPaymentMethod.value === 5 ? (
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                <Hidden smUp>
+                  <Select
+                    list={coinspayment}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                    width={"94%"}
+                  />
+                </Hidden>
+                <Hidden xsDown>
+                  <Select
+                    list={coinspayment}
+                    title={title}
+                    titleImg={img}
+                    selectItem={this.coinSelected}
+                  />
+                </Hidden>
+              </Grid>
+            ) : null}
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -132,18 +183,25 @@ PaymentBar.propTypes = {
   classes: PropTypes.object.isRequired,
   setCoinSelected: PropTypes.func.isRequired,
   coins: PropTypes.array.isRequired,
-  coinsActive: PropTypes.array.isRequired
+  coinsActive: PropTypes.array.isRequired,
+  methodPaymentsList: PropTypes.array,
+  setMethodServiceId: PropTypes.func.isRequired,
+  setPaymentCreditInformation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = store => ({
   coins: store.buy.coinsPayment || [],
-  coinsActive: store.skeleton.coins || []
+  coinsActive: store.skeleton.coins || [],
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setCoinSelected
+      setCoinSelected,
+      getPaymentMethodService,
+      setMethodServiceId,
+      setPaymentCreditInformation
     },
     dispatch
   );

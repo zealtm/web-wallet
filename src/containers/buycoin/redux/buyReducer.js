@@ -41,7 +41,9 @@ const initialState = {
     amount: "", // qtde a receber
     operator: "",
     address: "", // endereco para enviar o pgto
-    receiveAddress: "" // endereco onde o usuario vai receber a moeda comprada
+    receiveAddress: "", // endereco onde o usuario vai receber a moeda comprada
+    servicePaymentMethodId: undefined,
+    serviceCoinId: null
   }
 };
 
@@ -90,6 +92,7 @@ const buy = (state = initialState, action) => {
       };
 
     case "GET_BUY_PACKAGE_REDUCER":
+
       return {
         ...state,
         packages: action.packages,
@@ -105,6 +108,7 @@ const buy = (state = initialState, action) => {
       };
 
     case "SET_BUY_PACKAGE_REDUCER":
+
       return {
         ...state,
         buypackage: {
@@ -189,7 +193,15 @@ const buy = (state = initialState, action) => {
         ...state,
         coinsBuy: action.coins
       };
-
+    case "SET_CREDIT_PAYMENT_INFORMATION":
+      return {
+        ...state,
+        buypackage:{
+          ...state.buypackage,
+          servicePaymentMethodId: action.information.paymentMethoId,
+          serviceCoinId: action.information.serviceCoinId
+        }
+      };
     default: {
       return {
         ...state

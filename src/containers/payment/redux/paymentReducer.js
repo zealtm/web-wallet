@@ -15,7 +15,9 @@ const initialState = {
     name: "",
     dueDate: "", // dateend: "",
     cpfCnpj: "",
-    description: ""
+    description: "",
+    servicePaymentMethodId: undefined,
+    serviceCoinId: undefined
   },
   fee: {
     fee: {

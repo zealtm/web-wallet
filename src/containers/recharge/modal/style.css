@@ -186,6 +186,11 @@
   composes: bt;
 }
 
+:local(.btCancel) {
+  composes: buttonRed from "../../../components/bases/buttonBase.css";
+  composes: bt;
+}
+
 :local .inputTextDefault {
   composes: inputTextDefault from "../../../components/bases/inputBase.css";
   max-width: 260px;

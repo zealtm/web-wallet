@@ -145,14 +145,13 @@ class Menu extends React.Component {
               <Link to="/settings" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SETTING")}
               </Link>
+              <Link to="/deposit" className={style.link} onClick={actionMenu}>
+                {i18n.t("MENU_DEPOSIT")}
+              </Link>
               <Link to="/invite" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_INVITE")}
               </Link>
-              <a
-                href="mailto:support@lunes.io"
-                className={style.link}
-                onClick={actionMenu}
-              >
+              <a href="mailto:support@lunes.io" className={style.link} onClick={actionMenu}>
                 {i18n.t("MENU_SUPPORT")}
                 {/* <Link to="/help" className={style.link}></Link> */}
               </a>
@@ -175,7 +174,7 @@ class Menu extends React.Component {
           </button>
         </div>
       </div>
-    );
+    )
   }
 }
 

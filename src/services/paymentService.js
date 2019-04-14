@@ -87,7 +87,7 @@ class PaymentService {
 
       let response = await axios.get(`${BASE_URL}/bill/history`, API_HEADER);
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
+      
       if (response.data.code === 404) {
         return {
           payments: []
@@ -108,14 +108,12 @@ class PaymentService {
   async sendPay(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;
-
       const response = await axios.post(
         BASE_URL + "/bill/pay/" + payload.barCode,
         payload,
         API_HEADER
       );
       setAuthToken(response.headers[HEADER_RESPONSE]);
-
       return response;
     } catch (error) {
       console.warn(error);
