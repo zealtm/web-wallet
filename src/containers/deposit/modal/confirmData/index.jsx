@@ -4,7 +4,8 @@ import { bindActionCreators } from "redux";
 import {
   setModalSteps,
   setLoading,
-  createDepositBill
+  createDepositBill,
+  createDepositDebit
 } from "../../redux/depositAction";
 import PropTypes from "prop-types";
 import i18n from "../../../../utils/i18n";
@@ -12,7 +13,6 @@ import style from "./style.css";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import ButtonContinue from "../../../../components/buttonContinue";
-import { splitRange } from "ts-utils";
 
 class ConfirmData extends React.Component {
   constructor() {
@@ -26,6 +26,8 @@ class ConfirmData extends React.Component {
       payloadPayment,
       userData,
       createDepositBill,
+      setModalSteps,
+      createDepositDebit
     } = this.props;
     this.setState({loading: true});
     let payload = {
@@ -40,12 +42,14 @@ class ConfirmData extends React.Component {
           city: userData.city,
           state: userData.state,
           country: "BR",
-          zipcode: userData.cep
+          zipcode: userData.zipcode
         }
       }
     };
     if (payloadPayment.paymentMethodId === 1) {
       createDepositBill(payload);
+    }else{
+      createDepositDebit(payload);
     }
   };
   render() {
@@ -112,7 +116,7 @@ class ConfirmData extends React.Component {
             <div className={style.ConfirmDataDiv}>
               {i18n.t("DEPOSIT_CONFIRMDATA_CEP_TITLE")}
             </div>
-            <span className={style.ConfirmDataField}>{userData.cep}</span>
+            <span className={style.ConfirmDataField}>{userData.zipcode}</span>
           </Grid>
 
           <Grid item xs={12} sm={12}>
@@ -174,8 +178,9 @@ ConfirmData.propTypes = {
   loading: PropTypes.bool,
   userData: PropTypes.object,
   selectedValue: PropTypes.number,
-  createDepositBill: PropTypes.func.isRequired,
-  payloadPayment: PropTypes.object
+  createDepositBill: PropTypes.func,
+  payloadPayment: PropTypes.object,
+  createDepositDebit: PropTypes.func
 };
 
 const mapStateToProps = store => ({
@@ -191,7 +196,8 @@ const mapDispatchToProps = dispatch =>
     {
       setLoading,
       setModalSteps,
-      createDepositBill
+      createDepositBill,
+      createDepositDebit
     },
     dispatch
   );

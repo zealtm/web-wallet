@@ -319,7 +319,7 @@ export function* confirmBuySaga(payload) {
             packageId: payload.buy.buypack.idpack,
             coinId: payload.buy.buypack.paycoinid
               ? payload.buy.buypack.paycoinid
-              : null, 
+              : null,
             address: payload.buy.buypack.receiveAddress
               ? payload.buy.buypack.receiveAddress
               : payload.buy.receiveAddress, //payloadTransaction.fromAddress,
@@ -330,7 +330,7 @@ export function* confirmBuySaga(payload) {
               payload.buy.servicePaymentMethodId === 6
                 ? payload.buy.lunesUserAddress
                 : null,
-            serviceId:payload.buy.serviceCoinId
+            serviceId: payload.buy.serviceCoinId
           };
 
           let response_elastic = yield call(

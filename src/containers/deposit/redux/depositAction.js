@@ -35,6 +35,10 @@ export const createDepositBill = (payload) => ({
   type: "CREATE_DEPOSIT_BILL",
   payload
 });
+export const createDepositDebit = (payload) => ({
+  type: "CREATE_DEPOSIT_DEBIT",
+  payload
+});
 
 export const getKycData = () => ({
   type: "GET_KYC_DATA_API"
@@ -71,4 +75,9 @@ export const getPaymentMethodService = (serviceId) => ({
 export const setMethodServiceId = id => ({
   type: "SET_METHOD_SERVICE_ID",
   id
+});
+
+export const validateDepositCep = cep =>({
+  type: "GET_CEP_VALIDATION_API",
+  cep
 });

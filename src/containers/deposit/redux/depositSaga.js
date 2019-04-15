@@ -209,6 +209,42 @@ export function* createDepositBillSaga(payload) {
   }
 }
 
+export function* createDepositDebitSaga(payload){
+  try {
+    yield put({
+      type: "SET_LOADING_DEPOSIT",
+      loading: true
+    });
+    let token = yield call(getAuthToken);
+    let response = yield call(depositService.createDepositDebit, token, payload.payload);
+    if (response.data.errorMessage) {
+      yield put({
+        type: "SET_LOADING_DEPOSIT",
+        loading: false
+      });
+      yield put({
+        type: "SET_MODAL_STEP",
+        step: 4
+      });
+    } else {
+      let data = response.data.data;
+      yield put({
+        type: "SET_DEPOSIT_RETURN",
+        depositReturn: data
+      });
+      yield put({
+        type: "SET_MODAL_STEP",
+        step: 5
+      });
+
+
+    }
+
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* getPaymentsMethodsServiceCreditSaga(payload) {
   try {
     let token = yield call(getAuthToken);
