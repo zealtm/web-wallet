@@ -72,7 +72,6 @@ class CoinsInfo extends React.Component {
   };
   componentDidMount() {
     const {coins} = this.props;
-    console.log('aquii',coins);
     
   }
   componentDidUpdate() {
