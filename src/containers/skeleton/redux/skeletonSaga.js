@@ -1,7 +1,7 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 import {
-  setAuthToken,
+ 
   getAuthToken,
   getUserSeedWords,
   getDefaultCrypto,
@@ -26,7 +26,6 @@ export function* loadGeneralInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(
       userService.getUserPicture,
@@ -39,10 +38,6 @@ export function* loadGeneralInfo(action) {
       userId,
       token
     );
-
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
-
     let responseAlias = yield call(
       transactionService.getAliases,
       responseCoins.lunes.address
@@ -132,9 +127,7 @@ export function* loadWalletInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
+    
 
     let responseCoinHistory = yield call(
       coinService.getCoinHistory,

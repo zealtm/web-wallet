@@ -70,7 +70,10 @@ class CoinsInfo extends React.Component {
     }
     setWalletSendModalOpen();
   };
-
+  componentDidMount() {
+    const {coins} = this.props;
+    
+  }
   componentDidUpdate() {
     let { lastCoin } = this.state;
     let { wallet, coins, setUtxos } = this.props;
@@ -117,8 +120,10 @@ class CoinsInfo extends React.Component {
     let selectedCoin = wallet.selectedCoin ? wallet.selectedCoin : "lunes";
 
     if (!coins[selectedCoin]) return null;
-
+    
     let coin = coins[wallet.selectedCoin];
+
+    
     let coinPrice = coins[selectedCoin].price[defaultCoin].price;
     let coinPercent = coins[selectedCoin].price.percent;
     let fiatBalance = coin.balance[defaultCoin].toFixed(2);
