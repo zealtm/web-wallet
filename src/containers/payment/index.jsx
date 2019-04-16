@@ -35,9 +35,8 @@ class Payment extends React.Component {
     this.setState({ ...this.state, scannerOpen: !this.state.scannerOpen });
 
   closeModal = () => {
-    const { setModalStep, setClearPayment,getCoinsEnabled } = this.props;
+    const { setModalStep,getCoinsEnabled } = this.props;
     this.handleModal();
-    setClearPayment();
     setModalStep(1);
     getCoinsEnabled();
   }

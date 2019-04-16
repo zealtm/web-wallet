@@ -102,7 +102,16 @@ const payment = (state = initialState, action) => {
 
     case "SET_CLEAR_PAYMENT_REDUCER":
       return {
-        ...initialState
+        ...state,
+        payment: {
+          ...initialState.payment
+        },
+        fee: {
+          ...initialState.fee
+        },
+        history: [],
+        loading: false,
+        modalStep: 1
       };
     case "SET_PAYMENT_INVOICE_ERROR":
       return {
