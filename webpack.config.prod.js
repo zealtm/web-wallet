@@ -2,7 +2,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require("webpack");
 console.log("\n", "\x1b[1m", "\x1b[31m");
 console.log(
   "------------------------------------------------------------------------------------------"
@@ -116,6 +117,11 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new UglifyJSPlugin({
       uglifyOptions: {
         beautify: false,
