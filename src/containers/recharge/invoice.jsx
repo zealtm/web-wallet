@@ -9,7 +9,7 @@ import {
   getOperators,
   getValoresRecarga,
   setRecharge,
-  setClearRecharge
+  setClearStateRecharge
 } from "./redux/rechargeAction";
 import {
   getPaymentMethodService,
@@ -117,12 +117,11 @@ class Invoice extends React.Component {
   componentDidMount() {
     const {
       getCoinsEnabled,
-      setClearRecharge,
       getPaymentMethodService
     } = this.props;
-    setClearRecharge();
     getCoinsEnabled();
     getPaymentMethodService(3);
+    
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -235,36 +234,43 @@ class Invoice extends React.Component {
   };
 
   setDefaultState = () => {
-    const emptyValue = {
-      errors: [],
-      disableNumberInput: false,
-      invoiceLoading: false,
-      coin: {
-        name: undefined,
-        value: undefined,
-        img: undefined
-      },
-      invoice: {
-        coin: null,
-        phone: "",
-        operadora: {
-          value: null,
-          title: i18n.t("RECHARGE_SELECT_TITLE_OPERATOR")
+    const {cleanState,setClearStateRecharge } = this.props;
+    if(cleanState){
+      const emptyValue = {
+        errors: [],
+        disableNumberInput: false,
+        invoiceLoading: false,
+        coin: {
+          name: undefined,
+          value: undefined,
+          img: undefined
         },
-        valor: {
-          value: null,
-          title: i18n.t("RECHARGE_SELECT_TITLE_VALUE")
+        invoice: {
+          coin: null,
+          phone: "",
+          operadora: {
+            value: null,
+            title: i18n.t("RECHARGE_SELECT_TITLE_OPERATOR")
+          },
+          valor: {
+            value: null,
+            title: i18n.t("RECHARGE_SELECT_TITLE_VALUE")
+          }
         }
-      }
-    };
-
-    this.setState(emptyValue);
+      };
+  
+      this.setState(emptyValue);
+      setClearStateRecharge();
+    }
+    
   };
 
   inputValidator = () => {
-    const { openModal, setRecharge, coins } = this.props;
+    const { openModal, setRecharge, coins,cleanState } = this.props;
     const { invoice, coin, selectedPaymentMethod, serviceCoinId } = this.state;
-    
+    if(cleanState){
+      return;
+    }
     const coinVAL = invoice.coin == null
           ? ""
           : coins[invoice.coin.abbreviation].decimalPoint;
@@ -321,6 +327,10 @@ class Invoice extends React.Component {
         });
         return;
       }
+    }else{
+      if(!invoice.valor.value || !invoice.operadora.value || !invoice.phone){
+        return;
+      }
     }
     if (selectedPaymentMethod.value === 2) {
       invoiceData = {
@@ -331,7 +341,7 @@ class Invoice extends React.Component {
     
     openModal();
     setRecharge(invoiceData);
-    this.setDefaultState();
+    //this.setDefaultState();
   };
 
   checkAllInputs = () => {
@@ -353,6 +363,7 @@ class Invoice extends React.Component {
       operadoras,
       valores,
       loadingValores,
+      loadingCoins,
       valueError,
       methodPaymentsList
     } = this.props;
@@ -363,6 +374,8 @@ class Invoice extends React.Component {
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
       : i18n.t("SELECT_PAYMENT");
+    
+    this.setDefaultState();
 
     return (
       <Grid container direction="row" justify="center">
@@ -475,7 +488,13 @@ class Invoice extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {selectedPaymentMethod.value === 1 ? (
+            {loadingCoins ? (
+            <div style={{ margin: "10px auto", textAlign: "center" }}>
+              <Loading color="lunes" />
+            </div>
+          ) : null}
+            {(selectedPaymentMethod.value === 1 && !loadingCoins) ? (
+              
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
@@ -544,10 +563,12 @@ Invoice.propTypes = {
   getCoinsEnabled: PropTypes.func.isRequired,
   getValoresRecarga: PropTypes.func.isRequired,
   getOperators: PropTypes.func.isRequired,
-  setClearRecharge: PropTypes.func.isRequired,
   coins: PropTypes.array,
   valueError: PropTypes.bool,
-  methodPaymentsList: PropTypes.array
+  methodPaymentsList: PropTypes.array,
+  loadingCoins:PropTypes.bool.isRequired,
+  setClearStateRecharge:PropTypes.func.isRequired,
+  cleanState:PropTypes.bool,
 };
 
 const mapStateToProps = store => ({
@@ -558,7 +579,9 @@ const mapStateToProps = store => ({
   valores: store.recharge.valores,
   coins: store.skeleton.coins,
   valueError: store.recharge.valueError,
-  methodPaymentsList: store.deposit.paymentsMethodsService
+  methodPaymentsList: store.deposit.paymentsMethodsService,
+  loadingCoins: store.recharge.loadingCoins,
+  cleanState:store.recharge.cleanState  
 });
 
 const mapDispatchToProps = dispatch =>
@@ -568,9 +591,9 @@ const mapDispatchToProps = dispatch =>
       getValoresRecarga,
       getCoinsEnabled,
       setRecharge,
-      setClearRecharge,
       getPaymentMethodService,
-      setMethodServiceId
+      setMethodServiceId,
+      setClearStateRecharge
     },
     dispatch
   );

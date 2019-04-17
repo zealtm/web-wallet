@@ -58,6 +58,10 @@ export function* getCoinsEnabledSaga() {
       type: "GET_COINS_REDUCER",
       coins: coins
     });
+    yield put({
+      type: "SET_LOADING_PAYMENT_REDUCER",
+      loading: false
+    });
   } catch (error) {
     yield put(internalServerError());
   }
@@ -130,9 +134,7 @@ export function* setPaymentSaga(payload) {
       type: "SET_PAYMENT_REDUCER",
       payload: data
     });
-    yield put({
-      type: "SET_CLEAR_PAYMENT_REDUCER"
-    });    
+   
   } catch (error) {
     yield put(internalServerError());
     yield put({
@@ -401,10 +403,6 @@ export function* confirmPaySaga(payload) {
               payload_elastic
             );
 
-            yield put({
-              type: "SET_CLEAR_PAYMENT_REDUCER"
-            });
-
             if (response_elastic.data.errorMessage) {
               yield put({
                 type: "SET_MODAL_PAY_STEP_REDUCER",
@@ -413,22 +411,21 @@ export function* confirmPaySaga(payload) {
               yield put(internalServerError());
             } else {
               yield put({
+                type: "SET_CLEAR_PAYMENT_REDUCER"
+              });    
+              yield put({
                 type: "SET_MODAL_PAY_STEP_REDUCER",
                 step: 5
               });
             }
-
+            yield put({
+              type: "SET_LOADING_REDUCER",
+              payload: false
+            });
+      
             return;
           }        
       }
-      yield put({
-        type: "SET_CLEAR_PAYMENT_REDUCER"
-      });
-
-      yield put({
-        type: "SET_MODAL_PAY_STEP_REDUCER",
-        step: 5
-      });
 
       yield put({
         type: "SET_LOADING_REDUCER",

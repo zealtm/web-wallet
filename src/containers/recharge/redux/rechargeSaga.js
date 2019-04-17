@@ -46,11 +46,15 @@ export function* getRechargeCoinsEnabledSaga() {
       }
 
       return availableCoins;
-    }, []);
-
+    }, []);    
+    
     yield put({
       type: "GET_COINS_RECHARGE_REDUCER",
       coins: coins
+    });
+    yield put({
+      type: "SET_LOADING_RECHERGE_COIN_REDUCER",
+      loading: false
     });
   } catch (error) {
     yield put(internalServerError());
@@ -189,7 +193,15 @@ export function* setRechargeSaga(payload) {
       });
     }
   } catch (error) {
-    yield put(internalServerError());
+    yield put({
+      type: "SET_LOADING_REDUCER",
+      payload: false
+    });
+    yield put({
+      type: "SET_MODAL_RECHARGE_STEP_REDUCER",
+      step: 6
+    });
+    yield put(internalServerError());   
   }
 }
 
@@ -314,10 +326,6 @@ export function* confirmRechargeSaga(payload) {
             payloadElastic
           );
 
-          yield put({
-            type: "SET_CLEAR_RECHARGE_REDUCER"
-          });
-
           if (response_elastic.data.errorMessage) {
             yield put({
               type: "SET_MODAL_RECHARGE_STEP_REDUCER",
@@ -326,9 +334,13 @@ export function* confirmRechargeSaga(payload) {
             yield put(internalServerError());
           } else {
             yield put({
+              type: "SET_CLEAR_RECHARGE_REDUCER"
+            });
+            yield put({
               type: "SET_MODAL_RECHARGE_STEP_REDUCER",
               step: 5
             });
+            
           }
 
           yield put({
@@ -337,17 +349,7 @@ export function* confirmRechargeSaga(payload) {
           });
           return;
         }
-      }
-
-      yield put({
-        type: "SET_CLEAR_RECHARGE_REDUCER"
-      });
-
-      yield put({
-        type: "SET_MODAL_RECHARGE_STEP_REDUCER",
-        step: 5
-      });
-
+      }     
       yield put({
         type: "SET_LOADING_REDUCER",
         payload: false
