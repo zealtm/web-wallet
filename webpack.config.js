@@ -70,7 +70,7 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
   output: {
-    filename: "bundle-[name]-[chunkhash].js",
+    filename: "bundle-[name].js",
     path: path.resolve(__dirname, "public", "scripts"),
     publicPath: "scripts/"
   },
