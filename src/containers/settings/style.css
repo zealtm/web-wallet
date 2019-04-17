@@ -532,6 +532,7 @@
 :local(.indicatorItemKYC) {
   composes: indicatorItem;
 }
+
 @media screen and (max-width: 599px) {
   :local(.textInput){
     width: calc(100% - -7%) !important;

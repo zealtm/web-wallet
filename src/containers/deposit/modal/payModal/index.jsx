@@ -100,7 +100,6 @@ class PayModal extends Component {
   }
 }
 PayModal.propTypes = {
-  getDepositBill: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   loadingPdf: PropTypes.bool,
   depositReturn: PropTypes.object,

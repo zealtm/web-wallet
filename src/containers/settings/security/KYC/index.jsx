@@ -12,7 +12,8 @@ import {
   kycGetCountries,
   kycGetStates,
   kycGetCities,
-  getKyc
+  getKyc,
+  validateKycCep
 } from "../../redux/settingsAction";
 
 // STYLE
@@ -51,6 +52,7 @@ import ModalBar from "../../../../components/modalBar";
 import { CpfMask, CnpjMask } from "../../../../components/inputMask";
 import InfoContainer from "../infoContainer";
 import InfoConfirm from "../infoCorfirm";
+import { isCNPJ, isCPF } from "brazilian-values";
 
 const inputStyle = {
   root: {
@@ -224,6 +226,9 @@ class KYC extends React.Component {
       phoneCountry: "",
       invalidPhone: false,
       invalidPassport: false,
+      invalidCPF: false,
+      invalidCNPJ: false,
+      invalidCEP: false,
       country: "",
       checkInputs: false
     };
@@ -232,6 +237,29 @@ class KYC extends React.Component {
     let { kycGetCountries, getKyc } = this.props;
     kycGetCountries();
     getKyc();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { country, document, documentType, zipcode } = this.state;
+    const { cep } = this.props;
+    if (country === "BR" && prevProps.cep.cep !== cep.cep) {
+      if (!cep.cep) {
+        this.setState({ invalidCEP: true, state: "", city: "", address: "" });
+      } else {
+        this.setState({
+          state: cep.estado ? cep.estado : "",
+          city: cep.cidade ? cep.cidade : "",
+          street: cep.logradouro ? cep.logradouro : "",
+          invalidCEP: false
+        });
+      }
+    } else if (prevState.document !== document) {
+      if (documentType === "cpf" && document.length === 11) {
+        this.setState({ invalidCPF: !isCPF(document) });
+      } else if (documentType === "cnpj" && document.length === 14) {
+        this.setState({ invalidCNPJ: !isCNPJ(document) });
+      }
+    }
   }
 
   formGetter() {
@@ -529,7 +557,8 @@ class KYC extends React.Component {
       loadingKyc,
       loadingCreate,
       loadingState,
-      loadingCity
+      loadingAddress,
+      cep
     } = this.props;
     const {
       phoneNumber,
@@ -539,7 +568,11 @@ class KYC extends React.Component {
       country,
       state,
       city,
-      checkInputs
+      street,
+      checkInputs,
+      invalidCNPJ,
+      invalidCPF,
+      invalidCEP
     } = this.state;
     const MenuProps = {
       PaperProps: {
@@ -598,39 +631,7 @@ class KYC extends React.Component {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
-              <div className={style.textInput}>
-                <Input
-                  value={this.state.street}
-                  onChange={this.handleInput("street")}
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                  error={checkInputs && this.state.street === ""}
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
-              <div className={style.textInput}>
-                <Input
-                  classes={{
-                    root: classes.root,
-                    underline: classes.cssUnderline,
-                    input: classes.cssInput
-                  }}
-                  value={this.state.zipcode}
-                  error={checkInputs && this.state.zipcode === ""}
-                  onChange={this.handleInput("zipcode")}
-                  inputProps={{ maxLength: "12" }}
-                />
-              </div>
-            </Grid>
-          </Grid>
-          <Grid container className={style.boxKYC_2}>
+
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_COUNTRY")}</p>
               <div className={style.textInput}>
@@ -660,10 +661,34 @@ class KYC extends React.Component {
                 </Select>
               </div>
             </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_ZIP_CODE")}</p>
+              <div className={style.textInput}>
+                <Input
+                  classes={{
+                    root: classes.root,
+                    underline: classes.cssUnderline,
+                    input: classes.cssInput
+                  }}
+                  value={this.state.zipcode}
+                  error={
+                    (checkInputs && this.state.zipcode === "") || invalidCEP
+                  }
+                  onChange={this.handleInput("zipcode")}
+                  inputProps={{
+                    maxLength: this.state.country === "BR" ? "8" : "12"
+                  }}
+                />
+              </div>
+            </Grid>
+          </Grid>
+
+          <Grid container className={style.boxKYC_2}>
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_STATE")}</p>
               <div className={style.textInput}>
-                {loadingState ? (
+                {loadingState || loadingAddress ? (
                   <Loading />
                 ) : (
                   <Select
@@ -685,7 +710,16 @@ class KYC extends React.Component {
                         icon: classes.icon
                       }
                     }}
-                    disabled={country !== "" ? false : true}
+                    disabled={
+                      country === ""
+                        ? true
+                        : country === "BR" &&
+                          cep.cep &&
+                          state &&
+                          this.state.zipcode.length === 8
+                        ? true
+                        : false
+                    }
                     onChange={this.handleInput("state")}
                     error={checkInputs && this.state.state === ""}
                   >
@@ -696,38 +730,53 @@ class KYC extends React.Component {
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <p>{i18n.t("SETTINGS_USER_CITY")}</p>
-              <div className={style.textInput}>
-                {loadingCity ? (
-                  <Loading />
-                ) : (
-                  <Select
+              {loadingAddress ? (
+                <Loading />
+              ) : (
+                <div className={style.textInput}>
+                  <Input
                     classes={{
-                      selectMenu: classes.underlineItems,
-                      root: classes.rootSelect
+                      root: classes.root,
+                      underline: classes.cssUnderline,
+                      input: classes.cssInput,
+                      disabled: classes.disabled
                     }}
                     value={city}
-                    MenuProps={MenuProps}
-                    input={
-                      <Input
-                        classes={{
-                          underline: classes.underline
-                        }}
-                      />
+                    disabled={
+                      country === "BR" &&
+                      cep.cep &&
+                      city &&
+                      this.state.zipcode.length === 8
+                        ? true
+                        : false
                     }
-                    inputProps={{
-                      classes: {
-                        icon: classes.icon
-                      }
-                    }}
-                    disabled={state !== "" ? false : true}
-                    onChange={this.handleInput("city")}
                     error={checkInputs && this.state.city === ""}
-                  >
-                    {this.listCities()}
-                  </Select>
-                )}
-              </div>
+                    onChange={this.handleInput("city")}
+                  />
+                </div>
+              )}
             </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+              <p>{i18n.t("SETTINGS_USER_ADDRESS")}</p>
+              {loadingAddress ? (
+                <Loading />
+              ) : (
+                <div className={style.textInput}>
+                  <Input
+                    value={street}
+                    onChange={this.handleInput("street")}
+                    classes={{
+                      root: classes.root,
+                      underline: classes.cssUnderline,
+                      input: classes.cssInput
+                    }}
+                    error={checkInputs && this.state.street === ""}
+                  />
+                </div>
+              )}
+            </Grid>
+
             <Grid
               item
               xs={12}
@@ -851,6 +900,8 @@ class KYC extends React.Component {
                   }}
                   error={
                     invalidPassport ||
+                    invalidCNPJ ||
+                    invalidCPF ||
                     (checkInputs && this.state.document === "")
                   }
                   disabled={documentType ? false : true}
@@ -1006,13 +1057,12 @@ class KYC extends React.Component {
     ));
   };
 
-
   listStates = () => {
     const { classes, states } = this.props;
     if (states) {
       return states.map((item, index) => (
         <MenuItem
-          value={item.name}
+          value={item.shortName}
           key={index}
           classes={{
             root: classes.menuItemRoot
@@ -1024,29 +1074,12 @@ class KYC extends React.Component {
     }
     return "";
   };
-  listCities = () => {
-    const { classes, city } = this.props;
-    if (city) {
-      return city.map((item, index) => (
-        <MenuItem
-          value={item}
-          key={index}
-          classes={{
-            root: classes.menuItemRoot
-          }}
-        >
-          {item}
-        </MenuItem>
-      ));
-    }
-    return "";
-  };
 
   handleInput = property => e => {
-    const { kycGetStates, kycGetCities } = this.props;
+    const { kycGetStates, validateKycCep, cep, loadingAddress } = this.props;
     const { documentType, country } = this.state;
     let value = e.target.value;
-    let location = {};
+
     switch (property) {
       case "document":
         if (documentType === "passport") {
@@ -1068,21 +1101,30 @@ class KYC extends React.Component {
         });
         kycGetStates(value);
         this.setState({ state: "" });
-        this.setState({ city: "" });
         break;
       case "state":
-        location = {
-          country: country,
-          state: value
-        };
         this.setState({
           [property]: value
         });
-        kycGetCities(location);
-        this.setState({ city: "" });
+        break;
+      case "city":
+        value = value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
+        this.setState({
+          [property]: value
+        });
         break;
       case "zipcode":
         value = value.replace(/\W/, "");
+        this.setState({
+          [property]: value
+        });
+
+        if (country === "BR" && value.length > 7) {
+          validateKycCep(value);
+        }
+        break;
+      case "street":
+        value = value.replace(/[^0-9a-zà-ú A-ZÀ-Ú-]/, "");
         this.setState({
           [property]: value
         });
@@ -1154,7 +1196,7 @@ class KYC extends React.Component {
   };
 
   handleClick = () => {
-    const { kycCreate } = this.props;
+    const { kycCreate, cep } = this.props;
     const {
       street,
       state,
@@ -1185,6 +1227,17 @@ class KYC extends React.Component {
     };
     let passport = new RegExp("^[A-Z][0-9]{8}$");
 
+    if (documentType === "cpf" && !isCPF(document)) {
+      this.setState({ invalidCPF: true });
+      return;
+    } else if (documentType === "cnpj" && !isCNPJ(document)) {
+      this.setState({ invalidCNPJ: true });
+      return;
+    } else if (country === "BR" && (zipcode.length < 8 || !cep.cep)) {
+      this.setState({ invalidCEP: true });
+      return;
+    }
+
     if (!parseMax(phoneNumber).isValid()) {
       this.setState({ invalidPhone: true });
     } else {
@@ -1206,8 +1259,15 @@ class KYC extends React.Component {
   };
 
   render() {
-    const { invalidPassport, invalidPhone, checkInputs } = this.state;
-    const { sendRequest, kyc } = this.props;
+    const {
+      invalidPassport,
+      invalidPhone,
+      checkInputs,
+      invalidCNPJ,
+      invalidCPF,
+      invalidCEP
+    } = this.state;
+    const { sendRequest, kyc, cep } = this.props;
     let errorMessage = "";
     if (invalidPassport && !invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT");
@@ -1215,10 +1275,23 @@ class KYC extends React.Component {
       errorMessage = i18n.t("KYC_INVALID_PHONE");
     else if (invalidPassport && invalidPhone)
       errorMessage = i18n.t("KYC_INVALID_PASSPORT_PHONE");
+    else if (invalidCEP) errorMessage = i18n.t("INVALID_CEP");
+    else if (invalidCPF && !invalidPhone) errorMessage = i18n.t("INVALID_CPF");
+    else if (invalidCPF && invalidPhone)
+      errorMessage = i18n.t("KYC_INVALID_CPF_PHONE");
+    else if (invalidCNPJ && !invalidPhone)
+      errorMessage = i18n.t("INVALID_CNPJ");
+    else if (invalidCPF && invalidPhone)
+      errorMessage = i18n.t("KYC_INVALID_CNPJ_PHONE");
+
     return (
       <div>
-        {invalidPassport || invalidPhone ? (
-          <ModalBar type="error" message={errorMessage} timer />
+        {invalidPassport ||
+        invalidPhone ||
+        invalidCNPJ ||
+        invalidCPF ||
+        invalidCEP ? (
+          <ModalBar type="error" message={errorMessage} timer clock={"6000"} />
         ) : null}
         {sendRequest === 2 ? (
           <ModalBar
@@ -1276,16 +1349,11 @@ class KYC extends React.Component {
                 </Grid>
               </Grid>
               <Grid item xs={12} className={style.containerKYC}>
-                {(kyc.status == "rejected") ? (
+                {kyc.status == "rejected" ? (
                   <div style={{ color: "red" }} id="rejectedMessage">
-                    <div>
-                      {i18n.t("KYC_REJECTED_MESSAGE")}{" "}
-                    </div>
-                    <div>
-                      {kyc.comment}
-                    </div>
+                    <div>{i18n.t("KYC_REJECTED_MESSAGE")} </div>
+                    <div>{kyc.comment}</div>
                   </div>
-
                 ) : null}
                 {checkInputs ? (
                   <span style={{ color: "red" }} id="requiredFields">
@@ -1309,7 +1377,7 @@ KYC.propTypes = {
   loadingKyc: PropTypes.bool.isRequired,
   loadingCreate: PropTypes.bool.isRequired,
   loadingState: PropTypes.bool.isRequired,
-  loadingCity: PropTypes.bool.isRequired,
+  loadingAddress: PropTypes.bool,
   kycGetCountries: PropTypes.func.isRequired,
   kycGetStates: PropTypes.func.isRequired,
   kycGetCities: PropTypes.func.isRequired,
@@ -1318,19 +1386,22 @@ KYC.propTypes = {
   city: PropTypes.array,
   sendRequest: PropTypes.number,
   getKyc: PropTypes.func,
-  kyc: PropTypes.object.isRequired
+  kyc: PropTypes.object.isRequired,
+  validateKycCep: PropTypes.func,
+  cep: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   loadingKyc: store.settings.loadingKyc,
   loadingCreate: store.settings.loadingCreate,
   loadingState: store.settings.loadingState,
-  loadingCity: store.settings.loadingCity,
+  loadingAddress: store.settings.loadingAddress,
   countries: store.settings.location.countries,
   states: store.settings.location.states,
   city: store.settings.location.city,
   sendRequest: store.settings.sendRequest,
-  kyc: store.settings.kyc
+  kyc: store.settings.kyc,
+  cep: store.settings.cepValidation
 });
 
 const mapDispatchToProps = dispatch =>
@@ -1341,7 +1412,8 @@ const mapDispatchToProps = dispatch =>
       kycGetCountries,
       kycGetStates,
       kycGetCities,
-      getKyc
+      getKyc,
+      validateKycCep
     },
     dispatch
   );
