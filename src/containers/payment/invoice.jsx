@@ -9,8 +9,7 @@ import {
   setPayment,
   getInvoice,
   setClearPayment,
-  uploadBarcode,
-  setClearStatePayment
+  uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
 import { getPaymentMethodService } from "../deposit/redux/depositAction";
@@ -111,8 +110,10 @@ class Invoice extends React.Component {
   componentDidMount() {
     const {
       getCoinsEnabled,
+      setClearPayment,
       getPaymentMethodService
     } = this.props;
+    setClearPayment();
     getCoinsEnabled();
     getPaymentMethodService(4);
   }
@@ -159,35 +160,30 @@ class Invoice extends React.Component {
   };
 
   setDefaultState = () => {
-    const { cleanState, setClearStatePayment } = this.props;
-    if (cleanState) {
-      const emptyValue = {
-        number: "",
-        assignor: "",
-        name: "",
-        description: "",
-        dueDate: "",
-        cpfCnpj: "",
-        value: "",
-        coin: {
-          abbreviation: "",
-          address: ""
-        }
-      };
+    const emptyValue = {
+      number: "",
+      assignor: "",
+      name: "",
+      description: "",
+      dueDate: "",
+      cpfCnpj: "",
+      value: "",
+      coin: {
+        abbreviation: "",
+        address: ""
+      }
+    };
 
-      this.setState({
-        ...this.state,
-        disableNumberInput: false,
-        invoice: emptyValue,
-        coin: {
-          name: undefined,
-          value: undefined,
-          img: undefined
-        }
-      });
-      setClearStatePayment();
-    }
-
+    this.setState({
+      ...this.state,
+      disableNumberInput: false,
+      invoice: emptyValue,
+      coin: {
+        name: undefined,
+        value: undefined,
+        img: undefined
+      }
+    });
   };
 
   handleInvoiceNumberChange = value => {
@@ -205,12 +201,23 @@ class Invoice extends React.Component {
     });
 
     if (newValue.length == 0) {
-      //this.setDefaultState();
-     // setClearPayment();
+      this.setDefaultState();
+      setClearPayment();
     } else if (newValue.length >= 47) {
       if (disableNumberInput) {
         return;
       }
+
+      this.setState({
+        invoice: {
+          ...invoice,
+          number: newValue,
+          assignor: "",
+          dueDate: "",
+          value: "",
+          description: ""
+        }
+      });
 
       getInvoice(newValue);
     }
@@ -342,7 +349,7 @@ class Invoice extends React.Component {
     }
     this.setPayment(invoiceData);
     this.openModal();
-    //this.setDefaultState();
+    this.setDefaultState();
 
     return;
   };
@@ -395,7 +402,6 @@ class Invoice extends React.Component {
       loading,
       coinsRedux,
       payment,
-      loadingCoins,
       methodPaymentsList
     } = this.props;
     const { coin, invoice, errors, selectedPaymentMethod } = this.state;
@@ -407,8 +413,6 @@ class Invoice extends React.Component {
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
       : i18n.t("SELECT_PAYMENT");
-
-    this.setDefaultState();
 
     return (
       <Grid container direction="row" justify="center">
@@ -543,57 +547,52 @@ class Invoice extends React.Component {
             <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
           </Grid>
         </Grid>
-        <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container>
-            <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
-              <Hidden smUp>
-                <Select
-                  list={methodPaymentsList}
-                  title={paymentTitle}
-                  selectItem={this.handlePayment}
-                  error={errors.includes("Payment Method")}
-                  width={"100%"}
-                />
-              </Hidden>
-              <Hidden xsDown>
-                <Select
-                  list={methodPaymentsList}
-                  title={paymentTitle}
-                  selectItem={this.handlePayment}
-                  error={errors.includes("Payment Method")}
-                />
-              </Hidden>
-            </Grid>
-            {loadingCoins ? (
-              <div style={{ margin: "10px auto", textAlign: "center" }}>
-                <Loading color="lunes" />
-              </div>
-            ) : null}
-            {(selectedPaymentMethod.value === 3 && !loadingCoins) ? (
-              <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+          <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
+            <Grid container>
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
                 <Hidden smUp>
                   <Select
-                    list={coinsRedux}
-                    title={title}
-                    titleImg={img}
-                    selectItem={this.coinSelected}
-                    error={errors.includes("coin")}
-                    width={"94%"}
+                    list={methodPaymentsList}
+                    title={paymentTitle}
+                    selectItem={this.handlePayment}
+                    error={errors.includes("Payment Method")}
+                    width={"100%"}
                   />
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={coinsRedux}
-                    title={title}
-                    titleImg={img}
-                    selectItem={this.coinSelected}
-                    error={errors.includes("coin")}
+                    list={methodPaymentsList}
+                    title={paymentTitle}
+                    selectItem={this.handlePayment}
+                    error={errors.includes("Payment Method")}
                   />
                 </Hidden>
               </Grid>
-            ) : null}
+              {selectedPaymentMethod.value === 3 ? (
+                <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                  <Hidden smUp>
+                    <Select
+                      list={coinsRedux}
+                      title={title}
+                      titleImg={img}
+                      selectItem={this.coinSelected}
+                      error={errors.includes("coin")}
+                      width={"94%"}
+                    />
+                  </Hidden>
+                  <Hidden xsDown>
+                    <Select
+                      list={coinsRedux}
+                      title={title}
+                      titleImg={img}
+                      selectItem={this.coinSelected}
+                      error={errors.includes("coin")}
+                    />
+                  </Hidden>
+                </Grid>
+              ) : null}
+            </Grid>
           </Grid>
-        </Grid>
         <Grid
           item
           xs={12}
@@ -638,10 +637,7 @@ Invoice.propTypes = {
   coins: PropTypes.array,
   errorInput: PropTypes.func.isRequired,
   uploadBarcode: PropTypes.func.isRequired,
-  methodPaymentsList: PropTypes.array,
-  setClearStatePayment: PropTypes.func.isRequired,
-  loadingCoins: PropTypes.bool.isRequired,
-  cleanState: PropTypes.bool,
+  methodPaymentsList: PropTypes.array
 };
 
 const mapStateToProps = store => ({
@@ -649,9 +645,7 @@ const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading,
   coins: store.skeleton.coins,
-  methodPaymentsList: store.deposit.paymentsMethodsService,
-  loadingCoins: store.payment.loadingCoins,
-  cleanState: store.payment.cleanState
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
@@ -663,8 +657,7 @@ const mapDispatchToProps = dispatch =>
       setClearPayment,
       errorInput,
       uploadBarcode,
-      getPaymentMethodService,
-      setClearStatePayment
+      getPaymentMethodService
     },
     dispatch
   );
