@@ -823,5 +823,5 @@
   "P2P_ADDRESS_TO_SEND": "Address to send",
   "SELECT_COIN": "Select a coin",
 
-  "UNAVAILABLE_SERVICE": "Service currently unavailable"
+  "UNAVAILABLE_SERVICE": "Service currently unavailable. Try again later."
 }
