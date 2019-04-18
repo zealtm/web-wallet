@@ -60,7 +60,11 @@ const buy = (state = initialState, action) => {
         ...state,
         modalOpen: action.open
       };
-
+      case "SET_MODAL_CLOSE_REDUCER":
+      return {
+        ...state,
+        modalOpen: false
+      };
     case "SET_LOADING_HISTORY":
       return {
         ...state,

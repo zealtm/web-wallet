@@ -105,7 +105,8 @@ class Invoice extends React.Component {
         title: undefined,
         value: undefined
       },
-      serviceCoinId: null
+      serviceCoinId: null,
+      paymentCoins: []
     };
 
     this.coinSelected = this.coinSelected.bind(this);
@@ -124,7 +125,24 @@ class Invoice extends React.Component {
     getCoinsEnabled();
     getPaymentMethodService(3);
   }
-
+  validatePaymentCoins = () => {
+    const { coins, coinsRedux } = this.props;
+    let paymentCoins = [];
+    coinsRedux.forEach((element, index) => {
+      if (coins[element.title.toLowerCase()].status === "active") {
+        paymentCoins.push(element);
+      }
+    });
+    this.setState({ paymentCoins });
+  };
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedPaymentMethod } = this.state;
+    if (prevState.selectedPaymentMethod.value !== selectedPaymentMethod.value) {
+      if (selectedPaymentMethod.value === 1) {
+        this.validatePaymentCoins();
+      }
+    }
+  }
   coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
@@ -325,10 +343,10 @@ class Invoice extends React.Component {
     if (selectedPaymentMethod.value === 2) {
       invoiceData = {
         ...invoiceData,
-        serviceCoinId: serviceCoinId 
+        serviceCoinId: serviceCoinId
       };
     }
-    
+
     openModal();
     setRecharge(invoiceData);
     this.setDefaultState();
@@ -354,7 +372,8 @@ class Invoice extends React.Component {
       valores,
       loadingValores,
       valueError,
-      methodPaymentsList
+      methodPaymentsList,
+      coins
     } = this.props;
     const { coin, errors, invoice, selectedPaymentMethod } = this.state;
 
@@ -393,7 +412,6 @@ class Invoice extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid container className={style.box} style={{ marginTop: "10px" }}>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
             <Hidden smUp>
@@ -479,7 +497,7 @@ class Invoice extends React.Component {
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -489,7 +507,7 @@ class Invoice extends React.Component {
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
