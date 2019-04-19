@@ -113,7 +113,7 @@ export const resetModalSend = () => ({
   type: "SET_RESET_MODAL_SEND"
 })
 
-export const setWalletSendModalDescribe = descripton => ({
+export const setWalletSendModalDescribe = description => ({
   type: "SET_WALLET_MODAL_SEND_DESCRIBE",
-  descripton
+  description
 }); 

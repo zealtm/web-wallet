@@ -214,7 +214,7 @@ const wallet = (state = initialState, action) => {
         ...state,
         modal: {
           ...state.modal,
-          describe: action.descripton
+          describe: action.description
         }
     };
     

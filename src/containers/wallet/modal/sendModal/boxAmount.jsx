@@ -26,7 +26,7 @@ class BoxAmount extends React.Component {
     super();
     this.state = {
       amount: "",
-      descripton: ""
+      description: ""
     };
   }
 
@@ -38,8 +38,8 @@ class BoxAmount extends React.Component {
     }
   };
 
-  setDescrption = descripton => {
-    this.setState({ ...this.state, descripton });
+  setDescrption = description => {
+    this.setState({ ...this.state, description });
   };
 
   calcPercent = value => {
@@ -52,7 +52,7 @@ class BoxAmount extends React.Component {
   };
 
   confirmAmount = () => {
-    let { amount, descripton } = this.state;
+    let { amount, description } = this.state;
     let {
       modal,
       coins,
@@ -72,7 +72,7 @@ class BoxAmount extends React.Component {
     if (parseFloat(amount) <= coinBalance) {
       setWalletSendModalLoading();
       setWalletSendModalAmount(parseFloat(amount));
-      setWalletSendModalDescribe(descripton);
+      setWalletSendModalDescribe(description);
       getWalletSendModalFee(
         coin,
         coins[coin].address,
@@ -87,7 +87,7 @@ class BoxAmount extends React.Component {
   };
 
   render() {
-    let { amount,descripton } = this.state;
+    let { amount,description } = this.state;
     let { modal, coin } = this.props;
 
     return (
@@ -122,7 +122,7 @@ class BoxAmount extends React.Component {
           className={style.txtDescription}
           type="text"
           name="inputDescription"
-          value={descripton}
+          value={description}
           onChange={event => this.setDescrption(event.target.value)}
         />
 
