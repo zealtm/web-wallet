@@ -158,12 +158,21 @@ class InformationModal extends React.Component {
       errorMsg: ""
     };
   }
+
+  returnPaymentMethodIndex = () => {
+    const {payloadPayment, methods} = this.props;
+    for (let i = 0; i < methods.length; i++) {
+      if (methods[i].id === payloadPayment.paymentMethodId) {
+        return i;
+      }
+    }
+  };
   setInputValue = () => {
     const { userData, selectedValue, depositGetCity, methods } = this.props;
     const { data } = userData;
     const { fullName, document, documentType, address, status } = data;
     const { city, state, country, street, zipcode } = address;
-    if (selectedValue > methods[0].limitKycAmount && status !== "confirmed") {
+    if (selectedValue > methods[this.returnPaymentMethodIndex()].limitKycAmount && status !== "confirmed") {
       this.setState({
         fullName: "",
         documentType: "",
@@ -396,7 +405,7 @@ class InformationModal extends React.Component {
     if (selectedValue === 0) {
       infoMessage = i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE");
     } else if (
-      selectedValue > methods[0].limitKycAmount &&
+      selectedValue > methods[this.returnPaymentMethodIndex()].limitKycAmount &&
       statusKyc === "rejected"
     ) {
       infoMessage = (
@@ -411,7 +420,7 @@ class InformationModal extends React.Component {
         </div>
       );
     } else if (
-      selectedValue > methods[0].limitKycAmount &&
+      selectedValue > methods[this.returnPaymentMethodIndex()].limitKycAmount &&
       statusKyc === "waiting"
     ) {
       infoMessage = i18n.t("DEPOSIT_INF_MODAL_KYC_WAITING");
@@ -695,7 +704,8 @@ InformationModal.propTypes = {
   validateDepositCep: PropTypes.func,
   cep: PropTypes.object,
   methods: PropTypes.array,
-  loadingAddress: PropTypes.bool
+  loadingAddress: PropTypes.bool,
+  payloadPayment: PropTypes.object
 };
 
 const mapStateToProps = store => ({
@@ -707,7 +717,8 @@ const mapStateToProps = store => ({
   selectedValue: store.deposit.selectedValue,
   cep: store.settings.cepValidation,
   loadingAddress: store.settings.loadingAddress,
-  methods: store.deposit.paymentMethods
+  methods: store.deposit.paymentMethods,
+  payloadPayment: store.deposit.payloadPayment
 });
 
 const mapDispatchToProps = dispatch =>

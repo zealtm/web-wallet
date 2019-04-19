@@ -525,16 +525,18 @@ class Invoice extends React.Component {
           className={style.transparentBox}
           style={{ marginTop: "10px" }}
         >
-          <button
-            className={
-              this.checkAllInputs()
-                ? style.buttonEnable
-                : style.buttonBorderGreen
-            }
-            onClick={this.inputValidator}
-          >
-            {loading ? <Loading /> : i18n.t("RECHARGE_BT_INIT")}
-          </button>
+          {this.checkAllInputs() ? (
+            <button
+              className={style.buttonEnable}
+              onClick={this.inputValidator}
+            >
+              {loading ? <Loading /> : i18n.t("RECHARGE_BT_INIT")}
+            </button>
+          ) : (
+            <button className={style.buttonBorderGreen}>
+              {loading ? <Loading /> : i18n.t("RECHARGE_BT_INIT")}
+            </button>
+          )}
         </Grid>
 
         <Grid

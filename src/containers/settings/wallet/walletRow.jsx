@@ -100,7 +100,7 @@ class WalletRow extends React.Component {
           <input
             type="text"
             disabled
-            value={coin.address || i18n.t("TEXT_UNAVAILABLE")}
+            value={coin.status === "active" ? coin.address : i18n.t("TEXT_UNAVAILABLE")}
             className={style.inputClear}
           />
         </Grid>
