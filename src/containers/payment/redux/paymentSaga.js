@@ -407,7 +407,7 @@ export function* confirmPaySaga(payload) {
                 type: "SET_MODAL_PAY_STEP_REDUCER",
                 step: 6
               });
-              yield put(internalServerError());
+              yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
             } else {
               yield put({
                 type: "SET_MODAL_PAY_STEP_REDUCER",
@@ -437,7 +437,7 @@ export function* confirmPaySaga(payload) {
         step: 6
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
 
       return;
     } catch (error) {
@@ -451,9 +451,13 @@ export function* confirmPaySaga(payload) {
         step: 6
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
     }
   } catch (error) {
-    yield put(internalServerError());
+    yield put({
+      type: "SET_MODAL_PAY_STEP_REDUCER",
+      step: 6
+    });
+    yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
   }
 }

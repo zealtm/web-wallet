@@ -61,7 +61,7 @@ class TransactionHistory extends React.Component {
     let selectedCoin = wallet.selectedCoin;
     let coin = coins[selectedCoin];
 
-    if (!coin || !wallet.coinHistory || !wallet.coinHistory.history || wallet.coinHistory.history.length <= 0) {
+    if (!coin || !wallet.coinHistory || !wallet.coinHistory.history || !wallet.coinHistory.history.txs || wallet.coinHistory.history.length <= 0) {
       return (
         <div className={style.notFound}>{i18n.t("MESSAGE_NOTHING_FOUND")}</div>
       );
