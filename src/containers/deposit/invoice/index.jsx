@@ -446,7 +446,7 @@ class Invoice extends React.Component {
                   className={style.buttonBorderGreen}
                   onClick={() => this.inputValidator()}
                 >
-                  {i18n.t("DEPOSIT_TAB_TITLE")}
+                  {i18n.t("DEPOSIT_BUTTON_CONFIRM")}
                 </button>
               </Grid>
               <Grid
