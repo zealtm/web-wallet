@@ -586,7 +586,7 @@ class Invoice extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {loadingCoins ? (
+            {(selectedPaymentMethod.value === 1 && loadingCoins) ? (
               <div style={{ margin: "10px auto", textAlign: "center" }}>
                 <Loading color="lunes" />
               </div>

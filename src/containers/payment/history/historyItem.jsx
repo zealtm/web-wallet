@@ -23,11 +23,6 @@ class HistoryItem extends React.Component {
     let date =
     formatDate(item.date, "DMY", true) + " " + formatDate(item.date, "HM");
 
-    let coinSelected = getDefaultCrypto();
-    let fiatSelected = getDefaultFiat();
-    let coinFiatSymbol = skeleton.coins[coinSelected]
-        ? skeleton.coins[coinSelected].price[fiatSelected].symbol
-        : "USD";
     return (
       <Grid container>
         <Grid item xs={12} className={style.row}>
@@ -50,7 +45,7 @@ class HistoryItem extends React.Component {
                 decimalPoint
               )}
             </p>
-            <p>{coinFiatSymbol} {parseFloat(item.amountFiat).toFixed(2)}</p>
+            <p>R$ {parseFloat(item.amountFiat).toFixed(2)}</p>
           </div>
         </Grid>
         <div className={style.line} />
