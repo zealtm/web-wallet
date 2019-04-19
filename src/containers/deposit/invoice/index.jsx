@@ -106,7 +106,11 @@ class Invoice extends React.Component {
       activeCard: null,
       depositValue: 0,
       error: false,
-      errorMsg: ""
+      errorMsg: "",
+      methods: [
+        { id: 1, name: "bill", fee: 0, limitKycAmount: 300 },
+        { id: 2, name: "debit_card", fee: 0, limitKycAmount: 300 }
+      ]
     };
   }
 
@@ -207,8 +211,8 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
-    const { methods } = this.props;
-    const { paymentMethods } = this.state;
+   const { methods } = this.props;
+    const { paymentMethods} = this.state;
     let index = 0;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === value) {
@@ -223,6 +227,15 @@ class Invoice extends React.Component {
       payment: value,
       paymentName: name
     });
+  };
+  returnPaymentMethodIndex = () => {
+    const {methods} = this.props;
+    let {payment} = this.state;
+    for (let i = 0; i < methods.length; i++) {
+      if (methods[i].id === payment) {
+        return i;
+      }
+    }
   };
   renderPaymentMethods = () => {
     const { classes } = this.props;
@@ -326,25 +339,32 @@ class Invoice extends React.Component {
       openModal,
       setPaymentInformation,
       setKycValidation,
-      userData
+      userData,
+      methods
     } = this.props;
+    
     const { payment, depositValue, activeCard } = this.state;
     setPaymentInformation({
       service: "Deposit",
       packageId: activeCard,
       paymentMethodId: payment
     });
-    if (depositValue > 300 && userData.status !== "confirmed") {
+    if (depositValue > methods[this.returnPaymentMethodIndex()].limitKycAmount && userData.status !== "confirmed") {
       this.setState({
         error: true,
-        errorMsg:i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
+        errorMsg: i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
       });
     } else if (depositValue == 0) {
       this.setState({
         error: true,
         errorMsg: i18n.t("DEPOSIT_INF_MODAL_NO_SELECTED_VALUE")
       });
-    } else {
+    } else if (userData.status !== null && userData.address.country !== "BR") {
+      this.setState({
+        error:true,
+        errorMsg: i18n.t("DEPOSIT_KYC_COUNTRY_VALIDATION")
+      });
+    }else {
       this.setState({ error: false });
       //validações
       openModal();

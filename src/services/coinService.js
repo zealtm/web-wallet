@@ -82,17 +82,7 @@ class CoinService {
 
         availableCoins[index].coinHistory = undefined;
 
-        if (coin.status === "active") {
-          let responsePrice = await axios.get(
-            BASE_URL + "/coin/" + coin.abbreviation + "/price",
-            API_HEADER
-          );
-          availableCoins[index].price = responsePrice.data.data;
-          availableCoins[index].price.BRL.symbol = "R$";
-          availableCoins[index].price.USD.symbol = "$";
-          availableCoins[index].price.EUR.symbol = "€";
-          availableCoins[index].price.percent = percentCalcByRange(1, 3) + "%"; //CALCULAR PORCENTAGEM
-
+        if (coin.status === "active" ) {
           // CREATE ADDRESS
           let network = undefined;
           if (coin.abbreviation === "btc")
@@ -151,58 +141,62 @@ class CoinService {
             });
           }
           if (responseCreateAddress) {
-            availableCoins[index].address =
-              responseCreateAddress;
+            availableCoins[index].address = responseCreateAddress;
           } else {
             availableCoins[index].status = "inactive";
             availableCoins[index].address = undefined;
           }
+          try {
+            let responsePrice = await axios.get(
+              BASE_URL + "/coin/" + coin.abbreviation + "/price",
+              API_HEADER
+            );
+            if (responsePrice.data.data) {
+              availableCoins[index].price = responsePrice.data.data;
+              availableCoins[index].price.BRL.symbol = "R$";
+              availableCoins[index].price.USD.symbol = "$";
+              availableCoins[index].price.EUR.symbol = "€";
+              let priceHistory = await getPriceHistory(
+                coin.abbreviation,
+                token
+              );
+              if (priceHistory)
+                availableCoins[index].price.percent =
+                  percentCalcByRange(priceHistory.initial, priceHistory.last) +
+                  "%";
+              else availableCoins[index].price.percent = "-";
+            }
+            let responseBalance = await axios.get(
+              BASE_URL +
+                "/coin/" +
+                coin.abbreviation +
+                "/balance/" +
+                coin.address,
+              API_HEADER
+            );
+            if (responseBalance.data.data) {
+              availableCoins[index].status = "active";
+              availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
+              availableCoins[index].balance = responseBalance.data.data;
+              // BALANCE CONVERTER
+              availableCoins[index].balance.available = convertBiggestCoinUnit(
+                availableCoins[index].balance.available,
+                coin.decimalPoint
+              );
 
-          // GET PRICE
-          let priceHistory = await getPriceHistory(coin.abbreviation, token);
-
-          if (responsePrice.data.data) {
-            availableCoins[index].price = responsePrice.data.data;
-            availableCoins[index].price.percent =
-              percentCalcByRange(priceHistory.initial, priceHistory.last) + "%";
-          } else {
+              availableCoins[index].balance.total = convertBiggestCoinUnit(
+                availableCoins[index].balance.total,
+                coin.decimalPoint
+              );
+              Object.keys(availableCoins[index].price).map(fiat => {
+                let fiatPrice = availableCoins[index].price[fiat];
+                availableCoins[index].balance[fiat] =
+                  fiatPrice.price * availableCoins[index].balance.available;
+              });
+            }
+          } catch (error) {
             availableCoins[index].status = "inactive";
             availableCoins[index].price = undefined;
-          }
-
-          // GET BALANCE
-          let responseBalance = await axios.get(
-            BASE_URL +
-              "/coin/" +
-              coin.abbreviation +
-              "/balance/" +
-              coin.address,
-            API_HEADER
-          );
-
-          if (responseBalance.data.data) {
-            availableCoins.token = responseBalance.headers[HEADER_RESPONSE];
-            availableCoins[index].balance = responseBalance.data.data;
-
-            // BALANCE CONVERTER
-            availableCoins[index].balance.available = convertBiggestCoinUnit(
-              availableCoins[index].balance.available,
-              coin.decimalPoint
-            );
-
-            availableCoins[index].balance.total = convertBiggestCoinUnit(
-              availableCoins[index].balance.total,
-              coin.decimalPoint
-            );
-
-            Object.keys(availableCoins[index].price).map(fiat => {
-              let fiatPrice = availableCoins[index].price[fiat];
-              availableCoins[index].balance[fiat] =
-                fiatPrice.price * availableCoins[index].balance.available;
-            });
-          } else {
-            availableCoins[index].status = "inactive";
-            availableCoins[index].balance = undefined;
           }
         } else {
           availableCoins[index].address = undefined;
@@ -218,7 +212,7 @@ class CoinService {
         coins[coin.abbreviation] = availableCoins[index];
       });
       setAuthToken(availableCoins.token);
-      coins.token = availableCoins.token;
+      //coins.token = availableCoins.token;
       return coins;
     } catch (error) {
       internalServerError();
@@ -242,12 +236,12 @@ class CoinService {
   async getCoinBalance(coinName, address, token) {
     try {
       API_HEADER.headers.Authorization = token;
-      
+
       let response = await axios.get(
         `${BASE_URL}/coin/${coinName}/balance/${address}`,
         API_HEADER
       );
-      
+
       setAuthToken(response.headers[HEADER_RESPONSE]);
 
       return response;

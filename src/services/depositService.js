@@ -69,7 +69,23 @@ class DepositService {
       return;
     }
   }
+  async createDepositDebit(token, payload) {
+    try {
+      API_HEADER.headers.Authorization = token;
+      const response = await axios.post(
+        `${BASE_URL}/deposit/debitcard`,
+        payload,
+        API_HEADER
+      );
 
+      setAuthToken(response.headers[HEADER_RESPONSE]);
+      
+      return response;
+    } catch (error) {
+      internalServerError();
+      return;
+    }
+  }
   async getDepositBill(token, payload) {
     try {
       API_HEADER.headers.Authorization = token;

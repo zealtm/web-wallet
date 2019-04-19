@@ -103,7 +103,7 @@ module.exports = {
     extensions: [".js", ".jsx"]
   },
   output: {
-    filename: "bundle-[name].js",
+    filename: "bundle-[name]-[chunkhash].js",
     path: path.resolve(__dirname, "public", "scripts"),
     publicPath: "scripts/"
   },
@@ -139,7 +139,7 @@ module.exports = {
       }
     }),
     new HtmlWebpackPlugin({
-      template: "public/index.html"
+      template: "public/index-production.html"
     })
   ]
 };

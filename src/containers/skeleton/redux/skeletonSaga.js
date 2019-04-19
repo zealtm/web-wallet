@@ -1,7 +1,7 @@
 import { put, call } from "redux-saga/effects";
 import { internalServerError } from "../../../containers/errors/statusCodeMessage";
 import {
-  setAuthToken,
+ 
   getAuthToken,
   getUserSeedWords,
   getDefaultCrypto,
@@ -26,7 +26,6 @@ export function* loadGeneralInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
     let responseUser = yield call(userService.getUser, token);
     let pictureUser = yield call(
       userService.getUserPicture,
@@ -39,10 +38,6 @@ export function* loadGeneralInfo(action) {
       userId,
       token
     );
-
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
-
     let responseAlias = yield call(
       transactionService.getAliases,
       responseCoins.lunes.address
@@ -97,6 +92,31 @@ export function* loadGeneralInfo(action) {
   }
 }
 
+export function* loadCreditBalance(action) {
+  try {
+    let token = yield call(getAuthToken);
+    let userId = yield call(getUserId);
+    let {oldBalance} = action;
+    let responseCredits = {};
+    let timeOut = 25000;
+    let endTime = 2000;
+    do{
+      setTimeout(()=> {}, 2000);
+      endTime +=  2000;
+      responseCredits  = yield call(
+        coinService.getCoinBalance,
+        "lbrl",
+        userId,
+        token
+      );
+    }while(oldBalance === responseCredits.data.data.available && endTime <= timeOut);
+
+    yield put({ type: "SET_CREDIT_BALANCE", responseCredits });
+  } catch (error) {
+    yield put(internalServerError());
+  }
+}
+
 export function* loadWalletInfo(action) {
   try {
     const token = yield call(getAuthToken);
@@ -107,9 +127,7 @@ export function* loadWalletInfo(action) {
       token,
       decryptAes(seed, action.password)
     );
-
-    setAuthToken(responseCoins.token);
-    delete responseCoins.token;
+    
 
     let responseCoinHistory = yield call(
       coinService.getCoinHistory,
@@ -117,7 +135,6 @@ export function* loadWalletInfo(action) {
       responseCoins[defaultCrypto].address,
       token
     );
-
     yield put({
       type: "GET_GENERAL_INFO",
       coins: responseCoins
