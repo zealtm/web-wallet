@@ -31,7 +31,7 @@ class BalanceLBRL extends React.Component {
             <hr className={style.linBalance} /> 
             <div className={style.textBalanceBox}>
               <span className={style.textBalance}>{i18n.t("DEPOSIT_CREDIT")}</span>
-              <span className={style.textBalanceGreen}>{total} LBRL</span>
+              <span className={style.textBalanceGreen}>{"R$"}{total.toFixed(2)}</span>
             </div>            
         </div>
     );

@@ -2,7 +2,7 @@
 :local .linBalance{  
     width: 28vw !important;
     max-width: 40vw !important;
-    border:0.5px dashed white;
+    border:1px dashed #654fa4;
     float: left;
   }
   :local .textBalance{
@@ -34,7 +34,7 @@
     :local .linBalance{  
       width: 55vw !important;
       max-width: 60vw !important;
-      border:0.5px dashed white;
+      border:1px dashed #654fa4;
       float: left;
     }
   }
