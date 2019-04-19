@@ -3,7 +3,9 @@
     width: 28vw !important;
     max-width: 40vw !important;
     border:1px dashed #654fa4;
-    float: left;
+    float: left;     
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   :local .textBalance{
     font-weight: bold;
@@ -11,13 +13,13 @@
   :local .textBalanceGreen{
     composes: clGreenLight from "../../../components/bases/colorBase.css";
     margin-left: 5px;
-    
   }
   :local .textBalanceBox{
     float: right;
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
-  :local .contentBalance{
-    padding: 10px;
+  :local .contentBalance{    
     max-width: 40vw !important;
     margin: 0 auto;
     flex-direction: column;
@@ -29,12 +31,14 @@
       max-width: 120vw !important;
       margin: 0 auto;
       flex-direction: column;
-      display: block;
+      display: block;     
     }
     :local .linBalance{  
       width: 55vw !important;
       max-width: 60vw !important;
       border:1px dashed #654fa4;
       float: left;
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
   }
