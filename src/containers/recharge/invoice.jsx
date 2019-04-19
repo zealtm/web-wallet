@@ -9,7 +9,8 @@ import {
   getOperators,
   getValoresRecarga,
   setRecharge,
-  setClearStateRecharge
+  setClearStateRecharge,
+  setClearRecharge
 } from "./redux/rechargeAction";
 import {
   getPaymentMethodService,
@@ -117,10 +118,12 @@ class Invoice extends React.Component {
   componentDidMount() {
     const {
       getCoinsEnabled,
-      getPaymentMethodService
+      getPaymentMethodService,
+      setClearRecharge
     } = this.props;
     getCoinsEnabled();
     getPaymentMethodService(3);
+    setClearRecharge();
     
   }
 
@@ -569,6 +572,7 @@ Invoice.propTypes = {
   loadingCoins:PropTypes.bool.isRequired,
   setClearStateRecharge:PropTypes.func.isRequired,
   cleanState:PropTypes.bool,
+  setClearRecharge: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = store => ({
@@ -581,7 +585,7 @@ const mapStateToProps = store => ({
   valueError: store.recharge.valueError,
   methodPaymentsList: store.deposit.paymentsMethodsService,
   loadingCoins: store.recharge.loadingCoins,
-  cleanState:store.recharge.cleanState  
+  cleanState:store.recharge.cleanState,  
 });
 
 const mapDispatchToProps = dispatch =>
@@ -593,7 +597,8 @@ const mapDispatchToProps = dispatch =>
       setRecharge,
       getPaymentMethodService,
       setMethodServiceId,
-      setClearStateRecharge
+      setClearStateRecharge,
+      setClearRecharge
     },
     dispatch
   );

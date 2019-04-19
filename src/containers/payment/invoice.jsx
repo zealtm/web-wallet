@@ -111,10 +111,12 @@ class Invoice extends React.Component {
   componentDidMount() {
     const {
       getCoinsEnabled,
-      getPaymentMethodService
+      getPaymentMethodService,
+      setClearPayment
     } = this.props;
     getCoinsEnabled();
     getPaymentMethodService(4);
+    setClearPayment();
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -206,7 +208,7 @@ class Invoice extends React.Component {
 
     if (newValue.length == 0) {
       //this.setDefaultState();
-     // setClearPayment();
+      setClearPayment();
     } else if (newValue.length >= 47) {
       if (disableNumberInput) {
         return;
