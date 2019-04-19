@@ -121,7 +121,7 @@ class TransactionHistory extends React.Component {
                 </div>
                 <div>
                   {this.defineSymbol(
-                    coins[defaultCoin].price[defaultFiat].symbol || "$",
+                    coin.price ? coin.price[defaultFiat].symbol : "$",
                     transaction.price[defaultFiat]
                   )}
                   {this.hasDefaultPrice(
