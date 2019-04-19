@@ -119,8 +119,11 @@ class CoinsInfo extends React.Component {
     let step = wallet.modal.step;
     let selectedCoin = wallet.selectedCoin ? wallet.selectedCoin : "lunes";
 
-    if (!coins[selectedCoin]) return null;
+    if (!coins[selectedCoin] || !coins[selectedCoin].balance || !coins[selectedCoin].price) return null;
     
+    console.log(coins[selectedCoin])
+    console.log(wallet.selectedCoin)
+
     let coin = coins[wallet.selectedCoin];
 
     

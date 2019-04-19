@@ -55,15 +55,16 @@ class Header extends React.Component {
     let coinBalance =
       coins[coinSelected] && coins[coinSelected].balance
         ? coins[coinSelected].balance.available
-        : 0;
+        : "-";
 
-    let coinFiat = coins[coinSelected]
+    let coinFiat = coins[coinSelected] && coins[coinSelected].price
       ? (coins[coinSelected].price["BRL"].price * coinBalance).toFixed(2)
       : 0;
 
-    let coinFiatSymbol = coins[coinSelected]
+    let coinFiatSymbol = coins[coinSelected] && coins[coinSelected].price
       ? coins[coinSelected].price[fiatSelected].symbol
-      : "USD";
+      : "";
+
     if (openBalancePopup) {
       setTimeout(() => {
         this.setState({ ...this.state, openBalancePopup: false });
@@ -160,16 +161,17 @@ class Header extends React.Component {
     let coinBalance =
       coins[coinSelected] && coins[coinSelected].balance
         ? coins[coinSelected].balance.available
-        : 0;
-    
-    
-    let coinFiat = coins[coinSelected]
-      ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
-      : 0;
+        : "-";
 
-    let coinFiatSymbol = coins[coinSelected]
+    let coinFiatSymbol = coins[coinSelected] && coins[coinSelected].price
       ? coins[coinSelected].price[fiatSelected].symbol
-      : "USD";
+      : fiatSelected;
+    
+    let coinFiat = coins[coinSelected] && coins[coinSelected].price
+      ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
+      : "-";
+
+
 
     return (
       <Grid
@@ -206,7 +208,7 @@ class Header extends React.Component {
             className={style.textBalanceFiat}
             onClick={() => this.handleClick()}
           >
-            {coinFiatSymbol + coinFiat}
+            {coinFiatSymbol + " " + coinFiat}
           </span>
           {this.renderBalancePopup()}
         </Grid>
