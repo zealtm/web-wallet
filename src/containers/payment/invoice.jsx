@@ -101,7 +101,8 @@ class Invoice extends React.Component {
       selectedPaymentMethod: {
         title: undefined,
         value: undefined
-      }
+      },
+      paymentCoins: []
     };
     this.handlePayment = this.handlePayment.bind(this);
     this.coinSelected = this.coinSelected.bind(this);
@@ -116,6 +117,25 @@ class Invoice extends React.Component {
     setClearPayment();
     getCoinsEnabled();
     getPaymentMethodService(4);
+  }
+
+  validatePaymentCoins = () => {
+    const { coins, coinsRedux } = this.props;
+    let paymentCoins = [];
+    coinsRedux.forEach((element, index) => {
+      if (coins[element.title.toLowerCase()].status === "active") {
+        paymentCoins.push(element);
+      }
+    });
+    this.setState({ paymentCoins });
+  };
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedPaymentMethod } = this.state;
+    if (prevState.selectedPaymentMethod.value !== selectedPaymentMethod.value) {
+      if (selectedPaymentMethod.value === 3) {
+        this.validatePaymentCoins();
+      }
+    }
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -572,7 +592,7 @@ class Invoice extends React.Component {
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -582,7 +602,7 @@ class Invoice extends React.Component {
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
