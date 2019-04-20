@@ -26,7 +26,7 @@ class StableCoinBalance extends React.Component {
           </Grid>
           <Grid item width={"auto"} className={style.textBalanceBox}>
             <span className={style.textBalance}>{i18n.t("DEPOSIT_CREDIT")}</span>
-            <span className={style.textBalanceGreen}>R$ {creditAmount} </span>
+            <span className={style.textBalanceGreen}>R$ {creditAmount.toFixed(2)} </span>
           </Grid>            
         </Grid>
     );
