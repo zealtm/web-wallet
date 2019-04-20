@@ -26,6 +26,7 @@ import i18n from "../../../../utils/i18n";
 // COMPONENTS
 import CardPack from "../cardPack";
 import Loading from "../../../../components/loading";
+import StableCoinBalance from "../../../deposit/stableCoinBalance";
 
 // STYLE
 import style from "./style.css";
@@ -131,6 +132,7 @@ class PackCoins extends React.Component {
 
     return (
       <div>
+        <StableCoinBalance service="buy"/>
         <Grid container style={{ justifyContent: "center" }}>
           <Hidden xsDown>
             <Grid item xs={1} className={style.arrowControl}>
