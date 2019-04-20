@@ -23,6 +23,7 @@ import Select from "@material-ui/core/Select";
 import Loading from "../../../components/loading";
 import ModalBar from "../../../components/modalBar";
 import Instructions from "../../deposit/instructions";
+
 // MATERIAL UI
 import { Grid, Hidden, IconButton } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
@@ -258,7 +259,7 @@ class Invoice extends React.Component {
         <Grid item xs={12} className="payments">
           <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
         </Grid>
-
+        
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12}>
             <div className={style.containerInput}>

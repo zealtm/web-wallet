@@ -50,7 +50,7 @@ class Recharge extends React.Component {
         </div>
 
         <Tabs tabTitles={titles} tabContents={contents} justify="center" />
-
+        
         <Modal
           title={i18n.t("RECHARGE_TITLE")}
           content={<RechargeModal />}
