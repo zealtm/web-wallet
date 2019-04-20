@@ -212,7 +212,7 @@ class CoinService {
         coins[coin.abbreviation] = availableCoins[index];
       });
       setAuthToken(availableCoins.token);
-      coins.token = availableCoins.token;
+      //coins.token = availableCoins.token;
       return coins;
     } catch (error) {
       internalServerError();
