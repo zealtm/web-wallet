@@ -117,7 +117,7 @@ class BoxAmount extends React.Component {
           {i18n.t("MODAL_SEND_AMOUNT_INSTRUCTIONS")}
         </div>
 
-        <label className={style.txtDescriptionLabel}>{i18n.t("MODAL_SEND_DESCRIPTION")}</label><br />
+        <label className={style.txtDescriptionLabel}>{i18n.t("MODAL_SEND_DESCRIPTION")}</label>
         <input
           className={style.txtDescription}
           type="text"
