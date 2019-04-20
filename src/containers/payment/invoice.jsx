@@ -20,7 +20,7 @@ import Instructions from "../payment/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
 import { DateMask, MoneyBrlMask } from "../../components/inputMask";
-import BalanceLBRL from "../deposit/component/balanceLBRL";
+import StableCoinBalance from "../deposit/stableCoinBalance";
 // MATERIAL
 import { Grid, Input, InputAdornment, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -416,7 +416,7 @@ class Invoice extends React.Component {
 
     return (
       <div>
-        <BalanceLBRL />
+        <StableCoinBalance service="payment"/>
         <Grid container direction="row" justify="center">
           <Grid item xs={11} className={style.box}>
             <div className={style.row}>

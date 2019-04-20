@@ -22,7 +22,7 @@ import Loading from "../../components/loading";
 import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
 import ModalBar from "../../components/modalBar";
-import BalanceLBRL from "../deposit/component/balanceLBRL";
+import StableCoinBalance from "../deposit/stableCoinBalance";
 // MATERIAL
 import { Grid, Input, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -367,7 +367,7 @@ class Invoice extends React.Component {
 
     return (
       <div>
-        <BalanceLBRL />
+        <StableCoinBalance service="recharge"/>
         <Grid container direction="row" justify="center">
         <div>
           {valueError ? (

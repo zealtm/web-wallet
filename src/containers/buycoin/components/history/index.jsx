@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // COMPONENTS
 import HistoryCard from "../historyCard";
 import Loading from "../../../../components/loading.jsx";
-import BalanceLBRL from "../../../deposit/component/balanceLBRL";
+import StableCoinBalance from "../../../deposit/stableCoinBalance";
 
 // STYLE
 import style from "./style.css";
@@ -50,7 +50,6 @@ class History extends React.Component {
   render() {
     return (
       <div> 
-        <BalanceLBRL />
         <Grid container direction="row" justify="center">
         <Grid item xs={12} md={6} className={style.box}>
           <div className={style.boxContainer}>{this.renderHistory()}</div>
