@@ -22,7 +22,7 @@ import Loading from "../../components/loading";
 import Instructions from "../recharge/instructions";
 import { PhoneMask } from "../../components/inputMask";
 import ModalBar from "../../components/modalBar";
-
+import StableCoinBalance from "../deposit/stableCoinBalance";
 // MATERIAL
 import { Grid, Input, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -30,7 +30,6 @@ import { withStyles } from "@material-ui/core/styles";
 // UTILS
 import { inputValidator } from "../../utils/inputValidator";
 import i18n from "../../utils/i18n";
-
 // STYLES
 import style from "./style.css";
 
@@ -105,7 +104,8 @@ class Invoice extends React.Component {
         title: undefined,
         value: undefined
       },
-      serviceCoinId: null
+      serviceCoinId: null,
+      paymentCoins: []
     };
 
     this.coinSelected = this.coinSelected.bind(this);
@@ -124,7 +124,24 @@ class Invoice extends React.Component {
     getCoinsEnabled();
     getPaymentMethodService(3);
   }
-
+  validatePaymentCoins = () => {
+    const { coins, coinsRedux } = this.props;
+    let paymentCoins = [];
+    coinsRedux.forEach((element, index) => {
+      if (coins[element.title.toLowerCase()].status === "active") {
+        paymentCoins.push(element);
+      }
+    });
+    this.setState({ paymentCoins });
+  };
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedPaymentMethod } = this.state;
+    if (prevState.selectedPaymentMethod.value !== selectedPaymentMethod.value) {
+      if (selectedPaymentMethod.value === 1) {
+        this.validatePaymentCoins();
+      }
+    }
+  }
   coinSelected = (value, title, img = undefined) => {
     this.setState({
       ...this.state,
@@ -354,18 +371,22 @@ class Invoice extends React.Component {
       valores,
       loadingValores,
       valueError,
-      methodPaymentsList
+      methodPaymentsList,
+      credit,
+      coins
     } = this.props;
     const { coin, errors, invoice, selectedPaymentMethod } = this.state;
 
     const title = coin.name || i18n.t("SELECT_COIN");
-    const img = coin.img || "";
+    const img = coin.img || "";    
     const paymentTitle = selectedPaymentMethod.title
       ? selectedPaymentMethod.title
       : i18n.t("SELECT_PAYMENT");
 
     return (
-      <Grid container direction="row" justify="center">
+      <div>
+        <StableCoinBalance service="recharge"/>
+        <Grid container direction="row" justify="center">
         <div>
           {valueError ? (
             <ModalBar
@@ -393,7 +414,6 @@ class Invoice extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
         <Grid container className={style.box} style={{ marginTop: "10px" }}>
           <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
             <Hidden smUp>
@@ -479,7 +499,7 @@ class Invoice extends React.Component {
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -489,7 +509,7 @@ class Invoice extends React.Component {
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={coinsRedux}
+                    list={this.state.paymentCoins}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -530,6 +550,7 @@ class Invoice extends React.Component {
           <Instructions />
         </Grid>
       </Grid>
+      </div>      
     );
   }
 }
@@ -549,7 +570,7 @@ Invoice.propTypes = {
   setClearRecharge: PropTypes.func.isRequired,
   coins: PropTypes.array,
   valueError: PropTypes.bool,
-  methodPaymentsList: PropTypes.array
+  methodPaymentsList: PropTypes.array,
 };
 
 const mapStateToProps = store => ({
@@ -560,7 +581,7 @@ const mapStateToProps = store => ({
   valores: store.recharge.valores,
   coins: store.skeleton.coins,
   valueError: store.recharge.valueError,
-  methodPaymentsList: store.deposit.paymentsMethodsService
+  methodPaymentsList: store.deposit.paymentsMethodsService,
 });
 
 const mapDispatchToProps = dispatch =>

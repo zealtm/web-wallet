@@ -1,5 +1,8 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalError
+} from "../../errors/statusCodeMessage";
 
 // SERVICES
 import BuyService from "../../../services/buyService";
@@ -11,6 +14,7 @@ import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
+import i18n from "../../../utils/i18n";
 
 const buyService = new BuyService();
 const coinService = new CoinService();
@@ -349,7 +353,7 @@ export function* confirmBuySaga(payload) {
               type: "SET_MODAL_BUY_STEP_REDUCER",
               step: 4
             });
-            yield put(internalServerError());
+            yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
           } else {
             yield put({
               type: "SET_MODAL_BUY_STEP_REDUCER",
@@ -370,7 +374,7 @@ export function* confirmBuySaga(payload) {
         step: 4
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
       return;
     } catch (error) {
       yield put({
@@ -383,10 +387,11 @@ export function* confirmBuySaga(payload) {
         step: 4
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
     }
   } catch (error) {
-    yield put(internalServerError());
+    yield put({ type: "SET_MODAL_CLOSE_REDUCER" });
+    yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
   }
 }
 

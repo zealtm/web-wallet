@@ -183,8 +183,8 @@
   "SETTINGS_ALIAS_WALLET_LUNES": "Lunes",
   "SECURITY_ITEM": "Enter the Authentication Number to enable 2FA in your account.",
   "SECURITY_ITEM_plural": "",
-  "SETTING_LINK_RETURN": "Back to the settings",
-  "SECURITY_LINK_RETURN": "Back to the security",
+  "SETTING_LINK_RETURN": "Back to settings",
+  "SECURITY_LINK_RETURN": "Back to security",
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "NOTIFICATION_SERVICE_ALREADY_REGISTRED": "You are already registered",
   "SET_SEED_WORDS": "Your key words",
@@ -691,6 +691,7 @@
   "P2P_COMING_SOON": "Rating coming soon !",
 
   "DEPOSIT_TAB_TITLE": "Deposit",
+  "DEPOSIT_BUTTON_CONFIRM": "Make a Deposit",
   "DEPOSIT_TAB_HISTORY_TITLE": "History",
   "DEPOSIT_HEADER_TITLE": "DEPOSIT LUNES' WALLET",
   "DEPOSIT_HEADER_SUBTITLE": "Deposit FIAT money to use in Lunes services",
@@ -822,5 +823,7 @@
   "P2P_DESC_PLAN": "This plan will allow you to use P2P's system for",
   "P2P_CANCEL_ORDER": "Cancel done!",
   "P2P_ADDRESS_TO_SEND": "Address to send",
-  "SELECT_COIN": "Select a coin"
+  "SELECT_COIN": "Select a coin",
+
+  "UNAVAILABLE_SERVICE": "Service currently unavailable. Try again later."
 }
