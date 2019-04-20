@@ -664,6 +664,7 @@
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
 
   "DEPOSIT_TAB_TITLE": "Depósito",
+  "DEPOSIT_BUTTON_CONFIRM": "Realizar Depósito",
   "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
   "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
   "DEPOSIT_HEADER_SUBTITLE": "Deposite Reais (R$) em sua carteira para usar os serviços Lunes. Escolha um dos valores disponíveis para realizar o depósito em Reais.",
@@ -799,5 +800,7 @@
   "P2P_DESC_PLAN": " Este plano permitirá usar o sistema Lunes de P2P por",
   "P2P_CANCEL_ORDER": "Cancelamento concluído!",
   "P2P_ADDRESS_TO_SEND": "Endereço de envio",
-  "SELECT_COIN": "Selecione uma moeda"
+  "SELECT_COIN": "Selecione uma moeda",
+
+  "UNAVAILABLE_SERVICE": "Serviço indisponível no momento. Tente novamente mais tarde."
 }
