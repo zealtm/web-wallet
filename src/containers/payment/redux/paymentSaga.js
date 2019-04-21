@@ -55,7 +55,7 @@ export function* getCoinsEnabledSaga() {
     }, []);
 
     yield put({
-      type: "GET_COINS_REDUCER",
+      type: "GET_PAYMENT_COINS_REDUCER",
       coins: coins
     });
   } catch (error) {
