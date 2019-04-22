@@ -801,5 +801,6 @@
   "P2P_ADDRESS_TO_SEND": "Endereço de envio",
   "SELECT_COIN": "Selecione uma moeda",
 
-  "UNAVAILABLE_SERVICE": "Serviço indisponível no momento. Tente novamente mais tarde."
+  "UNAVAILABLE_SERVICE": "Serviço indisponível no momento. Tente novamente mais tarde.",
+  "UNAVAIBLE_TRANSACTION_HISTORY": "Não foi possível carregar o histórico de transação da criptomoeda no momento"
 }
