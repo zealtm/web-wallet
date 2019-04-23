@@ -124,10 +124,8 @@ class FeeBuy extends React.Component {
           ? coins[buypack.coin.abbreviation].address
           : ""
       };
-      
-      if (Number(creditsAvailable) > buypack.amountFiat) {
+      if (Number(creditsAvailable) >= buypack.amountFiat) {
         confirmBuy(payload);
-        
       } else {
         this.setState({
           error: true,
@@ -242,7 +240,9 @@ class FeeBuy extends React.Component {
       return (
         <div className={style.modalBox}>
           <div>
-            {error ? <ModalBar type="error" message={messageError} timer /> : null}
+            {error ? (
+              <ModalBar type="error" message={messageError} timer />
+            ) : null}
           </div>
           {buypack.servicePaymentMethodId === 6
             ? this.renderCreditPayment()
