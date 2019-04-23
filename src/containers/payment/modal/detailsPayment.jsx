@@ -72,7 +72,7 @@ class DetailsPayment extends React.Component {
         serviceCoinId: payment.serviceCoinId,
         payment: payment
       };
-      if (creditsAvailable > payment.amount) {
+      if (creditsAvailable >= payment.amount) {
         confirmPay(payload);
       }else {
         this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
