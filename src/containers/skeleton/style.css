@@ -64,7 +64,9 @@
 
 :local .boxBalance {
   text-align: right;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bolder;
+  margin: 2px -4px -4px -4px !important;
 }
 
 :local .menuUser {
@@ -77,13 +79,49 @@
   right: 16px;
   z-index: 999;
 }
+:local .iconCoin {
+  width: 23px;
+  height: 23px;
+  margin: 0px 5px -5px 5px;
+  opacity: 0.5;
+}
+:local .creditBalanceBox {
+  display: inline;
+  margin: 0 5px;
+}
+
+:local .ArrowDropDown {
+  position: absolute;
+  bottom: 9%;
+}
 
 @media only screen and (max-width: 599px) {
   :local .boxBalance {
     font-size: 11px;
   }
+  :local .iconCoin {
+    width: 20px;
+    height: 20px;
+    margin: 0px 5px -5px 5px;
+    opacity: 0.5;
+  }
 }
-
+@media only screen and (max-width: 344px) {
+  :local .creditBalanceBox {
+    display: inline;
+    margin: 0px 1px;
+    
+  }
+  :local .ArrowDropDown {
+    bottom: 4%;
+  }
+  :local .iconCoin {
+    width: 12px;
+    height: 12px;
+    margin: 0px 5px -2px 5px;
+    opacity: 0.5;
+  }
+}
 @media only screen and (max-width: 1279px) {
   :local .colMenu {
     position: absolute;
@@ -92,6 +130,15 @@
     overflow-y: auto;
   }
 }
+
+:local .verticalLine {
+  display: initial;
+  border-left: 1px solid #3b1878;
+  height: 50px;
+  position: absolute;
+  top: 10%;
+}
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -163,17 +210,28 @@
 }
 
 :local .textBalance {
-  composes: offside from "../../components/bases/textBase.css";
+  /* composes: offside from "../../components/bases/textBase.css"; */
+  cursor: pointer;
 }
 
 :local .textGreen {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
 }
 
+:local .textBalanceTitle {
+  composes: clGreenDefault from "../../components/bases/colorBase.css";
+  font-weight: bold;
+}
 :local .textBalanceFiat {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   display: block;
   font-size: 10px;
+  margin-right: 6%
+}
+@media only screen and (max-width: 599px) {
+  :local .textBalanceFiat {
+    margin-right: 9%
+  }
 }
 
 :local .linkPopMenu {
@@ -244,11 +302,11 @@
   margin-right: 0;
 }
 
-:local .btnBalanceDeposit {  
+:local .btnBalanceDeposit {
   composes: buttonEnable from "../../components/bases/buttonBase.css";
   padding: 0;
   width: 50%;
-  min-width:80px;
+  min-width: 80px;
   height: 30px;
   font-size: 13px;
   margin: auto;
@@ -262,10 +320,10 @@
 }
 
 :local .texGreentBalanceDeposit {
-  composes: inputTextDefault from "../../components/bases/inputBase.css";  
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
   font-size: 11px;
   text-align: center;
-  font-weight: bold;  
+  font-weight: bold;
   width: 75%;
   height: 15px;
   margin: auto;
@@ -434,4 +492,3 @@
     opacity: 1;
   }
 }
-
