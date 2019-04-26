@@ -204,7 +204,6 @@ class Header extends React.Component {
               {i18n.t("WALLET_MY_AMOUNT")}
             </span>
           </Hidden>
-          {creditBalance > 0 ? (
             <div style={{ display: "inline" }}>
               <div className={style.creditBalanceBox}>
                 <img
@@ -223,7 +222,6 @@ class Header extends React.Component {
                 <div className={style.verticalLine} />
               </Hidden>
             </div>
-          ) : null}
 
           <img
             className={style.iconCoin}
