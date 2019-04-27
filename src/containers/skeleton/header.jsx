@@ -87,7 +87,6 @@ class Header extends React.Component {
               <img
                 src="../../images/icons/deposit/balance_deposit-2x.png"
                 className={style.imgBalanceDeposit}
-                style={{ "max-width": "31px", "max-height": "31px" }}
               />
               <p>{convertBiggestCoinUnit(credit.available, 8).toFixed(2)}</p>
               <div style={{ position: "relative", top: "8px", left: "8%" }}>
@@ -103,7 +102,7 @@ class Header extends React.Component {
           <div>
             <span className={style.boxBalanceDeposit}>
               <img
-                src="../../images/icons/deposit/balance_deposit-2.png"
+                src={"images/icons/coins/" + coinSelected + ".png"}
                 className={style.imgBalanceDeposit}
               />
               <p>{coinBalance + " " + coinName}</p>

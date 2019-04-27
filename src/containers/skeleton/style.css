@@ -294,7 +294,8 @@
 
 :local .imgBalanceDeposit {
   display: block;
-  max-width: 100%;
+  width: 31px;
+  height: 31px;
   margin: auto;
   padding-left: 10px;
   padding-right: 10px;
