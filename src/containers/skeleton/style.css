@@ -85,9 +85,13 @@
   margin: 0px 5px -5px 5px;
   opacity: 0.5;
 }
+:local .balanceBox{
+  display: inline;
+  margin-right: 8px
+}
 :local .creditBalanceBox {
   display: inline;
-  margin: 0 5px;
+  margin: 0 16px 0 5px;
 }
 
 :local .ArrowDropDown {
@@ -226,7 +230,8 @@
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   display: block;
   font-size: 10px;
-  margin-right: 6%
+  margin-right: 6%;
+  cursor: pointer;
 }
 @media only screen and (max-width: 599px) {
   :local .textBalanceFiat {

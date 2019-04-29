@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
 import { Grid } from "@material-ui/core";
-import {ArrowDropDown} from '@material-ui/icons';
+import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 //STYLE
 import style from "./style.css";
 
@@ -154,6 +154,7 @@ class Header extends React.Component {
 
   renderBalance = () => {
     let { coins, credit } = this.props;
+    const { openBalancePopup } = this.state;
     let coinSelected = getDefaultCrypto();
     let fiatSelected = getDefaultFiat();
 
@@ -203,24 +204,24 @@ class Header extends React.Component {
               {i18n.t("WALLET_MY_AMOUNT")}
             </span>
           </Hidden>
-            <div style={{ display: "inline" }}>
-              <div className={style.creditBalanceBox}>
-                <img
-                  className={style.iconCoin}
-                  src={"images/icons/coins/whiteIcons/lbrl.png"}
-                />
-                <span
-                  className={style.textBalance}
-                  onClick={() => this.handleClick()}
-                >
-                  {creditBalance}
-                </span>
-              </div>
-
-              <Hidden xsDown>
-                <div className={style.verticalLine} />
-              </Hidden>
+          <div className={style.balanceBox}>
+            <div className={style.creditBalanceBox}>
+              <img
+                className={style.iconCoin}
+                src={"images/icons/coins/whiteIcons/lbrl.png"}
+              />
+              <span
+                className={style.textBalance}
+                onClick={() => this.handleClick()}
+              >
+                {creditBalance}
+              </span>
             </div>
+
+            <Hidden xsDown>
+              <div className={style.verticalLine} />
+            </Hidden>
+          </div>
 
           <img
             className={style.iconCoin}
@@ -238,9 +239,13 @@ class Header extends React.Component {
             onClick={() => this.handleClick()}
           >
             {coinFiatSymbol + " " + coinFiat}
-            <ArrowDropDown className={style.ArrowDropDown}/>
+            {openBalancePopup ? (
+              <ArrowDropUp className={style.ArrowDropDown} />
+            ) : (
+              <ArrowDropDown className={style.ArrowDropDown} />
+            )}
           </span>
-          
+
           {this.renderBalancePopup()}
         </Grid>
       </Grid>
