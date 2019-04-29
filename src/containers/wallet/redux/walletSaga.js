@@ -121,32 +121,51 @@ export function* shareCoinAddress(action) {
 export function* getWalletCoinHistory(action) {
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(
-      coinService.getCoinHistory,
-      action.coin,
-      action.address,
-      token
-    );
-
-    if (!response.error) {
-      yield put({
-        type: "SET_WALLET_HISTORY",
-        history: response
-      });
-
-      yield put({
-        type: "SET_WALLET_HISTORY_LOADING"
-      });
-
-      return;
-    }
-
     yield put({
       type: "SET_WALLET_HISTORY_LOADING",
       state: true
     });
+    try {
+      let response = yield call(
+        coinService.getCoinHistory,
+        action.coin,
+        action.address,
+        token
+      );
+      if (!response.error) {
+        yield put({
+          type: "SET_WALLET_HISTORY",
+          history: response
+        });
 
-    return;
+        yield put({
+          type: "SET_WALLET_HISTORY_LOADING"
+        });
+
+        return;
+      }else{
+        yield put({
+          type: "SET_WALLET_HISTORY",
+          history: null
+        });
+        yield put (modalError(i18n.t("UNAVAIBLE_TRANSACTION_HISTORY")));
+        yield put({
+          type: "SET_WALLET_HISTORY_LOADING"
+        });
+        return ;
+      }
+    } catch (error) {
+      yield put({
+        type: "SET_WALLET_HISTORY",
+        history: null
+      });
+      yield put (modalError(i18n.t("UNAVAIBLE_TRANSACTION_HISTORY")));
+      yield put({
+        type: "SET_WALLET_HISTORY_LOADING"
+      });
+      return ;
+    }
+
   } catch (error) {
     yield put({
       type: "CHANGE_WALLET_ERROR_STATE",
