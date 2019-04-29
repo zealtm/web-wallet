@@ -674,7 +674,17 @@
   composes: inputTextDefault from "../../components/bases/inputBase.css";
   max-width: 260px;
 }
-
+:local .txtDescriptionLabel {
+  width: 100%;
+  margin-bottom:30px;
+}
+:local .txtDescription {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
 :local(.processInfo) {
   padding-bottom: 30px;
 }
