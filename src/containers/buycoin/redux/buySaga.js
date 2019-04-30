@@ -78,9 +78,8 @@ export function* getBuyCoinsEnabledSaga() {
 
       return availableCoins;
     }, []);
-
     yield put({
-      type: "GET_COINS_REDUCER",
+      type: "GET_BUY_COINS_REDUCER",
       coins: coins
     });
   } catch (error) {

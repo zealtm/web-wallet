@@ -24,6 +24,7 @@
   "LEASING_TITLE_AMOUNT": "Em Leasing",
   "PAYMENT_FEE_AMOUNT": "Taxa da sua transação na rede ",
   "MODAL_SEND_AMOUNT": "Insira a quantidade",
+  "MODAL_SEND_DESCRIPTION": "Descreva sua transação",
   "MESSAGE_INVALID_PASSWORD": "Senha inválida",
   "PLACEHOLDER_USER_PASSWORD": "Usuário ou Senha",
   "SETTINGS_USER_PASSWORD": "Troque a senha",
@@ -53,6 +54,7 @@
   "TEXT_HIGH": "Alta",
   "TEXT_PREV": "Anterior",
   "BTN_PREV": "Anterior",
+  "WALLET_BALANCE_INSUFFICIENT": "Enviar", 
   "TEXT_UNAVAILABLE": "Indisponível",
   "TEXT_TO": "Para:",
   "PAYMENT_PASS_TO": "Para o endereço",
@@ -94,7 +96,7 @@
   "SETTINGS_NEW_PASSWORD_ERROR": "A nova senha é inválida",
   "SETTINGS_CONFIRM_NEW_PASSWORD_ERROR": "A nova senha e a confirmação da nova senha estão diferentes ",
   "PAGE_ERROR": "Sua sessão expirou, por favor faça novamente o login",
-  "BTN_SEND_ERROR": "Indisponível",
+  "BTN_SEND_ERROR": "Enviar",
   "COUPON_SERVER_ERROR": "Um erro ocorreu em nosso servidor, tente novamente mais tarde",
   "COUPON_UNKNOWN_ERROR": "Um erro desconhecido ocorreu ao tentar verificar este cupom, código 3",
   "COUPON_UNKNOWN_ERROR_plural": "An unknown error occurred when trying to verify that coupon, code 1",
@@ -664,6 +666,7 @@
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
 
   "DEPOSIT_TAB_TITLE": "Depósito",
+  "DEPOSIT_BUTTON_CONFIRM": "Realizar Depósito",
   "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
   "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
   "DEPOSIT_HEADER_SUBTITLE": "Deposite Reais (R$) em sua carteira para usar os serviços Lunes. Escolha um dos valores disponíveis para realizar o depósito em Reais.",
@@ -801,5 +804,6 @@
   "P2P_ADDRESS_TO_SEND": "Endereço de envio",
   "SELECT_COIN": "Selecione uma moeda",
 
-  "UNAVAILABLE_SERVICE": "Serviço indisponível no momento. Tente novamente mais tarde."
+  "UNAVAILABLE_SERVICE": "Serviço indisponível no momento. Tente novamente mais tarde.",
+  "UNAVAIBLE_TRANSACTION_HISTORY": "Não foi possível carregar o histórico de transação da criptomoeda no momento"
 }

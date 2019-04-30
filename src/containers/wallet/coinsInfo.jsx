@@ -70,10 +70,6 @@ class CoinsInfo extends React.Component {
     }
     setWalletSendModalOpen();
   };
-  componentDidMount() {
-    const {coins} = this.props;
-    
-  }
   componentDidUpdate() {
     let { lastCoin } = this.state;
     let { wallet, coins, setUtxos } = this.props;

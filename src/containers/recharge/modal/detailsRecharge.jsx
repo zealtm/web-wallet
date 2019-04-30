@@ -71,7 +71,7 @@ class DetailsRecharge extends React.Component {
         serviceCoinId: recharge.serviceCoinId
       };
       
-      if(creditsAvailable > Number(recharge.amount)){
+      if(creditsAvailable >= Number(recharge.amount)){
         confirmRecharge(payload);
       }else{
         this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
