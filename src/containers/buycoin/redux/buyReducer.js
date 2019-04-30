@@ -88,13 +88,12 @@ const buy = (state = initialState, action) => {
         loadingPackages: action.payload
       };
 
-    case "GET_COINS_REDUCER":
+    case "GET_BUY_COINS_REDUCER":
       return {
         ...state,
         coins: action.coins,
         loadingCoins: false
       };
-
     case "GET_BUY_PACKAGE_REDUCER":
 
       return {
