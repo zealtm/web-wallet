@@ -143,18 +143,18 @@ export function* cancelLeasing(action) {
 export function* getLeasingInfo(action) {
   try {
     const token = yield call(getAuthToken);
-    const seed = yield call(getUserSeedWords);
+    //const seed = yield call(getUserSeedWords);
 
     const professionalNodes = yield call(
       leasingService.getProfessionalNodes,
       token
     );
 
-    const responseCoins = yield call(
-      coinService.getGeneralInfo,
-      token,
-      decryptAes(seed, action.password)
-    );
+    // const responseCoins = yield call(
+    //   coinService.getGeneralInfo,
+    //   token,
+    //   decryptAes(seed, action.password)
+    // );
 
     yield put({
       type: "SET_LEASING_RELOAD"
@@ -204,10 +204,10 @@ export function* getLeasingInfo(action) {
       professionalNodes
     });
 
-    yield put({
-      type: "GET_GENERAL_INFO",
-      coins: responseCoins
-    });
+    // yield put({
+    //   type: "GET_GENERAL_INFO",
+    //   coins: responseCoins
+    // });
 
     return;
   } catch (error) {

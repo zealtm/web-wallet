@@ -26,14 +26,27 @@ class Leasing extends React.Component {
   componentDidMount() {
     let { getLeasingInfo, coins, setLeasingLoading, user } = this.props;
     setLeasingLoading(true);
-    setTimeout(() => {
+    if (coins.lunes) {
       getLeasingInfo(
         coins.lunes.abbreviation,
         coins.lunes.address,
         coins.lunes.decimalPoint,
         user.password
       );
-    }, 5000);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    let { getLeasingInfo, coins, setLeasingLoading, user } = this.props;
+    if (coins !== prevProps.coins) {
+      setLeasingLoading(true);
+      getLeasingInfo(
+        coins.lunes.abbreviation,
+        coins.lunes.address,
+        coins.lunes.decimalPoint,
+        user.password
+      );
+    }
   }
 
   handleModalLeasing = () => {
