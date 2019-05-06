@@ -82,7 +82,7 @@ class CoinService {
 
         availableCoins[index].coinHistory = undefined;
 
-        if (coin.status === "active" ) {
+        if (coin.status === "active") {
           // CREATE ADDRESS
           let network = undefined;
           if (coin.abbreviation === "btc")
@@ -220,31 +220,144 @@ class CoinService {
     }
   }
 
-  async getAvailableCoins(token) {
+  async getAvailableCoins(token, seed) {
     try {
       API_HEADER.headers.Authorization = token;
-      let response = await axios.get(BASE_URL + "/coin", API_HEADER);
-      setAuthToken(response.headers[HEADER_RESPONSE]);
+      let responseAvailableCoins = await axios.get(
+        BASE_URL + "/coin",
+        API_HEADER
+      );
+      setAuthToken(responseAvailableCoins.headers[HEADER_RESPONSE]);
+      let availableCoins = responseAvailableCoins.data.data.coins;
+      let defaultCrypto = await getDefaultCrypto();
+      let coins = [];
+      const promises = availableCoins.map(async (coin, index) => {
+        // CHECK ACTIVE DEFAULT COIN
+        if (defaultCrypto === coin.abbreviation && coin.status !== "active") {
+          let coin = availableCoins[index + 1]
+            ? availableCoins[index + 1].abbreviation
+            : availableCoins[index - 1].abbreviation;
+          setDefaultCrypto(coin);
+        }
 
-      return response;
+        availableCoins[index].coinHistory = undefined;
+        availableCoins[index].balance = null;
+        availableCoins[index].price = null;
+        if (coin.status === "active") {
+          // CREATE ADDRESS
+          let network = undefined;
+          if (coin.abbreviation === "btc")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
+
+          if (coin.abbreviation === "ltc")
+            network = TESTNET ? networks.LTCTESTNET : networks.LTC;
+
+          if (coin.abbreviation === "bch")
+            network = TESTNET ? networks.BCHTESTNET : networks.BCH;
+
+          if (coin.abbreviation === "lunes")
+            network = TESTNET ? networks.LUNESTESTNET : networks.LUNES;
+
+          if (coin.abbreviation === "dash")
+            network = TESTNET ? undefined : networks.DASH;
+
+          if (coin.abbreviation === "eth")
+            network = TESTNET ? networks.ROPSTEN : networks.ETH;
+
+          if (coin.abbreviation === "usdt")
+            network = TESTNET ? networks.BTCTESTNET : networks.BTC;
+
+          if (coin.abbreviation === "nmc")
+            network = TESTNET ? networks.NMCTESTNET : networks.NMC;
+
+          if (coin.abbreviation === "mona")
+            network = TESTNET ? networks.MONATESTNET : networks.MONA;
+
+          let responseCreateAddress = undefined;
+          if (coin.name === "lunes") {
+            let lunes = new LunesServices();
+            responseCreateAddress = await lunes.getLunesAddress({
+              seed: seed,
+              network: network
+            });
+          } else if (coin.name === "ethereum") {
+            let ethereum = new EthServices();
+            responseCreateAddress = await ethereum.getEthAddress({
+              seed: seed,
+              network: network
+            });
+          } else if (
+            coin.abbreviation === "btc" ||
+            coin.abbreviation === "ltc" ||
+            coin.abbreviation === "bch" ||
+            coin.abbreviation === "dash" ||
+            coin.abbreviation === "usdt" ||
+            coin.abbreviation === "nmc" ||
+            coin.abbreviation === "mona"
+          ) {
+            let bitcoin = new BtcServices();
+            responseCreateAddress = await bitcoin.getBtcAddress({
+              seed: seed,
+              network: network
+            });
+          }
+          if (responseCreateAddress) {
+            availableCoins[index].address = responseCreateAddress;
+          } else {
+            availableCoins[index].status = "inactive";
+            availableCoins[index].address = undefined;
+          }
+        }else {
+          availableCoins[index].address = undefined;
+          availableCoins[index].balance = undefined;
+        }
+      });
+      await Promise.all(promises);
+      availableCoins.map((coin, index) => {
+        coins[coin.abbreviation] = availableCoins[index];
+      });
+      return coins;
     } catch (error) {
       internalServerError();
       return;
     }
   }
 
-  async getCoinBalance(coinName, address, token) {
+  async getCoinBalance(coin, token) {
     try {
       API_HEADER.headers.Authorization = token;
+      let response = null;
+      let availableCoinsBalance = [];
+      coin.map(async (coins, index) => {
+        availableCoinsBalance[index] = coins;
+        response = await axios.get(
+          `${BASE_URL}/coin/${coins.abbreviation}/balance/${coins.address}`,
+          API_HEADER
+        );
+        if(response.data.data){
+          availableCoinsBalance[index].status = "active";
+          availableCoinsBalance.token = response.headers[HEADER_RESPONSE];
+          availableCoinsBalance[index].balance = response.data.data;
+          // BALANCE CONVERTER
+          availableCoinsBalance[index].balance.available = convertBiggestCoinUnit(
+            availableCoinsBalance[index].balance.available,
+            coins.decimalPoint
+          );
 
-      let response = await axios.get(
-        `${BASE_URL}/coin/${coinName}/balance/${address}`,
-        API_HEADER
-      );
+          availableCoinsBalance[index].balance.total = convertBiggestCoinUnit(
+            availableCoinsBalance[index].balance.total,
+            coins.decimalPoint
+          );
 
-      setAuthToken(response.headers[HEADER_RESPONSE]);
-
-      return response;
+        }
+        
+      });
+      setAuthToken(availableCoinsBalance.token);
+      let balance = [];
+      availableCoinsBalance.map((coin, index) => {
+        balance[coin.abbreviation] = availableCoinsBalance[index];
+      });
+      return balance;
     } catch (error) {
       internalServerError();
       return;

@@ -5,7 +5,8 @@ import {
   getAuthToken,
   getUserSeedWords,
   getDefaultCrypto,
-  getUserId
+  getUserId, 
+  getFavoritesCrypto
 } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
 import CoinService from "../../../services/coinService";
@@ -166,17 +167,26 @@ export function* loadWalletInfo(action) {
   }
 }
 
-export function* availableCoins() {
+export function* getCoinInformation(action){
+  const coins = yield call (availableCoins,action.password);
+  yield call(balanceCoins, coins);
+  
+}
+
+export function* availableCoins(password) {
   try {
     let token = yield call(getAuthToken);
-    let response = yield call(coinService.getAvailableCoins, token);
+    const seed = yield call(getUserSeedWords);
+    let coins = yield call(coinService.getAvailableCoins, token,  decryptAes(seed, password));
 
     yield put({
       type: "GET_AVAILABLE_COINS",
-      coins: response.data.data.coins
+      coins: coins
     });
-
-    return;
+    yield put({
+      type: "CHANGE_LOADING_GENERAL_STATE"
+    });
+    return coins;
   } catch (error) {
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",
@@ -186,15 +196,23 @@ export function* availableCoins() {
   }
 }
 
-export function* balanceCoins() {
+export function* balanceCoins(coins) {
   try {
-    let response = yield call();
-    yield put({
-      type: "GET_BALANCE_COINS",
-      coins: response
+    const fav = yield call(getFavoritesCrypto);
+    let token = yield call(getAuthToken);
+    let favCoins = [];
+    Object.values(coins).map(coin => {
+      if(coin.status === "active"){
+        fav.map((favCoin, index) => {
+          if(favCoin === coin.abbreviation){
+            favCoins[index] = coin;
+          }
+        });
+      }
     });
-
-    return;
+    const response = yield call(coinService.getCoinBalance, favCoins, token);
+    
+    return response;
   } catch (error) {
     yield put({
       type: "CHANGE_SKELETON_ERROR_STATE",

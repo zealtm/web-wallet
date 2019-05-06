@@ -13,8 +13,9 @@ export const loadWalletInfo = password => ({
   password
 });
 
-export const availableCoins = () => ({
-  type: "GET_AVAILABLE_COINS_API"
+export const availableCoins = password => ({
+  type: "GET_AVAILABLE_COINS_API",
+  password
 });
 
 export const createCoinsAddress = coins => ({

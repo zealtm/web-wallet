@@ -20,6 +20,7 @@ import style from "./style.css";
 //COMPONENTS
 import UserControl from "./userControl.jsx";
 import LogoLunes from "../../components/logoLunes";
+import ContentLoader from "react-content-loader";
 
 //UTILS
 import { TESTNET } from "../../constants/apiBaseUrl";
@@ -32,7 +33,8 @@ class Header extends React.Component {
     super(props);
     this.state = {
       openBalancePopup: false,
-      notifications: 0
+      notifications: 0,
+      placeHolderLoading: true
     };
   }
 
@@ -42,6 +44,15 @@ class Header extends React.Component {
       openBalancePopup: !this.state.openBalancePopup
     });
   };
+  componentDidUpdate(prevProps) {
+    const { coins } = this.props;
+   // const defaultCoin = getDefaultCrypto();
+    console.log(coins);
+    
+    // if (prevProps.coins.defaultCoin.balance !== coins.defaultCoin.balance) {
+    //   this.setState({ placeHolderLoading: !this.state.placeHolderLoading });
+    // }
+  }
 
   renderBalancePopup = () => {
     const { openBalancePopup } = this.state;
@@ -151,7 +162,27 @@ class Header extends React.Component {
       );
     }
   };
-
+  renderPlaceHolderLoading = () => {
+    return (
+      <ContentLoader
+        height={60}
+        width={350}
+        speed={2}
+        primaryColor="#9385bb"
+        secondaryColor="#42227d"
+        style={{ height: "70%", width: "150px" }}
+      >
+        <rect x="15" y="0" rx="3" ry="3" width="90" height="10" />
+        <rect x="115" y="0" rx="3" ry="3" width="60" height="10" />
+        <rect x="185" y="0" rx="3" ry="3" width="60" height="10" />
+        <rect x="35" y="20" rx="3" ry="3" width="130" height="10" />
+        <rect x="175" y="20" rx="3" ry="3" width="130" height="10" />
+        <rect x="15" y="40" rx="3" ry="3" width="90" height="10" />
+        <rect x="115" y="40" rx="3" ry="3" width="60" height="10" />
+        <rect x="185" y="40" rx="3" ry="3" width="60" height="10" />>
+      </ContentLoader>
+    );
+  };
   renderBalance = () => {
     let { coins, credit } = this.props;
     const { openBalancePopup } = this.state;
@@ -179,7 +210,26 @@ class Header extends React.Component {
           )
         : "-";
     let creditBalance = convertBiggestCoinUnit(credit.available, 8).toFixed(2);
-    return (
+    return (this.state.placeHolderLoading ? (
+      <Grid
+        container
+        justify="flex-end"
+        spacing={8}
+        className={style.boxBalance}
+      >
+        <Grid
+          item
+          style={{
+            position: "relative",
+            top: "3px",
+            maxWidth: "300px",
+            margin: "0 0 0 2%"
+          }}
+        >
+          {this.renderPlaceHolderLoading()}
+        </Grid>
+      </Grid>
+    ) : (
       <Grid
         container
         justify="flex-end"
@@ -204,6 +254,7 @@ class Header extends React.Component {
               {i18n.t("WALLET_MY_AMOUNT")}
             </span>
           </Hidden>
+
           <div className={style.balanceBox}>
             <div className={style.creditBalanceBox}>
               <img
@@ -249,7 +300,7 @@ class Header extends React.Component {
           {this.renderBalancePopup()}
         </Grid>
       </Grid>
-    );
+    ));
   };
 
   render() {

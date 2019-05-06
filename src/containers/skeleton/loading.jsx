@@ -4,12 +4,11 @@ import PropTypes from "prop-types";
 // REDUX
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { loadGeneralInfo } from "./redux/skeletonAction";
+import { loadGeneralInfo, availableCoins } from "./redux/skeletonAction";
 
 // COMPONENTS
 import Loading from "../../components/loading";
 import LogoLunes from "../../components/logoLunes";
-
 // STYLE
 import style from "./style.css";
 
@@ -20,11 +19,12 @@ class LoadingPage extends Component {
 
   loadingInfos = () => {
     let { loading } = this.props.skeleton;
-    let { loadGeneralInfo } = this.props;
+    let { loadGeneralInfo, availableCoins } = this.props;
     let { password } = this.props.user;
 
     if (loading) {
-      loadGeneralInfo(password);
+      availableCoins(password);
+     // loadGeneralInfo(password);
     }
   };
 
@@ -47,6 +47,7 @@ class LoadingPage extends Component {
 
 LoadingPage.propTypes = {
   loadGeneralInfo: PropTypes.func,
+  availableCoins: PropTypes.func,
   skeleton: PropTypes.object,
   user: PropTypes.object
 };
@@ -59,7 +60,8 @@ const mapSateToProps = store => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      loadGeneralInfo
+      loadGeneralInfo,
+      availableCoins
     },
     dispatch
   );

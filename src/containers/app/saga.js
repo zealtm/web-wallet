@@ -19,10 +19,10 @@ import {
 import {
   loadGeneralInfo,
   loadWalletInfo,
-  availableCoins,
   balanceCoins,
   createCoinsAddress,
-  loadCreditBalance
+  loadCreditBalance,
+  getCoinInformation
 } from "../skeleton/redux/skeletonSaga";
 import {
   validateAddress,
@@ -178,7 +178,7 @@ export default function* rootSaga() {
 
     // Skeleton-Saga
     fork(takeLatest, "GET_GENERAL_INFO_API", loadGeneralInfo),
-    fork(takeLatest, "GET_AVAILABLE_COINS_API", availableCoins),
+    fork(takeLatest, "GET_AVAILABLE_COINS_API", getCoinInformation),
     fork(takeLatest, "GET_BALANCE_COINS_API", balanceCoins),
     fork(takeLatest, "GET_WALLET_INFO_API", loadWalletInfo),
     fork(takeLatest, "POST_CREATE_COINS_ADDRESS_API", createCoinsAddress),
