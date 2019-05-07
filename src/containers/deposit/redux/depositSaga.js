@@ -247,6 +247,9 @@ export function* createDepositDebitSaga(payload){
 
 export function* getPaymentsMethodsServiceCreditSaga(payload) {
   try {
+    yield put({
+      type: "CLEAR_METHOD_SERVICE_REDUCE"
+    });
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getPaymentsMethodsServiceCredit, token, payload.serviceId);
 

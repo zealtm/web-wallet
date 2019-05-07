@@ -149,6 +149,11 @@ const deposit = (state = initialState, action) => {
       return {
         ...state,
         selectMethodId: action.id
+      };      
+    case "CLEAR_METHOD_SERVICE_REDUCE":
+      return {
+        ...state,
+        payloadPayment : state.payloadPayment
       };
     default: {
       return {

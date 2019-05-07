@@ -28,7 +28,7 @@ const initialState = {
   },
   history: [],
   loading: false,
-  loadingCoins: true,
+  loadingCoins: false,
   cleanState :false,
   modalStep: 1,
 };
@@ -114,7 +114,8 @@ const payment = (state = initialState, action) => {
         history: [],
         loading: false,
         modalStep: 1,
-        cleanState : true
+        cleanState : true,
+        loadingCoins : true
       };
     case "SET_PAYMENT_INVOICE_ERROR":
       return {

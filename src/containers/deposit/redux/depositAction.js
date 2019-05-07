@@ -81,3 +81,9 @@ export const validateDepositCep = cep =>({
   type: "GET_CEP_VALIDATION_API",
   cep
 });
+
+export const clearServicePayment = () =>(
+  {
+    type: "CLEAR_METHOD_SERVICE_REDUCE"
+  }
+);

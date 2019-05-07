@@ -330,7 +330,7 @@ class Invoice extends React.Component {
         invoiceInputs[key]["minLength"] = 11;
       }
     }
-    if (selectedPaymentMethod.value == 1) {
+    if (selectedPaymentMethod.value === 1) {
       const coinInput = {
         type: "text",
         name: "coin",
@@ -387,7 +387,7 @@ class Invoice extends React.Component {
       loadingCoins,
       valueError,
       methodPaymentsList,
-      coins
+      coins,
     } = this.props;
     const { coin, errors, invoice, selectedPaymentMethod } = this.state;
 
@@ -509,7 +509,7 @@ class Invoice extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {(selectedPaymentMethod.value === 1 && loadingCoins) ? (
+            {(selectedPaymentMethod.value === 1 &&  ( loadingCoins || !coinsRedux)) ? (
             <div style={{ margin: "10px auto", textAlign: "center" }}>
               <Loading color="lunes" />
             </div>
@@ -519,7 +519,7 @@ class Invoice extends React.Component {
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
-                    list={this.state.paymentCoins}
+                    list={coinsRedux}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -529,7 +529,7 @@ class Invoice extends React.Component {
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={this.state.paymentCoins}
+                    list={coinsRedux}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}

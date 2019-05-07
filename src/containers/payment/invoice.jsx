@@ -586,7 +586,7 @@ class Invoice extends React.Component {
                 />
               </Hidden>
             </Grid>
-            {(selectedPaymentMethod.value === 1 && loadingCoins) ? (
+            {(selectedPaymentMethod.value === 3 && ( loadingCoins || !coinsRedux) ) ? (
               <div style={{ margin: "10px auto", textAlign: "center" }}>
                 <Loading color="lunes" />
               </div>
@@ -595,7 +595,7 @@ class Invoice extends React.Component {
               <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
                 <Hidden smUp>
                   <Select
-                    list={this.state.paymentCoins}
+                    list={coinsRedux}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -605,7 +605,7 @@ class Invoice extends React.Component {
                 </Hidden>
                 <Hidden xsDown>
                   <Select
-                    list={this.state.paymentCoins}
+                    list={coinsRedux}
                     title={title}
                     titleImg={img}
                     selectItem={this.coinSelected}
@@ -663,7 +663,7 @@ Invoice.propTypes = {
   methodPaymentsList: PropTypes.array,
   setClearStatePayment: PropTypes.func.isRequired,
   loadingCoins: PropTypes.bool.isRequired,
-  cleanState: PropTypes.bool,
+  cleanState: PropTypes.bool
 };
 
 const mapStateToProps = store => ({

@@ -5,7 +5,7 @@ const initialState = {
   history: [],
   loading: false,
   loadingValores: false,
-  loadingCoins: true,
+  loadingCoins: false,
   cleanState :false,
   modalStep: 1,
   valueError: false,
@@ -58,7 +58,7 @@ const recharge = (state=initialState, action) => {
       case "GET_COINS_RECHARGE_REDUCER":
         return {
           ...state,
-          coins: action.coins
+          coins: action.coins          
         };
 
       case "GET_OPERADORAS_REDUCER":
@@ -102,7 +102,8 @@ const recharge = (state=initialState, action) => {
       case "SET_CLEAR_RECHARGE_REDUCER":
         return {
           ...initialState,
-          cleanState : true
+          cleanState : true,
+          loadingCoins: true
         };
 
       case "GET_HISTORY_RECHARGE_REDUCER":
