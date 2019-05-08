@@ -106,10 +106,19 @@ class Invoice extends React.Component {
       depositValue: 0,
       error: false,
       errorMsg: "",
-      methods: []
+      methods: [],
+      paymentName: null
     };
   }
-
+  renderPaymentName = () => {
+    let { paymentName, paymentMethods } = this.state;
+    const { methods } = this.props;
+    if (paymentName === null) {
+      let index = methods[0].id === 1 ? (index = 0) : (index = 1);
+      let value = methods[0].id;
+      this.setState({ payment: value, paymentName: paymentMethods[index] });
+    }
+  };
   componentDidMount() {
     const { getPackages, getKycData, getPaymentsMethods } = this.props;
     const { paymentMethods } = this.state;
@@ -117,9 +126,13 @@ class Invoice extends React.Component {
     getPackages();
     getPaymentsMethods(paymentMethods);
     getKycData();
-
   }
-
+  componentDidUpdate(prevProps) {
+    const { methods } = this.props;
+    if (prevProps.methos !== methods) {
+      this.renderPaymentName();
+    }
+  }
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
@@ -159,13 +172,10 @@ class Invoice extends React.Component {
 
   listPaymentMethods = () => {
     const { classes, methods } = this.props;
-    const { paymentMethods} = this.state;
-    
-        
+    const { paymentMethods } = this.state;
+
     if (methods) {
-
       return methods.map((method, index) => (
-
         <MenuItem
           value={method ? method.id : ""}
           key={index}
@@ -214,12 +224,12 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
-   const { methods } = this.props;
-    const { paymentMethods} = this.state;
+    const { methods } = this.props;
+    const { paymentMethods } = this.state;
     let index = 0;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === value) {
-        methods[i].id === 1 ? index = 0 : index = 1;
+        methods[i].id === 1 ? (index = 0) : (index = 1);
       }
     }
 
@@ -232,14 +242,15 @@ class Invoice extends React.Component {
     });
   };
   returnPaymentMethodIndex = () => {
-    const {methods} = this.props;
-    let {payment} = this.state;
+    const { methods } = this.props;
+    let { payment } = this.state;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === payment) {
         return i;
       }
     }
   };
+
   renderPaymentMethods = () => {
     const { classes } = this.props;
     const { checkBox, paymentName } = this.state;
@@ -257,13 +268,12 @@ class Invoice extends React.Component {
       }
     };
 
-    console.log(paymentName)
     return (
       <div>
         <Grid item xs={12} className="payments">
           <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
         </Grid>
-        
+
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12}>
             <div className={style.containerInput}>
@@ -273,7 +283,7 @@ class Invoice extends React.Component {
                 }}
                 MenuProps={MenuProps}
                 value={this.state.payment}
-                renderValue={paymentName}
+                renderValue={() => paymentName}
                 onChange={event =>
                   this.handleChangePaymentMethod(event.target.value)
                 }
@@ -346,14 +356,17 @@ class Invoice extends React.Component {
       userData,
       methods
     } = this.props;
-    
+
     const { payment, depositValue, activeCard } = this.state;
     setPaymentInformation({
       service: "Deposit",
       packageId: activeCard,
       paymentMethodId: payment
     });
-    if (depositValue > methods[this.returnPaymentMethodIndex()].limitKycAmount && userData.status !== "confirmed") {
+    if (
+      depositValue > methods[this.returnPaymentMethodIndex()].limitKycAmount &&
+      userData.status !== "confirmed"
+    ) {
       this.setState({
         error: true,
         errorMsg: i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
@@ -365,10 +378,10 @@ class Invoice extends React.Component {
       });
     } else if (userData.status !== null && userData.address.country !== "BR") {
       this.setState({
-        error:true,
+        error: true,
         errorMsg: i18n.t("DEPOSIT_KYC_COUNTRY_VALIDATION")
       });
-    }else {
+    } else {
       this.setState({ error: false });
       //validações
       openModal();
