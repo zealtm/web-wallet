@@ -1,5 +1,8 @@
 {
   "EXAMPLE_EMAIL": "example@example.com",
+  "MODAL_SEND_DESCRIPTION": "Describe your transaction",
+  "WALLET_BALANCE_INSUFFICIENT": "Send",
+  "SECURITY_LINK_RETURN": "Back to security",
   "SECURITY_2FA_REGISTRED": "Two Factor Authentication already registered!",
   "BUYCOINS_TITLE": "BUY CRYPTOCURRENCIES",
   "BUYCOINS_STATUS_WAITING": "Waiting",
@@ -19,5 +22,8 @@
   "P2P_CHAT_FAILED_TO_OPEN_CHAT": "Failed to open chat",
   "P2P_NO_USER_ORDERS": "You don't have any orders or an error has occurred",
   "P2P_CHAT_FAILED_TO_OPEN": "Failed to open chat, try again",
-  "P2P_CHAT_SELECT_AN_USER_TO_CHAT": "Select an user above to chat with"
+  "P2P_CHAT_SELECT_AN_USER_TO_CHAT": "Select an user above to chat with",
+  "DEPOSIT_BUTTON_CONFIRM": "Make a Deposit",
+  "UNAVAILABLE_SERVICE": "Service currently unavailable. Try again later.",
+  "UNAVAIBLE_TRANSACTION_HISTORY": "Could not load coin transaction history."
 }
