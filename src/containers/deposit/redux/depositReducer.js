@@ -72,7 +72,8 @@ const deposit = (state = initialState, action) => {
     case "SET_PAYMENT_METHODS":
       return {
         ...state,
-        paymentMethods: action.response.data
+        paymentMethods: action.response.data,
+        paymentName: action.response.paymentName
       };
     case "SET_PAYMENT_INFORMATION":
       return {

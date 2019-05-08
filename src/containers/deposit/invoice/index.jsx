@@ -102,23 +102,22 @@ class Invoice extends React.Component {
       days: [...Array(31).keys()],
       payment: 1,
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
-      paymentName: i18n.t("DEPOSIT_INVOICE"),
       activeCard: null,
       depositValue: 0,
       error: false,
       errorMsg: "",
-      methods: [
-        { id: 1, name: "bill", fee: 0, limitKycAmount: 300 },
-        { id: 2, name: "debit_card", fee: 0, limitKycAmount: 300 }
-      ]
+      methods: []
     };
   }
 
   componentDidMount() {
     const { getPackages, getKycData, getPaymentsMethods } = this.props;
+    const { paymentMethods } = this.state;
+
     getPackages();
-    getPaymentsMethods();
+    getPaymentsMethods(paymentMethods);
     getKycData();
+
   }
 
   moveSlide = (direction = "next") => {
@@ -160,9 +159,13 @@ class Invoice extends React.Component {
 
   listPaymentMethods = () => {
     const { classes, methods } = this.props;
-    const { paymentMethods } = this.state;
+    const { paymentMethods} = this.state;
+    
+        
     if (methods) {
+
       return methods.map((method, index) => (
+
         <MenuItem
           value={method ? method.id : ""}
           key={index}
@@ -170,7 +173,7 @@ class Invoice extends React.Component {
             root: classes.menuItemRoot
           }}
         >
-          {paymentMethods[index]}
+          {method.id === 1 ? paymentMethods[0] : paymentMethods[1]}
         </MenuItem>
       ));
     }
@@ -216,7 +219,7 @@ class Invoice extends React.Component {
     let index = 0;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === value) {
-        index = i;
+        methods[i].id === 1 ? index = 0 : index = 1;
       }
     }
 
@@ -239,7 +242,7 @@ class Invoice extends React.Component {
   };
   renderPaymentMethods = () => {
     const { classes } = this.props;
-    const { checkBox } = this.state;
+    const { checkBox, paymentName } = this.state;
     const imgUri = "./images/icons/arrow/expand-more@1x.png";
 
     const MenuProps = {
@@ -254,6 +257,7 @@ class Invoice extends React.Component {
       }
     };
 
+    console.log(paymentName)
     return (
       <div>
         <Grid item xs={12} className="payments">
@@ -269,7 +273,7 @@ class Invoice extends React.Component {
                 }}
                 MenuProps={MenuProps}
                 value={this.state.payment}
-                renderValue={() => this.state.paymentName}
+                renderValue={paymentName}
                 onChange={event =>
                   this.handleChangePaymentMethod(event.target.value)
                 }
@@ -483,6 +487,7 @@ const mapStateToProps = store => ({
   packages: store.deposit.packages,
   loading: store.deposit.loading,
   methods: store.deposit.paymentMethods,
+  paymentName: store.deposit.paymentName,
   userData: store.deposit.kyc.data
 });
 
