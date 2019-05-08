@@ -124,14 +124,18 @@ export function* depositGetCity(payload) {
     yield put(internalServerError());
   }
 }
-export function* getPaymentsMethods() {
+export function* getPaymentsMethods(payload) {
   try {
     let token = yield call(getAuthToken);
     let response = yield call(depositService.getPaymentsMethods, token);
+
     if (response.code !== "200") {
       yield put(internalServerError());
       return;
+    }else{
+      response.paymentName = response.data[0] ? (response.data[0].id === 1 ? payload.methods[0] : payload.methods[1]) : null
     }
+
     yield put({
       type: "SET_PAYMENT_METHODS",
       response

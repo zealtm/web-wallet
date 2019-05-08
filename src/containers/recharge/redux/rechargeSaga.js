@@ -30,7 +30,6 @@ export function* getRechargeCoinsEnabledSaga() {
     let response = yield call(rechargeService.getCoins, token);
 
     const services = response.data.services;
-
     const coins = services.reduce((availableCoins, coin) => {
       if (coin.status === "active") {
         const active = {

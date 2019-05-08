@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Badge from "@material-ui/core/Badge";
 import { Grid } from "@material-ui/core";
+import { ArrowDropDown, ArrowDropUp } from "@material-ui/icons";
 //STYLE
 import style from "./style.css";
 
@@ -57,20 +58,23 @@ class Header extends React.Component {
         ? coins[coinSelected].balance.available
         : "-";
 
-    let coinFiat = coins[coinSelected] && coins[coinSelected].price
-      ? (coins[coinSelected].price["BRL"].price * coinBalance).toFixed(2)
-      : 0;
+    let coinFiat =
+      coins[coinSelected] && coins[coinSelected].price
+        ? (coins[coinSelected].price["BRL"].price * coinBalance).toFixed(2)
+        : 0;
 
-    let coinFiatSymbol = coins[coinSelected] && coins[coinSelected].price
-      ? coins[coinSelected].price[fiatSelected].symbol
-      : "";
+    let coinFiatSymbol =
+      coins[coinSelected] && coins[coinSelected].price
+        ? coins[coinSelected].price[fiatSelected].symbol
+        : "";
 
     if (openBalancePopup) {
       setTimeout(() => {
         this.setState({ ...this.state, openBalancePopup: false });
       }, 8000);
-      let total = (Number(coinFiat)) + convertBiggestCoinUnit(credit.available, 8);
-      
+      let total =
+        Number(coinFiat) + convertBiggestCoinUnit(credit.available, 8);
+
       return (
         <div className={style.menuUserDeposit}>
           <div className={style.arrowUp} />
@@ -83,7 +87,6 @@ class Header extends React.Component {
               <img
                 src="../../images/icons/deposit/balance_deposit-2x.png"
                 className={style.imgBalanceDeposit}
-                style={{ "max-width":"31px", "max-height" : "31px" }}
               />
               <p>{convertBiggestCoinUnit(credit.available, 8).toFixed(2)}</p>
               <div style={{ position: "relative", top: "8px", left: "8%" }}>
@@ -99,13 +102,13 @@ class Header extends React.Component {
           <div>
             <span className={style.boxBalanceDeposit}>
               <img
-                src="../../images/icons/deposit/balance_deposit-2.png"
+                src={"images/icons/coins/" + coinSelected + ".png"}
                 className={style.imgBalanceDeposit}
               />
               <p>{coinBalance + " " + coinName}</p>
             </span>
             <p className={style.texGreentBalanceDeposit}>
-              {i18n.t("AMOUNT_CREDIT") + (total).toFixed(2)}
+              {i18n.t("AMOUNT_CREDIT") + total.toFixed(2)}
             </p>
           </div>
         </div>
@@ -150,7 +153,8 @@ class Header extends React.Component {
   };
 
   renderBalance = () => {
-    let { coins } = this.props;
+    let { coins, credit } = this.props;
+    const { openBalancePopup } = this.state;
     let coinSelected = getDefaultCrypto();
     let fiatSelected = getDefaultFiat();
 
@@ -163,16 +167,18 @@ class Header extends React.Component {
         ? coins[coinSelected].balance.available
         : "-";
 
-    let coinFiatSymbol = coins[coinSelected] && coins[coinSelected].price
-      ? coins[coinSelected].price[fiatSelected].symbol
-      : fiatSelected;
-    
-    let coinFiat = coins[coinSelected] && coins[coinSelected].price
-      ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(2)
-      : "-";
+    let coinFiatSymbol =
+      coins[coinSelected] && coins[coinSelected].price
+        ? coins[coinSelected].price[fiatSelected].symbol
+        : fiatSelected;
 
-
-
+    let coinFiat =
+      coins[coinSelected] && coins[coinSelected].price
+        ? (coins[coinSelected].price[fiatSelected].price * coinBalance).toFixed(
+            2
+          )
+        : "-";
+    let creditBalance = convertBiggestCoinUnit(credit.available, 8).toFixed(2);
     return (
       <Grid
         container
@@ -192,24 +198,54 @@ class Header extends React.Component {
         <Grid item>
           <Hidden xsDown>
             <span
-              className={style.textGreen}
+              className={style.textBalanceTitle}
               onClick={() => this.handleClick()}
             >
-              {i18n.t("WALLET_MY_AMOUNT")}{" "}
+              {i18n.t("WALLET_MY_AMOUNT")}
             </span>
           </Hidden>
+          <div className={style.balanceBox}>
+            <div className={style.creditBalanceBox}>
+              <img
+                className={style.iconCoin}
+                src={"images/icons/coins/whiteIcons/lbrl.png"}
+              />
+              <span
+                className={style.textBalance}
+                onClick={() => this.handleClick()}
+              >
+                {creditBalance}
+              </span>
+            </div>
+
+            <Hidden xsDown>
+              <div className={style.verticalLine} />
+            </Hidden>
+          </div>
+
+          <img
+            className={style.iconCoin}
+            src={"images/icons/coins/whiteIcons/" + coinSelected + ".png"}
+          />
+
           <span
             className={style.textBalance}
             onClick={() => this.handleClick()}
           >
-            {coinBalance + " " + coinName}
+            {coinBalance}
           </span>
           <span
             className={style.textBalanceFiat}
             onClick={() => this.handleClick()}
           >
             {coinFiatSymbol + " " + coinFiat}
+            {openBalancePopup ? (
+              <ArrowDropUp className={style.ArrowDropDown} />
+            ) : (
+              <ArrowDropDown className={style.ArrowDropDown} />
+            )}
           </span>
+
           {this.renderBalancePopup()}
         </Grid>
       </Grid>
