@@ -102,25 +102,37 @@ class Invoice extends React.Component {
       days: [...Array(31).keys()],
       payment: 1,
       paymentMethods: [i18n.t("DEPOSIT_INVOICE"), i18n.t("DEPOSIT_DEBIT")],
-      paymentName: i18n.t("DEPOSIT_INVOICE"),
       activeCard: null,
       depositValue: 0,
       error: false,
       errorMsg: "",
-      methods: [
-        { id: 1, name: "bill", fee: 0, limitKycAmount: 300 },
-        { id: 2, name: "debit_card", fee: 0, limitKycAmount: 300 }
-      ]
+      methods: [],
+      paymentName: null
     };
   }
-
+  renderPaymentName = () => {
+    let { paymentName, paymentMethods } = this.state;
+    const { methods } = this.props;
+    if (paymentName === null) {
+      let index = methods[0].id === 1 ? (index = 0) : (index = 1);
+      let value = methods[0].id;
+      this.setState({ payment: value, paymentName: paymentMethods[index] });
+    }
+  };
   componentDidMount() {
     const { getPackages, getKycData, getPaymentsMethods } = this.props;
+    const { paymentMethods } = this.state;
+
     getPackages();
-    getPaymentsMethods();
+    getPaymentsMethods(paymentMethods);
     getKycData();
   }
-
+  componentDidUpdate(prevProps) {
+    const { methods } = this.props;
+    if (prevProps.methos !== methods) {
+      this.renderPaymentName();
+    }
+  }
   moveSlide = (direction = "next") => {
     if (direction === "prev") this.slider.slickPrev();
     else this.slider.slickNext();
@@ -161,6 +173,7 @@ class Invoice extends React.Component {
   listPaymentMethods = () => {
     const { classes, methods } = this.props;
     const { paymentMethods } = this.state;
+
     if (methods) {
       return methods.map((method, index) => (
         <MenuItem
@@ -170,7 +183,7 @@ class Invoice extends React.Component {
             root: classes.menuItemRoot
           }}
         >
-          {paymentMethods[index]}
+          {method.id === 1 ? paymentMethods[0] : paymentMethods[1]}
         </MenuItem>
       ));
     }
@@ -211,12 +224,12 @@ class Invoice extends React.Component {
   }
 
   handleChangePaymentMethod = value => {
-   const { methods } = this.props;
-    const { paymentMethods} = this.state;
+    const { methods } = this.props;
+    const { paymentMethods } = this.state;
     let index = 0;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === value) {
-        index = i;
+        methods[i].id === 1 ? (index = 0) : (index = 1);
       }
     }
 
@@ -229,17 +242,18 @@ class Invoice extends React.Component {
     });
   };
   returnPaymentMethodIndex = () => {
-    const {methods} = this.props;
-    let {payment} = this.state;
+    const { methods } = this.props;
+    let { payment } = this.state;
     for (let i = 0; i < methods.length; i++) {
       if (methods[i].id === payment) {
         return i;
       }
     }
   };
+
   renderPaymentMethods = () => {
     const { classes } = this.props;
-    const { checkBox } = this.state;
+    const { checkBox, paymentName } = this.state;
     const imgUri = "./images/icons/arrow/expand-more@1x.png";
 
     const MenuProps = {
@@ -259,7 +273,7 @@ class Invoice extends React.Component {
         <Grid item xs={12} className="payments">
           <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
         </Grid>
-        
+
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12}>
             <div className={style.containerInput}>
@@ -269,7 +283,7 @@ class Invoice extends React.Component {
                 }}
                 MenuProps={MenuProps}
                 value={this.state.payment}
-                renderValue={() => this.state.paymentName}
+                renderValue={() => paymentName}
                 onChange={event =>
                   this.handleChangePaymentMethod(event.target.value)
                 }
@@ -342,14 +356,17 @@ class Invoice extends React.Component {
       userData,
       methods
     } = this.props;
-    
+
     const { payment, depositValue, activeCard } = this.state;
     setPaymentInformation({
       service: "Deposit",
       packageId: activeCard,
       paymentMethodId: payment
     });
-    if (depositValue > methods[this.returnPaymentMethodIndex()].limitKycAmount && userData.status !== "confirmed") {
+    if (
+      depositValue > methods[this.returnPaymentMethodIndex()].limitKycAmount &&
+      userData.status !== "confirmed"
+    ) {
       this.setState({
         error: true,
         errorMsg: i18n.t("DEPOSIT_KYC_CONFIRMATION_REQUIRED")
@@ -361,10 +378,10 @@ class Invoice extends React.Component {
       });
     } else if (userData.status !== null && userData.address.country !== "BR") {
       this.setState({
-        error:true,
+        error: true,
         errorMsg: i18n.t("DEPOSIT_KYC_COUNTRY_VALIDATION")
       });
-    }else {
+    } else {
       this.setState({ error: false });
       //validações
       openModal();
@@ -483,6 +500,7 @@ const mapStateToProps = store => ({
   packages: store.deposit.packages,
   loading: store.deposit.loading,
   methods: store.deposit.paymentMethods,
+  paymentName: store.deposit.paymentName,
   userData: store.deposit.kyc.data
 });
 

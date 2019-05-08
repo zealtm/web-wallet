@@ -23,8 +23,9 @@ export const getDepositHistory = () => ({
   type: "GET_DEPOSIT_HISTORY"
 });
 
-export const getPaymentsMethods = () => ({
-  type: "GET_PAYMENT_METHODS_API"
+export const getPaymentsMethods = (methods) => ({
+  type: "GET_PAYMENT_METHODS_API",
+  methods
 });
 export const setPaymentInformation = (method) => ({
   type: "SET_PAYMENT_INFORMATION",
