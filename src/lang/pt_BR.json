@@ -663,6 +663,7 @@
   "P2P_CHANGE_ADDRESS": "Preencha o endereço para recebimento",
 
   "DEPOSIT_TAB_TITLE": "Depósito",
+  "DEPOSIT_BUTTON_CONFIRM": "Fazer um depósito",
   "DEPOSIT_TAB_HISTORY_TITLE": "Histórico",
   "DEPOSIT_HEADER_TITLE": "DEPÓSITO CARTEIRA LUNES",
   "DEPOSIT_HEADER_SUBTITLE": "Deposite Reais (R$) em sua carteira e receba o valor equivalente em LBRL. Escolha um dos valores disponíveis para realizar o seu depósito.",
