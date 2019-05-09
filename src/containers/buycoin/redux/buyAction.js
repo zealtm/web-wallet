@@ -90,3 +90,8 @@ export const getLunesBuyPrices = coins => ({
   type: "GET_LUNES_BUY_PRICES_API",
   coins
 });
+
+export const setPaymentCreditInformation = information => ({
+  type: "SET_CREDIT_PAYMENT_INFORMATION",
+  information
+});

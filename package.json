@@ -84,6 +84,7 @@
     "bip39": "^2.5.0",
     "bitcoinjs-lib": "^3.3.2",
     "brazilian-barcode": "^0.0.2",
+    "brazilian-values": "^0.4.0",
     "browser-image-compression": "0.0.3",
     "coinselect": "^3.1.11",
     "crypto-js": "^3.1.9-1",
@@ -121,7 +122,7 @@
     "redux-saga": "^0.16.0",
     "slick-carousel": "^1.8.1",
     "validator": "^10.4.0",
-    "web3": "^1.0.0-beta.34",
+    "web3": "1.0.0-beta.35",
     "web3-provider-engine": "^13.6.5"
   }
 }

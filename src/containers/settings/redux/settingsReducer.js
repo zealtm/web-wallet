@@ -13,12 +13,13 @@ const initialState = {
   loadingKyc: false,
   loadingCreate: false,
   loadingState: false,
-  loadingCity: false,
+  loadingAddress: false,
   location: {
     countries: [],
     states: [],
     city: []
   },
+  cepValidation: {cep: true},
   sendRequest: 0,
   kyc: {},
   loadingP2P: false,
@@ -75,7 +76,8 @@ const settings = (state = initialState, action) => {
       return {
         ...state,
         security: {
-          urlImage: action.url
+          urlImage: action.urlQrCode,
+          uriQrCode: action.uri
         },
         loading: !state.loading
       };
@@ -158,11 +160,17 @@ const settings = (state = initialState, action) => {
         ...state,
         loadingState: true
       };
-    case "SET_LOADING_CITY":
+    case "SET_LOADING_ADDRESS":
       return {
         ...state,
-        loadingCity: true
+        loadingAddress: true
       };
+    case "SET_CEP_VALIDATION_INFORMATION":
+    return {
+      ...state,
+      cepValidation: action.response,
+      loadingAddress: false
+    };
     case "COUNT_KYC_SEND_REQUEST":
       return {
         ...state,

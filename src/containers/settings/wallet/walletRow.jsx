@@ -79,19 +79,28 @@ class WalletRow extends React.Component {
 
   render() {
     const { coin } = this.props;
+    let coinAbbreviation = coin.abbreviation;
+    let favorites = getFavoritesCrypto();
+    let imgUrl = "images/icons/coins/whiteIcons/" + coinAbbreviation + ".png";
+    if (
+      favorites && favorites.length > 0 &&
+      favorites[favorites.indexOf(coinAbbreviation)] === coinAbbreviation
+    ) {
+      imgUrl =
+        "images/icons/coins/" +
+        favorites[favorites.indexOf(coinAbbreviation)] +
+        ".png";
+    }
     return (
       <Grid container justify="center">
         <Grid item xs={2} md={1}>
-          <img
-            src={"images/icons/coins/" + coin.abbreviation + ".png"}
-            className={style.coinIcon}
-          />
+          <img src={imgUrl} className={style.coinIcon} />
         </Grid>
         <Grid item xs={7} md={8}>
           <input
             type="text"
             disabled
-            value={coin.address || i18n.t("TEXT_UNAVAILABLE")}
+            value={coin.status === "active" ? coin.address : i18n.t("TEXT_UNAVAILABLE")}
             className={style.inputClear}
           />
         </Grid>

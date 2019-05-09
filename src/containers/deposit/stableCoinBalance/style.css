@@ -1,0 +1,64 @@
+/* lin balance */
+:local .linBalance{  
+
+    border:0.5px dashed white;
+    opacity:0.25;
+  }
+  :local .textBalance{
+    font-weight: bold;
+  }
+
+  :local .textBalanceBox{
+    text-align: right;
+    
+  }
+
+  :local .textBalanceGreen{
+    composes: clGreenLight from "../../../components/bases/colorBase.css";
+    margin-left: 5px;
+    
+  }
+
+  :local .contentBalance{
+   
+    max-width: 40vw !important;
+    margin: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+  }
+
+  :local .contentBalanceBuy{
+   
+    max-width: 50vw !important;
+    margin: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+  }
+
+  @media screen and (max-width: 1280px){
+    :local .contentBalance{
+      max-width: 60vw !important;
+    }
+
+    :local .contentBalanceBuy{
+      max-width: 55vw !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    :local .contentBalance{
+      padding: 10px;
+      max-width: 100vw !important;
+    }
+
+    :local .contentBalanceBuy{
+      padding: 10px;
+      max-width: 100vw !important;
+    }
+
+  }
+
+
+

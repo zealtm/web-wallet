@@ -14,7 +14,7 @@ import { Grid, Input, InputAdornment, IconButton } from "@material-ui/core";
 // COMPONENTS
 import HistoryItem from "./historyItem";
 import Loading from "../../../components/loading";
-
+import StableCoinBalance from "../../deposit/stableCoinBalance";
 // STYLES
 import style from "./style.css";
 import colors from "../../../components/bases/colors";
@@ -87,59 +87,62 @@ class History extends React.Component {
     const { search } = this.state;
 
     return (
-      <Grid container direction="row" justify="center">
-        <Grid item xs={12} className={style.transparentBox}>
-          <Grid container>
-            <Grid item xs={4} sm={3}>
-              <div className={style.headerBox} style={{ marginRight: "2px" }}>
-                <div className={style.icon}>
-                  <img src="/images/icons/general/pay@1x.png" alt="Payments" />
+      <div>
+        <Grid container direction="row" justify="center">
+          <Grid item xs={12} className={style.transparentBox}>
+            <Grid container>
+              <Grid item xs={4} sm={3}>
+                <div className={style.headerBox} style={{ marginRight: "2px" }}>
+                  <div className={style.icon}>
+                    <img src="/images/icons/general/pay@1x.png" alt="Payments" />
+                  </div>
+                  <div className={style.invoiceInfo}>
+                    {history.length}
+                    <br />
+                    {i18n.t("RECHARGE_TAB_TITLE_HISTORY")}
+                  </div>
                 </div>
-                <div className={style.invoiceInfo}>
-                  {history.length}
-                  <br />
-                  {i18n.t("RECHARGE_TAB_TITLE_HISTORY")}
+              </Grid>
+              <Grid item xs={8} sm={9}>
+                <div className={style.headerBox}>
+                  <Input
+                    value={search}
+                    onChange={this.handleSearchChange}
+                    classes={{
+                      root: classes.inputRoot,
+                      underline: classes.inputCssUnderlineDisabled,
+                      input: classes.inputCss
+                    }}
+                    placeholder={i18n.t("RECHARGE_FIND")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="Search"
+                          onClick={this.handleFilter}
+                          onMouseDown={this.handleMouseDownPassword}
+                        >
+                          <Search classes={{ root: classes.iconRoot }} />
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
                 </div>
-              </div>
-            </Grid>
-            <Grid item xs={8} sm={9}>
-              <div className={style.headerBox}>
-                <Input
-                  value={search}
-                  onChange={this.handleSearchChange}
-                  classes={{
-                    root: classes.inputRoot,
-                    underline: classes.inputCssUnderlineDisabled,
-                    input: classes.inputCss
-                  }}
-                  placeholder={i18n.t("RECHARGE_FIND")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Search"
-                        onClick={this.handleFilter}
-                        onMouseDown={this.handleMouseDownPassword}
-                      >
-                        <Search classes={{ root: classes.iconRoot }} />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </div>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={12} className={style.box}>
-          {loading ? (
-            <Loading color="lunes" />
-          ) : (
-            <div className={style.historyItems}>
-              {history.map((val, key) => this.renderItem(val, key))}
-            </div>
-          )}
+          <Grid item xs={12} className={style.box}>
+            {loading ? (
+              <Loading color="lunes" />
+            ) : (
+                <div className={style.historyItems}>
+                  {history.map((val, key) => this.renderItem(val, key))}
+                </div>
+              )}
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
+
     );
   }
 }

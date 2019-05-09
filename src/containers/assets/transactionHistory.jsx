@@ -74,8 +74,7 @@ class TransactionHistory extends React.Component {
     
     return history.assets.map((val, index) => {
       let transaction = history.assets[index];
-      let type = lunesAddress === transaction.toAddress ? "SENT" : "RECEIVED";
-      
+      let type = lunesAddress === transaction.to ? "RECEIVED" : "SENT";
       
       return (
         <div key={index}>

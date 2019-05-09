@@ -11,19 +11,29 @@ class InternalError extends React.Component {
   constructor() {
     super();
     this.state = {
-      timer: 3
+      timer: 3,
+      isRedirect: false
     };
   }
 
   counter = () => {
-    let { timer } = this.state;
+    let { timer, isRedirect } = this.state;
+    if(isRedirect){
+      return;
+    }
     if (timer > 0) {
       this.setState({
         ...this.state,
         timer: this.state.timer - 1
       });
     } else if (timer <= 0) {
-      location.reload();
+      //location.reload();
+      window.location.href ="/";
+      this.setState({
+        ...this.state,
+        isRedirect: true
+      });
+      return;
     }
   };
 

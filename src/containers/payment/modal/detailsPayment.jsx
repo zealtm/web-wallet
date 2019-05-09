@@ -5,12 +5,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { updateUserConsents } from "../../user/redux/userAction";
-import { setModalStep } from "../redux/paymentAction";
+import { setModalStep, confirmPay } from "../redux/paymentAction";
 import { clearMessage, errorInput } from "../../errors/redux/errorAction";
 
 // UTILS
 import i18n from "../../../utils/i18n";
 import { formatCpfCnpj } from "../../../utils/strings";
+import { convertBiggestCoinUnit } from "../../../utils/numbers";
 
 // STYLES
 import style from "./style.css";
@@ -37,15 +38,48 @@ class DetailsPayment extends React.Component {
   }
 
   validateForm = () => {
-    const { setModalStep, errorInput, clearMessage } = this.props;
+    const {
+      setModalStep,
+      errorInput,
+      clearMessage,
+      payment,
+      coins,
+      confirmPay,
+      creditBalance
+    } = this.props;
     const { user } = this.state;
-
+    let creditsAvailable = convertBiggestCoinUnit(
+      creditBalance.available,
+      8
+    ).toFixed(2);
     if (user.terms === "unread") {
       errorInput(i18n.t("PAYMENT_TERMS_ERROR"));
       return;
     }
-
-    setModalStep(2);
+    if (payment.servicePaymentMethodId === 4) {
+      const payload = {
+        coin: "lbrl",
+        fromAddress: null,
+        toAddress: null,
+        lunesUserAddress: coins["lunes"].address,
+        amount: payment.amount,
+        fee: null,
+        feePerByte: null,
+        feeLunes: null,
+        price: payment.amount,
+        decimalPoint: null,
+        servicePaymentMethodId: payment.servicePaymentMethodId,
+        serviceCoinId: payment.serviceCoinId,
+        payment: payment
+      };
+      if (creditsAvailable >= payment.amount) {
+        confirmPay(payload);
+      }else {
+        this.setState({error: true, errorMsg: i18n.t("INSUFFICIENT_CREDIT")});
+      }
+    } else {
+      setModalStep(2);
+    }
     clearMessage();
   };
 
@@ -64,7 +98,34 @@ class DetailsPayment extends React.Component {
 
     updateUserConsents({ terms: newStatus });
   };
-
+  renderCrypto = () => {
+    const { payment } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        <span className={style.textGreen}>
+          {payment.amount.toFixed(8)} {payment.coin.abbreviation.toUpperCase()}
+        </span>
+        {i18n.t("PAYMENT_DETAILS_TEXT_2")}
+        <span className={style.textGreen}>R$ {payment.value}</span>
+        {i18n.t("PAYMENT_DETAILS_TEXT_3")}
+      </div>
+    );
+  };
+  renderCredit = () => {
+    const { payment } = this.props;
+    return (
+      <div className={style.strongText} style={{ marginTop: 20 }}>
+        {"Será debitado "}
+        <span className={style.textGreen}>
+          R$ {payment.value}
+          {" do seu crédito com 1% de taxa de serviço "}
+        </span>
+        {i18n.t("PAYMENT_DETAILS_TEXT_2")}
+        <span className={style.textGreen}> R$ {payment.amount} </span>
+        {i18n.t("PAYMENT_DETAILS_TEXT_3")}
+      </div>
+    );
+  };
   render() {
     const { loading, payment } = this.props;
     const { user, error, errorMsg } = this.state;
@@ -82,15 +143,9 @@ class DetailsPayment extends React.Component {
             {error ? <ModalBar type="error" message={errorMsg} timer /> : null}
           </div>
           {i18n.t("PAYMENT_DETAILS_TEXT_1")}
-          <div className={style.strongText} style={{ marginTop: 20 }}>
-            <span className={style.textGreen}>
-              {payment.amount.toFixed(8)}{" "}
-              {payment.coin.abbreviation.toUpperCase()}
-            </span>
-            {i18n.t("PAYMENT_DETAILS_TEXT_2")}
-            <span className={style.textGreen}>R$ {payment.value}</span>
-            {i18n.t("PAYMENT_DETAILS_TEXT_3")}
-          </div>
+          {payment.servicePaymentMethodId === 3
+            ? this.renderCrypto()
+            : this.renderCredit()}
           <Grid container className={style.inlineInfo}>
             <Grid item xs={6} md={3}>
               <label className={style.inlineInfoLabel}>
@@ -156,13 +211,18 @@ DetailsPayment.propTypes = {
   setModalStep: PropTypes.func.isRequired,
   updateUserConsents: PropTypes.func.isRequired,
   clearMessage: PropTypes.func,
-  errorInput: PropTypes.func
+  errorInput: PropTypes.func,
+  coins: PropTypes.array.isRequired,
+  confirmPay: PropTypes.func.isRequired,
+  creditBalance: PropTypes.object
 };
 
 const mapStateToProps = store => ({
   payment: store.payment.payment,
   loading: store.payment.loading,
-  user: store.user.user
+  user: store.user.user,
+  coins: store.skeleton.coins,
+  creditBalance: store.skeleton.creditBalance
 });
 
 const mapDispatchToProps = dispatch =>
@@ -171,7 +231,8 @@ const mapDispatchToProps = dispatch =>
       updateUserConsents,
       setModalStep,
       clearMessage,
-      errorInput
+      errorInput,
+      confirmPay
     },
     dispatch
   );

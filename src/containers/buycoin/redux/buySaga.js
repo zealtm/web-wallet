@@ -1,5 +1,8 @@
 import { put, call } from "redux-saga/effects";
-import { internalServerError } from "../../errors/statusCodeMessage";
+import {
+  internalServerError,
+  modalError
+} from "../../errors/statusCodeMessage";
 
 // SERVICES
 import BuyService from "../../../services/buyService";
@@ -11,6 +14,7 @@ import { getAuthToken } from "../../../utils/localStorage";
 import { convertBiggestCoinUnit } from "../../../utils/numbers";
 import { getUserSeedWords } from "../../../utils/localStorage";
 import { decryptAes } from "../../../utils/cryptography";
+import i18n from "../../../utils/i18n";
 
 const buyService = new BuyService();
 const coinService = new CoinService();
@@ -74,9 +78,8 @@ export function* getBuyCoinsEnabledSaga() {
 
       return availableCoins;
     }, []);
-
     yield put({
-      type: "GET_COINS_REDUCER",
+      type: "GET_BUY_COINS_REDUCER",
       coins: coins
     });
   } catch (error) {
@@ -280,40 +283,57 @@ export function* confirmBuySaga(payload) {
       feePerByte: payload.buy.feePerByte,
       feeLunes: payload.buy.feeLunes,
       price: payload.buy.price,
-      decimalPoint: payload.buy.decimalPoint
+      decimalPoint: payload.buy.decimalPoint,
+      describe: "Compra"
     };
 
     try {
       let seed = yield call(getUserSeedWords);
       let token = yield call(getAuthToken);
-
-      // pega o servico disponivel
-      let lunesWallet = yield call(
-        transactionService.buyService,
-        payloadTransaction.coin,
-        token
-      );
-
-      if (lunesWallet) {
-        let response = yield call(
-          transactionService.transaction,
-          lunesWallet.id,
-          payloadTransaction,
-          lunesWallet,
-          decryptAes(seed, payload.buy.user),
+      let lunesWallet = null;
+      let response = null;
+      if (payload.buy.buypack.servicePaymentMethodId !== 6) {
+        // pega o servico disponivel
+        lunesWallet = yield call(
+          transactionService.buyService,
+          payloadTransaction.coin,
           token
         );
+      }
 
-        const transacao_obj = JSON.parse(response.config.data);
+      if (lunesWallet || payload.buy.servicePaymentMethodId === 6) {
+        if (lunesWallet) {
+          response = yield call(
+            transactionService.transaction,
+            lunesWallet.id,
+            payloadTransaction,
+            lunesWallet,
+            decryptAes(seed, payload.buy.user),
+            token
+          );
+        }
+        const transacao_obj = response
+          ? JSON.parse(response.config.data)
+          : null;
 
-        if (response) {
+        if (response || payload.buy.servicePaymentMethodId === 6) {
           const payload_elastic = {
-            txID: transacao_obj.txID,
+            txID: response ? transacao_obj.txID : null,
             packageId: payload.buy.buypack.idpack,
-            coinId: payload.buy.buypack.paycoinid, //payload.buy.buypack.coin.id,
-            address: payload.buy.buypack.receiveAddress, //payloadTransaction.fromAddress,
+            coinId: payload.buy.buypack.paycoinid
+              ? payload.buy.buypack.paycoinid
+              : null,
+            address: payload.buy.buypack.receiveAddress
+              ? payload.buy.buypack.receiveAddress
+              : payload.buy.receiveAddress, //payloadTransaction.fromAddress,
             amount: payloadTransaction.amountReceive,
-            coin: payload.buy.buypack.coin.abbreviation //coin
+            coin: payload.buy.buypack.coin.abbreviation, //coin
+            servicePaymentMethodId: payload.buy.servicePaymentMethodId,
+            userLunesAddress:
+              payload.buy.servicePaymentMethodId === 6
+                ? payload.buy.lunesUserAddress
+                : null,
+            serviceId: payload.buy.serviceCoinId
           };
 
           let response_elastic = yield call(
@@ -332,7 +352,7 @@ export function* confirmBuySaga(payload) {
               type: "SET_MODAL_BUY_STEP_REDUCER",
               step: 4
             });
-            yield put(internalServerError());
+            yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
           } else {
             yield put({
               type: "SET_MODAL_BUY_STEP_REDUCER",
@@ -353,7 +373,7 @@ export function* confirmBuySaga(payload) {
         step: 4
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
       return;
     } catch (error) {
       yield put({
@@ -366,10 +386,11 @@ export function* confirmBuySaga(payload) {
         step: 4
       });
 
-      yield put(internalServerError());
+      yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
     }
   } catch (error) {
-    yield put(internalServerError());
+    yield put({ type: "SET_MODAL_CLOSE_REDUCER" });
+    yield put(modalError(i18n.t("UNAVAILABLE_SERVICE")));
   }
 }
 
@@ -404,7 +425,7 @@ export function* getLunesBuyPrices(payload) {
     coins.lunes.price.BRL.price = response.BRL.price;
     coins.lunes.price.EUR.price = response.EUR.price;
     coins.lunes.price.USD.price = response.USD.price;
-   
+
     yield put({
       type: "GET_LUNES_BUY_PRICES",
       coins

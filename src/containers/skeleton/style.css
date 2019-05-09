@@ -64,7 +64,9 @@
 
 :local .boxBalance {
   text-align: right;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bolder;
+  margin: 2px -4px -4px -4px !important;
 }
 
 :local .menuUser {
@@ -77,13 +79,53 @@
   right: 16px;
   z-index: 999;
 }
+:local .iconCoin {
+  width: 23px;
+  height: 23px;
+  margin: 0px 5px -5px 5px;
+  opacity: 0.5;
+}
+:local .balanceBox{
+  display: inline;
+  margin-right: 8px
+}
+:local .creditBalanceBox {
+  display: inline;
+  margin: 0 16px 0 5px;
+}
+
+:local .ArrowDropDown {
+  position: absolute;
+  bottom: 9%;
+}
 
 @media only screen and (max-width: 599px) {
   :local .boxBalance {
     font-size: 11px;
   }
+  :local .iconCoin {
+    width: 20px;
+    height: 20px;
+    margin: 0px 5px -5px 5px;
+    opacity: 0.5;
+  }
 }
-
+@media only screen and (max-width: 344px) {
+  :local .creditBalanceBox {
+    display: inline;
+    margin: 0px 1px;
+    
+  }
+  :local .ArrowDropDown {
+    bottom: 4%;
+  }
+  :local .iconCoin {
+    width: 12px;
+    height: 12px;
+    margin: 0px 5px -2px 5px;
+    opacity: 0.5;
+  }
+}
 @media only screen and (max-width: 1279px) {
   :local .colMenu {
     position: absolute;
@@ -92,6 +134,15 @@
     overflow-y: auto;
   }
 }
+
+:local .verticalLine {
+  display: initial;
+  border-left: 1px solid #3b1878;
+  height: 50px;
+  position: absolute;
+  top: 10%;
+}
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -163,17 +214,29 @@
 }
 
 :local .textBalance {
-  composes: offside from "../../components/bases/textBase.css";
+  /* composes: offside from "../../components/bases/textBase.css"; */
+  cursor: pointer;
 }
 
 :local .textGreen {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
 }
 
+:local .textBalanceTitle {
+  composes: clGreenDefault from "../../components/bases/colorBase.css";
+  font-weight: bold;
+}
 :local .textBalanceFiat {
   composes: clGreenDefault from "../../components/bases/colorBase.css";
   display: block;
   font-size: 10px;
+  margin-right: 6%;
+  cursor: pointer;
+}
+@media only screen and (max-width: 599px) {
+  :local .textBalanceFiat {
+    margin-right: 9%
+  }
 }
 
 :local .linkPopMenu {
@@ -196,6 +259,84 @@
 :local .linkPopMenu:hover img {
   opacity: 1;
   color: #ffffff;
+}
+
+/* ------------------------------------------------------------------------- */
+
+/* 2.  BALANCE DEPOSIT  */
+
+:local .menuUserDeposit {
+  composes: bgPurpleLight from "../../components/bases/colorBase.css";
+  margin-top: 17px;
+  width: 260px;
+  height: 180px;
+  border-radius: 8px;
+  box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  right: 77px;
+  z-index: 999;
+}
+
+@media only screen and (max-width: 1280px) {
+  :local .menuUserDeposit {
+    margin-right: -52px;
+  }
+}
+@media only screen and (max-width: 599px) {
+  :local .menuUserDeposit {
+    margin-right: -62px;
+  }
+}
+
+:local .textBalanceDeposit {
+  font-size: 12px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 6px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+:local .imgBalanceDeposit {
+  display: block;
+  width: 31px;
+  height: 31px;
+  margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+:local .btnBalanceDeposit {
+  composes: buttonEnable from "../../components/bases/buttonBase.css";
+  padding: 0;
+  width: 50%;
+  min-width: 80px;
+  height: 30px;
+  font-size: 13px;
+  margin: auto;
+}
+
+:local .boxBalanceDeposit {
+  font-size: 11px;
+  display: flex;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  line-height: 2.9;
+}
+
+:local .texGreentBalanceDeposit {
+  composes: inputTextDefault from "../../components/bases/inputBase.css";
+  font-size: 11px;
+  text-align: center;
+  font-weight: bold;
+  width: 75%;
+  height: 15px;
+  margin: auto;
+  padding: 3px;
+  margin-top: 10px;
+  display: block;
+  color: #68f285;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -239,6 +380,7 @@
 }
 
 /* eslint-disable */
+
 :local .arrowUp {
   composes: bgPurpleLight from "../../components/bases/colorBase.css";
   width: 24px;

@@ -12,6 +12,7 @@ import {
   uploadBarcode
 } from "./redux/paymentAction";
 import { errorInput } from "../errors/redux/errorAction";
+import { getPaymentMethodService } from "../deposit/redux/depositAction";
 
 // COMPONENTS
 import Select from "../../components/select";
@@ -19,9 +20,9 @@ import Instructions from "../payment/instructions";
 import colors from "../../components/bases/colors";
 import Loading from "../../components/loading";
 import { DateMask, MoneyBrlMask } from "../../components/inputMask";
-
+import StableCoinBalance from "../deposit/stableCoinBalance";
 // MATERIAL
-import { Grid, Input, InputAdornment } from "@material-ui/core";
+import { Grid, Input, InputAdornment, Hidden } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 // STYLES
@@ -96,16 +97,45 @@ class Invoice extends React.Component {
         name: undefined,
         value: undefined,
         img: undefined
-      }
+      },
+      selectedPaymentMethod: {
+        title: undefined,
+        value: undefined
+      },
+      paymentCoins: []
     };
-
+    this.handlePayment = this.handlePayment.bind(this);
     this.coinSelected = this.coinSelected.bind(this);
   }
 
   componentDidMount() {
-    const { getCoinsEnabled, setClearPayment } = this.props;
+    const {
+      getCoinsEnabled,
+      setClearPayment,
+      getPaymentMethodService
+    } = this.props;
     setClearPayment();
     getCoinsEnabled();
+    getPaymentMethodService(4);
+  }
+
+  validatePaymentCoins = () => {
+    const { coins, coinsRedux } = this.props;
+    let paymentCoins = [];
+    coinsRedux.forEach((element, index) => {
+      if (coins[element.title.toLowerCase()].status === "active") {
+        paymentCoins.push(element);
+      }
+    });
+    this.setState({ paymentCoins });
+  };
+  componentDidUpdate(prevProps, prevState) {
+    const { selectedPaymentMethod } = this.state;
+    if (prevState.selectedPaymentMethod.value !== selectedPaymentMethod.value) {
+      if (selectedPaymentMethod.value === 3) {
+        this.validatePaymentCoins();
+      }
+    }
   }
 
   coinSelected = (value, title, img = undefined) => {
@@ -121,7 +151,31 @@ class Invoice extends React.Component {
       invoice: {
         ...invoice,
         coin: value
+      },
+      serviceCoinId: null
+    });
+  };
+  searchServiceCoinId = value => {
+    const { methodPaymentsList } = this.props;
+    let id = null;
+    methodPaymentsList.forEach((element, index) => {
+      if (element.id === value) {
+        id = element.serviceCoinId;
       }
+    });
+    if (id !== null) return id;
+
+    return;
+  };
+  handlePayment = (value, title) => {
+    let serviceCoinId = this.searchServiceCoinId(value);
+    this.setState({
+      ...this.state,
+      selectedPaymentMethod: {
+        value: value,
+        title: title
+      },
+      serviceCoinId
     });
   };
 
@@ -239,23 +293,33 @@ class Invoice extends React.Component {
 
   inputValidator = () => {
     const { payment, coins, errorInput } = this.props;
-    const { invoice, coin } = this.state;
+    const { invoice, coin, selectedPaymentMethod, serviceCoinId } = this.state;
 
-    const invoiceData = {
+    const coinBLRL =
+      selectedPaymentMethod.value === 4
+        ? payment.value
+        : coins[invoice.coin.abbreviation].decimalPoint;
+    const addr =
+      selectedPaymentMethod.value === 4
+        ? ""
+        : coins[invoice.coin.abbreviation]
+          ? coins[invoice.coin.abbreviation].address
+          : undefined;
+    let invoiceData = {
       ...invoice,
       assignor: payment.assignor || invoice.assignor,
       dueDate: payment.dueDate || invoice.dueDate,
       value: payment.value || invoice.value,
       description: payment.description || invoice.description,
-      decimalPoint: coins[invoice.coin.abbreviation].decimalPoint,
-      address: coins[invoice.coin.abbreviation]
-        ? coins[invoice.coin.abbreviation].address
-        : undefined
+      decimalPoint: coinBLRL,
+      address: addr,
+      servicePaymentMethodId: selectedPaymentMethod.value
     };
-
-    if (invoiceData.value > coin.value.limit) {
-      errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
-      return;
+    if (selectedPaymentMethod.value === 3) {
+      if (invoiceData.value > coin.value.limit) {
+        errorInput("Valor excede o limite diário de R$ " + coin.value.limit);
+        return;
+      }
     }
 
     const invoiceInputs = {};
@@ -275,29 +339,34 @@ class Invoice extends React.Component {
         invoiceInputs[key]["minLength"] = 47;
       }
     }
+    if (selectedPaymentMethod.value === 3) {
+      const coinInput = {
+        type: "text",
+        name: "coin",
+        placeholder: "coin",
+        value: invoiceData.coin.abbreviation || coin.name || "",
+        required: true
+      };
 
-    const coinInput = {
-      type: "text",
-      name: "coin",
-      placeholder: "coin",
-      value: invoiceData.coin.abbreviation || coin.name || "",
-      required: true
-    };
+      const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
 
-    const { errors } = inputValidator({ ...invoiceInputs, coin: coinInput });
+      if (payment.error) {
+        errors.push("number");
+      }
 
-    if (payment.error) {
-      errors.push("number");
+      if (errors.length > 0) {
+        this.setState({
+          ...this.state,
+          errors
+        });
+        return;
+      }
+    } else {
+      invoiceData = {
+        ...invoiceData,
+        serviceCoinId: serviceCoinId
+      };
     }
-
-    if (errors.length > 0) {
-      this.setState({
-        ...this.state,
-        errors
-      });
-      return;
-    }
-
     this.setPayment(invoiceData);
     this.openModal();
     this.setDefaultState();
@@ -306,9 +375,8 @@ class Invoice extends React.Component {
   };
 
   checkAllInputs = () => {
-    const { invoice, coin } = this.state;
+    const { invoice, coin, selectedPaymentMethod } = this.state;
     const { payment } = this.props;
-
     return (
       invoice.number &&
       invoice.name &&
@@ -317,7 +385,7 @@ class Invoice extends React.Component {
       (payment.description || invoice.description) &&
       (payment.dueDate || invoice.dueDate) &&
       (payment.value || invoice.value) &&
-      coin.value
+      (coin.value || selectedPaymentMethod.value === 4)
     );
   };
 
@@ -349,185 +417,233 @@ class Invoice extends React.Component {
   };
 
   render() {
-    const { classes, loading, coinsRedux, payment } = this.props;
-    const { coin, invoice, errors } = this.state;
+    const {
+      classes,
+      loading,
+      coinsRedux,
+      payment,
+      methodPaymentsList
+    } = this.props;
+    const { coin, invoice, errors, selectedPaymentMethod } = this.state;
     const title = coin.name || i18n.t("SELECT_COIN");
     const img = coin.img || "";
     let dueDatePayment = invoice.dueDate
       ? this.currentDateTransform(invoice.dueDate)
       : (dueDatePayment = this.currentDateTransform(payment.dueDate));
+    const paymentTitle = selectedPaymentMethod.title
+      ? selectedPaymentMethod.title
+      : i18n.t("SELECT_PAYMENT");
 
     return (
-      <Grid container direction="row" justify="center">
-        <Grid item xs={11} className={style.box}>
-          <div className={style.row}>
-            <Grid item xs={11} md={12}>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCssCenter
-                }}
-                placeholder="237933802350009031431630033330944400000001000000"
-                inputProps={{ maxLength: 48, required: true }}
-                value={invoice.number || payment.number}
-                onChange={e => this.handleInvoiceNumberChange(e.target.value)}
-                error={errors.includes("number")}
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <div className={style.cameraIconMargin}>
-                <label
-                  htmlFor="file-upload"
-                  className={style.labelCameraUpload}
-                >
-                  <img
-                    className={style.cameraIcon}
-                    src="images/icons/camera/camera-white.png"
-                    alt="Camera"
-                  />
-                  <span>Max. 3MB</span>
-                </label>
-                <input
-                  id="file-upload"
-                  className={style.cameraInput}
-                  type="file"
-                  accept="image/*"
-                  onChange={this.fileUpload}
+      <div>
+        <StableCoinBalance service="payment"/>
+        <Grid container direction="row" justify="center">
+          <Grid item xs={11} className={style.box}>
+            <div className={style.row}>
+              <Grid item xs={11} md={12}>
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCssCenter
+                  }}
+                  placeholder="237933802350009031431630033330944400000001000000"
+                  inputProps={{ maxLength: 48, required: true }}
+                  value={invoice.number || payment.number}
+                  onChange={e => this.handleInvoiceNumberChange(e.target.value)}
+                  error={errors.includes("number")}
                 />
-              </div>
-            </Grid>
-          </div>
-
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_ASSIGNOR")}
-                value={payment.assignor || invoice.assignor}
-                onChange={this.handleInvoiceDefaultChange("assignor")}
-                error={errors.includes("assignor")}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_NAME")}
-                value={invoice.name}
-                onChange={this.handleInvoiceDefaultChange("name")}
-                error={errors.includes("name")}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
-                value={payment.description || invoice.description}
-                onChange={this.handleInvoiceDefaultChange("description")}
-                error={errors.includes("description")}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_DUE_DATE")}
-                value={dueDatePayment}
-                onChange={this.handleInvoiceDefaultChange("dueDate")}
-                error={errors.includes("dueDate")}
-                inputComponent={DateMask}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
-                value={invoice.cpfCnpj}
-                onChange={this.handleCpfCnpjChange}
-                error={errors.includes("cpfCnpj")}
-                inputProps={{ maxLength: 14 }}
-              />
-              <Input
-                classes={{
-                  root: classes.inputRoot,
-                  underline: classes.inputCssUnderline,
-                  input: classes.inputCss
-                }}
-                placeholder={i18n.t("PAYMENT_VALUE")}
-                startAdornment={
-                  <InputAdornment
-                    position="start"
-                    disableTypography
-                    classes={{ root: classes.inputCss }}
+              </Grid>
+              <Grid item xs={1}>
+                <div className={style.cameraIconMargin}>
+                  <label
+                    htmlFor="file-upload"
+                    className={style.labelCameraUpload}
                   >
-                    R$
+                    <img
+                      className={style.cameraIcon}
+                      src="images/icons/camera/camera-white.png"
+                      alt="Camera"
+                    />
+                    <span>Max. 3MB</span>
+                  </label>
+                  <input
+                    id="file-upload"
+                    className={style.cameraInput}
+                    type="file"
+                    accept="image/*"
+                    onChange={this.fileUpload}
+                  />
+                </div>
+              </Grid>
+            </div>
+
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_ASSIGNOR")}
+                  value={payment.assignor || invoice.assignor}
+                  onChange={this.handleInvoiceDefaultChange("assignor")}
+                  error={errors.includes("assignor")}
+                />
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_NAME")}
+                  value={invoice.name}
+                  onChange={this.handleInvoiceDefaultChange("name")}
+                  error={errors.includes("name")}
+                />
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_SHORT_DESCRIPTION")}
+                  value={payment.description || invoice.description}
+                  onChange={this.handleInvoiceDefaultChange("description")}
+                  error={errors.includes("description")}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_DUE_DATE")}
+                  value={dueDatePayment}
+                  onChange={this.handleInvoiceDefaultChange("dueDate")}
+                  error={errors.includes("dueDate")}
+                  inputComponent={DateMask}
+                />
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_CPF_CNPJ")}
+                  value={invoice.cpfCnpj}
+                  onChange={this.handleCpfCnpjChange}
+                  error={errors.includes("cpfCnpj")}
+                  inputProps={{ maxLength: 14 }}
+                />
+                <Input
+                  classes={{
+                    root: classes.inputRoot,
+                    underline: classes.inputCssUnderline,
+                    input: classes.inputCss
+                  }}
+                  placeholder={i18n.t("PAYMENT_VALUE")}
+                  startAdornment={
+                    <InputAdornment
+                      position="start"
+                      disableTypography
+                      classes={{ root: classes.inputCss }}
+                    >
+                      R$
                   </InputAdornment>
-                }
-                value={payment.value || invoice.value}
-                onChange={this.handleInvoiceDefaultChange("value")}
-                error={errors.includes("value")}
-                inputComponent={MoneyBrlMask}
-              />
+                  }
+                  value={payment.value || invoice.value}
+                  onChange={this.handleInvoiceDefaultChange("value")}
+                  error={errors.includes("value")}
+                  inputComponent={MoneyBrlMask}
+                />
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-
-        <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
-          <Grid container justify={"center"}>
-            <Grid item xs={12} sm={6}>
-              <Select
-                list={coinsRedux}
-                title={title}
-                titleImg={img}
-                selectItem={this.coinSelected}
-                error={errors.includes("coin")}
-                width={"100%"}
-              />
+          <Grid item xs={12} className={style.paymentType}>
+            <Grid item xs={12} className="payments">
+              <h4>{i18n.t("DEPOSIT_PAYMENT_METHODS")}</h4>
             </Grid>
           </Grid>
-        </Grid>
+          <Grid item xs={12} className={style.box} style={{ marginTop: "10px" }}>
+            <Grid container>
+              <Grid item xs={12} sm={6} className={style.alignSelectItem_1}>
+                <Hidden smUp>
+                  <Select
+                    list={methodPaymentsList}
+                    title={paymentTitle}
+                    selectItem={this.handlePayment}
+                    error={errors.includes("Payment Method")}
+                    width={"100%"}
+                  />
+                </Hidden>
+                <Hidden xsDown>
+                  <Select
+                    list={methodPaymentsList}
+                    title={paymentTitle}
+                    selectItem={this.handlePayment}
+                    error={errors.includes("Payment Method")}
+                  />
+                </Hidden>
+              </Grid>
+              {selectedPaymentMethod.value === 3 ? (
+                <Grid item xs={12} sm={6} className={style.alignSelectItem_2}>
+                  <Hidden smUp>
+                    <Select
+                      list={this.state.paymentCoins}
+                      title={title}
+                      titleImg={img}
+                      selectItem={this.coinSelected}
+                      error={errors.includes("coin")}
+                      width={"94%"}
+                    />
+                  </Hidden>
+                  <Hidden xsDown>
+                    <Select
+                      list={this.state.paymentCoins}
+                      title={title}
+                      titleImg={img}
+                      selectItem={this.coinSelected}
+                      error={errors.includes("coin")}
+                    />
+                  </Hidden>
+                </Grid>
+              ) : null}
+            </Grid>
+          </Grid>
 
-        <Grid
-          item
-          xs={12}
-          className={style.transparentBox}
-          style={{ marginTop: "10px" }}
-        >
-          <button
-            className={
-              this.checkAllInputs()
-                ? style.buttonEnable
-                : style.buttonBorderGreen
-            }
-            onClick={this.inputValidator}
+          <Grid
+            item
+            xs={12}
+            className={style.transparentBox}
+            style={{ marginTop: "10px" }}
           >
-            {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
-          </button>
-        </Grid>
+            <button
+              className={
+                this.checkAllInputs()
+                  ? style.buttonEnable
+                  : style.buttonBorderGreen
+              }
+              onClick={this.inputValidator}
+            >
+              {loading ? <Loading /> : i18n.t("PAYMENT_PAY_NOW")}
+            </button>
+          </Grid>
 
-        <Grid
-          item
-          xs={12}
-          className={style.transparentBox}
-          style={{ marginTop: "10px" }}
-        >
-          <Instructions />
+          <Grid
+            item
+            xs={12}
+            className={style.transparentBox}
+            style={{ marginTop: "10px" }}
+          >
+            <Instructions />
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }
@@ -544,14 +660,16 @@ Invoice.propTypes = {
   setClearPayment: PropTypes.func.isRequired,
   coins: PropTypes.array,
   errorInput: PropTypes.func.isRequired,
-  uploadBarcode: PropTypes.func.isRequired
+  uploadBarcode: PropTypes.func.isRequired,
+  methodPaymentsList: PropTypes.array
 };
 
 const mapStateToProps = store => ({
   coinsRedux: store.payment.coins,
   payment: store.payment.payment,
   loading: store.payment.loading,
-  coins: store.skeleton.coins
+  coins: store.skeleton.coins,
+  methodPaymentsList: store.deposit.paymentsMethodsService
 });
 
 const mapDispatchToProps = dispatch =>
@@ -562,7 +680,8 @@ const mapDispatchToProps = dispatch =>
       setPayment,
       setClearPayment,
       errorInput,
-      uploadBarcode
+      uploadBarcode,
+      getPaymentMethodService
     },
     dispatch
   );

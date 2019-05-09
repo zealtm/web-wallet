@@ -1,0 +1,22 @@
+
+:local .modalBox {
+    text-align: center;
+    align-self: center;
+    padding: 20px;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+  }
+  :local .imageResult {
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+  
+  @media only screen and (max-width: 599px) {
+    :local .modalBox {
+      font-size: 10px;
+    }
+
+  }
+  
