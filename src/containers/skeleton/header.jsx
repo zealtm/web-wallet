@@ -157,7 +157,8 @@ class Header extends React.Component {
     const { openBalancePopup } = this.state;
     let coinSelected = getDefaultCrypto();
     let fiatSelected = getDefaultFiat();
-
+    console.log(coins);
+    
     let coinName = coins[coinSelected]
       ? coins[coinSelected].abbreviation.toUpperCase()
       : "UNDEFINED";
