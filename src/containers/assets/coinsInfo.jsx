@@ -69,15 +69,20 @@ class CoinsInfo extends React.Component {
 
   handleModalSendClose = () => {
     this.props.resetModalSend();
-    let { user, assets, setAssetsSendModalOpen, loadWalletInfo } = this.props;
+    let { user, 
+         assets, 
+         setAssetsSendModalOpen,
+         loadWalletInfo 
+    } = this.props;
     let step = assets.modal.step;
 
     if (step === 4) {
       return null;
-    } else if (step === 5 || step === 6) {
-      this.reloadHistory();
+    } else if (step === 5 || step === 6) {     
+      this.reloadHistory(); 
       return () => {
-        setAssetsSendModalOpen(), loadWalletInfo(user.password);
+        setAssetsSendModalOpen(), 
+        loadWalletInfo(user.password);
       };
     } else {
       return () => setAssetsReceiveModalOpen();
