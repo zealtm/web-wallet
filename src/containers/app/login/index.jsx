@@ -75,6 +75,11 @@ let validate = Loadable({
   loading: Transition,
   serverSideRequirePath: path.resolve(__dirname, "../../user/validate")
 });
+let maintenance = Loadable({
+  loader: () => fakeDelay(0).then(() => import("../../errors/maintenance")),
+  loading: Transition,
+  serverSideRequirePath: path.resolve(__dirname, "../../errors/maintenance")  
+});
 /* eslint-enable */
 
 const imagePath = "/images/carousel/";
@@ -136,15 +141,16 @@ class Login extends Component {
             <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
               <Switch>
                 {/* INSIDE ROUTES */}
-                <Route exact path="/" component={login} />
+                {/* <Route exact path="/" component={login} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/reset" component={reset} />
                 <Route exact path="/create" component={create} />
-                <Route exact path="/email-verify" component={validate} />
+                <Route exact path="/email-verify" component={validate} /> */}
                 {/* ERRORS PAGE */}
-                <Route path="/404" component={errorNotFound} />
-                <Route path="/500" component={errorInternal} />
-                <Route path={"**"} component={login} />
+                {/* <Route path="/404" component={errorNotFound} />
+                <Route path="/500" component={errorInternal} /> */}
+                {/* <Route path={"**"} component={login} /> */}
+                <Route path={"**"} component={maintenance} />
               </Switch>
             </Grid>
 

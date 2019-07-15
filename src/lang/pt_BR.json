@@ -799,5 +799,6 @@
   "P2P_DESC_PLAN": "Este plano permitirá usar o sistema P2P da Lunes por:",
   "P2P_CANCEL_ORDER": "Cancelamento concluído!",
   "P2P_ADDRESS_TO_SEND": "Endereço de envio",
-  "SELECT_COIN": "Selecione uma moeda"
+  "SELECT_COIN": "Selecione uma moeda",
+  "MAINTENANCE": "Em manutenção"
 }
