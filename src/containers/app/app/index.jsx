@@ -159,6 +159,7 @@ let invite = Loadable({
   loading: loading,
   serverSideRequirePath: path.resolve(__dirname, "../../invite")
 });
+
 /* eslint-enable */
 
 class App extends Component {
