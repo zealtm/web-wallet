@@ -141,16 +141,16 @@ class Login extends Component {
             <Grid item xs={12} sm={12} md={5} className={style.colLeft}>
               <Switch>
                 {/* INSIDE ROUTES */}
-                {/* <Route exact path="/" component={login} />
+                <Route exact path="/" component={login} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/reset" component={reset} />
                 <Route exact path="/create" component={create} />
-                <Route exact path="/email-verify" component={validate} /> */}
+                <Route exact path="/email-verify" component={validate} />
                 {/* ERRORS PAGE */}
-                {/* <Route path="/404" component={errorNotFound} />
-                <Route path="/500" component={errorInternal} /> */}
-                {/* <Route path={"**"} component={login} /> */}
-                <Route path={"**"} component={maintenance} />
+                <Route path="/404" component={errorNotFound} />
+                <Route path="/500" component={errorInternal} /> 
+                 <Route path={"**"} component={login} />
+                {/* <Route path={"**"} component={maintenance} /> */}
               </Switch>
             </Grid>
 
