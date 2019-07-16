@@ -9,6 +9,7 @@ import { getAuthToken, getDecodedAuthToken } from "../../../utils/localStorage";
 import i18n from "../../../utils/i18n";
 import { decodeToken } from "../../../utils/cryptography";
 import { getChatBundle } from "../chat/functions";
+import Store from "../../app/store";
 
 // SERVICES
 import P2pService from "../../../services/p2pService";
@@ -20,7 +21,8 @@ export function* prepareOrOpenChat(payload) {
   try {
     let { order } = payload;
 
-    let state = window.store.getState();
+    // let state = window.store.getState();
+    let state = Store.getState();
     let { orders: myOrders } = state.p2p;
 
     if (!myOrders) {

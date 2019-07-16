@@ -2,6 +2,7 @@ import i18n from "./../../../utils/i18n";
 import style from "./style.css";
 import { convertISO8601 } from "./../../../utils/numbers.js";
 import { chat } from "./../../../constants/apiBaseUrl.js"
+import Store from "../../app/store";
 
 export const getChatBundle = (data = {}) => {
   try {
@@ -30,7 +31,8 @@ export const getChatBundle = (data = {}) => {
     bundlesWrapperEL.appendChild(bundleEL);
   } catch (err) {
     console.error(err);
-    window.store.dispatch({
+    // window.store.dispatch({
+      Store.dispatch({
       type: "REQUEST_FAILED",
       message: i18n.t("P2P_CHAT_FAILED_TO_OPEN")
     });
