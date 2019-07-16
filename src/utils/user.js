@@ -1,5 +1,5 @@
 import { encryptMd5 } from "./cryptography"
-
+import Store from "../containers/app/store";
 const _makeGravatarUrl = (email, size, defaultImg) => {
   email = email ? encryptMd5(email) : ''
   size = size ? `s=${size}&` : ''
@@ -13,8 +13,7 @@ const _makeGravatarUrl = (email, size, defaultImg) => {
 //email required when not using default
 export const getProfileImg = (size, email, defaultImg) => {
   if (!email)
-    email = window.store.getState().user.user.email
-
+    email = Store.getState().user.user.email
   // // not working, uncomment to use profilePicture from REDUX
   // let { profilePicture } = window.store.getState().user.user
   // defaultImg = defaultImg ? '/'+defaultImg : '/'+profilePicture
