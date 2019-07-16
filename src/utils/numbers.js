@@ -1,5 +1,6 @@
 import i18n from "./i18n";
 import { countriesInfo } from "../constants/user.js";
+import Store from "../containers/app/store";
 
 export const convertBiggestCoinUnit = (value, decimal) => {
   let number = "1";
@@ -93,7 +94,8 @@ export const satoshiToCommon = (value, zeros = 8) => {
 };
 export const localCurrency = (number, currency) => {
   if (!currency) {
-    let { user } = window.store.getState().user;
+    // let { user } = window.store.getState().user;
+    let { user } = Store.getState().user;
     let { country } = user;
     country = country ? country.replace(/\s/gim, "_").toLowerCase() : undefined;
     let countryInfo = countriesInfo[country];
