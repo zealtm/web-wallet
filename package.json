@@ -1,6 +1,6 @@
 {
-  "name": "project-viserion",
-  "version": "0.0.1",
+  "name": "Zealtm-Wallet",
+  "version": "1.0.0",
   "description": "Wallet Web",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "Wallet",
     "Web"
   ],
-  "author": "Lunes Platform",
+  "author": "ZEALTM-DEV",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Lunes-platform/Viserion_Project/issues"
